@@ -1,0 +1,32 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/newfile.png</file>
+        <file>icons/saved.png</file>
+        <file>icons/unsaved.png</file>
+        <file>icons/openFile.png</file>
+        <file>icons/saveAll.png</file>
+        <file>icons/closeAll.png</file>
+        <file>icons/closeFile.png</file>
+        <file>icons/copy.png</file>
+        <file>icons/cut.png</file>
+        <file>icons/paste.png</file>
+        <file>icons/redo.png</file>
+        <file>icons/undo.png</file>
+        <file>icons/zoomIn.png</file>
+        <file>icons/zoomOut.png</file>
+        <file>icons/indentGuide.png</file>
+        <file>icons/invisibleChar.png</file>
+        <file>icons/wrap.png</file>
+        <file>icons/find.png</file>
+        <file>stylesheets/npp.css</file>
+        <file>icons/findReplace.png</file>
+        <file>icons/readonly.png</file>
+        <file>icons/startRecord.png</file>
+        <file>icons/stopRecord.png</file>
+        <file>icons/playRecord.png</file>
+        <file>icons/playRecord_m.png</file>
+        <file>icons/saveRecord.png</file>
+        <file>icons/text_indent.png</file>
+        <file>icons/text_indent_remove.png</file>
+    </qresource>
+</RCC>

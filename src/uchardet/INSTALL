@@ -1,0 +1,4 @@
+Execute release.sh or manually make a directory and check in, and execute
+	cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release && make
+Then install
+	sudo make install

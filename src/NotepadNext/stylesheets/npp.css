@@ -1,0 +1,42 @@
+QStatusBar {
+    border-top: 1px solid darkgray;
+}
+
+NppTabBar {
+    qproperty-tabsClosable: true;
+    qproperty-expanding: false;
+    qproperty-usesScrollButtons: true;
+    qproperty-documentMode: true;
+    qproperty-movable: true;
+    qproperty-drawBase: true;
+}
+
+NppTabBar::tab {
+    background: rgb(192, 192, 192);
+    margin-top: 2px;
+    border-left: 1px solid white;
+    border-top: 2px solid white;
+    border-right: 2px solid gray;
+    padding: 2px 2px 0px 5px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+NppTabBar::tab:selected {
+    background: rgb(240, 240, 240);
+    border-top: 4px solid orange;
+    padding-bottom: 2px;
+    margin-top: 1px;
+}
+NppTabBar::tab:hover:!selected {
+    background: rgb(210, 210, 210);
+}
+
+QSplitter {
+    qproperty-handleWidth: 2;
+}
+
+QSplitter::handle {
+    border-top: 1px solid darkgray;
+    border-bottom: 1px solid darkgray;
+    margin-bottom: 2px;
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Notepad Next</DisplayName>
+    <Description>Notepad Next v0.1</Description>
+    <Version>0.1</Version>
+    <ForcedInstallation>true</ForcedInstallation>
+    <ReleaseDate>2019-03-19</ReleaseDate>
+    <!-- <RequiresAdminRights>true</RequiresAdminRights> -->
+    <Script>installscript.qs</Script>
+    <UserInterfaces>
+        <UserInterface>installoptions.ui</UserInterface>
+    </UserInterfaces>
+</Package>

@@ -1,0 +1,82 @@
+// File to suppress cppcheck warnings for files that will not be fixed.
+// Does not suppress warnings where an additional occurrence of the warning may be of interest.
+
+// Coding style is to use assignments in constructor when there are many
+// members to initialize or the initialization is complex or has comments.
+useInitializationList
+
+// These may be interesting but its not clear without examining each instance closely
+// Would have to ensure that any_of/all_of has same early/late exits as current code and
+// produces same result on empty collections
+useStlAlgorithm
+
+// The two sections are for different purposes: C1 control set and UTF-8 invalid bytes
+duplicateCondition:scintilla/src/Editor.cxx
+
+// Some non-explicit constructors are used for conversions or are private to lexers
+noExplicitConstructor
+
+// Document is checking for a change by called methods and cppcheck isn't considering escape
+knownConditionTrueFalse:scintilla/src/Document.cxx
+
+// ScintillaDocument is providing an API and there are no consumers of the API inside Scintilla
+unusedFunction:scintilla/qt/ScintillaEdit/ScintillaDocument.cpp
+
+// moc_ files are not understood by cppcheck
+noValidConfiguration
+
+// The performance cost of by-value passing is often small and using a reference decreases
+// code legibility.
+passedByValue
+
+// Suppress most lexer warnings since the lexers are maintained by others
+redundantCondition:scintilla/lexers/LexA68k.cxx
+shadowVar:scintilla/lexers/LexAU3.cxx
+unreadVariable:scintilla/lexers/LexBaan.cxx
+uninitMemberVar:scintilla/lexers/LexBash.cxx
+variableScope:scintilla/lexers/LexBash.cxx
+variableScope:scintilla/lexers/LexBatch.cxx
+variableScope:scintilla/lexers/LexCmake.cxx
+variableScope:scintilla/lexers/LexCSS.cxx
+variableScope:scintilla/lexers/LexDataflex.cxx
+variableScope:scintilla/lexers/LexErlang.cxx
+variableScope:scintilla/lexers/LexGui4Cli.cxx
+variableScope:scintilla/lexers/LexInno.cxx
+variableScope:scintilla/lexers/LexLaTeX.cxx
+unreadVariable:scintilla/lexers/LexMatlab.cxx
+variableScope:scintilla/lexers/LexMetapost.cxx
+variableScope:scintilla/lexers/LexModula.cxx
+variableScope:scintilla/lexers/LexMSSQL.cxx
+variableScope:scintilla/lexers/LexNimrod.cxx
+variableScope:scintilla/lexers/LexNsis.cxx
+variableScope:scintilla/lexers/LexOpal.cxx
+variableScope:scintilla/lexers/LexPB.cxx
+shadowVar:scintilla/lexers/LexPowerPro.cxx
+variableScope:scintilla/lexers/LexProgress.cxx
+redundantAssignment:scintilla/lexers/LexRegistry.cxx
+variableScope:scintilla/lexers/LexRuby.cxx
+uninitMemberVar:scintilla/lexers/LexRuby.cxx
+variableScope:scintilla/lexers/LexSpecman.cxx
+unreadVariable:scintilla/lexers/LexSpice.cxx
+clarifyCalculation:scintilla/lexers/LexTADS3.cxx
+invalidscanf:scintilla/lexers/LexTCMD.cxx
+knownConditionTrueFalse:scintilla/lexers/LexTCMD.cxx
+variableScope:scintilla/lexers/LexTeX.cxx
+knownConditionTrueFalse:scintilla/lexers/LexVerilog.cxx
+constArgument:scintilla/lexers/LexVerilog.cxx
+shadowVar:scintilla/lexers/LexVHDL.cxx
+unreadVariable:scintilla/lexers/LexVHDL.cxx
+variableScope:scintilla/lexers/LexVHDL.cxx
+unreadVariable:scintilla/lexers/LexVisualProlog.cxx
+
+// bp.itBracket not actually redundant as needed by return statements
+redundantAssignment:scintilla/lexers/LexCPP.cxx
+
+// safety initializations at start of GetCharacterExtents
+redundantAssignment:scintilla/gtk/ScintillaGTKAccessible.cxx
+
+// Suppress everything in catch.hpp as won't be changing
+*:scintilla/test/unit/catch.hpp
+// For now, suppress all test source files as, since Catch 2, cppcheck shows many warnings showing
+// it doesn't understand the REQUIRE macro
+*:scintilla/test/unit/*.cxx

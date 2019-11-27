@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>scripts/init.lua</file>
+        <file>languages/cpp.lua</file>
+        <file>languages/lua.lua</file>
+        <file>languages/text.lua</file>
+        <file>languages/python.lua</file>
+    </qresource>
+</RCC>
