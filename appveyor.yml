@@ -18,3 +18,4 @@ build_script:
 
 artifacts:
   - path: build\NotepadNext\release\NotepadNext.exe
+    name: NotepadNext.exe
