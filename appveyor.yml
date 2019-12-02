@@ -1,0 +1,20 @@
+version: 0.1.0.{build}
+image: Visual Studio 2017
+
+init:
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
+
+install:
+  - mkdir build
+  - cd build
+
+before_build:
+  - set PATH=C:\Qt\5.13.2\msvc2017_64\bin\;C:\Qt\Tools\QtCreator\bin\;C:\Qt\Tools\QtInstallerFramework\3.1\bin\;%PATH%
+  - qmake -v
+  - qmake ..\src\NotepadNext.pro
+
+build_script:
+  - jom
+
+artifacts:
+  - path: build\NotepadNext\release\NotepadNext.exe
