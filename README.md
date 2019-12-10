@@ -1,4 +1,7 @@
 # Notepad Next
+
+[![Build status](https://ci.appveyor.com/api/projects/status/ix8wdx6tu5t3you0?svg=true)](https://ci.appveyor.com/project/dail8859/notepadnext)
+
 A cross-platform, reimplementation of Notepad++.
 
 Though the application overall is stable and usable, it should not be considered for daily use and is missing most features.
