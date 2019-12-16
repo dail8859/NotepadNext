@@ -17,24 +17,6 @@
  */
 
 
-// This file is part of Notepad Next.
-//
-// Copyright (C)2017 Justin Dailey <dail8859@yahoo.com>
-//
-// Notepad Next is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either
-// version 2 of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
@@ -123,7 +105,11 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 #endif
 
     // Get some events from the tab bar
-    connect(tabbedEditor->getTabBar(), &QTabBar::tabBarDoubleClicked, this, &MainWindow::tabBarDoubleClicked);
+    connect(tabbedEditor->getTabBar(), &QTabBar::tabBarDoubleClicked, this, [=](int index) {
+        if (index == TabbedEditor::INVALID_INDEX) {
+            newFile();
+        }
+    });
     connect(tabbedEditor->getTabBar(), &QTabBar::tabCloseRequested, this, &MainWindow::closeFile);
     connect(tabbedEditor->getTabBar(), &QWidget::customContextMenuRequested, this, &MainWindow::tabBarRightClicked);
 
@@ -1671,14 +1657,6 @@ void MainWindow::dropEvent(QDropEvent *event)
     }
     else {
         event->ignore();
-    }
-}
-
-void MainWindow::tabBarDoubleClicked(int index)
-{
-    qInfo("Clicked on index %d", index);
-    if (index == TabbedEditor::INVALID_INDEX) {
-        newFile();
     }
 }
 
