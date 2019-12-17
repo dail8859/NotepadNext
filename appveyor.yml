@@ -28,5 +28,5 @@ after_build:
 artifacts:
   - path: NotepadNext.zip
     name: NotepadNext.zip
-  - path: build_installer\NotepadNext\NotepadNext-v0.1.exe
+  - path: build_installer\NotepadNext-v0.1.exe
     name: NotepadNext-v0.1.exe
