@@ -15,6 +15,7 @@ build_script:
   - jom
 
 after_build:
+  - cd %APPVEYOR_BUILD_FOLDER%
   - xcopy build_app\NotepadNext\release\NotepadNext.exe installer\packages\app\data\
   - windeployqt installer\packages\app\data\NotepadNext.exe
   - 7z a NotepadNext.zip .\installer\packages\app\data\*
