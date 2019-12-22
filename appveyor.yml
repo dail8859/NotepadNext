@@ -3,19 +3,30 @@ image: Visual Studio 2017
 
 init:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
-
-install:
-  - mkdir build
-  - cd build
-
-before_build:
   - set PATH=C:\Qt\5.13.2\msvc2017_64\bin\;C:\Qt\Tools\QtCreator\bin\;C:\Qt\Tools\QtInstallerFramework\3.1\bin\;%PATH%
   - qmake -v
+
+before_build:
+  - mkdir build_app
+  - cd build_app
   - qmake ..\src\NotepadNext.pro
 
 build_script:
   - jom
 
+after_build:
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - xcopy build_app\NotepadNext\release\NotepadNext.exe installer\packages\app\data\
+  - windeployqt installer\packages\app\data\NotepadNext.exe
+  - 7z a NotepadNext.zip .\installer\packages\app\data\*
+  - 7z a installer\packages\app\data\data.7z .\installer\packages\app\data\* -sdel
+  - mkdir build_installer
+  - cd build_installer
+  - qmake ..\installer\installer.pro
+  - jom
+
 artifacts:
-  - path: build\NotepadNext\release\NotepadNext.exe
-    name: NotepadNext.exe
+  - path: NotepadNext.zip
+    name: NotepadNext.zip
+  - path: build_installer\NotepadNext-v0.1.exe
+    name: NotepadNext-v0.1.exe
