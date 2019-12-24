@@ -24,9 +24,6 @@ after_build:
   - cd build_installer
   - qmake ..\installer\installer.pro
   - jom
-
-artifacts:
-  - path: NotepadNext.zip
-    name: NotepadNext-v$(appveyor_build_version).zip
-  - path: build_installer\NotepadNext-v0.1.exe
-    name: NotepadNext-v$(appveyor_build_version)-setup.exe
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - appveyor PushArtifact NotepadNext.zip -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%.zip
+  - appveyor PushArtifact build_installer\NotepadNext-v0.1.exe -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%-setup.exe
