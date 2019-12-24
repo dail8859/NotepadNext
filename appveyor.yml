@@ -3,7 +3,7 @@ image: Visual Studio 2017
 
 init:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
-  - set PATH=C:\Qt\5.13.2\msvc2017_64\bin\;C:\Qt\Tools\QtCreator\bin\;C:\Qt\Tools\QtInstallerFramework\3.1\bin\;%PATH%
+  - set PATH=C:\Qt\5.13.2\msvc2017_64\bin\;C:\Qt\Tools\QtCreator\bin\;%PATH%
   - qmake -v
 
 before_build:
@@ -16,8 +16,8 @@ build_script:
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - xcopy build_app\NotepadNext\release\NotepadNext.exe installer\packages\app\data\
-  - windeployqt installer\packages\app\data\NotepadNext.exe
+  - xcopy build_app\NotepadNext\NotepadNext.exe installer\packages\app\data\
+  - windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-angle --no-opengl-sw installer\packages\app\data\NotepadNext.exe
   - 7z a NotepadNext.zip .\installer\packages\app\data\*
   - 7z a installer\packages\app\data\data.7z .\installer\packages\app\data\* -sdel
   - mkdir build_installer
@@ -27,6 +27,6 @@ after_build:
 
 artifacts:
   - path: NotepadNext.zip
-    name: NotepadNext.zip
+    name: NotepadNext-v$(appveyor_build_version).zip
   - path: build_installer\NotepadNext-v0.1.exe
-    name: NotepadNext-v0.1.exe
+    name: NotepadNext-v$(appveyor_build_version)-setup.exe

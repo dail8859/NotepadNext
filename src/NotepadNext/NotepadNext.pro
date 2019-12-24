@@ -20,13 +20,8 @@ QT += core widgets printsupport network
 TARGET = NotepadNext
 
 TEMPLATE = app
-CONFIG += c++17
 
-include(../Version.pri)
-
-# Add custom defines
-DEFINES += APP_VERSION='"\\\"$$APP_VERSION\\\""'
-DEFINES += APP_COPYRIGHT='"\\\"$$APP_COPYRIGHT\\\""'
+include(../Config.pri)
 
 # Set variables for output executable
 VERSION = $$APP_VERSION

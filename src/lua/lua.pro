@@ -19,7 +19,8 @@ TARGET = Lua
 TEMPLATE = lib
 CONFIG += lib_bundle
 CONFIG += staticlib
-CONFIG -= debug_and_release debug_and_release_target
+
+include(../Config.pri)
 
 # Set the paths to an empty string
 DEFINES += LUA_PATH_DEFAULT=\\\"\\\"

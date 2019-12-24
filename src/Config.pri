@@ -15,13 +15,11 @@
 # along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
 
 
-TARGET = uchardet
-TEMPLATE = lib
-CONFIG += lib_bundle
-CONFIG += staticlib
+include(Version.pri)
 
-include(../Config.pri)
+# Add custom defines
+DEFINES += APP_VERSION='"\\\"$$APP_VERSION\\\""'
+DEFINES += APP_COPYRIGHT='"\\\"$$APP_COPYRIGHT\\\""'
 
-SOURCES += $$files(src/*.cpp, false)
-SOURCES += $$files(src/LangModels/*.cpp, false)
-HEADERS += $$files(src/*.h, false)
+CONFIG += c++17
+CONFIG -= debug_and_release debug_and_release_target
