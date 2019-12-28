@@ -9,5 +9,6 @@
     <Script>installscript.qs</Script>
     <UserInterfaces>
         <UserInterface>installoptions.ui</UserInterface>
+        <UserInterface>targetwidget.ui</UserInterface>
     </UserInterfaces>
 </Package>

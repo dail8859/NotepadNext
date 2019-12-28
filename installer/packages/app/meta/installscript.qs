@@ -14,9 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
 
+var targetDirectoryPage = null;
 
 function Component()
 {
+    component.loaded.connect(this, this.installerLoaded);
+
     component.loaded.connect(this, function() {
         if (installer.isInstaller()) {
             if (systemInfo.productType === "windows") {
@@ -69,5 +72,52 @@ Component.prototype.createOperations = function()
                 "iconId=0"
             );
         }
+    }
+}
+
+Component.prototype.installerLoaded = function()
+{
+    installer.setDefaultPageVisible(QInstaller.TargetDirectory, false);
+    installer.addWizardPage(component, "TargetWidget", QInstaller.TargetDirectory);
+
+    targetDirectoryPage = gui.pageWidgetByObjectName("DynamicTargetWidget");
+    targetDirectoryPage.windowTitle = "Choose Installation Directory";
+    targetDirectoryPage.description.setText("Please select where Notepad Next will be installed:");
+    targetDirectoryPage.targetDirectory.textChanged.connect(this, this.targetDirectoryChanged);
+    targetDirectoryPage.targetDirectory.setText(installer.value("TargetDir"));
+    targetDirectoryPage.targetChooser.released.connect(this, this.targetChooserClicked);
+
+    gui.pageById(QInstaller.PerformInstallation).entered.connect(this, this.performInstallationPageEntered);
+}
+
+Component.prototype.targetChooserClicked = function()
+{
+    var dir = QFileDialog.getExistingDirectory("", targetDirectoryPage.targetDirectory.text);
+    targetDirectoryPage.targetDirectory.setText(dir);
+}
+
+Component.prototype.targetDirectoryChanged = function()
+{
+    var dir = targetDirectoryPage.targetDirectory.text;
+    if (installer.fileExists(dir) && installer.fileExists(dir + "/maintenancetool.exe")) {
+        targetDirectoryPage.warning.setText("<p style=\"color: red\">Existing installation will be uninstalled.</p>");
+    }
+    else if (installer.fileExists(dir)) {
+        targetDirectoryPage.warning.setText("<p style=\"color: red\">Installing in existing directory. Its existing contents will be removed.</p>");
+    }
+    else {
+        targetDirectoryPage.warning.setText("");
+    }
+
+    installer.setValue("TargetDir", dir);
+}
+
+Component.prototype.performInstallationPageEntered = function()
+{
+    var dir = installer.value("TargetDir");
+
+    if (installer.fileExists(dir) && installer.fileExists(dir + "/maintenancetool.exe")) {
+        console.log("Running uninstaller: " + dir + "/maintenancetool.exe");
+        installer.execute(dir + "/maintenancetool.exe", new Array("--script", dir + "/scripts/auto_uninstall.qs"));
     }
 }
