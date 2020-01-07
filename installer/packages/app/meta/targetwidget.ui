@@ -29,7 +29,7 @@
    <item>
     <widget class="QLabel" name="description">
      <property name="text">
-      <string/>
+      <string>Please select where Notepad Next will be installed:</string>
      </property>
     </widget>
    </item>
@@ -87,6 +87,44 @@
         <size>
          <width>40</width>
          <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QCheckBox" name="addContextMenu">
+       <property name="text">
+        <string>Add Context Menu</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="addDesktopShortcut">
+       <property name="text">
+        <string>Add Desktop Shortcut</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="addStartMenuShortcut">
+       <property name="text">
+        <string>Add Start Menu Shortcut</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
         </size>
        </property>
       </spacer>
