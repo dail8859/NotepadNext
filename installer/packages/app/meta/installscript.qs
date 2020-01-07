@@ -19,14 +19,6 @@ var targetDirectoryPage = null;
 function Component()
 {
     component.loaded.connect(this, this.installerLoaded);
-
-    component.loaded.connect(this, function() {
-        if (installer.isInstaller()) {
-            if (systemInfo.productType === "windows") {
-                installer.addWizardPageItem(component, "InstallOptionsForm", QInstaller.TargetDirectory);
-            }
-        }
-    });
 }
 
 Component.prototype.createOperations = function()
@@ -34,9 +26,9 @@ Component.prototype.createOperations = function()
     // call default implementation to actually install the registeredfile
     component.createOperations();
 
-    var isContextMenuChecked = component.userInterface("InstallOptionsForm").addContextMenu.checked;
-    var isDesktopShortcutChecked = component.userInterface("InstallOptionsForm").addDesktopShortcut.checked;
-    var isStartMenuShortcutChecked = component.userInterface("InstallOptionsForm").addStartMenuShortcut.checked;
+    var isContextMenuChecked = component.userInterface("TargetWidget").addContextMenu.checked;
+    var isDesktopShortcutChecked = component.userInterface("TargetWidget").addDesktopShortcut.checked;
+    var isStartMenuShortcutChecked = component.userInterface("TargetWidget").addStartMenuShortcut.checked;
     if (systemInfo.productType === "windows") {
         // Right-click context menu
         if (isContextMenuChecked) {
@@ -82,7 +74,6 @@ Component.prototype.installerLoaded = function()
 
     targetDirectoryPage = gui.pageWidgetByObjectName("DynamicTargetWidget");
     targetDirectoryPage.windowTitle = "Choose Installation Directory";
-    targetDirectoryPage.description.setText("Please select where Notepad Next will be installed:");
     targetDirectoryPage.targetDirectory.textChanged.connect(this, this.targetDirectoryChanged);
     targetDirectoryPage.targetDirectory.setText(installer.value("TargetDir"));
     targetDirectoryPage.targetChooser.released.connect(this, this.targetChooserClicked);
