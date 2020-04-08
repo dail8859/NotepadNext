@@ -778,7 +778,7 @@ void MainWindow::setupEditor(ScintillaNext *editor)
 
     editor->styleSetFore(STYLE_LINENUMBER, 0x808080);
     editor->styleSetBack(STYLE_LINENUMBER, 0xE4E4E4);
-    editor->styleSetBold(STYLE_LINENUMBER, true);
+    editor->styleSetBold(STYLE_LINENUMBER, false);
 
     editor->styleSetFore(STYLE_BRACELIGHT, 0x0000FF);
     editor->styleSetBack(STYLE_BRACELIGHT, 0xFFFFFF);
