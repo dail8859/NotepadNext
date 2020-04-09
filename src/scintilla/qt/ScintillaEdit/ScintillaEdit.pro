@@ -12,7 +12,8 @@ TEMPLATE = lib
 CONFIG += lib_bundle
 CONFIG += c++1z
 CONFIG += staticlib
-CONFIG -= debug_and_release debug_and_release_target
+
+include(../../../Config.pri)
 
 VERSION = 4.3.2
 
@@ -76,7 +77,6 @@ OTHER_FILES +=
 INCLUDEPATH += ../ScintillaEditBase ../../include ../../src ../../lexlib
 
 DEFINES += SCINTILLA_QT=1 MAKING_LIBRARY=1 SCI_LEXER=1 _CRT_SECURE_NO_DEPRECATE=1
-DEFINES += SCI_OWNREGEX
 CONFIG(release, debug|release) {
     DEFINES += NDEBUG=1
 }
