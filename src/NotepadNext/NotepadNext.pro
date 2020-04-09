@@ -120,7 +120,7 @@ INCLUDEPATH += $$PWD/dialogs
 INCLUDEPATH += $$PWD/widgets
 
 # Statically link in Scintilla
-DEFINES += EXPORT_IMPORT_API= SCI_OWNREGEX
+DEFINES += EXPORT_IMPORT_API=
 LIBS += -L$$OUT_PWD/../scintilla/qt/ScintillaEdit/ -lScintillaEdit
 INCLUDEPATH += \
     $$PWD/../scintilla/qt/ScintillaEditBase \
