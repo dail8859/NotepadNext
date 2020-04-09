@@ -19,6 +19,22 @@ constexpr RECT RectFromPRectangle(PRectangle prc) noexcept {
 	return rc;
 }
 
+constexpr POINT POINTFromPoint(Point pt) noexcept {
+	return POINT{ static_cast<LONG>(pt.x), static_cast<LONG>(pt.y) };
+}
+
+constexpr Point PointFromPOINT(POINT pt) noexcept {
+	return Point::FromInts(pt.x, pt.y);
+}
+
+constexpr HWND HwndFromWindowID(WindowID wid) noexcept {
+	return static_cast<HWND>(wid);
+}
+
+inline HWND HwndFromWindow(const Window &w) noexcept {
+	return HwndFromWindowID(w.GetID());
+}
+
 #if defined(USE_D2D)
 extern bool LoadD2D();
 extern ID2D1Factory *pD2DFactory;

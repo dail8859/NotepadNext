@@ -14,7 +14,7 @@ CONFIG += c++1z
 CONFIG += staticlib
 CONFIG -= debug_and_release debug_and_release_target
 
-VERSION = 4.2.0
+VERSION = 4.3.2
 
 SOURCES += \
     ScintillaEdit.cpp \

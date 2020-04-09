@@ -10,10 +10,6 @@
 
 #include "ScintillaQt.h"
 #include "PlatQt.h"
-#ifdef SCI_LEXER
-#include "LexerModule.h"
-#include "ExternalLexer.h"
-#endif
 
 #include <QApplication>
 #include <QDrag>
@@ -41,7 +37,7 @@ ScintillaQt::ScintillaQt(QAbstractScrollArea *parent)
 	// On OS X drawing text into a pixmap moves it around 1 pixel to
 	// the right compared to drawing it directly onto a window.
 	// Buffered drawing turned off by default to avoid this.
-	WndProc(SCI_SETBUFFEREDDRAW, false, 0);
+	view.bufferedDraw = false;
 
 	Init();
 
@@ -52,10 +48,8 @@ ScintillaQt::ScintillaQt(QAbstractScrollArea *parent)
 
 ScintillaQt::~ScintillaQt()
 {
-	for (TickReason tr = tickCaret; tr <= tickDwell; tr = static_cast<TickReason>(tr + 1)) {
-		FineTickerCancel(tr);
-	}
-	SetIdle(false);
+	CancelTimers();
+	ChangeIdle(false);
 }
 
 void ScintillaQt::execCommand(QAction *action)
@@ -145,9 +139,7 @@ void ScintillaQt::Init()
 
 void ScintillaQt::Finalise()
 {
-	for (TickReason tr = tickCaret; tr <= tickDwell; tr = static_cast<TickReason>(tr + 1)) {
-		FineTickerCancel(tr);
-	}
+	CancelTimers();
 	ScintillaBase::Finalise();
 }
 
@@ -303,7 +295,6 @@ void ScintillaQt::ReconfigureScrollBars()
 void ScintillaQt::CopyToModeClipboard(const SelectionText &selectedText, QClipboard::Mode clipboardMode_)
 {
 	QClipboard *clipboard = QApplication::clipboard();
-	clipboard->clear(clipboardMode_);
 	QString su = StringFromSelectedText(selectedText);
 	QMimeData *mimeData = new QMimeData();
 	mimeData->setText(su);
@@ -417,6 +408,18 @@ void ScintillaQt::FineTickerStart(TickReason reason, int millis, int /* toleranc
 	timers[reason] = startTimer(millis);
 }
 
+// CancelTimers cleans up all fine-ticker timers and is non-virtual to avoid warnings when
+// called during destruction.
+void ScintillaQt::CancelTimers()
+{
+	for (TickReason tr = tickCaret; tr <= tickDwell; tr = static_cast<TickReason>(tr + 1)) {
+		if (timers[tr]) {
+			killTimer(timers[tr]);
+			timers[tr] = 0;
+		}
+	}
+}
+
 void ScintillaQt::FineTickerCancel(TickReason reason)
 {
 	if (timers[reason]) {
@@ -433,7 +436,7 @@ void ScintillaQt::onIdle()
 	}
 }
 
-bool ScintillaQt::SetIdle(bool on)
+bool ScintillaQt::ChangeIdle(bool on)
 {
 	QTimer *qIdle;
 	if (on) {
@@ -457,6 +460,11 @@ bool ScintillaQt::SetIdle(bool on)
 		}
 	}
 	return true;
+}
+
+bool ScintillaQt::SetIdle(bool on)
+{
+	return ChangeIdle(on);
 }
 
 int ScintillaQt::CharacterSetOfDocument() const
@@ -690,12 +698,6 @@ sptr_t ScintillaQt::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam)
 
 		case SCI_GETDIRECTPOINTER:
 			return reinterpret_cast<sptr_t>(this);
-
-#ifdef SCI_LEXER
-		case SCI_LOADLEXERLIBRARY:
-			LexerManager::GetInstance()->Load(reinterpret_cast<const char *>(lParam));
-			break;
-#endif
 
 		default:
 			return ScintillaBase::WndProc(iMessage, wParam, lParam);

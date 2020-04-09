@@ -489,7 +489,7 @@ static unsigned int KeyFromString(const char *charBytes, size_t len) {
 	return k;
 }
 
-SpecialRepresentations::SpecialRepresentations() noexcept {
+SpecialRepresentations::SpecialRepresentations() {
 	const short none = 0;
 	std::fill(startByteHasReprs, std::end(startByteHasReprs), none);
 }

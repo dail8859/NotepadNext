@@ -131,7 +131,7 @@ public:
 	void SetBidiR2L(bool bidiR2L_) override;
 
 	void BrushColour(ColourDesired back);
-	void SetCodec(Font &font);
+	void SetCodec(const Font &font);
 	void SetFont(Font &font);
 
 	QPaintDevice *GetPaintDevice();

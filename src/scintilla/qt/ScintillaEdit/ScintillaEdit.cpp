@@ -243,6 +243,14 @@ sptr_t ScintillaEdit::tabWidth() const {
     return send(SCI_GETTABWIDTH, 0, 0);
 }
 
+void ScintillaEdit::setTabMinimumWidth(sptr_t pixels) {
+    send(SCI_SETTABMINIMUMWIDTH, pixels, 0);
+}
+
+sptr_t ScintillaEdit::tabMinimumWidth() const {
+    return send(SCI_GETTABMINIMUMWIDTH, 0, 0);
+}
+
 void ScintillaEdit::clearTabStops(sptr_t line) {
     send(SCI_CLEARTABSTOPS, line, 0);
 }
@@ -1079,12 +1087,28 @@ sptr_t ScintillaEdit::targetStart() const {
     return send(SCI_GETTARGETSTART, 0, 0);
 }
 
+void ScintillaEdit::setTargetStartVirtualSpace(sptr_t space) {
+    send(SCI_SETTARGETSTARTVIRTUALSPACE, space, 0);
+}
+
+sptr_t ScintillaEdit::targetStartVirtualSpace() const {
+    return send(SCI_GETTARGETSTARTVIRTUALSPACE, 0, 0);
+}
+
 void ScintillaEdit::setTargetEnd(sptr_t end) {
     send(SCI_SETTARGETEND, end, 0);
 }
 
 sptr_t ScintillaEdit::targetEnd() const {
     return send(SCI_GETTARGETEND, 0, 0);
+}
+
+void ScintillaEdit::setTargetEndVirtualSpace(sptr_t space) {
+    send(SCI_SETTARGETENDVIRTUALSPACE, space, 0);
+}
+
+sptr_t ScintillaEdit::targetEndVirtualSpace() const {
+    return send(SCI_GETTARGETENDVIRTUALSPACE, 0, 0);
 }
 
 void ScintillaEdit::setTargetRange(sptr_t start, sptr_t end) {
@@ -2551,8 +2575,16 @@ sptr_t ScintillaEdit::selectionNStart(sptr_t selection) const {
     return send(SCI_GETSELECTIONNSTART, selection, 0);
 }
 
+sptr_t ScintillaEdit::selectionNStartVirtualSpace(sptr_t selection) const {
+    return send(SCI_GETSELECTIONNSTARTVIRTUALSPACE, selection, 0);
+}
+
 void ScintillaEdit::setSelectionNEnd(sptr_t selection, sptr_t caret) {
     send(SCI_SETSELECTIONNEND, selection, caret);
+}
+
+sptr_t ScintillaEdit::selectionNEndVirtualSpace(sptr_t selection) const {
+    return send(SCI_GETSELECTIONNENDVIRTUALSPACE, selection, 0);
 }
 
 sptr_t ScintillaEdit::selectionNEnd(sptr_t selection) const {
@@ -2893,6 +2925,10 @@ QByteArray ScintillaEdit::tagsOfStyle(sptr_t style) {
 
 QByteArray ScintillaEdit::descriptionOfStyle(sptr_t style) {
     return TextReturner(SCI_DESCRIPTIONOFSTYLE, style);
+}
+
+void ScintillaEdit::setILexer(sptr_t ilexer) {
+    send(SCI_SETILEXER, 0, ilexer);
 }
 
 sptr_t ScintillaEdit::bidirectional() const {

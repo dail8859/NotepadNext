@@ -344,7 +344,7 @@ class LexerPython : public DefaultLexer {
 	std::map<Sci_Position, std::vector<SingleFStringExpState> > ftripleStateAtEol;
 public:
 	explicit LexerPython() :
-		DefaultLexer(lexicalClasses, ELEMENTS(lexicalClasses)),
+		DefaultLexer("python", SCLEX_PYTHON, lexicalClasses, ELEMENTS(lexicalClasses)),
 		subStyles(styleSubable, 0x80, 0x40, 0) {
 	}
 	~LexerPython() override {
@@ -353,7 +353,7 @@ public:
 		delete this;
 	}
 	int SCI_METHOD Version() const override {
-		return lvRelease4;
+		return lvRelease5;
 	}
 	const char *SCI_METHOD PropertyNames() override {
 		return osPython.PropertyNames();
@@ -365,6 +365,9 @@ public:
 		return osPython.DescribeProperty(name);
 	}
 	Sci_Position SCI_METHOD PropertySet(const char *key, const char *val) override;
+	const char * SCI_METHOD PropertyGet(const char *key) override {
+		return osPython.PropertyGet(key);
+	}
 	const char *SCI_METHOD DescribeWordListSets() override {
 		return osPython.DescribeWordListSets();
 	}
@@ -409,7 +412,7 @@ public:
 		return styleSubable;
 	}
 
-	static ILexer4 *LexerFactoryPython() {
+	static ILexer5 *LexerFactoryPython() {
 		return new LexerPython();
 	}
 

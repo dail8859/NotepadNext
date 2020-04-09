@@ -501,7 +501,7 @@ const int sizeLexicalClasses = static_cast<int>(std::size(lexicalClasses));
 
 }
 
-class LexerCPP : public ILexer4 {
+class LexerCPP : public ILexer5 {
 	bool caseSensitive;
 	CharacterSet setWord;
 	CharacterSet setNegationOp;
@@ -564,7 +564,7 @@ public:
 		delete this;
 	}
 	int SCI_METHOD Version() const noexcept override {
-		return lvRelease4;
+		return lvRelease5;
 	}
 	const char * SCI_METHOD PropertyNames() override {
 		return osCPP.PropertyNames();
@@ -674,10 +674,19 @@ public:
 		return "";
 	}
 
-	static ILexer4 *LexerFactoryCPP() {
+	// ILexer5 methods
+	const char * SCI_METHOD GetName() override {
+		return caseSensitive ? "cpp" : "cppnocase";
+	}
+	int SCI_METHOD  GetIdentifier() override {
+		return caseSensitive ? SCLEX_CPP : SCLEX_CPPNOCASE;
+	}
+	const char * SCI_METHOD PropertyGet(const char *key) override;
+
+	static ILexer5 *LexerFactoryCPP() {
 		return new LexerCPP(true);
 	}
-	static ILexer4 *LexerFactoryCPPInsensitive() {
+	static ILexer5 *LexerFactoryCPPInsensitive() {
 		return new LexerCPP(false);
 	}
 	constexpr static int MaskActive(int style) noexcept {
@@ -699,6 +708,10 @@ Sci_Position SCI_METHOD LexerCPP::PropertySet(const char *key, const char *val) 
 		return 0;
 	}
 	return -1;
+}
+
+const char * SCI_METHOD LexerCPP::PropertyGet(const char *key) {
+	return osCPP.PropertyGet(key);
 }
 
 Sci_Position SCI_METHOD LexerCPP::WordListSet(int n, const char *wl) {

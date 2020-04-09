@@ -53,7 +53,7 @@ class ScintillaGTK : public ScintillaBase {
 
 	// Wheel mouse support
 	unsigned int linesPerScroll;
-	GTimeVal lastWheelMouseTime;
+	gint64 lastWheelMouseTime;
 	gint lastWheelMouseDirection;
 	gint wheelMouseIntensity;
 	gdouble smoothScrollY;
@@ -273,6 +273,12 @@ public:
 		weakRef(obj) {
 		g_object_weak_ref(weakRef, WeakNotify, this);
 	}
+
+	// Deleted so GObjectWatcher objects can not be copied.
+	GObjectWatcher(const GObjectWatcher&) = delete;
+	GObjectWatcher(GObjectWatcher&&) = delete;
+	GObjectWatcher&operator=(const GObjectWatcher&) = delete;
+	GObjectWatcher&operator=(GObjectWatcher&&) = delete;
 
 	virtual ~GObjectWatcher() {
 		if (weakRef) {

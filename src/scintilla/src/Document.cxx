@@ -382,7 +382,7 @@ Sci_Position SCI_METHOD Document::LineEnd(Sci_Position line) const {
 		return LineStart(line + 1);
 	} else {
 		Sci::Position position = LineStart(line + 1);
-		if (SC_CP_UTF8 == dbcsCodePage) {
+		if (SC_LINE_END_TYPE_UNICODE == cb.GetLineEndTypes()) {
 			const unsigned char bytes[] = {
 				cb.UCharAt(position-3),
 				cb.UCharAt(position-2),

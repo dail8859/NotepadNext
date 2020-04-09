@@ -42,6 +42,8 @@ def CheckFiles(root):
     filePaths += glob.glob(root + "/cocoa/*.mm")
     filePaths += glob.glob(root + "/cocoa/*.h")
     filePaths += glob.glob(root + "/test/unit/*.cxx")
+    filePaths += glob.glob(root + "/lexilla/src/*.cxx")
+    filePaths += glob.glob(root + "/lexilla/test/*.cxx")
     # The Qt platform code interleaves system and Scintilla headers
     #~ filePaths += glob.glob(root + "/qt/ScintillaEditBase/*.cpp")
     #~ filePaths += glob.glob(root + "/qt/ScintillaEdit/*.cpp")

@@ -171,7 +171,7 @@ constexpr int LevelNumber(int level) noexcept {
 class LexInterface {
 protected:
 	Document *pdoc;
-	ILexer4 *instance;
+	ILexer5 *instance;
 	bool performingStyle;	///< Prevent reentrance
 public:
 	explicit LexInterface(Document *pdoc_) noexcept : pdoc(pdoc_), instance(nullptr), performingStyle(false) {
