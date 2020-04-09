@@ -153,7 +153,6 @@ MainWindow *NotepadNextApplication::createNewWindow()
 {
     MainWindow *w = new MainWindow(this);
 
-    // Save the window
     windows.append(w);
 
     w->initialize(settings);
