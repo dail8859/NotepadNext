@@ -80,5 +80,4 @@ private:
     bool readFromDisk(QFile &file);
 };
 
-
 #endif // SCINTILLABUFFER_H
