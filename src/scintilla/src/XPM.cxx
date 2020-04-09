@@ -264,6 +264,21 @@ void RGBAImage::SetPixel(int x, int y, ColourDesired colour, int alpha) {
 	pixel[3] = static_cast<unsigned char>(alpha);
 }
 
+// Transform a block of pixels from RGBA to BGRA with premultiplied alpha.
+// Used for DrawRGBAImage on some platforms.
+void RGBAImage::BGRAFromRGBA(unsigned char *pixelsBGRA, const unsigned char *pixelsRGBA, size_t count) noexcept {
+	for (size_t i = 0; i < count; i++) {
+		const unsigned char alpha = pixelsRGBA[3];
+		// Input is RGBA, output is BGRA with premultiplied alpha
+		pixelsBGRA[2] = pixelsRGBA[0] * alpha / 255;
+		pixelsBGRA[1] = pixelsRGBA[1] * alpha / 255;
+		pixelsBGRA[0] = pixelsRGBA[2] * alpha / 255;
+		pixelsBGRA[3] = alpha;
+		pixelsRGBA += bytesPerPixel;
+		pixelsBGRA += bytesPerPixel;
+	}
+}
+
 RGBAImageSet::RGBAImageSet() : height(-1), width(-1) {
 }
 

@@ -84,11 +84,19 @@ private:
 			saves.resize(numLines + 128);
 	}
 public:
-	static ILexer4 *LexerFactoryLaTeX() {
+	static ILexer5 *LexerFactoryLaTeX() {
 		return new LexerLaTeX();
 	}
 	void SCI_METHOD Lex(Sci_PositionU startPos, Sci_Position length, int initStyle, IDocument *pAccess) override;
 	void SCI_METHOD Fold(Sci_PositionU startPos, Sci_Position length, int initStyle, IDocument *pAccess) override;
+
+	// ILexer5 methods
+	const char * SCI_METHOD GetName() override {
+		return "latex";
+	}
+	int SCI_METHOD  GetIdentifier() override {
+		return SCLEX_LATEX;
+	}
 };
 
 static bool latexIsSpecial(int ch) {

@@ -81,6 +81,11 @@ public:
 		pfd = pfd_;
 		characterSet = characterSet_;
 	}
+	// Deleted so FontHandle objects can not be copied.
+	FontHandle(const FontHandle &) = delete;
+	FontHandle(FontHandle &&) = delete;
+	FontHandle &operator=(const FontHandle &) = delete;
+	FontHandle &operator=(FontHandle &&) = delete;
 	~FontHandle() {
 		if (pfd)
 			pango_font_description_free(pfd);
@@ -146,6 +151,11 @@ class SurfaceImpl : public Surface {
 	void SetConverter(int characterSet_);
 public:
 	SurfaceImpl() noexcept;
+	// Deleted so SurfaceImpl objects can not be copied.
+	SurfaceImpl(const SurfaceImpl&) = delete;
+	SurfaceImpl(SurfaceImpl&&) = delete;
+	SurfaceImpl&operator=(const SurfaceImpl&) = delete;
+	SurfaceImpl&operator=(SurfaceImpl&&) = delete;
 	~SurfaceImpl() override;
 
 	void Init(WindowID wid) override;
@@ -591,18 +601,13 @@ void SurfaceImpl::DrawRGBAImage(PRectangle rc, int width, int height, const unsi
 		rc.top += (rc.Height() - height) / 2;
 	rc.bottom = rc.top + height;
 
-	int stride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, width);
+	const int stride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, width);
 	const int ucs = stride * height;
 	std::vector<unsigned char> image(ucs);
-	for (int iy=0; iy<height; iy++) {
-		for (int ix=0; ix<width; ix++) {
-			unsigned char *pixel = &image[0] + iy*stride + ix * 4;
-			const unsigned char alpha = pixelsImage[3];
-			pixel[2] = (*pixelsImage++) * alpha / 255;
-			pixel[1] = (*pixelsImage++) * alpha / 255;
-			pixel[0] = (*pixelsImage++) * alpha / 255;
-			pixel[3] = *pixelsImage++;
-		}
+	for (ptrdiff_t iy=0; iy<height; iy++) {
+		unsigned char *pixel = &image[0] + iy*stride;
+		RGBAImage::BGRAFromRGBA(pixel, pixelsImage, width);
+		pixelsImage += RGBAImage::bytesPerPixel * width;
 	}
 
 	cairo_surface_t *psurfImage = cairo_image_surface_create_for_data(&image[0], CAIRO_FORMAT_ARGB32, width, height, stride);
@@ -755,6 +760,12 @@ public:
 		iter = pango_layout_get_iter(layout);
 		pango_layout_iter_get_cluster_extents(iter, nullptr, &pos);
 	}
+	// Deleted so ClusterIterator objects can not be copied.
+	ClusterIterator(const ClusterIterator&) = delete;
+	ClusterIterator(ClusterIterator&&) = delete;
+	ClusterIterator&operator=(const ClusterIterator&) = delete;
+	ClusterIterator&operator=(ClusterIterator&&) = delete;
+
 	~ClusterIterator() {
 		pango_layout_iter_free(iter);
 	}
@@ -1219,6 +1230,11 @@ public:
 #endif
 		delegate(nullptr) {
 	}
+	// Deleted so ListBoxX objects can not be copied.
+	ListBoxX(const ListBoxX&) = delete;
+	ListBoxX(ListBoxX&&) = delete;
+	ListBoxX&operator=(const ListBoxX&) = delete;
+	ListBoxX&operator=(ListBoxX&&) = delete;
 	~ListBoxX() override {
 		if (pixhash) {
 			g_hash_table_foreach((GHashTable *) pixhash, list_image_free, nullptr);
@@ -1958,7 +1974,11 @@ public:
 	explicit DynamicLibraryImpl(const char *modulePath) noexcept {
 		m = g_module_open(modulePath, G_MODULE_BIND_LAZY);
 	}
-
+	// Deleted so DynamicLibraryImpl objects can not be copied.
+	DynamicLibraryImpl(const DynamicLibraryImpl&) = delete;
+	DynamicLibraryImpl(DynamicLibraryImpl&&) = delete;
+	DynamicLibraryImpl&operator=(const DynamicLibraryImpl&) = delete;
+	DynamicLibraryImpl&operator=(DynamicLibraryImpl&&) = delete;
 	~DynamicLibraryImpl() override {
 		if (m != nullptr)
 			g_module_close(m);

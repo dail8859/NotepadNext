@@ -42,14 +42,8 @@
 #include "ILexer.h"
 #include "Scintilla.h"
 #include "ScintillaWidget.h"
-#ifdef SCI_LEXER
-#include "SciLexer.h"
-#endif
 #include "StringCopy.h"
 #include "CharacterCategory.h"
-#ifdef SCI_LEXER
-#include "LexerModule.h"
-#endif
 #include "Position.h"
 #include "UniqueString.h"
 #include "SplitVector.h"
@@ -77,10 +71,6 @@
 #include "Editor.h"
 #include "AutoComplete.h"
 #include "ScintillaBase.h"
-
-#ifdef SCI_LEXER
-#include "ExternalLexer.h"
-#endif
 
 #include "ScintillaGTK.h"
 #include "scintilla-marshal.h"
@@ -172,6 +162,7 @@ ScintillaGTK::ScintillaGTK(_ScintillaObject *sci_) :
 	atomSought(nullptr),
 	im_context(nullptr),
 	lastNonCommonScript(PANGO_SCRIPT_INVALID_CODE),
+	lastWheelMouseTime(0),
 	lastWheelMouseDirection(0),
 	wheelMouseIntensity(0),
 	smoothScrollY(0),
@@ -201,8 +192,6 @@ ScintillaGTK::ScintillaGTK(_ScintillaObject *sci_) :
 #else
 	linesPerScroll = 4;
 #endif
-	lastWheelMouseTime.tv_sec = 0;
-	lastWheelMouseTime.tv_usec = 0;
 
 	Init();
 }
@@ -433,6 +422,11 @@ public:
 		uniStr = g_utf8_to_ucs4_fast(str, strlen(str), &uniStrLen);
 		pscript = pango_script_for_unichar(uniStr[0]);
 	}
+	// Deleted so PreEditString objects can not be copied.
+	PreEditString(const PreEditString&) = delete;
+	PreEditString(PreEditString&&) = delete;
+	PreEditString&operator=(const PreEditString&) = delete;
+	PreEditString&operator=(PreEditString&&) = delete;
 	~PreEditString() {
 		g_free(str);
 		g_free(uniStr);
@@ -752,16 +746,16 @@ std::string ConvertText(const char *s, size_t len, const char *charSetDest,
 // Returns the target converted to UTF8.
 // Return the length in bytes.
 Sci::Position ScintillaGTK::TargetAsUTF8(char *text) const {
-	const Sci::Position targetLength = targetEnd - targetStart;
+	const Sci::Position targetLength = targetRange.Length();
 	if (IsUnicodeMode()) {
 		if (text) {
-			pdoc->GetCharRange(text, targetStart, targetLength);
+			pdoc->GetCharRange(text, targetRange.start.Position(), targetLength);
 		}
 	} else {
 		// Need to convert
 		const char *charSetBuffer = CharacterSetID();
 		if (*charSetBuffer) {
-			std::string s = RangeText(targetStart, targetEnd);
+			std::string s = RangeText(targetRange.start.Position(), targetRange.end.Position());
 			std::string tmputf = ConvertText(&s[0], targetLength, "UTF-8", charSetBuffer, false);
 			if (text) {
 				memcpy(text, tmputf.c_str(), tmputf.length());
@@ -769,7 +763,7 @@ Sci::Position ScintillaGTK::TargetAsUTF8(char *text) const {
 			return tmputf.length();
 		} else {
 			if (text) {
-				pdoc->GetCharRange(text, targetStart, targetLength);
+				pdoc->GetCharRange(text, targetRange.start.Position(), targetLength);
 			}
 		}
 	}
@@ -829,11 +823,6 @@ sptr_t ScintillaGTK::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam
 		case SCI_GETDIRECTPOINTER:
 			return reinterpret_cast<sptr_t>(this);
 
-#ifdef SCI_LEXER
-		case SCI_LOADLEXERLIBRARY:
-			LexerManager::GetInstance()->Load(ConstCharPtrFromSPtr(lParam));
-			break;
-#endif
 		case SCI_TARGETASUTF8:
 			return TargetAsUTF8(CharPtrFromSPtr(lParam));
 
@@ -1202,6 +1191,11 @@ struct CaseMapper {
 			mapped = g_utf8_strdown(sUTF8.c_str(), sUTF8.length());
 		}
 	}
+	// Deleted so CaseMapper objects can not be copied.
+	CaseMapper(const CaseMapper&) = delete;
+	CaseMapper(CaseMapper&&) = delete;
+	CaseMapper&operator=(const CaseMapper&) = delete;
+	CaseMapper&operator=(CaseMapper&&) = delete;
 	~CaseMapper() {
 		g_free(mapped);
 	}
@@ -1883,13 +1877,8 @@ gint ScintillaGTK::ScrollEvent(GtkWidget *widget, GdkEventScroll *event) {
 			cLineScroll = 4;
 		sciThis->wheelMouseIntensity = cLineScroll;
 #else
-		int timeDelta = 1000000;
-		GTimeVal curTime;
-		g_get_current_time(&curTime);
-		if (curTime.tv_sec == sciThis->lastWheelMouseTime.tv_sec)
-			timeDelta = curTime.tv_usec - sciThis->lastWheelMouseTime.tv_usec;
-		else if (curTime.tv_sec == sciThis->lastWheelMouseTime.tv_sec + 1)
-			timeDelta = 1000000 + (curTime.tv_usec - sciThis->lastWheelMouseTime.tv_usec);
+		const gint64 curTime = g_get_monotonic_time();
+		const gint64 timeDelta = curTime - sciThis->lastWheelMouseTime;
 		if ((event->direction == sciThis->lastWheelMouseDirection) && (timeDelta < 250000)) {
 			if (sciThis->wheelMouseIntensity < 12)
 				sciThis->wheelMouseIntensity++;
@@ -1900,11 +1889,11 @@ gint ScintillaGTK::ScrollEvent(GtkWidget *widget, GdkEventScroll *event) {
 				cLineScroll = 4;
 			sciThis->wheelMouseIntensity = cLineScroll;
 		}
+		sciThis->lastWheelMouseTime = curTime;
 #endif
 		if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_LEFT) {
 			cLineScroll *= -1;
 		}
-		g_get_current_time(&sciThis->lastWheelMouseTime);
 		sciThis->lastWheelMouseDirection = event->direction;
 
 		// Note:  Unpatched versions of win32gtk don't set the 'state' value so
@@ -2326,8 +2315,10 @@ void ScintillaGTK::SetCandidateWindowPos() {
 	// Composition box accompanies candidate box.
 	const Point pt = PointMainCaret();
 	GdkRectangle imeBox = {0}; // No need to set width
-	imeBox.x = static_cast<gint>(pt.x);           // Only need positiion
-	imeBox.y = static_cast<gint>(pt.y) + vs.lineHeight; // underneath the first charater
+	imeBox.x = static_cast<gint>(pt.x);
+	imeBox.y = static_cast<gint>(pt.y + std::max(4, vs.lineHeight/4));
+	// prevent overlapping with current line
+	imeBox.height = vs.lineHeight;
 	gtk_im_context_set_cursor_location(im_context, &imeBox);
 }
 
@@ -2397,8 +2388,11 @@ void ScintillaGTK::PreeditChangedInlineThis() {
 			return;
 		}
 
-		if (initialCompose)
+		if (initialCompose) {
 			ClearBeforeTentativeStart();
+		}
+
+		SetCandidateWindowPos();
 		pdoc->TentativeStart(); // TentativeActive() from now on
 
 		std::vector<int> indicator = MapImeIndicators(preeditStr.attrs, preeditStr.str);
@@ -2432,7 +2426,6 @@ void ScintillaGTK::PreeditChangedInlineThis() {
 		}
 
 		EnsureCaretVisible();
-		SetCandidateWindowPos();
 		ShowCaretAtCurrentPosition();
 	} catch (...) {
 		errorStatus = SC_STATUS_FAILURE;
@@ -2443,6 +2436,8 @@ void ScintillaGTK::PreeditChangedWindowedThis() {
 	try {
 		PreEditString pes(im_context);
 		if (strlen(pes.str) > 0) {
+			SetCandidateWindowPos();
+
 			PangoLayout *layout = gtk_widget_create_pango_layout(PWidget(wText), pes.str);
 			pango_layout_set_attributes(layout, pes.attrs);
 
@@ -3041,9 +3036,6 @@ GType scintilla_object_get_type() {
 
 void ScintillaGTK::ClassInit(OBJECT_CLASS *object_class, GtkWidgetClass *widget_class, GtkContainerClass *container_class) {
 	Platform_Initialise();
-#ifdef SCI_LEXER
-	Scintilla_LinkLexers();
-#endif
 	atomUTF8 = gdk_atom_intern("UTF8_STRING", FALSE);
 	atomString = GDK_SELECTION_TYPE_STRING;
 	atomUriList = gdk_atom_intern("text/uri-list", FALSE);

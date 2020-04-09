@@ -49,11 +49,14 @@
 #include <regex>
 #include <iostream>
 #include <sstream>
+#include <fstream>
+#include <filesystem>
 
 // POSIX
+#include <dlfcn.h>
 #include <sys/time.h>
 
-// GTK+ headers
+// GTK headers
 #include <glib.h>
 #include <gmodule.h>
 #include <gdk/gdk.h>
@@ -104,6 +107,7 @@
 #include "CharacterSet.h"
 #include "CharacterCategory.h"
 #include "LexerModule.h"
+#include "CatalogueModules.h"
 #include "OptionSet.h"
 #include "SparseState.h"
 #include "SubStyles.h"
@@ -153,6 +157,10 @@
 #include "ScintillaBase.h"
 
 #include "ExternalLexer.h"
+
+#include "Lexilla.h"
+#include "TestDocument.h"
+#include "LexillaAccess.h"
 
 // Platform-specific headers
 

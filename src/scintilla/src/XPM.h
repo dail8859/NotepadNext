@@ -50,6 +50,7 @@ class RGBAImage {
 	float scale;
 	std::vector<unsigned char> pixelBytes;
 public:
+	static constexpr size_t bytesPerPixel = 4;
 	RGBAImage(int width_, int height_, float scale_, const unsigned char *pixels_);
 	explicit RGBAImage(const XPM &xpm);
 	RGBAImage(const RGBAImage &) = default;
@@ -65,6 +66,7 @@ public:
 	int CountBytes() const;
 	const unsigned char *Pixels() const;
 	void SetPixel(int x, int y, ColourDesired colour, int alpha);
+	static void BGRAFromRGBA(unsigned char *pixelsBGRA, const unsigned char *pixelsRGBA, size_t count) noexcept;
 };
 
 /**

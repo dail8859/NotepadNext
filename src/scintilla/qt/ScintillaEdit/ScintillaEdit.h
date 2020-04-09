@@ -99,6 +99,8 @@ public:
 	void setBufferedDraw(bool buffered);
 	void setTabWidth(sptr_t tabWidth);
 	sptr_t tabWidth() const;
+	void setTabMinimumWidth(sptr_t pixels);
+	sptr_t tabMinimumWidth() const;
 	void clearTabStops(sptr_t line);
 	void addTabStop(sptr_t line, sptr_t x);
 	sptr_t getNextTabStop(sptr_t line, sptr_t x);
@@ -308,8 +310,12 @@ public:
 	sptr_t caretWidth() const;
 	void setTargetStart(sptr_t start);
 	sptr_t targetStart() const;
+	void setTargetStartVirtualSpace(sptr_t space);
+	sptr_t targetStartVirtualSpace() const;
 	void setTargetEnd(sptr_t end);
 	sptr_t targetEnd() const;
+	void setTargetEndVirtualSpace(sptr_t space);
+	sptr_t targetEndVirtualSpace() const;
 	void setTargetRange(sptr_t start, sptr_t end);
 	QByteArray targetText() const;
 	void targetFromSelection();
@@ -676,7 +682,9 @@ public:
 	sptr_t selectionNAnchorVirtualSpace(sptr_t selection) const;
 	void setSelectionNStart(sptr_t selection, sptr_t anchor);
 	sptr_t selectionNStart(sptr_t selection) const;
+	sptr_t selectionNStartVirtualSpace(sptr_t selection) const;
 	void setSelectionNEnd(sptr_t selection, sptr_t caret);
+	sptr_t selectionNEndVirtualSpace(sptr_t selection) const;
 	sptr_t selectionNEnd(sptr_t selection) const;
 	void setRectangularSelectionCaret(sptr_t caret);
 	sptr_t rectangularSelectionCaret() const;
@@ -762,6 +770,7 @@ public:
 	QByteArray nameOfStyle(sptr_t style);
 	QByteArray tagsOfStyle(sptr_t style);
 	QByteArray descriptionOfStyle(sptr_t style);
+	void setILexer(sptr_t ilexer);
 	sptr_t bidirectional() const;
 	void setBidirectional(sptr_t bidirectional);
 	sptr_t lineCharacterIndex() const;
