@@ -24,7 +24,6 @@
 #include <QList>
 
 #include <ScintillaBuffer.h>
-#include <QFileSystemWatcher>
 
 class BufferManager : public QObject
 {
