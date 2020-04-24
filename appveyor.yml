@@ -1,4 +1,4 @@
-version: 0.1.0.{build}
+version: 0.2.0.{build}
 image: Visual Studio 2017
 
 init:
@@ -26,7 +26,7 @@ after_build:
   - jom
   - cd %APPVEYOR_BUILD_FOLDER%
   - appveyor PushArtifact NotepadNext.zip -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%.zip
-  - appveyor PushArtifact build_installer\NotepadNext-v0.1.exe -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%-setup.exe
+  - appveyor PushArtifact build_installer\NotepadNext-v0.2.exe -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%-setup.exe
 
 deploy:
   provider: GitHub
