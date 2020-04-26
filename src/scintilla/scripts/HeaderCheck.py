@@ -1,69 +1,55 @@
+#!/usr/bin/env python3
 # Script to check that headers are in a consistent order
-# Requires Python 2.6 or later
+# Canonical header order is defined in scripts/HeaderOrder.txt
+# Requires Python 3.6 or later
 
-from __future__ import print_function
-import codecs, glob, os, platform, sys, unicodedata
+import codecs, glob, os
 
-def ciCompare(a,b):
-    return cmp(a.lower(), b.lower())
-
-def ciKey(a):
-    return a.lower()
-
-def SortListInsensitive(l):
-    try:    # Try key function
-        l.sort(key=ciKey)
-    except TypeError:    # Earlier version of Python, so use comparison function
-        l.sort(ciCompare)
+patterns = [
+    "include/*.h",
+    "src/*.cxx",
+    "lexlib/*.cxx",
+    "lexers/*.cxx",
+    "win32/*.cxx",
+    "gtk/*.cxx",
+    "cocoa/*.mm",
+    "cocoa/*.h",
+    "test/unit/*.cxx",
+    "lexilla/src/*.cxx",
+    "lexilla/test/*.cxx",
+]
 
 def IsHeader(x):
     return x.strip().startswith("#") and ("include" in x or "import" in x)
 
+def HeaderFromIncludeLine(s):
+    #\s*#\s*(include|import)\s+\S+\s*
+    return s.strip()[1:].strip()[7:].strip()
+
 def ExtractHeaders(filename):
-    with codecs.open(filename, "r", "UTF-8") as infile:
-        includeLines = [x.strip()[1:].strip()[7:].strip() for x in infile.readlines() if \
-            IsHeader(x)]
-    if '.' not in filename:
-        print(filename)
-        for n in includeLines:
-            print(n)
-        print()
-    return includeLines
+    with codecs.open(filename, "r", "windows-1252") as infile:
+        return [HeaderFromIncludeLine(l) for l in infile if IsHeader(l)]
 
 def CheckFiles(root):
     # Find all the lexer source code files
-    filePaths = glob.glob(root + "/include/*.h")
-    filePaths += glob.glob(root + "/src/*.cxx")
-    SortListInsensitive(filePaths)
-    filePaths += glob.glob(root + "/lexlib/*.cxx")
-    filePaths += glob.glob(root + "/lexers/*.cxx")
-    filePaths += glob.glob(root + "/win32/*.cxx")
-    filePaths += glob.glob(root + "/gtk/*.cxx")
-    filePaths += glob.glob(root + "/cocoa/*.mm")
-    filePaths += glob.glob(root + "/cocoa/*.h")
-    filePaths += glob.glob(root + "/test/unit/*.cxx")
-    filePaths += glob.glob(root + "/lexilla/src/*.cxx")
-    filePaths += glob.glob(root + "/lexilla/test/*.cxx")
+    filePaths = []
+    for p in patterns:
+        filePaths += glob.glob(os.path.join(root, p))
     # The Qt platform code interleaves system and Scintilla headers
     #~ filePaths += glob.glob(root + "/qt/ScintillaEditBase/*.cpp")
     #~ filePaths += glob.glob(root + "/qt/ScintillaEdit/*.cpp")
     #~ print(filePaths)
-    masterHeaderList = ExtractHeaders(root + "/scripts/HeaderOrder.txt")
-    for f in filePaths:
-        if "LexCaml" in f:
+    masterHeaderList = ExtractHeaders(os.path.join(root, "scripts/HeaderOrder.txt"))
+    orderedPaths = sorted(filePaths, key=str.casefold)
+    allIncs = set()
+    for f in orderedPaths:
+        if "LexCaml" in f: # LexCaml adds system headers in #if to be an external lexer
             continue
         print("   File ", f)
-        try:
-            incs = ExtractHeaders(f)
-        except UnicodeDecodeError:
-            #~ print("UnicodeDecodeError\n")
-            continue
+        incs = ExtractHeaders(f)
         #~ print("\n".join(incs))
         news = set(incs) - set(masterHeaderList)
-        #~ print("")
-        #~ print("\n".join(incs))
-        #~ print("")
-        ended = False
+        allIncs = allIncs.union(set(incs))
         m = 0
         i = 0
         while i < len(incs):
@@ -90,5 +76,9 @@ def CheckFiles(root):
                     i += 1
                     #~ return
         #print("Master header list", " ".join(masterHeaderList))
+    unused = sorted(set(masterHeaderList) - allIncs)
+    if unused:
+        print("In HeaderOrder.txt but not used")
+        print("\n".join(unused))
 
 CheckFiles("..")

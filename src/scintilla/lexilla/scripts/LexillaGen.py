@@ -41,12 +41,5 @@ def RegenerateAll(root):
     UpdateLineInFile(rcPath, "#define VERSION_WORDS",
         "#define VERSION_WORDS " + versionCommad)
 
-    #~ startDir = os.getcwd()
-    #~ os.chdir(os.path.join(scintillaBase, "win32"))
-    #~ win32.DepGen.Generate()
-    #~ os.chdir(os.path.join(scintillaBase, "gtk"))
-    #~ gtk.DepGen.Generate()
-    #~ os.chdir(startDir)
-
 if __name__=="__main__":
     RegenerateAll(os.path.join("..", ".."))

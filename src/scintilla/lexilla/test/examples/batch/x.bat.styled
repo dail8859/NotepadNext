@@ -13,14 +13,22 @@ rem 'echo' is word=2, 'a' is default=0
 {1}rem operator=7 '='
 {4}@{2}set{0} Q{7}={0}A
 
-{1}rem 2nd ')' in this construct is wrongly styled as default
+{1}::comment=1
+{0}
+{1}:: Bug 1624: this construct produced inconsistent brackets in the past
 {2}if ERRORLEVEL{0} 2{2} goto{0} END
-{4}@{2}if exist{0} a{5} ({0}
+{4}@{2}if exist{0} a (
 {2}echo{0} exists
-{5}){2} else{0} (
+){2} else{0} (
 {2}echo{0} not
-{5}){0}
+)
 
-{2}FOR{0} /L {6}%%G{2} IN{0} (2,1,4){2} DO{5} (echo{0} {6}%%G{0})
+{2}FOR{0} /L {6}%%G{2} IN{0} (2,1,4){2} DO{0} ({2}echo{0} {6}%%G{0})
+
+{1}:: Bug 1997: keywords not recognized when preceded by '('
+{2}IF NOT DEFINED{0} var ({2}SET{0} var{7}={0}1)
+
+{1}:: Bug 2065: keywords not recognized when followed by ')'
+{4}@{2}if exist{0} a ({2} exit{0})
 
 {3}:END

@@ -159,6 +159,14 @@ void ScintillaEdit::markerDeleteHandle(sptr_t markerHandle) {
     send(SCI_MARKERDELETEHANDLE, markerHandle, 0);
 }
 
+sptr_t ScintillaEdit::markerHandleFromLine(sptr_t line, sptr_t which) {
+    return send(SCI_MARKERHANDLEFROMLINE, line, which);
+}
+
+sptr_t ScintillaEdit::markerNumberFromLine(sptr_t line, sptr_t which) {
+    return send(SCI_MARKERNUMBERFROMLINE, line, which);
+}
+
 bool ScintillaEdit::undoCollection() const {
     return send(SCI_GETUNDOCOLLECTION, 0, 0);
 }

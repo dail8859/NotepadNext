@@ -716,7 +716,7 @@ void SetupConversions(enum CaseConversion conversion) {
 	const char *sComplex = complexCaseConversions;
 	while (*sComplex) {
 		// Longest ligature is 3 character so 5 for safety
-		const size_t lenUTF8 = 5*UTF8MaxBytes+1;
+		constexpr size_t lenUTF8 = 5*UTF8MaxBytes+1;
 		unsigned char originUTF8[lenUTF8]{};
 		char foldedUTF8[lenUTF8]{};
 		char lowerUTF8[lenUTF8]{};

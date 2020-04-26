@@ -563,6 +563,65 @@
       </li>
     </ul>
     <h3>
+       <a href="https://www.scintilla.org/scite432.zip">Release 4.3.3</a>
+    </h3>
+    <ul>
+	<li>
+	Released 27 April 2020.
+	</li>
+	<li>
+	Added Visual Studio project files for Lexilla and Scintilla with no lexers.
+	</li>
+	<li>
+	Add methods for iterating through the marker handles and marker numbers on a line:
+	SCI_MARKERHANDLEFROMLINE and SCI_MARKERNUMBERFROMLINE.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1344/">Feature #1344</a>.
+	</li>
+	<li>
+	Assembler lexers asm and as can change comment character with lexer.as.comment.character property.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1314/">Feature #1314</a>.
+	</li>
+	<li>
+	Fix brace styling in Batch lexer so that brace matching works.
+	<a href="https://sourceforge.net/p/scintilla/bugs/1624/">Bug #1624</a>,
+	<a href="https://sourceforge.net/p/scintilla/bugs/1906/">Bug #1906</a>,
+	<a href="https://sourceforge.net/p/scintilla/bugs/1997/">Bug #1997</a>,
+	<a href="https://sourceforge.net/p/scintilla/bugs/2065/">Bug #2065</a>.
+	</li>
+	<li>
+	Change Perl lexer to style all line ends of comment lines in comment line style.
+	Previously, the last character was in default style which made the characters in
+	\r\n line ends have mismatching styles.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2164/">Bug #2164</a>.
+	</li>
+	<li>
+	When a lexer has been set with SCI_SETILEXER, fix SCI_GETLEXER and avoid
+	sending SCN_STYLENEEDED notifications.
+	</li>
+	<li>
+	On Win32 fix handling Japanese IME input when both GCS_COMPSTR and
+	GCS_RESULTSTR set.
+	</li>
+	<li>
+	With Qt on Win32 add support for line copy format on clipboard, compatible with Visual Studio.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2167/">Bug #2167</a>.
+	</li>
+	<li>
+	On Qt with default encoding (ISO 8859-1) fix bug where 'µ' (Micro Sign) case-insensitively matches '?'
+	<a href="https://sourceforge.net/p/scintilla/bugs/2168/">Bug #2168</a>.
+	</li>
+	<li>
+	On GTK with Wayland fix display of windowed IME.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2149/">Bug #2149</a>.
+	</li>
+	<li>
+	For Python programs, SciTE defaults to running python3 on Unix and pyw on Windows which will run
+	the most recently installed Python in many cases.
+	Set the "python.command" property to override this.
+	Scripts distributed with Scintilla and SciTE are checked with Python 3 and may not work with Python 2.
+	</li>
+    </ul>
+    <h3>
        <a href="https://www.scintilla.org/scite432.zip">Release 4.3.2</a>
     </h3>
     <ul>

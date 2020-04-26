@@ -905,7 +905,7 @@ void SCI_METHOD LexerPerl::Lex(Sci_PositionU startPos, Sci_Position length, int 
 			sc.SetState(SCE_PL_DEFAULT);
 			break;
 		case SCE_PL_COMMENTLINE:
-			if (sc.atLineEnd) {
+			if (sc.atLineStart) {
 				sc.SetState(SCE_PL_DEFAULT);
 			}
 			break;

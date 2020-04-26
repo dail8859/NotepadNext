@@ -1,5 +1,6 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Requires Python 2.7 or later
+# Requires Python 3.6 or later
 
 from __future__ import with_statement
 from __future__ import unicode_literals

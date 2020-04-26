@@ -13,7 +13,9 @@ echo %ProgramFiles(x86)%
 rem operator=7 '='
 @set Q=A
 
-rem 2nd ')' in this construct is wrongly styled as default
+::comment=1
+
+:: Bug 1624: this construct produced inconsistent brackets in the past
 if ERRORLEVEL 2 goto END
 @if exist a (
 echo exists
@@ -22,5 +24,11 @@ echo not
 )
 
 FOR /L %%G IN (2,1,4) DO (echo %%G)
+
+:: Bug 1997: keywords not recognized when preceded by '('
+IF NOT DEFINED var (SET var=1)
+
+:: Bug 2065: keywords not recognized when followed by ')'
+@if exist a ( exit)
 
 :END

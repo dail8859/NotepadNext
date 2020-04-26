@@ -65,7 +65,49 @@ std::map<std::string, std::string> PropertiesFromFile(std::filesystem::path path
 	return m;
 }
 
+int Substitute(std::string &s, const std::string &sFind, const std::string &sReplace) {
+	int c = 0;
+	const size_t lenFind = sFind.size();
+	const size_t lenReplace = sReplace.size();
+	size_t posFound = s.find(sFind);
+	while (posFound != std::string::npos) {
+		s.replace(posFound, lenFind, sReplace);
+		posFound = s.find(sFind, posFound + lenReplace);
+		c++;
+	}
+	return c;
+}
+
 const std::string BOM = "\xEF\xBB\xBF";
+
+void TestCRLF(std::filesystem::path path, const std::string s, Scintilla::ILexer5 *plex) {
+	// Convert all line ends to \r\n to check if styles change between \r and \n which makes
+	// it difficult to test on different platforms when files may have line ends changed.
+	std::string text = s;
+	Substitute(text, "\r\n", "\n");
+	Substitute(text, "\n", "\r\n");
+	TestDocument doc;
+	doc.Set(text);
+	Scintilla::IDocument *pdoc = &doc;
+	plex->Lex(0, pdoc->Length(), 0, pdoc);
+	int prevStyle = -1;
+	Sci_Position line = 1;
+	for (Sci_Position pos = 0; pos < pdoc->Length(); pos++) {
+		const int styleNow = pdoc->StyleAt(pos);
+		char ch = '\0';
+		pdoc->GetCharRange(&ch, pos, 1);
+		if (ch == '\n') {
+			if (styleNow != prevStyle) {
+				std::cout << path.string() << ":" << line << ":" <<
+					" different styles between \\r and \\n at " <<
+					pos << ": " << prevStyle << ", " << styleNow << "\n";
+			}
+			line++;
+		}
+		prevStyle = styleNow;
+	}
+	plex->Release();
+}
 
 bool TestFile(std::filesystem::path path,
 	std::map<std::string, std::string> properties) {
@@ -122,6 +164,10 @@ bool TestFile(std::filesystem::path path,
 		std::ofstream ofs(pathNew, std::ios::binary);
 		ofs << styledTextNew;
 	}
+	plex->Release();
+
+	TestCRLF(path, text, CreateLexer(language));
+
 	return true;
 }
 

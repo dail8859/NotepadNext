@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # ScintillaData.py - implemented 2013 by Neil Hodgson neilh@scintilla.org
 # Released to the public domain.
 
@@ -30,7 +31,7 @@
 #         dictionary of file names { SCLEX_ID: file name }
 
 # This file can be run to see the data it provides.
-# Requires Python 2.7 or later
+# Requires Python 3.6 or later
 
 from __future__ import with_statement
 
@@ -178,17 +179,11 @@ def FindCredits(historyFile):
                 credits.append(credit)
     return credits
 
-def ciCompare(a,b):
-    return cmp(a.lower(), b.lower())
-
 def ciKey(a):
     return a.lower()
 
 def SortListInsensitive(l):
-    try:    # Try key function
-        l.sort(key=ciKey)
-    except TypeError:    # Earlier version of Python, so use comparison function
-        l.sort(ciCompare)
+    l.sort(key=ciKey)
 
 class ScintillaData:
     def __init__(self, scintillaRoot):

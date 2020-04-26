@@ -21,7 +21,13 @@ LD=link
 
 !IFDEF SUPPORT_XP
 ADD_DEFINE=-D_USING_V110_SDK71_
+# Different subsystems for 32-bit and 64-bit Windows XP so detect based on Platform
+# environment vairable set by vcvars*.bat to be either x86 or x64
+!IF "$(PLATFORM)" == "x64"
+SUBSYSTEM=-SUBSYSTEM:WINDOWS,5.02
+!ELSE
 SUBSYSTEM=-SUBSYSTEM:WINDOWS,5.01
+!ENDIF
 !ELSEIFDEF ARM64
 ADD_DEFINE=-D_ARM64_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1
 SUBSYSTEM=-SUBSYSTEM:WINDOWS,10.00
@@ -65,7 +71,7 @@ clean:
 	$(DIR_BIN)\Scintilla.lib $(DIR_BIN)\SciLexer.lib $(LIBSCI)
 
 depend:
-	python DepGen.py
+	pyw DepGen.py
 
 # Required for base Scintilla
 SRC_OBJS=\

@@ -9,11 +9,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include <time.h>
-#include <math.h>
 #include <assert.h>
 #include <ctype.h>
-#include <limits.h>
 
 // C++ wrappers of C standard library
 #include <cstddef>
@@ -32,11 +29,9 @@
 #include <stdexcept>
 #include <new>
 #include <utility>
-#include <tuple>
 #include <string>
 #include <string_view>
 #include <vector>
-#include <deque>
 #include <map>
 #include <set>
 #include <forward_list>

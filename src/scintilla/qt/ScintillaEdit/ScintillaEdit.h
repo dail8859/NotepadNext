@@ -78,6 +78,8 @@ public:
 	bool canRedo();
 	sptr_t markerLineFromHandle(sptr_t markerHandle);
 	void markerDeleteHandle(sptr_t markerHandle);
+	sptr_t markerHandleFromLine(sptr_t line, sptr_t which);
+	sptr_t markerNumberFromLine(sptr_t line, sptr_t which);
 	bool undoCollection() const;
 	sptr_t viewWS() const;
 	void setViewWS(sptr_t viewWS);
