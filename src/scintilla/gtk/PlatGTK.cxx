@@ -43,16 +43,16 @@ using namespace Scintilla;
 
 namespace {
 
-const double kPi = 3.14159265358979323846;
+constexpr double kPi = 3.14159265358979323846;
 
 // The Pango version guard for pango_units_from_double and pango_units_to_double
 // is more complex than simply implementing these here.
 
-int pangoUnitsFromDouble(double d) noexcept {
+constexpr int pangoUnitsFromDouble(double d) noexcept {
 	return static_cast<int>(d * PANGO_SCALE + 0.5);
 }
 
-float floatFromPangoUnits(int pu) noexcept {
+constexpr float floatFromPangoUnits(int pu) noexcept {
 	return static_cast<float>(pu) / PANGO_SCALE;
 }
 
@@ -109,7 +109,7 @@ FontHandle *FontHandle::CreateNewFont(const FontParameters &fp) {
 }
 
 // X has a 16 bit coordinate space, so stop drawing here to avoid wrapping
-const int maxCoordinate = 32000;
+constexpr int maxCoordinate = 32000;
 
 FontHandle *PFont(const Font &f) noexcept {
 	return static_cast<FontHandle *>(f.GetID());
@@ -184,7 +184,7 @@ public:
 
 	std::unique_ptr<IScreenLineLayout> Layout(const IScreenLine *screenLine) override;
 
-	void DrawTextBase(PRectangle rc, Font &font_, XYPOSITION ybase, std::string_view text, ColourDesired fore);
+	void DrawTextBase(PRectangle rc, const Font &font_, XYPOSITION ybase, std::string_view text, ColourDesired fore);
 	void DrawTextNoClip(PRectangle rc, Font &font_, XYPOSITION ybase, std::string_view text, ColourDesired fore, ColourDesired back) override;
 	void DrawTextClipped(PRectangle rc, Font &font_, XYPOSITION ybase, std::string_view text, ColourDesired fore, ColourDesired back) override;
 	void DrawTextTransparent(PRectangle rc, Font &font_, XYPOSITION ybase, std::string_view text, ColourDesired fore) override;
@@ -306,7 +306,7 @@ bool SurfaceImpl::Initialised() {
 	if (inited && context) {
 		if (cairo_status(context) == CAIRO_STATUS_SUCCESS) {
 			// Even when status is success, the target surface may have been
-			// finished whch may cause an assertion to fail crashing the application.
+			// finished which may cause an assertion to fail crashing the application.
 			// The cairo_surface_has_show_text_glyphs call checks the finished flag
 			// and when set, sets the status to CAIRO_STATUS_SURFACE_FINISHED
 			// which leads to warning messages instead of crashes.
@@ -353,7 +353,8 @@ void SurfaceImpl::Init(SurfaceID sid, WindowID wid) {
 void SurfaceImpl::InitPixMap(int width, int height, Surface *surface_, WindowID wid) {
 	PLATFORM_ASSERT(surface_);
 	Release();
-	SurfaceImpl *surfImpl = static_cast<SurfaceImpl *>(surface_);
+	SurfaceImpl *surfImpl = dynamic_cast<SurfaceImpl *>(surface_);
+	PLATFORM_ASSERT(surfImpl);
 	PLATFORM_ASSERT(wid);
 	context = cairo_reference(surfImpl->context);
 	pcontext = gtk_widget_create_pango_context(PWidget(wid));
@@ -488,8 +489,8 @@ void SurfaceImpl::FillRectangle(PRectangle rc, Surface &surfacePattern) {
 		PLATFORM_ASSERT(context);
 		// Tile pattern over rectangle
 		// Currently assumes 8x8 pattern
-		const int widthPat = 8;
-		const int heightPat = 8;
+		constexpr int widthPat = 8;
+		constexpr int heightPat = 8;
 		const IntegerRectangle irc(rc);
 		for (int xTile = irc.left; xTile < irc.right; xTile += widthPat) {
 			const int widthx = (xTile + widthPat > irc.right) ? irc.right - xTile : widthPat;
@@ -527,7 +528,7 @@ void SurfaceImpl::RoundedRectangle(PRectangle rc, ColourDesired fore, ColourDesi
 }
 
 static void PathRoundRectangle(cairo_t *context, double left, double top, double width, double height, int radius) noexcept {
-	const double degrees = kPi / 180.0;
+	constexpr double degrees = kPi / 180.0;
 
 	cairo_new_sub_path(context);
 	cairo_arc(context, left + width - radius, top + radius, radius, -90 * degrees, 0 * degrees);
@@ -647,7 +648,7 @@ std::unique_ptr<IScreenLineLayout> SurfaceImpl::Layout(const IScreenLine *) {
 std::string UTF8FromLatin1(std::string_view text) {
 	std::string utfForm(text.length()*2 + 1, '\0');
 	size_t lenU = 0;
-	for (char ch : text) {
+	for (const char ch : text) {
 		const unsigned char uch = ch;
 		if (uch < 0x80) {
 			utfForm[lenU++] = uch;
@@ -660,7 +661,9 @@ std::string UTF8FromLatin1(std::string_view text) {
 	return utfForm;
 }
 
-static std::string UTF8FromIconv(const Converter &conv, std::string_view text) {
+namespace {
+
+std::string UTF8FromIconv(const Converter &conv, std::string_view text) {
 	if (conv) {
 		std::string utfForm(text.length()*3+1, '\0');
 		char *pin = const_cast<char *>(text.data());
@@ -680,9 +683,9 @@ static std::string UTF8FromIconv(const Converter &conv, std::string_view text) {
 
 // Work out how many bytes are in a character by trying to convert using iconv,
 // returning the first length that succeeds.
-static size_t MultiByteLenFromIconv(const Converter &conv, const char *s, size_t len) {
+size_t MultiByteLenFromIconv(const Converter &conv, const char *s, size_t len) noexcept {
 	for (size_t lenMB=1; (lenMB<4) && (lenMB <= len); lenMB++) {
-		char wcForm[2];
+		char wcForm[2] {};
 		char *pin = const_cast<char *>(s);
 		gsize inLeft = lenMB;
 		char *pout = wcForm;
@@ -695,7 +698,9 @@ static size_t MultiByteLenFromIconv(const Converter &conv, const char *s, size_t
 	return 1;
 }
 
-void SurfaceImpl::DrawTextBase(PRectangle rc, Font &font_, XYPOSITION ybase, std::string_view text,
+}
+
+void SurfaceImpl::DrawTextBase(PRectangle rc, const Font &font_, XYPOSITION ybase, std::string_view text,
 			       ColourDesired fore) {
 	PenColour(fore);
 	if (context) {
@@ -832,7 +837,7 @@ void SurfaceImpl::MeasureWidths(Font &font_, std::string_view text, XYPOSITION *
 									positions[i++] = iti.position - (places - place) * iti.distance / places;
 									positionsCalculated++;
 								}
-								clusterStart += UTF8BytesOfLead[static_cast<unsigned char>(utfForm.c_str()[clusterStart])];
+								clusterStart += UTF8BytesOfLead[static_cast<unsigned char>(utfForm[clusterStart])];
 								place++;
 							}
 						}
@@ -896,7 +901,6 @@ XYPOSITION SurfaceImpl::WidthText(Font &font_, std::string_view text) {
 		if (PFont(font_)->pfd) {
 			std::string utfForm;
 			pango_layout_set_font_description(layout, PFont(font_)->pfd);
-			PangoRectangle pos;
 			if (et == UTF8) {
 				pango_layout_set_text(layout, text.data(), text.length());
 			} else {
@@ -908,6 +912,7 @@ XYPOSITION SurfaceImpl::WidthText(Font &font_, std::string_view text) {
 				pango_layout_set_text(layout, utfForm.c_str(), utfForm.length());
 			}
 			PangoLayoutLine *pangoLine = pango_layout_get_line_readonly(layout, 0);
+			PangoRectangle pos {};
 			pango_layout_line_get_extents(pangoLine, nullptr, &pos);
 			return floatFromPangoUnits(pos.width);
 		}
@@ -1033,7 +1038,7 @@ void Window::SetPosition(PRectangle rc) {
 
 namespace {
 
-GdkRectangle MonitorRectangleForWidget(GtkWidget *wid) {
+GdkRectangle MonitorRectangleForWidget(GtkWidget *wid) noexcept {
 	GdkWindow *wnd = WindowFromWidget(wid);
 	GdkRectangle rcScreen = GdkRectangle();
 #if GTK_CHECK_VERSION(3,22,0)
@@ -1158,7 +1163,7 @@ PRectangle Window::GetMonitorRect(Point pt) {
 
 	gdk_window_get_origin(WindowFromWidget(PWidget(wid)), &x_offset, &y_offset);
 
-	GdkRectangle rect;
+	GdkRectangle rect {};
 
 #if GTK_CHECK_VERSION(3,22,0)
 	GdkDisplay *pdisplay = gtk_widget_get_display(PWidget(wid));
@@ -1387,13 +1392,13 @@ static gboolean ButtonRelease(GtkWidget *, GdkEventButton *ev, gpointer p) {
 	return FALSE;
 }
 
-/* Change the active color to the selected color so the listbox uses the color
+/* Change the active colour to the selected colour so the listbox uses the colour
 scheme that it would use if it had the focus. */
 static void StyleSet(GtkWidget *w, GtkStyle *, void *) {
 
 	g_return_if_fail(w != nullptr);
 
-	/* Copy the selected color to active.  Note that the modify calls will cause
+	/* Copy the selected colour to active.  Note that the modify calls will cause
 	recursive calls to this function after the value is updated and w->style to
 	be set to a new object */
 
@@ -1702,7 +1707,7 @@ void ListBoxX::Append(char *s, int type) {
 		list_image = static_cast<ListImage *>(g_hash_table_lookup((GHashTable *) pixhash,
 						      GINT_TO_POINTER(type)));
 	}
-	GtkTreeIter iter;
+	GtkTreeIter iter {};
 	GtkListStore *store =
 		GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(list)));
 	gtk_list_store_append(GTK_LIST_STORE(store), &iter);
@@ -1742,7 +1747,7 @@ int ListBoxX::Length() {
 }
 
 void ListBoxX::Select(int n) {
-	GtkTreeIter iter;
+	GtkTreeIter iter {};
 	GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(list));
 	GtkTreeSelection *selection =
 		gtk_tree_view_get_selection(GTK_TREE_VIEW(list));
@@ -1797,8 +1802,8 @@ void ListBoxX::Select(int n) {
 
 int ListBoxX::GetSelection() {
 	int index = -1;
-	GtkTreeIter iter;
-	GtkTreeModel *model;
+	GtkTreeIter iter {};
+	GtkTreeModel *model {};
 	GtkTreeSelection *selection;
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list));
 	if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
@@ -1813,13 +1818,13 @@ int ListBoxX::GetSelection() {
 }
 
 int ListBoxX::Find(const char *prefix) {
-	GtkTreeIter iter;
+	GtkTreeIter iter {};
 	GtkTreeModel *model =
 		gtk_tree_view_get_model(GTK_TREE_VIEW(list));
 	bool valid = gtk_tree_model_get_iter_first(model, &iter) != FALSE;
 	int i = 0;
 	while (valid) {
-		gchar *s;
+		gchar *s = nullptr;
 		gtk_tree_model_get(model, &iter, TEXT_COLUMN, &s, -1);
 		if (s && (0 == strncmp(prefix, s, strlen(prefix)))) {
 			g_free(s);
@@ -1834,7 +1839,7 @@ int ListBoxX::Find(const char *prefix) {
 
 void ListBoxX::GetValue(int n, char *value, int len) {
 	char *text = nullptr;
-	GtkTreeIter iter;
+	GtkTreeIter iter {};
 	GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(list));
 	const bool valid = gtk_tree_model_iter_nth_child(model, &iter, nullptr, n) != FALSE;
 	if (valid) {
@@ -1934,7 +1939,7 @@ void Menu::Destroy() {
 }
 
 #if !GTK_CHECK_VERSION(3,22,0)
-static void MenuPositionFunc(GtkMenu *, gint *x, gint *y, gboolean *, gpointer userData) {
+static void MenuPositionFunc(GtkMenu *, gint *x, gint *y, gboolean *, gpointer userData) noexcept {
 	sptr_t intFromPointer = GPOINTER_TO_INT(userData);
 	*x = intFromPointer & 0xffff;
 	*y = intFromPointer >> 16;

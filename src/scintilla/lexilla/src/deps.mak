@@ -1,4 +1,4 @@
-# Created by DepGen.py. To recreate, run 'python DepGen.py'.
+# Created by DepGen.py. To recreate, run DepGen.py.
 Lexilla.o: \
 	../../lexilla/src/Lexilla.cxx \
 	../../include/ILexer.h \

@@ -550,6 +550,10 @@ bool ViewStyle::IsBlockCaretStyle() const noexcept {
 		(caretStyle & CARETSTYLE_OVERSTRIKE_BLOCK) != 0;
 }
 
+bool ViewStyle::IsCaretVisible() const noexcept {
+	return caretWidth > 0 && caretStyle != CARETSTYLE_INVISIBLE;
+}
+
 bool ViewStyle::DrawCaretInsideSelection(bool inOverstrike, bool imeCaretBlockOverride) const noexcept {
 	if (caretStyle & CARETSTYLE_BLOCK_AFTER)
 		return false;

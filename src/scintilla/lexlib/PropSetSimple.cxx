@@ -137,10 +137,10 @@ static int ExpandAllInPlace(const PropSetSimple &props, std::string &withVars, i
 	return maxExpands;
 }
 
-int PropSetSimple::GetExpanded(const char *key, char *result) const {
+size_t PropSetSimple::GetExpanded(const char *key, char *result) const {
 	std::string val = Get(key);
 	ExpandAllInPlace(*this, val, 100, VarChain(key));
-	const int n = static_cast<int>(val.size());
+	const size_t n = val.size();
 	if (result) {
 		memcpy(result, val.c_str(), n+1);
 	}

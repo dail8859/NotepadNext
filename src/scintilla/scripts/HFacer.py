@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # HFacer.py - regenerate the Scintilla.h and SciLexer.h files from the Scintilla.iface interface
 # definition file.
 # Implemented 2000 by Neil Hodgson neilh@scintilla.org
-# Requires Python 2.5 or later
+# Requires Python 2.7 or later
 
 import sys
 import os

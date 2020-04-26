@@ -1,4 +1,4 @@
-# Created by DepGen.py. To recreate, run 'python DepGen.py'.
+# Created by DepGen.py. To recreate, run DepGen.py.
 $(DIR_O)/HanjaDic.obj: \
 	HanjaDic.cxx \
 	../src/UniConversion.h \

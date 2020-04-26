@@ -85,7 +85,7 @@ public:
 	}
 
 	/// Reallocate the storage for the buffer to be newSize and
-	/// copy exisiting contents to the new buffer.
+	/// copy existing contents to the new buffer.
 	/// Must not be used to decrease the size of the buffer.
 	void ReAllocate(ptrdiff_t newSize) {
 		if (newSize < 0)

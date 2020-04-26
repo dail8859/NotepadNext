@@ -139,7 +139,6 @@ constVariable:scintilla/lexers/LexAVE.cxx
 constVariable:scintilla/lexers/LexAVS.cxx
 constVariable:scintilla/lexers/LexAsn1.cxx
 constVariable:scintilla/lexers/LexBibTeX.cxx
-constVariable:scintilla/lexers/LexBatch.cxx
 constVariable:scintilla/lexers/LexCLW.cxx
 constVariable:scintilla/lexers/LexCOBOL.cxx
 constVariable:scintilla/lexers/LexCSS.cxx
@@ -197,6 +196,9 @@ constVariable:scintilla/lexers/LexVHDL.cxx
 
 // bp.itBracket not actually redundant as needed by return statements
 redundantAssignment:scintilla/lexers/LexCPP.cxx
+
+// Suppress everything in test example files
+*:scintilla/lexilla/test/examples/*
 
 // Suppress everything in catch.hpp as won't be changing
 *:scintilla/test/unit/catch.hpp

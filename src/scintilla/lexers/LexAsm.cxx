@@ -80,6 +80,7 @@ struct OptionsAsm {
 	std::string foldExplicitEnd;
 	bool foldExplicitAnywhere;
 	bool foldCompact;
+	std::string commentChar;
 	OptionsAsm() {
 		delimiter = "";
 		fold = false;
@@ -90,6 +91,7 @@ struct OptionsAsm {
 		foldExplicitEnd   = "";
 		foldExplicitAnywhere = false;
 		foldCompact = true;
+		commentChar = "";
 	}
 };
 
@@ -133,6 +135,9 @@ struct OptionSetAsm : public OptionSet<OptionsAsm> {
 			"Set this property to 1 to enable explicit fold points anywhere, not just in line comments.");
 
 		DefineProperty("fold.compact", &OptionsAsm::foldCompact);
+
+		DefineProperty("lexer.as.comment.character", &OptionsAsm::commentChar,
+			"Overrides the default comment character (which is ';' for asm and '#' for as).");
 
 		DefineWordListSets(asmWordListDesc);
 	}
@@ -245,6 +250,9 @@ Sci_Position SCI_METHOD LexerAsm::WordListSet(int n, const char *wl) {
 void SCI_METHOD LexerAsm::Lex(Sci_PositionU startPos, Sci_Position length, int initStyle, IDocument *pAccess) {
 	LexAccessor styler(pAccess);
 
+	const char commentCharacter = options.commentChar.empty() ?
+		commentChar : options.commentChar.front();
+
 	// Do not leak onto next line
 	if (initStyle == SCE_ASM_STRINGEOL)
 		initStyle = SCE_ASM_DEFAULT;
@@ -350,7 +358,7 @@ void SCI_METHOD LexerAsm::Lex(Sci_PositionU startPos, Sci_Position length, int i
 
 		// Determine if a new state should be entered.
 		if (sc.state == SCE_ASM_DEFAULT) {
-			if (sc.ch == commentChar){
+			if (sc.ch == commentCharacter) {
 				sc.SetState(SCE_ASM_COMMENT);
 			} else if (IsASCII(sc.ch) && (isdigit(sc.ch) || (sc.ch == '.' && IsASCII(sc.chNext) && isdigit(sc.chNext)))) {
 				sc.SetState(SCE_ASM_NUMBER);

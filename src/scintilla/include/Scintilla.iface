@@ -151,10 +151,16 @@ fun position GetStyledText=2015(, textrange tr)
 fun bool CanRedo=2016(,)
 
 # Retrieve the line number at which a particular marker is located.
-fun int MarkerLineFromHandle=2017(int markerHandle,)
+fun line MarkerLineFromHandle=2017(int markerHandle,)
 
 # Delete a marker.
 fun void MarkerDeleteHandle=2018(int markerHandle,)
+
+# Retrieve marker handles of a line
+fun int MarkerHandleFromLine=2732(line line, int which)
+
+# Retrieve marker number of a marker handle
+fun int MarkerNumberFromLine=2733(line line, int which)
 
 # Is undo history being collected?
 get bool GetUndoCollection=2019(,)
@@ -285,6 +291,21 @@ get IMEInteraction GetIMEInteraction=2678(,)
 # Choose to display the IME in a window or inline.
 set void SetIMEInteraction=2679(IMEInteraction imeInteraction,)
 
+enu Alpha=SC_ALPHA_
+val SC_ALPHA_TRANSPARENT=0
+val SC_ALPHA_OPAQUE=255
+val SC_ALPHA_NOALPHA=256
+
+ali SC_ALPHA_NOALPHA=NO_ALPHA
+
+enu CursorShape=SC_CURSOR
+val SC_CURSORNORMAL=-1
+val SC_CURSORARROW=2
+val SC_CURSORWAIT=4
+val SC_CURSORREVERSEARROW=7
+
+ali SC_CURSORREVERSEARROW=REVERSE_ARROW
+
 enu MarkerSymbol=SC_MARK_
 val MARKER_MAX=31
 val SC_MARK_CIRCLE=0
@@ -382,7 +403,7 @@ set void MarkerSetBack=2042(int markerNumber, colour back)
 # Set the background colour used for a particular marker number when its folding block is selected.
 set void MarkerSetBackSelected=2292(int markerNumber, colour back)
 
-# Enable/disable highlight for current folding bloc (smallest one that contains the caret)
+# Enable/disable highlight for current folding block (smallest one that contains the caret)
 fun void MarkerEnableHighlight=2293(bool enabled,)
 
 # Add a marker to a line, returning an ID which can be used to find or delete the marker.
@@ -1279,7 +1300,7 @@ fun position CallTipPosStart=2203(,)
 set void CallTipSetPosStart=2214(position posStart,)
 
 # Highlight a segment of the definition.
-fun void CallTipSetHlt=2204(int highlightStart, int highlightEnd)
+fun void CallTipSetHlt=2204(position highlightStart, position highlightEnd)
 
 # Set the background colour for the call tip.
 set void CallTipSetBack=2205(colour back,)
@@ -1991,14 +2012,6 @@ set void SetMouseWheelCaptures=2696(bool captures,)
 # Get whether mouse wheel can be active outside the window.
 get bool GetMouseWheelCaptures=2697(,)
 
-enu CursorShape=SC_CURSOR
-val SC_CURSORNORMAL=-1
-val SC_CURSORARROW=2
-val SC_CURSORWAIT=4
-val SC_CURSORREVERSEARROW=7
-
-ali SC_CURSORREVERSEARROW=REVERSE_ARROW
-
 # Sets the cursor to one of the SC_CURSOR* values.
 set void SetCursor=2386(CursorShape cursorType,)
 # Get cursor type.
@@ -2025,6 +2038,7 @@ fun void WordPartRightExtend=2393(,)
 enu VisiblePolicy=VISIBLE_
 val VISIBLE_SLOP=0x01
 val VISIBLE_STRICT=0x04
+
 # Set the way the display area is determined when a particular line
 # is to be moved to by Find, FindNext, GotoLine, etc.
 fun void SetVisiblePolicy=2394(VisiblePolicy visiblePolicy, int visibleSlop)
@@ -2111,10 +2125,13 @@ get bool GetHotspotSingleLine=2497(,)
 
 # Move caret down one paragraph (delimited by empty lines).
 fun void ParaDown=2413(,)
+
 # Extend selection down one paragraph (delimited by empty lines).
 fun void ParaDownExtend=2414(,)
+
 # Move caret up one paragraph (delimited by empty lines).
 fun void ParaUp=2415(,)
+
 # Extend selection up one paragraph (delimited by empty lines).
 fun void ParaUpExtend=2416(,)
 
@@ -2301,18 +2318,18 @@ fun position EncodedFromUTF8=2449(string utf8, stringresult encoded)
 # multi-byte characters. If beyond end of line, return line end position.
 fun position FindColumn=2456(line line, position column)
 
-# Can the caret preferred x position only be changed by explicit movement commands?
-get CaretSticky GetCaretSticky=2457(,)
-
-# Stop the caret preferred x position changing when the user types.
-set void SetCaretSticky=2458(CaretSticky useCaretStickyBehaviour,)
-
 enu CaretSticky=SC_CARETSTICKY_
 val SC_CARETSTICKY_OFF=0
 val SC_CARETSTICKY_ON=1
 val SC_CARETSTICKY_WHITESPACE=2
 
 ali SC_CARETSTICKY_WHITESPACE=WHITE_SPACE
+
+# Can the caret preferred x position only be changed by explicit movement commands?
+get CaretSticky GetCaretSticky=2457(,)
+
+# Stop the caret preferred x position changing when the user types.
+set void SetCaretSticky=2458(CaretSticky useCaretStickyBehaviour,)
 
 # Switch between sticky and non-sticky: meant to be bound to a key.
 fun void ToggleCaretSticky=2459(,)
@@ -2325,13 +2342,6 @@ get bool GetPasteConvertEndings=2468(,)
 
 # Duplicate the selection. If selection empty duplicate the line containing the caret.
 fun void SelectionDuplicate=2469(,)
-
-enu Alpha=SC_ALPHA_
-val SC_ALPHA_TRANSPARENT=0
-val SC_ALPHA_OPAQUE=255
-val SC_ALPHA_NOALPHA=256
-
-ali SC_ALPHA_NOALPHA=NO_ALPHA
 
 # Set background alpha of the caret line.
 set void SetCaretLineBackAlpha=2470(Alpha alpha,)
@@ -2379,10 +2389,10 @@ fun int IndicatorAllOnFor=2506(position pos,)
 fun int IndicatorValueAt=2507(int indicator, position pos)
 
 # Where does a particular indicator start?
-fun int IndicatorStart=2508(int indicator, position pos)
+fun position IndicatorStart=2508(int indicator, position pos)
 
 # Where does a particular indicator end?
-fun int IndicatorEnd=2509(int indicator, position pos)
+fun position IndicatorEnd=2509(int indicator, position pos)
 
 # Set number of entries in position cache
 set void SetPositionCache=2514(int size,)
@@ -2590,18 +2600,25 @@ get int GetMainSelection=2575(,)
 
 # Set the caret position of the nth selection.
 set void SetSelectionNCaret=2576(int selection, position caret)
+
 # Return the caret position of the nth selection.
 get position GetSelectionNCaret=2577(int selection,)
+
 # Set the anchor position of the nth selection.
 set void SetSelectionNAnchor=2578(int selection, position anchor)
+
 # Return the anchor position of the nth selection.
 get position GetSelectionNAnchor=2579(int selection,)
+
 # Set the virtual space of the caret of the nth selection.
 set void SetSelectionNCaretVirtualSpace=2580(int selection, position space)
+
 # Return the virtual space of the caret of the nth selection.
 get position GetSelectionNCaretVirtualSpace=2581(int selection,)
+
 # Set the virtual space of the anchor of the nth selection.
 set void SetSelectionNAnchorVirtualSpace=2582(int selection, position space)
+
 # Return the virtual space of the anchor of the nth selection.
 get position GetSelectionNAnchorVirtualSpace=2583(int selection,)
 
@@ -2625,18 +2642,25 @@ get position GetSelectionNEnd=2587(int selection,)
 
 # Set the caret position of the rectangular selection.
 set void SetRectangularSelectionCaret=2588(position caret,)
+
 # Return the caret position of the rectangular selection.
 get position GetRectangularSelectionCaret=2589(,)
+
 # Set the anchor position of the rectangular selection.
 set void SetRectangularSelectionAnchor=2590(position anchor,)
+
 # Return the anchor position of the rectangular selection.
 get position GetRectangularSelectionAnchor=2591(,)
+
 # Set the virtual space of the caret of the rectangular selection.
 set void SetRectangularSelectionCaretVirtualSpace=2592(position space,)
+
 # Return the virtual space of the caret of the rectangular selection.
 get position GetRectangularSelectionCaretVirtualSpace=2593(,)
+
 # Set the virtual space of the anchor of the rectangular selection.
 set void SetRectangularSelectionAnchorVirtualSpace=2594(position space,)
+
 # Return the virtual space of the anchor of the rectangular selection.
 get position GetRectangularSelectionAnchorVirtualSpace=2595(,)
 

@@ -132,7 +132,7 @@ public:
 
 	void BrushColour(ColourDesired back);
 	void SetCodec(const Font &font);
-	void SetFont(Font &font);
+	void SetFont(const Font &font);
 
 	QPaintDevice *GetPaintDevice();
 	void SetPainter(QPainter *painter);
