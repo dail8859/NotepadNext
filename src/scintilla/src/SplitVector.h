@@ -76,16 +76,16 @@ public:
 	~SplitVector() {
 	}
 
-	ptrdiff_t GetGrowSize() const {
+	ptrdiff_t GetGrowSize() const noexcept {
 		return growSize;
 	}
 
-	void SetGrowSize(ptrdiff_t growSize_) {
+	void SetGrowSize(ptrdiff_t growSize_) noexcept {
 		growSize = growSize_;
 	}
 
 	/// Reallocate the storage for the buffer to be newSize and
-	/// copy exisiting contents to the new buffer.
+	/// copy existing contents to the new buffer.
 	/// Must not be used to decrease the size of the buffer.
 	void ReAllocate(ptrdiff_t newSize) {
 		if (newSize < 0)
@@ -290,7 +290,7 @@ public:
 		std::copy(body.data() + position, body.data() + position + range1Length, buffer);
 		buffer += range1Length;
 		position = position + range1Length + gapLength;
-		ptrdiff_t range2Length = retrieveLength - range1Length;
+		const ptrdiff_t range2Length = retrieveLength - range1Length;
 		std::copy(body.data() + position, body.data() + position + range2Length, buffer);
 	}
 

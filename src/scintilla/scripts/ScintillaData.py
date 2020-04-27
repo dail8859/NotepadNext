@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # ScintillaData.py - implemented 2013 by Neil Hodgson neilh@scintilla.org
 # Released to the public domain.
 
@@ -30,7 +31,7 @@
 #         dictionary of file names { SCLEX_ID: file name }
 
 # This file can be run to see the data it provides.
-# Requires Python 2.7 or later
+# Requires Python 3.6 or later
 
 from __future__ import with_statement
 
@@ -178,27 +179,20 @@ def FindCredits(historyFile):
                 credits.append(credit)
     return credits
 
-def ciCompare(a,b):
-    return cmp(a.lower(), b.lower())
-
 def ciKey(a):
     return a.lower()
 
 def SortListInsensitive(l):
-    try:    # Try key function
-        l.sort(key=ciKey)
-    except TypeError:    # Earlier version of Python, so use comparison function
-        l.sort(ciCompare)
+    l.sort(key=ciKey)
 
 class ScintillaData:
     def __init__(self, scintillaRoot):
-        # Discover verion information
+        # Discover version information
         with open(scintillaRoot + "version.txt") as f:
             self.version = f.read().strip()
         self.versionDotted = self.version[0] + '.' + self.version[1] + '.' + \
             self.version[2]
-        self.versionCommad = self.version[0] + ', ' + self.version[1] + ', ' + \
-            self.version[2] + ', 0'
+        self.versionCommad = self.versionDotted.replace(".", ", ") + ', 0'
 
         with open(scintillaRoot + "doc/index.html") as f:
             self.dateModified = [l for l in f.readlines() if "Date.Modified" in l]\

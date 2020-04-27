@@ -19,9 +19,10 @@
 
 #include "LineNumbers.h"
 
-// Ugly but efficient
+
 static inline int countDigits(quint32 x)
 {
+    // Ugly but efficient
     return (x < 10 ? 1 :
            (x < 100 ? 2 :
            (x < 1000 ? 3 :

@@ -23,7 +23,7 @@ public:
 		position = 0;
 		virtualSpace = 0;
 	}
-	void MoveForInsertDelete(bool insertion, Sci::Position startChange, Sci::Position length) noexcept;
+	void MoveForInsertDelete(bool insertion, Sci::Position startChange, Sci::Position length, bool moveForEqual) noexcept;
 	bool operator ==(const SelectionPosition &other) const noexcept {
 		return position == other.position && virtualSpace == other.virtualSpace;
 	}
@@ -71,6 +71,9 @@ struct SelectionSegment {
 	}
 	bool Empty() const noexcept {
 		return start == end;
+	}
+	Sci::Position Length() const noexcept {
+		return end.Position() - start.Position();
 	}
 	void Extend(SelectionPosition p) noexcept {
 		if (start > p)

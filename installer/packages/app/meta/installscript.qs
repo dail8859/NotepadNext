@@ -14,16 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
 
+var targetDirectoryPage = null;
 
 function Component()
 {
-    component.loaded.connect(this, function() {
-        if (installer.isInstaller()) {
-            if (systemInfo.productType === "windows") {
-                installer.addWizardPageItem(component, "InstallOptionsForm", QInstaller.TargetDirectory);
-            }
-        }
-    });
+    component.loaded.connect(this, this.installerLoaded);
 }
 
 Component.prototype.createOperations = function()
@@ -31,9 +26,9 @@ Component.prototype.createOperations = function()
     // call default implementation to actually install the registeredfile
     component.createOperations();
 
-    var isContextMenuChecked = component.userInterface("InstallOptionsForm").addContextMenu.checked;
-    var isDesktopShortcutChecked = component.userInterface("InstallOptionsForm").addDesktopShortcut.checked;
-    var isStartMenuShortcutChecked = component.userInterface("InstallOptionsForm").addStartMenuShortcut.checked;
+    var isContextMenuChecked = component.userInterface("TargetWidget").addContextMenu.checked;
+    var isDesktopShortcutChecked = component.userInterface("TargetWidget").addDesktopShortcut.checked;
+    var isStartMenuShortcutChecked = component.userInterface("TargetWidget").addStartMenuShortcut.checked;
     if (systemInfo.productType === "windows") {
         // Right-click context menu
         if (isContextMenuChecked) {
@@ -69,5 +64,51 @@ Component.prototype.createOperations = function()
                 "iconId=0"
             );
         }
+    }
+}
+
+Component.prototype.installerLoaded = function()
+{
+    installer.setDefaultPageVisible(QInstaller.TargetDirectory, false);
+    installer.addWizardPage(component, "TargetWidget", QInstaller.TargetDirectory);
+
+    targetDirectoryPage = gui.pageWidgetByObjectName("DynamicTargetWidget");
+    targetDirectoryPage.windowTitle = "Choose Installation Directory";
+    targetDirectoryPage.targetDirectory.textChanged.connect(this, this.targetDirectoryChanged);
+    targetDirectoryPage.targetDirectory.setText(installer.value("TargetDir"));
+    targetDirectoryPage.targetChooser.released.connect(this, this.targetChooserClicked);
+
+    gui.pageById(QInstaller.PerformInstallation).entered.connect(this, this.performInstallationPageEntered);
+}
+
+Component.prototype.targetChooserClicked = function()
+{
+    var dir = QFileDialog.getExistingDirectory("", targetDirectoryPage.targetDirectory.text);
+    targetDirectoryPage.targetDirectory.setText(dir);
+}
+
+Component.prototype.targetDirectoryChanged = function()
+{
+    var dir = targetDirectoryPage.targetDirectory.text;
+    if (installer.fileExists(dir) && installer.fileExists(dir + "/maintenancetool.exe")) {
+        targetDirectoryPage.warning.setText("<p style=\"color: red\">Existing installation will be uninstalled.</p>");
+    }
+    else if (installer.fileExists(dir)) {
+        targetDirectoryPage.warning.setText("<p style=\"color: red\">Installing in existing directory. Its existing contents will be removed.</p>");
+    }
+    else {
+        targetDirectoryPage.warning.setText("");
+    }
+
+    installer.setValue("TargetDir", dir);
+}
+
+Component.prototype.performInstallationPageEntered = function()
+{
+    var dir = installer.value("TargetDir");
+
+    if (installer.fileExists(dir) && installer.fileExists(dir + "/maintenancetool.exe")) {
+        console.log("Running uninstaller: " + dir + "/maintenancetool.exe");
+        installer.execute(dir + "/maintenancetool.exe", new Array("--script", dir + "/scripts/auto_uninstall.qs"));
     }
 }

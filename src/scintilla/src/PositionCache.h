@@ -213,7 +213,7 @@ class SpecialRepresentations {
 	MapRepresentation mapReprs;
 	short startByteHasReprs[0x100];
 public:
-	SpecialRepresentations() noexcept;
+	SpecialRepresentations();
 	void SetRepresentation(const char *charBytes, const char *value);
 	void ClearRepresentation(const char *charBytes);
 	const Representation *RepresentationFromCharacter(const char *charBytes, size_t len) const;

@@ -109,15 +109,25 @@ public:
 		pfont = nullptr;
 	}
 };
-static int FontCharacterSet(Font &f)
-{
-	return reinterpret_cast<FontAndCharacterSet *>(f.GetID())->characterSet;
+
+namespace {
+
+FontAndCharacterSet *AsFontAndCharacterSet(const Font &f) {
+	return reinterpret_cast<FontAndCharacterSet *>(f.GetID());
 }
 
-static QFont *FontPointer(Font &f)
+int FontCharacterSet(const Font &f)
 {
-	return reinterpret_cast<FontAndCharacterSet *>(f.GetID())->pfont;
+	return AsFontAndCharacterSet(f)->characterSet;
 }
+
+QFont *FontPointer(const Font &f)
+{
+	return AsFontAndCharacterSet(f)->pfont;
+}
+
+}
+
 Font::Font() noexcept : fid(nullptr) {}
 Font::~Font()
 {
@@ -213,7 +223,7 @@ void SurfaceImpl::Release()
 
 bool SurfaceImpl::Initialised()
 {
-	return device != 0;
+	return device != nullptr;
 }
 
 void SurfaceImpl::PenColour(ColourDesired fore)
@@ -228,7 +238,7 @@ void SurfaceImpl::BrushColour(ColourDesired back)
 	GetPainter()->setBrush(QBrush(QColorFromCA(back)));
 }
 
-void SurfaceImpl::SetCodec(Font &font)
+void SurfaceImpl::SetCodec(const Font &font)
 {
 	if (font.GetID()) {
 		const char *csid = "UTF-8";
@@ -241,7 +251,7 @@ void SurfaceImpl::SetCodec(Font &font)
 	}
 }
 
-void SurfaceImpl::SetFont(Font &font)
+void SurfaceImpl::SetFont(const Font &font)
 {
 	if (font.GetID()) {
 		GetPainter()->setFont(*FontPointer(font));
@@ -1109,17 +1119,17 @@ public:
 	}
 	Function FindFunction(const char *name) override {
 		if (lib) {
-			// C++ standard doesn't like casts between function pointers and void pointers so use a union
-			union {
+			// Use memcpy as it doesn't invoke undefined or conditionally defined behaviour.
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-				QFunctionPointer fp;
+			QFunctionPointer fp {};
 #else
-				void *fp;
+			void *fp = nullptr;
 #endif
-				Function f;
-			} fnConv;
-			fnConv.fp = lib->resolve(name);
-			return fnConv.f;
+			fp = lib->resolve(name);
+			Function f = nullptr;
+			static_assert(sizeof(f) == sizeof(fp));
+			memcpy(&f, &fp, sizeof(f));
+			return f;
 		}
 		return nullptr;
 	}

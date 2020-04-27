@@ -24,6 +24,7 @@
 
 using namespace Scintilla;
 
+#ifdef SCI_OWNREGEX
 RegexSearchBase *Scintilla::CreateRegexSearch(CharClassify *charClassTable)
 {
     Q_UNUSED(charClassTable);
@@ -32,6 +33,7 @@ RegexSearchBase *Scintilla::CreateRegexSearch(CharClassify *charClassTable)
 
     return new QRegexSearch();
 }
+#endif
 
 QRegexSearch::QRegexSearch()
 {
@@ -54,7 +56,7 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
     if (minPos == maxPos)
         return -1;
 
-    QRegularExpression re(s, QRegularExpression::OptimizeOnFirstUsageOption | QRegularExpression::MultilineOption | QRegularExpression::UseUnicodePropertiesOption);
+    QRegularExpression re(s, QRegularExpression::MultilineOption | QRegularExpression::UseUnicodePropertiesOption);
 
     if ((flags & SCFIND_MATCHCASE) == 0)
         re.setPatternOptions(QRegularExpression::CaseInsensitiveOption);

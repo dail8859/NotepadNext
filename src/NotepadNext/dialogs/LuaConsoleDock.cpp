@@ -30,7 +30,6 @@
 #include "LuaExtension.h"
 
 #include <QKeyEvent>
-#include <QShortcut>
 #include <QVBoxLayout>
 
 #define INDIC_BRACEHIGHLIGHT INDIC_CONTAINER

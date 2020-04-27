@@ -34,7 +34,7 @@ void CharClassify::SetDefaultCharClasses(bool includeWordClass) {
 }
 
 void CharClassify::SetCharClasses(const unsigned char *chars, cc newCharClass) {
-	// Apply the newCharClass to the specifed chars
+	// Apply the newCharClass to the specified chars
 	if (chars) {
 		while (*chars) {
 			charClass[*chars] = static_cast<unsigned char>(newCharClass);

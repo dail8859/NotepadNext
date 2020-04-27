@@ -20,6 +20,8 @@
 #ifndef LINENUMBERS_H
 #define LINENUMBERS_H
 
+#include <QObject>
+
 #include "Plugin.h"
 
 class LineNumbers : public Plugin

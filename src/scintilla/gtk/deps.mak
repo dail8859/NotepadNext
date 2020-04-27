@@ -1,4 +1,4 @@
-# Created by DepGen.py. To recreate, run 'python DepGen.py'.
+# Created by DepGen.py. To recreate, run DepGen.py.
 PlatGTK.o: \
 	PlatGTK.cxx \
 	../include/Platform.h \
@@ -18,10 +18,8 @@ ScintillaGTK.o: \
 	../include/ILexer.h \
 	../include/Scintilla.h \
 	../include/ScintillaWidget.h \
-	../include/SciLexer.h \
 	../lexlib/StringCopy.h \
 	../lexlib/CharacterCategory.h \
-	../lexlib/LexerModule.h \
 	../src/Position.h \
 	../src/UniqueString.h \
 	../src/SplitVector.h \
@@ -49,7 +47,6 @@ ScintillaGTK.o: \
 	../src/Editor.h \
 	../src/AutoComplete.h \
 	../src/ScintillaBase.h \
-	../src/ExternalLexer.h \
 	ScintillaGTK.h \
 	scintilla-marshal.h \
 	ScintillaGTKAccessible.h \
@@ -62,10 +59,8 @@ ScintillaGTKAccessible.o: \
 	../include/ILexer.h \
 	../include/Scintilla.h \
 	../include/ScintillaWidget.h \
-	../include/SciLexer.h \
 	../lexlib/StringCopy.h \
 	../lexlib/CharacterCategory.h \
-	../lexlib/LexerModule.h \
 	../src/Position.h \
 	../src/UniqueString.h \
 	../src/SplitVector.h \
@@ -126,6 +121,7 @@ Catalogue.o: \
 	../include/Scintilla.h \
 	../include/SciLexer.h \
 	../lexlib/LexerModule.h \
+	../lexlib/CatalogueModules.h \
 	../src/Catalogue.h
 CellBuffer.o: \
 	../src/CellBuffer.cxx \
@@ -432,7 +428,8 @@ ScintillaBase.o: \
 	../src/EditView.h \
 	../src/Editor.h \
 	../src/AutoComplete.h \
-	../src/ScintillaBase.h
+	../src/ScintillaBase.h \
+	../src/ExternalLexer.h
 Selection.o: \
 	../src/Selection.cxx \
 	../include/Platform.h \
@@ -1121,6 +1118,19 @@ LexHex.o: \
 	../lexlib/StyleContext.h \
 	../lexlib/CharacterSet.h \
 	../lexlib/LexerModule.h
+LexHollywood.o: \
+	../lexers/LexHollywood.cxx \
+	../include/ILexer.h \
+	../include/Sci_Position.h \
+	../include/Scintilla.h \
+	../include/SciLexer.h \
+	../lexlib/WordList.h \
+	../lexlib/LexAccessor.h \
+	../lexlib/StyleContext.h \
+	../lexlib/CharacterSet.h \
+	../lexlib/LexerModule.h \
+	../lexlib/OptionSet.h \
+	../lexlib/DefaultLexer.h
 LexHTML.o: \
 	../lexers/LexHTML.cxx \
 	../include/ILexer.h \
@@ -1620,6 +1630,20 @@ LexR.o: \
 	../lexlib/StyleContext.h \
 	../lexlib/CharacterSet.h \
 	../lexlib/LexerModule.h
+LexRaku.o: \
+	../lexers/LexRaku.cxx \
+	../include/ILexer.h \
+	../include/Sci_Position.h \
+	../include/Scintilla.h \
+	../include/SciLexer.h \
+	../lexlib/WordList.h \
+	../lexlib/LexAccessor.h \
+	../lexlib/StyleContext.h \
+	../lexlib/CharacterSet.h \
+	../lexlib/CharacterCategory.h \
+	../lexlib/LexerModule.h \
+	../lexlib/OptionSet.h \
+	../lexlib/DefaultLexer.h
 LexRebol.o: \
 	../lexers/LexRebol.cxx \
 	../include/ILexer.h \

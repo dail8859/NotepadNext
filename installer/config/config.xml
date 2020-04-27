@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Installer>
     <Name>Notepad Next</Name>
-    <Version>0.1</Version>
-    <Title>Notepad Next v0.1</Title>
+    <Version>0.2</Version>
+    <Title>Notepad Next v0.2</Title>
     <Publisher>Notepad Next</Publisher>
     <StartMenuDir>Notepad Next</StartMenuDir>
 
     <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
-    <SupportsModify>true</SupportsModify>
-    <TargetDir>@ApplicationsDirX64@/Notepad Next</TargetDir>
+    <SupportsModify>false</SupportsModify>
+    <TargetDir>@ApplicationsDirX64@\Notepad Next</TargetDir>
 
     <!--<StyleSheet>style.qss</StyleSheet>-->
     <!--<TitleColor>#88FF33</TitleColor>-->

@@ -1,9 +1,9 @@
-version: 0.1.0.{build}
+version: 0.2.0.{build}
 image: Visual Studio 2017
 
 init:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
-  - set PATH=C:\Qt\5.13.2\msvc2017_64\bin\;C:\Qt\Tools\QtCreator\bin\;%PATH%
+  - set PATH=C:\Qt\5.13\msvc2017_64\bin\;C:\Qt\Tools\QtCreator\bin\;%PATH%
   - qmake -v
 
 before_build:
@@ -24,9 +24,16 @@ after_build:
   - cd build_installer
   - qmake ..\installer\installer.pro
   - jom
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - appveyor PushArtifact NotepadNext.zip -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%.zip
+  - appveyor PushArtifact build_installer\NotepadNext-v0.2.exe -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%-setup.exe
 
-artifacts:
-  - path: NotepadNext.zip
-    name: NotepadNext-v$(appveyor_build_version).zip
-  - path: build_installer\NotepadNext-v0.1.exe
-    name: NotepadNext-v$(appveyor_build_version)-setup.exe
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: qrw+nu8dQKFLG+lNmky6buHsvHFwlibAai0r0aJ3MYbyBniONVxvgnmyx37bPh44
+  artifact: NotepadNext-v$(appveyor_build_version).zip, NotepadNext-v$(appveyor_build_version)-setup.exe
+  draft: true
+  force_update: true
+  on:
+    APPVEYOR_REPO_TAG: true

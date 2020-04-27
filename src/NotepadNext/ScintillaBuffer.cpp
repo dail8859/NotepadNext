@@ -44,6 +44,7 @@ static bool writeToDisk(const QByteArray &data, const QString &path)
     }
     else {
         qWarning("writeBufferToDisk() failure: %s", qPrintable(file.errorString()));
+        writeSuccessful = false;
     }
 
     return writeSuccessful;
@@ -200,7 +201,10 @@ ScintillaBuffer::BufferStateChange ScintillaBuffer::checkForBufferStateChange()
         fileInfo.refresh();
         if (fileInfo.exists()) {
             bufferType = BufferType::File;
-            return BufferStateChange::Modified;
+            return BufferStateChange::Restored;
+        }
+        else {
+            return BufferStateChange::NoChange;
         }
     }
 
