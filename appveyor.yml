@@ -27,3 +27,14 @@ after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
   - appveyor PushArtifact NotepadNext.zip -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%.zip
   - appveyor PushArtifact build_installer\NotepadNext-v0.1.exe -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%-setup.exe
+
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: qrw+nu8dQKFLG+lNmky6buHsvHFwlibAai0r0aJ3MYbyBniONVxvgnmyx37bPh44
+  artifact: NotepadNext-v$(appveyor_build_version).zip, NotepadNext-v$(appveyor_build_version)-setup.exe
+  draft: true
+  force_update: true
+  on:
+    branch: master
+    APPVEYOR_REPO_TAG: true
