@@ -37,23 +37,17 @@ win32 {
 
 SOURCES += \
     Finder.cpp \
-    LineNumbers.cpp \
     main.cpp \
     ScintillaBuffer.cpp \
-    MainWindow.cpp \
     BufferManager.cpp \
-    TabbedEditor.cpp \
+    widgets/TabbedEditor.cpp \
     BufferView.cpp \
-    NppTabBar.cpp \
-    StatusLabel.cpp \
-    HighlightedScrollBar.cpp \
+    widgets/NppTabBar.cpp \
+    widgets/StatusLabel.cpp \
     NppImporter.cpp \
     RecentFilesListManager.cpp \
-    FindReplaceDialog.cpp \
-    SmartHighlighter.cpp \
     ScintillaNext.cpp \
     QRegexSearch.cpp \
-    LuaConsoleDock.cpp \
     LuaState.cpp \
     IFaceTable.cpp \
     LuaExtension.cpp \
@@ -61,32 +55,32 @@ SOURCES += \
     IFaceTableMixer.cpp \
     NotepadNextApplication.cpp \
     MacroRecorder.cpp \
-    MacroRunDialog.cpp \
-    MacroSaveDialog.cpp \
-    WindowListDialog.cpp \
-    PreferencesDialog.cpp \
     Settings.cpp \
-    Plugin.cpp \
-    BraceMatch.cpp
+    dialogs/MacroRunDialog.cpp \
+    dialogs/MacroSaveDialog.cpp \
+    dialogs/WindowListDialog.cpp \
+    dialogs/PreferencesDialog.cpp \
+    dialogs/MainWindow.cpp \
+    dialogs/FindReplaceDialog.cpp \
+    dialogs/LuaConsoleDock.cpp \
+    plugins/Plugin.cpp \
+    plugins/HighlightedScrollBar.cpp \
+    plugins/SmartHighlighter.cpp \
+    plugins/BraceMatch.cpp \
+    plugins/LineNumbers.cpp
 
 HEADERS += \
     Finder.h \
-    LineNumbers.h \
     ScintillaBuffer.h \
-    MainWindow.h \
     BufferManager.h \
-    TabbedEditor.h \
+    widgets/TabbedEditor.h \
     BufferView.h \
-    NppTabBar.h \
-    StatusLabel.h \
-    HighlightedScrollBar.h \
+    widgets/NppTabBar.h \
+    widgets/StatusLabel.h \
     NppImporter.h \
     RecentFilesListManager.h \
-    FindReplaceDialog.h \
-    SmartHighlighter.h \
     ScintillaNext.h \
     QRegexSearch.h \
-    LuaConsoleDock.h \
     LuaState.h \
     IFaceTable.h \
     LuaExtension.h \
@@ -94,29 +88,39 @@ HEADERS += \
     IFaceTableMixer.h \
     NotepadNextApplication.h \
     MacroRecorder.h \
-    MacroRunDialog.h \
-    MacroSaveDialog.h \
-    WindowListDialog.h \
-    PreferencesDialog.h \
     Settings.h \
-    Plugin.h \
-    BraceMatch.h
+    dialogs/MainWindow.h \
+    dialogs/FindReplaceDialog.h \
+    dialogs/LuaConsoleDock.h \
+    dialogs/MacroRunDialog.h \
+    dialogs/MacroSaveDialog.h \
+    dialogs/WindowListDialog.h \
+    dialogs/PreferencesDialog.h \
+    plugins/Plugin.h \
+    plugins/HighlightedScrollBar.h \
+    plugins/SmartHighlighter.h \
+    plugins/BraceMatch.h \
+    plugins/LineNumbers.h
 
 FORMS += \
-    MainWindow.ui \
-    FindReplaceDialog.ui \
-    LuaConsoleDock.ui \
-    MacroRunDialog.ui \
-    MacroSaveDialog.ui \
-    WindowListDialog.ui \
-    PreferencesDialog.ui
+    dialogs/MainWindow.ui \
+    dialogs/FindReplaceDialog.ui \
+    dialogs/LuaConsoleDock.ui \
+    dialogs/MacroRunDialog.ui \
+    dialogs/MacroSaveDialog.ui \
+    dialogs/WindowListDialog.ui \
+    dialogs/PreferencesDialog.ui
 
 RESOURCES += \
     resources.qrc \
     scripts.qrc
 
+INCLUDEPATH += $$PWD/plugins
+INCLUDEPATH += $$PWD/dialogs
+INCLUDEPATH += $$PWD/widgets
+
 # Statically link in Scintilla
-DEFINES += EXPORT_IMPORT_API= SCI_OWNREGEX
+DEFINES += EXPORT_IMPORT_API=
 LIBS += -L$$OUT_PWD/../scintilla/qt/ScintillaEdit/ -lScintillaEdit
 INCLUDEPATH += \
     $$PWD/../scintilla/qt/ScintillaEditBase \
@@ -146,5 +150,3 @@ DEFINES += LUA_VERSION_NUM=503
 
 win32-g++:LIBS += libUser32
 win32-msvc*:LIBS += User32.lib
-
-DISTFILES +=

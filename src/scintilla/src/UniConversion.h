@@ -10,9 +10,9 @@
 
 namespace Scintilla {
 
-const int UTF8MaxBytes = 4;
+constexpr int UTF8MaxBytes = 4;
 
-const int unicodeReplacementChar = 0xFFFD;
+constexpr int unicodeReplacementChar = 0xFFFD;
 
 size_t UTF8Length(std::wstring_view wsv) noexcept;
 size_t UTF8PositionFromUTF16Position(std::string_view u8Text, size_t positionUTF16) noexcept;
@@ -64,13 +64,13 @@ int UTF8DrawBytes(const unsigned char *us, int len) noexcept;
 
 // Line separator is U+2028 \xe2\x80\xa8
 // Paragraph separator is U+2029 \xe2\x80\xa9
-const int UTF8SeparatorLength = 3;
+constexpr int UTF8SeparatorLength = 3;
 inline bool UTF8IsSeparator(const unsigned char *us) noexcept {
 	return (us[0] == 0xe2) && (us[1] == 0x80) && ((us[2] == 0xa8) || (us[2] == 0xa9));
 }
 
 // NEL is U+0085 \xc2\x85
-const int UTF8NELLength = 2;
+constexpr int UTF8NELLength = 2;
 inline bool UTF8IsNEL(const unsigned char *us) noexcept {
 	return (us[0] == 0xc2) && (us[1] == 0x85);
 }

@@ -1,6 +1,10 @@
 // File to suppress cppcheck warnings for files that will not be fixed.
 // Does not suppress warnings where an additional occurrence of the warning may be of interest.
 
+// unreadVariable has expanded in cppcheck 1.90 to match assigning a struct then reading
+// only from members which is a common idiom
+unreadVariable
+
 // Coding style is to use assignments in constructor when there are many
 // members to initialize or the initialization is complex or has comments.
 useInitializationList
@@ -10,17 +14,24 @@ useInitializationList
 // produces same result on empty collections
 useStlAlgorithm
 
+// Currently shift by word size is implementation defined but is OK on all used compilers
+// In C++20, it will be well-defined.
+shiftTooManyBitsSigned
+
 // The two sections are for different purposes: C1 control set and UTF-8 invalid bytes
 duplicateCondition:scintilla/src/Editor.cxx
 
 // Some non-explicit constructors are used for conversions or are private to lexers
 noExplicitConstructor
 
-// Document is checking for a change by called methods and cppcheck isn't considering escape
-knownConditionTrueFalse:scintilla/src/Document.cxx
+// MarginView access to all bits is safe and is better defined in later versions of C++
+shiftTooManyBitsSigned:scintilla/src/MarginView.cxx
 
 // ScintillaDocument is providing an API and there are no consumers of the API inside Scintilla
 unusedFunction:scintilla/qt/ScintillaEdit/ScintillaDocument.cpp
+
+// moc_ files show #error as they are not built with standard context
+preprocessorErrorDirective:scintilla/qt/*.cpp
 
 // moc_ files are not understood by cppcheck
 noValidConfiguration
@@ -31,49 +42,163 @@ passedByValue
 
 // Suppress most lexer warnings since the lexers are maintained by others
 redundantCondition:scintilla/lexers/LexA68k.cxx
-shadowVar:scintilla/lexers/LexAU3.cxx
+constParameter:scintilla/lexers/LexAbaqus.cxx
+constParameter:scintilla/lexers/LexAda.cxx
+constParameter:scintilla/lexers/LexAsn1.cxx
+compareBoolExpressionWithInt:scintilla/lexers/LexAU3.cxx
+knownConditionTrueFalse:scintilla/lexers/LexAU3.cxx
+shadowVariable:scintilla/lexers/LexAU3.cxx
+constParameter:scintilla/lexers/LexBaan.cxx
 unreadVariable:scintilla/lexers/LexBaan.cxx
+constParameter:scintilla/lexers/LexBash.cxx
 uninitMemberVar:scintilla/lexers/LexBash.cxx
 variableScope:scintilla/lexers/LexBash.cxx
 variableScope:scintilla/lexers/LexBatch.cxx
+constParameter:scintilla/lexers/LexBullant.cxx
 variableScope:scintilla/lexers/LexCmake.cxx
+constParameter:scintilla/lexers/LexCLW.cxx
+constParameter:scintilla/lexers/LexCOBOL.cxx
+constParameter:scintilla/lexers/LexCoffeeScript.cxx
+constParameter:scintilla/lexers/LexCPP.cxx
 variableScope:scintilla/lexers/LexCSS.cxx
+constParameter:scintilla/lexers/LexDataflex.cxx
 variableScope:scintilla/lexers/LexDataflex.cxx
+knownConditionTrueFalse:scintilla/lexers/LexECL.cxx
+constParameter:scintilla/lexers/LexEiffel.cxx
 variableScope:scintilla/lexers/LexErlang.cxx
+knownConditionTrueFalse:scintilla/lexers/LexEScript.cxx
+constParameter:scintilla/lexers/LexFortran.cxx
 variableScope:scintilla/lexers/LexGui4Cli.cxx
+constParameter:scintilla/lexers/LexHaskell.cxx
+constParameter:scintilla/lexers/LexHex.cxx
+constParameter:scintilla/lexers/LexHTML.cxx
 variableScope:scintilla/lexers/LexInno.cxx
+constParameter:scintilla/lexers/LexJSON.cxx
 variableScope:scintilla/lexers/LexLaTeX.cxx
+constParameter:scintilla/lexers/LexLaTeX.cxx
+constParameter:scintilla/lexers/LexLisp.cxx
+constParameter:scintilla/lexers/LexMagik.cxx
+constParameter:scintilla/lexers/LexMatlab.cxx
 unreadVariable:scintilla/lexers/LexMatlab.cxx
 variableScope:scintilla/lexers/LexMetapost.cxx
+constParameter:scintilla/lexers/LexModula.cxx
 variableScope:scintilla/lexers/LexModula.cxx
 variableScope:scintilla/lexers/LexMSSQL.cxx
+shadowArgument:scintilla/lexers/LexMySQL.cxx
+constParameter:scintilla/lexers/LexNim.cxx
+constParameter:scintilla/lexers/LexNimrod.cxx
 variableScope:scintilla/lexers/LexNimrod.cxx
 variableScope:scintilla/lexers/LexNsis.cxx
 variableScope:scintilla/lexers/LexOpal.cxx
+constParameter:scintilla/lexers/LexOScript.cxx
+constParameter:scintilla/lexers/LexPascal.cxx
 variableScope:scintilla/lexers/LexPB.cxx
-shadowVar:scintilla/lexers/LexPowerPro.cxx
+constParameter:scintilla/lexers/LexPerl.cxx
+constParameter:scintilla/lexers/LexPLM.cxx
+constParameter:scintilla/lexers/LexPython.cxx
+shadowVariable:scintilla/lexers/LexPowerPro.cxx
+constParameter:scintilla/lexers/LexProgress.cxx
 variableScope:scintilla/lexers/LexProgress.cxx
-redundantAssignment:scintilla/lexers/LexRegistry.cxx
+constParameter:scintilla/lexers/LexRaku.cxx
+variableScope:scintilla/lexers/LexRaku.cxx
+redundantInitialization:scintilla/lexers/LexRegistry.cxx
+constParameter:scintilla/lexers/LexRuby.cxx
 variableScope:scintilla/lexers/LexRuby.cxx
 uninitMemberVar:scintilla/lexers/LexRuby.cxx
+constParameter:scintilla/lexers/LexRust.cxx
+constParameter:scintilla/lexers/LexScriptol.cxx
 variableScope:scintilla/lexers/LexSpecman.cxx
+constParameter:scintilla/lexers/LexSpice.cxx
 unreadVariable:scintilla/lexers/LexSpice.cxx
+constParameter:scintilla/lexers/LexSTTXT.cxx
+constParameter:scintilla/lexers/LexTACL.cxx
+knownConditionTrueFalse:scintilla/lexers/LexTACL.cxx
 clarifyCalculation:scintilla/lexers/LexTADS3.cxx
+constParameter:scintilla/lexers/LexTADS3.cxx
+constParameter:scintilla/lexers/LexTAL.cxx
 invalidscanf:scintilla/lexers/LexTCMD.cxx
 knownConditionTrueFalse:scintilla/lexers/LexTCMD.cxx
+constParameter:scintilla/lexers/LexTeX.cxx
 variableScope:scintilla/lexers/LexTeX.cxx
+constParameter:scintilla/lexers/LexVB.cxx
 knownConditionTrueFalse:scintilla/lexers/LexVerilog.cxx
 constArgument:scintilla/lexers/LexVerilog.cxx
-shadowVar:scintilla/lexers/LexVHDL.cxx
+constParameter:scintilla/lexers/LexVerilog.cxx
+constParameter:scintilla/lexers/LexVHDL.cxx
+shadowVariable:scintilla/lexers/LexVHDL.cxx
 unreadVariable:scintilla/lexers/LexVHDL.cxx
 variableScope:scintilla/lexers/LexVHDL.cxx
 unreadVariable:scintilla/lexers/LexVisualProlog.cxx
+constParameter:scintilla/lexers/LexYAML.cxx
+
+constVariable:scintilla/lexers/LexA68k.cxx
+constVariable:scintilla/lexers/LexAPDL.cxx
+constVariable:scintilla/lexers/LexASY.cxx
+constVariable:scintilla/lexers/LexAU3.cxx
+constVariable:scintilla/lexers/LexAVE.cxx
+constVariable:scintilla/lexers/LexAVS.cxx
+constVariable:scintilla/lexers/LexAsn1.cxx
+constVariable:scintilla/lexers/LexBibTeX.cxx
+constVariable:scintilla/lexers/LexCLW.cxx
+constVariable:scintilla/lexers/LexCOBOL.cxx
+constVariable:scintilla/lexers/LexCSS.cxx
+constVariable:scintilla/lexers/LexCaml.cxx
+constVariable:scintilla/lexers/LexCmake.cxx
+constVariable:scintilla/lexers/LexCoffeeScript.cxx
+constVariable:scintilla/lexers/LexConf.cxx
+constVariable:scintilla/lexers/LexCrontab.cxx
+constVariable:scintilla/lexers/LexCsound.cxx
+constVariable:scintilla/lexers/LexDMAP.cxx
+constVariable:scintilla/lexers/LexDataflex.cxx
+constVariable:scintilla/lexers/LexECL.cxx
+constVariable:scintilla/lexers/LexEScript.cxx
+constVariable:scintilla/lexers/LexEiffel.cxx
+constVariable:scintilla/lexers/LexErlang.cxx
+constVariable:scintilla/lexers/LexFlagship.cxx
+constVariable:scintilla/lexers/LexForth.cxx
+constVariable:scintilla/lexers/LexGAP.cxx
+constVariable:scintilla/lexers/LexFortran.cxx
+constVariable:scintilla/lexers/LexGui4Cli.cxx
+constVariable:scintilla/lexers/LexInno.cxx
+constVariable:scintilla/lexers/LexKVIrc.cxx
+constVariable:scintilla/lexers/LexKix.cxx
+constVariable:scintilla/lexers/LexLout.cxx
+constVariable:scintilla/lexers/LexMetapost.cxx
+constVariable:scintilla/lexers/LexMMIXAL.cxx
+constVariable:scintilla/lexers/LexMSSQL.cxx
+constVariable:scintilla/lexers/LexMagik.cxx
+constVariable:scintilla/lexers/LexMatlab.cxx
+constVariable:scintilla/lexers/LexModula.cxx
+constVariable:scintilla/lexers/LexNsis.cxx
+constVariable:scintilla/lexers/LexOpal.cxx
+constVariable:scintilla/lexers/LexPB.cxx
+constVariable:scintilla/lexers/LexPerl.cxx
+constVariable:scintilla/lexers/LexPOV.cxx
+constVariable:scintilla/lexers/LexPS.cxx
+constVariable:scintilla/lexers/LexPascal.cxx
+constVariable:scintilla/lexers/LexPowerPro.cxx
+constVariable:scintilla/lexers/LexPowerShell.cxx
+constVariable:scintilla/lexers/LexR.cxx
+constVariable:scintilla/lexers/LexRebol.cxx
+constVariable:scintilla/lexers/LexSAS.cxx
+constVariable:scintilla/lexers/LexSML.cxx
+constVariable:scintilla/lexers/LexSorcus.cxx
+constVariable:scintilla/lexers/LexSpecman.cxx
+constVariable:scintilla/lexers/LexStata.cxx
+constVariable:scintilla/lexers/LexTACL.cxx
+constVariable:scintilla/lexers/LexTADS3.cxx
+constVariable:scintilla/lexers/LexTAL.cxx
+constVariable:scintilla/lexers/LexTCL.cxx
+constVariable:scintilla/lexers/LexTCMD.cxx
+constVariable:scintilla/lexers/LexTeX.cxx
+constVariable:scintilla/lexers/LexVB.cxx
+constVariable:scintilla/lexers/LexVHDL.cxx
 
 // bp.itBracket not actually redundant as needed by return statements
 redundantAssignment:scintilla/lexers/LexCPP.cxx
 
-// safety initializations at start of GetCharacterExtents
-redundantAssignment:scintilla/gtk/ScintillaGTKAccessible.cxx
+// Suppress everything in test example files
+*:scintilla/lexilla/test/examples/*
 
 // Suppress everything in catch.hpp as won't be changing
 *:scintilla/test/unit/catch.hpp

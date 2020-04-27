@@ -188,8 +188,19 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     connect(ui->actionUndo, &QAction::triggered, editor, &ScintillaNext::undo);
     connect(ui->actionRedo, &QAction::triggered, editor, &ScintillaNext::redo);
-    connect(ui->actionCut, &QAction::triggered, editor, &ScintillaNext::cut);
-    connect(ui->actionCopy, &QAction::triggered, editor, &ScintillaNext::copy);
+    connect(ui->actionCut, &QAction::triggered, [=]() {
+        qInfo("actionCut");
+        if (editor->selectionEmpty()) {
+            editor->copyAllowLine();
+            editor->lineDelete();
+        }
+        else {
+            editor->cut();
+        }
+    });
+    connect(ui->actionCopy, &QAction::triggered, [=]() {
+        editor->copyAllowLine();
+    });
     connect(ui->actionPaste, &QAction::triggered, editor, &ScintillaNext::paste);
     connect(ui->actionSelect_All, &QAction::triggered, editor, &ScintillaNext::selectAll);
     connect(ui->actionCopyFullPath, &QAction::triggered, [=]() {
@@ -587,7 +598,7 @@ void MainWindow::initialize(Settings *settings)
 
     this->settings = settings;
     connect(settings, &Settings::showMenuBarChanged, [=](bool showMenuBar) {
-        // Don't hide it else the actions won't be enabled
+        // Don't 'hide' it, else the actions won't be enabled
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
     });
     connect(settings, &Settings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
@@ -778,7 +789,7 @@ void MainWindow::setupEditor(ScintillaNext *editor)
 
     editor->styleSetFore(STYLE_LINENUMBER, 0x808080);
     editor->styleSetBack(STYLE_LINENUMBER, 0xE4E4E4);
-    editor->styleSetBold(STYLE_LINENUMBER, true);
+    editor->styleSetBold(STYLE_LINENUMBER, false);
 
     editor->styleSetFore(STYLE_BRACELIGHT, 0x0000FF);
     editor->styleSetBack(STYLE_BRACELIGHT, 0xFFFFFF);
@@ -1371,8 +1382,6 @@ void MainWindow::updateSelectionBasedUi(int updated)
     if (updated & (SC_UPDATE_CONTENT | SC_UPDATE_SELECTION)) {
         bool hasAnySelections = !editor->selectionEmpty();
 
-        ui->actionCut->setEnabled(hasAnySelections);
-        ui->actionCopy->setEnabled(hasAnySelections);
         ui->actionDelete->setEnabled(hasAnySelections);
         ui->actionPaste->setEnabled(editor->canPaste());
 

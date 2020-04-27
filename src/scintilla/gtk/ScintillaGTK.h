@@ -36,16 +36,17 @@ class ScintillaGTK : public ScintillaBase {
 
 	GtkWidgetClass *parentClass;
 
-	static GdkAtom atomUTF8;
-	static GdkAtom atomString;
-	static GdkAtom atomUriList;
-	static GdkAtom atomDROPFILES_DND;
+	static inline GdkAtom atomUTF8 {};
+	static inline GdkAtom atomString {};
+	static inline GdkAtom atomUriList {};
+	static inline GdkAtom atomDROPFILES_DND {};
 	GdkAtom atomSought;
 
 #if PLAT_GTK_WIN32
 	CLIPFORMAT cfColumnSelect;
 #endif
 
+	bool preeditInitialized;
 	Window wPreedit;
 	Window wPreeditDraw;
 	GtkIMContext *im_context;
@@ -53,7 +54,7 @@ class ScintillaGTK : public ScintillaBase {
 
 	// Wheel mouse support
 	unsigned int linesPerScroll;
-	GTimeVal lastWheelMouseTime;
+	gint64 lastWheelMouseTime;
 	gint lastWheelMouseDirection;
 	gint wheelMouseIntensity;
 	gdouble smoothScrollY;
@@ -78,7 +79,7 @@ public:
 	ScintillaGTK &operator=(const ScintillaGTK &) = delete;
 	ScintillaGTK &operator=(ScintillaGTK &&) = delete;
 	virtual ~ScintillaGTK();
-	static ScintillaGTK *FromWidget(GtkWidget *widget);
+	static ScintillaGTK *FromWidget(GtkWidget *widget) noexcept;
 	static void ClassInit(OBJECT_CLASS *object_class, GtkWidgetClass *widget_class, GtkContainerClass *container_class);
 private:
 	void Init();
@@ -273,6 +274,12 @@ public:
 		weakRef(obj) {
 		g_object_weak_ref(weakRef, WeakNotify, this);
 	}
+
+	// Deleted so GObjectWatcher objects can not be copied.
+	GObjectWatcher(const GObjectWatcher&) = delete;
+	GObjectWatcher(GObjectWatcher&&) = delete;
+	GObjectWatcher&operator=(const GObjectWatcher&) = delete;
+	GObjectWatcher&operator=(GObjectWatcher&&) = delete;
 
 	virtual ~GObjectWatcher() {
 		if (weakRef) {

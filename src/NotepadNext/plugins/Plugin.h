@@ -20,6 +20,8 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+#include <QObject>
+
 #include "ScintillaEdit.h"
 
 class Plugin : public QObject

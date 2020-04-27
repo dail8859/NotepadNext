@@ -5,6 +5,7 @@ syntax: glob
 *.lib
 *.obj
 *.iobj
+__pycache__
 *.pyc
 *.dll
 *.dylib
@@ -19,6 +20,8 @@ syntax: glob
 *.bak
 *.sbr
 *.suo
+*.aps
+*.vcxproj.*
 *.idb
 *.bsc
 *.intermediate.manifest

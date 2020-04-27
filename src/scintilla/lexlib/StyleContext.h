@@ -154,8 +154,8 @@ public:
 	Sci_Position LengthCurrent() const {
 		return currentPos - styler.GetStartSegment();
 	}
-	int GetRelative(Sci_Position n) {
-		return static_cast<unsigned char>(styler.SafeGetCharAt(currentPos+n, 0));
+	int GetRelative(Sci_Position n, char chDefault='\0') {
+		return static_cast<unsigned char>(styler.SafeGetCharAt(currentPos+n, chDefault));
 	}
 	int GetRelativeCharacter(Sci_Position n) {
 		if (n == 0)

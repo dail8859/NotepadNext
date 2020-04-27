@@ -442,7 +442,7 @@
   </action>
   <action name="actionClose">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/closeFile.png</normaloff>:/icons/closeFile.png</iconset>
    </property>
    <property name="text">
@@ -470,7 +470,7 @@
   </action>
   <action name="actionSaveAll">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/saveAll.png</normaloff>:/icons/saveAll.png</iconset>
    </property>
    <property name="text">
@@ -490,7 +490,7 @@
   </action>
   <action name="actionIncrease_Indent">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/text_indent.png</normaloff>:/icons/text_indent.png</iconset>
    </property>
    <property name="text">
@@ -499,7 +499,7 @@
   </action>
   <action name="actionDecrease_Indent">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/text_indent_remove.png</normaloff>:/icons/text_indent_remove.png</iconset>
    </property>
    <property name="text">
@@ -583,7 +583,7 @@
   </action>
   <action name="actionCloseAll">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/closeAll.png</normaloff>:/icons/closeAll.png</iconset>
    </property>
    <property name="text">
@@ -724,14 +724,6 @@
     <string>Word Wrap</string>
    </property>
   </action>
-  <action name="actionShowNone">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Show None</string>
-   </property>
-  </action>
   <action name="actionRestoreRecentlyClosedFile">
    <property name="text">
     <string>Restore Recently Closed File</string>
@@ -818,7 +810,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/startRecord.png</normaloff>
      <normalon>:/icons/stopRecord.png</normalon>:/icons/startRecord.png</iconset>
    </property>
@@ -831,7 +823,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/playRecord.png</normaloff>:/icons/playRecord.png</iconset>
    </property>
    <property name="text">
@@ -846,7 +838,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/saveRecord.png</normaloff>:/icons/saveRecord.png</iconset>
    </property>
    <property name="text">
@@ -858,7 +850,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/playRecord_m.png</normaloff>:/icons/playRecord_m.png</iconset>
    </property>
    <property name="text">
@@ -881,7 +873,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../resources.qrc"/>
  </resources>
  <connections/>
 </ui>
