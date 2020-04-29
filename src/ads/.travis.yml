@@ -1,0 +1,155 @@
+language: cpp
+# gcc is clang on mac
+compiler: gcc
+
+git:
+  depth: 1
+
+matrix:
+  fast_finish: true
+  include:
+  - name: Ubuntu qmake Qt5.5.1
+    os: linux
+    dist: trusty
+    group: stable
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - sourceline: 'ppa:beineri/opt-qt551-trusty'
+        update: true
+        packages:
+        - qt55base
+        - qt55tools
+        - gcc-6
+        - g++-6
+        - libc6-i386
+    script:
+        - PATH="/opt/qt55/bin:$PATH"
+        - CXX="g++-6"
+        - CC="gcc-6"
+        - qt55-env.sh
+        - qmake
+        - make
+        - make install
+  - name: Ubuntu qmake dll
+    os: linux
+    dist: xenial
+    group: stable
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - sourceline: 'ppa:beineri/opt-qt-5.12.0-xenial'
+        update: true
+        packages:
+        - qt512base
+        - qt512tools
+        - gcc-6
+        - g++-6
+        - libc6-i386
+        - libgl-dev
+        - libgl1-mesa-dev
+        - mesa-common-dev
+    script:
+        - PATH="/opt/qt512/bin:$PATH"
+        - CXX="g++-6"
+        - CC="gcc-6"
+        - qt512-env.sh
+        - qmake
+        - make
+        - make install
+  - name: Ubuntu qmake static
+    os: linux
+    dist: xenial
+    group: stable
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - sourceline: 'ppa:beineri/opt-qt-5.12.0-xenial'
+        update: true
+        packages:
+        - qt512base
+        - qt512tools
+        - gcc-6
+        - g++-6
+        - libc6-i386
+        - libgl-dev
+        - libgl1-mesa-dev
+        - mesa-common-dev
+    script:
+        - PATH="/opt/qt512/bin:$PATH"
+        - CXX="g++-6"
+        - CC="gcc-6"
+        - qt512-env.sh
+        - qmake "CONFIG+=adsBuildStatic"
+        - make
+        - make install
+  - name: macOS CMake dll
+    os: osx
+    osx_image: xcode10.1
+    addons:
+      homebrew:
+        packages:
+        - qt
+        update: true
+    script:
+        - PATH="/usr/local/opt/qt5/bin:$PATH"
+        - mkdir -p build
+        - cd build
+        - cmake --version
+        - cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_DEBUG_POSTFIX=_debug -DBUILD_EXAMPLES=ON -DBUILD_STATIC=OFF -DCMAKE_INSTALL_PREFIX="./installed" ../
+        - cmake --build .
+        - cmake --build . --target install
+        - cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_EXAMPLES=ON -DBUILD_STATIC=OFF -DCMAKE_INSTALL_PREFIX="./installed" ../
+        - cmake --build .
+        - cmake --build . --target install
+  - name: macOS CMake static
+    os: osx
+    osx_image: xcode10.1
+    addons:
+      homebrew:
+        packages:
+        - qt
+        update: true
+    script:
+        - PATH="/usr/local/opt/qt5/bin:$PATH"
+        - mkdir -p build
+        - cd build
+        - cmake --version
+        - cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=DEBUG -DCMAKE_DEBUG_POSTFIX=_debug -DBUILD_EXAMPLES=ON -DBUILD_STATIC=ON -DCMAKE_INSTALL_PREFIX="./installed" ../
+        - cmake --build .
+        - cmake --build . --target install
+        - cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_EXAMPLES=ON -DBUILD_STATIC=ON -DCMAKE_INSTALL_PREFIX="./installed" ../
+        - cmake --build .
+        - cmake --build . --target install
+  - name: macOS qmake dll
+    os: osx
+    osx_image: xcode10.1
+    addons:
+      homebrew:
+        packages:
+        - qt
+        update: true
+    script:
+        - PATH="/usr/local/opt/qt5/bin:$PATH"
+        - qmake
+        - make
+        - make install
+  - name: macOS qmake static
+    os: osx
+    osx_image: xcode10.1
+    addons:
+      homebrew:
+        packages:
+        - qt
+        update: true
+    script:
+        - PATH="/usr/local/opt/qt5/bin:$PATH"
+        - qmake "CONFIG+=adsBuildStatic"
+        - make
+        - make install
+notifications:
+  email: false
+
