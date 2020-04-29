@@ -1,0 +1,2 @@
+include versioneer.py
+include PyQtAds/_version.py
