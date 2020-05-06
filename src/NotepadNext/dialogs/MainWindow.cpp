@@ -33,6 +33,9 @@
 #include <Windows.h>
 #endif
 
+#include "DockAreaWidget.h"
+#include "DockWidgetTab.h"
+
 #include "NotepadNextApplication.h"
 #include "Settings.h"
 
@@ -67,21 +70,27 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 {
     qInfo(Q_FUNC_INFO);
 
+    Q_INIT_RESOURCE(ads);
+
     ui->setupUi(this);
 
     qInfo("setupUi Completed");
 
+    setupStatusBar();
+
+     // TODO: these belongs in main app so they can be shared?
     bufferManager = new BufferManager(this);
     recentFilesListManager = new RecentFilesListManager(ui->menuRecentFiles);
 
-    tabbedEditor = new TabbedEditor();
-    this->setCentralWidget(tabbedEditor);
-    editor = tabbedEditor->getEditor();
+    // The windows editor manager that supports docking
+    dockedEditor = new DockedEditor(this);
+    connect(dockedEditor, &DockedEditor::editorCreated, this, &MainWindow::setupEditor);
+
+    editor = new ScintillaNext();
 
     // Set up the lua state and the extension
     LuaExtension::Instance().Initialise(app->getLuaState()->L, this->editor);
 
-    setupStatusBar();
 
 #ifdef QT_DEBUG
     // Print some debug messages: connect these first in case something bad happens during a later slot
@@ -90,34 +99,29 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(bufferManager, &BufferManager::bufferClosed, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferClosed(%s)", buffer->getName().toUtf8().constData());});
     connect(bufferManager, &BufferManager::bufferRenamed, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferRenamed(%s)", buffer->getName().toUtf8().constData());});
 
-    connect(tabbedEditor, &TabbedEditor::bufferSwitched, [](ScintillaBuffer *buffer) { qInfo("bufferSwitched(%s)", buffer->getName().toUtf8().constData());});
-    connect(tabbedEditor, &TabbedEditor::allBuffersClosed, []() { qInfo("allBuffersClosed()");});
-    connect(tabbedEditor->getTabBar(), &QTabBar::tabMoved, [](int from, int to) { qInfo("tabMoved(from %d, to %d)", from, to);});
-
-    connect(editor, &ScintillaNext::savePointChanged, [](bool b) { qInfo("savePointChanged(%s)", b ? "true" : "false");});
-    connect(editor, &ScintillaNext::updateUi, [](int updated) { qInfo("updateUi(%d)", updated);});
-    connect(editor, &ScintillaNext::uriDropped, [](const QString &uri) { qInfo("uriDropped(%s)", qUtf8Printable(uri));});
-    connect(editor, &ScintillaNext::marginClicked, [](int position, int modifiers, int margin) { qInfo("marginClicked(%d, %d, %d)", position, modifiers, margin);});
+    //connect(editor, &ScintillaNext::savePointChanged, [](bool b) { qInfo("savePointChanged(%s)", b ? "true" : "false");});
+    //connect(editor, &ScintillaNext::updateUi, [](int updated) { qInfo("updateUi(%d)", updated);});
+    //connect(editor, &ScintillaNext::uriDropped, [](const QString &uri) { qInfo("uriDropped(%s)", qUtf8Printable(uri));});
+    //connect(editor, &ScintillaNext::marginClicked, [](int position, int modifiers, int margin) { qInfo("marginClicked(%d, %d, %d)", position, modifiers, margin);});
     //connect(editor, &ScintillaNext::modified, [](int type, int position, int length, int linesAdded, const QByteArray &text, int line, int foldNow, int foldPrev) {
     //    qInfo("linesAdded %d", linesAdded);
     //});
-    connect(editor, &ScintillaNext::styleNeeded, [](int pos)  { qInfo("styleNeeded(%d)", pos);});
+    //connect(editor, &ScintillaNext::styleNeeded, [](int pos)  { qInfo("styleNeeded(%d)", pos);});
 #endif
 
     // Get some events from the tab bar
-    connect(tabbedEditor->getTabBar(), &QTabBar::tabBarDoubleClicked, this, [=](int index) {
-        if (index == TabbedEditor::INVALID_INDEX) {
-            newFile();
-        }
-    });
-    connect(tabbedEditor->getTabBar(), &QTabBar::tabCloseRequested, this, &MainWindow::closeFile);
-    connect(tabbedEditor->getTabBar(), &QWidget::customContextMenuRequested, this, &MainWindow::tabBarRightClicked);
+    // TODO: replace with + button on bar
+    //connect(tabbedEditor->getTabBar(), &QTabBar::tabBarDoubleClicked, this, [=](int index) {
+    //    if (index == TabbedEditor::INVALID_INDEX) {
+    //        newFile();
+    //    }
+    //});
+    connect(dockedEditor, &DockedEditor::bufferCloseRequested, this, &MainWindow::closeFile);
 
-    // We need to be notified when the tabbed editor switches to a new file (e.g. via the user clicking on a tab)
-    connect(tabbedEditor, &TabbedEditor::bufferSwitched, this, &MainWindow::bufferActivated);
+    //connect(tabbedEditor->getTabBar(), &QWidget::customContextMenuRequested, this, &MainWindow::tabBarRightClicked);
 
-    // Create an empty buffer if all have closed. TODO: handle future option to close the application on last file being closed
-    connect(tabbedEditor, &TabbedEditor::allBuffersClosed, this, &MainWindow::newFile);
+    // We need to be notified when the editor switches to a new file (e.g. via the user clicking on a tab)
+    connect(dockedEditor, &DockedEditor::bufferSwitched, this, &MainWindow::bufferActivated);
 
     // TODO: this might not be the best way but works for now
     // Set up the menus
@@ -204,14 +208,14 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionPaste, &QAction::triggered, editor, &ScintillaNext::paste);
     connect(ui->actionSelect_All, &QAction::triggered, editor, &ScintillaNext::selectAll);
     connect(ui->actionCopyFullPath, &QAction::triggered, [=]() {
-        auto buffer = tabbedEditor->getCurrentBuffer();
+        auto buffer = dockedEditor->getCurrentBuffer();
         if (buffer->isFile()) {
             QApplication::clipboard()->setText(buffer->fileInfo.canonicalFilePath());
         }
     });
-    connect(ui->actionCopyFileName, &QAction::triggered, [=]() { QApplication::clipboard()->setText(tabbedEditor->getCurrentBuffer()->getName());});
+    connect(ui->actionCopyFileName, &QAction::triggered, [=]() { QApplication::clipboard()->setText(dockedEditor->getCurrentBuffer()->getName());});
     connect(ui->actionCopyFileDirectory, &QAction::triggered, [=]() {
-        auto buffer = tabbedEditor->getCurrentBuffer();
+        auto buffer = dockedEditor->getCurrentBuffer();
         if (buffer->isFile()) {
             QApplication::clipboard()->setText(buffer->fileInfo.canonicalFilePath());
         }
@@ -361,10 +365,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
             }
         }
     });
-    // The first time it is triggered it doesn't see it as checked for some reason
-    ui->actionShowWhitespaceandTab->setChecked(true);
-    ui->actionShowWhitespaceandTab->trigger();
-    ui->actionShowWhitespaceandTab->trigger();
 
     connect(ui->actionShowWrapSymbol, &QAction::triggered, [=](bool b) {
         editor->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
@@ -440,10 +440,14 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     });
 
     connect(ui->actionPlayback, &QAction::triggered, [=](bool b) {
+        Q_UNUSED(b);
+
         currentMacro->replay(editor);
     });
 
     connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, [=](bool b) {
+        Q_UNUSED(b);
+
         if (mrd == Q_NULLPTR) {
             mrd = new MacroRunDialog(this);
             connect(mrd, &MacroRunDialog::execute, [=](Macro *macro, int times) {
@@ -465,6 +469,8 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     });
 
     connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, [=](bool b) {
+        Q_UNUSED(b);
+
         MacroSaveDialog msd;
 
         msd.show();
@@ -496,31 +502,25 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
             delete actions.takeFirst();
         }
 
-        const int current = tabbedEditor->currentIndex();
-        for (int i = 0; i < tabbedEditor->count(); ++i) {
-            // NOTE: the menu does not take ownership when using insertAction
-            QAction *action = new QAction(tabbedEditor->getBufferFromIndex(i)->getName());
-
-            if (i == current) {
+        ScintillaBuffer *currentBuffer = dockedEditor->getCurrentBuffer();
+        foreach (ScintillaBuffer *buffer, dockedEditor->buffers()) {
+            QAction *action = new QAction(buffer->getName());
+            if (buffer == currentBuffer) {
                 action->setCheckable(true);
                 action->setChecked(true);
             }
 
-            connect(action, &QAction::triggered, [=]() {
-                tabbedEditor->switchToIndex(i);
-            });
+            //connect(action, &QAction::triggered, [=]() {
+            //    tabbedEditor->switchToIndex(i);
+            //});
 
+            // NOTE: the menu does not take ownership when using insertAction
             ui->menuWindows->insertAction(actions.at(0), action);
         }
     });
 
     connect(ui->actionWindowsList, &QAction::triggered, [=]() {
-        QList<ScintillaBuffer *> buffers;
-        for (int i = 0; i < tabbedEditor->count(); ++i) {
-            buffers << tabbedEditor->getBufferFromIndex(i);
-        }
-
-        WindowListDialog wld(this, buffers, this);
+        WindowListDialog wld(this, dockedEditor->buffers().toList(), this);
         wld.show();
         wld.raise();
         wld.activateWindow();
@@ -536,33 +536,16 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     });
 
     // Connect the editor to the UI
-    connect(editor, &ScintillaNext::savePointChanged, this, &MainWindow::updateSaveStatusBasedUi);
-    connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateSelectionBasedUi);
-    connect(tabbedEditor->getTabBar(), &QTabBar::tabMoved, this, &MainWindow::updateBufferPositionBasedUi);
-
-    connect(editor, &ScintillaNext::marginClicked, [=](int position, int modifiers, int margin) {
-        if (margin == 1) {
-            int line = editor->lineFromPosition(position);
-
-            if (editor->markerGet(line) & (1 << 24)) {
-                while (editor->markerGet(line) & (1 << 24)) {
-                    editor->markerDelete(line, 24);
-                }
-            }
-            else {
-                editor->markerAdd(line, 24);
-            }
-        }
-    });
+    //connect(tabbedEditor->getTabBar(), &QTabBar::tabMoved, this, &MainWindow::updateBufferPositionBasedUi);
 
     // Send some events to the tabbed editor to automatcially manage the tabs
-    connect(bufferManager, &BufferManager::bufferCreated, tabbedEditor, &TabbedEditor::addBuffer);
-    connect(bufferManager, &BufferManager::bufferClosed, tabbedEditor, &TabbedEditor::removeBuffer);
-    connect(bufferManager, &BufferManager::bufferRenamed, tabbedEditor, &TabbedEditor::renamedBuffer);
+    connect(bufferManager, &BufferManager::bufferCreated, dockedEditor, &DockedEditor::addBuffer);
+    connect(bufferManager, &BufferManager::bufferClosed, dockedEditor, &DockedEditor::removeBuffer);
+    connect(bufferManager, &BufferManager::bufferRenamed, dockedEditor, &DockedEditor::renamedBuffer);
 
     // If the current file is saved update the window title incase the file was renamed
     connect(bufferManager, &BufferManager::bufferCreated, this, &MainWindow::detectLanguageFromExtension);
-    connect(bufferManager, &BufferManager::bufferClosed, this, &MainWindow::updateBufferPositionBasedUi);
+    //connect(bufferManager, &BufferManager::bufferClosed, this, &MainWindow::updateBufferPositionBasedUi);
     connect(bufferManager, &BufferManager::bufferRenamed, [=] (ScintillaBuffer *buffer) {
         updateBufferFileStatusBasedUi(buffer);
         detectLanguageFromExtension(buffer);
@@ -589,7 +572,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    Q_ASSERT(tabbedEditor->count() == 0);
+    Q_ASSERT(dockedEditor->count() == 0);
 }
 
 void MainWindow::initialize(Settings *settings)
@@ -602,31 +585,21 @@ void MainWindow::initialize(Settings *settings)
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
     });
     connect(settings, &Settings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
-    connect(settings, &Settings::showTabBarChanged, tabbedEditor->getTabBar(), &QTabBar::setVisible);
+    //connect(settings, &Settings::showTabBarChanged, tabbedEditor->getTabBar(), &QTabBar::setVisible);
     connect(settings, &Settings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
 
-    connect(settings, &Settings::tabsClosableChanged, tabbedEditor->getTabBar(), &QTabBar::setTabsClosable);
+    //connect(settings, &Settings::tabsClosableChanged, tabbedEditor->getTabBar(), &QTabBar::setTabsClosable);
 
     setupEditor(editor);
 
-
-    // Plugins
-    SmartHighlighter *s = new SmartHighlighter(editor);
-    s->setEnabled(true);
-
-    HighlightedScrollBarPlugin *h = new HighlightedScrollBarPlugin(editor);
-    h->setEnabled(true);
-
-    BraceMatch *b = new BraceMatch(editor);
-    b->setEnabled(true);
-
-    LineNumbers *l = new LineNumbers(editor);
-    l->setEnabled(true);
-
+    // The first time it is triggered it doesn't see it as checked for some reason
+    ui->actionShowWhitespaceandTab->setChecked(true);
+    ui->actionShowWhitespaceandTab->trigger();
+    ui->actionShowWhitespaceandTab->trigger();
 
     setupLanguageMenu();
 
-    if (tabbedEditor->count() == 0)
+    if (dockedEditor->count() == 0)
         newFile();
 
     editor->grabFocus();
@@ -803,6 +776,39 @@ void MainWindow::setupEditor(ScintillaNext *editor)
     // STYLE_CONTROLCHAR
     // STYLE_CALLTIP
     // STYLE_FOLDDISPLAYTEXT
+
+    // Plugins
+    SmartHighlighter *s = new SmartHighlighter(editor);
+    s->setEnabled(true);
+
+    //HighlightedScrollBarPlugin *h = new HighlightedScrollBarPlugin(editor);
+    //h->setEnabled(true);
+
+    BraceMatch *b = new BraceMatch(editor);
+    b->setEnabled(true);
+
+    LineNumbers *l = new LineNumbers(editor);
+    l->setEnabled(true);
+
+    // Connect the editor to the UI
+    connect(editor, &ScintillaNext::savePointChanged, this, &MainWindow::updateSaveStatusBasedUi);
+    connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateSelectionBasedUi);
+    connect(editor, &ScintillaNext::marginClicked, [editor](int position, int modifiers, int margin) {
+        Q_UNUSED(modifiers);
+
+        if (margin == 1) {
+            int line = editor->lineFromPosition(position);
+
+            if (editor->markerGet(line) & (1 << 24)) {
+                while (editor->markerGet(line) & (1 << 24)) {
+                    editor->markerDelete(line, 24);
+                }
+            }
+            else {
+                editor->markerAdd(line, 24);
+            }
+        }
+    });
 }
 
 void MainWindow::newFile()
@@ -812,15 +818,13 @@ void MainWindow::newFile()
     static int count = 1;
 
     bufferManager->createEmtpyBuffer(QString("New %1").arg(count++));
-
-    tabbedEditor->switchToIndex(tabbedEditor->count() - 1);
 }
 
 // One unedited, new blank document
 bool MainWindow::isInInitialState()
 {
-    if (tabbedEditor->count() == 1) {
-        ScintillaBuffer *buffer = tabbedEditor->getBufferFromIndex(0);
+    if (dockedEditor->count() == 1) {
+        ScintillaBuffer *buffer = dockedEditor->getCurrentBuffer();
         return !buffer->isFile() && buffer->is_save_point();
     }
 
@@ -834,8 +838,8 @@ void MainWindow::openFileList(const QStringList &fileNames)
     if (fileNames.size() == 0)
         return;
 
-    bool wasInitialState = isInInitialState();
-    const ScintillaBuffer *mostRecentBuffer = Q_NULLPTR;
+    //bool wasInitialState = isInInitialState();
+    //const ScintillaBuffer *mostRecentBuffer = Q_NULLPTR;
 
     foreach (const QString &filePath , fileNames) {
         qInfo(qUtf8Printable(filePath));
@@ -844,7 +848,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
         ScintillaBuffer *buffer = bufferManager->getBufferByFilePath(filePath);
         if (buffer != Q_NULLPTR) {
             // The file has already been opened
-            mostRecentBuffer = buffer;
+            //mostRecentBuffer = buffer;
             continue;
         }
 
@@ -853,7 +857,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
             auto reply = QMessageBox::question(this, "Create File", QString("<b>%1</b> does not exist. Do you want to create it?").arg(filePath));
             if (reply == QMessageBox::Yes) {
                 buffer = bufferManager->createBufferFromFile(filePath);
-                mostRecentBuffer = buffer;
+                //mostRecentBuffer = buffer;
             }
             else {
                 // Make sure it is not still in the recent files list
@@ -862,28 +866,30 @@ void MainWindow::openFileList(const QStringList &fileNames)
         }
         else {
             buffer = bufferManager->createBufferFromFile(filePath);
-            mostRecentBuffer = buffer;
+            //mostRecentBuffer = buffer;
         }
     }
 
     // If any were successful, switch to the last one
-    if (mostRecentBuffer) {
-        tabbedEditor->switchToBuffer(mostRecentBuffer);
-
-        if (wasInitialState) {
-            closeFile(0);
-        }
-    }
+    //if (mostRecentBuffer) {
+    //    dockedEditor->switchToBuffer(mostRecentBuffer);
+    //
+    //    if (wasInitialState) {
+    //        // TODO: fix this
+    //        //closeFile(0);
+    //    }
+    //}
 }
 
 bool MainWindow::checkBuffersBeforeClose(int startIndex, int endIndex)
 {
+    // TODO: use index
+
     // Check if any need saved
-    for(int i = startIndex; i < endIndex; ++i) {
-        auto const buffer = tabbedEditor->getBufferFromIndex(i);
+    foreach (ScintillaBuffer *buffer, dockedEditor->buffers()) {
         if (!buffer->is_save_point()) {
             // Switch to it
-            tabbedEditor->switchToIndex(i);
+            dockedEditor->switchToBuffer(buffer);
             // Ask the user what to do
             QString message = QString("Save file <b>%1</b>?").arg(buffer->getName());
             auto reply = QMessageBox::question(this, "Save File", message, QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save);
@@ -967,7 +973,7 @@ void MainWindow::openFile(const QString &filePath)
 
 void MainWindow::reloadFile()
 {
-    auto buffer = tabbedEditor->getCurrentBuffer();
+    auto buffer = dockedEditor->getCurrentBuffer();
 
     if (!buffer->isFile() && !buffer->is_save_point()) {
         return;
@@ -982,23 +988,22 @@ void MainWindow::reloadFile()
 
 void MainWindow::closeCurrentFile()
 {
-    closeFile(tabbedEditor->currentIndex());
+    closeFile(dockedEditor->getCurrentBuffer());
 }
 
-void MainWindow::closeFile(int index)
+void MainWindow::closeFile(ScintillaBuffer *buffer)
 {
     if (isInInitialState()) {
         // Don't close the last file
         return;
     }
 
-    auto buffer = tabbedEditor->getBufferFromIndex(index);
     if(buffer->is_save_point()) {
         bufferManager->closeBuffer(buffer);
     }
     else {
         // The user needs be asked what to do about this file, so switch to it
-        tabbedEditor->switchToIndex(index);
+        dockedEditor->switchToBuffer(buffer);
 
         QString message = QString("Save file <b>%1</b>?").arg(buffer->getName());
         auto reply = QMessageBox::question(this, "Save File", message, QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save);
@@ -1017,39 +1022,38 @@ void MainWindow::closeFile(int index)
 
         bufferManager->closeBuffer(buffer);
     }
-
 }
 
 void MainWindow::closeAllFiles(bool forceClose = false)
 {
     if (!forceClose) {
-        if (!checkBuffersBeforeClose(0, tabbedEditor->count())) {
+        if (!checkBuffersBeforeClose(0, dockedEditor->count())) {
             return;
         }
     }
 
-    tabbedEditor->switchToIndex(tabbedEditor->count() - 1);
-    for (int index = tabbedEditor->count() - 1; index >= 0; --index) {
-        auto buffer = tabbedEditor->getBufferFromIndex(index);
+    // Ask the buffer manager to close the buffers the dockedEditor knows about
+    foreach (ScintillaBuffer *buffer, dockedEditor->buffers()) {
         bufferManager->closeBuffer(buffer);
     }
 }
 
 void MainWindow::closeAllExceptActive()
 {
-    const ScintillaBuffer *currentBuffer = tabbedEditor->getCurrentBuffer();
+    /*
+    const ScintillaBuffer *currentBuffer = dockedEditor->getCurrentBuffer();
 
     int curIndex = tabbedEditor->currentIndex();
     if (!checkBuffersBeforeClose(0, curIndex)) {
         return;
     }
-    if (!checkBuffersBeforeClose(curIndex + 1, tabbedEditor->count())) {
+    if (!checkBuffersBeforeClose(curIndex + 1, dockedEditor->count())) {
         return;
     }
 
     // Iterate the buffers but skip the one we want to keep
     int i = 0;
-    while (tabbedEditor->count() > 1) {
+    while (dockedEditor->count() > 1) {
         ScintillaBuffer *buffer = tabbedEditor->getBufferFromIndex(i);
         if (buffer == currentBuffer) {
             i++;
@@ -1058,10 +1062,12 @@ void MainWindow::closeAllExceptActive()
             bufferManager->closeBuffer(buffer);
         }
     }
+    */
 }
 
 void MainWindow::closeAllToLeft()
 {
+    /*
     // Save the current index since checkBuffersBeforeClose() might change it
     int curIndex = tabbedEditor->currentIndex();
 
@@ -1076,35 +1082,32 @@ void MainWindow::closeAllToLeft()
         auto buffer = tabbedEditor->getBufferFromIndex(0);
         bufferManager->closeBuffer(buffer);
     }
+    */
 }
 
 void MainWindow::closeAllToRight()
 {
+    /*
     // Save the current index since checkBuffersBeforeClose() might change it
     int curIndex = tabbedEditor->currentIndex();
 
-    if (!checkBuffersBeforeClose(curIndex, tabbedEditor->count())) {
+    if (!checkBuffersBeforeClose(curIndex, dockedEditor->count())) {
         return;
     }
 
     // Restore it now that everything is ready to be closed
     tabbedEditor->switchToIndex(curIndex);
 
-    while (curIndex < tabbedEditor->count() - 1) {
+    while (curIndex < dockedEditor->count() - 1) {
         auto buffer = tabbedEditor->getBufferFromIndex(curIndex + 1);
         bufferManager->closeBuffer(buffer);
     }
+    */
 }
 
 bool MainWindow::saveCurrentFile()
 {
-    return saveFile(tabbedEditor->currentIndex());
-}
-
-bool MainWindow::saveFile(int index)
-{
-    auto buffer = tabbedEditor->getBufferFromIndex(index);
-    return saveFile(buffer);
+    return saveFile(dockedEditor->getCurrentBuffer());
 }
 
 bool MainWindow::saveFile(ScintillaBuffer *buffer)
@@ -1114,7 +1117,7 @@ bool MainWindow::saveFile(ScintillaBuffer *buffer)
 
     if (!buffer->isFile()) {
         // Switch to the buffer and show the saveas dialog
-        tabbedEditor->switchToBuffer(buffer);
+        dockedEditor->switchToBuffer(buffer);
         return saveCurrentFileAsDialog();
     }
     else {
@@ -1151,7 +1154,7 @@ bool MainWindow::saveCurrentFileAsDialog()
 {
     QString dialogDir = QString();
     QString filter = getFileDialogFilter();
-    auto buffer = tabbedEditor->getCurrentBuffer();
+    auto buffer = dockedEditor->getCurrentBuffer();
 
     // Use the file path if possible
     if (buffer->isFile()) {
@@ -1179,13 +1182,7 @@ bool MainWindow::saveCurrentFileAsDialog()
 
 bool MainWindow::saveCurrentFileAs(const QString &fileName)
 {
-    return saveFileAs(tabbedEditor->currentIndex(), fileName);
-}
-
-bool MainWindow::saveFileAs(int index, const QString &fileName)
-{
-    auto buffer = tabbedEditor->getBufferFromIndex(index);
-    return saveFileAs(buffer, fileName);
+    return saveFileAs(dockedEditor->getCurrentBuffer(), fileName);
 }
 
 bool MainWindow::saveFileAs(ScintillaBuffer *buffer, const QString &fileName)
@@ -1201,7 +1198,7 @@ void MainWindow::saveCopyAsDialog()
 {
     QString dialogDir = QString();
     QString filter = getFileDialogFilter();
-    auto buffer = tabbedEditor->getCurrentBuffer();
+    auto buffer = dockedEditor->getCurrentBuffer();
 
     // Use the file path if possible
     if (buffer->isFile()) {
@@ -1222,20 +1219,20 @@ void MainWindow::saveCopyAsDialog()
 
 void MainWindow::saveCopyAs(const QString &fileName)
 {
-    auto buffer = tabbedEditor->getCurrentBuffer();
+    auto buffer = dockedEditor->getCurrentBuffer();
     bufferManager->saveBufferCopyAs(buffer, fileName);
 }
 
 void MainWindow::saveAll()
 {
-    for(int i = 0; i < tabbedEditor->count(); ++i) {
-        saveFile(i);
+    foreach (ScintillaBuffer *buffer, dockedEditor->buffers()) {
+        saveFile(buffer);
     }
 }
 
 void MainWindow::renameFile()
 {
-    auto buffer = tabbedEditor->getCurrentBuffer();
+    auto buffer = dockedEditor->getCurrentBuffer();
 
     Q_ASSERT(buffer->isFile());
 
@@ -1276,8 +1273,8 @@ void MainWindow::updateBufferFileStatusBasedUi(ScintillaBuffer *buffer)
 
 bool MainWindow::isAnyUnsaved()
 {
-    for(int i = 0; i < tabbedEditor->count(); ++i) {
-        if (!tabbedEditor->getBufferFromIndex(i)->is_save_point()) {
+    foreach (ScintillaBuffer *buffer, dockedEditor->buffers()) {
+        if (!buffer->is_save_point()) {
             return true;
         }
     }
@@ -1325,8 +1322,8 @@ void MainWindow::updateSaveStatusBasedUi(bool isDirty)
     ui->actionSave->setEnabled(isDirty);
     ui->actionSaveAll->setEnabled(isDirty || isAnyUnsaved());
 
-    if (tabbedEditor->count() == 1) {
-        ScintillaBuffer *buffer = tabbedEditor->getCurrentBuffer();
+    if (dockedEditor->count() == 1) {
+        ScintillaBuffer *buffer = dockedEditor->getCurrentBuffer();
         bool ableToClose = buffer->isFile() || isDirty;
         ui->actionClose->setEnabled(ableToClose);
         ui->actionCloseAll->setEnabled(ableToClose);
@@ -1339,17 +1336,17 @@ void MainWindow::updateSaveStatusBasedUi(bool isDirty)
 
 void MainWindow::updateBufferPositionBasedUi()
 {
-    int curIndex = tabbedEditor->currentIndex();
-    ui->actionCloseAllToLeft->setEnabled(curIndex != 0);
-    ui->actionCloseAllToRight->setEnabled(curIndex != tabbedEditor->count() - 1);
-    ui->actionCloseAllExceptActive->setEnabled(tabbedEditor->count() > 1);
+    //int curIndex = tabbedEditor->currentIndex();
+    //ui->actionCloseAllToLeft->setEnabled(curIndex != 0);
+    //ui->actionCloseAllToRight->setEnabled(curIndex != dockedEditor->count() - 1);
+    //ui->actionCloseAllExceptActive->setEnabled(dockedEditor->count() > 1);
 }
 
 void MainWindow::updateGui(ScintillaBuffer *buffer)
 {
     // TODO: Does buffer need passed in? It should only ever operate on the current buffer!
-    // buffer = tabbedEditor->getCurrentBuffer();
-    editor->setEOLMode(buffer->get_eol_mode());
+    // buffer = dockedEditor->getCurrentBuffer();
+    // editor->setEOLMode(buffer->get_eol_mode());
 
     updateBufferFileStatusBasedUi(buffer);
     updateSaveStatusBasedUi(!buffer->is_save_point());
@@ -1583,22 +1580,22 @@ void MainWindow::focusIn()
 {
     qInfo(Q_FUNC_INFO);
 
-    if (checkBufferForModification(tabbedEditor->getCurrentBuffer())) {
-        updateGui(tabbedEditor->getCurrentBuffer());
+    ScintillaBuffer *buffer = dockedEditor->getCurrentBuffer();
+
+    if (checkBufferForModification(buffer)) {
+        updateGui(buffer);
     }
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if (!checkBuffersBeforeClose(0, tabbedEditor->count())) {
+    if (!checkBuffersBeforeClose(0, dockedEditor->count())) {
         event->ignore();
         return;
     }
 
     // While tabs are being closed, turn off UI updates so the main window doesn't continuously refresh.
-    disconnect(tabbedEditor, &TabbedEditor::bufferSwitched, this, &MainWindow::bufferActivated);
-    // Also disable creating a new file.
-    disconnect(tabbedEditor, &TabbedEditor::allBuffersClosed, this, &MainWindow::newFile);
+    disconnect(dockedEditor, &DockedEditor::bufferSwitched, this, &MainWindow::bufferActivated);
 
     closeAllFiles(true);
 
@@ -1698,8 +1695,10 @@ void MainWindow::setFoldMarkers(ScintillaNext *editor, const QString &type)
     }
 }
 
+
 void MainWindow::tabBarRightClicked(const QPoint &pos)
 {
+    /*
     // Check to see if an actual tab was clicked
     int index = tabbedEditor->getTabBar()->tabAt(pos);
     if (index == TabbedEditor::INVALID_INDEX) {
@@ -1724,14 +1723,16 @@ void MainWindow::tabBarRightClicked(const QPoint &pos)
     menu->addAction(ui->actionCopyFileName);
     menu->addAction(ui->actionCopyFileDirectory);
     menu->popup(tabbedEditor->mapToGlobal(pos));
+    */
 }
+
 
 void MainWindow::languageMenuTriggered()
 {
     const QAction *act = qobject_cast<QAction *>(sender());
     QVariant v = act->data();
 
-    auto buffer = tabbedEditor->getCurrentBuffer();
+    auto buffer = dockedEditor->getCurrentBuffer();
     buffer->lexer = v.toString();
 
     setLanguage(buffer);

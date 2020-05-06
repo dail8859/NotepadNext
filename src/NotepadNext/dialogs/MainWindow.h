@@ -24,7 +24,9 @@
 #include <QLabel>
 #include <QActionGroup>
 
-#include "TabbedEditor.h"
+#include "DockedEditor.h"
+
+#include "ScintillaNext.h"
 #include "BufferManager.h"
 #include "StatusLabel.h"
 #include "NppImporter.h"
@@ -68,19 +70,17 @@ public slots:
     void reloadFile();
 
     void closeCurrentFile();
-    void closeFile(int index);
+    void closeFile(ScintillaBuffer *buffer);
     void closeAllFiles(bool forceClose);
     void closeAllExceptActive();
     void closeAllToLeft();
     void closeAllToRight();
 
     bool saveCurrentFile();
-    bool saveFile(int index);
     bool saveFile(ScintillaBuffer *buffer);
 
     bool saveCurrentFileAsDialog();
     bool saveCurrentFileAs(const QString &fileName);
-    bool saveFileAs(int index, const QString &fileName);
     bool saveFileAs(ScintillaBuffer *buffer, const QString &fileName);
 
     void saveCopyAsDialog();
@@ -119,7 +119,7 @@ private:
     Ui::MainWindow *ui = Q_NULLPTR;
     NotepadNextApplication *app = Q_NULLPTR;
     BufferManager *bufferManager = Q_NULLPTR;
-    TabbedEditor *tabbedEditor = Q_NULLPTR;
+    DockedEditor *dockedEditor = Q_NULLPTR;
     ScintillaNext *editor = Q_NULLPTR;
     MacroRecorder *recorder = Q_NULLPTR;
     Settings *settings = Q_NULLPTR;
