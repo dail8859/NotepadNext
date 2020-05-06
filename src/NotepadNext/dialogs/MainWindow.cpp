@@ -85,8 +85,10 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     // The windows editor manager that supports docking
     dockedEditor = new DockedEditor(this);
     connect(dockedEditor, &DockedEditor::editorCreated, this, &MainWindow::setupEditor);
-
-    editor = new ScintillaNext();
+    connect(dockedEditor, &DockedEditor::editorCloseRequested, [=](ScintillaNext *editor) {
+        this->closeFile(editor->scintillaBuffer());
+    });
+    connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::bufferActivated);
 
     // Set up the lua state and the extension
     LuaExtension::Instance().Initialise(app->getLuaState()->L, this->editor);
@@ -109,21 +111,14 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     //connect(editor, &ScintillaNext::styleNeeded, [](int pos)  { qInfo("styleNeeded(%d)", pos);});
 #endif
 
-    // Get some events from the tab bar
     // TODO: replace with + button on bar
     //connect(tabbedEditor->getTabBar(), &QTabBar::tabBarDoubleClicked, this, [=](int index) {
     //    if (index == TabbedEditor::INVALID_INDEX) {
     //        newFile();
     //    }
     //});
-    connect(dockedEditor, &DockedEditor::bufferCloseRequested, this, &MainWindow::closeFile);
-
     //connect(tabbedEditor->getTabBar(), &QWidget::customContextMenuRequested, this, &MainWindow::tabBarRightClicked);
 
-    // We need to be notified when the editor switches to a new file (e.g. via the user clicking on a tab)
-    connect(dockedEditor, &DockedEditor::bufferSwitched, this, &MainWindow::bufferActivated);
-
-    // TODO: this might not be the best way but works for now
     // Set up the menus
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFileDialog);
@@ -175,38 +170,37 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionUnix, &QAction::triggered, [=]() { convertEOLs(SC_EOL_LF); });
     connect(ui->actionMacintosh, &QAction::triggered, [=]() { convertEOLs(SC_EOL_CR); });
 
-    connect(ui->actionUpperCase, &QAction::triggered, [=]() { editor->upperCase();});
-    connect(ui->actionLowerCase, &QAction::triggered, [=]() { editor->lowerCase();});
+    connect(ui->actionUpperCase, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->upperCase();});
+    connect(ui->actionLowerCase, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->lowerCase();});
 
-    connect(ui->actionDuplicateCurrentLine, &QAction::triggered, [=]() { editor->lineDuplicate();});
-    connect(ui->actionMoveCurrentLineUp, &QAction::triggered, [=]() { editor->moveSelectedLinesUp();});
-    connect(ui->actionMoveCurrentLineDown, &QAction::triggered, [=]() { editor->moveSelectedLinesDown();});
+    connect(ui->actionDuplicateCurrentLine, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->lineDuplicate();});
+    connect(ui->actionMoveCurrentLineUp, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->moveSelectedLinesUp();});
+    connect(ui->actionMoveCurrentLineDown, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->moveSelectedLinesDown();});
     connect(ui->actionSplitLines, &QAction::triggered, [=]() {
-        editor->targetFromSelection();
-        editor->linesSplit(0);
+        dockedEditor->getCurrentEditor()->targetFromSelection();
+        dockedEditor->getCurrentEditor()->linesSplit(0);
     });
     connect(ui->actionJoinLines, &QAction::triggered, [=]()  {
-        editor->targetFromSelection();
-        editor->linesJoin();
+        dockedEditor->getCurrentEditor()->targetFromSelection();
+        dockedEditor->getCurrentEditor()->linesJoin();
     });
 
-    connect(ui->actionUndo, &QAction::triggered, editor, &ScintillaNext::undo);
-    connect(ui->actionRedo, &QAction::triggered, editor, &ScintillaNext::redo);
+    connect(ui->actionUndo, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->undo();});
+    connect(ui->actionRedo, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->redo();});
     connect(ui->actionCut, &QAction::triggered, [=]() {
-        qInfo("actionCut");
-        if (editor->selectionEmpty()) {
-            editor->copyAllowLine();
-            editor->lineDelete();
+        if (dockedEditor->getCurrentEditor()->selectionEmpty()) {
+            dockedEditor->getCurrentEditor()->copyAllowLine();
+            dockedEditor->getCurrentEditor()->lineDelete();
         }
         else {
-            editor->cut();
+            dockedEditor->getCurrentEditor()->cut();
         }
     });
     connect(ui->actionCopy, &QAction::triggered, [=]() {
-        editor->copyAllowLine();
+        dockedEditor->getCurrentEditor()->copyAllowLine();
     });
-    connect(ui->actionPaste, &QAction::triggered, editor, &ScintillaNext::paste);
-    connect(ui->actionSelect_All, &QAction::triggered, editor, &ScintillaNext::selectAll);
+    connect(ui->actionPaste, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->paste();});
+    connect(ui->actionSelect_All, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->selectAll();});
     connect(ui->actionCopyFullPath, &QAction::triggered, [=]() {
         auto buffer = dockedEditor->getCurrentBuffer();
         if (buffer->isFile()) {
@@ -220,42 +214,42 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
             QApplication::clipboard()->setText(buffer->fileInfo.canonicalFilePath());
         }
     });
-    connect(ui->actionIncrease_Indent, &QAction::triggered, editor, &ScintillaNext::tab);
-    connect(ui->actionDecrease_Indent, &QAction::triggered, editor, &ScintillaNext::backTab);
+    connect(ui->actionIncrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->tab();});
+    connect(ui->actionDecrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->backTab();});
 
-    connect(ui->actionFind, &QAction::triggered, [=]() {
-        // Create it if it doesn't exist
-        if (frd == Q_NULLPTR) {
-            frd = new FindReplaceDialog(this);
-            frd->setEditor(editor);
-        }
-
-        // Get any selected text
-        if (!editor->selectionEmpty()) {
-            int selection = editor->mainSelection();
-            int start = editor->selectionNStart(selection);
-            int end = editor->selectionNEnd(selection);
-            if (end > start) {
-                auto selText = editor->get_text_range(start, end);
-                frd->setFindText(QString::fromUtf8(selText));
-            }
-        }
-        else {
-            int start = editor->wordStartPosition(editor->currentPos(), true);
-            int end = editor->wordEndPosition(editor->currentPos(), true);
-            if (end > start) {
-                editor->setSelectionStart(start);
-                editor->setSelectionEnd(end);
-                auto selText = editor->get_text_range(start, end);
-                frd->setFindText(QString::fromUtf8(selText));
-            }
-        }
-
-        frd->setTab(FindReplaceDialog::FIND_TAB);
-        frd->show();
-        frd->raise();
-        frd->activateWindow();
-    });
+    //connect(ui->actionFind, &QAction::triggered, [=]() {
+    //    // Create it if it doesn't exist
+    //    if (frd == Q_NULLPTR) {
+    //        frd = new FindReplaceDialog(this);
+    //        frd->setEditor(editor);
+    //    }
+    //
+    //    // Get any selected text
+    //    if (!editor->selectionEmpty()) {
+    //        int selection = editor->mainSelection();
+    //        int start = editor->selectionNStart(selection);
+    //        int end = editor->selectionNEnd(selection);
+    //        if (end > start) {
+    //            auto selText = editor->get_text_range(start, end);
+    //            frd->setFindText(QString::fromUtf8(selText));
+    //        }
+    //    }
+    //    else {
+    //        int start = editor->wordStartPosition(editor->currentPos(), true);
+    //        int end = editor->wordEndPosition(editor->currentPos(), true);
+    //        if (end > start) {
+    //            editor->setSelectionStart(start);
+    //            editor->setSelectionEnd(end);
+    //            auto selText = editor->get_text_range(start, end);
+    //            frd->setFindText(QString::fromUtf8(selText));
+    //        }
+    //    }
+    //
+    //    frd->setTab(FindReplaceDialog::FIND_TAB);
+    //    frd->show();
+    //    frd->raise();
+    //    frd->activateWindow();
+    //});
 
     connect(ui->actionFindNext, &QAction::triggered, [=]() {
         if (frd != Q_NULLPTR) {
@@ -263,39 +257,39 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
-    connect(ui->actionReplace, &QAction::triggered, [=]() {
-        // Create it if it doesn't exist
-        if (frd == Q_NULLPTR) {
-            frd = new FindReplaceDialog(this);
-            frd->setEditor(editor);
-        }
-
-        // Get any selected text
-        if (!editor->selectionEmpty()) {
-            int selection = editor->mainSelection();
-            int start = editor->selectionNStart(selection);
-            int end = editor->selectionNEnd(selection);
-            if (end > start) {
-                auto selText = editor->get_text_range(start, end);
-                frd->setFindText(QString::fromUtf8(selText));
-            }
-        }
-        else {
-            int start = editor->wordStartPosition(editor->currentPos(), true);
-            int end = editor->wordEndPosition(editor->currentPos(), true);
-            if (end > start) {
-                editor->setSelectionStart(start);
-                editor->setSelectionEnd(end);
-                auto selText = editor->get_text_range(start, end);
-                frd->setFindText(QString::fromUtf8(selText));
-            }
-        }
-
-        frd->setTab(FindReplaceDialog::REPLACE_TAB);
-        frd->show();
-        frd->raise();
-        frd->activateWindow();
-    });
+    //connect(ui->actionReplace, &QAction::triggered, [=]() {
+    //    // Create it if it doesn't exist
+    //    if (frd == Q_NULLPTR) {
+    //        frd = new FindReplaceDialog(this);
+    //        frd->setEditor(editor);
+    //    }
+    //
+    //    // Get any selected text
+    //    if (!editor->selectionEmpty()) {
+    //        int selection = editor->mainSelection();
+    //        int start = editor->selectionNStart(selection);
+    //        int end = editor->selectionNEnd(selection);
+    //        if (end > start) {
+    //            auto selText = editor->get_text_range(start, end);
+    //            frd->setFindText(QString::fromUtf8(selText));
+    //        }
+    //    }
+    //    else {
+    //        int start = editor->wordStartPosition(editor->currentPos(), true);
+    //        int end = editor->wordEndPosition(editor->currentPos(), true);
+    //        if (end > start) {
+    //            editor->setSelectionStart(start);
+    //            editor->setSelectionEnd(end);
+    //            auto selText = editor->get_text_range(start, end);
+    //            frd->setFindText(QString::fromUtf8(selText));
+    //        }
+    //    }
+    //
+    //    frd->setTab(FindReplaceDialog::REPLACE_TAB);
+    //    frd->show();
+    //    frd->raise();
+    //    frd->activateWindow();
+    //});
 
 
     connect(ui->actionAlwaysOnTop, &QAction::triggered, [=](bool b) {
@@ -338,45 +332,46 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     showSymbolActionGroup->addAction(ui->actionShowAllCharacters);
     showSymbolActionGroup->setExclusive(false);
 
-    connect(showSymbolActionGroup, &QActionGroup::triggered, [=](QAction *action) {
-        if (!action->isChecked()) {
-            editor->setViewWS(SCWS_INVISIBLE);
-            editor->setViewEOL(false);
-        }
-        else {
-            // Uncheck all other actions
-            foreach (QAction *otherAction, showSymbolActionGroup->actions()) {
-                if (otherAction != action) {
-                    otherAction->setChecked(false);
-                }
-            }
-
-            if (action == ui->actionShowWhitespaceandTab) {
-                editor->setViewWS(SCWS_VISIBLEALWAYS);
-                editor->setViewEOL(false);
-            }
-            else if (action == ui->actionShowEndofLine) {
-                editor->setViewWS(SCWS_INVISIBLE);
-                editor->setViewEOL(true);
-            }
-            else if (action == ui->actionShowAllCharacters) {
-                editor->setViewWS(SCWS_VISIBLEALWAYS);
-                editor->setViewEOL(true);
-            }
-        }
-    });
+    //connect(showSymbolActionGroup, &QActionGroup::triggered, [=](QAction *action) {
+    //    if (!action->isChecked()) {
+    //        editor->setViewWS(SCWS_INVISIBLE);
+    //        editor->setViewEOL(false);
+    //    }
+    //    else {
+    //        // Uncheck all other actions
+    //        foreach (QAction *otherAction, showSymbolActionGroup->actions()) {
+    //            if (otherAction != action) {
+    //                otherAction->setChecked(false);
+    //            }
+    //        }
+    //
+    //        if (action == ui->actionShowWhitespaceandTab) {
+    //            editor->setViewWS(SCWS_VISIBLEALWAYS);
+    //            editor->setViewEOL(false);
+    //        }
+    //        else if (action == ui->actionShowEndofLine) {
+    //            editor->setViewWS(SCWS_INVISIBLE);
+    //            editor->setViewEOL(true);
+    //        }
+    //        else if (action == ui->actionShowAllCharacters) {
+    //            editor->setViewWS(SCWS_VISIBLEALWAYS);
+    //            editor->setViewEOL(true);
+    //        }
+    //    }
+    //});
 
     connect(ui->actionShowWrapSymbol, &QAction::triggered, [=](bool b) {
-        editor->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+        dockedEditor->getCurrentEditor()->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
     });
     connect(ui->actionShowIndentGuide, &QAction::triggered, [=](bool b) {
-        editor->setIndentationGuides(b ? SC_IV_LOOKBOTH : SC_IV_NONE);
+        dockedEditor->getCurrentEditor()->setIndentationGuides(b ? SC_IV_LOOKBOTH : SC_IV_NONE);
     });
     ui->actionShowIndentGuide->setChecked(true);
 
     connect(ui->actionWordWrap, &QAction::triggered, [=](bool b) {
+        ScintillaNext *editor = dockedEditor->getCurrentEditor();
         if (b) {
-            editor->setWrapMode(SC_WRAP_WORD);
+            dockedEditor->getCurrentEditor()->setWrapMode(SC_WRAP_WORD);
         }
         else {
             // Store the top line and restore it after the lines have been unwrapped
@@ -386,9 +381,9 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
-    connect(ui->actionZoomIn, &QAction::triggered, editor, &ScintillaNext::zoomIn);
-    connect(ui->actionZoomOut, &QAction::triggered, editor, &ScintillaNext::zoomOut);
-    connect(ui->actionZoomReset, &QAction::triggered, [=]() { editor->setZoom(0); });
+    connect(ui->actionZoomIn, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->zoomIn();});
+    connect(ui->actionZoomOut, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->zoomOut();});
+    connect(ui->actionZoomReset, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->setZoom(0); });
 
     languageActionGroup = new QActionGroup(this);
     languageActionGroup->setExclusive(true);
@@ -401,11 +396,11 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         pd->activateWindow();
     });
 
-    recorder = new MacroRecorder(editor, this);
+    recorder = new MacroRecorder(this);
     connect(ui->actionMacroRecording, &QAction::triggered, [=](bool b) {
         if (b) {
             ui->actionMacroRecording->setText("Stop Recording");
-            recorder->startRecording();
+            recorder->startRecording(dockedEditor->getCurrentEditor());
 
             // A macro is being recorded so disable some macro options
             ui->actionPlayback->setEnabled(false);
@@ -442,7 +437,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionPlayback, &QAction::triggered, [=](bool b) {
         Q_UNUSED(b);
 
-        currentMacro->replay(editor);
+        currentMacro->replay(dockedEditor->getCurrentEditor());
     });
 
     connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, [=](bool b) {
@@ -452,9 +447,9 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
             mrd = new MacroRunDialog(this);
             connect(mrd, &MacroRunDialog::execute, [=](Macro *macro, int times) {
                 if (times > 0)
-                    macro->replay(editor, times);
+                    macro->replay(dockedEditor->getCurrentEditor(), times);
                 else if (times == -1)
-                    macro->replayTillEndOfFile(editor);
+                    macro->replayTillEndOfFile(dockedEditor->getCurrentEditor());
             });
         }
 
@@ -549,7 +544,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(bufferManager, &BufferManager::bufferRenamed, [=] (ScintillaBuffer *buffer) {
         updateBufferFileStatusBasedUi(buffer);
         detectLanguageFromExtension(buffer);
-        updateGui(buffer);
+        updateBufferFileStatusBasedUi(buffer);
     });
 
     ui->actionAboutQt->setIcon(QPixmap(QLatin1String(":/qt-project.org/qmessagebox/images/qtlogo-64.png")));
@@ -590,7 +585,7 @@ void MainWindow::initialize(Settings *settings)
 
     //connect(settings, &Settings::tabsClosableChanged, tabbedEditor->getTabBar(), &QTabBar::setTabsClosable);
 
-    setupEditor(editor);
+    //setupEditor(editor);
 
     // The first time it is triggered it doesn't see it as checked for some reason
     ui->actionShowWhitespaceandTab->setChecked(true);
@@ -602,7 +597,7 @@ void MainWindow::initialize(Settings *settings)
     if (dockedEditor->count() == 0)
         newFile();
 
-    editor->grabFocus();
+    //editor->grabFocus();
 
     // Put the style sheet here for now
     QFile f(":/stylesheets/npp.css");
@@ -792,7 +787,7 @@ void MainWindow::setupEditor(ScintillaNext *editor)
 
     // Connect the editor to the UI
     connect(editor, &ScintillaNext::savePointChanged, this, &MainWindow::updateSaveStatusBasedUi);
-    connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateSelectionBasedUi);
+    connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
     connect(editor, &ScintillaNext::marginClicked, [editor](int position, int modifiers, int margin) {
         Q_UNUSED(modifiers);
 
@@ -936,6 +931,7 @@ void MainWindow::setupStatusBar()
     });
 
     connect(qobject_cast<StatusLabel*>(overType), &StatusLabel::clicked, [=]() {
+        ScintillaNext *editor = dockedEditor->getCurrentEditor();
         bool ot = editor->overtype();
         if (ot)
             overType->setText("INS");
@@ -1036,6 +1032,8 @@ void MainWindow::closeAllFiles(bool forceClose = false)
     foreach (ScintillaBuffer *buffer, dockedEditor->buffers()) {
         bufferManager->closeBuffer(buffer);
     }
+
+    newFile();
 }
 
 void MainWindow::closeAllExceptActive()
@@ -1254,9 +1252,10 @@ void MainWindow::renameFile()
 
 void MainWindow::convertEOLs(int eolMode)
 {
+    ScintillaNext *editor = dockedEditor->getCurrentEditor();
     editor->convertEOLs(eolMode);
     editor->setEOLMode(eolMode);
-    updateEOLBasedUi();
+    updateEOLBasedUi(editor);
 }
 
 void MainWindow::updateBufferFileStatusBasedUi(ScintillaBuffer *buffer)
@@ -1282,7 +1281,7 @@ bool MainWindow::isAnyUnsaved()
     return false;
 }
 
-void MainWindow::updateEOLBasedUi()
+void MainWindow::updateEOLBasedUi(ScintillaNext *editor)
 {
     switch(editor->eOLMode()) {
     case SC_EOL_CR:
@@ -1300,7 +1299,7 @@ void MainWindow::updateEOLBasedUi()
     }
 }
 
-void MainWindow::updateEncodingBasedUi()
+void MainWindow::updateEncodingBasedUi(ScintillaNext *editor)
 {
     switch(editor->codePage()) {
     case 0:
@@ -1342,71 +1341,88 @@ void MainWindow::updateBufferPositionBasedUi()
     //ui->actionCloseAllExceptActive->setEnabled(dockedEditor->count() > 1);
 }
 
-void MainWindow::updateGui(ScintillaBuffer *buffer)
+void MainWindow::updateGui(ScintillaNext *editor)
 {
     // TODO: Does buffer need passed in? It should only ever operate on the current buffer!
     // buffer = dockedEditor->getCurrentBuffer();
     // editor->setEOLMode(buffer->get_eol_mode());
 
-    updateBufferFileStatusBasedUi(buffer);
-    updateSaveStatusBasedUi(!buffer->is_save_point());
-    updateEOLBasedUi();
-    updateEncodingBasedUi();
+    updateBufferFileStatusBasedUi(editor->scintillaBuffer());
+    updateSaveStatusBasedUi(!editor->scintillaBuffer()->is_save_point());
+    updateEOLBasedUi(editor);
+    updateEncodingBasedUi(editor);
     updateBufferPositionBasedUi();
+    updateSelectionBasedUi(editor);
+    updateContentBasedUi(editor);
 
-    setLanguage(buffer);
+    docType->setText(editor->scintillaBuffer()->lexer);
 
     foreach (QAction *action, languageActionGroup->actions()) {
-        if (action->data().toString() == buffer->lexer) {
+        if (action->data().toString() == editor->scintillaBuffer()->lexer) {
             action->setChecked(true);
             break;
         }
     }
 }
 
-void MainWindow::updateSelectionBasedUi(int updated)
+void MainWindow::updateDocumentBasedUi(int updated)
 {
-    if (updated & SC_UPDATE_CONTENT) {
-        ui->actionUndo->setEnabled(editor->canUndo());
-        ui->actionRedo->setEnabled(editor->canRedo());
+    ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
 
-        QString sizeText = QString("Length: %1    Lines: %2").arg(
-                QLocale::system().toString(editor->length()),
-                QLocale::system().toString(editor->lineCount()));
-        docSize->setText(sizeText);
+    // TODO: what if this is triggered by an editor that is not the active editor?
+
+    if (updated & SC_UPDATE_CONTENT) {
+        updateSelectionBasedUi(editor);
     }
 
     if (updated & (SC_UPDATE_CONTENT | SC_UPDATE_SELECTION)) {
-        bool hasAnySelections = !editor->selectionEmpty();
+        updateContentBasedUi(editor);
 
-        ui->actionDelete->setEnabled(hasAnySelections);
-        ui->actionPaste->setEnabled(editor->canPaste());
-
-        ui->actionLowerCase->setEnabled(hasAnySelections);
-        ui->actionUpperCase->setEnabled(hasAnySelections);
-
-        QString selectionText;
-        if (editor->selections() > 1) {
-            selectionText = "Sel: N/A";
-        }
-        else {
-            int start = editor->selectionStart();
-            int end = editor->selectionEnd();
-            int lines = editor->lineFromPosition(end) - editor->lineFromPosition(start);
-
-            if (end > start)
-                lines++;
-
-            selectionText = QString("Sel: %1 | %2").arg(
-                    QLocale::system().toString(editor->countCharacters(start, end)),
-                    QLocale::system().toString(lines));
-        }
-        int pos = editor->currentPos();
-        QString positionText = QString("Ln: %1    Col: %2    ").arg(
-                QLocale::system().toString(editor->lineFromPosition(pos) + 1),
-                QLocale::system().toString(editor->column(pos) + 1));
-        docPos->setText(positionText + selectionText);
     }
+}
+
+void MainWindow::updateSelectionBasedUi(ScintillaNext *editor)
+{
+    ui->actionUndo->setEnabled(editor->canUndo());
+    ui->actionRedo->setEnabled(editor->canRedo());
+
+    QString sizeText = QString("Length: %1    Lines: %2").arg(
+            QLocale::system().toString(editor->length()),
+            QLocale::system().toString(editor->lineCount()));
+    docSize->setText(sizeText);
+}
+
+void MainWindow::updateContentBasedUi(ScintillaNext *editor)
+{
+    bool hasAnySelections = !editor->selectionEmpty();
+
+    ui->actionDelete->setEnabled(hasAnySelections);
+    ui->actionPaste->setEnabled(editor->canPaste());
+
+    ui->actionLowerCase->setEnabled(hasAnySelections);
+    ui->actionUpperCase->setEnabled(hasAnySelections);
+
+    QString selectionText;
+    if (editor->selections() > 1) {
+        selectionText = "Sel: N/A";
+    }
+    else {
+        int start = editor->selectionStart();
+        int end = editor->selectionEnd();
+        int lines = editor->lineFromPosition(end) - editor->lineFromPosition(start);
+
+        if (end > start)
+            lines++;
+
+        selectionText = QString("Sel: %1 | %2").arg(
+                QLocale::system().toString(editor->countCharacters(start, end)),
+                QLocale::system().toString(lines));
+    }
+    int pos = editor->currentPos();
+    QString positionText = QString("Ln: %1    Col: %2    ").arg(
+            QLocale::system().toString(editor->lineFromPosition(pos) + 1),
+            QLocale::system().toString(editor->column(pos) + 1));
+    docPos->setText(positionText + selectionText);
 }
 
 void MainWindow::detectLanguageFromExtension(ScintillaBuffer *buffer)
@@ -1442,25 +1458,27 @@ return "null"
     return;
 }
 
-void MainWindow::bufferActivated(ScintillaBuffer *buffer)
+void MainWindow::bufferActivated(ScintillaNext *editor)
 {
-    checkBufferForModification(buffer);
-    updateGui(buffer);
+    qInfo(Q_FUNC_INFO);
+
+    checkBufferForModification(editor->scintillaBuffer());
+    updateGui(editor);
 }
 
-void MainWindow::setLanguage(ScintillaBuffer *buffer)
+void MainWindow::setLanguage(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
     if (true) {
-        docType->setText(buffer->lexer);
-        if (buffer->lexer == "null") {
+        docType->setText(editor->lexerLanguage());
+        if (editor->lexerLanguage() == "null") {
             editor->setLexer(SCLEX_NULL);
         }
         else {
-            setupEditor(editor);
+            //setupEditor(editor);
 
-            app->getLuaState()->execute(QString("lexer = \"%1\"").arg(buffer->lexer).toLatin1().constData());
+            app->getLuaState()->execute(QString("lexer = \"%1\"").arg(QString(editor->lexerLanguage())).toLatin1().constData());
             app->getLuaState()->execute(R"(
                 local L = languages[lexer]
                 -- this resets the style definitions but keeps
@@ -1580,10 +1598,8 @@ void MainWindow::focusIn()
 {
     qInfo(Q_FUNC_INFO);
 
-    ScintillaBuffer *buffer = dockedEditor->getCurrentBuffer();
-
-    if (checkBufferForModification(buffer)) {
-        updateGui(buffer);
+    if (checkBufferForModification(dockedEditor->getCurrentBuffer())) {
+        updateGui(dockedEditor->getCurrentEditor());
     }
 }
 
@@ -1595,7 +1611,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 
     // While tabs are being closed, turn off UI updates so the main window doesn't continuously refresh.
-    disconnect(dockedEditor, &DockedEditor::bufferSwitched, this, &MainWindow::bufferActivated);
+    disconnect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::bufferActivated);
 
     closeAllFiles(true);
 
@@ -1657,7 +1673,7 @@ void MainWindow::dropEvent(QDropEvent *event)
         }
 
         newFile();
-        editor->setText(event->mimeData()->text().toLocal8Bit().constData());
+        dockedEditor->getCurrentEditor()->setText(event->mimeData()->text().toLocal8Bit().constData());
         bringWindowToForeground();
         event->acceptProposedAction();
     }
@@ -1732,10 +1748,11 @@ void MainWindow::languageMenuTriggered()
     const QAction *act = qobject_cast<QAction *>(sender());
     QVariant v = act->data();
 
-    auto buffer = dockedEditor->getCurrentBuffer();
+    auto editor = dockedEditor->getCurrentEditor();
+    auto buffer = editor->scintillaBuffer();
     buffer->lexer = v.toString();
 
-    setLanguage(buffer);
+    setLanguage(editor);
 
     qInfo(qUtf8Printable(buffer->lexer));
 }

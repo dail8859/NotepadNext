@@ -91,17 +91,19 @@ public slots:
     void convertEOLs(int eolMode);
 
     void updateBufferFileStatusBasedUi(ScintillaBuffer *buffer);
-    void updateEOLBasedUi();
-    void updateEncodingBasedUi();
-    void updateSelectionBasedUi(int updated);
+    void updateEOLBasedUi(ScintillaNext *editor);
+    void updateEncodingBasedUi(ScintillaNext *editor);
+    void updateDocumentBasedUi(int updated);
+    void updateSelectionBasedUi(ScintillaNext *editor);
+    void updateContentBasedUi(ScintillaNext *editor);
     void updateSaveStatusBasedUi(bool isDirty);
     void updateBufferPositionBasedUi();
-    void updateGui(ScintillaBuffer *buffer);
+    void updateGui(ScintillaNext *editor);
 
     void detectLanguageFromExtension(ScintillaBuffer *buffer);
-    void bufferActivated(ScintillaBuffer *buffer);
+    void bufferActivated(ScintillaNext *editor);
 
-    void setLanguage(ScintillaBuffer *buffer);
+    void setLanguage(ScintillaNext *editor);
 
     void bringWindowToForeground();
     void focusIn();
@@ -120,7 +122,6 @@ private:
     NotepadNextApplication *app = Q_NULLPTR;
     BufferManager *bufferManager = Q_NULLPTR;
     DockedEditor *dockedEditor = Q_NULLPTR;
-    ScintillaNext *editor = Q_NULLPTR;
     MacroRecorder *recorder = Q_NULLPTR;
     Settings *settings = Q_NULLPTR;
 

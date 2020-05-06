@@ -23,10 +23,24 @@
 
 #include <QMouseEvent>
 
-ScintillaNext::ScintillaNext(QWidget *parent) :
+ScintillaNext::ScintillaNext(ScintillaBuffer *buffer, QWidget *parent) :
     ScintillaEdit(parent)
 {
+    if (buffer) {
+        setDocPointer(reinterpret_cast<sptr_t>(buffer->pointer()));
 
+        QObject *obj = this;
+        QVariant var = QVariant::fromValue(buffer);
+        obj->setProperty("ScintillaBufferPointer", var);
+    }
+}
+
+ScintillaBuffer *ScintillaNext::scintillaBuffer()
+{
+    QObject *obj = this;
+    auto var = obj->property("ScintillaBufferPointer");
+
+    return var.value<ScintillaBuffer*>();
 }
 
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)
