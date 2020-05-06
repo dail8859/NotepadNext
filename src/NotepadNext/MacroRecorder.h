@@ -51,16 +51,16 @@ class MacroRecorder : public QObject
     Q_OBJECT
 
 public:
-    MacroRecorder(ScintillaNext *editor, QObject *parent = nullptr);
+    MacroRecorder(QObject *parent = nullptr);
 
-    void startRecording();
+    void startRecording(ScintillaNext *editor);
     Macro *stopRecording();
 
 public slots:
     void recordMacroStep(int message, uptr_t wParam, sptr_t lParam);
 
 private:
-    ScintillaNext *editor;
+    ScintillaNext *editor = Q_NULLPTR;
     Macro *macro = Q_NULLPTR;
 };
 

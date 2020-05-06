@@ -193,14 +193,14 @@ void Macro::setName(const QString &value)
 }
 
 
-MacroRecorder::MacroRecorder(ScintillaNext *editor, QObject *parent) :
-    editor(editor),
+MacroRecorder::MacroRecorder(QObject *parent) :
     QObject(parent)
 {
 }
 
-void MacroRecorder::startRecording()
+void MacroRecorder::startRecording(ScintillaNext *editor)
 {
+    this->editor = editor;
     connect(editor, &ScintillaNext::macroRecord, this, &MacroRecorder::recordMacroStep);
 
     // We don't "own" the macro so don't delete it if it is a valid pointer

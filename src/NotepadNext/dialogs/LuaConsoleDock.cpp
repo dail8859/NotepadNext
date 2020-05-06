@@ -94,14 +94,14 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
 
     ui->setupUi(this);
 
-    output = new ScintillaNext(this);
+    output = new ScintillaNext(Q_NULLPTR, this);
 
     QFrame *line;
     line = new QFrame(this);
     line->setFrameShape(QFrame::HLine);
     line->setFrameShadow(QFrame::Sunken);
 
-    input = new ScintillaNext(this);
+    input = new ScintillaNext(Q_NULLPTR, this);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(output);

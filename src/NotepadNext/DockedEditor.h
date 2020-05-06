@@ -36,8 +36,8 @@ private:
 public:
     explicit DockedEditor(QWidget *parent);
 
-    ScintillaNext *getCurrentEditor();
-    ScintillaBuffer *getCurrentBuffer();
+    ScintillaNext *getCurrentEditor() const;
+    ScintillaBuffer *getCurrentBuffer() const;
 
     int count() const;
     QVector<ScintillaBuffer *> buffers() const;
@@ -53,8 +53,8 @@ public slots:
 
 signals:
     void editorCreated(ScintillaNext *editor);
-    void bufferCloseRequested(ScintillaBuffer *buffer);
-    void bufferSwitched(ScintillaBuffer *buffer);
+    void editorCloseRequested(ScintillaNext *editor);
+    void editorActivated(ScintillaNext *buffer);
 };
 
 #endif // DOCKEDEDITOR_H
