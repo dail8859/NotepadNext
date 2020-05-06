@@ -17,66 +17,44 @@
  */
 
 
-#ifndef TABBDEDITOR_H
-#define TABBDEDITOR_H
+#ifndef DOCKEDEDITOR_H
+#define DOCKEDEDITOR_H
 
-#include <QTabBar>
-#include <QVBoxLayout>
-#include <QSplitter>
-#include <QList>
+#include <QObject>
 
+#include "DockManager.h"
 #include "ScintillaBuffer.h"
 #include "ScintillaNext.h"
 
-class TabbedEditor : public QWidget
+class DockedEditor : public QObject
 {
     Q_OBJECT
+private:
+    ads::CDockManager* m_DockManager = Q_NULLPTR;
+    ScintillaNext *currentEditor = Q_NULLPTR;
 
 public:
-    enum { INVALID_INDEX = -1 };
+    explicit DockedEditor(QWidget *parent);
 
-    explicit TabbedEditor(QWidget *parent = Q_NULLPTR);
-    ~TabbedEditor();
-
-    int count() const;
-    int currentIndex() const;
+    ScintillaNext *getCurrentEditor();
     ScintillaBuffer *getCurrentBuffer();
 
-    void switchToIndex(int index);
+    int count() const;
+    QVector<ScintillaBuffer *> buffers() const;
     void switchToBuffer(const ScintillaBuffer *buffer);
 
-    ScintillaBuffer *getBufferFromIndex(int index);
-    int getIndexFromBuffer(const ScintillaBuffer *buffer);
-
-    QTabBar *getTabBar() { return tabBar; }
-    ScintillaNext *getEditor() { return editor; }
-
-signals:
-    void allBuffersClosed();
-    void bufferSwitched(ScintillaBuffer *buffer);
+private slots:
+    void dockWidgetCloseRequested();
 
 public slots:
     void addBuffer(ScintillaBuffer *buffer);
     void removeBuffer(ScintillaBuffer *buffer);
     void renamedBuffer(ScintillaBuffer *buffer);
 
-private slots:
-    void setBufferSaveIcon(bool atSavePoint);
-
-private:
-    QTabBar *tabBar;
-
-    ScintillaNext *editor;
-
-    bool ignoreNextTabIndexChanged = false;
-    bool forceSwitch = false;
-    int previousIndex = -1;
-
-    void forceSwitchToIndex(int index) {
-        forceSwitch = true;
-        switchToIndex(index);
-        forceSwitch = false;
-    }
+signals:
+    void editorCreated(ScintillaNext *editor);
+    void bufferCloseRequested(ScintillaBuffer *buffer);
+    void bufferSwitched(ScintillaBuffer *buffer);
 };
 
-#endif // TABBDEDITOR_H
+#endif // DOCKEDEDITOR_H

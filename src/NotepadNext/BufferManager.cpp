@@ -49,6 +49,13 @@ void BufferManager::manageBuffer(ScintillaBuffer *buffer)
     connect(buffer, &ScintillaBuffer::modify_attempt, []() { qInfo("ScintillaBuffer::modify_attempt()");});
     connect(buffer, &ScintillaBuffer::save_point, [](bool atSavePoint) { qInfo("ScintillaBuffer::save_point(%s)", atSavePoint ? "true" : "false");});
     connect(buffer, &ScintillaBuffer::modified, [](int position, int modification_type, const QByteArray& text, int length, int linesAdded, int line, int foldLevelNow, int foldLevelPrev) {
+        Q_UNUSED(position);
+        Q_UNUSED(text);
+        Q_UNUSED(length);
+        Q_UNUSED(linesAdded);
+        Q_UNUSED(line);
+        Q_UNUSED(foldLevelNow);
+        Q_UNUSED(foldLevelPrev);
         qInfo("ScintillaBuffer::modified(%d)", modification_type);
     });
     connect(buffer, &ScintillaBuffer::style_needed, [](int pos) { qInfo("ScintillaBuffer::style_needed(%d)", pos);});
