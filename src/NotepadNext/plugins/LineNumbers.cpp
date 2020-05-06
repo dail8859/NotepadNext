@@ -57,7 +57,7 @@ void LineNumbers::adjustMarginWidth()
 
 void LineNumbers::notify(const SCNotification *pscn)
 {
-    if (pscn->nmhdr.code == SCN_UPDATEUI && pscn->updated & SC_UPDATE_V_SCROLL) {
+    if ((pscn->nmhdr.code == SCN_UPDATEUI && pscn->updated & SC_UPDATE_V_SCROLL) || pscn->nmhdr.code == SCN_ZOOM) {
         adjustMarginWidth();
     }
 }
