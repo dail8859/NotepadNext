@@ -65,7 +65,6 @@ public:
 
 signals:
     void bufferCreated(ScintillaBuffer *buffer);
-    void bufferSaved(ScintillaBuffer *buffer);
     void bufferClosed(ScintillaBuffer *buffer);
     void bufferRenamed(ScintillaBuffer *buffer);
 

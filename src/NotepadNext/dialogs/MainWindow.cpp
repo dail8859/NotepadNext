@@ -91,13 +91,13 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::bufferActivated);
 
     // Set up the lua state and the extension
-    LuaExtension::Instance().Initialise(app->getLuaState()->L, this->editor);
+    //LuaExtension::Instance().Initialise(app->getLuaState()->L, this->editor);
 
 
 #ifdef QT_DEBUG
     // Print some debug messages: connect these first in case something bad happens during a later slot
     connect(bufferManager, &BufferManager::bufferCreated, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferCreated(%s)", buffer->getName().toUtf8().constData());});
-    connect(bufferManager, &BufferManager::bufferSaved, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferSaved(%s)", buffer->getName().toUtf8().constData());});
+    //connect(bufferManager, &BufferManager::bufferSaved, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferSaved(%s)", buffer->getName().toUtf8().constData());});
     connect(bufferManager, &BufferManager::bufferClosed, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferClosed(%s)", buffer->getName().toUtf8().constData());});
     connect(bufferManager, &BufferManager::bufferRenamed, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferRenamed(%s)", buffer->getName().toUtf8().constData());});
 
@@ -526,8 +526,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionAboutNotepadNext, &QAction::triggered, [=]() {
         QMessageBox::about(this, "About Notepad Next",
                             QString("<h3>Notepad Next v%1</h3><p>This program does stuff.</p><p>%2</p>")
-                                .arg(APP_VERSION)
-                                .arg(APP_COPYRIGHT));
+                                .arg(APP_VERSION, APP_COPYRIGHT));
     });
 
     // Connect the editor to the UI
@@ -1033,7 +1032,8 @@ void MainWindow::closeAllFiles(bool forceClose = false)
         bufferManager->closeBuffer(buffer);
     }
 
-    newFile();
+    if (!forceClose)
+        newFile();
 }
 
 void MainWindow::closeAllExceptActive()
