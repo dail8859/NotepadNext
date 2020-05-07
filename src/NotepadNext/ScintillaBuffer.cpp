@@ -131,12 +131,13 @@ bool ScintillaBuffer::reloadFromFile()
     }
 
     // Remove all the text
-    this->delete_undo_history();
-    this->blockSignals(true);
-    this->set_undo_collection(false);
-    this->delete_chars(0, this->length());
-    this->set_undo_collection(true);
-    this->blockSignals(false);
+    {
+        const QSignalBlocker blocker(this);
+        this->set_undo_collection(false);
+        this->delete_undo_history();
+        this->delete_chars(0, this->length());
+        this->set_undo_collection(true);
+    }
 
     // NOTE: if the read fails then the buffer will be completely empty...which probably
     // isn't a good thing, but this should be a rare occurrence.
@@ -184,7 +185,7 @@ ScintillaBuffer::BufferStateChange ScintillaBuffer::checkForBufferStateChange()
         fileInfo.refresh(); // refresh else exists() fails to notice missing file
         if (!fileInfo.exists()) {
             bufferType = BufferType::FileMissing;
-            save_point(false); // Notify that this file is now dirty
+            emit save_point(false); // Notify that this file is now dirty
             return BufferStateChange::Deleted;
         }
 
