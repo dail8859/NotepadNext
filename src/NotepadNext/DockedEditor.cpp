@@ -34,6 +34,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaDynamicTabsMenuButtonVisibility, true);
 
     m_DockManager = new ads::CDockManager(parent);
+    m_DockManager->setStyleSheet("");
 
     connect(m_DockManager, &ads::CDockManager::dockAreaCreated, [this](ads::CDockAreaWidget* DockArea) {
         qInfo("Registering new DockArea");
@@ -109,12 +110,7 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
 
     Q_ASSERT(buffer != Q_NULLPTR);
 
-    //QString iconPath;
-    //if (buffer->is_read_only())
-    //    iconPath = ":/icons/readonly.png";
-    //else
-    //    iconPath = ":/icons/saved.png";
-
+    // Need a new editor
     auto editor = new ScintillaNext(buffer);
 
     if (currentEditor == Q_NULLPTR) {
@@ -123,25 +119,13 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
 
     emit editorCreated(editor);
 
-    // If the dock manager doesnt have any dock areas this will be the first one.
-    // Since the
-    //if (m_DockManager->dockAreaCount() == 0) {
-    //    emit bufferSwitched(buffer);
-    //}
-
+    // Create the dock widget for the editor
     ads::CDockWidget* dw = new ads::CDockWidget(buffer->getName());
     dw->setWidget(editor);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetDeleteOnClose, true);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::CustomCloseHandling, true);
-    ads::CDockAreaWidget *area = m_DockManager->addDockWidgetTab(ads::CenterDockWidgetArea, dw);
 
-
-
-    connect(dw, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
-
-    //int newIndex = tabBar->addTab(QIcon(iconPath), buffer->getName());
-    //tabBar->blockSignals(false);
-
+    // Set the tooltip based on the buffer
     if (buffer->isFile()) {
         dw->tabWidget()->setToolTip(buffer->fileInfo.canonicalFilePath());
     }
@@ -149,12 +133,21 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
         dw->tabWidget()->setToolTip(buffer->getName());
     }
 
-    // NOTE:
+    // Set the icon
+    dw->tabWidget()->setIcon(QIcon(":/icons/saved.png"));
+    connect(buffer, &ScintillaBuffer::save_point, [=](bool atSavePoint) {
+        const QString iconPath = atSavePoint ? ":/icons/saved.png" : ":/icons/unsaved.png";
+        dw->tabWidget()->setIcon(QIcon(iconPath));
+    });
+
+    connect(dw, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
+
+    ads::CDockAreaWidget *area = m_DockManager->addDockWidgetTab(ads::CenterDockWidgetArea, dw);
+
+    // NOTE: If it is the first widget added to an area, manually trigger the signal
     if (area->dockWidgetsCount() == 1) {
         emit area->currentChanged(0);
     }
-
-    //connect(buffer, &ScintillaBuffer::save_point, this, &TabbedEditor::setBufferSaveIcon);
 }
 
 void DockedEditor::removeBuffer(ScintillaBuffer *buffer)
