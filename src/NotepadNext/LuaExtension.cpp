@@ -735,6 +735,10 @@ bool LuaExtension::Initialise(lua_State *L, ScintillaNext *editor_) {
     return false;
 }
 
+void LuaExtension::setEditor(ScintillaEdit *editor_) {
+    editor = editor_;
+}
+
 bool LuaExtension::Finalise() {
     if (luaState) {
         lua_close(luaState);

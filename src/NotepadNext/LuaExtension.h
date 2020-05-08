@@ -38,6 +38,7 @@ public:
     ~LuaExtension();
 
     bool Initialise(lua_State *L, ScintillaNext *editor_);
+    void setEditor(ScintillaEdit *editor_);
     bool Finalise();
 
     // Helper methods

@@ -90,9 +90,12 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     });
     connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::bufferActivated);
 
-    // Set up the lua state and the extension
-    //LuaExtension::Instance().Initialise(app->getLuaState()->L, this->editor);
 
+    // Set up the lua state and the extension. Need to intialize it after the first file was created
+    LuaExtension::Instance().Initialise(app->getLuaState()->L, Q_NULLPTR);
+    connect(dockedEditor, &DockedEditor::editorActivated, [](ScintillaNext *editor) {
+        LuaExtension::Instance().setEditor(editor);
+    });
 
 #ifdef QT_DEBUG
     // Print some debug messages: connect these first in case something bad happens during a later slot
@@ -613,7 +616,7 @@ void MainWindow::setupLanguageMenu()
                 R"(
                 local names = {}
                 for _, L in pairs(languages) do
-                    names[#names + 1] = L.name
+                    names[#names + 1] = L.lexer
                 end
                 table.sort(names)
                 return names
@@ -1355,10 +1358,10 @@ void MainWindow::updateGui(ScintillaNext *editor)
     updateSelectionBasedUi(editor);
     updateContentBasedUi(editor);
 
-    docType->setText(editor->scintillaBuffer()->lexer);
+    docType->setText(editor->lexerLanguage());
 
     foreach (QAction *action, languageActionGroup->actions()) {
-        if (action->data().toString() == editor->scintillaBuffer()->lexer) {
+        if (action->data().toString() == editor->lexerLanguage()) {
             action->setChecked(true);
             break;
         }
@@ -1476,7 +1479,7 @@ void MainWindow::setLanguage(ScintillaNext *editor)
             editor->setLexer(SCLEX_NULL);
         }
         else {
-            //setupEditor(editor);
+            LuaExtension::Instance().setEditor(editor);
 
             app->getLuaState()->execute(QString("lexer = \"%1\"").arg(QString(editor->lexerLanguage())).toLatin1().constData());
             app->getLuaState()->execute(R"(
@@ -1746,13 +1749,9 @@ void MainWindow::tabBarRightClicked(const QPoint &pos)
 void MainWindow::languageMenuTriggered()
 {
     const QAction *act = qobject_cast<QAction *>(sender());
+    auto editor = dockedEditor->getCurrentEditor();
     QVariant v = act->data();
 
-    auto editor = dockedEditor->getCurrentEditor();
-    auto buffer = editor->scintillaBuffer();
-    buffer->lexer = v.toString();
-
+    editor->setLexerLanguage(v.toString().toLocal8Bit().data());
     setLanguage(editor);
-
-    qInfo(qUtf8Printable(buffer->lexer));
 }

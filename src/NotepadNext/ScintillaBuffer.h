@@ -56,7 +56,7 @@ public:
     bool is_save_point() override;
 
     QFileInfo fileInfo;
-    QString lexer = "null"; // TODO: figure out another way probably
+    QString lexer = "null"; // TODO: remove the need for this
 
     static ScintillaBuffer *fromFile(const QString &filePath);
 
