@@ -775,8 +775,8 @@ void MainWindow::setupEditor(ScintillaNext *editor)
     SmartHighlighter *s = new SmartHighlighter(editor);
     s->setEnabled(true);
 
-    //HighlightedScrollBarPlugin *h = new HighlightedScrollBarPlugin(editor);
-    //h->setEnabled(true);
+    HighlightedScrollBarPlugin *h = new HighlightedScrollBarPlugin(editor);
+    h->setEnabled(true);
 
     BraceMatch *b = new BraceMatch(editor);
     b->setEnabled(true);

@@ -36,8 +36,6 @@ HighlightedScrollBarPlugin::HighlightedScrollBarPlugin(ScintillaEdit *editor)
 
 HighlightedScrollBarPlugin::~HighlightedScrollBarPlugin()
 {
-    editor->setVerticalScrollBar(new QScrollBar(editor));
-    scrollBar = nullptr;
 }
 
 void HighlightedScrollBarPlugin::notify(const SCNotification *pscn)
