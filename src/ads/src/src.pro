@@ -1,11 +1,9 @@
-ADS_OUT_ROOT = $${OUT_PWD}/..
-
-
 TARGET = ads
 TEMPLATE = lib
 CONFIG += lib_bundle
 CONFIG += staticlib
 QT += core gui widgets
+
 include(../../Config.pri)
 
 DEFINES += ADS_STATIC
@@ -61,13 +59,8 @@ SOURCES += \
 
 
 unix {
-HEADERS += linux/FloatingWidgetTitleBar.h
-SOURCES += linux/FloatingWidgetTitleBar.cpp
-}
-
-isEmpty(PREFIX){
-	PREFIX=..\installed
-	warning("Install Prefix not set")
+    HEADERS += linux/FloatingWidgetTitleBar.h
+    SOURCES += linux/FloatingWidgetTitleBar.cpp
 }
 
 DISTFILES +=
