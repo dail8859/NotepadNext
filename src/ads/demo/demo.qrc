@@ -14,5 +14,8 @@
         <file>images/plus.svg</file>
         <file>images/help_outline.svg</file>
         <file>images/fullscreen.svg</file>
+        <file>images/create_floating_editor.svg</file>
+        <file>images/create_floating_table.svg</file>
+        <file>images/docked_editor.svg</file>
     </qresource>
 </RCC>

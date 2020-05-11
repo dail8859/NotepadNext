@@ -24,19 +24,19 @@ set(ads_example_SRCS
     MainWindow.cpp
     MainWindow.ui
 )
-add_executable(Example1 WIN32 ${ads_example_SRCS})
+add_executable(SimpleExample WIN32 ${ads_example_SRCS})
 if(BUILD_STATIC)
     set(ads_example_DEFINE ${ads_example_DEFINE} ADS_STATIC)
 endif()
-add_dependencies(Example1 qtadvanceddocking)
-target_include_directories(Example1 PUBLIC 
+add_dependencies(SimpleExample qtadvanceddocking)
+target_include_directories(SimpleExample PUBLIC 
     $<BUILD_INTERFACE:${ads_example_INCLUDE}>
     $<INSTALL_INTERFACE:include>
     )
-target_include_directories(Example1 PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../src"  ${ads_example_INCLUDE})
-target_link_libraries(Example1 PRIVATE qtadvanceddocking ${ads_example_LIBS})
-target_compile_definitions(Example1 PRIVATE ${ads_example_DEFINE})
-set_target_properties(Example1 PROPERTIES 
+target_include_directories(SimpleExample PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../src"  ${ads_example_INCLUDE})
+target_link_libraries(SimpleExample PRIVATE qtadvanceddocking ${ads_example_LIBS})
+target_compile_definitions(SimpleExample PRIVATE ${ads_example_DEFINE})
+set_target_properties(SimpleExample PROPERTIES 
     VERSION "1.0"
     SOVERSION 1
     EXPORT_NAME "Qt Advanced Docking System Example"

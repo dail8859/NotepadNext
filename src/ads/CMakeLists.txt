@@ -123,7 +123,8 @@ set_target_properties(qtadvanceddocking PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${ads_PlatformDir}/bin"
 )
 if(BUILD_EXAMPLES)
-    add_subdirectory(example)
+    add_subdirectory(examples/simple)
+    add_subdirectory(examples/sidebar)
     add_subdirectory(demo)
 endif()
 
