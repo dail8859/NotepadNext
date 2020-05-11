@@ -33,7 +33,6 @@ struct FloatingDragPreviewPrivate
 	CFloatingDragPreview *_this;
 	QWidget* Content;
 	CDockAreaWidget* ContentSourceArea = nullptr;
-	CDockContainerWidget* ContenSourceContainer = nullptr;
 	QPoint DragStartMousePosition;
 	CDockManager* DockManager;
 	CDockContainerWidget *DropContainer = nullptr;
@@ -123,10 +122,8 @@ void FloatingDragPreviewPrivate::updateDropOverlays(const QPoint &GlobalPos)
 	int VisibleDockAreas = TopContainer->visibleDockAreaCount();
 	ContainerOverlay->setAllowedAreas(
 	    VisibleDockAreas > 1 ? OuterDockAreas : AllDockAreas);
-	DockWidgetArea ContainerArea = ContainerOverlay->showOverlay(TopContainer);
-	ContainerOverlay->enableDropPreview(ContainerArea != InvalidDockWidgetArea);
 	auto DockArea = TopContainer->dockAreaAt(GlobalPos);
-	if (DockArea && DockArea->isVisible() && VisibleDockAreas > 0 && DockArea != ContentSourceArea)
+	if (DockArea && DockArea->isVisible() && VisibleDockAreas >= 0 && DockArea != ContentSourceArea)
 	{
 		DockAreaOverlay->enableDropPreview(true);
 		DockAreaOverlay->setAllowedAreas(
@@ -137,8 +134,7 @@ void FloatingDragPreviewPrivate::updateDropOverlays(const QPoint &GlobalPos)
 		// the mouse is in the title bar. If the ContainerArea is valid
 		// then we ignore the dock area of the dockAreaOverlay() and disable
 		// the drop preview
-		if ((Area == CenterDockWidgetArea)
-		    && (ContainerArea != InvalidDockWidgetArea))
+		if ((Area == CenterDockWidgetArea) && (ContainerDropArea != InvalidDockWidgetArea))
 		{
 			DockAreaOverlay->enableDropPreview(false);
 			ContainerOverlay->enableDropPreview(true);
@@ -147,6 +143,7 @@ void FloatingDragPreviewPrivate::updateDropOverlays(const QPoint &GlobalPos)
 		{
 			ContainerOverlay->enableDropPreview(InvalidDockWidgetArea == Area);
 		}
+		ContainerOverlay->showOverlay(TopContainer);
 	}
 	else
 	{
@@ -158,6 +155,11 @@ void FloatingDragPreviewPrivate::updateDropOverlays(const QPoint &GlobalPos)
 		{
 			ContainerOverlay->hideOverlay();
 		}
+		else
+		{
+			ContainerOverlay->showOverlay(TopContainer);
+		}
+
 
 		if (DockArea == ContentSourceArea && InvalidDockWidgetArea == ContainerDropArea)
 		{
@@ -266,7 +268,6 @@ CFloatingDragPreview::CFloatingDragPreview(CDockWidget* Content)
 	if (Content->dockAreaWidget()->openDockWidgetsCount() == 1)
 	{
 		d->ContentSourceArea = Content->dockAreaWidget();
-		d->ContenSourceContainer = Content->dockContainer();
 	}
 	setWindowTitle(Content->windowTitle());
 }
@@ -278,7 +279,6 @@ CFloatingDragPreview::CFloatingDragPreview(CDockAreaWidget* Content)
 {
 	d->DockManager = Content->dockManager();
 	d->ContentSourceArea = Content;
-	d->ContenSourceContainer = Content->dockContainer();
 	setWindowTitle(Content->currentDockWidget()->windowTitle());
 }
 

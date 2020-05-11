@@ -456,13 +456,21 @@ void MainWindowPrivate::createActions()
 	ui.toolBar->addAction(PerspectiveListAction);
 	ui.toolBar->addAction(SavePerspectiveAction);
 
-	QAction* a = ui.toolBar->addAction("Create Editor");
+	QAction* a = ui.toolBar->addAction("Create Floating Editor");
+	a->setProperty("Floating", true);
 	a->setToolTip("Creates floating dynamic dockable editor windows that are deleted on close");
 	a->setIcon(svgIcon(":/adsdemo/images/note_add.svg"));
 	_this->connect(a, SIGNAL(triggered()), SLOT(createEditor()));
 	ui.menuTests->addAction(a);
 
-	a = ui.toolBar->addAction("Create Table");
+	a = ui.toolBar->addAction("Create Docked Editor");
+	a->setProperty("Floating", false);
+	a->setToolTip("Creates a docked editor windows that are deleted on close");
+	a->setIcon(svgIcon(":/adsdemo/images/docked_editor.svg"));
+	_this->connect(a, SIGNAL(triggered()), SLOT(createEditor()));
+	ui.menuTests->addAction(a);
+
+	a = ui.toolBar->addAction("Create Floating Table");
 	a->setToolTip("Creates floating dynamic dockable table with millions of entries");
 	a->setIcon(svgIcon(":/adsdemo/images/grid_on.svg"));
 	_this->connect(a, SIGNAL(triggered()), SLOT(createTable()));
@@ -661,11 +669,22 @@ void CMainWindow::onViewVisibilityChanged(bool Visible)
 //============================================================================
 void CMainWindow::createEditor()
 {
+	QObject* Sender = sender();
+	QVariant vFloating = Sender->property("Floating");
+	bool Floating = vFloating.isValid() ? vFloating.toBool() : true;
 	auto DockWidget = createEditorWidget(d->ui.menuView);
 	DockWidget->setFeature(ads::CDockWidget::DockWidgetDeleteOnClose, true);
-	auto FloatingWidget = d->DockManager->addDockWidgetFloating(DockWidget);
-    FloatingWidget->move(QPoint(20, 20));
     connect(DockWidget, SIGNAL(closeRequested()), SLOT(onEditorCloseRequested()));
+
+    if (Floating)
+    {
+		auto FloatingWidget = d->DockManager->addDockWidgetFloating(DockWidget);
+		FloatingWidget->move(QPoint(20, 20));
+    }
+    else
+    {
+    	d->DockManager->addDockWidget(ads::TopDockWidgetArea, DockWidget);
+    }
 }
 
 

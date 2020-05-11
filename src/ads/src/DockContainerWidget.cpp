@@ -1034,6 +1034,10 @@ void DockContainerWidgetPrivate::addDockArea(CDockAreaWidget* NewDockArea, DockW
 	if (Splitter->orientation() == InsertParam.orientation())
 	{
 		insertWidgetIntoSplitter(Splitter, NewDockArea, InsertParam.append());
+		if (Splitter->isHidden())
+		{
+			Splitter->show();
+		}
 	}
 	else
 	{

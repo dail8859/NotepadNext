@@ -589,7 +589,7 @@ void CDockAreaTitleBar::mouseMoveEvent(QMouseEvent* ev)
         return;
     }
 
-	// If this is the last dock area in a dock container it does not make
+	// If this is the last dock area in a floating dock container it does not make
 	// sense to move it to a new floating widget and leave this one
 	// empty
 	if (d->DockArea->dockContainer()->isFloating()
@@ -612,7 +612,7 @@ void CDockAreaTitleBar::mouseMoveEvent(QMouseEvent* ev)
 	int DragDistance = (d->DragStartMousePos - ev->pos()).manhattanLength();
 	if (DragDistance >= CDockManager::startDragDistance())
 	{
-        ADS_PRINT("CTabsScrollArea::startFloating");
+        ADS_PRINT("CDockAreaTitlBar::startFloating");
 		d->startFloating(d->DragStartMousePos);
 		auto Overlay = d->DockArea->dockManager()->containerOverlay();
 		Overlay->setAllowedAreas(OuterDockAreas);

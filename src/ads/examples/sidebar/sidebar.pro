@@ -1,8 +1,8 @@
-ADS_OUT_ROOT = $${OUT_PWD}/..
+ADS_OUT_ROOT = $${OUT_PWD}/../..
 
 QT += core gui widgets
 
-TARGET = Example1
+TARGET = SidebarExample
 DESTDIR = $${ADS_OUT_ROOT}/lib
 TEMPLATE = app
 CONFIG += c++14
@@ -42,6 +42,6 @@ else{
     LIBS += -lqtadvanceddocking
 }
 
-INCLUDEPATH += ../src
-DEPENDPATH += ../src    
+INCLUDEPATH += ../../src
+DEPENDPATH += ../../src    
 
