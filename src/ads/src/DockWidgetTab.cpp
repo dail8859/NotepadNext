@@ -160,6 +160,7 @@ struct DockWidgetTabPrivate
 		GlobalDragStartMousePosition = GlobalPos;
 		DragStartMousePosition = _this->mapFromGlobal(GlobalPos);
 	}
+
 };
 // struct DockWidgetTabPrivate
 
@@ -284,6 +285,7 @@ CDockWidgetTab::CDockWidgetTab(CDockWidget* DockWidget, QWidget *parent) :
 	setAttribute(Qt::WA_NoMousePropagation, true);
 	d->DockWidget = DockWidget;
 	d->createLayout();
+	setFocusPolicy(Qt::ClickFocus);
 }
 
 //============================================================================
@@ -461,16 +463,24 @@ void CDockWidgetTab::setActiveTab(bool active)
 	bool AllTabsHaveCloseButton = d->testConfigFlag(CDockManager::AllTabsHaveCloseButton);
 	bool TabHasCloseButton = (ActiveTabHasCloseButton && active) | AllTabsHaveCloseButton;
 	d->CloseButton->setVisible(DockWidgetClosable && TabHasCloseButton);
-	if (d->IsActiveTab == active)
+
+	bool UpdateFocusStyle = false;
+	if (active && !hasFocus())
 	{
-		return;
+		setFocus(Qt::OtherFocusReason);
+		UpdateFocusStyle = true;
 	}
 
+	if (d->IsActiveTab == active)
+	{
+		if (UpdateFocusStyle)
+		{
+			updateStyle();
+		}
+		return;
+	}
 	d->IsActiveTab = active;
-	style()->unpolish(this);
-	style()->polish(this);
-	d->TitleLabel->style()->unpolish(d->TitleLabel);
-	d->TitleLabel->style()->polish(d->TitleLabel);
+	updateStyle();
 	update();
 	updateGeometry();
 
@@ -638,6 +648,16 @@ void CDockWidgetTab::onDockWidgetFeaturesChanged()
 void CDockWidgetTab::setElideMode(Qt::TextElideMode mode)
 {
 	d->TitleLabel->setElideMode(mode);
+}
+
+
+//============================================================================
+void CDockWidgetTab::updateStyle()
+{
+	this->style()->unpolish(this);
+	this->style()->polish(this);
+	d->TitleLabel->style()->unpolish(d->TitleLabel);
+	d->TitleLabel->style()->polish(d->TitleLabel);
 }
 
 

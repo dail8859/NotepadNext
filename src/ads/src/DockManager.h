@@ -36,8 +36,8 @@
 #include "FloatingDockContainer.h"
 
 
-class QSettings;
-class QMenu;
+QT_FORWARD_DECLARE_CLASS(QSettings)
+QT_FORWARD_DECLARE_CLASS(QMenu)
 
 namespace ads
 {
@@ -83,6 +83,10 @@ private:
 	friend class CFloatingDragPreview;
 	friend struct FloatingDragPreviewPrivate;
 	friend class CDockAreaTitleBar;
+
+private slots:
+	void onFocusChanged(QWidget *old, QWidget *now);
+	void onFocusedDockAreaViewToggled(bool Open);
 
 protected:
 	/**

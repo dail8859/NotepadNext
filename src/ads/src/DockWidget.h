@@ -34,8 +34,8 @@
 
 #include "ads_globals.h"
 
-class QToolBar;
-class QXmlStreamWriter;
+QT_FORWARD_DECLARE_CLASS(QToolBar)
+QT_FORWARD_DECLARE_CLASS(QXmlStreamWriter)
 
 namespace ads
 {

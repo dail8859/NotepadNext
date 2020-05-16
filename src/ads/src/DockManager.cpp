@@ -45,6 +45,8 @@
 #include <QSettings>
 #include <QMenu>
 #include <QApplication>
+#include <QGuiApplication>
+#include <QPointer>
 
 #include "FloatingDockContainer.h"
 #include "DockOverlay.h"
@@ -53,6 +55,7 @@
 #include "DockAreaWidget.h"
 #include "IconProvider.h"
 #include "DockingStateReader.h"
+#include "DockAreaTitleBar.h"
 
 
 /**
@@ -91,6 +94,8 @@ struct DockManagerPrivate
 	CDockManager::eViewMenuInsertionOrder MenuInsertionOrder = CDockManager::MenuAlphabeticallySorted;
 	bool RestoringState = false;
 	QVector<CFloatingDockContainer*> UninitializedFloatingWidgets;
+	QPointer<CDockWidget> FocusedDockWidget = nullptr;
+	QPointer<CDockAreaWidget> FocusedArea = nullptr;
 
 	/**
 	 * Private data constructor
@@ -437,6 +442,8 @@ CDockManager::CDockManager(QWidget *parent) :
 	d->ContainerOverlay = new CDockOverlay(this, CDockOverlay::ModeContainerOverlay);
 	d->Containers.append(this);
 	d->loadStylesheet();
+	connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)),
+		this, SLOT(onFocusChanged(QWidget*, QWidget*)));
 }
 
 //============================================================================
@@ -869,6 +876,94 @@ CIconProvider& CDockManager::iconProvider()
 {
 	static CIconProvider Instance;
 	return Instance;
+}
+
+
+//===========================================================================
+void updateDockWidgetFocusStyle(CDockWidget* DockWidget, bool Focused)
+{
+	DockWidget->setProperty("focused", Focused);
+	DockWidget->tabWidget()->setProperty("focused", Focused);
+	DockWidget->tabWidget()->updateStyle();
+	internal::repolishStyle(DockWidget);
+}
+
+
+//===========================================================================
+void updateDockAreaFocusStyle(CDockAreaWidget* DockArea, bool Focused)
+{
+	DockArea->setProperty("focused", Focused);
+	internal::repolishStyle(DockArea);
+	internal::repolishStyle(DockArea->titleBar());
+}
+
+
+//===========================================================================
+void CDockManager::onFocusChanged(QWidget* focusedOld, QWidget* focusedNow)
+{
+	Q_UNUSED(focusedOld)
+	if (!focusedNow)
+	{
+		return;
+	}
+
+	CDockWidget* DockWidget = nullptr;
+	auto DockWidgetTab = qobject_cast<CDockWidgetTab*>(focusedNow);
+	if (DockWidgetTab)
+	{
+		DockWidget = DockWidgetTab->dockWidget();
+	}
+	else
+	{
+		DockWidget = internal::findParent<CDockWidget*>(focusedNow);
+	}
+
+	if (!DockWidget)
+	{
+		return;
+	}
+
+	CDockAreaWidget* NewFocusedDockArea = nullptr;
+	if (d->FocusedDockWidget)
+	{
+		updateDockWidgetFocusStyle(d->FocusedDockWidget, false);
+	}
+	d->FocusedDockWidget = DockWidget;
+	updateDockWidgetFocusStyle(d->FocusedDockWidget, true);
+	NewFocusedDockArea = d->FocusedDockWidget->dockAreaWidget();
+	if (!NewFocusedDockArea || (d->FocusedArea == NewFocusedDockArea))
+	{
+		return;
+	}
+
+	if (d->FocusedArea)
+	{
+		disconnect(d->FocusedArea, SIGNAL(viewToggled(bool)), this, SLOT(onFocusedDockAreaViewToggled(bool)));
+		updateDockAreaFocusStyle(d->FocusedArea, false);
+	}
+
+	d->FocusedArea = NewFocusedDockArea;
+	updateDockAreaFocusStyle(d->FocusedArea, true);
+	connect(d->FocusedArea, SIGNAL(viewToggled(bool)), this, SLOT(onFocusedDockAreaViewToggled(bool)));
+}
+
+
+//===========================================================================
+void CDockManager::onFocusedDockAreaViewToggled(bool Open)
+{
+	CDockAreaWidget* DockArea = qobject_cast<CDockAreaWidget*>(sender());
+	if (!DockArea || Open)
+	{
+		return;
+	}
+	auto Container = DockArea->dockContainer();
+	auto OpenedDockAreas = Container->openedDockAreas();
+	if (OpenedDockAreas.isEmpty())
+	{
+		return;
+	}
+
+	OpenedDockAreas[0]->currentDockWidget()->tabWidget()->setFocus(Qt::OtherFocusReason);
 }
 
 

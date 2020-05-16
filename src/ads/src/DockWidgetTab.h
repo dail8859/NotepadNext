@@ -39,6 +39,7 @@ namespace ads
 class CDockWidget;
 class CDockAreaWidget;
 struct DockWidgetTabPrivate;
+class CDockManager;
 
 /**
  * A dock widget tab that shows a title and an icon.
@@ -54,6 +55,7 @@ private:
 	DockWidgetTabPrivate* d; ///< private data (pimpl)
 	friend struct DockWidgetTabPrivate;
 	friend class CDockWidget;
+	friend class CDockManager;
 	void onDockWidgetFeaturesChanged();
 
 private slots:
@@ -152,6 +154,10 @@ public:
 	 */
 	void setElideMode(Qt::TextElideMode mode);
 
+	/**
+	 * Update stylesheet style if a property changes
+	 */
+	void updateStyle();
 
 public slots:
 	virtual void setVisible(bool visible) override;

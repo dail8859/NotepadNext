@@ -9,10 +9,6 @@ ads--CDockContainerWidget
     background: palette(dark);
 }
 
-ads--CDockContainerWidget QSplitter::handle
-{
-    background: palette(dark);
-}
 
 ads--CDockAreaWidget
 {
@@ -90,5 +86,45 @@ QScrollArea#dockWidgetScrollArea
 {
 	background: rgba(0, 0, 0, 32);
 }
+
+
+ads--CDockSplitter::handle
+{
+    background-color: palette(dark);
+    /* uncomment the following line if you would like to change the size of
+       the splitter handles */
+    /* height: 1px; */
+}
+
+
+
+ads--CDockWidgetTab[focused="true"]
+{
+    background: palette(highlight);
+    border-color: palette(highlight);
+}
+
+ads--CDockWidgetTab[focused="true"] QLabel
+{
+    color: palette(light);
+}
+
+
+ads--CDockAreaTitleBar
+{
+	background: transparent;
+	border-bottom: 2px solid palette(light);
+	padding-bottom: 0px;
+}
+
+ads--CDockAreaWidget[focused="true"] ads--CDockAreaTitleBar
+{
+	background: transparent;
+	border-bottom: 2px solid palette(highlight);
+	padding-bottom: 0px;
+}
+
+
+
 
 

@@ -35,7 +35,7 @@
 #include "ads_globals.h"
 #include "DockWidget.h"
 
-class QXmlStreamWriter;
+QT_FORWARD_DECLARE_CLASS(QXmlStreamWriter)
 
 
 namespace ads
@@ -193,7 +193,7 @@ public:
 	bool isInFrontOf(CDockContainerWidget* Other) const;
 
 	/**
-	 * Returns the dock area at teh given global position or 0 if there is no
+	 * Returns the dock area at the given global position or 0 if there is no
 	 * dock area at this position
 	 */
 	CDockAreaWidget* dockAreaAt(const QPoint& GlobalPos) const;

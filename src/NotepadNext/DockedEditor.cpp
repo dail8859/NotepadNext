@@ -24,6 +24,7 @@
 #include "ScintillaNext.h"
 
 #include <QVariant>
+#include <QApplication>
 
 Q_DECLARE_METATYPE(ScintillaBuffer*)
 
@@ -49,6 +50,16 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
             emit editorActivated(editor);
         });
     });
+
+    //connect(qApp, &QApplication::focusChanged, [=](QWidget *old, QWidget *now) {
+    //    if (now) {
+    //        auto editor = qobject_cast<ScintillaNext *>(now);
+    //        if (editor) {
+    //            qInfo(qUtf8Printable(editor->scintillaBuffer()->getName()));
+    //            emit editorActivated(editor);
+    //        }
+    //    }
+    //});
 }
 
 
