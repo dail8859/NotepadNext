@@ -1,0 +1,6 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<desc>date_range icon - Licensed under Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0) - Created with Iconfu.com - Derivative work of Material icons (Copyright Google Inc.)</desc>
+	<g fill="#03b8e5" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<path d="M896,256v597.33c0,46.93 -38.4,85.34 -85.33,85.34h-597.34c-47.36,0 -85.33,-38.41 -85.33,-85.34l0.43,-597.33c0,-46.93 37.54,-85.33 84.9,-85.33h42.67v-85.34h85.33v85.34h341.34v-85.34h85.33v85.34h42.67c46.93,0 85.33,38.4 85.33,85.33zM810.67,384h-597.34v469.33h597.34zM384,554.67h-85.33v-85.34h85.33zM554.67,554.67h-85.34v-85.34h85.34zM725.33,554.67h-85.33v-85.34h85.33z"/>
+	</g>
+</svg>

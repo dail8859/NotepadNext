@@ -41,14 +41,16 @@ void BufferManager::manageBuffer(ScintillaBuffer *buffer)
     buffers.append(buffer);
 
 #ifdef QT_DEBUG
-    connect(buffer, &ScintillaBuffer::destroyed, [](QObject *obj) {
-        Q_UNUSED(obj);
-        qInfo("ScintillaBuffer destroyed");
-    });
-
     connect(buffer, &ScintillaBuffer::modify_attempt, []() { qInfo("ScintillaBuffer::modify_attempt()");});
     connect(buffer, &ScintillaBuffer::save_point, [](bool atSavePoint) { qInfo("ScintillaBuffer::save_point(%s)", atSavePoint ? "true" : "false");});
     connect(buffer, &ScintillaBuffer::modified, [](int position, int modification_type, const QByteArray& text, int length, int linesAdded, int line, int foldLevelNow, int foldLevelPrev) {
+        Q_UNUSED(position);
+        Q_UNUSED(text);
+        Q_UNUSED(length);
+        Q_UNUSED(linesAdded);
+        Q_UNUSED(line);
+        Q_UNUSED(foldLevelNow);
+        Q_UNUSED(foldLevelPrev);
         qInfo("ScintillaBuffer::modified(%d)", modification_type);
     });
     connect(buffer, &ScintillaBuffer::style_needed, [](int pos) { qInfo("ScintillaBuffer::style_needed(%d)", pos);});
@@ -59,6 +61,9 @@ void BufferManager::manageBuffer(ScintillaBuffer *buffer)
 
 void BufferManager::detectEols(ScintillaBuffer *buffer)
 {
+    if (buffer->length() == 0)
+        return;
+
     // TODO: not the most efficient way of doing this
     // Can check/warn for mixed line endings
 
@@ -73,6 +78,9 @@ void BufferManager::detectEols(ScintillaBuffer *buffer)
 
 void BufferManager::detectEncoding(ScintillaBuffer *buffer)
 {
+    if (buffer->length() == 0)
+        return;
+
     // TODO: just do this for now
     buffer->set_code_page(SC_CP_UTF8);
 }
@@ -117,11 +125,9 @@ bool BufferManager::saveBuffer(ScintillaBuffer *buffer, bool forceSave, const QF
 
     if (buffer->type() == ScintillaBuffer::Temporary && fileInfo != Q_NULLPTR) {
         buffer->saveAs(fileInfo->filePath());
-        emit bufferSaved(buffer);
     }
     else if (buffer->isFile() && (forceSave || !buffer->is_save_point())) {
         buffer->save();
-        emit bufferSaved(buffer);
     }
     else {
         return false;
@@ -132,8 +138,6 @@ bool BufferManager::saveBuffer(ScintillaBuffer *buffer, bool forceSave, const QF
 
 void BufferManager::closeBuffer(ScintillaBuffer *buffer)
 {
-    emit bufferClosed(buffer);
-
     bool b = buffers.removeOne(buffer);
 
     Q_ASSERT(b == true);
@@ -142,7 +146,8 @@ void BufferManager::closeBuffer(ScintillaBuffer *buffer)
     // it uses internally. Once the ScintillaBuffer is deleted, it releases this single reference
     // which causes the document to get cleaned up.
 
-    delete buffer;
+    emit bufferClosed(buffer);
+    buffer->deleteLater();
 }
 
 bool BufferManager::saveBufferAs(ScintillaBuffer *buffer, const QString &newFilePath)

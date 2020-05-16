@@ -3,7 +3,7 @@ function rgb(x)
 end
 
 languages = {}
-languages["C++"] = require("cpp")
-languages["Lua"] = require("lua")
-languages["Text"] = require("text")
-languages["Python"] = require("python")
+languages["cpp"] = require("cpp")
+languages["lua"] = require("lua")
+languages["null"] = require("text")
+languages["python"] = require("python")

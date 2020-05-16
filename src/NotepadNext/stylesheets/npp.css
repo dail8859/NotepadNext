@@ -2,41 +2,64 @@ QStatusBar {
     border-top: 1px solid darkgray;
 }
 
-NppTabBar {
-    qproperty-tabsClosable: true;
-    qproperty-expanding: false;
-    qproperty-usesScrollButtons: true;
-    qproperty-documentMode: true;
-    qproperty-movable: true;
-    qproperty-drawBase: true;
-}
-
-NppTabBar::tab {
+ads--CDockWidgetTab {
     background: rgb(192, 192, 192);
     margin-top: 2px;
     border-left: 1px solid white;
     border-top: 2px solid white;
     border-right: 2px solid gray;
-    padding: 2px 2px 0px 5px;
+    padding: 2px 2px 0px 2px;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
 }
-NppTabBar::tab:selected {
+
+ads--CDockWidgetTab[activeTab="true"]
+{
+    background: rgb(240, 240, 240);
+    border-top: 4px solid rgb(255, 75, 75);
+    padding-bottom: 2px;
+    margin-top: 1px;
+}
+
+ads--CDockWidgetTab[focused="true"]
+{
     background: rgb(240, 240, 240);
     border-top: 4px solid orange;
     padding-bottom: 2px;
     margin-top: 1px;
 }
-NppTabBar::tab:hover:!selected {
+
+ads--CDockWidgetTab:hover[activeTab="false"] {
     background: rgb(210, 210, 210);
 }
 
-QSplitter {
-    qproperty-handleWidth: 2;
+ads--CDockAreaTitleBar
+{
+    background: transparent;
+    border-bottom: 1px solid darkgray;
+    padding-bottom: 0px;
 }
 
-QSplitter::handle {
-    border-top: 1px solid darkgray;
-    border-bottom: 1px solid darkgray;
-    margin-bottom: 2px;
+ads--CDockWidgetTab[focused="false"] QLabel {
+    color: gray;
+}
+
+#tabCloseButton
+{
+    background: rgba(0, 0, 0, 16);
+    margin-bottom: 1px;
+    margin-left: 4px;
+    border: none;
+    padding: 0px -2px;
+}
+
+#tabCloseButton:hover
+{
+    border: 1px solid rgba(0, 0, 0, 32);
+    background: red;
+}
+
+#tabCloseButton:pressed
+{
+    background: rgba(0, 0, 0, 32);
 }

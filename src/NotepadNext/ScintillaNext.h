@@ -21,19 +21,22 @@
 #define SCINTILLANEXT_H
 
 #include "ScintillaEdit.h"
+#include "ScintillaBuffer.h"
 
 class ScintillaNext : public ScintillaEdit
 {
     Q_OBJECT
 
 public:
-    explicit ScintillaNext(QWidget *parent = nullptr);
+    explicit ScintillaNext(ScintillaBuffer *buffer = Q_NULLPTR, QWidget *parent = Q_NULLPTR);
 
     template<typename Func>
     void forEachMatch(const QString &text, Func callback) { forEachMatch(text.toUtf8(), callback); }
 
     template<typename Func>
     void forEachMatch(const QByteArray &byteArray, Func callback);
+
+    ScintillaBuffer *scintillaBuffer();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
