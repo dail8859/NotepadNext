@@ -541,11 +541,11 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(bufferManager, &BufferManager::bufferRenamed, dockedEditor, &DockedEditor::renamedBuffer);
 
     // If the current file is saved update the window title incase the file was renamed
-    connect(bufferManager, &BufferManager::bufferCreated, this, &MainWindow::detectLanguageFromExtension);
+    connect(dockedEditor, &DockedEditor::editorCreated, this, &MainWindow::detectLanguageFromExtension);
     //connect(bufferManager, &BufferManager::bufferClosed, this, &MainWindow::updateBufferPositionBasedUi);
     connect(bufferManager, &BufferManager::bufferRenamed, [=] (ScintillaBuffer *buffer) {
         updateBufferFileStatusBasedUi(buffer);
-        detectLanguageFromExtension(buffer);
+        //detectLanguageFromExtension(buffer);
         updateBufferFileStatusBasedUi(buffer);
     });
 
@@ -632,15 +632,18 @@ void MainWindow::setupLanguageMenu()
         while (j < language_names.size() &&
                language_names[i][0].toUpper() == language_names[j][0].toUpper()) {
             const QString &key = language_names[j];
-            QAction *action = new QAction(key);
+            const QString languageName = app->getLuaState()->executeAndReturn<QString>(
+                QString("return languages[\"%1\"].name").arg(key).toLatin1().constData()
+            );
+            QAction *action = new QAction(languageName);
             action->setCheckable(true);
             action->setData(key);
             connect(action, &QAction::triggered, this, &MainWindow::languageMenuTriggered);
             languageActionGroup->addAction(action);
             actions.append(action);
 
-            if (key == "normal")
-                action->setChecked(true);
+            //if (key == "normal")
+            //    action->setChecked(true);
             ++j;
         }
 
@@ -1428,9 +1431,11 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
     docPos->setText(positionText + selectionText);
 }
 
-void MainWindow::detectLanguageFromExtension(ScintillaBuffer *buffer)
+void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
+
+    ScintillaBuffer *buffer = editor->scintillaBuffer();
 
     // Only real files have extensions
     if (!buffer->isFile()) {
@@ -1449,14 +1454,15 @@ local ext = "%1"
 for name, L in pairs(languages) do
     for _, v in ipairs(L.extensions) do
         if v == ext then
-            return L.name
+            return L.lexer
         end
     end
 end
 return "null"
 )").arg(ext).toLatin1().constData());
 
-    buffer->lexer = lexer;
+    editor->setLexerLanguage(lexer.toLocal8Bit().constData());
+    setLanguage(editor);
 
     return;
 }
@@ -1523,21 +1529,6 @@ void MainWindow::setLanguage(ScintillaNext *editor)
                 editor:Colourise(0, 1);
                 )");
         }
-    }
-    else {
-        //buffer->lexer = language.name;
-        //docType->setText(language.longDescription);
-        //editor->setLexer(language.lexer_id); // TODO: get this from somewhere
-        //foreach (LexerStyle ls, language.lexer.styles) {
-        //    editor->styleSetFore(ls.id, ls.fgColor);
-        //    editor->styleSetBack(ls.id, ls.bgColor);
-        //    if (ls.keywordClass != -1) {
-        //        editor->setKeyWords(ls.keywordClass, language.keywords[ls.keywordClass].toLocal8Bit().constData());
-        //    }
-        //}
-        //editor->setProperty("fold", "1");
-        //editor->setProperty("fold.compact", "0");
-        //editor->setProperty("lexer.cpp.track.preprocessor", "0");
     }
 }
 

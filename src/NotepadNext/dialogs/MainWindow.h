@@ -100,7 +100,7 @@ public slots:
     void updateBufferPositionBasedUi();
     void updateGui(ScintillaNext *editor);
 
-    void detectLanguageFromExtension(ScintillaBuffer *buffer);
+    void detectLanguageFromExtension(ScintillaNext *editor);
     void bufferActivated(ScintillaNext *editor);
 
     void setLanguage(ScintillaNext *editor);

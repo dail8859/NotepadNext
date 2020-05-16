@@ -39,6 +39,7 @@
 #include <QDebug>
 #include <QPointer>
 
+#include "DockAreaTitleBar_p.h"
 #include "ads_globals.h"
 #include "FloatingDockContainer.h"
 #include "FloatingDragPreview.h"
@@ -55,8 +56,6 @@
 
 namespace ads
 {
-using tTitleBarButton = QToolButton;
-
 
 /**
  * Private data class of CDockAreaTitleBar class (pimpl)
@@ -129,86 +128,6 @@ struct DockAreaTitleBarPrivate
 	 */
 	IFloatingWidget* makeAreaFloating(const QPoint& Offset, eDragState DragState);
 };// struct DockAreaTitleBarPrivate
-
-
-/**
- * Title bar button of a dock area that customizes tTitleBarButton appearance/behaviour
- * according to various config flags such as:
- * CDockManager::DockAreaHas_xxx_Button - if set to 'false' keeps the button always invisible
- * CDockManager::DockAreaHideDisabledButtons - if set to 'true' hides button when it is disabled
- */
-class CTitleBarButton : public tTitleBarButton
-{
-	Q_OBJECT
-	bool Visible = true;
-	bool HideWhenDisabled = false;
-public:
-	using Super = tTitleBarButton;
-	CTitleBarButton(bool visible = true, QWidget* parent = nullptr)
-		: tTitleBarButton(parent),
-		  Visible(visible),
-		  HideWhenDisabled(DockAreaTitleBarPrivate::testConfigFlag(CDockManager::DockAreaHideDisabledButtons))
-	{}
-	
-
-	/**
-	 * Adjust this visibility change request with our internal settings:
-	 */
-	virtual void setVisible(bool visible) override
-	{
-		// 'visible' can stay 'true' if and only if this button is configured to generaly visible:
-		visible = visible && this->Visible;
-
-		// 'visible' can stay 'true' unless: this button is configured to be invisible when it is disabled and it is currently disabled:
-		if(visible && HideWhenDisabled)
-		{
-			visible = isEnabled();
-		}
-
-		Super::setVisible(visible);
-	}
-	
-protected:
-	/**
-	 * Handle EnabledChanged signal to set button invisible if the configured
-	 */
-	bool event(QEvent *ev) override
-	{
-		if(QEvent::EnabledChange == ev->type() && HideWhenDisabled)
-		{
-			// force setVisible() call 
-			// Calling setVisible() directly here doesn't work well when button is expected to be shown first time
-			QMetaObject::invokeMethod(this, "setVisible", Qt::QueuedConnection, Q_ARG(bool, isEnabled()));
-		}
-
-		return Super::event(ev);
-	}
-};
-
-
-/**
- * This spacer widget is here because of the following problem.
- * The dock area title bar handles mouse dragging and moving the floating widget.
- * The  problem is, that if the title bar becomes invisible, i.e. if the dock
- * area contains only one single dock widget and the dock area is moved
- * into a floating widget, then mouse events are not handled anymore and dragging
- * of the floating widget stops.
- */
-class CSpacerWidget : public QWidget
-{
-	Q_OBJECT
-public:
-	using Super = QWidget;
-	CSpacerWidget(QWidget* Parent = 0)
-	    : Super(Parent)
-	{
-	    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	    setStyleSheet("border: none; background: none;");
-	}
-	virtual QSize sizeHint() const override {return QSize(0, 0);}
-	virtual QSize minimumSizeHint() const override {return QSize(0, 0);}
-};
-
 
 //============================================================================
 DockAreaTitleBarPrivate::DockAreaTitleBarPrivate(CDockAreaTitleBar* _public) :
@@ -674,10 +593,50 @@ int CDockAreaTitleBar::indexOf(QWidget *widget) const
 	return d->Layout->indexOf(widget);
 }
 
+//============================================================================
+CTitleBarButton::CTitleBarButton(bool visible /*= true*/, QWidget* parent /*= nullptr*/) : tTitleBarButton(parent),
+Visible(visible),
+HideWhenDisabled(DockAreaTitleBarPrivate::testConfigFlag(CDockManager::DockAreaHideDisabledButtons))
+{
+
+}
+
+//============================================================================
+void CTitleBarButton::setVisible(bool visible)
+{
+	// 'visible' can stay 'true' if and only if this button is configured to generaly visible:
+	visible = visible && this->Visible;
+
+	// 'visible' can stay 'true' unless: this button is configured to be invisible when it is disabled and it is currently disabled:
+	if (visible && HideWhenDisabled)
+	{
+		visible = isEnabled();
+	}
+
+	Super::setVisible(visible);
+}
+
+//============================================================================
+bool CTitleBarButton::event(QEvent *ev)
+{
+	if (QEvent::EnabledChange == ev->type() && HideWhenDisabled)
+	{
+		// force setVisible() call 
+		// Calling setVisible() directly here doesn't work well when button is expected to be shown first time
+		QMetaObject::invokeMethod(this, "setVisible", Qt::QueuedConnection, Q_ARG(bool, isEnabled()));
+	}
+
+	return Super::event(ev);
+}
+
+//============================================================================
+CSpacerWidget::CSpacerWidget(QWidget* Parent /*= 0*/) : Super(Parent)
+{
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	setStyleSheet("border: none; background: none;");
+}
 
 } // namespace ads
-
-#include "DockAreaTitleBar.moc"
 
 //---------------------------------------------------------------------------
 // EOF DockAreaTitleBar.cpp

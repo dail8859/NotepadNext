@@ -413,6 +413,7 @@ void CDockAreaWidget::insertDockWidget(int index, CDockWidget* DockWidget,
 	bool Activate)
 {
 	d->ContentsLayout->insertWidget(index, DockWidget);
+	DockWidget->setDockArea(this);
 	DockWidget->tabWidget()->setDockAreaWidget(this);
 	auto TabWidget = DockWidget->tabWidget();
 	// Inserting the tab will change the current index which in turn will
@@ -428,7 +429,6 @@ void CDockAreaWidget::insertDockWidget(int index, CDockWidget* DockWidget,
 	{
 		setCurrentIndex(index);
 	}
-	DockWidget->setDockArea(this);
 	d->updateTitleBarButtonStates();
 }
 

@@ -33,6 +33,7 @@ HEADERS += \
     FloatingDragPreview.h \
     DockOverlay.h \
     DockSplitter.h \
+    DockAreaTitleBar_p.h \
     DockAreaTitleBar.h \
     ElidingLabel.h \
     IconProvider.h \

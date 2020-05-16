@@ -37,7 +37,7 @@
 #include <QDebug>
 #include <QStyle>
 
-class QAbstractButton;
+QT_FORWARD_DECLARE_CLASS(QAbstractButton)
 
 #ifndef ADS_STATIC
 #ifdef ADS_SHARED_EXPORT
@@ -60,7 +60,7 @@ class QAbstractButton;
 // dumps to qDebug and std::cout after layout changes
 #define ADS_DEBUG_LEVEL 0
 
-class QSplitter;
+QT_FORWARD_DECLARE_CLASS(QSplitter)
 
 namespace ads
 {
@@ -250,6 +250,13 @@ void setToolTip(QObjectPtr obj, const QString &tip)
  */
 void setButtonIcon(QAbstractButton* Button, QStyle::StandardPixmap StandarPixmap,
 	ads::eIcon CustomIconId);
+
+
+/**
+ * Calls unpolish() / polish for the style of the given widget to update
+ * stylesheet if a property changes
+ */
+void repolishStyle(QWidget* w);
 
 } // namespace internal
 } // namespace ads

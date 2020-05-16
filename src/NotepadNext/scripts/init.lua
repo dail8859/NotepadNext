@@ -5,5 +5,5 @@ end
 languages = {}
 languages["cpp"] = require("cpp")
 languages["lua"] = require("lua")
-languages["text"] = require("text")
+languages["null"] = require("text")
 languages["python"] = require("python")

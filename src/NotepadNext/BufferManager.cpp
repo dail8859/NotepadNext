@@ -41,11 +41,6 @@ void BufferManager::manageBuffer(ScintillaBuffer *buffer)
     buffers.append(buffer);
 
 #ifdef QT_DEBUG
-    connect(buffer, &ScintillaBuffer::destroyed, [](QObject *obj) {
-        Q_UNUSED(obj);
-        qInfo("ScintillaBuffer destroyed");
-    });
-
     connect(buffer, &ScintillaBuffer::modify_attempt, []() { qInfo("ScintillaBuffer::modify_attempt()");});
     connect(buffer, &ScintillaBuffer::save_point, [](bool atSavePoint) { qInfo("ScintillaBuffer::save_point(%s)", atSavePoint ? "true" : "false");});
     connect(buffer, &ScintillaBuffer::modified, [](int position, int modification_type, const QByteArray& text, int length, int linesAdded, int line, int foldLevelNow, int foldLevelPrev) {
