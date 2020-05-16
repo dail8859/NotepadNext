@@ -24,7 +24,9 @@
 #include <QLabel>
 #include <QActionGroup>
 
-#include "TabbedEditor.h"
+#include "DockedEditor.h"
+
+#include "ScintillaNext.h"
 #include "BufferManager.h"
 #include "StatusLabel.h"
 #include "NppImporter.h"
@@ -68,19 +70,17 @@ public slots:
     void reloadFile();
 
     void closeCurrentFile();
-    void closeFile(int index);
+    void closeFile(ScintillaBuffer *buffer);
     void closeAllFiles(bool forceClose);
     void closeAllExceptActive();
     void closeAllToLeft();
     void closeAllToRight();
 
     bool saveCurrentFile();
-    bool saveFile(int index);
     bool saveFile(ScintillaBuffer *buffer);
 
     bool saveCurrentFileAsDialog();
     bool saveCurrentFileAs(const QString &fileName);
-    bool saveFileAs(int index, const QString &fileName);
     bool saveFileAs(ScintillaBuffer *buffer, const QString &fileName);
 
     void saveCopyAsDialog();
@@ -91,17 +91,19 @@ public slots:
     void convertEOLs(int eolMode);
 
     void updateBufferFileStatusBasedUi(ScintillaBuffer *buffer);
-    void updateEOLBasedUi();
-    void updateEncodingBasedUi();
-    void updateSelectionBasedUi(int updated);
+    void updateEOLBasedUi(ScintillaNext *editor);
+    void updateEncodingBasedUi(ScintillaNext *editor);
+    void updateDocumentBasedUi(int updated);
+    void updateSelectionBasedUi(ScintillaNext *editor);
+    void updateContentBasedUi(ScintillaNext *editor);
     void updateSaveStatusBasedUi(bool isDirty);
     void updateBufferPositionBasedUi();
-    void updateGui(ScintillaBuffer *buffer);
+    void updateGui(ScintillaNext *editor);
 
-    void detectLanguageFromExtension(ScintillaBuffer *buffer);
-    void bufferActivated(ScintillaBuffer *buffer);
+    void detectLanguageFromExtension(ScintillaNext *editor);
+    void bufferActivated(ScintillaNext *editor);
 
-    void setLanguage(ScintillaBuffer *buffer);
+    void setLanguage(ScintillaNext *editor);
 
     void bringWindowToForeground();
     void focusIn();
@@ -119,8 +121,7 @@ private:
     Ui::MainWindow *ui = Q_NULLPTR;
     NotepadNextApplication *app = Q_NULLPTR;
     BufferManager *bufferManager = Q_NULLPTR;
-    TabbedEditor *tabbedEditor = Q_NULLPTR;
-    ScintillaNext *editor = Q_NULLPTR;
+    DockedEditor *dockedEditor = Q_NULLPTR;
     MacroRecorder *recorder = Q_NULLPTR;
     Settings *settings = Q_NULLPTR;
 

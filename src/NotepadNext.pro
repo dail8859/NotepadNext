@@ -29,8 +29,9 @@ SUBDIRS = ScintillaEdit \
         qtsingleapplication \
         lua \
         uchardet \
+        ads \
         NotepadNext
 
 ScintillaEdit.subdir = scintilla/qt/ScintillaEdit
 
-NotepadNext.depends = ScintillaEdit qtsingleapplication lua uchardet
+NotepadNext.depends = ScintillaEdit qtsingleapplication lua uchardet ads

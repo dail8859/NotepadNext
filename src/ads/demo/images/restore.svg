@@ -1,0 +1,6 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,1024,1024">
+	<desc>restore icon - Licensed under Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0) - Created with Iconfu.com - Derivative work of Material icons (Copyright Google Inc.)</desc>
+	<g fill="#03b8e5" fill-rule="nonzero" style="mix-blend-mode: normal">
+		<path d="M938.67,512c0,212.05 -171.95,384 -384,384c-106.24,0 -201.81,-43.09 -271.36,-112.64l60.58,-60.59c53.76,54.19 128.43,87.9 210.78,87.9c165.12,0 298.66,-133.55 298.66,-298.67c0,-165.12 -133.54,-298.67 -298.66,-298.67c-165.12,0 -298.67,133.55 -298.67,298.67h128l-172.37,171.95l-2.99,-5.98l-165.97,-165.97h128c0,-212.05 171.95,-384 384,-384c212.05,0 384,171.95 384,384zM576,341.33v181.34l149.33,88.74l-30.72,51.63l-182.61,-108.37v-213.34z"/>
+	</g>
+</svg>

@@ -36,11 +36,11 @@ win32 {
 
 
 SOURCES += \
+    DockedEditor.cpp \
     Finder.cpp \
     main.cpp \
     ScintillaBuffer.cpp \
     BufferManager.cpp \
-    widgets/TabbedEditor.cpp \
     BufferView.cpp \
     widgets/NppTabBar.cpp \
     widgets/StatusLabel.cpp \
@@ -70,10 +70,10 @@ SOURCES += \
     plugins/LineNumbers.cpp
 
 HEADERS += \
+    DockedEditor.h \
     Finder.h \
     ScintillaBuffer.h \
     BufferManager.h \
-    widgets/TabbedEditor.h \
     BufferView.h \
     widgets/NppTabBar.h \
     widgets/StatusLabel.h \
@@ -150,3 +150,7 @@ DEFINES += LUA_VERSION_NUM=503
 
 win32-g++:LIBS += libUser32
 win32-msvc*:LIBS += User32.lib
+
+LIBS += -L$$OUT_PWD/../ads/src -lads
+INCLUDEPATH += $$PWD/../ads/src
+DEPENDPATH += $$PWD/../ads/src

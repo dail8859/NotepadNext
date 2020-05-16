@@ -1,0 +1,19 @@
+*.pro.user
+/build
+*.o
+*.dylib
+*.app
+qrc_*
+moc_*
+ui_*
+Makefile
+
+# IDEs
+.idea
+
+# Python
+.eggs
+*.pyc
+*.pyd
+__pycache__
+PyQtAds/rc.py
