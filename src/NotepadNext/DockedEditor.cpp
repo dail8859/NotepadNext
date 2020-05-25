@@ -31,6 +31,8 @@ Q_DECLARE_METATYPE(ScintillaBuffer*)
 DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
 {
     ads::CDockManager::setConfigFlag(ads::CDockManager::AllTabsHaveCloseButton, true);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::AlwaysShowTabs, true);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::FloatingContainerHasWidgetTitle, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasCloseButton, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaDynamicTabsMenuButtonVisibility, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::FocusStyling, true);
@@ -38,19 +40,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     m_DockManager = new ads::CDockManager(parent);
     m_DockManager->setStyleSheet("");
 
-    connect(m_DockManager, &ads::CDockManager::dockAreaCreated, [this](ads::CDockAreaWidget* DockArea) {
-        qInfo("Registering new DockArea");
-        this->connect(DockArea, &ads::CDockAreaWidget::currentChanged, [DockArea, this](int index) {
-            auto dockWidget = DockArea->dockWidget(index);
-            auto editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
-
-            // Force it to be the active editor to receive input
-            editor->grabFocus();
-
-            currentEditor = editor;
-            emit editorActivated(editor);
-        });
-    });
+    connect(m_DockManager, &ads::CDockManager::dockAreaCreated, this, &DockedEditor::dockAreaCreated);
 
     //connect(qApp, &QApplication::focusChanged, [=](QWidget *old, QWidget *now) {
     //    if (now) {
@@ -114,6 +104,23 @@ void DockedEditor::dockWidgetCloseRequested()
     auto editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
 
     emit editorCloseRequested(editor);
+}
+
+void DockedEditor::dockAreaCreated(ads::CDockAreaWidget *DockArea)
+{
+    qInfo(Q_FUNC_INFO);
+
+    // Catch all currentChanged() events
+    connect(DockArea, &ads::CDockAreaWidget::currentChanged, [DockArea, this](int index) {
+        auto dockWidget = DockArea->dockWidget(index);
+        auto editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
+
+        // Force it to be the active editor to receive input
+        editor->grabFocus();
+
+        currentEditor = editor;
+        emit editorActivated(editor);
+    });
 }
 
 void DockedEditor::addBuffer(ScintillaBuffer *buffer)
