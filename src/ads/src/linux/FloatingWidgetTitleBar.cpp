@@ -115,7 +115,7 @@ void FloatingWidgetTitleBarPrivate::createLayout()
 
 //============================================================================
 CFloatingWidgetTitleBar::CFloatingWidgetTitleBar(CFloatingDockContainer *parent) :
-	QWidget(parent),
+    QFrame(parent),
 	d(new FloatingWidgetTitleBarPrivate(this))
 {
 	d->FloatingWidget = parent;
@@ -172,16 +172,26 @@ void CFloatingWidgetTitleBar::mouseMoveEvent(QMouseEvent *ev)
 	Super::mouseMoveEvent(ev);
 }
 
+
 //============================================================================
 void CFloatingWidgetTitleBar::enableCloseButton(bool Enable)
 {
 	d->CloseButton->setEnabled(Enable);
 }
 
+
 //============================================================================
 void CFloatingWidgetTitleBar::setTitle(const QString &Text)
 {
 	d->TitleLabel->setText(Text);
+}
+
+
+//============================================================================
+void CFloatingWidgetTitleBar::updateStyle()
+{
+    internal::repolishStyle(this);
+    internal::repolishStyle(d->TitleLabel);
 }
 
 } // namespace ads

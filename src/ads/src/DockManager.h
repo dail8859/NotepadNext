@@ -123,6 +123,20 @@ protected:
 	CDockOverlay* dockAreaOverlay() const;
 
 	/**
+	 * A container needs to call this function if a widget has been dropped
+	 * into it
+	 */
+	void emitWidgetDroppedSignals(QWidget* DroppedWidget);
+
+	/**
+	 * This function is called, if a floating widget has been dropped into
+	 * an new position.
+	 * When this function is called, all dock widgets of the FloatingWidget
+	 * are already inserted into its new position
+	 */
+	void endFloatingWidgetDrop(CFloatingDockContainer* FloatingWidget);
+
+	/**
 	 * Show the floating widgets that has been created floating
 	 */
 	virtual void showEvent(QShowEvent *event) override;
@@ -165,7 +179,7 @@ public:
 		FloatingContainerHasWidgetIcon = 0x80000, //!< If set, the Floating Widget icon reflects the icon of the current dock widget otherwise it displays application icon
 		HideSingleCentralWidgetTitleBar = 0x100000, //!< If there is only one single visible dock widget in the main dock container (the dock manager) and if this flag is set, then the titlebar of this dock widget will be hidden
 		                                            //!< this only makes sense for non draggable and non floatable widgets and enables the creation of some kind of "central" widget
-
+		FocusStyling = 0x200000, //!< enables styling of focused dock widget tabs or floating widget titlebar
 
         DefaultDockAreaButtons = DockAreaHasCloseButton
 							   | DockAreaHasUndockButton
@@ -409,6 +423,21 @@ public:
 	 */
 	static int startDragDistance();
 
+	/**
+	 * Helper function to set focus depending on the configuration of the
+	 * FocusStyling flag
+	 */
+	template <class QWidgetPtr>
+	static void setWidgetFocus(QWidgetPtr widget)
+	{
+		if (!CDockManager::configFlags().testFlag(CDockManager::FocusStyling))
+		{
+			return;
+		}
+
+		widget->setFocus(Qt::OtherFocusReason);
+	}
+
 public slots:
 	/**
 	 * Opens the perspective with the given name.
@@ -483,6 +512,18 @@ signals:
      * docking system but it is not deleted yet.
      */
     void dockWidgetRemoved(CDockWidget* DockWidget);
+
+    /**
+     * This signal is emitted if a dock widget has been dropped into a new
+     * position
+     */
+    void dockWidgetDropped(CDockWidget* DockWidget);
+
+    /**
+     * This signal is emitted if a dock area has been dropped into a new
+     * position
+     */
+    void dockAreaDropped(CDockAreaWidget* DockArea);
 }; // class DockManager
 } // namespace ads
 //-----------------------------------------------------------------------------

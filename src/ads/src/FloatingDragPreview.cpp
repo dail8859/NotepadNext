@@ -297,6 +297,7 @@ void CFloatingDragPreview::moveFloating()
 	const QPoint moveToPos = QCursor::pos() - d->DragStartMousePosition
 	    - QPoint(BorderSize, 0);
 	move(moveToPos);
+	d->updateDropOverlays(QCursor::pos());
 }
 
 
@@ -311,14 +312,6 @@ void CFloatingDragPreview::startFloating(const QPoint &DragStartMousePos,
 	moveFloating();
 	show();
 
-}
-
-
-//============================================================================
-void CFloatingDragPreview::moveEvent(QMoveEvent *event)
-{
-	QWidget::moveEvent(event);
-	d->updateDropOverlays(QCursor::pos());
 }
 
 

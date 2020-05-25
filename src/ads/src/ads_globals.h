@@ -258,6 +258,7 @@ void setButtonIcon(QAbstractButton* Button, QStyle::StandardPixmap StandarPixmap
  */
 void repolishStyle(QWidget* w);
 
+
 } // namespace internal
 } // namespace ads
 

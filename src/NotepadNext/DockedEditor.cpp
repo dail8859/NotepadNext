@@ -33,6 +33,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     ads::CDockManager::setConfigFlag(ads::CDockManager::AllTabsHaveCloseButton, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasCloseButton, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaDynamicTabsMenuButtonVisibility, true);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::FocusStyling, true);
 
     m_DockManager = new ads::CDockManager(parent);
     m_DockManager->setStyleSheet("");

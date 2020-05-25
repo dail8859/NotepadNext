@@ -93,4 +93,41 @@ QScrollArea#dockWidgetScrollArea
         background: rgba(0, 0, 0, 32);
 }
 
+/* Focus related styling */
+ads--CDockWidgetTab[focused="true"]
+{
+    background: palette(highlight);
+    border-color: palette(highlight);
+}
 
+ads--CDockWidgetTab[focused="true"] QLabel
+{
+    color: palette(light);
+}
+
+
+ads--CDockAreaTitleBar
+{
+        background: transparent;
+        border-bottom: 2px solid palette(light);
+        padding-bottom: 0px;
+}
+
+ads--CDockAreaWidget[focused="true"] ads--CDockAreaTitleBar
+{
+        background: transparent;
+        border-bottom: 2px solid palette(highlight);
+        padding-bottom: 0px;
+}
+
+
+ads--CFloatingDockContainer[isActiveWindow="true"] ads--CFloatingWidgetTitleBar
+{
+    background: palette(highlight);
+}
+
+
+ads--CFloatingDockContainer[isActiveWindow="true"] ads--CFloatingWidgetTitleBar > QLabel
+{
+    color: palette(light);
+}

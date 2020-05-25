@@ -205,10 +205,14 @@ void CDockAreaTabBar::insertTab(int Index, CDockWidgetTab* Tab)
 	connect(Tab, SIGNAL(elidedChanged(bool)), this, SIGNAL(elidedChanged(bool)));
 	Tab->installEventFilter(this);
 	emit tabInserted(Index);
-	if (Index <= d->CurrentIndex || d->CurrentIndex == -1)
+    if (Index <= d->CurrentIndex)
 	{
 		setCurrentIndex(d->CurrentIndex + 1);
-	}
+    }
+    else if (d->CurrentIndex == -1)
+    {
+    	setCurrentIndex(Index);
+    }
 
 	updateGeometry();
 }

@@ -415,9 +415,10 @@ void DockContainerWidgetPrivate::dropIntoContainer(CFloatingDockContainer* Float
 	}
 	else if (FloatingSplitter->orientation() == InsertParam.orientation())
 	{
+        int InsertIndex = InsertParam.append() ? Splitter->count() : 0;
 		while (FloatingSplitter->count())
 		{
-			insertWidgetIntoSplitter(Splitter, FloatingSplitter->widget(0), InsertParam.append());
+            Splitter->insertWidget(InsertIndex++, FloatingSplitter->widget(0));
 		}
 	}
 	else
@@ -575,6 +576,11 @@ void DockContainerWidgetPrivate::moveIntoCenterOfSection(QWidget* Widget, CDockA
 	if (DroppedDockWidget)
 	{
 		CDockAreaWidget* OldDockArea = DroppedDockWidget->dockAreaWidget();
+		if (OldDockArea == TargetArea)
+		{
+			return;
+		}
+
 		if (OldDockArea)
 		{
 			OldDockArea->removeDockWidget(DroppedDockWidget);
@@ -1453,12 +1459,21 @@ void CDockContainerWidget::dropFloatingWidget(CFloatingDockContainer* FloatingWi
 		// level widget anymore
 		CDockWidget::emitTopLevelEventForWidget(SingleDockWidget, false);
 	}
+
+	window()->activateWindow();
+	if (SingleDroppedDockWidget)
+	{
+		std::cout << "SingleDockWidget dropped" << std::endl;
+		d->DockManager->emitWidgetDroppedSignals(SingleDroppedDockWidget);
+	}
+	d->DockManager->endFloatingWidgetDrop(FloatingWidget);
 }
 
 
 //============================================================================
 void CDockContainerWidget::dropWidget(QWidget* Widget, DockWidgetArea DropArea, CDockAreaWidget* TargetAreaWidget)
 {
+	std::cout << "dropWidget" << std::endl;
     CDockWidget* SingleDockWidget = topLevelDockWidget();
 	if (TargetAreaWidget)
 	{
@@ -1472,6 +1487,19 @@ void CDockContainerWidget::dropWidget(QWidget* Widget, DockWidgetArea DropArea, 
 	// If there was a top level widget before the drop, then it is not top
 	// level widget anymore
 	CDockWidget::emitTopLevelEventForWidget(SingleDockWidget, false);
+	CDockWidget* DockWidget = qobject_cast<CDockWidget*>(Widget);
+	if (!DockWidget)
+	{
+		CDockAreaWidget* DockArea = qobject_cast<CDockAreaWidget*>(Widget);
+		auto OpenDockWidgets = DockArea->openedDockWidgets();
+		if (OpenDockWidgets.count() == 1)
+		{
+			DockWidget = OpenDockWidgets[0];
+		}
+	}
+
+	window()->activateWindow();
+	d->DockManager->emitWidgetDroppedSignals(Widget);
 }
 
 
