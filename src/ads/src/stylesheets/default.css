@@ -97,7 +97,7 @@ ads--CDockSplitter::handle
 }
 
 
-
+/* Focus related styling */
 ads--CDockWidgetTab[focused="true"]
 {
     background: palette(highlight);
@@ -123,8 +123,3 @@ ads--CDockAreaWidget[focused="true"] ads--CDockAreaTitleBar
 	border-bottom: 2px solid palette(highlight);
 	padding-bottom: 0px;
 }
-
-
-
-
-

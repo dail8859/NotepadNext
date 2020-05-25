@@ -429,6 +429,12 @@ void CDockAreaWidget::insertDockWidget(int index, CDockWidget* DockWidget,
 	{
 		setCurrentIndex(index);
 	}
+	// If this dock area is hidden, then we need to make it visible again
+	// by calling DockWidget->toggleViewInternal(true);
+	if (!this->isVisible() && d->ContentsLayout->count() > 1 && !dockManager()->isRestoringState())
+	{
+		DockWidget->toggleViewInternal(true);
+	}
 	d->updateTitleBarButtonStates();
 }
 
@@ -448,7 +454,7 @@ void CDockAreaWidget::removeDockWidget(CDockWidget* DockWidget)
 	{
 		setCurrentDockWidget(NextOpenDockWidget);
 	}
-	else if (d->ContentsLayout->isEmpty() && DockContainer->dockAreaCount() > 1)
+	else if (d->ContentsLayout->isEmpty() && DockContainer->dockAreaCount() >= 1)
 	{
         ADS_PRINT("Dock Area empty");
 		DockContainer->removeDockArea(this);

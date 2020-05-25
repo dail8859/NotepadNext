@@ -285,7 +285,10 @@ CDockWidgetTab::CDockWidgetTab(CDockWidget* DockWidget, QWidget *parent) :
 	setAttribute(Qt::WA_NoMousePropagation, true);
 	d->DockWidget = DockWidget;
 	d->createLayout();
-	setFocusPolicy(Qt::ClickFocus);
+	if (CDockManager::configFlags().testFlag(CDockManager::FocusStyling))
+	{
+		setFocusPolicy(Qt::ClickFocus);
+	}
 }
 
 //============================================================================
@@ -464,21 +467,25 @@ void CDockWidgetTab::setActiveTab(bool active)
 	bool TabHasCloseButton = (ActiveTabHasCloseButton && active) | AllTabsHaveCloseButton;
 	d->CloseButton->setVisible(DockWidgetClosable && TabHasCloseButton);
 
-	bool UpdateFocusStyle = false;
-	if (active && !hasFocus())
+	if (CDockManager::configFlags().testFlag(CDockManager::FocusStyling))
 	{
-		setFocus(Qt::OtherFocusReason);
-		UpdateFocusStyle = true;
+		bool UpdateFocusStyle = false;
+		if (active && !hasFocus())
+		{
+			setFocus(Qt::OtherFocusReason);
+			UpdateFocusStyle = true;
+		}
+
+		if (d->IsActiveTab == active)
+		{
+			if (UpdateFocusStyle)
+			{
+				updateStyle();
+			}
+			return;
+		}
 	}
 
-	if (d->IsActiveTab == active)
-	{
-		if (UpdateFocusStyle)
-		{
-			updateStyle();
-		}
-		return;
-	}
 	d->IsActiveTab = active;
 	updateStyle();
 	update();
@@ -580,7 +587,7 @@ void CDockWidgetTab::mouseDoubleClickEvent(QMouseEvent *event)
 void CDockWidgetTab::setVisible(bool visible)
 {
 	// Just here for debugging to insert debug output
-	Super::setVisible(visible);
+    Super::setVisible(visible);
 }
 
 

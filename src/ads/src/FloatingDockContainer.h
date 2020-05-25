@@ -172,17 +172,22 @@ protected:
 	/**
 	 * Call this function to update the window title
 	 */
-	void updateWindowTitle();
-
+    void updateWindowTitle();
 
 protected: // reimplements QWidget
 	virtual void changeEvent(QEvent *event) override;
-	virtual void moveEvent(QMoveEvent *event) override;
-	virtual bool event(QEvent *e) override;
 	virtual void closeEvent(QCloseEvent *event) override;
 	virtual void hideEvent(QHideEvent *event) override;
 	virtual void showEvent(QShowEvent *event) override;
 	virtual bool eventFilter(QObject *watched, QEvent *event) override;
+
+#ifdef Q_OS_WIN
+	/**
+	 * Native event filter for handling WM_MOVING messages on Windows
+	 */
+	virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
+#endif
+
 
 public:
 	using Super = QWidget;

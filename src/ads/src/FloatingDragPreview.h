@@ -40,11 +40,6 @@ private slots:
 
 protected:
 	/**
-	 * Updates the drop overlays
-	 */
-	virtual void moveEvent(QMoveEvent *event) override;
-
-	/**
 	 * Cares about painting the
 	 */
 	virtual void paintEvent(QPaintEvent *e) override;
