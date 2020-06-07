@@ -45,8 +45,6 @@
 #include <QSettings>
 #include <QMenu>
 #include <QApplication>
-#include <QGuiApplication>
-#include <QPointer>
 
 #include "FloatingDockContainer.h"
 #include "DockOverlay.h"
@@ -56,6 +54,7 @@
 #include "IconProvider.h"
 #include "DockingStateReader.h"
 #include "DockAreaTitleBar.h"
+#include "DockFocusController.h"
 
 #ifdef Q_OS_LINUX
 #include "linux/FloatingWidgetTitleBar.h"
@@ -67,7 +66,7 @@
  * name. Normally, when resources are built as part of the application, the
  * resources are loaded automatically at startup. The Q_INIT_RESOURCE() macro
  * is necessary on some platforms for resources stored in a static library.
- * Because GCC caues a linker error if we put Q_INIT_RESOURCE into the
+ * Because GCC causes a linker error if we put Q_INIT_RESOURCE into the
  * loadStyleSheet() function, we place it into a function outside of the ads
  * namespace
  */
@@ -79,6 +78,16 @@ static void initResource()
 
 namespace ads
 {
+/**
+ * Internal file version in case the structure changes internally
+ */
+enum eStateFileVersion
+{
+	InitialVersion = 0,      //!< InitialVersion
+	Version1 = 1,            //!< Version1
+	CurrentVersion = Version1//!< CurrentVersion
+};
+
 static CDockManager::ConfigFlags StaticConfigFlags = CDockManager::DefaultNonOpaqueConfig;
 
 /**
@@ -98,9 +107,7 @@ struct DockManagerPrivate
 	CDockManager::eViewMenuInsertionOrder MenuInsertionOrder = CDockManager::MenuAlphabeticallySorted;
 	bool RestoringState = false;
 	QVector<CFloatingDockContainer*> UninitializedFloatingWidgets;
-	QPointer<CDockWidget> FocusedDockWidget = nullptr;
-	QPointer<CDockAreaWidget> FocusedArea = nullptr;
-    QPointer<CFloatingDockContainer> FloatingWidget = nullptr;
+	CDockFocusController* FocusController = nullptr;
 
 	/**
 	 * Private data constructor
@@ -158,12 +165,6 @@ struct DockManagerPrivate
 	 * Adds action to menu - optionally in sorted order
 	 */
 	void addActionToMenu(QAction* Action, QMenu* Menu, bool InsertSorted);
-
-	/**
-	 * This function updates the focus style of the given dock widget and
-	 * the dock area that it belongs to
-	 */
-	void updateDockWidgetFocus(CDockWidget* DockWidget);
 };
 // struct DockManagerPrivate
 
@@ -255,8 +256,20 @@ bool DockManagerPrivate::restoreStateFromXml(const QByteArray &state,  int versi
     {
     	return false;
     }
-
     s.setFileVersion(v);
+
+    ADS_PRINT(s.attributes().value("UserVersion"));
+    // Older files do not support UserVersion but we still want to load them so
+    // we first test if the attribute exists
+    if (!s.attributes().value("UserVersion").isEmpty())
+    {
+		v = s.attributes().value("UserVersion").toInt(&ok);
+		if (!ok || v != version)
+		{
+			return false;
+		}
+    }
+
     bool Result = true;
 #ifdef ADS_DEBUG_PRINT
     int  DockContainers = s.attributes().value("Containers").toInt();
@@ -436,99 +449,6 @@ void DockManagerPrivate::addActionToMenu(QAction* Action, QMenu* Menu, bool Inse
 }
 
 
-//===========================================================================
-void updateDockWidgetFocusStyle(CDockWidget* DockWidget, bool Focused)
-{
-	DockWidget->setProperty("focused", Focused);
-	DockWidget->tabWidget()->setProperty("focused", Focused);
-	DockWidget->tabWidget()->updateStyle();
-	internal::repolishStyle(DockWidget);
-}
-
-
-//===========================================================================
-void updateDockAreaFocusStyle(CDockAreaWidget* DockArea, bool Focused)
-{
-	DockArea->setProperty("focused", Focused);
-	internal::repolishStyle(DockArea);
-	internal::repolishStyle(DockArea->titleBar());
-}
-
-
-//===========================================================================
-void updateFloatingWidgetFocusStyle(CFloatingDockContainer* FloatingWidget, bool Focused)
-{
-#ifdef Q_OS_LINUX
-    auto TitleBar = qobject_cast<CFloatingWidgetTitleBar*>(FloatingWidget->titleBarWidget());
-    if (!TitleBar)
-    {
-        return;
-    }
-    TitleBar->setProperty("focused", Focused);
-    TitleBar->updateStyle();
-#else
-    Q_UNUSED(FloatingWidget)
-    Q_UNUSED(Focused)
-#endif
-}
-
-
-//============================================================================
-void DockManagerPrivate::updateDockWidgetFocus(CDockWidget* DockWidget)
-{
-	CDockAreaWidget* NewFocusedDockArea = nullptr;
-	if (FocusedDockWidget)
-	{
-		updateDockWidgetFocusStyle(FocusedDockWidget, false);
-	}
-	FocusedDockWidget = DockWidget;
-	updateDockWidgetFocusStyle(FocusedDockWidget, true);
-	NewFocusedDockArea = FocusedDockWidget->dockAreaWidget();
-	if (!NewFocusedDockArea || (FocusedArea == NewFocusedDockArea))
-	{
-		return;
-	}
-
-	if (FocusedArea)
-	{
-		std::cout << "FocusedArea" << std::endl;
-		QObject::disconnect(FocusedArea, SIGNAL(viewToggled(bool)), _this, SLOT(onFocusedDockAreaViewToggled(bool)));
-		updateDockAreaFocusStyle(FocusedArea, false);
-	}
-
-	FocusedArea = NewFocusedDockArea;
-	updateDockAreaFocusStyle(FocusedArea, true);
-	QObject::connect(FocusedArea, SIGNAL(viewToggled(bool)), _this, SLOT(onFocusedDockAreaViewToggled(bool)));
-
-    auto NewFloatingWidget = FocusedDockWidget->dockContainer()->floatingWidget();
-    if (NewFloatingWidget)
-    {
-    	NewFloatingWidget->setProperty("FocusedDockWidget", QVariant::fromValue(DockWidget));
-    }
-
-
-#ifdef Q_OS_LINUX
-	// This code is required for styling the floating widget titlebar for linux
-	// depending on the current focus state
-    if (FloatingWidget == NewFloatingWidget)
-    {
-        return;
-    }
-
-    if (FloatingWidget)
-    {
-        updateFloatingWidgetFocusStyle(FloatingWidget, false);
-    }
-    FloatingWidget = NewFloatingWidget;
-
-    if (FloatingWidget)
-    {
-        updateFloatingWidgetFocusStyle(FloatingWidget, true);
-    }
-#endif
-}
-
-
 //============================================================================
 CDockManager::CDockManager(QWidget *parent) :
 	CDockContainerWidget(this, parent),
@@ -547,10 +467,9 @@ CDockManager::CDockManager(QWidget *parent) :
 	d->Containers.append(this);
 	d->loadStylesheet();
 
-	if (CDockManager::configFlags().testFlag(CDockManager::FocusStyling))
+	if (CDockManager::configFlags().testFlag(CDockManager::FocusHighlighting))
 	{
-		connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)),
-			this, SLOT(onFocusChanged(QWidget*, QWidget*)));
+		d->FocusController = new CDockFocusController(this);
 	}
 }
 
@@ -643,7 +562,8 @@ QByteArray CDockManager::saveState(int version) const
 	s.setAutoFormatting(ConfigFlags.testFlag(XmlAutoFormattingEnabled));
     s.writeStartDocument();
 		s.writeStartElement("QtAdvancedDockingSystem");
-		s.writeAttribute("Version", QString::number(version));
+		s.writeAttribute("Version", QString::number(CurrentVersion));
+		s.writeAttribute("UserVersion", QString::number(version));
 		s.writeAttribute("Containers", QString::number(d->Containers.count()));
 		for (auto Container : d->Containers)
 		{
@@ -685,12 +605,11 @@ bool CDockManager::restoreState(const QByteArray &state, int version)
 	emit restoringState();
 	bool Result = d->restoreState(state, version);
 	d->RestoringState = false;
-	emit stateRestored();
 	if (!IsHidden)
 	{
 		show();
 	}
-
+	emit stateRestored();
 	return Result;
 }
 
@@ -988,103 +907,31 @@ CIconProvider& CDockManager::iconProvider()
 
 
 //===========================================================================
-void CDockManager::onFocusChanged(QWidget* focusedOld, QWidget* focusedNow)
+void CDockManager::notifyWidgetOrAreaRelocation(QWidget* DroppedWidget)
 {
-	std::cout << "CDockManager::onFocusChanged" << std::endl;
-	Q_UNUSED(focusedOld)
-	if (!focusedNow)
+	if (d->FocusController)
 	{
-		return;
+		d->FocusController->notifyWidgetOrAreaRelocation(DroppedWidget);
 	}
-
-	CDockWidget* DockWidget = nullptr;
-	auto DockWidgetTab = qobject_cast<CDockWidgetTab*>(focusedNow);
-	std::cout << "FocuseNow " << focusedNow->metaObject()->className() << std::endl;
-	if (DockWidgetTab)
-	{
-		DockWidget = DockWidgetTab->dockWidget();
-	}
-	else
-	{
-		DockWidget = internal::findParent<CDockWidget*>(focusedNow);
-	}
-
-#ifdef Q_OS_LINUX
-    if (!DockWidget)
-	{
-		return;
-	}
-#else
-    if (!DockWidget || !DockWidget->tabWidget()->isVisible())
-	{
-		return;
-	}
-#endif
-
-	std::cout << "CDockManager::onFocusChanged " << DockWidget->tabWidget()->text().toStdString() << std::endl;
-	d->updateDockWidgetFocus(DockWidget);
 }
 
 
 //===========================================================================
-void CDockManager::onFocusedDockAreaViewToggled(bool Open)
+void CDockManager::notifyFloatingWidgetDrop(CFloatingDockContainer* FloatingWidget)
 {
-	CDockAreaWidget* DockArea = qobject_cast<CDockAreaWidget*>(sender());
-	if (!DockArea || Open)
+	if (d->FocusController)
 	{
-		return;
+		d->FocusController->notifyFloatingWidgetDrop(FloatingWidget);
 	}
-	auto Container = DockArea->dockContainer();
-	auto OpenedDockAreas = Container->openedDockAreas();
-	if (OpenedDockAreas.isEmpty())
-	{
-		return;
-	}
-
-	CDockManager::setWidgetFocus(OpenedDockAreas[0]->currentDockWidget()->tabWidget());
 }
 
 
 //===========================================================================
-void CDockManager::emitWidgetDroppedSignals(QWidget* DroppedWidget)
+void CDockManager::setDockWidgetFocused(CDockWidget* DockWidget)
 {
-	CDockWidget* DockWidget = qobject_cast<CDockWidget*>(DroppedWidget);
-	if (DockWidget)
+	if (d->FocusController)
 	{
-		CDockManager::setWidgetFocus(DockWidget->tabWidget());
-		emit dockWidgetDropped(DockWidget);
-		return;
-	}
-
-	CDockAreaWidget* DockArea = qobject_cast<CDockAreaWidget*>(DroppedWidget);
-	if (!DockArea)
-	{
-		return;
-	}
-
-	DockWidget = DockArea->currentDockWidget();
-	CDockManager::setWidgetFocus(DockWidget->tabWidget());
-}
-
-
-//===========================================================================
-void CDockManager::endFloatingWidgetDrop(CFloatingDockContainer* FloatingWidget)
-{
-	if (!FloatingWidget)
-	{
-		return;
-	}
-
-	auto vDockWidget = FloatingWidget->property("FocusedDockWidget");
-	if (!vDockWidget.isValid())
-	{
-		return;
-	}
-	auto DockWidget = vDockWidget.value<CDockWidget*>();
-	if (DockWidget)
-	{
-		std::cout << "Dropped focus dock widget " << DockWidget->objectName().toStdString() << std::endl;
-		CDockManager::setWidgetFocus(DockWidget->tabWidget());
+		d->FocusController->setDockWidgetFocused(DockWidget);
 	}
 }
 

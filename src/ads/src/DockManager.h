@@ -84,9 +84,6 @@ private:
 	friend struct FloatingDragPreviewPrivate;
 	friend class CDockAreaTitleBar;
 
-private slots:
-	void onFocusChanged(QWidget *old, QWidget *now);
-	void onFocusedDockAreaViewToggled(bool Open);
 
 protected:
 	/**
@@ -122,11 +119,12 @@ protected:
 	 */
 	CDockOverlay* dockAreaOverlay() const;
 
+
 	/**
 	 * A container needs to call this function if a widget has been dropped
 	 * into it
 	 */
-	void emitWidgetDroppedSignals(QWidget* DroppedWidget);
+	void notifyWidgetOrAreaRelocation(QWidget* RelocatedWidget);
 
 	/**
 	 * This function is called, if a floating widget has been dropped into
@@ -134,7 +132,8 @@ protected:
 	 * When this function is called, all dock widgets of the FloatingWidget
 	 * are already inserted into its new position
 	 */
-	void endFloatingWidgetDrop(CFloatingDockContainer* FloatingWidget);
+	void notifyFloatingWidgetDrop(CFloatingDockContainer* FloatingWidget);
+
 
 	/**
 	 * Show the floating widgets that has been created floating
@@ -179,7 +178,7 @@ public:
 		FloatingContainerHasWidgetIcon = 0x80000, //!< If set, the Floating Widget icon reflects the icon of the current dock widget otherwise it displays application icon
 		HideSingleCentralWidgetTitleBar = 0x100000, //!< If there is only one single visible dock widget in the main dock container (the dock manager) and if this flag is set, then the titlebar of this dock widget will be hidden
 		                                            //!< this only makes sense for non draggable and non floatable widgets and enables the creation of some kind of "central" widget
-		FocusStyling = 0x200000, //!< enables styling of focused dock widget tabs or floating widget titlebar
+		FocusHighlighting = 0x200000, //!< enables styling of focused dock widget tabs or floating widget titlebar
 
         DefaultDockAreaButtons = DockAreaHasCloseButton
 							   | DockAreaHasUndockButton
@@ -326,8 +325,12 @@ public:
 	 * If auto formatting is enabled, the output is intended and line wrapped.
 	 * The XmlMode XmlAutoFormattingDisabled is better if you would like to have
 	 * a more compact XML output - i.e. for storage in ini files.
+	 * The version number is stored as part of the data.
+	 * To restore the saved state, pass the return value and version number
+	 * to restoreState().
+	 * \see restoreState()
 	 */
-	QByteArray saveState(int version = Version1) const;
+	QByteArray saveState(int version = 0) const;
 
 	/**
 	 * Restores the state of this dockmanagers dockwidgets.
@@ -335,8 +338,9 @@ public:
 	 * not match, the dockmanager's state is left unchanged, and this function
 	 * returns false; otherwise, the state is restored, and this function
 	 * returns true.
+	 * \see saveState()
 	 */
-	bool restoreState(const QByteArray &state, int version = Version1);
+	bool restoreState(const QByteArray &state, int version = 0);
 
 	/**
 	 * Saves the current perspective to the internal list of perspectives.
@@ -430,7 +434,7 @@ public:
 	template <class QWidgetPtr>
 	static void setWidgetFocus(QWidgetPtr widget)
 	{
-		if (!CDockManager::configFlags().testFlag(CDockManager::FocusStyling))
+		if (!CDockManager::configFlags().testFlag(CDockManager::FocusHighlighting))
 		{
 			return;
 		}
@@ -443,6 +447,13 @@ public slots:
 	 * Opens the perspective with the given name.
 	 */
 	void openPerspective(const QString& PerspectiveName);
+
+	/**
+	 * Request a focus change to the given dock widget.
+	 * This function only has an effect, if the flag CDockManager::FocusStyling
+	 * is enabled
+	 */
+	void setDockWidgetFocused(CDockWidget* DockWidget);
 
 signals:
 	/**
@@ -514,16 +525,11 @@ signals:
     void dockWidgetRemoved(CDockWidget* DockWidget);
 
     /**
-     * This signal is emitted if a dock widget has been dropped into a new
-     * position
+     * This signal is emitted if the focused dock widget changed.
+     * Both old and now can be nullptr.
+     * The focused dock widget is the one that is highlighted in the GUI
      */
-    void dockWidgetDropped(CDockWidget* DockWidget);
-
-    /**
-     * This signal is emitted if a dock area has been dropped into a new
-     * position
-     */
-    void dockAreaDropped(CDockAreaWidget* DockArea);
+    void focusedDockWidgetChanged(CDockWidget* old, CDockWidget* now);
 }; // class DockManager
 } // namespace ads
 //-----------------------------------------------------------------------------

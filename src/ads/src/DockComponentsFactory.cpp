@@ -8,7 +8,7 @@
 //============================================================================
 //                                   INCLUDES
 //============================================================================
-#include <DockComponentsFactory.h>
+#include "DockComponentsFactory.h"
 
 #include <memory>
 

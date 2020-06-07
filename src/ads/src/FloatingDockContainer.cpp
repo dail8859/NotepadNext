@@ -48,6 +48,9 @@
 
 #ifdef Q_OS_WIN
 #include <windows.h>
+#ifdef _MSC_VER
+#pragma comment(lib, "User32.lib")
+#endif
 #endif
 #ifdef Q_OS_LINUX
 #include "linux/FloatingWidgetTitleBar.h"
@@ -57,7 +60,7 @@
 namespace ads
 {
 #ifdef Q_OS_WIN
-#if 0
+#if 0 // set to 1 if you need this function for debugging
 /**
  * Just for debuging to convert windows message identifiers to strings
  */
@@ -634,6 +637,8 @@ CFloatingDockContainer::CFloatingDockContainer(CDockAreaWidget *DockArea) :
     {
     	TopLevelDockWidget->emitTopLevelChanged(true);
     }
+
+    d->DockManager->notifyWidgetOrAreaRelocation(DockArea);
 }
 
 //============================================================================
@@ -649,6 +654,8 @@ CFloatingDockContainer::CFloatingDockContainer(CDockWidget *DockWidget) :
     {
     	TopLevelDockWidget->emitTopLevelChanged(true);
     }
+
+    d->DockManager->notifyWidgetOrAreaRelocation(DockWidget);
 }
 
 //============================================================================
@@ -715,7 +722,6 @@ bool CFloatingDockContainer::nativeEvent(const QByteArray &eventType, void *mess
 			 if (d->isState(DraggingMousePressed))
 			 {
 				ADS_PRINT("CFloatingDockContainer::nativeEvent WM_ENTERSIZEMOVE" << e->type());
-				qApp->installEventFilter(this);
 				d->setState(DraggingFloatingWidget);
 				d->updateDropOverlays(QCursor::pos());
 			 }
@@ -724,8 +730,15 @@ bool CFloatingDockContainer::nativeEvent(const QByteArray &eventType, void *mess
 		case WM_EXITSIZEMOVE:
 			 if (d->isState(DraggingFloatingWidget))
 			 {
-				 ADS_PRINT("CFloatingDockContainer::nativeEvent WM_EXITSIZEMOVE" << e->type());;
-				 d->titleMouseReleaseEvent();
+				ADS_PRINT("CFloatingDockContainer::nativeEvent WM_EXITSIZEMOVE" << e->type());
+				if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+				{
+					d->handleEscapeKey();
+				}
+				else
+				{
+					d->titleMouseReleaseEvent();
+				}
 			 }
 			 break;
 	}
@@ -791,47 +804,17 @@ void CFloatingDockContainer::hideEvent(QHideEvent *event)
 	d->Hiding = false;
 }
 
+
 //============================================================================
 void CFloatingDockContainer::showEvent(QShowEvent *event)
 {
 	Super::showEvent(event);
-}
-
-
-//============================================================================
-bool CFloatingDockContainer::eventFilter(QObject *watched, QEvent *e)
-{
-	Q_UNUSED(watched);
-	// I have not found a way to detect non client area key press events to
-	// handle escape key presses. On Windows, if the escape key is pressed while
-	// dragging around a widget, the widget position is reset to its start position
-	// which in turn generates a QEvent::NonClientAreaMouseButtonRelease event
-	// if the mouse is outside of the widget after the move to its initial position
-	// or a QEvent::MouseButtonRelease event, if the mouse is inside of teh widget
-	// after the position has been reset.
-	// So we can install an event filter on the application to get these events
-	// here to properly cancel dragging and hide the overlays.
-	// If we are in DraggingFloatingWidget state, it means the widget
-	// has been dragged already but if the position is the same like
-	// the start position, then this is an indication that the escape
-	// key has been pressed.
-	if (e->type() == QEvent::MouseButtonRelease || e->type() == QEvent::NonClientAreaMouseButtonRelease)
-	{
-		ADS_PRINT("CFloatingDockContainer::eventFilter QEvent::MouseButtonRelease or"
-			"QEvent::NonClientAreaMouseButtonRelease" << "d->DragggingState " << d->DraggingState);
-		qApp->removeEventFilter(this);
-		if (d->DragStartPos == pos())
-		{
-			d->handleEscapeKey();
-			return true;
-		}
-		return false;
-	}
-
-#if (ADS_DEBUG_LEVEL > 0)
-	qDebug() << QTime::currentTime() << "CFloatingDockContainer::eventFilter " << e->type();
+#ifdef Q_OS_LINUX
+    if (CDockManager::testConfigFlag(CDockManager::FocusHighlighting))
+    {
+        this->window()->activateWindow();
+    }
 #endif
-	return false;
 }
 
 

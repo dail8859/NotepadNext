@@ -28,7 +28,7 @@
 //============================================================================
 //                                   INCLUDES
 //============================================================================
-#include <FloatingDragPreview.h>
+#include "FloatingDragPreview.h"
 #include "ElidingLabel.h"
 #include "DockWidgetTab.h"
 
@@ -285,7 +285,7 @@ CDockWidgetTab::CDockWidgetTab(CDockWidget* DockWidget, QWidget *parent) :
 	setAttribute(Qt::WA_NoMousePropagation, true);
 	d->DockWidget = DockWidget;
 	d->createLayout();
-	if (CDockManager::configFlags().testFlag(CDockManager::FocusStyling))
+	if (CDockManager::configFlags().testFlag(CDockManager::FocusHighlighting))
 	{
 		setFocusPolicy(Qt::ClickFocus);
 	}
@@ -467,7 +467,8 @@ void CDockWidgetTab::setActiveTab(bool active)
 	bool TabHasCloseButton = (ActiveTabHasCloseButton && active) | AllTabsHaveCloseButton;
 	d->CloseButton->setVisible(DockWidgetClosable && TabHasCloseButton);
 
-	if (CDockManager::configFlags().testFlag(CDockManager::FocusStyling))
+	// Focus related stuff
+	if (CDockManager::configFlags().testFlag(CDockManager::FocusHighlighting) && !d->DockWidget->dockManager()->isRestoringState())
 	{
 		bool UpdateFocusStyle = false;
 		if (active && !hasFocus())
@@ -484,6 +485,10 @@ void CDockWidgetTab::setActiveTab(bool active)
 			}
 			return;
 		}
+	}
+	else if (d->IsActiveTab == active)
+	{
+		return;
 	}
 
 	d->IsActiveTab = active;
@@ -661,10 +666,7 @@ void CDockWidgetTab::setElideMode(Qt::TextElideMode mode)
 //============================================================================
 void CDockWidgetTab::updateStyle()
 {
-	this->style()->unpolish(this);
-	this->style()->polish(this);
-	d->TitleLabel->style()->unpolish(d->TitleLabel);
-	d->TitleLabel->style()->polish(d->TitleLabel);
+	internal::repolishStyle(this, internal::RepolishDirectChildren);
 }
 
 

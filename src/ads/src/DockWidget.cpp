@@ -235,6 +235,11 @@ CDockWidget::CDockWidget(const QString &title, QWidget *parent) :
 	connect(d->ToggleViewAction, SIGNAL(triggered(bool)), this,
 		SLOT(toggleView(bool)));
 	setToolbarFloatingStyle(false);
+
+	if (CDockManager::configFlags().testFlag(CDockManager::FocusHighlighting))
+	{
+		setFocusPolicy(Qt::ClickFocus);
+	}
 }
 
 //============================================================================
@@ -293,6 +298,7 @@ QWidget* CDockWidget::takeWidget()
 		w = d->ScrollArea->takeWidget();
 		delete d->ScrollArea;
 		d->ScrollArea = nullptr;
+		d->Widget = nullptr;
 	}
 	else if (d->Widget)
 	{

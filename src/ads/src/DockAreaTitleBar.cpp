@@ -465,6 +465,11 @@ void CDockAreaTitleBar::mousePressEvent(QMouseEvent* ev)
 		ev->accept();
 		d->DragStartMousePos = ev->pos();
 		d->DragState = DraggingMousePressed;
+
+		if (CDockManager::configFlags().testFlag(CDockManager::FocusHighlighting))
+		{
+			d->TabBar->currentTab()->setFocus(Qt::OtherFocusReason);
+		}
 		return;
 	}
 	Super::mousePressEvent(ev);
@@ -485,6 +490,7 @@ void CDockAreaTitleBar::mouseReleaseEvent(QMouseEvent* ev)
 		{
 			d->FloatingWidget->finishDragging();
 		}
+
 		return;
 	}
 	Super::mouseReleaseEvent(ev);
