@@ -26,6 +26,8 @@
 **.pl = native
 **.rb = native
 **.tcl = native
+**.err = native
+**.mms = native
 **.txt = native
 **.pch = native
 **.hgeol = native

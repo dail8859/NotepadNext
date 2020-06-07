@@ -3752,10 +3752,10 @@ struct Sci_TextToFind {
     <code>SendMessage(hScintilla, WM_XXXX, WPARAM, LPARAM)</code> where <code>hScintilla</code> is
     the handle to the Scintilla window you created as your editor.</p>
 
-    <p>While we are on the subject of forwarding messages in Windows, the top level window should
-    forward any <code>WM_SETTINGCHANGE</code> messages to Scintilla (this is currently used to
-    collect changes to mouse settings, but could be used for other user interface items in the
-    future).</p>
+    <p>On Windows, the top level window should forward any <code>WM_SETTINGCHANGE</code>,
+    <code>WM_SYSCOLORCHANGE</code>, and
+    <code>WM_DPICHANGED</code> messages to Scintilla as this allows Scintilla to respond to changes to
+    mouse settings, monitor resolution, colour scheme and similar system properties.</p>
 
     <p><b id="SCI_SETBUFFEREDDRAW">SCI_SETBUFFEREDDRAW(bool buffered)</b><br />
      <b id="SCI_GETBUFFEREDDRAW">SCI_GETBUFFEREDDRAW &rarr; bool</b><br />
