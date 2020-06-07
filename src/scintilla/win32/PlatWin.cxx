@@ -81,7 +81,7 @@ bool LoadD2D() {
 	static bool triedLoadingD2D = false;
 	if (!triedLoadingD2D) {
 		DWORD loadLibraryFlags = 0;
-		HMODULE kernel32 = ::GetModuleHandle(TEXT("kernel32.dll"));
+		HMODULE kernel32 = ::GetModuleHandleW(L"kernel32.dll");
 		if (kernel32) {
 			if (::GetProcAddress(kernel32, "SetDefaultDllDirectories")) {
 				// Availability of SetDefaultDllDirectories implies Windows 8+ or
@@ -97,34 +97,30 @@ bool LoadD2D() {
 			IUnknown **factory);
 
 		hDLLD2D = ::LoadLibraryEx(TEXT("D2D1.DLL"), 0, loadLibraryFlags);
-		if (hDLLD2D) {
-			D2D1CFSig fnD2DCF = reinterpret_cast<D2D1CFSig>(::GetProcAddress(hDLLD2D, "D2D1CreateFactory"));
-			if (fnD2DCF) {
-				// A single threaded factory as Scintilla always draw on the GUI thread
-				fnD2DCF(D2D1_FACTORY_TYPE_SINGLE_THREADED,
-					__uuidof(ID2D1Factory),
-					nullptr,
-					reinterpret_cast<IUnknown**>(&pD2DFactory));
-			}
+		D2D1CFSig fnD2DCF = DLLFunction<D2D1CFSig>(hDLLD2D, "D2D1CreateFactory");
+		if (fnD2DCF) {
+			// A single threaded factory as Scintilla always draw on the GUI thread
+			fnD2DCF(D2D1_FACTORY_TYPE_SINGLE_THREADED,
+				__uuidof(ID2D1Factory),
+				nullptr,
+				reinterpret_cast<IUnknown**>(&pD2DFactory));
 		}
 		hDLLDWrite = ::LoadLibraryEx(TEXT("DWRITE.DLL"), 0, loadLibraryFlags);
-		if (hDLLDWrite) {
-			DWriteCFSig fnDWCF = reinterpret_cast<DWriteCFSig>(::GetProcAddress(hDLLDWrite, "DWriteCreateFactory"));
-			if (fnDWCF) {
-				const GUID IID_IDWriteFactory2 = // 0439fc60-ca44-4994-8dee-3a9af7b732ec
-				{ 0x0439fc60, 0xca44, 0x4994, { 0x8d, 0xee, 0x3a, 0x9a, 0xf7, 0xb7, 0x32, 0xec } };
+		DWriteCFSig fnDWCF = DLLFunction<DWriteCFSig>(hDLLDWrite, "DWriteCreateFactory");
+		if (fnDWCF) {
+			const GUID IID_IDWriteFactory2 = // 0439fc60-ca44-4994-8dee-3a9af7b732ec
+			{ 0x0439fc60, 0xca44, 0x4994, { 0x8d, 0xee, 0x3a, 0x9a, 0xf7, 0xb7, 0x32, 0xec } };
 
-				const HRESULT hr = fnDWCF(DWRITE_FACTORY_TYPE_SHARED,
-					IID_IDWriteFactory2,
+			const HRESULT hr = fnDWCF(DWRITE_FACTORY_TYPE_SHARED,
+				IID_IDWriteFactory2,
+				reinterpret_cast<IUnknown**>(&pIDWriteFactory));
+			if (SUCCEEDED(hr)) {
+				// D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT
+				d2dDrawTextOptions = static_cast<D2D1_DRAW_TEXT_OPTIONS>(0x00000004);
+			} else {
+				fnDWCF(DWRITE_FACTORY_TYPE_SHARED,
+					__uuidof(IDWriteFactory),
 					reinterpret_cast<IUnknown**>(&pIDWriteFactory));
-				if (SUCCEEDED(hr)) {
-					// D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT
-					d2dDrawTextOptions = static_cast<D2D1_DRAW_TEXT_OPTIONS>(0x00000004);
-				} else {
-					fnDWCF(DWRITE_FACTORY_TYPE_SHARED,
-						__uuidof(IDWriteFactory),
-						reinterpret_cast<IUnknown**>(&pIDWriteFactory));
-				}
 			}
 		}
 
@@ -247,9 +243,36 @@ void SetWindowPointer(HWND hWnd, void *ptr) noexcept {
 
 namespace {
 
-HINSTANCE hinstPlatformRes {};
+// system DPI, same for all monitor.
+UINT uSystemDPI = USER_DEFAULT_SCREEN_DPI;
 
-HCURSOR reverseArrowCursor {};
+using GetDpiForWindowSig = UINT(WINAPI *)(HWND hwnd);
+GetDpiForWindowSig fnGetDpiForWindow = nullptr;
+
+using GetSystemMetricsForDpiSig = int(WINAPI *)(int nIndex, UINT dpi);
+GetSystemMetricsForDpiSig fnGetSystemMetricsForDpi = nullptr;
+
+using AdjustWindowRectExForDpiSig = BOOL(WINAPI *)(LPRECT lpRect, DWORD dwStyle, BOOL bMenu, DWORD dwExStyle, UINT dpi);
+AdjustWindowRectExForDpiSig fnAdjustWindowRectExForDpi = nullptr;
+
+void LoadDpiForWindow() noexcept {
+	HMODULE user32 = ::GetModuleHandleW(L"user32.dll");
+	fnGetDpiForWindow = DLLFunction<GetDpiForWindowSig>(user32, "GetDpiForWindow");
+	fnGetSystemMetricsForDpi = DLLFunction<GetSystemMetricsForDpiSig>(user32, "GetSystemMetricsForDpi");
+	fnAdjustWindowRectExForDpi = DLLFunction<AdjustWindowRectExForDpiSig>(user32, "AdjustWindowRectExForDpi");
+
+	using GetDpiForSystemSig = UINT(WINAPI *)(void);
+	GetDpiForSystemSig fnGetDpiForSystem = DLLFunction<GetDpiForSystemSig>(user32, "GetDpiForSystem");
+	if (fnGetDpiForSystem) {
+		uSystemDPI = fnGetDpiForSystem();
+	} else {
+		HDC hdcMeasure = ::CreateCompatibleDC({});
+		uSystemDPI = ::GetDeviceCaps(hdcMeasure, LOGPIXELSY);
+		::DeleteDC(hdcMeasure);
+	}
+}
+
+HINSTANCE hinstPlatformRes {};
 
 FormatAndMetrics *FamFromFontID(void *fid) noexcept {
 	return static_cast<FormatAndMetrics *>(fid);
@@ -419,6 +442,23 @@ public:
 };
 typedef VarBuffer<XYPOSITION, stackBufferLength> TextPositions;
 
+UINT DpiForWindow(WindowID wid) noexcept {
+	if (fnGetDpiForWindow) {
+		return fnGetDpiForWindow(HwndFromWindowID(wid));
+	}
+	return uSystemDPI;
+}
+
+int SystemMetricsForDpi(int nIndex, UINT dpi) noexcept {
+	if (fnGetSystemMetricsForDpi) {
+		return fnGetSystemMetricsForDpi(nIndex, dpi);
+	}
+
+	int value = ::GetSystemMetrics(nIndex);
+	value = (dpi == uSystemDPI) ? value : ::MulDiv(value, dpi, uSystemDPI);
+	return value;
+}
+
 class SurfaceGDI : public Surface {
 	bool unicodeMode=false;
 	HDC hdc{};
@@ -430,6 +470,9 @@ class SurfaceGDI : public Surface {
 	HFONT fontOld{};
 	HBITMAP bitmap{};
 	HBITMAP bitmapOld{};
+
+	int logPixelsY = USER_DEFAULT_SCREEN_DPI;
+
 	int maxWidthMeasure = INT_MAX;
 	// There appears to be a 16 bit string length limit in GDI on NT.
 	int maxLenText = 65535;
@@ -541,20 +584,22 @@ bool SurfaceGDI::Initialised() {
 	return hdc != 0;
 }
 
-void SurfaceGDI::Init(WindowID) {
+void SurfaceGDI::Init(WindowID wid) {
 	Release();
 	hdc = ::CreateCompatibleDC({});
 	hdcOwned = true;
 	::SetTextAlign(hdc, TA_BASELINE);
+	logPixelsY = DpiForWindow(wid);
 }
 
-void SurfaceGDI::Init(SurfaceID sid, WindowID) {
+void SurfaceGDI::Init(SurfaceID sid, WindowID wid) {
 	Release();
 	hdc = static_cast<HDC>(sid);
 	::SetTextAlign(hdc, TA_BASELINE);
+	logPixelsY = DpiForWindow(wid);
 }
 
-void SurfaceGDI::InitPixMap(int width, int height, Surface *surface_, WindowID) {
+void SurfaceGDI::InitPixMap(int width, int height, Surface *surface_, WindowID wid) {
 	Release();
 	SurfaceGDI *psurfOther = dynamic_cast<SurfaceGDI *>(surface_);
 	// Should only ever be called with a SurfaceGDI, not a SurfaceD2D
@@ -566,6 +611,7 @@ void SurfaceGDI::InitPixMap(int width, int height, Surface *surface_, WindowID) 
 	::SetTextAlign(hdc, TA_BASELINE);
 	SetUnicodeMode(psurfOther->unicodeMode);
 	SetDBCSMode(psurfOther->codePage);
+	logPixelsY = DpiForWindow(wid);
 }
 
 void SurfaceGDI::PenColour(ColourDesired fore) {
@@ -603,7 +649,7 @@ void SurfaceGDI::SetFont(const Font &font_) noexcept {
 }
 
 int SurfaceGDI::LogPixelsY() {
-	return ::GetDeviceCaps(hdc, LOGPIXELSY);
+	return logPixelsY;
 }
 
 int SurfaceGDI::DeviceHeightFont(int points) {
@@ -623,7 +669,7 @@ void SurfaceGDI::Polygon(Point *pts, size_t npts, ColourDesired fore, ColourDesi
 	BrushColour(back);
 	std::vector<POINT> outline;
 	for (size_t i=0; i<npts; i++) {
-		POINT pt = POINTFromPoint(pts[i]);
+		const POINT pt = POINTFromPoint(pts[i]);
 		outline.push_back(pt);
 	}
 	::Polygon(hdc, &outline[0], static_cast<int>(npts));
@@ -773,8 +819,8 @@ void SurfaceGDI::DrawRGBAImage(PRectangle rc, int width, int height, const unsig
 		const BITMAPINFO bpih = {{sizeof(BITMAPINFOHEADER), width, height, 1, 32, BI_RGB, 0, 0, 0, 0, 0},
 			{{0, 0, 0, 0}}};
 		void *image = nullptr;
-		HBITMAP hbmMem = CreateDIBSection(hMemDC, &bpih,
-			DIB_RGB_COLORS, &image, NULL, 0);
+		HBITMAP hbmMem = ::CreateDIBSection(hMemDC, &bpih,
+			DIB_RGB_COLORS, &image, {}, 0);
 		if (hbmMem) {
 			HBITMAP hbmOld = SelectBitmap(hMemDC, hbmMem);
 
@@ -996,8 +1042,6 @@ class SurfaceD2D : public Surface {
 	ID2D1SolidColorBrush *pBrush;
 
 	int logPixelsY;
-	float dpiScaleX;
-	float dpiScaleY;
 
 	void Clear() noexcept;
 	void SetFont(const Font &font_);
@@ -1011,7 +1055,7 @@ public:
 	SurfaceD2D &operator=(SurfaceD2D &&) = delete;
 	~SurfaceD2D() override;
 
-	void SetScale();
+	void SetScale(WindowID wid);
 	void Init(WindowID wid) override;
 	void Init(SurfaceID sid, WindowID wid) override;
 	void InitPixMap(int width, int height, Surface *surface_, WindowID wid) override;
@@ -1081,9 +1125,7 @@ SurfaceD2D::SurfaceD2D() noexcept :
 
 	pBrush = nullptr;
 
-	logPixelsY = 72;
-	dpiScaleX = 1.0;
-	dpiScaleY = 1.0;
+	logPixelsY = USER_DEFAULT_SCREEN_DPI;
 }
 
 SurfaceD2D::~SurfaceD2D() {
@@ -1114,12 +1156,8 @@ void SurfaceD2D::Release() {
 	Clear();
 }
 
-void SurfaceD2D::SetScale() {
-	HDC hdcMeasure = ::CreateCompatibleDC({});
-	logPixelsY = ::GetDeviceCaps(hdcMeasure, LOGPIXELSY);
-	dpiScaleX = ::GetDeviceCaps(hdcMeasure, LOGPIXELSX) / 96.0f;
-	dpiScaleY = logPixelsY / 96.0f;
-	::DeleteDC(hdcMeasure);
+void SurfaceD2D::SetScale(WindowID wid) {
+	logPixelsY = DpiForWindow(wid);
 }
 
 bool SurfaceD2D::Initialised() {
@@ -1130,20 +1168,20 @@ HRESULT SurfaceD2D::FlushDrawing() {
 	return pRenderTarget->Flush();
 }
 
-void SurfaceD2D::Init(WindowID /* wid */) {
+void SurfaceD2D::Init(WindowID wid) {
 	Release();
-	SetScale();
+	SetScale(wid);
 }
 
-void SurfaceD2D::Init(SurfaceID sid, WindowID) {
+void SurfaceD2D::Init(SurfaceID sid, WindowID wid) {
 	Release();
-	SetScale();
+	SetScale(wid);
 	pRenderTarget = static_cast<ID2D1RenderTarget *>(sid);
 }
 
-void SurfaceD2D::InitPixMap(int width, int height, Surface *surface_, WindowID) {
+void SurfaceD2D::InitPixMap(int width, int height, Surface *surface_, WindowID wid) {
 	Release();
-	SetScale();
+	SetScale(wid);
 	SurfaceD2D *psurfOther = dynamic_cast<SurfaceD2D *>(surface_);
 	// Should only ever be called with a SurfaceD2D, not a SurfaceGDI
 	PLATFORM_ASSERT(psurfOther);
@@ -1629,13 +1667,13 @@ void ScreenLineLayout::FillTextLayoutFormats(const IScreenLine *screenLine, IDWr
 	for (size_t bytePosition = 0; bytePosition < screenLine->Length();) {
 		const unsigned char uch = screenLine->Text()[bytePosition];
 		const unsigned int byteCount = UTF8BytesOfLead[uch];
-		const UINT32 codeUnits = static_cast<UINT32>(UTF16LengthFromUTF8ByteCount(byteCount));
+		const UINT32 codeUnits = UTF16LengthFromUTF8ByteCount(byteCount);
 		const DWRITE_TEXT_RANGE textRange = { layoutPosition, codeUnits };
 
 		XYPOSITION representationWidth = screenLine->RepresentationWidth(bytePosition);
 		if ((representationWidth == 0.0f) && (screenLine->Text()[bytePosition] == '\t')) {
 			Point realPt;
-			DWRITE_HIT_TEST_METRICS realCaretMetrics;
+			DWRITE_HIT_TEST_METRICS realCaretMetrics {};
 			textLayout->HitTestTextPosition(
 				layoutPosition,
 				false, // trailing if false, else leading edge
@@ -1746,9 +1784,9 @@ size_t ScreenLineLayout::PositionFromX(XYPOSITION xDistance, bool charPosition) 
 	// If hitting the trailing side of a cluster, return the
 	// leading edge of the following text position.
 
-	BOOL isTrailingHit;
-	BOOL isInside;
-	DWRITE_HIT_TEST_METRICS caretMetrics;
+	BOOL isTrailingHit = FALSE;
+	BOOL isInside = FALSE;
+	DWRITE_HIT_TEST_METRICS caretMetrics {};
 
 	textLayout->HitTestPoint(
 		xDistance,
@@ -1758,7 +1796,7 @@ size_t ScreenLineLayout::PositionFromX(XYPOSITION xDistance, bool charPosition) 
 		&caretMetrics
 	);
 
-	DWRITE_HIT_TEST_METRICS hitTestMetrics = {};
+	DWRITE_HIT_TEST_METRICS hitTestMetrics {};
 	if (isTrailingHit) {
 		FLOAT caretX = 0.0f;
 		FLOAT caretY = 0.0f;
@@ -1798,7 +1836,7 @@ XYPOSITION ScreenLineLayout::XFromPosition(size_t caretPosition) {
 	const size_t position = GetPositionInLayout(text, caretPosition);
 
 	// Translate text character offset to point x,y.
-	DWRITE_HIT_TEST_METRICS caretMetrics;
+	DWRITE_HIT_TEST_METRICS caretMetrics {};
 	Point pt;
 
 	textLayout->HitTestTextPosition(
@@ -1893,7 +1931,7 @@ void SurfaceD2D::DrawTextCommon(PRectangle rc, const Font &font_, XYPOSITION yba
 		}
 
 		// Explicitly creating a text layout appears a little faster
-		IDWriteTextLayout *pTextLayout;
+		IDWriteTextLayout *pTextLayout = nullptr;
 		const HRESULT hr = pIDWriteFactory->CreateTextLayout(tbuf.buffer, tbuf.tlen, pTextFormat,
 				rc.Width(), rc.Height(), &pTextLayout);
 		if (SUCCEEDED(hr)) {
@@ -2210,8 +2248,7 @@ void Window::InvalidateRectangle(PRectangle rc) {
 }
 
 void Window::SetFont(Font &font) {
-	::SendMessage(HwndFromWindowID(wid), WM_SETFONT,
-		reinterpret_cast<WPARAM>(font.GetID()), 0);
+	SetWindowFont(HwndFromWindowID(wid), font.GetID(), 0);
 }
 
 namespace {
@@ -2226,8 +2263,24 @@ void FlipBitmap(HBITMAP bitmap, int width, int height) noexcept {
 	}
 }
 
-void LoadReverseArrowCursor() noexcept {
+}
+
+HCURSOR LoadReverseArrowCursor(UINT dpi) noexcept {
+	HCURSOR reverseArrowCursor {};
+
+	bool created = false;
 	HCURSOR cursor = ::LoadCursor({}, IDC_ARROW);
+
+	if (dpi != uSystemDPI) {
+		const int width = SystemMetricsForDpi(SM_CXCURSOR, dpi);
+		const int height = SystemMetricsForDpi(SM_CYCURSOR, dpi);
+		HCURSOR copy = static_cast<HCURSOR>(::CopyImage(cursor, IMAGE_CURSOR, width, height, LR_COPYFROMRESOURCE | LR_COPYRETURNORG));
+		if (copy) {
+			created = copy != cursor;
+			cursor = copy;
+		}
+	}
+
 	ICONINFO info;
 	if (::GetIconInfo(cursor, &info)) {
 		BITMAP bmp;
@@ -2244,8 +2297,11 @@ void LoadReverseArrowCursor() noexcept {
 		if (info.hbmColor)
 			::DeleteObject(info.hbmColor);
 	}
-}
 
+	if (created) {
+		::DestroyCursor(cursor);
+	}
+	return reverseArrowCursor;
 }
 
 void Window::SetCursor(Cursor curs) {
@@ -2269,8 +2325,6 @@ void Window::SetCursor(Cursor curs) {
 		::SetCursor(::LoadCursor(NULL,IDC_HAND));
 		break;
 	case cursorReverseArrow:
-		::SetCursor(reverseArrowCursor);
-		break;
 	case cursorArrow:
 	case cursorInvalid:	// Should not occur, but just in case.
 		::SetCursor(::LoadCursor(NULL,IDC_ARROW));
@@ -2359,6 +2413,7 @@ class ListBoxX : public ListBox {
 	unsigned int aveCharWidth;
 	Window *parent;
 	int ctrlID;
+	UINT dpi;
 	IListBoxDelegate *delegate;
 	const char *widestItem;
 	unsigned int maxCharWidth;
@@ -2370,7 +2425,7 @@ class ListBoxX : public ListBox {
 
 	HWND GetHWND() const;
 	void AppendListItem(const char *text, const char *numword);
-	static void AdjustWindowRect(PRectangle *rc);
+	static void AdjustWindowRect(PRectangle *rc, UINT dpi);
 	int ItemHeight() const;
 	int MinClientWidth() const;
 	int TextOffset() const;
@@ -2394,7 +2449,7 @@ class ListBoxX : public ListBox {
 public:
 	ListBoxX() : lineHeight(10), fontCopy{}, technology(0), lb{}, unicodeMode(false),
 		desiredVisibleRows(9), maxItemCharacters(0), aveCharWidth(8),
-		parent(nullptr), ctrlID(0),
+		parent(nullptr), ctrlID(0), dpi(USER_DEFAULT_SCREEN_DPI),
 		delegate(nullptr),
 		widestItem(nullptr), maxCharWidth(1), resizeHit(0), wheelDelta(0) {
 	}
@@ -2451,6 +2506,7 @@ void ListBoxX::Create(Window &parent_, int ctrlID_, Point location_, int lineHei
 		hinstanceParent,
 		this);
 
+	dpi = DpiForWindow(hwndParent);
 	POINT locationw = POINTFromPoint(location);
 	::MapWindowPoints(hwndParent, NULL, &locationw, 1);
 	location = PointFromPOINT(locationw);
@@ -2464,7 +2520,7 @@ void ListBoxX::SetFont(Font &font) {
 		}
 		FormatAndMetrics *pfm = static_cast<FormatAndMetrics *>(font.GetID());
 		fontCopy = pfm->HFont();
-		::SendMessage(lb, WM_SETFONT, reinterpret_cast<WPARAM>(fontCopy), 0);
+		SetWindowFont(lb, fontCopy, 0);
 	}
 }
 
@@ -2518,9 +2574,9 @@ PRectangle ListBoxX::GetDesiredRect() {
 
 	rcDesired.right = rcDesired.left + TextOffset() + width + (TextInset.x * 2);
 	if (Length() > rows)
-		rcDesired.right += ::GetSystemMetrics(SM_CXVSCROLL);
+		rcDesired.right += SystemMetricsForDpi(SM_CXVSCROLL, dpi);
 
-	AdjustWindowRect(&rcDesired);
+	AdjustWindowRect(&rcDesired, dpi);
 	return rcDesired;
 }
 
@@ -2531,7 +2587,7 @@ int ListBoxX::TextOffset() const {
 
 int ListBoxX::CaretFromEdge() {
 	PRectangle rc;
-	AdjustWindowRect(&rc);
+	AdjustWindowRect(&rc, dpi);
 	return TextOffset() + static_cast<int>(TextInset.x + (0 - rc.left) - 1);
 }
 
@@ -2729,9 +2785,13 @@ void ListBoxX::SetList(const char *list, char separator, char typesep) {
 	SetRedraw(true);
 }
 
-void ListBoxX::AdjustWindowRect(PRectangle *rc) {
+void ListBoxX::AdjustWindowRect(PRectangle *rc, UINT dpi) {
 	RECT rcw = RectFromPRectangle(*rc);
-	::AdjustWindowRectEx(&rcw, WS_THICKFRAME, false, WS_EX_WINDOWEDGE);
+	if (fnAdjustWindowRectExForDpi) {
+		fnAdjustWindowRectExForDpi(&rcw, WS_THICKFRAME, false, WS_EX_WINDOWEDGE, dpi);
+	} else {
+		::AdjustWindowRectEx(&rcw, WS_THICKFRAME, false, WS_EX_WINDOWEDGE);
+	}
 	*rc = PRectangle::FromInts(rcw.left, rcw.top, rcw.right, rcw.bottom);
 }
 
@@ -2750,7 +2810,7 @@ int ListBoxX::MinClientWidth() const {
 
 POINT ListBoxX::MinTrackSize() const {
 	PRectangle rc = PRectangle::FromInts(0, 0, MinClientWidth(), ItemHeight());
-	AdjustWindowRect(&rc);
+	AdjustWindowRect(&rc, dpi);
 	POINT ret = {static_cast<LONG>(rc.Width()), static_cast<LONG>(rc.Height())};
 	return ret;
 }
@@ -2759,9 +2819,9 @@ POINT ListBoxX::MaxTrackSize() const {
 	PRectangle rc = PRectangle::FromInts(0, 0,
 		std::max(static_cast<unsigned int>(MinClientWidth()),
 		maxCharWidth * maxItemCharacters + static_cast<int>(TextInset.x) * 2 +
-		 TextOffset() + ::GetSystemMetrics(SM_CXVSCROLL)),
+		 TextOffset() + SystemMetricsForDpi(SM_CXVSCROLL, dpi)),
 		ItemHeight() * lti.Count());
-	AdjustWindowRect(&rc);
+	AdjustWindowRect(&rc, dpi);
 	POINT ret = {static_cast<LONG>(rc.Width()), static_cast<LONG>(rc.Height())};
 	return ret;
 }
@@ -2868,7 +2928,7 @@ LRESULT ListBoxX::NcHitTest(WPARAM wParam, LPARAM lParam) const {
 	// window caption height + frame, even if one is hovering over the bottom edge of
 	// the frame, so workaround that here
 	if (hit >= HTTOP && hit <= HTTOPRIGHT) {
-		const int minHeight = GetSystemMetrics(SM_CYMINTRACK);
+		const int minHeight = SystemMetricsForDpi(SM_CYMINTRACK, dpi);
 		const int yPos = GET_Y_LPARAM(lParam);
 		if ((rc.Height() < minHeight) && (yPos > ((rc.top + rc.bottom)/2))) {
 			hit += HTBOTTOM - HTTOP;
@@ -3295,7 +3355,7 @@ bool Platform::ShowAssertionPopUps(bool assertionPopUps_) {
 }
 
 void Platform::Assert(const char *c, const char *file, int line) {
-	char buffer[2000];
+	char buffer[2000] {};
 	sprintf(buffer, "Assertion [%s] failed at %s %d%s", c, file, line, assertionPopUps ? "" : "\r\n");
 	if (assertionPopUps) {
 		const int idButton = ::MessageBoxA(0, buffer, "Assertion failure",
@@ -3316,7 +3376,7 @@ void Platform::Assert(const char *c, const char *file, int line) {
 
 void Platform_Initialise(void *hInstance) {
 	hinstPlatformRes = static_cast<HINSTANCE>(hInstance);
-	LoadReverseArrowCursor();
+	LoadDpiForWindow();
 	ListBoxX_Register();
 }
 
@@ -3349,8 +3409,6 @@ void Platform_Finalise(bool fromDllMain) {
 		}
 	}
 #endif
-	if (reverseArrowCursor)
-		::DestroyCursor(reverseArrowCursor);
 	ListBoxX_Unregister();
 }
 

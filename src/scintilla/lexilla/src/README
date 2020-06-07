@@ -5,7 +5,7 @@ programming, mark-up, and data languages for the Scintilla source code editing
 component.
 
 Lexilla is made available as both a shared library and static library.
-The shared library is called lexilla.so / lexilla.dylib / lexilla.dll on Linux / macOS /
+The shared library is called liblexilla.so / liblexilla.dylib / lexilla.dll on Linux / macOS /
 Windows.
 The static library is called liblexilla.a when built with GCC or Clang and liblexilla.lib
 when built with MSVC.

@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\src\CharClassify.cxx" />
     <ClCompile Include="..\..\src\ContractionState.cxx" />
     <ClCompile Include="..\..\src\Decoration.cxx" />
+    <ClCompile Include="..\..\src\PerLine.cxx" />
     <ClCompile Include="..\..\src\RunStyles.cxx" />
     <ClCompile Include="..\..\src\UniConversion.cxx" />
     <ClCompile Include="..\..\src\UniqueString.cxx" />

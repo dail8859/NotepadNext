@@ -157,7 +157,7 @@ ScintillaGTK::ScintillaGTK(_ScintillaObject *sci_) :
 	atomSought(nullptr),
 	preeditInitialized(false),
 	im_context(nullptr),
-	lastNonCommonScript(PANGO_SCRIPT_INVALID_CODE),
+	lastNonCommonScript(G_UNICODE_SCRIPT_INVALID_CODE),
 	lastWheelMouseTime(0),
 	lastWheelMouseDirection(0),
 	wheelMouseIntensity(0),
@@ -413,13 +413,13 @@ public:
 	gboolean validUTF8;
 	glong uniStrLen;
 	gunichar *uniStr;
-	PangoScript pscript;
+	GUnicodeScript pscript;
 
 	explicit PreEditString(GtkIMContext *im_context) noexcept {
 		gtk_im_context_get_preedit_string(im_context, &str, &attrs, &cursor_pos);
 		validUTF8 = g_utf8_validate(str, strlen(str), nullptr);
 		uniStr = g_utf8_to_ucs4_fast(str, strlen(str), &uniStrLen);
-		pscript = pango_script_for_unichar(uniStr[0]);
+		pscript = g_unichar_get_script(uniStr[0]);
 	}
 	// Deleted so PreEditString objects can not be copied.
 	PreEditString(const PreEditString&) = delete;
@@ -1278,10 +1278,10 @@ public:
 		sci(sci_) {
 	}
 
-	static void ClipboardReceived(GtkClipboard *, GtkSelectionData *selection_data, gpointer data) {
+	static void ClipboardReceived(GtkClipboard *clipboard, GtkSelectionData *selection_data, gpointer data) {
 		SelectionReceiver *self = static_cast<SelectionReceiver *>(data);
 		if (self->sci) {
-			self->sci->ReceivedClipboard(selection_data);
+			self->sci->ReceivedClipboard(clipboard, selection_data);
 		}
 		delete self;
 	}
@@ -1373,6 +1373,10 @@ void ScintillaGTK::ClaimSelection() {
 	}
 }
 
+bool ScintillaGTK::IsStringAtom(GdkAtom type) {
+	return (type == GDK_TARGET_STRING) || (type == atomUTF8) || (type == atomUTF8Mime);
+}
+
 static const guchar *DataOfGSD(GtkSelectionData *sd) noexcept { return gtk_selection_data_get_data(sd); }
 static gint LengthOfGSD(GtkSelectionData *sd) noexcept { return gtk_selection_data_get_length(sd); }
 static GdkAtom TypeOfGSD(GtkSelectionData *sd) noexcept { return gtk_selection_data_get_data_type(sd); }
@@ -1385,7 +1389,7 @@ void ScintillaGTK::GetGtkSelectionText(GtkSelectionData *selectionData, Selectio
 	GdkAtom selectionTypeData = TypeOfGSD(selectionData);
 
 	// Return empty string if selection is not a string
-	if ((selectionTypeData != GDK_TARGET_STRING) && (selectionTypeData != atomUTF8)) {
+	if (!IsStringAtom(selectionTypeData)) {
 		selText.Clear();
 		return;
 	}
@@ -1431,7 +1435,7 @@ void ScintillaGTK::GetGtkSelectionText(GtkSelectionData *selectionData, Selectio
 	}
 }
 
-void ScintillaGTK::InsertSelection(GtkSelectionData *selectionData) {
+void ScintillaGTK::InsertSelection(GtkClipboard *clipBoard, GtkSelectionData *selectionData) {
 	const gint length = gtk_selection_data_get_length(selectionData);
 	if (length >= 0) {
 		GdkAtom selection = gtk_selection_data_get_selection(selectionData);
@@ -1446,6 +1450,15 @@ void ScintillaGTK::InsertSelection(GtkSelectionData *selectionData) {
 		InsertPasteShape(selText.Data(), selText.Length(),
 				 selText.rectangular ? pasteRectangular : pasteStream);
 		EnsureCaretVisible();
+	} else {
+		GdkAtom target = gtk_selection_data_get_target(selectionData);
+		if (target == atomUTF8) {
+			// In case data is actually only stored as text/plain;charset=utf-8 not UTF8_STRING
+			gtk_clipboard_request_contents(clipBoard, atomUTF8Mime,
+					 SelectionReceiver::ClipboardReceived,
+					 new SelectionReceiver(this)
+			);
+		}
 	}
 	Redraw();
 }
@@ -1454,9 +1467,9 @@ GObject *ScintillaGTK::MainObject() const noexcept {
 	return G_OBJECT(PWidget(wMain));
 }
 
-void ScintillaGTK::ReceivedClipboard(GtkSelectionData *selection_data) noexcept {
+void ScintillaGTK::ReceivedClipboard(GtkClipboard *clipBoard, GtkSelectionData *selection_data) noexcept {
 	try {
-		InsertSelection(selection_data);
+		InsertSelection(clipBoard, selection_data);
 	} catch (...) {
 		errorStatus = SC_STATUS_FAILURE;
 	}
@@ -1470,9 +1483,9 @@ void ScintillaGTK::ReceivedSelection(GtkSelectionData *selection_data) {
 				atomSought = atomString;
 				gtk_selection_convert(GTK_WIDGET(PWidget(wMain)),
 						      SelectionOfGSD(selection_data), atomSought, GDK_CURRENT_TIME);
-			} else if ((LengthOfGSD(selection_data) > 0) &&
-					((TypeOfGSD(selection_data) == GDK_TARGET_STRING) || (TypeOfGSD(selection_data) == atomUTF8))) {
-				InsertSelection(selection_data);
+			} else if ((LengthOfGSD(selection_data) > 0) && IsStringAtom(TypeOfGSD(selection_data))) {
+				GtkClipboard *clipBoard = gtk_widget_get_clipboard(GTK_WIDGET(PWidget(wMain)), SelectionOfGSD(selection_data));
+				InsertSelection(clipBoard, selection_data);
 			}
 		}
 //	else fprintf(stderr, "Target non string %d %d\n", (int)(selection_data->type),
@@ -1489,7 +1502,7 @@ void ScintillaGTK::ReceivedDrop(GtkSelectionData *selection_data) {
 		std::vector<char> drop(data, data + LengthOfGSD(selection_data));
 		drop.push_back('\0');
 		NotifyURIDropped(&drop[0]);
-	} else if ((TypeOfGSD(selection_data) == GDK_TARGET_STRING) || (TypeOfGSD(selection_data) == atomUTF8)) {
+	} else if (IsStringAtom(TypeOfGSD(selection_data))) {
 		if (LengthOfGSD(selection_data) > 0) {
 			SelectionText selText;
 			GetGtkSelectionText(selection_data, selText);
@@ -2235,9 +2248,9 @@ gboolean ScintillaGTK::ExposePreedit(GtkWidget *widget, GdkEventExpose *ose, Sci
 
 bool ScintillaGTK::KoreanIME() {
 	PreEditString pes(im_context);
-	if (pes.pscript != PANGO_SCRIPT_COMMON)
+	if (pes.pscript != G_UNICODE_SCRIPT_COMMON)
 		lastNonCommonScript = pes.pscript;
-	return lastNonCommonScript == PANGO_SCRIPT_HANGUL;
+	return lastNonCommonScript == G_UNICODE_SCRIPT_HANGUL;
 }
 
 void ScintillaGTK::MoveImeCarets(int pos) {
@@ -3041,6 +3054,7 @@ GType scintilla_object_get_type() {
 void ScintillaGTK::ClassInit(OBJECT_CLASS *object_class, GtkWidgetClass *widget_class, GtkContainerClass *container_class) {
 	Platform_Initialise();
 	atomUTF8 = gdk_atom_intern("UTF8_STRING", FALSE);
+	atomUTF8Mime = gdk_atom_intern("text/plain;charset=utf-8", FALSE);
 	atomString = GDK_SELECTION_TYPE_STRING;
 	atomUriList = gdk_atom_intern("text/uri-list", FALSE);
 	atomDROPFILES_DND = gdk_atom_intern("DROPFILES_DND", FALSE);

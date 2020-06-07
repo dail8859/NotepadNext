@@ -15,7 +15,7 @@ CONFIG += staticlib
 
 include(../../../Config.pri)
 
-VERSION = 4.3.3
+VERSION = 4.4.3
 
 SOURCES += \
     ScintillaEdit.cpp \

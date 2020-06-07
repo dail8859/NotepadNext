@@ -43,6 +43,7 @@ def textFromRun(args):
 	proc = subprocess.Popen(args, shell=isinstance(args, str), stdout=subprocess.PIPE)
 	(stdoutdata, stderrdata) = proc.communicate()
 	if proc.returncode:
+		print("Warning  - failed to run '" + " ".join(args) + "'")
 		raise OSError(proc.returncode)
 	return stdoutdata
 
@@ -239,7 +240,7 @@ class SepBuilder:
 		print(" ".join(args))
 		retcode = subprocess.call(" ".join(args), shell=True, stderr=subprocess.STDOUT)
 		if retcode:
-			print("Failed in generatorrunner", retcode)
+			print("Error - failed in generatorrunner " + str(retcode))
 			sys.exit()
 
 	def writeVariables(self):
