@@ -59,6 +59,7 @@ public:
 	~LineMarkers() override;
 	void Init() override;
 	void InsertLine(Sci::Line line) override;
+	void InsertLines(Sci::Line line, Sci::Line lines) override;
 	void RemoveLine(Sci::Line line) override;
 
 	int MarkValue(Sci::Line line) const noexcept;
@@ -85,6 +86,7 @@ public:
 	~LineLevels() override;
 	void Init() override;
 	void InsertLine(Sci::Line line) override;
+	void InsertLines(Sci::Line line, Sci::Line lines) override;
 	void RemoveLine(Sci::Line line) override;
 
 	void ExpandLevels(Sci::Line sizeNew=-1);
@@ -106,6 +108,7 @@ public:
 	~LineState() override;
 	void Init() override;
 	void InsertLine(Sci::Line line) override;
+	void InsertLines(Sci::Line line, Sci::Line lines) override;
 	void RemoveLine(Sci::Line line) override;
 
 	int SetLineState(Sci::Line line, int state);
@@ -126,6 +129,7 @@ public:
 	~LineAnnotation() override;
 	void Init() override;
 	void InsertLine(Sci::Line line) override;
+	void InsertLines(Sci::Line line, Sci::Line lines) override;
 	void RemoveLine(Sci::Line line) override;
 
 	bool MultipleStyles(Sci::Line line) const noexcept;
@@ -155,6 +159,7 @@ public:
 	~LineTabstops() override;
 	void Init() override;
 	void InsertLine(Sci::Line line) override;
+	void InsertLines(Sci::Line line, Sci::Line lines) override;
 	void RemoveLine(Sci::Line line) override;
 
 	bool ClearTabstops(Sci::Line line) noexcept;

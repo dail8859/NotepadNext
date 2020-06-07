@@ -543,17 +543,22 @@ static void ColouriseBatchDoc(
 			// Colorize Default Text for remainder of line - currently not lexed
 			styler.ColourTo(endPos, SCE_BAT_DEFAULT);
 
-			// handle line continuation for SET and ECHO commands except the last line and an empty line
-			if (!continueProcessing && (i<startPos + length-1) && linePos>2) {
-				Sci_PositionU lineContinuationPos;
-				if (lineBuffer[linePos-2]=='\r') // Windows EOL
-					lineContinuationPos=linePos-3;
-				else
-					lineContinuationPos=linePos-2; // Unix or Mac EOL
-				if ((lineBuffer[lineContinuationPos]!='^') ||  // handle '^' line continuation
-					IsEscaped(lineBuffer, lineContinuationPos)
-					|| textQuoted(lineBuffer, lineContinuationPos))
+			// handle line continuation for SET and ECHO commands except the last line
+			if (!continueProcessing && (i<startPos + length-1)) {
+				if (linePos==1 || (linePos==2 && lineBuffer[1]=='\r')) // empty line on Unix and Mac or on Windows
+					continueProcessing=true;
+				else {
+					Sci_PositionU lineContinuationPos;
+					if ((linePos>2) && lineBuffer[linePos-2]=='\r') // Windows EOL
+						lineContinuationPos=linePos-3;
+					else
+						lineContinuationPos=linePos-2; // Unix or Mac EOL
+					// Reset continueProcessing	if line continuation was not found
+					if ((lineBuffer[lineContinuationPos]!='^')
+							|| IsEscaped(lineBuffer, lineContinuationPos)
+							|| textQuoted(lineBuffer, lineContinuationPos))
 						continueProcessing=true;
+				}
 			}
 
 			linePos = 0;

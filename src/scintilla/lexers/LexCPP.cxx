@@ -831,7 +831,7 @@ void SCI_METHOD LexerCPP::Lex(Sci_PositionU startPos, Sci_Position length, int i
 		ppDefineHistory.clear();
 
 	std::vector<PPDefinition>::iterator itInvalid = std::find_if(ppDefineHistory.begin(), ppDefineHistory.end(),
-		[lineCurrent](const PPDefinition &p) { return p.line >= lineCurrent; });
+		[lineCurrent](const PPDefinition &p) noexcept { return p.line >= lineCurrent; });
 	if (itInvalid != ppDefineHistory.end()) {
 		ppDefineHistory.erase(itInvalid, ppDefineHistory.end());
 		definitionsChanged = true;

@@ -12,8 +12,10 @@
 
 #if _WIN32
 #define EXPORT_FUNCTION __declspec(dllexport)
+#define CALLING_CONVENTION __stdcall
 #else
 #define EXPORT_FUNCTION __attribute__((visibility("default")))
+#define CALLING_CONVENTION
 #endif
 
 #include "ILexer.h"
@@ -305,12 +307,12 @@ void AddEachLexer() {
 
 extern "C" {
 
-int EXPORT_FUNCTION GetLexerCount() {
+EXPORT_FUNCTION int CALLING_CONVENTION GetLexerCount() {
 	AddEachLexer();
 	return catalogueLexilla.Count();
 }
 
-void EXPORT_FUNCTION GetLexerName(unsigned int index, char *name, int buflength) {
+EXPORT_FUNCTION void CALLING_CONVENTION GetLexerName(unsigned int index, char *name, int buflength) {
 	AddEachLexer();
 	*name = 0;
 	const char *lexerName = catalogueLexilla.Name(index);
@@ -319,12 +321,12 @@ void EXPORT_FUNCTION GetLexerName(unsigned int index, char *name, int buflength)
 	}
 }
 
-LexerFactoryFunction EXPORT_FUNCTION GetLexerFactory(unsigned int index) {
+EXPORT_FUNCTION LexerFactoryFunction CALLING_CONVENTION GetLexerFactory(unsigned int index) {
 	AddEachLexer();
 	return catalogueLexilla.Factory(index);
 }
 
-ILexer5 EXPORT_FUNCTION *CreateLexer(const char *name) {
+EXPORT_FUNCTION ILexer5 * CALLING_CONVENTION CreateLexer(const char *name) {
 	AddEachLexer();
 	for (unsigned int i = 0; i < catalogueLexilla.Count(); i++) {
 		const char *lexerName = catalogueLexilla.Name(i);

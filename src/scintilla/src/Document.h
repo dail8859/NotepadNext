@@ -298,6 +298,7 @@ public:
 	// From PerLine
 	void Init() override;
 	void InsertLine(Sci::Line line) override;
+	void InsertLines(Sci::Line line, Sci::Line lines) override;
 	void RemoveLine(Sci::Line line) override;
 
 	int LineEndTypesSupported() const;

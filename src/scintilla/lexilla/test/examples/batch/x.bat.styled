@@ -31,4 +31,9 @@ rem 'echo' is word=2, 'a' is default=0
 {1}:: Bug 2065: keywords not recognized when followed by ')'
 {4}@{2}if exist{0} a ({2} exit{0})
 
+{1}:: Bug: with \r or \n, 'command' is seen as continuation
+{2}echo{0} word ^
+1
+{5}command{0}
+
 {3}:END

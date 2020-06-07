@@ -31,4 +31,9 @@ IF NOT DEFINED var (SET var=1)
 :: Bug 2065: keywords not recognized when followed by ')'
 @if exist a ( exit)
 
+:: Bug: with \r or \n, 'command' is seen as continuation
+echo word ^
+1
+command
+
 :END

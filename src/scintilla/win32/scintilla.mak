@@ -275,7 +275,7 @@ $(COMPONENT): $(COMPONENT_OBJS) $(DIR_O)\ScintRes.res
 $(LEXCOMPONENT): $(LEXCOMPONENT_OBJS) $(DIR_O)\ScintRes.res
 	$(LD) $(LDFLAGS) -DEF:Scintilla.def -DLL -OUT:$@ $** $(LIBS)
 
-$(LIBSCI): $(SCILEX_OBJS)
+$(LIBSCI): $(COMPONENT_OBJS)
 	LIB /OUT:$@ $**
 
 # Define how to build all the objects and what they depend on
