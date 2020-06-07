@@ -75,6 +75,13 @@ inline bool UTF8IsNEL(const unsigned char *us) noexcept {
 	return (us[0] == 0xc2) && (us[1] == 0x85);
 }
 
+// Is the sequence of 3 char a UTF-8 line end? Only the last two char are tested for a NEL. 
+constexpr bool UTF8IsMultibyteLineEnd(unsigned char ch0, unsigned char ch1, unsigned char ch2) noexcept {
+	return
+		((ch0 == 0xe2) && (ch1 == 0x80) && ((ch2 == 0xa8) || (ch2 == 0xa9))) ||
+		((ch1 == 0xc2) && (ch2 == 0x85));
+}
+
 enum { SURROGATE_LEAD_FIRST = 0xD800 };
 enum { SURROGATE_LEAD_LAST = 0xDBFF };
 enum { SURROGATE_TRAIL_FIRST = 0xDC00 };

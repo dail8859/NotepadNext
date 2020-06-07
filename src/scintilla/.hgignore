@@ -8,6 +8,7 @@ syntax: glob
 __pycache__
 *.pyc
 *.dll
+*.so
 *.dylib
 *.framework
 *.pyd
@@ -21,6 +22,7 @@ __pycache__
 *.sbr
 *.suo
 *.aps
+*.sln
 *.vcxproj.*
 *.idb
 *.bsc

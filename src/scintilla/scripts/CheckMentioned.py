@@ -11,7 +11,6 @@ srcRoot = "../.."
 sys.path.append(srcRoot + "/scintilla/scripts")
 
 import Face
-import ScintillaData
 
 uninteresting = {
 	"SCINTILLA_H", "SCI_START", "SCI_LEXER_START", "SCI_OPTIONAL_START",
@@ -104,7 +103,6 @@ def makeSig(params):
 pathIface = srcRoot + "/scintilla/include/Scintilla.iface"
 
 def retrieveFeatures():
-	sci = ScintillaData.ScintillaData(srcRoot + "/scintilla/")
 	face = Face.Face()
 	face.ReadFromFile(pathIface)
 	sciToFeature = {}

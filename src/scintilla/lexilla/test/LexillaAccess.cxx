@@ -77,9 +77,9 @@ bool LoadLexilla([[maybe_unused]] std::filesystem::path path) {
 	lexillaDL = ::LoadLibraryW(sharedLibrary.c_str());
 #else
 #if defined(__APPLE__)
-	sharedLibrary.append("lexilla.dylib");
+	sharedLibrary.append("liblexilla.dylib");
 #else
-	sharedLibrary.append("lexilla.so");
+	sharedLibrary.append("liblexilla.so");
 #endif
 	lexillaDL = dlopen(sharedLibrary.c_str(), RTLD_LAZY);
 #endif

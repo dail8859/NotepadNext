@@ -178,6 +178,13 @@ void Document::InsertLine(Sci::Line line) {
 	}
 }
 
+void Document::InsertLines(Sci::Line line, Sci::Line lines) {
+	for (const auto &pl : perLineData) {
+		if (pl)
+			pl->InsertLines(line, lines);
+	}
+}
+
 void Document::RemoveLine(Sci::Line line) {
 	for (const std::unique_ptr<PerLine> &pl : perLineData) {
 		if (pl)
