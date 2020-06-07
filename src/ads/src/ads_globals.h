@@ -64,13 +64,6 @@ QT_FORWARD_DECLARE_CLASS(QSplitter)
 
 namespace ads
 {
-enum eStateFileVersion
-{
-	InitialVersion = 0,
-	Version1 = 1,
-	CurrentVersion = Version1
-};
-
 class CDockSplitter;
 
 enum DockWidgetArea
@@ -252,11 +245,18 @@ void setButtonIcon(QAbstractButton* Button, QStyle::StandardPixmap StandarPixmap
 	ads::eIcon CustomIconId);
 
 
+enum eRepolishChildOptions
+{
+	RepolishIgnoreChildren,
+	RepolishDirectChildren,
+	RepolishChildrenRecursively
+};
+
 /**
  * Calls unpolish() / polish for the style of the given widget to update
  * stylesheet if a property changes
  */
-void repolishStyle(QWidget* w);
+void repolishStyle(QWidget* w, eRepolishChildOptions Options = RepolishIgnoreChildren);
 
 
 } // namespace internal

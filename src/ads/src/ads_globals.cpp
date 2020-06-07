@@ -121,7 +121,7 @@ void setButtonIcon(QAbstractButton* Button, QStyle::StandardPixmap StandarPixmap
 
 
 //============================================================================
-void repolishStyle(QWidget* w)
+void repolishStyle(QWidget* w, eRepolishChildOptions Options)
 {
 	if (!w)
 	{
@@ -129,6 +129,19 @@ void repolishStyle(QWidget* w)
 	}
 	w->style()->unpolish(w);
 	w->style()->polish(w);
+
+	if (RepolishIgnoreChildren == Options)
+	{
+		return;
+	}
+
+	QList<QWidget*> Children = w->findChildren<QWidget*>(QString(),
+		(RepolishDirectChildren == Options) ? Qt::FindDirectChildrenOnly: Qt::FindChildrenRecursively);
+	for (auto Widget : Children)
+	{
+		Widget->style()->unpolish(Widget);
+		Widget->style()->polish(Widget);
+	}
 }
 
 } // namespace internal

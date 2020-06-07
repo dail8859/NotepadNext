@@ -680,6 +680,7 @@ void MainWindow::setupEditor(ScintillaNext *editor)
     editor->setMultiPaste(SC_MULTIPASTE_EACH);
     editor->setVirtualSpaceOptions(SCVS_RECTANGULARSELECTION);
 
+    editor->setMarginLeft(2);
     editor->setMarginWidthN(0, 30);
     editor->setMarginMaskN(1, (1<<MARK_BOOKMARK) | (1<<MARK_HIDELINESBEGIN) | (1<<MARK_HIDELINESEND) | (1<<MARK_HIDELINESUNDERLINE));
     editor->setMarginMaskN(2, SC_MASK_FOLDERS);

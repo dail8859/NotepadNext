@@ -27,7 +27,7 @@
 //============================================================================
 //                                   INCLUDES
 //============================================================================
-#include <FloatingDragPreview.h>
+#include "FloatingDragPreview.h"
 #include "DockAreaTabBar.h"
 
 #include <QMouseEvent>

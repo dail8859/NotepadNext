@@ -4,5 +4,6 @@
         <file>images/close-button.svg</file>
         <file>images/close-button-disabled.svg</file>
         <file>stylesheets/default_linux.css</file>
+        <file>images/close-button-focused.svg</file>
     </qresource>
 </RCC>

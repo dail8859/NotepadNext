@@ -84,13 +84,19 @@ QScrollArea#dockWidgetScrollArea
 
 #tabCloseButton:hover
 {
-        border: 1px solid rgba(0, 0, 0, 32);
-        background: rgba(0, 0, 0, 16);
+        /*border: 1px solid rgba(0, 0, 0, 32);*/
+        background: rgba(0, 0, 0, 24);
 }
 
 #tabCloseButton:pressed
 {
-        background: rgba(0, 0, 0, 32);
+        background: rgba(0, 0, 0, 48);
+}
+
+#tabCloseButton
+{
+        qproperty-icon: url(:/ads/images/close-button.svg);
+        qproperty-iconSize: 16px;
 }
 
 /* Focus related styling */
@@ -98,6 +104,24 @@ ads--CDockWidgetTab[focused="true"]
 {
     background: palette(highlight);
     border-color: palette(highlight);
+}
+
+ads--CDockWidgetTab[focused="true"] > #tabCloseButton
+{
+        qproperty-icon: url(:/ads/images/close-button-focused.svg)
+}
+
+
+
+ads--CDockWidgetTab[focused="true"] > #tabCloseButton:hover
+{
+        background: rgba(255, 255, 255, 48);
+}
+
+
+ads--CDockWidgetTab[focused="true"] > #tabCloseButton:pressed
+{
+        background: rgba(255, 255, 255, 92);
 }
 
 ads--CDockWidgetTab[focused="true"] QLabel
