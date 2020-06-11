@@ -105,7 +105,7 @@ ads--CDockSplitter::handle
 
 /* Focus related styling */
 ads--CDockWidgetTab[focused="true"]
-{;
+{
     background: palette(highlight);
     border-color: palette(highlight);
 }

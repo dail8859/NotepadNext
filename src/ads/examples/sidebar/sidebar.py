@@ -2,8 +2,8 @@ import os
 import sys
 
 from PyQt5 import uic
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QLabel
+from PyQt5.QtCore import Qt, QMargins
+from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QPlainTextEdit
 
 from PyQtAds import QtAds
 
@@ -20,7 +20,10 @@ class MainWindow(MainWindowUI, MainWindowBase):
  
         # Create the dock manager. Because the parent parameter is a QMainWindow
         # the dock manager registers itself as the central widget.
-        self.dock_manager = QtAds.CDockManager(self)
+        layout = QVBoxLayout(self.dockContainer);
+        layout.setContentsMargins(QMargins(0, 0, 0, 0))
+        self.dock_manager = QtAds.CDockManager(self.dockContainer)
+        layout.addWidget(self.dock_manager)
         
         # Create example content label - this can be any application specific
         # widget
@@ -40,6 +43,13 @@ class MainWindow(MainWindowUI, MainWindowBase):
 
         # Add the dock widget to the top dock widget area
         self.dock_manager.addDockWidget(QtAds.TopDockWidgetArea, dock_widget)
+        
+        # Create an example editor
+        te = QPlainTextEdit()
+        te.setPlaceholderText("Please enter your text here into this QPlainTextEdit...")
+        dock_widget = QtAds.CDockWidget("Editor 1")
+        self.menuView.addAction(dock_widget.toggleViewAction())
+        self.dock_manager.addDockWidget(QtAds.BottomDockWidgetArea, dock_widget)
 
 
 if __name__ == '__main__':

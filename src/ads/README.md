@@ -7,21 +7,11 @@
 [What's new](https://github.com/githubuser0xFFFF/Qt-Advanced-Docking-System/releases/latest) •
 [Documentation](doc/user-guide.md)
 
-Qt Advanced Docking System lets you create customizable layouts using a full 
-featured window docking system similar to what is found in many popular 
-integrated development environments (IDEs) such as Visual Studio. 
+Qt Advanced Docking System lets you create customizable layouts using a full
+featured window docking system similar to what is found in many popular
+integrated development environments (IDEs) such as Visual Studio.
 
 [![Video Advanced Docking](doc/advanced-docking_video.png)](https://www.youtube.com/watch?v=7pdNfafg3Qc)
-
-Everything is implemented with standard Qt functionality without any
-platform specific code. Basic usage of QWidgets and QLayouts and using basic 
-styles as much as possible.
-
-This work is based on and inspired by the 
-[Advanced Docking System for Qt](https://github.com/mfreiholz/Qt-Advanced-Docking-System) 
-from Manuel Freiholz. I did an almost complete rewrite of his code to improve
-code quality, readibility and to fix all issues from the issue tracker 
-of his docking system project.
 
 ## Features
 
@@ -38,6 +28,7 @@ of his docking system project.
   - [Tab-menu for easy handling of many tabbed dock widgets](#tab-menu-for-easy-handling-of-many-tabbed-dock-widgets)
   - [Many different ways to detach dock widgets](#many-different-ways-to-detach-dock-widgets)
   - [Supports deletion of dynamically created dock widgets](#supports-deletion-of-dynamically-created-dock-widgets)
+  - [Python PyQt5 Bindings](#python-pyqt5-bindings)
 - [Tested Compatible Environments](#tested-compatible-environments)
   - [Windows](#windows)
   - [macOS](#macos)
@@ -54,6 +45,7 @@ of his docking system project.
   - [Qt Creator IDE](#qt-creator-ide)
   - [Qt Design Studio](#qt-design-studio)
   - [QmixElements](#qmixelements)
+  - [ezEditor](#ezeditor)
 
 ### Docking everywhere - no central widget
 
@@ -134,6 +126,20 @@ You can detach dock widgets and also dock areas in the following ways:
 ### Supports deletion of dynamically created dock widgets
 
 Normally clicking the close button of a dock widget will just hide the widget and the user can show it again using the toggleView() action of the dock widget. This is meant for user interfaces with a static amount of widgets. But the advanced docking system also supports dynamic dock widgets that will get deleted on close. If you set the dock widget flag `DockWidgetDeleteOnClose` for a certain dock widget, then it will be deleted as soon as you close this dock widget. This enables the implementation of user interfaces with dynamically created editors, like in word processing applications or source code development tools.
+
+### Python PyQt5 Bindings
+
+<img src="doc/python_logo.png" height="140">
+
+The Advanced Docking System comes with a complete Python integration based on
+PyQt5 bindings. The package is available via [conda-forge](https://github.com/conda-forge/pyqtads-feedstock). The python integration has been contributed to this project
+by the following people:
+
+- [n-elie](https://github.com/n-elie)
+- [Hugo Slepicka](https://github.com/hhslepicka)
+- [K Lauer](https://github.com/klauer)
+
+Latest working version: [3.4.2](https://github.com/githubuser0xFFFF/Qt-Advanced-Docking-System/releases/tag/3.4.2)
 
 ## Tested Compatible Environments
 
@@ -246,7 +252,13 @@ MainWindow::~MainWindow()
 ## Developers
 
 - Uwe Kindler, Project Maintainer
-- Manuel Freiholz 
+- Manuel Freiholz
+
+This work is based on and inspired by the 
+[Advanced Docking System for Qt](https://github.com/mfreiholz/Qt-Advanced-Docking-System)
+from Manuel Freiholz. I did an almost complete rewrite of his code to improve
+code quality, readibility and to fix all issues from the issue tracker
+of his docking system project.
 
 ## License information
 
@@ -304,3 +316,11 @@ plugin-based and modular laboratory automation software for controlling CETONI d
 Advanced Docking System in the QmixElements sofware.
 
 ![QmixElements](doc/qmix_elements.png)
+
+### [ezEditor](https://github.com/ezEngine/ezEngine)
+
+The ezEditor is a full blown graphical editor used for editing scenes and
+importing and authoring assets for the [ezEngine](https://github.com/ezEngine/ezEngine) -
+an open source C++ game engine in active development.
+
+![ezEditor](doc/ezEngine_editor.png)

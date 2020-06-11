@@ -23,6 +23,9 @@
   - [`FloatingContainerHasWidgetTitle`](#floatingcontainerhaswidgettitle)
   - [`FloatingContainerHasWidgetIcon`](#floatingcontainerhaswidgeticon)
   - [`HideSingleCentralWidgetTitleBar`](#hidesinglecentralwidgettitlebar)
+  - [`FocusHighlighting`](#focushighlighting)
+- [Styling](#styling)
+  - [Disabling the Internal Style Sheet](#disabling-the-internal-style-sheet)
 
 ## Configuration Flags
 
@@ -282,7 +285,8 @@ otherwise (default setting) it displays application icon.
 
 ### `HideSingleCentralWidgetTitleBar`
 
-If there is only one single visible dock widget in the main dock container (the dock manager) and if this flag is set, then the titlebar of this dock widget will be hidden.
+If there is only one single visible dock widget in the main dock container (the dock manager)
+and if this flag is set, then the titlebar of this dock widget will be hidden.
 This only makes sense for non draggable and non floatable dock widgets and enables
 the creation of some kind of "central" static widget. Because the titlebar is
 hidden, it is not possible to drag out the central widget to make it floating
@@ -297,3 +301,127 @@ still has a titlebar to drag it out of the main window.
 
 ![HideSingleCentralWidgetTitleBar false](cfg_flag_HideSingleCentralWidgetTitleBar_false.png)
 
+### `FocusHighlighting`
+
+If this is enabled, the docking system is able to highlight the tab and the
+components of a dock area with a different style (i.e. a different color).
+This option is disabled by default and needs to be enabled explicitely
+because it adds some overhead. The dock manager needs to react on focus
+changes and dock widget dragging to highlight the right dock widget. You should
+enable it only, if you really need it for your application.
+
+If the feature is enabled, you can also connect to the new dock manager
+signal `focusedDockWidgetChanged(CDockWidget* old, CDockWidget* now)` to
+react on focus changes and to prepare the content of the focused dock
+widget.
+
+You can click into the tab, the titlebar or the content of a dock widget
+to focus it.
+
+![FocusHighlighting](cfg_flag_FocusHighlighting.gif)
+
+For the focused dock widget and dock widget tab, the property `focused` will
+be set to true and you can use this property to style the focused dock
+widget differently. The picture above uses the following styling:
+
+```css
+/* Color the tab with the nhighlight color */
+ads--CDockWidgetTab[focused="true"]
+{
+    background: palette(highlight);
+    border-color: palette(highlight);
+}
+
+/* Use a different colored close button icon to match the test color */
+ads--CDockWidgetTab[focused="true"] > #tabCloseButton
+{
+	qproperty-icon: url(:/ads/images/close-button-focused.svg)
+}
+
+/* Make a hovered focused close button a little bit lighter */
+ads--CDockWidgetTab[focused="true"] > #tabCloseButton:hover
+{
+	background: rgba(255, 255, 255, 48);
+}
+
+/* Make a pressed focused close button even more lighter */
+ads--CDockWidgetTab[focused="true"] > #tabCloseButton:pressed
+{
+	background: rgba(255, 255, 255, 92);
+}
+
+/* Use a different color for the tab label */
+ads--CDockWidgetTab[focused="true"] QLabel
+{
+    color: palette(light);
+}
+
+/* Paint a nice solid line for the whole title bar to create the illusion
+   of an active tab */
+ads--CDockAreaWidget[focused="true"] ads--CDockAreaTitleBar
+{
+	background: transparent;
+	border-bottom: 2px solid palette(highlight);
+	padding-bottom: 0px;
+}
+```
+
+If you have a content widget that does not support focussing for some reason
+(like `QVTKOpenGLStereoWidget` from the [VTK library](https://github.com/Kitware/VTK)),
+then you can manually switch the focus by reacting on mouse events. The 
+following code shows, how to install en event filter on the `QVTKOpenGLStereoWidget`
+to properly switch the focus on `QEvent::MouseButtonPress`:
+
+```c++
+static ads::CDockWidget* createVTK2DWindow(QMenu* ViewMenu, QObject* EventFilter)
+{
+    QVTKOpenGLStereoWidget* qvtkOpenGLStereoWidget = new QVTKOpenGLStereoWidget;
+    ads::CDockWidget* DockWidget = new ads::CDockWidget("2D Window");
+    DockWidget->setWidget(qvtkOpenGLStereoWidget);
+    qvtkOpenGLStereoWidget->installEventFilter(EventFilter);
+    qvtkOpenGLStereoWidget->setProperty("DockWidget", QVariant::fromValue(DockWidget));
+    return DockWidget;
+}
+```
+
+Now we can use the event filter function to react on mouse events and then
+use the dock manager function `setDockWidgetFocused()` to switch the focus:
+
+```c++
+bool CMainWindow::eventFilter(QObject *watched, QEvent *event)
+{
+    if (event->type() == QEvent::MouseButtonPress)
+    {
+        QVTKOpenGLStereoWidget* vtkWidget =  qobject_cast<QVTKOpenGLStereoWidget*>(watched);
+        auto vDockWidget = vtkWidget->property("DockWidget");
+        ads::CDockWidget* DockWidget = nullptr;
+        if (vDockWidget.isValid())
+        {
+            DockWidget = qvariant_cast<ads::CDockWidget*>(vDockWidget);
+        }
+
+        if (DockWidget)
+        {
+            d->DockManager->setDockWidgetFocused(DockWidget);
+        }
+    }
+    return false;
+}
+```
+
+## Styling
+
+The Advanced Docking System supports styling via [Qt Style Sheets](https://doc.qt.io/qt-5/stylesheet.html). All components like splitters, tabs, buttons, titlebar and
+icons are styleable this way.
+
+### Disabling the Internal Style Sheet
+
+The dock manager uses an internal stylesheet to style its components. That
+means, the style that you see in the demo application comes from the
+internal stylesheets that you will find in `src/stylesheets` folder. If you want
+to disable this internal stylesheet because your application uses its own,
+just call the function for settings the stylesheet with an empty string.
+
+```c++
+DockManager->setStyleSheet("");
+```
