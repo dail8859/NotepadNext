@@ -16,7 +16,7 @@ ads--CDockWidgetTab {
 ads--CDockWidgetTab[activeTab="true"]
 {
     background: rgb(240, 240, 240);
-    border-top: 4px solid rgb(255, 75, 75);
+    border-top: 4px solid rgb(255, 202, 176);
     padding-bottom: 2px;
     margin-top: 1px;
 }
@@ -40,7 +40,7 @@ ads--CDockAreaTitleBar
     padding-bottom: 0px;
 }
 
-ads--CDockWidgetTab[focused="false"] QLabel {
+ads--CDockWidgetTab[activeTab="false"] QLabel {
     color: gray;
 }
 
