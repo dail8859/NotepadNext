@@ -5,6 +5,7 @@
 %Include ads_globals.sip
 %Include DockWidget.sip
 %Include DockAreaTabBar.sip
+%Include DockAreaTitleBar_p.sip
 %Include DockAreaTitleBar.sip
 %Include DockAreaWidget.sip
 %Include DockComponentsFactory.sip

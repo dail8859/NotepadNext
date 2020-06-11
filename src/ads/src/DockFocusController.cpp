@@ -110,11 +110,6 @@ void DockFocusControllerPrivate::updateDockWidgetFocus(CDockWidget* DockWidget)
 	}
 
 	CDockWidget* old = FocusedDockWidget;
-	if (DockWidget != FocusedDockWidget)
-	{
-		std::cout << "!!!!!!!!!!!! focusedDockWidgetChanged " << (FocusedDockWidget ? FocusedDockWidget->objectName().toStdString() : "-")
-			<< " -> " << (DockWidget ? DockWidget->objectName().toStdString() : "-") << std::endl;
-	}
 	FocusedDockWidget = DockWidget;
 	updateDockWidgetFocusStyle(FocusedDockWidget, true);
 	NewFocusedDockArea = FocusedDockWidget->dockAreaWidget();
@@ -122,7 +117,6 @@ void DockFocusControllerPrivate::updateDockWidgetFocus(CDockWidget* DockWidget)
 	{
 		if (FocusedArea)
 		{
-			std::cout << "FocusedArea" << std::endl;
 			QObject::disconnect(FocusedArea, SIGNAL(viewToggled(bool)), _this, SLOT(onFocusedDockAreaViewToggled(bool)));
 			updateDockAreaFocusStyle(FocusedArea, false);
 		}
@@ -136,7 +130,6 @@ void DockFocusControllerPrivate::updateDockWidgetFocus(CDockWidget* DockWidget)
     auto NewFloatingWidget = FocusedDockWidget->dockContainer()->floatingWidget();
     if (NewFloatingWidget)
     {
-    	std::cout << "NewFloatingWidget->setProperty(FocusedDockWidget)" << std::endl;
     	NewFloatingWidget->setProperty("FocusedDockWidget", QVariant::fromValue(DockWidget));
     }
 
@@ -194,8 +187,7 @@ void CDockFocusController::onApplicationFocusChanged(QWidget* focusedOld, QWidge
 	{
 		return;
 	}
-	std::cout << "CDockManager::onFocusChanged" << std::endl;
-    std::cout << "focusedNow " << focusedNow << std::endl;
+
 	Q_UNUSED(focusedOld)
 	if (!focusedNow)
 	{
@@ -204,7 +196,6 @@ void CDockFocusController::onApplicationFocusChanged(QWidget* focusedOld, QWidge
 
 	CDockWidget* DockWidget = nullptr;
 	auto DockWidgetTab = qobject_cast<CDockWidgetTab*>(focusedNow);
-	std::cout << "FocuseNow " << focusedNow->metaObject()->className() << std::endl;
 	if (DockWidgetTab)
 	{
 		DockWidget = DockWidgetTab->dockWidget();
@@ -228,13 +219,10 @@ void CDockFocusController::onApplicationFocusChanged(QWidget* focusedOld, QWidge
 #else
     if (!DockWidget || DockWidget->tabWidget()->isHidden())
 	{
-    	std::cout << "!DockWidget || !DockWidget->tabWidget()->isVisible() " << (DockWidget ? DockWidget->objectName().toStdString() : "0") << std::endl;
-		std::cout << "DockWidget->tabWidget()->isHidden() " << (DockWidget ? DockWidget->tabWidget()->isHidden() : false) << std::endl;
     	return;
 	}
 #endif
 
-	std::cout << "CDockManager::onFocusChanged " << DockWidget->tabWidget()->text().toStdString() << std::endl;
 	d->updateDockWidgetFocus(DockWidget);
 }
 
@@ -277,11 +265,10 @@ void CDockFocusController::notifyWidgetOrAreaRelocation(QWidget* DroppedWidget)
 	{
 		return;
 	}
-	std::cout << "\n\nCDockManager::notifyWidgetDrop" << std::endl;
+
 	CDockWidget* DockWidget = qobject_cast<CDockWidget*>(DroppedWidget);
 	if (DockWidget)
 	{
-		std::cout << "CDockManager::setWidgetFocus " << DockWidget->objectName().toStdString() << std::endl;
 		CDockManager::setWidgetFocus(DockWidget->tabWidget());
 		return;
 	}
@@ -294,14 +281,12 @@ void CDockFocusController::notifyWidgetOrAreaRelocation(QWidget* DroppedWidget)
 
 	DockWidget = DockArea->currentDockWidget();
 	CDockManager::setWidgetFocus(DockWidget->tabWidget());
-	std::cout << "\n\n" << std::endl;
 }
 
 
 //===========================================================================
 void CDockFocusController::notifyFloatingWidgetDrop(CFloatingDockContainer* FloatingWidget)
 {
-	std::cout << "\n\nCDockManager::notifyFloatingWidgetDrop" << std::endl;
 	if (!FloatingWidget || d->DockManager->isRestoringState())
 	{
 		return;
@@ -312,22 +297,19 @@ void CDockFocusController::notifyFloatingWidgetDrop(CFloatingDockContainer* Floa
 	{
 		return;
 	}
-	std::cout << "vDockWidget.isValid()" << std::endl;
+
 	auto DockWidget = vDockWidget.value<CDockWidget*>();
 	if (DockWidget)
 	{
-		std::cout << "Dropped focus dock widget " << DockWidget->objectName().toStdString() << std::endl;
 		DockWidget->dockAreaWidget()->setCurrentDockWidget(DockWidget);
 		CDockManager::setWidgetFocus(DockWidget->tabWidget());
 	}
-	std::cout << "\n\n" << std::endl;
 }
 
 
 //==========================================================================
 void CDockFocusController::onStateRestored()
 {
-	std::cout << "CDockFocusController::onStateRestored()" << std::endl;
 	if (d->FocusedDockWidget)
 	{
 		updateDockWidgetFocusStyle(d->FocusedDockWidget, false);

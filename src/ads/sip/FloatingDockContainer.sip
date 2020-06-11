@@ -27,6 +27,7 @@ public:
 
 	virtual void moveFloating() = 0;
 	virtual void finishDragging() = 0;
+	virtual ~IFloatingWidget();
 };
 
 
@@ -56,6 +57,10 @@ protected:
 	virtual void closeEvent(QCloseEvent *event);
 	virtual void hideEvent(QHideEvent *event);
 	virtual void showEvent(QShowEvent *event);
+	%If (WS_WIN)
+	virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result);
+	%End
+
 
 public:
 	CFloatingDockContainer(ads::CDockManager* DockManager /TransferThis/);

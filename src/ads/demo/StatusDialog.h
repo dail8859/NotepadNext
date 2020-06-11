@@ -23,7 +23,7 @@ class CStatusDialog : public QDialog
 	Q_OBJECT
 private:
 	StatusDialogPrivate* d; ///< private data (pimpl)
-	friend class StatusDialogPrivate;
+    friend struct StatusDialogPrivate;
 
 private slots:
 	void on_dockWidgetsComboBox_currentIndexChanged(int index);

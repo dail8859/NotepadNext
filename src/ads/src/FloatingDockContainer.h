@@ -180,6 +180,11 @@ protected: // reimplements QWidget
 	virtual void hideEvent(QHideEvent *event) override;
 	virtual void showEvent(QShowEvent *event) override;
 
+#ifdef Q_OS_MACOS
+	virtual bool event(QEvent *e) override;
+	virtual void moveEvent(QMoveEvent *event) override;
+#endif
+
 #ifdef Q_OS_WIN
 	/**
 	 * Native event filter for handling WM_MOVING messages on Windows

@@ -2,9 +2,6 @@ language: cpp
 # gcc is clang on mac
 compiler: gcc
 
-git:
-  depth: 1
-
 matrix:
   fast_finish: true
   include:
@@ -21,74 +18,152 @@ matrix:
         packages:
         - qt55base
         - qt55tools
-        - gcc-6
-        - g++-6
-        - libc6-i386
+        - gcc-9
+        - g++-9
     script:
         - PATH="/opt/qt55/bin:$PATH"
-        - CXX="g++-6"
-        - CC="gcc-6"
+        - CXX="g++-9"
+        - CC="gcc-9"
         - qt55-env.sh
         - qmake
         - make
         - make install
   - name: Ubuntu qmake dll
     os: linux
-    dist: xenial
+    dist: bionic
     group: stable
+    services:
+        - xvfb
+    compiler: gcc
     addons:
       apt:
         sources:
         - ubuntu-toolchain-r-test
-        - sourceline: 'ppa:beineri/opt-qt-5.12.0-xenial'
+        - sourceline: 'ppa:beineri/opt-qt-5.14.2-bionic'
         update: true
         packages:
-        - qt512base
-        - qt512tools
-        - gcc-6
-        - g++-6
+        - qt514base
+        - qt514tools
+        - gcc-9
+        - g++-9
         - libc6-i386
         - libgl-dev
         - libgl1-mesa-dev
         - mesa-common-dev
     script:
-        - PATH="/opt/qt512/bin:$PATH"
-        - CXX="g++-6"
-        - CC="gcc-6"
-        - qt512-env.sh
+        - PATH="/opt/qt514/bin:$PATH"
+        - CXX="g++-9"
+        - CC="gcc-9"
+        - qt514-env.sh
         - qmake
         - make
         - make install
   - name: Ubuntu qmake static
     os: linux
-    dist: xenial
+    dist: bionic
     group: stable
+    services:
+        - xvfb
+    compiler: gcc
     addons:
       apt:
         sources:
         - ubuntu-toolchain-r-test
-        - sourceline: 'ppa:beineri/opt-qt-5.12.0-xenial'
+        - sourceline: 'ppa:beineri/opt-qt-5.14.2-bionic'
         update: true
         packages:
-        - qt512base
-        - qt512tools
-        - gcc-6
-        - g++-6
+        - qt514base
+        - qt514tools
+        - gcc-9
+        - g++-9
         - libc6-i386
         - libgl-dev
         - libgl1-mesa-dev
         - mesa-common-dev
     script:
-        - PATH="/opt/qt512/bin:$PATH"
-        - CXX="g++-6"
-        - CC="gcc-6"
-        - qt512-env.sh
+        - PATH="/opt/qt514/bin:$PATH"
+        - CXX="g++-9"
+        - CC="gcc-9"
+        - qt514-env.sh
         - qmake "CONFIG+=adsBuildStatic"
         - make
         - make install
+  - name: Ubuntu CMake dll
+    os: linux
+    dist: bionic
+    group: stable
+    services:
+        - xvfb
+    compiler: gcc
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - sourceline: 'ppa:beineri/opt-qt-5.14.2-bionic'
+        update: true
+        packages:
+        - qt514base
+        - qt514tools
+        - gcc-9
+        - g++-9
+        - libc6-i386
+        - libgl-dev
+        - libgl1-mesa-dev
+        - mesa-common-dev
+    script:
+        - PATH="/opt/qt514/bin:$PATH"
+        - CXX="g++-9"
+        - CC="gcc-9"
+        - qt514-env.sh
+        - mkdir ./build
+        - cd ./build
+        - cmake --version
+        - cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_STATIC=OFF -DBUILD_EXAMPLES=ON -DCMAKE_INSTALL_PREFIX="./installed" ../
+        - cmake --build .
+        - cmake --build . --target install
+        - cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=DEBUG -DBUILD_STATIC=OFF -DBUILD_EXAMPLES=ON -DCMAKE_DEBUG_POSTFIX=d -DCMAKE_INSTALL_PREFIX="./installed" ../
+        - cmake --build .
+        - cmake --build . --target install
+  - name: Ubuntu CMake Static
+    os: linux
+    dist: bionic
+    group: stable
+    services:
+        - xvfb
+    compiler: gcc
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        - sourceline: 'ppa:beineri/opt-qt-5.14.2-bionic'
+        update: true
+        packages:
+        - qt514base
+        - qt514tools
+        - gcc-9
+        - g++-9
+        - libc6-i386
+        - libgl-dev
+        - libgl1-mesa-dev
+        - mesa-common-dev
+    script:
+        - PATH="/opt/qt514/bin:$PATH"
+        - CXX="g++-9"
+        - CC="gcc-9"
+        - qt514-env.sh
+        - mkdir ./build
+        - cd ./build
+        - cmake --version
+        - cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_STATIC=ON -DBUILD_EXAMPLES=ON -DCMAKE_INSTALL_PREFIX="./installed" ../
+        - cmake --build .
+        - cmake --build . --target install
+        - cmake -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=DEBUG -DBUILD_STATIC=ON -DBUILD_EXAMPLES=ON -DCMAKE_DEBUG_POSTFIX=d -DCMAKE_INSTALL_PREFIX="./installed" ../
+        - cmake --build .
+        - cmake --build . --target install
   - name: macOS CMake dll
     os: osx
-    osx_image: xcode10.1
+    osx_image: xcode11.3
+    compiler: clang
     addons:
       homebrew:
         packages:
@@ -107,7 +182,8 @@ matrix:
         - cmake --build . --target install
   - name: macOS CMake static
     os: osx
-    osx_image: xcode10.1
+    osx_image: xcode11.3
+    compiler: clang
     addons:
       homebrew:
         packages:
@@ -126,7 +202,8 @@ matrix:
         - cmake --build . --target install
   - name: macOS qmake dll
     os: osx
-    osx_image: xcode10.1
+    osx_image: xcode11.3
+    compiler: clang
     addons:
       homebrew:
         packages:
@@ -139,7 +216,8 @@ matrix:
         - make install
   - name: macOS qmake static
     os: osx
-    osx_image: xcode10.1
+    osx_image: xcode11.3
+    compiler: clang
     addons:
       homebrew:
         packages:
