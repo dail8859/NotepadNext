@@ -45,8 +45,6 @@ public:
 
 private slots:
     void dockWidgetCloseRequested();
-    void dockAreaCreated(ads::CDockAreaWidget* DockArea);
-    void currentChanged(int index);
 
 public slots:
     void addBuffer(ScintillaBuffer *buffer);
