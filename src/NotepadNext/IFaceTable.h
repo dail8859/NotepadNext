@@ -20,6 +20,7 @@
 #ifndef IFACETABLE_H
 #define IFACETABLE_H
 
+#include <string>
 #include <vector>
 
 enum IFaceType {

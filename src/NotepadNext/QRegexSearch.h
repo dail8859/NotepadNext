@@ -25,6 +25,7 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <stdexcept>
 
 #include "Sci_Position.h"
 #include "Position.h"
