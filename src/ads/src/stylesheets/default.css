@@ -1,7 +1,6 @@
 
 /*
  * Default style sheet on Windows Platforms
- * Note: Always use CSS-classes with and without "ads--" namespace to support Qt4 & Qt5
  */
 
 ads--CDockContainerWidget
@@ -9,6 +8,10 @@ ads--CDockContainerWidget
     background: palette(dark);
 }
 
+ads--CDockContainerWidget QSplitter::handle
+{
+    background: palette(dark);
+}
 
 ads--CDockAreaWidget
 {
@@ -16,10 +19,6 @@ ads--CDockAreaWidget
     border: 1px solid white;
 }
 
-ads--CDockAreaWidget #tabsMenuButton::menu-indicator
-{
-    image: none;
-}
 
 
 ads--CDockWidgetTab
@@ -74,78 +73,31 @@ QScrollArea#dockWidgetScrollArea
 	background: none;
 	border: none;
 	padding: 0px -2px;
+        qproperty-icon: url(:/ads/images/close-button.svg);
+        qproperty-iconSize: 16px;
 }
 
 #tabCloseButton:hover
 {
-	/*border: 1px solid rgba(0, 0, 0, 32);*/
-	background: rgba(0, 0, 0, 24);
+	border: 1px solid rgba(0, 0, 0, 32);
+	background: rgba(0, 0, 0, 16);
 }
 
 #tabCloseButton:pressed
 {
-	background: rgba(0, 0, 0, 48);
+	background: rgba(0, 0, 0, 32);
 }
 
-#tabCloseButton
+
+#tabsMenuButton::menu-indicator
+{
+    image: none;
+}
+
+
+#dockAreaCloseButton
 {
 	qproperty-icon: url(:/ads/images/close-button.svg);
-	qproperty-iconSize: 16px;
-}
-
-
-ads--CDockSplitter::handle
-{
-    background-color: palette(dark);
-    /* uncomment the following line if you would like to change the size of
-       the splitter handles */
-    /* height: 1px; */
-}
-
-
-/* Focus related styling */
-ads--CDockWidgetTab[focused="true"]
-{
-    background: palette(highlight);
-    border-color: palette(highlight);
-}
-
-ads--CDockWidgetTab[focused="true"] > #tabCloseButton
-{
-	qproperty-icon: url(:/ads/images/close-button-focused.svg)
-}
-
-
-
-ads--CDockWidgetTab[focused="true"] > #tabCloseButton:hover
-{
-	background: rgba(255, 255, 255, 48);
-}
-
-
-ads--CDockWidgetTab[focused="true"] > #tabCloseButton:pressed
-{
-	background: rgba(255, 255, 255, 92);
-}
-
-
-ads--CDockWidgetTab[focused="true"] QLabel
-{
-    color: palette(light);
-}
-
-
-ads--CDockAreaTitleBar
-{
-	background: transparent;
-	border-bottom: 2px solid palette(light);
-	padding-bottom: 0px;
-}
-
-ads--CDockAreaWidget[focused="true"] ads--CDockAreaTitleBar
-{
-	background: transparent;
-	border-bottom: 2px solid palette(highlight);
-	padding-bottom: 0px;
+	qproperty-iconSize: 16px;	
 }
 

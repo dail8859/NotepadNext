@@ -179,6 +179,7 @@ public:
 		HideSingleCentralWidgetTitleBar = 0x100000, //!< If there is only one single visible dock widget in the main dock container (the dock manager) and if this flag is set, then the titlebar of this dock widget will be hidden
 		                                            //!< this only makes sense for non draggable and non floatable widgets and enables the creation of some kind of "central" widget
 		FocusHighlighting = 0x200000, //!< enables styling of focused dock widget tabs or floating widget titlebar
+		EqualSplitOnInsertion = 0x400000, ///!< if enabled, the space is equally distributed to all widgets in a  splitter
 
         DefaultDockAreaButtons = DockAreaHasCloseButton
 							   | DockAreaHasUndockButton
@@ -434,7 +435,7 @@ public:
 	template <class QWidgetPtr>
 	static void setWidgetFocus(QWidgetPtr widget)
 	{
-		if (!CDockManager::configFlags().testFlag(CDockManager::FocusHighlighting))
+		if (!CDockManager::testConfigFlag(CDockManager::FocusHighlighting))
 		{
 			return;
 		}

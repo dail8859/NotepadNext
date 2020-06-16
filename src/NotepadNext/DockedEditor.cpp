@@ -36,10 +36,10 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasCloseButton, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaDynamicTabsMenuButtonVisibility, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::FocusHighlighting, true);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::EqualSplitOnInsertion, true);
 
     m_DockManager = new ads::CDockManager(parent);
     m_DockManager->setStyleSheet("");
-
 
     connect(m_DockManager, &ads::CDockManager::dockAreaCreated, [this](ads::CDockAreaWidget* DockArea) {
         qInfo("Registering new DockArea");

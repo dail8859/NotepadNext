@@ -1,7 +1,6 @@
 
 /*
- * Default style sheet on Windows Platforms
- * Note: Always use CSS-classes with and without "ads--" namespace to support Qt4 & Qt5
+ * Default style sheet on Linux Platforms
  */
 
 ads--CDockContainerWidget
@@ -80,78 +79,25 @@ QScrollArea#dockWidgetScrollArea
         background: none;
         border: none;
         padding: 0px -2px;
-}
-
-#tabCloseButton:hover
-{
-        /*border: 1px solid rgba(0, 0, 0, 32);*/
-        background: rgba(0, 0, 0, 24);
-}
-
-#tabCloseButton:pressed
-{
-        background: rgba(0, 0, 0, 48);
-}
-
-#tabCloseButton
-{
         qproperty-icon: url(:/ads/images/close-button.svg);
         qproperty-iconSize: 16px;
 }
 
-/* Focus related styling */
-ads--CDockWidgetTab[focused="true"]
+#tabCloseButton:hover
 {
-    background: palette(highlight);
-    border-color: palette(highlight);
+        border: 1px solid rgba(0, 0, 0, 32);
+        background: rgba(0, 0, 0, 16);
 }
 
-ads--CDockWidgetTab[focused="true"] > #tabCloseButton
+#tabCloseButton:pressed
 {
-        qproperty-icon: url(:/ads/images/close-button-focused.svg)
+        background: rgba(0, 0, 0, 32);
 }
 
-
-
-ads--CDockWidgetTab[focused="true"] > #tabCloseButton:hover
+#dockAreaCloseButton
 {
-        background: rgba(255, 255, 255, 48);
-}
-
-
-ads--CDockWidgetTab[focused="true"] > #tabCloseButton:pressed
-{
-        background: rgba(255, 255, 255, 92);
-}
-
-ads--CDockWidgetTab[focused="true"] QLabel
-{
-    color: palette(light);
+	qproperty-icon: url(:/ads/images/close-button.svg);
+	qproperty-iconSize: 16px;	
 }
 
 
-ads--CDockAreaTitleBar
-{
-        background: transparent;
-        border-bottom: 2px solid palette(light);
-        padding-bottom: 0px;
-}
-
-ads--CDockAreaWidget[focused="true"] ads--CDockAreaTitleBar
-{
-        background: transparent;
-        border-bottom: 2px solid palette(highlight);
-        padding-bottom: 0px;
-}
-
-
-ads--CFloatingDockContainer[isActiveWindow="true"] ads--CFloatingWidgetTitleBar
-{
-    background: palette(highlight);
-}
-
-
-ads--CFloatingDockContainer[isActiveWindow="true"] ads--CFloatingWidgetTitleBar > QLabel
-{
-    color: palette(light);
-}
