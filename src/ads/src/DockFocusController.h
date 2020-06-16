@@ -54,7 +54,7 @@ public:
 	template <class QWidgetPtr>
 	static void setWidgetFocus(QWidgetPtr widget)
 	{
-		if (!CDockManager::configFlags().testFlag(CDockManager::FocusHighlighting))
+		if (!CDockManager::testConfigFlag(CDockManager::FocusHighlighting))
 		{
 			return;
 		}

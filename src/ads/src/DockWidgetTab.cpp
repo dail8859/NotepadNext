@@ -114,7 +114,7 @@ struct DockWidgetTabPrivate
 	 */
 	bool testConfigFlag(CDockManager::eConfigFlag Flag) const
 	{
-		return CDockManager::configFlags().testFlag(Flag);
+		return CDockManager::testConfigFlag(Flag);
 	}
 
 	/**
@@ -243,7 +243,7 @@ bool DockWidgetTabPrivate::startFloating(eDragState DraggingState)
     ADS_PRINT("startFloating");
 	DragState = DraggingState;
 	IFloatingWidget* FloatingWidget = nullptr;
-	bool OpaqueUndocking = CDockManager::configFlags().testFlag(CDockManager::OpaqueUndocking) ||
+	bool OpaqueUndocking = CDockManager::testConfigFlag(CDockManager::OpaqueUndocking) ||
 		(DraggingFloatingWidget != DraggingState);
 
 	// If section widget has multiple tabs, we take only one tab
@@ -285,7 +285,7 @@ CDockWidgetTab::CDockWidgetTab(CDockWidget* DockWidget, QWidget *parent) :
 	setAttribute(Qt::WA_NoMousePropagation, true);
 	d->DockWidget = DockWidget;
 	d->createLayout();
-	if (CDockManager::configFlags().testFlag(CDockManager::FocusHighlighting))
+	if (CDockManager::testConfigFlag(CDockManager::FocusHighlighting))
 	{
 		setFocusPolicy(Qt::ClickFocus);
 	}
@@ -399,7 +399,7 @@ void CDockWidgetTab::mouseMoveEvent(QMouseEvent* ev)
         {
         	// If we undock, we need to restore the initial position of this
         	// tab because it looks strange if it remains on its dragged position
-        	if (d->isDraggingState(DraggingTab) && !CDockManager::configFlags().testFlag(CDockManager::OpaqueUndocking))
+        	if (d->isDraggingState(DraggingTab) && !CDockManager::testConfigFlag(CDockManager::OpaqueUndocking))
 			{
         		parentWidget()->layout()->update();
 			}
@@ -468,7 +468,7 @@ void CDockWidgetTab::setActiveTab(bool active)
 	d->CloseButton->setVisible(DockWidgetClosable && TabHasCloseButton);
 
 	// Focus related stuff
-	if (CDockManager::configFlags().testFlag(CDockManager::FocusHighlighting) && !d->DockWidget->dockManager()->isRestoringState())
+	if (CDockManager::testConfigFlag(CDockManager::FocusHighlighting) && !d->DockWidget->dockManager()->isRestoringState())
 	{
 		bool UpdateFocusStyle = false;
 		if (active && !hasFocus())

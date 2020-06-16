@@ -136,6 +136,10 @@ public:
 			m_CurrentWidget = nullptr;
 			m_CurrentIndex = -1;
 		}
+		else if (indexOf(Widget) < m_CurrentIndex)
+		{
+			--m_CurrentIndex;
+		}
 		m_Widgets.removeOne(Widget);
 	}
 
@@ -731,7 +735,7 @@ void CDockAreaWidget::updateTitleBarVisibility()
 		return;
 	}
 
-    if (CDockManager::configFlags().testFlag(CDockManager::AlwaysShowTabs))
+    if (CDockManager::testConfigFlag(CDockManager::AlwaysShowTabs))
     {
         return;
     }
@@ -739,7 +743,7 @@ void CDockAreaWidget::updateTitleBarVisibility()
 	if (d->TitleBar)
 	{
 		bool Hidden = Container->hasTopLevelDockWidget() && (Container->isFloating()
-			|| CDockManager::configFlags().testFlag(CDockManager::HideSingleCentralWidgetTitleBar));
+			|| CDockManager::testConfigFlag(CDockManager::HideSingleCentralWidgetTitleBar));
 		d->TitleBar->setVisible(!Hidden);
 	}
 }

@@ -391,7 +391,7 @@ struct FloatingDockContainerPrivate
 	 */
 	static bool testConfigFlag(CDockManager::eConfigFlag Flag)
 	{
-		return CDockManager::configFlags().testFlag(Flag);
+		return CDockManager::testConfigFlag(Flag);
 	}
 
 	/**
