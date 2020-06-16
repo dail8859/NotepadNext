@@ -112,7 +112,7 @@ void FloatingDragPreviewPrivate::updateDropOverlays(const QPoint &GlobalPos)
 	{
 		ContainerOverlay->hideOverlay();
 		DockAreaOverlay->hideOverlay();
-		if (CDockManager::configFlags().testFlag(CDockManager::DragPreviewIsDynamic))
+		if (CDockManager::testConfigFlag(CDockManager::DragPreviewIsDynamic))
 		{
 			setHidden(false);
 		}
@@ -167,7 +167,7 @@ void FloatingDragPreviewPrivate::updateDropOverlays(const QPoint &GlobalPos)
 		}
 	}
 
-	if (CDockManager::configFlags().testFlag(CDockManager::DragPreviewIsDynamic))
+	if (CDockManager::testConfigFlag(CDockManager::DragPreviewIsDynamic))
 	{
 		setHidden(DockDropArea != InvalidDockWidgetArea || ContainerDropArea != InvalidDockWidgetArea);
 	}
@@ -203,7 +203,7 @@ void FloatingDragPreviewPrivate::createFloatingWidget()
 	{
 		FloatingWidget->setGeometry(_this->geometry());
 		FloatingWidget->show();
-		if (!CDockManager::configFlags().testFlag(CDockManager::DragPreviewHasWindowFrame))
+		if (!CDockManager::testConfigFlag(CDockManager::DragPreviewHasWindowFrame))
 		{
 			QApplication::processEvents();
 			int FrameHeight = FloatingWidget->frameGeometry().height() - FloatingWidget->geometry().height();
@@ -222,7 +222,7 @@ CFloatingDragPreview::CFloatingDragPreview(QWidget* Content, QWidget* parent) :
 {
 	d->Content = Content;
 	setAttribute(Qt::WA_DeleteOnClose);
-	if (CDockManager::configFlags().testFlag(CDockManager::DragPreviewHasWindowFrame))
+	if (CDockManager::testConfigFlag(CDockManager::DragPreviewHasWindowFrame))
 	{
 		setWindowFlags(
 			Qt::Window | Qt::WindowMaximizeButtonHint | Qt::WindowCloseButtonHint);
@@ -245,7 +245,7 @@ CFloatingDragPreview::CFloatingDragPreview(QWidget* Content, QWidget* parent) :
 	// Create a static image of the widget that should get undocked
 	// This is like some kind preview image like it is uses in drag and drop
 	// operations
-	if (CDockManager::configFlags().testFlag(CDockManager::DragPreviewShowsContentPixmap))
+	if (CDockManager::testConfigFlag(CDockManager::DragPreviewShowsContentPixmap))
 	{
 		d->ContentPreviewPixmap = QPixmap(Content->size());
 		Content->render(&d->ContentPreviewPixmap);
@@ -297,6 +297,7 @@ void CFloatingDragPreview::moveFloating()
 	const QPoint moveToPos = QCursor::pos() - d->DragStartMousePosition
 	    - QPoint(BorderSize, 0);
 	move(moveToPos);
+	d->updateDropOverlays(QCursor::pos());
 }
 
 
@@ -311,14 +312,6 @@ void CFloatingDragPreview::startFloating(const QPoint &DragStartMousePos,
 	moveFloating();
 	show();
 
-}
-
-
-//============================================================================
-void CFloatingDragPreview::moveEvent(QMoveEvent *event)
-{
-	QWidget::moveEvent(event);
-	d->updateDropOverlays(QCursor::pos());
 }
 
 
@@ -370,14 +363,14 @@ void CFloatingDragPreview::paintEvent(QPaintEvent* event)
 	}
 
 	QPainter painter(this);
-	if (CDockManager::configFlags().testFlag(CDockManager::DragPreviewShowsContentPixmap))
+	if (CDockManager::testConfigFlag(CDockManager::DragPreviewShowsContentPixmap))
 	{
 		painter.drawPixmap(QPoint(0, 0), d->ContentPreviewPixmap);
 	}
 
 	// If we do not have a window frame then we paint a QRubberBand like
 	// frameless window
-	if (!CDockManager::configFlags().testFlag(CDockManager::DragPreviewHasWindowFrame))
+	if (!CDockManager::testConfigFlag(CDockManager::DragPreviewHasWindowFrame))
 	{
 		QColor Color = palette().color(QPalette::Active, QPalette::Highlight);
 		QPen Pen = painter.pen();

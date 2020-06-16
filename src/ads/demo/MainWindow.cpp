@@ -196,6 +196,9 @@ static ads::CDockWidget* createFileSystemTreeDockWidget(QMenu* ViewMenu)
 		.arg(FileSystemCount++));
 	DockWidget->setWidget(w);
 	ViewMenu->addAction(DockWidget->toggleViewAction());
+	// We disable focus to test focus highlighting if the dock widget content
+	// does not support focus
+	w->setFocusPolicy(Qt::NoFocus);
     return DockWidget;
 }
 
@@ -571,6 +574,10 @@ CMainWindow::CMainWindow(QWidget *parent) :
 	// dock widget.
 	// CDockManager::setConfigFlag(CDockManager::HideSingleCentralWidgetTitleBar, true);
 
+	// uncomment the following line to enable focus highlighting of the dock
+	// widget that has the focus
+	// CDockManager::setConfigFlag(CDockManager::FocusHighlighting, true);
+
 	// Now create the dock manager and its content
 	d->DockManager = new CDockManager(this);
 
@@ -656,13 +663,14 @@ void CMainWindow::onViewToggled(bool Open)
 //============================================================================
 void CMainWindow::onViewVisibilityChanged(bool Visible)
 {
+	Q_UNUSED(Visible);
 	auto DockWidget = qobject_cast<ads::CDockWidget*>(sender());
     if (!DockWidget)
     {
         return;
     }
 
-    qDebug() << DockWidget->objectName() << " visibilityChanged(" << Visible << ")";
+    //qDebug() << DockWidget->objectName() << " visibilityChanged(" << Visible << ")";
 }
 
 

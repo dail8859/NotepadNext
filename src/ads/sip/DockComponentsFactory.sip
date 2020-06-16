@@ -16,7 +16,7 @@ public:
 	virtual CDockAreaTabBar* createDockAreaTabBar(CDockAreaWidget* DockArea /Transfer/ ) const;
 	virtual CDockAreaTitleBar* createDockAreaTitleBar(CDockAreaWidget* DockArea /Transfer/ ) const;
 	static const CDockComponentsFactory* factory();
-	static void setFactory(CDockComponentsFactory* Factory);
+	static void setFactory(CDockComponentsFactory* Factory /KeepReference/);
 	static void resetDefaultFactory();
     
 };

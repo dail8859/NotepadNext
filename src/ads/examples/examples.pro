@@ -2,4 +2,5 @@ TEMPLATE = subdirs
 
 SUBDIRS = \
 	simple \
-	sidebar
+	sidebar \
+	deleteonclose

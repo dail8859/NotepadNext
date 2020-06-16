@@ -13,7 +13,6 @@ class CFloatingDragPreview : QWidget, ads::IFloatingWidget
     %End
 
 protected:
-	virtual void moveEvent(QMoveEvent *event);
 	virtual void paintEvent(QPaintEvent *e);
 	CFloatingDragPreview(QWidget* Content /TransferThis/, QWidget* parent /TransferThis/);
 

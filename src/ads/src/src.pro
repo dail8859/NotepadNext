@@ -37,7 +37,8 @@ HEADERS += \
     DockAreaTitleBar.h \
     ElidingLabel.h \
     IconProvider.h \
-    DockComponentsFactory.h 
+    DockComponentsFactory.h  \
+    DockFocusController.h
 
 
 SOURCES += \
@@ -56,7 +57,8 @@ SOURCES += \
     DockAreaTitleBar.cpp \
     ElidingLabel.cpp \
     IconProvider.cpp \
-    DockComponentsFactory.cpp
+    DockComponentsFactory.cpp \
+    DockFocusController.cpp
 
 
 unix {

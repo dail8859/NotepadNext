@@ -4,7 +4,7 @@
 
 namespace ads
 {
-    
+
 class CDockAreaWidget : QFrame
 {
 
@@ -32,6 +32,7 @@ public:
 	virtual ~CDockAreaWidget();
 	ads::CDockManager* dockManager() const;
 	ads::CDockContainerWidget* dockContainer() const;
+	virtual QSize minimumSizeHint() const;
 	QRect titleBarGeometry() const;
 	QRect contentAreaGeometry() const;
 	int dockWidgetsCount() const;

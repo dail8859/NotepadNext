@@ -680,6 +680,7 @@ void MainWindow::setupEditor(ScintillaNext *editor)
     editor->setMultiPaste(SC_MULTIPASTE_EACH);
     editor->setVirtualSpaceOptions(SCVS_RECTANGULARSELECTION);
 
+    editor->setMarginLeft(2);
     editor->setMarginWidthN(0, 30);
     editor->setMarginMaskN(1, (1<<MARK_BOOKMARK) | (1<<MARK_HIDELINESBEGIN) | (1<<MARK_HIDELINESEND) | (1<<MARK_HIDELINESUNDERLINE));
     editor->setMarginMaskN(2, SC_MASK_FOLDERS);
@@ -1439,7 +1440,7 @@ void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
 
     // Only real files have extensions
     if (!buffer->isFile()) {
-        buffer->lexer = "null";
+        editor->setLexer(SCLEX_NULL);
         return;
     }
 
@@ -1461,8 +1462,7 @@ end
 return "null"
 )").arg(ext).toLatin1().constData());
 
-    editor->setLexerLanguage(lexer.toLocal8Bit().constData());
-    setLanguage(editor);
+    setLanguage(editor, lexer);
 
     return;
 }
@@ -1475,61 +1475,56 @@ void MainWindow::bufferActivated(ScintillaNext *editor)
     updateGui(editor);
 }
 
-void MainWindow::setLanguage(ScintillaNext *editor)
+void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 {
     qInfo(Q_FUNC_INFO);
 
-    if (true) {
-        docType->setText(editor->lexerLanguage());
-        if (editor->lexerLanguage() == "null") {
-            editor->setLexer(SCLEX_NULL);
-        }
-        else {
-            LuaExtension::Instance().setEditor(editor);
+    editor->setLexerLanguage(languageName.toLocal8Bit().constData());
 
-            app->getLuaState()->execute(QString("lexer = \"%1\"").arg(QString(editor->lexerLanguage())).toLatin1().constData());
-            app->getLuaState()->execute(R"(
-                local L = languages[lexer]
-                -- this resets the style definitions but keeps
-                -- the "wanted" stuff, such as line numbers, etc
-                -- resetEditorStyle()
-                editor.LexerLanguage = L.lexer
+    docType->setText(editor->lexerLanguage());
+    LuaExtension::Instance().setEditor(editor);
 
-                editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
-                editor.TabWidth = L.tabSize or 4
-                if L.styles then
-                    for name, style in pairs(L.styles) do
-                        editor.StyleFore[style.id] = style.fgColor
-                        editor.StyleBack[style.id] = style.bgColor
-                        if style.fontStyle then
-                            if style.fontStyle & 1 == 1 then
-                                editor.StyleBold[style.id] = true
-                            end
-                            if style.fontStyle & 2 == 2 then
-                                editor.StyleItalic[style.id] = true
-                            end
-                        end
+    app->getLuaState()->execute(QString("lexer = \"%1\"").arg(QString(editor->lexerLanguage())).toLatin1().constData());
+    app->getLuaState()->execute(R"(
+        local L = languages[lexer]
+        -- this resets the style definitions but keeps
+        -- the "wanted" stuff, such as line numbers, etc
+        -- resetEditorStyle()
+        editor.LexerLanguage = L.lexer
+
+        editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
+        editor.TabWidth = L.tabSize or 4
+        if L.styles then
+            for name, style in pairs(L.styles) do
+                editor.StyleFore[style.id] = style.fgColor
+                editor.StyleBack[style.id] = style.bgColor
+                if style.fontStyle then
+                    if style.fontStyle & 1 == 1 then
+                        editor.StyleBold[style.id] = true
+                    end
+                    if style.fontStyle & 2 == 2 then
+                        editor.StyleItalic[style.id] = true
                     end
                 end
-                if L.keywords then
-                    for id, kw in pairs(L.keywords) do
-                        editor.KeyWords[id] = kw
-                    end
-                end
-                if L.properties then
-                    for p,v in pairs(L.properties) do
-                        editor.Property[p] = v
-                    end
-                end
-                editor.Property["fold"] = "1"
-                editor.Property["fold.compact"] = "0"
+            end
+        end
+        if L.keywords then
+            for id, kw in pairs(L.keywords) do
+                editor.KeyWords[id] = kw
+            end
+        end
+        if L.properties then
+            for p,v in pairs(L.properties) do
+                editor.Property[p] = v
+            end
+        end
+        editor.Property["fold"] = "1"
+        editor.Property["fold.compact"] = "0"
 
-                -- The document needs redone, but don't force it to do the whole thing
-                -- since SC_IDLESTYLING_TOVISIBLE is used
-                editor:Colourise(0, 1);
-                )");
-        }
-    }
+        -- The document needs redone, but don't force it to do the whole thing
+        -- since SC_IDLESTYLING_TOVISIBLE is used
+        editor:Colourise(0, 1);
+        )");
 }
 
 void MainWindow::bringWindowToForeground()
@@ -1743,6 +1738,5 @@ void MainWindow::languageMenuTriggered()
     auto editor = dockedEditor->getCurrentEditor();
     QVariant v = act->data();
 
-    editor->setLexerLanguage(v.toString().toLocal8Bit().data());
-    setLanguage(editor);
+    setLanguage(editor, v.toString());
 }

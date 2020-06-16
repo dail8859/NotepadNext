@@ -86,7 +86,7 @@ protected:
 	/**
 	 * Show context menu
 	 */
-	virtual void contextMenuEvent(QContextMenuEvent *event);
+	virtual void contextMenuEvent(QContextMenuEvent *event) override;
 
 public slots:
 	/**

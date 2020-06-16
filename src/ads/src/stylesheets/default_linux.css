@@ -1,7 +1,6 @@
 
 /*
- * Default style sheet on Windows Platforms
- * Note: Always use CSS-classes with and without "ads--" namespace to support Qt4 & Qt5
+ * Default style sheet on Linux Platforms
  */
 
 ads--CDockContainerWidget
@@ -80,6 +79,8 @@ QScrollArea#dockWidgetScrollArea
         background: none;
         border: none;
         padding: 0px -2px;
+        qproperty-icon: url(:/ads/images/close-button.svg);
+        qproperty-iconSize: 16px;
 }
 
 #tabCloseButton:hover
@@ -91,6 +92,12 @@ QScrollArea#dockWidgetScrollArea
 #tabCloseButton:pressed
 {
         background: rgba(0, 0, 0, 32);
+}
+
+#dockAreaCloseButton
+{
+	qproperty-icon: url(:/ads/images/close-button.svg);
+	qproperty-iconSize: 16px;	
 }
 
 

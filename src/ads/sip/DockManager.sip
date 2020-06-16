@@ -165,12 +165,12 @@ public:
 		DockAreaDynamicTabsMenuButtonVisibility,
 		FloatingContainerHasWidgetTitle,
 		FloatingContainerHasWidgetIcon,
+		HideSingleCentralWidgetTitleBar,
         DefaultDockAreaButtons,
 		DefaultBaseConfig,
         DefaultOpaqueConfig,
 		DefaultNonOpaqueConfig,
 		NonOpaqueWithWindowFrame,
-		HideSingleCentralWidgetTitleBar,
 	};
     typedef QFlags<ads::CDockManager::eConfigFlag> ConfigFlags;
 
@@ -194,8 +194,8 @@ public:
 	const QList<ads::CDockContainerWidget*> dockContainers() const;
 	const QList<ads::CFloatingDockContainer*> floatingWidgets() const;
 	unsigned int zOrderIndex() const;
-	QByteArray saveState(int version = 1) const;
-	bool restoreState(const QByteArray &state, int version = 1);
+	QByteArray saveState(int version = 0) const;
+	bool restoreState(const QByteArray &state, int version = 0);
 	void addPerspective(const QString& UniquePrespectiveName);
 	void removePerspective(const QString& Name);
 	void removePerspectives(const QStringList& Names);

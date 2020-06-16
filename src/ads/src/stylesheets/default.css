@@ -1,7 +1,6 @@
 
 /*
  * Default style sheet on Windows Platforms
- * Note: Always use CSS-classes with and without "ads--" namespace to support Qt4 & Qt5
  */
 
 ads--CDockContainerWidget
@@ -9,6 +8,10 @@ ads--CDockContainerWidget
     background: palette(dark);
 }
 
+ads--CDockContainerWidget QSplitter::handle
+{
+    background: palette(dark);
+}
 
 ads--CDockAreaWidget
 {
@@ -16,10 +19,6 @@ ads--CDockAreaWidget
     border: 1px solid white;
 }
 
-ads--CDockAreaWidget #tabsMenuButton::menu-indicator
-{
-    image: none;
-}
 
 
 ads--CDockWidgetTab
@@ -74,6 +73,8 @@ QScrollArea#dockWidgetScrollArea
 	background: none;
 	border: none;
 	padding: 0px -2px;
+        qproperty-icon: url(:/ads/images/close-button.svg);
+        qproperty-iconSize: 16px;
 }
 
 #tabCloseButton:hover
@@ -88,43 +89,15 @@ QScrollArea#dockWidgetScrollArea
 }
 
 
-ads--CDockSplitter::handle
+#tabsMenuButton::menu-indicator
 {
-    background-color: palette(dark);
-    /* uncomment the following line if you would like to change the size of
-       the splitter handles */
-    /* height: 1px; */
+    image: none;
 }
 
 
-
-ads--CDockWidgetTab[focused="true"]
+#dockAreaCloseButton
 {
-    background: palette(highlight);
-    border-color: palette(highlight);
+	qproperty-icon: url(:/ads/images/close-button.svg);
+	qproperty-iconSize: 16px;	
 }
-
-ads--CDockWidgetTab[focused="true"] QLabel
-{
-    color: palette(light);
-}
-
-
-ads--CDockAreaTitleBar
-{
-	background: transparent;
-	border-bottom: 2px solid palette(light);
-	padding-bottom: 0px;
-}
-
-ads--CDockAreaWidget[focused="true"] ads--CDockAreaTitleBar
-{
-	background: transparent;
-	border-bottom: 2px solid palette(highlight);
-	padding-bottom: 0px;
-}
-
-
-
-
 
