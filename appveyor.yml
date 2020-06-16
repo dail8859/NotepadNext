@@ -1,9 +1,9 @@
 version: 0.2.0.{build}
-image: Visual Studio 2017
+image: Visual Studio 2019
 
 init:
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
-  - set PATH=C:\Qt\5.13\msvc2017_64\bin\;C:\Qt\Tools\QtCreator\bin\;%PATH%
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+  - set PATH=C:\Qt\5.14\msvc2017_64\bin\;C:\Qt\Tools\QtCreator\bin\;%PATH%
   - qmake -v
 
 before_build:

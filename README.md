@@ -11,11 +11,11 @@ There are numerous bugs and half working implementations. Pull requests are grea
 ![screenshot](/doc/screenshot.png)
 
 # Development
-Current development has been done using Visual Studio 2017 and Qt v5.14. Other platforms/compilers have not been tested but should be usable.
+Current development has been done using Visual Studio 2019 and Qt v5.15. Other platforms/compilers have not been tested but should be usable.
 
-1. Install Visual Studio 2017 (Community Edition is fine)
+1. Install Visual Studio 2019 (Community Edition is fine)
 1. Download the [Qt Installer](https://www.qt.io/download-qt-installer)
-1. Use the Qt Installer to install `Qt 5.14.X` (MSVC 2017 64-bit) and `Qt Creator` 
+1. Use the Qt Installer to install `Qt 5.15.X` (MSVC 2019 64-bit) and `Qt Creator` 
 1. Open `src/NotepadNext.pro`
 1. Build/Run the project
 
