@@ -29,7 +29,7 @@
 //============================================================================
 //                                   INCLUDES
 //============================================================================
-#include <QWidget>
+#include <QFrame>
 
 namespace ads
 {
@@ -45,7 +45,7 @@ struct FloatingWidgetTitleBarPrivate;
  * for the docking system to work properly, we use our own titlebar here to
  * capture the required mouse events.
  */
-class CFloatingWidgetTitleBar : public QWidget
+class CFloatingWidgetTitleBar : public QFrame
 {
 	Q_OBJECT
 private:
@@ -74,6 +74,11 @@ public:
 	 * Sets the window title, that means, the text of the internal tile label.
 	 */
 	void setTitle(const QString &Text);
+
+    /**
+     * Update stylesheet style if a property changes
+     */
+    void updateStyle();
 
 signals:
 	/**

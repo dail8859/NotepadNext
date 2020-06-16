@@ -1,6 +1,7 @@
 import os
 import sys
 import shlex
+import shutil
 import subprocess
 import glob
 
@@ -141,7 +142,23 @@ class build_ext(sipdistutils.build_ext):
 
     def _find_sip(self):
         """override _find_sip to allow for manually speficied sip path."""
-        return self.sip_bin or super()._find_sip()
+        
+        # 1. Manually specified sip_bin
+        if self.sip_bin:
+            return self.sip_bin
+
+        # 2. Path determined from sipconfig.Configuration()
+        #    This may not exist, depending on conda build configuration.
+        sip_bin = super()._find_sip()
+        if os.path.exists(sip_bin):
+            return sip_bin
+
+        # 3. Finally, fall back to sip binary found in path
+        sip_bin = shutil.which('sip')
+        if sip_bin:
+            return sip_bin
+
+        raise SystemExit('Could not find PyQt SIP binary.')
 
     def _sip_compile(self, sip_bin, source, sbf):
         cmd = [sip_bin]
@@ -194,7 +211,10 @@ class build_ext(sipdistutils.build_ext):
         return super().swig_sources(sources, extension)
 
     def build_extension(self, ext):
+        # /usr/bin/rcc -name ads ../../Qt-Advanced-Docking-System/src/ads.qrc -o release/qrc_ads.cpp
+        
         cppsources = [source for source in ext.sources if source.endswith(".cpp")]
+        headersources = ['src/DockAreaTitleBar_p.h']
 
         dir_util.mkpath(self.build_temp, dry_run=self.dry_run)
 
@@ -228,9 +248,44 @@ class build_ext(sipdistutils.build_ext):
                 if os.path.getsize(out_file) > 0:
                     ext.sources.append(out_file)
 
+        # Run moc on all orphan header files.
+        for source in headersources:
+            # *.cpp -> *.moc
+            moc_file = os.path.basename(source).replace(".h", ".moc")
+            out_file = os.path.join(self.build_temp, moc_file)
+
+            if newer(source, out_file) or self.force:
+                spawn.spawn(get_moc_args(out_file, source),
+                            dry_run=self.dry_run)
+
+            header = source
+            if os.path.exists(header):
+                # *.h -> moc_*.cpp
+                moc_file = "moc_" + os.path.basename(header).replace(
+                    ".h", ".cpp")
+                out_file = os.path.join(self.build_temp, moc_file)
+
+                if newer(header, out_file) or self.force:
+                    spawn.spawn(get_moc_args(out_file, header),
+                                dry_run=self.dry_run)
+
+                if os.path.getsize(out_file) > 0:
+                    ext.sources.append(out_file)
+
         # Add the temp build directory to include path, for compiler to find
         # the created .moc files
         ext.include_dirs += [self._sip_output_dir()]
+        
+        # Run rcc on all resource files
+        resources = [source for source in ext.sources if source.endswith(".qrc")]
+        for source in resources:
+            ext.sources.remove(source)
+            out_file = os.path.join(self.build_temp, "qrc_" + os.path.basename(source).replace(".qrc", ".cpp"))
+            if newer(header, out_file) or self.force:
+                spawn.spawn(["rcc", "-name", os.path.splitext(os.path.basename(source))[0], source, "-o", out_file], dry_run=self.dry_run)
+
+            if os.path.getsize(out_file) > 0:
+                ext.sources.append(out_file)
 
         sipdistutils.build_ext.build_extension(self, ext)
 
@@ -262,9 +317,10 @@ class BuildPyCommand(build_py):
 setup_requires = ["PyQt5"] if REQUIRE_PYQT else []
 cpp_sources = glob.glob(os.path.join('src', '*.cpp'))
 sip_sources = [os.path.join('sip', MODULE_NAME + '.sip')]
+resources = [os.path.join('src', MODULE_NAME + '.qrc')]
 if sys.platform == 'linux':
     cpp_sources += glob.glob(os.path.join('src', 'linux', '*.cpp'))
-ext_modules = [Extension('PyQtAds.QtAds.ads', cpp_sources + sip_sources)]
+ext_modules = [Extension('PyQtAds.QtAds.ads', cpp_sources + sip_sources + resources)]
 
 install_requires = ["PyQt5"]
 if sys.platform == 'win32':

@@ -31,15 +31,25 @@ Q_DECLARE_METATYPE(ScintillaBuffer*)
 DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
 {
     ads::CDockManager::setConfigFlag(ads::CDockManager::AllTabsHaveCloseButton, true);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::AlwaysShowTabs, true);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::FloatingContainerHasWidgetTitle, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasCloseButton, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaDynamicTabsMenuButtonVisibility, true);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::FocusHighlighting, true);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::EqualSplitOnInsertion, true);
 
     m_DockManager = new ads::CDockManager(parent);
     m_DockManager->setStyleSheet("");
 
     connect(m_DockManager, &ads::CDockManager::dockAreaCreated, [this](ads::CDockAreaWidget* DockArea) {
         qInfo("Registering new DockArea");
+
+        this->connect(DockArea, &ads::CDockAreaWidget::destroyed, [](QObject *obj) {
+            qInfo("DockAreaRemoved");
+        });
+
         this->connect(DockArea, &ads::CDockAreaWidget::currentChanged, [DockArea, this](int index) {
+            qInfo("currentChanged");
             auto dockWidget = DockArea->dockWidget(index);
             auto editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
 
@@ -50,16 +60,6 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
             emit editorActivated(editor);
         });
     });
-
-    //connect(qApp, &QApplication::focusChanged, [=](QWidget *old, QWidget *now) {
-    //    if (now) {
-    //        auto editor = qobject_cast<ScintillaNext *>(now);
-    //        if (editor) {
-    //            qInfo(qUtf8Printable(editor->scintillaBuffer()->getName()));
-    //            emit editorActivated(editor);
-    //        }
-    //    }
-    //});
 }
 
 

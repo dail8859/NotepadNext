@@ -4,10 +4,11 @@
 #include <QMainWindow>
 #include "DockManager.h"
 
+QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
-
+QT_END_NAMESPACE
 
 /**
  * This example shows, how to place a dock widget container and a static

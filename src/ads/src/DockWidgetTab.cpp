@@ -28,7 +28,7 @@
 //============================================================================
 //                                   INCLUDES
 //============================================================================
-#include <FloatingDragPreview.h>
+#include "FloatingDragPreview.h"
 #include "ElidingLabel.h"
 #include "DockWidgetTab.h"
 
@@ -114,7 +114,7 @@ struct DockWidgetTabPrivate
 	 */
 	bool testConfigFlag(CDockManager::eConfigFlag Flag) const
 	{
-		return CDockManager::configFlags().testFlag(Flag);
+		return CDockManager::testConfigFlag(Flag);
 	}
 
 	/**
@@ -243,7 +243,7 @@ bool DockWidgetTabPrivate::startFloating(eDragState DraggingState)
     ADS_PRINT("startFloating");
 	DragState = DraggingState;
 	IFloatingWidget* FloatingWidget = nullptr;
-	bool OpaqueUndocking = CDockManager::configFlags().testFlag(CDockManager::OpaqueUndocking) ||
+	bool OpaqueUndocking = CDockManager::testConfigFlag(CDockManager::OpaqueUndocking) ||
 		(DraggingFloatingWidget != DraggingState);
 
 	// If section widget has multiple tabs, we take only one tab
@@ -285,7 +285,10 @@ CDockWidgetTab::CDockWidgetTab(CDockWidget* DockWidget, QWidget *parent) :
 	setAttribute(Qt::WA_NoMousePropagation, true);
 	d->DockWidget = DockWidget;
 	d->createLayout();
-	setFocusPolicy(Qt::ClickFocus);
+	if (CDockManager::testConfigFlag(CDockManager::FocusHighlighting))
+	{
+		setFocusPolicy(Qt::ClickFocus);
+	}
 }
 
 //============================================================================
@@ -396,7 +399,7 @@ void CDockWidgetTab::mouseMoveEvent(QMouseEvent* ev)
         {
         	// If we undock, we need to restore the initial position of this
         	// tab because it looks strange if it remains on its dragged position
-        	if (d->isDraggingState(DraggingTab) && !CDockManager::configFlags().testFlag(CDockManager::OpaqueUndocking))
+        	if (d->isDraggingState(DraggingTab) && !CDockManager::testConfigFlag(CDockManager::OpaqueUndocking))
 			{
         		parentWidget()->layout()->update();
 			}
@@ -464,21 +467,30 @@ void CDockWidgetTab::setActiveTab(bool active)
 	bool TabHasCloseButton = (ActiveTabHasCloseButton && active) | AllTabsHaveCloseButton;
 	d->CloseButton->setVisible(DockWidgetClosable && TabHasCloseButton);
 
-	bool UpdateFocusStyle = false;
-	if (active && !hasFocus())
+	// Focus related stuff
+	if (CDockManager::testConfigFlag(CDockManager::FocusHighlighting) && !d->DockWidget->dockManager()->isRestoringState())
 	{
-		setFocus(Qt::OtherFocusReason);
-		UpdateFocusStyle = true;
-	}
-
-	if (d->IsActiveTab == active)
-	{
-		if (UpdateFocusStyle)
+		bool UpdateFocusStyle = false;
+		if (active && !hasFocus())
 		{
-			updateStyle();
+			setFocus(Qt::OtherFocusReason);
+			UpdateFocusStyle = true;
 		}
+
+		if (d->IsActiveTab == active)
+		{
+			if (UpdateFocusStyle)
+			{
+				updateStyle();
+			}
+			return;
+		}
+	}
+	else if (d->IsActiveTab == active)
+	{
 		return;
 	}
+
 	d->IsActiveTab = active;
 	updateStyle();
 	update();
@@ -580,7 +592,7 @@ void CDockWidgetTab::mouseDoubleClickEvent(QMouseEvent *event)
 void CDockWidgetTab::setVisible(bool visible)
 {
 	// Just here for debugging to insert debug output
-	Super::setVisible(visible);
+    Super::setVisible(visible);
 }
 
 
@@ -654,10 +666,7 @@ void CDockWidgetTab::setElideMode(Qt::TextElideMode mode)
 //============================================================================
 void CDockWidgetTab::updateStyle()
 {
-	this->style()->unpolish(this);
-	this->style()->polish(this);
-	d->TitleLabel->style()->unpolish(d->TitleLabel);
-	d->TitleLabel->style()->polish(d->TitleLabel);
+	internal::repolishStyle(this, internal::RepolishDirectChildren);
 }
 
 

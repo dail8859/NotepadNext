@@ -103,7 +103,7 @@ public slots:
     void detectLanguageFromExtension(ScintillaNext *editor);
     void bufferActivated(ScintillaNext *editor);
 
-    void setLanguage(ScintillaNext *editor);
+    void setLanguage(ScintillaNext *editor, const QString &languageName);
 
     void bringWindowToForeground();
     void focusIn();
