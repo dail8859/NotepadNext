@@ -19,20 +19,13 @@ after_build:
   - xcopy build_app\NotepadNext\NotepadNext.exe installer\packages\app\data\
   - windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-angle --no-opengl-sw installer\packages\app\data\NotepadNext.exe
   - 7z a NotepadNext.zip .\installer\packages\app\data\*
-  - 7z a installer\packages\app\data\data.7z .\installer\packages\app\data\* -sdel
-  - mkdir build_installer
-  - cd build_installer
-  - qmake ..\installer\installer.pro
-  - jom
-  - cd %APPVEYOR_BUILD_FOLDER%
   - appveyor PushArtifact NotepadNext.zip -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%.zip
-  - appveyor PushArtifact build_installer\NotepadNext-v0.2.exe -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%-setup.exe
 
 deploy:
   provider: GitHub
   auth_token:
     secure: qrw+nu8dQKFLG+lNmky6buHsvHFwlibAai0r0aJ3MYbyBniONVxvgnmyx37bPh44
-  artifact: NotepadNext-v$(appveyor_build_version).zip, NotepadNext-v$(appveyor_build_version)-setup.exe
+  artifact: NotepadNext-v$(appveyor_build_version).zip
   draft: true
   force_update: true
   on:
