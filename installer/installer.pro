@@ -25,10 +25,6 @@ INSTALLER = "NotepadNext-v$$APP_VERSION"
     error(Building the installer is only supported on Windows currently)
 }
 
-!exists ($$PWD/packages/app/data/data.7z) {
-    error(packages/app/data/data.7z missing)
-}
-
 INPUT = config/config.xml \
     config/controller.qs \
     $$files(packages/**package.xml, true) \
@@ -39,7 +35,7 @@ installer.input = INPUT
 installer.output = $$INSTALLER
 installer.CONFIG += target_predeps no_link combine
 #installer.depends = predeploy
-installer.commands = C:/Qt/Tools/QtInstallerFramework/3.1/bin/binarycreator --offline-only -c $$PWD/config/config.xml -p $$PWD/packages ${QMAKE_FILE_OUT}
+installer.commands = C:/Qt/Tools/QtInstallerFramework/3.2/bin/binarycreator --offline-only -c $$PWD/config/config.xml -p $$PWD/packages ${QMAKE_FILE_OUT}
 
 QMAKE_EXTRA_COMPILERS += installer
 
