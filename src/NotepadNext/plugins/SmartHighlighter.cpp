@@ -41,7 +41,7 @@ void SmartHighlighter::notify(const SCNotification *pscn)
 void SmartHighlighter::highlightCurrentView()
 {
     editor->setIndicatorCurrent(29);
-    editor->indicatorClearRange(0, editor->length());
+    //editor->indicatorClearRange(0, editor->length());
 
     if (editor->selectionEmpty()) {
         return;
