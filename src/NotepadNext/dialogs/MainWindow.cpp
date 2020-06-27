@@ -260,6 +260,10 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
+    connect(ui->actionQuickFind, &QAction::triggered, [=]() {
+        // TODO
+    });
+
     //connect(ui->actionReplace, &QAction::triggered, [=]() {
     //    // Create it if it doesn't exist
     //    if (frd == Q_NULLPTR) {
