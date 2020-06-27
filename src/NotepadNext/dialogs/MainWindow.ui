@@ -153,6 +153,8 @@
     <addaction name="actionFindNext"/>
     <addaction name="actionFind_Previous"/>
     <addaction name="actionReplace"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuickFind"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -868,6 +870,14 @@
    </property>
    <property name="menuRole">
     <enum>QAction::PreferencesRole</enum>
+   </property>
+  </action>
+  <action name="actionQuickFind">
+   <property name="text">
+    <string>Quick Find</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+I</string>
    </property>
   </action>
  </widget>
