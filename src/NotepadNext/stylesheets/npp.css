@@ -63,3 +63,10 @@ ads--CDockWidgetTab[activeTab="false"] QLabel {
 {
     background: rgba(0, 0, 0, 32);
 }
+
+#QuickFindWidget {
+    border-left: 1px solid darkgray;
+    border-right: 1px solid darkgray;
+    border-bottom: 3px solid blue;
+    background: palette(window);
+}

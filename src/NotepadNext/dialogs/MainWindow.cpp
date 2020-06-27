@@ -28,6 +28,7 @@
 #include <QStandardPaths>
 #include <QWindow>
 #include <QPushButton>
+#include <QPropertyAnimation>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -261,7 +262,31 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     });
 
     connect(ui->actionQuickFind, &QAction::triggered, [=]() {
-        // TODO
+        ScintillaNext *editor = this->dockedEditor->getCurrentEditor();
+
+        if (quickFind == Q_NULLPTR) {
+            quickFind = new QuickFindWidget(editor);
+        }
+        else {
+            quickFind->setParent(editor);
+        }
+        quickFind->setFocus();
+
+        int usableWidth = editor->width();
+
+        // Account for the scrollbar as the quick find will be underneath if the scrollbar is visible
+        if (editor->verticalScrollBar() && editor->verticalScrollBar()->isVisible()) {
+            usableWidth -= editor->verticalScrollBar()->width();
+        }
+
+        QPropertyAnimation *animation = new QPropertyAnimation(quickFind, "pos");
+        animation->setDuration(200);
+        animation->setStartValue(QPoint(usableWidth - quickFind->width(), -quickFind->height()));
+        animation->setEndValue(QPoint(usableWidth - quickFind->width(), 0));
+        animation->setEasingCurve(QEasingCurve::OutQuad);
+        animation->start(QAbstractAnimation::DeleteWhenStopped);
+
+        quickFind->show();
     });
 
     //connect(ui->actionReplace, &QAction::triggered, [=]() {
