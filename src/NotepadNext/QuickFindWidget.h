@@ -24,40 +24,11 @@
 #include <QFrame>
 #include <QObject>
 
+#include "FocusWatcher.h"
+
 namespace Ui {
 class QuickFindWidget;
 }
-
-class FocusWatcher : public QObject {
-    Q_OBJECT
-
-public:
-    explicit FocusWatcher(QObject* parent = nullptr) : QObject(parent) {
-        if (parent)
-            parent->installEventFilter(this);
-    }
-
- protected:
-    bool eventFilter(QObject *obj, QEvent *event) override {
-        Q_UNUSED(obj)
-
-        if (event->type() == QEvent::FocusIn) {
-            emit focusChanged(true);
-            emit focusIn();
-        }
-        else if (event->type() == QEvent::FocusOut) {
-            emit focusChanged(false);
-            emit focusOut();
-        }
-
-        return false;
-    }
-
-signals:
-    void focusChanged(bool in);
-    void focusIn();
-    void focusOut();
-};
 
 
 class QuickFindWidget : public QFrame
