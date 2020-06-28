@@ -1,3 +1,22 @@
+/*
+ * This file is part of Notepad Next.
+ * Copyright 2020 Justin Dailey
+ *
+ * Notepad Next is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Notepad Next is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+
 #include "QuickFindWidget.h"
 #include "ScintillaNext.h"
 #include "ui_QuickFindWidget.h"
@@ -14,10 +33,18 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
 
     this->setFocusProxy(ui->lineEdit);
 
-    auto a = new FocusOutCatcher();
-    ui->lineEdit->installEventFilter(a);
+    auto fw = new FocusWatcher(ui->lineEdit);
 
-    connect(a, &FocusOutCatcher::focusLeft, this, &QuickFindWidget::hide);
+    connect(fw, &FocusWatcher::focusOut, [=]() {
+        clearHighlights();
+        hide();
+    });
+
+    connect(fw, &FocusWatcher::focusIn, [=]() {
+        ui->lineEdit->selectAll();
+        performSearch();
+    });
+
     connect(ui->lineEdit, &QLineEdit::textEdited, [=](const QString &) { this->performSearch(); });
     connect(ui->lineEdit, &QLineEdit::returnPressed, this, &QuickFindWidget::performSearch);
     connect(ui->buttonRegexp, &QToolButton::toggled, this, &QuickFindWidget::performSearch);
@@ -31,12 +58,9 @@ QuickFindWidget::~QuickFindWidget()
 
 void QuickFindWidget::performSearch()
 {
+    clearHighlights();
+
     ScintillaNext *editor =  qobject_cast<ScintillaNext *>(this->parentWidget());
-
-    // Clear any previously highlighted areas
-    editor->setIndicatorCurrent(29);
-    editor->indicatorClearRange(0, editor->length());
-
     QString text = ui->lineEdit->text();
 
     if (text.length() > 0) {
@@ -51,9 +75,31 @@ void QuickFindWidget::performSearch()
         }
 
         editor->setSearchFlags(searchFlags);
-        editor->forEachMatch(text, [=](int start, int end) {
+
+        int foundOne = false;
+        editor->forEachMatch(text, [&](int start, int end) {
+            foundOne = true;
+
             editor->indicatorFillRange(start, end - start);
             return end;
         });
+
+        if (foundOne == false) {
+            ui->lineEdit->setStyleSheet("border: 1px solid red; padding: 2px;");
+        }
+        else {
+            ui->lineEdit->setStyleSheet("border: 1px solid blue; padding: 2px;");
+        }
     }
+    else {
+        ui->lineEdit->setStyleSheet("border: 1px solid blue; padding: 2px;");
+    }
+}
+
+void QuickFindWidget::clearHighlights()
+{
+    ScintillaNext *editor =  qobject_cast<ScintillaNext *>(this->parentWidget());
+
+    editor->setIndicatorCurrent(29);
+    editor->indicatorClearRange(0, editor->length());
 }
