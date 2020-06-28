@@ -961,8 +961,7 @@ void MainWindow::openFileDialog()
         Q_NULLPTR, // caption
         Q_NULLPTR, // dir
         filter, // filter
-        Q_NULLPTR, // selected filter
-        nullptr // Option flags
+        Q_NULLPTR // selected filter
         );
 
     openFileList(fileNames);
@@ -1171,8 +1170,7 @@ bool MainWindow::saveCurrentFileAsDialog()
         Q_NULLPTR, // caption
         dialogDir, // dir
         filter, // filter
-        Q_NULLPTR, // selected filter
-        nullptr // Option flags
+        Q_NULLPTR // selected filter
         );
 
     if (fileName.size() == 0) {
@@ -1215,8 +1213,7 @@ void MainWindow::saveCopyAsDialog()
         Q_NULLPTR, // caption
         dialogDir, // dir
         filter, // filter
-        Q_NULLPTR, // selected filter
-        nullptr // Option flags
+        Q_NULLPTR // selected filter
         );
 
     saveCopyAs(fileName);
