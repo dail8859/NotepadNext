@@ -149,7 +149,7 @@ private:
     FindReplaceDialog *frd = Q_NULLPTR;
     MacroRunDialog *mrd = Q_NULLPTR;
     PreferencesDialog *pd = Q_NULLPTR;
-    QWidget *quickFind = Q_NULLPTR;
+    QuickFindWidget *quickFind = Q_NULLPTR;
 
     QVector<Macro *> macros;
     Macro *currentMacro = Q_NULLPTR;
