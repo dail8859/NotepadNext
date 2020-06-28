@@ -24,7 +24,7 @@
 #include <QKeyEvent>
 #include <QLineEdit>
 #include <QShortcut>
-
+#include <QScrollBar>
 
 QuickFindWidget::QuickFindWidget(QWidget *parent) :
     QFrame(parent),
@@ -48,6 +48,7 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
     });
 
     connect(ui->lineEdit, &QLineEdit::textEdited, [=](const QString &) { this->performSearch(); });
+    connect(ui->lineEdit, &QLineEdit::returnPressed, this, &QuickFindWidget::performSearch);
     connect(ui->buttonRegexp, &QToolButton::toggled, this, &QuickFindWidget::performSearch);
     connect(ui->buttonMatchCase, &QToolButton::toggled, this, &QuickFindWidget::performSearch);
 }
@@ -55,6 +56,16 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
 QuickFindWidget::~QuickFindWidget()
 {
     delete ui;
+}
+
+void QuickFindWidget::setEditor(ScintillaNext *editor)
+{
+    if (this->editor != Q_NULLPTR)
+        disconnect(editor, &ScintillaNext::resized, this, &QuickFindWidget::positionWidget);
+    connect(editor, &ScintillaNext::resized, this, &QuickFindWidget::positionWidget);
+
+    this->editor = editor;
+    positionWidget();
 }
 
 bool QuickFindWidget::eventFilter(QObject *obj, QEvent *event)
@@ -67,15 +78,8 @@ bool QuickFindWidget::eventFilter(QObject *obj, QEvent *event)
             clearHighlights();
             this->hide();
         }
-        // Catch Return/Enter from getting propagated to the Scintilla Editor
-        else if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter) {
-            event->accept();
-            qInfo("Return");
-            return true;
-        }
     }
 
-    // standard event processing
     return QObject::eventFilter(obj, event);
 }
 
@@ -85,7 +89,6 @@ void QuickFindWidget::performSearch()
 
     clearHighlights();
 
-    ScintillaNext *editor =  qobject_cast<ScintillaNext *>(this->parentWidget());
     QString text = ui->lineEdit->text();
 
     if (text.length() > 0) {
@@ -121,10 +124,22 @@ void QuickFindWidget::performSearch()
     }
 }
 
+void QuickFindWidget::positionWidget()
+{
+    int usableWidth = editor->width();
+
+    // Account for the scrollbar as the quick find will be underneath if the scrollbar is visible
+    if (editor->verticalScrollBar() && editor->verticalScrollBar()->isVisible()) {
+        usableWidth -= editor->verticalScrollBar()->width();
+    }
+
+    QPoint position = QPoint(usableWidth - this->width(), 0);
+
+    this->move(editor->mapTo(this->parentWidget(), position));
+}
+
 void QuickFindWidget::clearHighlights()
 {
-    ScintillaNext *editor =  qobject_cast<ScintillaNext *>(this->parentWidget());
-
     editor->setIndicatorCurrent(29);
     editor->indicatorClearRange(0, editor->length());
 }

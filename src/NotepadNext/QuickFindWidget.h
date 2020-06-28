@@ -22,9 +22,12 @@
 
 #include <QEvent>
 #include <QFrame>
+#include <QKeyEvent>
+#include <QLineEdit>
 #include <QObject>
 
 #include "FocusWatcher.h"
+#include "ScintillaNext.h"
 
 namespace Ui {
 class QuickFindWidget;
@@ -39,16 +42,20 @@ public:
     explicit QuickFindWidget(QWidget *parent = nullptr);
     ~QuickFindWidget();
 
+    void setEditor(ScintillaNext *editor);
+
 protected:
    bool eventFilter(QObject *obj, QEvent *event) override;
 
 public slots:
     void performSearch();
+    void positionWidget();
 
 private:
     void clearHighlights();
 
     Ui::QuickFindWidget *ui;
+    ScintillaNext *editor = Q_NULLPTR;
 };
 
 #endif // QUICKFINDWIDGET_H
