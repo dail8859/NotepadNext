@@ -68,6 +68,9 @@ public:
     explicit QuickFindWidget(QWidget *parent = nullptr);
     ~QuickFindWidget();
 
+protected:
+   bool eventFilter(QObject *obj, QEvent *event) override;
+
 public slots:
     void performSearch();
 

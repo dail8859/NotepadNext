@@ -21,6 +21,7 @@
 #include "ScintillaNext.h"
 #include "ui_QuickFindWidget.h"
 
+#include <QKeyEvent>
 #include <QLineEdit>
 #include <QShortcut>
 
@@ -34,6 +35,7 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
     this->setFocusProxy(ui->lineEdit);
 
     auto fw = new FocusWatcher(ui->lineEdit);
+    ui->lineEdit->installEventFilter(this);
 
     connect(fw, &FocusWatcher::focusOut, [=]() {
         clearHighlights();
@@ -46,7 +48,6 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
     });
 
     connect(ui->lineEdit, &QLineEdit::textEdited, [=](const QString &) { this->performSearch(); });
-    connect(ui->lineEdit, &QLineEdit::returnPressed, this, &QuickFindWidget::performSearch);
     connect(ui->buttonRegexp, &QToolButton::toggled, this, &QuickFindWidget::performSearch);
     connect(ui->buttonMatchCase, &QToolButton::toggled, this, &QuickFindWidget::performSearch);
 }
@@ -56,8 +57,32 @@ QuickFindWidget::~QuickFindWidget()
     delete ui;
 }
 
+bool QuickFindWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+
+        // Use escape key to close the quick find widget
+        if (keyEvent->key() == Qt::Key_Escape) {
+            clearHighlights();
+            this->hide();
+        }
+        // Catch Return/Enter from getting propagated to the Scintilla Editor
+        else if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter) {
+            event->accept();
+            qInfo("Return");
+            return true;
+        }
+    }
+
+    // standard event processing
+    return QObject::eventFilter(obj, event);
+}
+
 void QuickFindWidget::performSearch()
 {
+    qInfo(Q_FUNC_INFO);
+
     clearHighlights();
 
     ScintillaNext *editor =  qobject_cast<ScintillaNext *>(this->parentWidget());
