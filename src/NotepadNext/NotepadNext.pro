@@ -73,6 +73,7 @@ SOURCES += \
 HEADERS += \
     DockedEditor.h \
     Finder.h \
+    FocusWatcher.h \
     QuickFindWidget.h \
     ScintillaBuffer.h \
     BufferManager.h \

@@ -17,38 +17,42 @@
  */
 
 
-#ifndef QUICKFINDWIDGET_H
-#define QUICKFINDWIDGET_H
+#ifndef FOCUSWATCHER_H
+#define FOCUSWATCHER_H
 
 #include <QEvent>
-#include <QFrame>
 #include <QObject>
 
-#include "FocusWatcher.h"
 
-namespace Ui {
-class QuickFindWidget;
-}
-
-
-class QuickFindWidget : public QFrame
-{
+class FocusWatcher : public QObject {
     Q_OBJECT
 
 public:
-    explicit QuickFindWidget(QWidget *parent = nullptr);
-    ~QuickFindWidget();
+    explicit FocusWatcher(QObject* parent = nullptr) : QObject(parent) {
+        if (parent)
+            parent->installEventFilter(this);
+    }
 
-protected:
-   bool eventFilter(QObject *obj, QEvent *event) override;
+ protected:
+    bool eventFilter(QObject *obj, QEvent *event) override {
+        Q_UNUSED(obj)
 
-public slots:
-    void performSearch();
+        if (event->type() == QEvent::FocusIn) {
+            emit focusChanged(true);
+            emit focusIn();
+        }
+        else if (event->type() == QEvent::FocusOut) {
+            emit focusChanged(false);
+            emit focusOut();
+        }
 
-private:
-    void clearHighlights();
+        return false;
+    }
 
-    Ui::QuickFindWidget *ui;
+signals:
+    void focusChanged(bool in);
+    void focusIn();
+    void focusOut();
 };
 
-#endif // QUICKFINDWIDGET_H
+#endif // FOCUSWATCHER_H
