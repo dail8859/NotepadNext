@@ -28,7 +28,6 @@
 #include <QStandardPaths>
 #include <QWindow>
 #include <QPushButton>
-
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -258,6 +257,18 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         if (frd != Q_NULLPTR) {
             frd->performLastSearch();
         }
+    });
+
+    connect(ui->actionQuickFind, &QAction::triggered, [=]() {
+        ScintillaNext *editor = this->dockedEditor->getCurrentEditor();
+
+        if (quickFind == Q_NULLPTR) {
+            quickFind = new QuickFindWidget(this);
+        }
+        quickFind->setEditor(editor);
+        quickFind->setFocus();
+
+        quickFind->show();
     });
 
     //connect(ui->actionReplace, &QAction::triggered, [=]() {
