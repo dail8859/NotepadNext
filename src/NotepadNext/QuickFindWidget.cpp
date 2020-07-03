@@ -47,7 +47,7 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
         performSearch();
     });
 
-    connect(ui->lineEdit, &QLineEdit::textEdited, [=](const QString &) { this->performSearch(); });
+    connect(ui->lineEdit, &QLineEdit::textChanged, [=](const QString &) { this->performSearch(); });
     connect(ui->lineEdit, &QLineEdit::returnPressed, this, &QuickFindWidget::performSearch);
     connect(ui->buttonRegexp, &QToolButton::toggled, this, &QuickFindWidget::performSearch);
     connect(ui->buttonMatchCase, &QToolButton::toggled, this, &QuickFindWidget::performSearch);
