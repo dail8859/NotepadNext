@@ -38,6 +38,7 @@ win32 {
 SOURCES += \
     DockedEditor.cpp \
     Finder.cpp \
+    QuickFindWidget.cpp \
     main.cpp \
     ScintillaBuffer.cpp \
     BufferManager.cpp \
@@ -72,6 +73,8 @@ SOURCES += \
 HEADERS += \
     DockedEditor.h \
     Finder.h \
+    FocusWatcher.h \
+    QuickFindWidget.h \
     ScintillaBuffer.h \
     BufferManager.h \
     BufferView.h \
@@ -103,6 +106,7 @@ HEADERS += \
     plugins/LineNumbers.h
 
 FORMS += \
+    QuickFindWidget.ui \
     dialogs/MainWindow.ui \
     dialogs/FindReplaceDialog.ui \
     dialogs/LuaConsoleDock.ui \
