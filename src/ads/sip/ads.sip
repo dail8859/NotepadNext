@@ -11,6 +11,7 @@
 %Include DockComponentsFactory.sip
 %Include DockContainerWidget.sip
 %Include DockingStateReader.sip
+%Include DockFocusController.sip
 %Include DockManager.sip
 %Include DockOverlay.sip
 %Include DockSplitter.sip

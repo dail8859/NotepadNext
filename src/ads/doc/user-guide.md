@@ -30,7 +30,7 @@
 ## Configuration Flags
 
 The Advanced Docking System has a number of global configuration options to
-configure the design and the functionality of the docking system. Each
+configure the design and the functionality of the docking system. Eachs
 configuration will be explained in detail in the following sections.
 
 ### Setting Configuration Flags

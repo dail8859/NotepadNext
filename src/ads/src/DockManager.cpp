@@ -708,6 +708,7 @@ void CDockManager::removeDockWidget(CDockWidget* Dockwidget)
 	emit dockWidgetAboutToBeRemoved(Dockwidget);
 	d->DockWidgetsMap.remove(Dockwidget->objectName());
 	CDockContainerWidget::removeDockWidget(Dockwidget);
+	Dockwidget->setDockManager(nullptr);
 	emit dockWidgetRemoved(Dockwidget);
 }
 
