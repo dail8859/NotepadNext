@@ -453,6 +453,8 @@ void CDockAreaWidget::removeDockWidget(CDockWidget* DockWidget)
 	auto TabWidget = DockWidget->tabWidget();
 	TabWidget->hide();
 	d->tabBar()->removeTab(TabWidget);
+	TabWidget->setParent(DockWidget);
+	DockWidget->setDockArea(nullptr);
 	CDockContainerWidget* DockContainer = dockContainer();
 	if (NextOpenDockWidget)
 	{

@@ -25,7 +25,7 @@ set(ads_SRCS
     DockComponentsFactory.cpp
     ads.qrc
 )
-set(ads_INSTALL_INCLUDE 
+set(ads_HEADERS
     ads_globals.h
     DockAreaTabBar.h
     DockAreaTitleBar.h
@@ -47,13 +47,13 @@ set(ads_INSTALL_INCLUDE
 )
 if (UNIX)
     set(ads_SRCS linux/FloatingWidgetTitleBar.cpp ${ads_SRCS})
-    set(ads_INSTALL_INCLUDE linux/FloatingWidgetTitleBar.h ${ads_INSTALL_INCLUDE})
+    set(ads_HEADERS linux/FloatingWidgetTitleBar.h ${ads_HEADERS})
 endif()
 if(BUILD_STATIC)
-    add_library(qtadvanceddocking STATIC ${ads_SRCS})
+    add_library(qtadvanceddocking STATIC ${ads_SRCS} ${ads_HEADERS})
     target_compile_definitions(qtadvanceddocking PUBLIC ADS_STATIC)
 else()
-    add_library(qtadvanceddocking SHARED ${ads_SRCS})
+    add_library(qtadvanceddocking SHARED ${ads_SRCS} ${ads_HEADERS})
     target_compile_definitions(qtadvanceddocking PRIVATE ADS_SHARED_EXPORT)
 endif()
 target_link_libraries(qtadvanceddocking PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets)
@@ -75,7 +75,7 @@ write_basic_package_version_file(
     VERSION ${VERSION_SHORT}
     COMPATIBILITY SameMajorVersion
 )
-install(FILES ${ads_INSTALL_INCLUDE}
+install(FILES ${ads_HEADERS}
     DESTINATION include 
     COMPONENT headers
 )
@@ -104,5 +104,5 @@ install(FILES qtadvanceddockingConfig.cmake "${CMAKE_CURRENT_BINARY_DIR}/qtadvan
 
 target_include_directories(qtadvanceddocking PUBLIC
     $<INSTALL_INTERFACE:include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
-
