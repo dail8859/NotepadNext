@@ -56,11 +56,12 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
     if (minPos == maxPos)
         return -1;
 
-    QRegularExpression re(s, QRegularExpression::MultilineOption | QRegularExpression::UseUnicodePropertiesOption);
+    auto options = QRegularExpression::MultilineOption | QRegularExpression::UseUnicodePropertiesOption;
 
     if ((flags & SCFIND_MATCHCASE) == 0)
-        re.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+        options |= QRegularExpression::CaseInsensitiveOption;
 
+    QRegularExpression re(s, options);
     if (!re.isValid())
         return -1; // Invalid regular expression
 
