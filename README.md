@@ -1,6 +1,11 @@
 # Notepad Next
 
-[![Build status](https://ci.appveyor.com/api/projects/status/ix8wdx6tu5t3you0?svg=true)](https://ci.appveyor.com/project/dail8859/notepadnext)
+| Branch | Status |
+|---|---|
+| master | [![Build status](https://ci.appveyor.com/api/projects/status/ix8wdx6tu5t3you0/branch/master?svg=true)](https://ci.appveyor.com/project/dail8859/notepadnext/branch/master) |
+| dev | [![Build status](https://ci.appveyor.com/api/projects/status/ix8wdx6tu5t3you0/branch/dev?svg=true)](https://ci.appveyor.com/project/dail8859/notepadnext/branch/dev) |
+
+
 
 A cross-platform, reimplementation of Notepad++.
 
