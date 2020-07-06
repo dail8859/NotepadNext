@@ -108,8 +108,14 @@ void QuickFindWidget::performSearch()
         editor->forEachMatch(text, [&](int start, int end) {
             foundOne = true;
 
-            editor->indicatorFillRange(start, end - start);
-            return end;
+            const int length = end - start;
+
+            // Don't highlight 0 length matches
+            if (length > 0)
+                editor->indicatorFillRange(start, length);
+
+            // Advance at least 1 character to prevent infinite loop
+            return qMax(start + 1, end);
         });
 
         if (foundOne == false) {
