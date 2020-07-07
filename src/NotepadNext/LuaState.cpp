@@ -118,8 +118,6 @@ LuaState::~LuaState()
 
 void LuaState::execute(const char *statement, bool clear)
 {
-    qInfo(Q_FUNC_INFO);
-
     // There may be other things on the stack so save the top of it
     const int stacktop = lua_gettop(L);
 
