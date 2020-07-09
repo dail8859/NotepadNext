@@ -219,39 +219,45 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionIncrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->tab();});
     connect(ui->actionDecrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->backTab();});
 
-    //connect(ui->actionFind, &QAction::triggered, [=]() {
-    //    // Create it if it doesn't exist
-    //    if (frd == Q_NULLPTR) {
-    //        frd = new FindReplaceDialog(this);
-    //        frd->setEditor(editor);
-    //    }
-    //
-    //    // Get any selected text
-    //    if (!editor->selectionEmpty()) {
-    //        int selection = editor->mainSelection();
-    //        int start = editor->selectionNStart(selection);
-    //        int end = editor->selectionNEnd(selection);
-    //        if (end > start) {
-    //            auto selText = editor->get_text_range(start, end);
-    //            frd->setFindText(QString::fromUtf8(selText));
-    //        }
-    //    }
-    //    else {
-    //        int start = editor->wordStartPosition(editor->currentPos(), true);
-    //        int end = editor->wordEndPosition(editor->currentPos(), true);
-    //        if (end > start) {
-    //            editor->setSelectionStart(start);
-    //            editor->setSelectionEnd(end);
-    //            auto selText = editor->get_text_range(start, end);
-    //            frd->setFindText(QString::fromUtf8(selText));
-    //        }
-    //    }
-    //
-    //    frd->setTab(FindReplaceDialog::FIND_TAB);
-    //    frd->show();
-    //    frd->raise();
-    //    frd->activateWindow();
-    //});
+    connect(ui->actionFind, &QAction::triggered, [=]() {
+        ScintillaNext *editor = dockedEditor->getCurrentEditor();
+
+        // Create it if it doesn't exist
+        if (frd == Q_NULLPTR) {
+            frd = new FindReplaceDialog(this);
+        }
+
+        frd->setEditor(editor);
+
+        // TODO: if dockedEditor::editorActivated() is fired, or if the editor get closed
+        // the FindReplaceDialog's editor pointer needs updated...
+
+        // Get any selected text
+        if (!editor->selectionEmpty()) {
+            int selection = editor->mainSelection();
+            int start = editor->selectionNStart(selection);
+            int end = editor->selectionNEnd(selection);
+            if (end > start) {
+                auto selText = editor->get_text_range(start, end);
+                frd->setFindText(QString::fromUtf8(selText));
+            }
+        }
+        else {
+            int start = editor->wordStartPosition(editor->currentPos(), true);
+            int end = editor->wordEndPosition(editor->currentPos(), true);
+            if (end > start) {
+                editor->setSelectionStart(start);
+                editor->setSelectionEnd(end);
+                auto selText = editor->get_text_range(start, end);
+                frd->setFindText(QString::fromUtf8(selText));
+            }
+        }
+
+        frd->setTab(FindReplaceDialog::FIND_TAB);
+        frd->show();
+        frd->raise();
+        frd->activateWindow();
+    });
 
     connect(ui->actionFindNext, &QAction::triggered, [=]() {
         if (frd != Q_NULLPTR) {
