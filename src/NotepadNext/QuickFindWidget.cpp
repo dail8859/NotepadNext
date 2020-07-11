@@ -17,6 +17,7 @@
  */
 
 
+#include "Finder.h"
 #include "QuickFindWidget.h"
 #include "ScintillaNext.h"
 #include "ui_QuickFindWidget.h"
@@ -84,6 +85,7 @@ bool QuickFindWidget::eventFilter(QObject *obj, QEvent *event)
         if (keyEvent->key() == Qt::Key_Escape) {
             clearHighlights();
             this->hide();
+            editor->grabFocus();
         }
     }
 
@@ -109,7 +111,17 @@ void QuickFindWidget::performSearch()
             searchFlags |= SCFIND_MATCHCASE;
         }
 
-        editor->setSearchFlags(searchFlags);
+        Finder f = Finder(editor);
+        f.setWrap(true);
+        f.setSearchFlags(searchFlags);
+        f.setSearchText(text);
+
+        auto range = f.findNext(editor->selectionStart());
+        if (range.cpMin == INVALID_POSITION)
+            return;
+
+        editor->setSel(range.cpMin, range.cpMax);
+        editor->verticalCentreCaret();
 
         bool foundOne = false;
         editor->setIndicatorCurrent(28);

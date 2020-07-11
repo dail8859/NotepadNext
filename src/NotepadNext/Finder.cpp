@@ -39,12 +39,12 @@ void Finder::setSearchText(const QString &text)
     this->text = text;
 }
 
-Sci_CharacterRange Finder::findNext()
+Sci_CharacterRange Finder::findNext(int startPos)
 {
     if (text.isEmpty())
         return {INVALID_POSITION, INVALID_POSITION};
 
-    const int pos = editor->selectionEnd();
+    const int pos = startPos == INVALID_POSITION ? editor->selectionEnd() : startPos;
     const QByteArray textData = text.toUtf8();
 
     editor->setTargetRange(pos, editor->length());
