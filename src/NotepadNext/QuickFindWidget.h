@@ -48,11 +48,16 @@ protected:
    bool eventFilter(QObject *obj, QEvent *event) override;
 
 public slots:
-    void performSearch();
+    void highlightMatches();
+    void navigateToNextMatch(bool skipCurrent = true);
+    void highlightAndNavigateToNextMatch();
+
+private slots:
     void positionWidget();
 
 private:
     void clearHighlights();
+    int computeSearchFlags();
 
     Ui::QuickFindWidget *ui;
     ScintillaNext *editor = Q_NULLPTR;

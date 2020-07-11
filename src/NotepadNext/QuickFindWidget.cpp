@@ -45,13 +45,13 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
 
     connect(fw, &FocusWatcher::focusIn, [=]() {
         ui->lineEdit->selectAll();
-        performSearch();
+        highlightAndNavigateToNextMatch();
     });
 
-    connect(ui->lineEdit, &QLineEdit::textChanged, [=](const QString &) { this->performSearch(); });
-    connect(ui->lineEdit, &QLineEdit::returnPressed, this, &QuickFindWidget::performSearch);
-    connect(ui->buttonRegexp, &QToolButton::toggled, this, &QuickFindWidget::performSearch);
-    connect(ui->buttonMatchCase, &QToolButton::toggled, this, &QuickFindWidget::performSearch);
+    connect(ui->lineEdit, &QLineEdit::textChanged, [=](const QString &) { this->highlightAndNavigateToNextMatch(); });
+    connect(ui->lineEdit, &QLineEdit::returnPressed, [=]() { this->navigateToNextMatch(true); });
+    connect(ui->buttonRegexp, &QToolButton::toggled, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
+    connect(ui->buttonMatchCase, &QToolButton::toggled, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
 }
 
 QuickFindWidget::~QuickFindWidget()
@@ -92,62 +92,93 @@ bool QuickFindWidget::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
-void QuickFindWidget::performSearch()
+void QuickFindWidget::highlightMatches()
 {
     qInfo(Q_FUNC_INFO);
 
     clearHighlights();
 
-    QString text = ui->lineEdit->text();
+    const QString text = ui->lineEdit->text();
 
-    if (text.length() > 0) {
-        int searchFlags = 0;
+    if (text.isEmpty()) {
+        ui->lineEdit->setStyleSheet("border: 1px solid blue; padding: 2px;");
+        return;
+    }
 
-        if (ui->buttonRegexp->isChecked()) {
-            searchFlags |= SCFIND_REGEXP;
-        }
+    bool foundOne = false;
+    editor->setIndicatorCurrent(28);
+    editor->setSearchFlags(computeSearchFlags());
+    editor->forEachMatch(text, [&](int start, int end) {
+        foundOne = true;
 
-        if (ui->buttonMatchCase->isChecked()) {
-            searchFlags |= SCFIND_MATCHCASE;
-        }
+        const int length = end - start;
 
-        Finder f = Finder(editor);
-        f.setWrap(true);
-        f.setSearchFlags(searchFlags);
-        f.setSearchText(text);
+        // Don't highlight 0 length matches
+        if (length > 0)
+            editor->indicatorFillRange(start, length);
 
-        auto range = f.findNext(editor->selectionStart());
-        if (range.cpMin == INVALID_POSITION)
-            return;
+        // Advance at least 1 character to prevent infinite loop
+        return qMax(start + 1, end);
+    });
 
-        editor->setSel(range.cpMin, range.cpMax);
-        editor->verticalCentreCaret();
-
-        bool foundOne = false;
-        editor->setIndicatorCurrent(28);
-        editor->forEachMatch(text, [&](int start, int end) {
-            foundOne = true;
-
-            const int length = end - start;
-
-            // Don't highlight 0 length matches
-            if (length > 0)
-                editor->indicatorFillRange(start, length);
-
-            // Advance at least 1 character to prevent infinite loop
-            return qMax(start + 1, end);
-        });
-
-        if (foundOne == false) {
-            ui->lineEdit->setStyleSheet("border: 1px solid red; padding: 2px;");
-        }
-        else {
-            ui->lineEdit->setStyleSheet("border: 1px solid blue; padding: 2px;");
-        }
+    if (foundOne == false) {
+        ui->lineEdit->setStyleSheet("border: 1px solid red; padding: 2px;");
     }
     else {
         ui->lineEdit->setStyleSheet("border: 1px solid blue; padding: 2px;");
     }
+}
+
+void QuickFindWidget::navigateToNextMatch(bool skipCurrent)
+{
+    qInfo(Q_FUNC_INFO);
+
+    const QString text = ui->lineEdit->text();
+
+    if (text.isEmpty()) {
+        return;
+    }
+
+    Finder f = Finder(editor);
+    f.setWrap(true);
+    f.setSearchFlags(computeSearchFlags());
+    f.setSearchText(text);
+
+    int startPos = INVALID_POSITION;
+    if (skipCurrent) {
+        startPos = editor->selectionEnd();
+    }
+    else {
+        startPos = editor->selectionStart();
+    }
+
+    auto range = f.findNext(startPos);
+    if (range.cpMin == INVALID_POSITION)
+        return;
+
+    editor->setSel(range.cpMin, range.cpMax);
+    editor->verticalCentreCaret();
+}
+
+void QuickFindWidget::highlightAndNavigateToNextMatch()
+{
+    highlightMatches();
+    navigateToNextMatch(false);
+}
+
+int QuickFindWidget::computeSearchFlags()
+{
+    int searchFlags = 0;
+
+    if (ui->buttonRegexp->isChecked()) {
+        searchFlags |= SCFIND_REGEXP;
+    }
+
+    if (ui->buttonMatchCase->isChecked()) {
+        searchFlags |= SCFIND_MATCHCASE;
+    }
+
+    return searchFlags;
 }
 
 void QuickFindWidget::positionWidget()
