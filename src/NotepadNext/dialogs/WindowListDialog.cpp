@@ -62,7 +62,7 @@ WindowListDialog::~WindowListDialog()
 
 
 
-BufferViewModel::BufferViewModel(QList<ScintillaBuffer *> buffers, QObject *parent) :
+BufferViewModel::BufferViewModel(const QList<ScintillaBuffer *>& buffers, QObject *parent) :
     buffers(buffers),
     QAbstractTableModel(parent)
 {
