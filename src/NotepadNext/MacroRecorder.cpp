@@ -140,14 +140,11 @@ void Macro::replayTillEndOfFile(ScintillaNext *editor) const
 {
     qInfo(Q_FUNC_INFO);
 
-    int length;
-    int curPos;
-
     editor->beginUndoAction();
 
     do {
-        length = editor->length();
-        curPos = editor->currentPos();
+        int length = editor->length();
+        int curPos = editor->currentPos();
 
         replay(editor);
 

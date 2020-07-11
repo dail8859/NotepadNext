@@ -104,7 +104,7 @@ void QuickFindWidget::performSearch()
 
         editor->setSearchFlags(searchFlags);
 
-        int foundOne = false;
+        bool foundOne = false;
         editor->forEachMatch(text, [&](int start, int end) {
             foundOne = true;
 
