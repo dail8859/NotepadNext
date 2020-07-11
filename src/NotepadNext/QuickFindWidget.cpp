@@ -65,6 +65,13 @@ void QuickFindWidget::setEditor(ScintillaNext *editor)
     connect(editor, &ScintillaNext::resized, this, &QuickFindWidget::positionWidget);
 
     this->editor = editor;
+
+    editor->indicSetFore(28, 0xFF8000);
+    editor->indicSetStyle(28, INDIC_FULLBOX);
+    editor->indicSetOutlineAlpha(28, 150);
+    editor->indicSetAlpha(28, 50);
+    editor->indicSetUnder(28, true);
+
     positionWidget();
 }
 
@@ -146,6 +153,6 @@ void QuickFindWidget::positionWidget()
 
 void QuickFindWidget::clearHighlights()
 {
-    editor->setIndicatorCurrent(29);
+    editor->setIndicatorCurrent(28);
     editor->indicatorClearRange(0, editor->length());
 }

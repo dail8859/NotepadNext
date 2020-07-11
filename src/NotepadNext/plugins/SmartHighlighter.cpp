@@ -25,6 +25,7 @@ SmartHighlighter::SmartHighlighter(ScintillaEdit *editor) :
 {
     setObjectName("SmartHighlighter");
 
+    editor->indicSetFore(29, 0x00FF00);
     editor->indicSetStyle(29, INDIC_ROUNDBOX);
     editor->indicSetOutlineAlpha(29, 150);
     editor->indicSetAlpha(29, 100);
@@ -41,7 +42,7 @@ void SmartHighlighter::notify(const SCNotification *pscn)
 void SmartHighlighter::highlightCurrentView()
 {
     editor->setIndicatorCurrent(29);
-    //editor->indicatorClearRange(0, editor->length());
+    editor->indicatorClearRange(0, editor->length());
 
     if (editor->selectionEmpty()) {
         return;

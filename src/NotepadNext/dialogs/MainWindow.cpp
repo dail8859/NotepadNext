@@ -742,15 +742,15 @@ void MainWindow::setupEditor(ScintillaNext *editor)
 
     // Indicators
     // Find Mark Style
-    editor->indicSetFore(31, 0x0000FF);
+    // editor->indicSetFore(31, 0x0000FF);
     // Smart HighLighting
-    editor->indicSetFore(29, 0x00FF00);
+    // editor->indicSetFore(29, 0x00FF00);
     // Incremental highlight all
-    editor->indicSetFore(28, 0xFF8000);
+    // editor->indicSetFore(28, 0xFF8000);
     // Tags match highlighting
-    editor->indicSetFore(27, 0xFF0080);
+    // editor->indicSetFore(27, 0xFF0080);
     // Tags attribute
-    editor->indicSetFore(26, 0x00FFFF);
+    // editor->indicSetFore(26, 0x00FFFF);
 
     /*
     -- Mark Style 1
