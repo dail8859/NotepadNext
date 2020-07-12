@@ -32,8 +32,8 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
 {
     ads::CDockManager::setConfigFlag(ads::CDockManager::AllTabsHaveCloseButton, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::AlwaysShowTabs, true);
-    ads::CDockManager::setConfigFlag(ads::CDockManager::FloatingContainerHasWidgetTitle, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasCloseButton, false);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasUndockButton, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaDynamicTabsMenuButtonVisibility, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::FocusHighlighting, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::EqualSplitOnInsertion, true);
@@ -125,6 +125,7 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
     dw->setWidget(editor);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetDeleteOnClose, true);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::CustomCloseHandling, true);
+    dw->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetFloatable, false);
 
     dw->tabWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(dw->tabWidget(), &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
