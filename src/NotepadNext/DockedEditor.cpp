@@ -126,6 +126,11 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetDeleteOnClose, true);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::CustomCloseHandling, true);
 
+    dw->tabWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(dw->tabWidget(), &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
+        emit contextMenuRequestedForEditor(editor);
+    });
+
     // Set the tooltip based on the buffer
     if (buffer->isFile()) {
         dw->tabWidget()->setToolTip(buffer->fileInfo.canonicalFilePath());

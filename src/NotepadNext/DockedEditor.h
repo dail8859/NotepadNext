@@ -54,7 +54,9 @@ public slots:
 signals:
     void editorCreated(ScintillaNext *editor);
     void editorCloseRequested(ScintillaNext *editor);
-    void editorActivated(ScintillaNext *buffer);
+    void editorActivated(ScintillaNext *editor);
+
+    void contextMenuRequestedForEditor(ScintillaNext *editor);
 };
 
 #endif // DOCKEDEDITOR_H
