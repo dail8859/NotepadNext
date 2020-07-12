@@ -49,7 +49,14 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
     });
 
     connect(ui->lineEdit, &QLineEdit::textChanged, [=](const QString &) { this->highlightAndNavigateToNextMatch(); });
-    connect(ui->lineEdit, &QLineEdit::returnPressed, [=]() { this->navigateToNextMatch(true); });
+    connect(ui->lineEdit, &QLineEdit::returnPressed, [=]() {
+        if (QGuiApplication::keyboardModifiers() & Qt::ShiftModifier) {
+            navigateToPrevMatch();
+        }
+        else {
+            navigateToNextMatch(true);
+        }
+    });
     connect(ui->buttonRegexp, &QToolButton::toggled, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
     connect(ui->buttonMatchCase, &QToolButton::toggled, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
 }
@@ -153,6 +160,29 @@ void QuickFindWidget::navigateToNextMatch(bool skipCurrent)
     }
 
     auto range = f.findNext(startPos);
+    if (range.cpMin == INVALID_POSITION)
+        return;
+
+    editor->setSel(range.cpMin, range.cpMax);
+    editor->verticalCentreCaret();
+}
+
+void QuickFindWidget::navigateToPrevMatch()
+{
+    qInfo(Q_FUNC_INFO);
+
+    const QString text = ui->lineEdit->text();
+
+    if (text.isEmpty()) {
+        return;
+    }
+
+    Finder f = Finder(editor);
+    f.setWrap(true);
+    f.setSearchFlags(computeSearchFlags());
+    f.setSearchText(text);
+
+    auto range = f.findPrev();
     if (range.cpMin == INVALID_POSITION)
         return;
 
