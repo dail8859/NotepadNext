@@ -119,7 +119,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     //        newFile();
     //    }
     //});
-    //connect(tabbedEditor->getTabBar(), &QWidget::customContextMenuRequested, this, &MainWindow::tabBarRightClicked);
+    connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
 
     // Set up the menus
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
@@ -209,7 +209,9 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
             QApplication::clipboard()->setText(buffer->fileInfo.canonicalFilePath());
         }
     });
-    connect(ui->actionCopyFileName, &QAction::triggered, [=]() { QApplication::clipboard()->setText(dockedEditor->getCurrentBuffer()->getName());});
+    connect(ui->actionCopyFileName, &QAction::triggered, [=]() {
+        QApplication::clipboard()->setText(dockedEditor->getCurrentBuffer()->getName());
+    });
     connect(ui->actionCopyFileDirectory, &QAction::triggered, [=]() {
         auto buffer = dockedEditor->getCurrentBuffer();
         if (buffer->isFile()) {
@@ -1715,24 +1717,19 @@ void MainWindow::setFoldMarkers(ScintillaNext *editor, const QString &type)
 }
 
 
-void MainWindow::tabBarRightClicked(const QPoint &pos)
+void MainWindow::tabBarRightClicked(ScintillaNext *editor)
 {
-    /*
-    // Check to see if an actual tab was clicked
-    int index = tabbedEditor->getTabBar()->tabAt(pos);
-    if (index == TabbedEditor::INVALID_INDEX) {
-        return;
-    }
+    qInfo(Q_FUNC_INFO);
 
     // Focus on the correct tab
-    tabbedEditor->switchToIndex(index);
+    dockedEditor->switchToBuffer(editor->scintillaBuffer());
 
     // Create the menu and show it
     QMenu *menu = new QMenu(this);
     menu->addAction(ui->actionClose);
-    menu->addAction(ui->actionCloseAllExceptActive);
-    menu->addAction(ui->actionCloseAllToLeft);
-    menu->addAction(ui->actionCloseAllToRight);
+    //menu->addAction(ui->actionCloseAllExceptActive);
+    //menu->addAction(ui->actionCloseAllToLeft);
+    //menu->addAction(ui->actionCloseAllToRight);
     menu->addAction(ui->actionSave);
     menu->addAction(ui->actionSaveAs);
     menu->addAction(ui->actionRename);
@@ -1741,8 +1738,7 @@ void MainWindow::tabBarRightClicked(const QPoint &pos)
     menu->addAction(ui->actionCopyFullPath);
     menu->addAction(ui->actionCopyFileName);
     menu->addAction(ui->actionCopyFileDirectory);
-    menu->popup(tabbedEditor->mapToGlobal(pos));
-    */
+    menu->popup(QCursor::pos());
 }
 
 

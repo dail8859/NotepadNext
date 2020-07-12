@@ -115,7 +115,7 @@ protected:
     void dropEvent(QDropEvent *event) override;
 
 private slots:
-    void tabBarRightClicked(const QPoint &pos);
+    void tabBarRightClicked(ScintillaNext *editor);
     void languageMenuTriggered();
 
 private:
