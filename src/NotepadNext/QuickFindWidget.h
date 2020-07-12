@@ -50,6 +50,7 @@ protected:
 public slots:
     void highlightMatches();
     void navigateToNextMatch(bool skipCurrent = true);
+    void navigateToPrevMatch();
     void highlightAndNavigateToNextMatch();
 
 private slots:
