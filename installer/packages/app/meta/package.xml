@@ -10,4 +10,7 @@
     <UserInterfaces>
         <UserInterface>targetwidget.ui</UserInterface>
     </UserInterfaces>
+    <Licenses>
+        <License name="GNU GPLv3" file="LICENSE" />
+    </Licenses>
 </Package>
