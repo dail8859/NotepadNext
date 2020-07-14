@@ -169,6 +169,7 @@ public:
 		FloatingContainerHasWidgetIcon,
 		HideSingleCentralWidgetTitleBar,
         FocusHighlighting,
+        EqualSplitOnInsertion,
         DefaultDockAreaButtons,
 		DefaultBaseConfig,
         DefaultOpaqueConfig,

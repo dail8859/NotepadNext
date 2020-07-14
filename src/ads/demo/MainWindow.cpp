@@ -165,6 +165,7 @@ struct MainWindowPrivate
 	QWidgetAction* PerspectiveListAction = nullptr;
 	QComboBox* PerspectiveComboBox = nullptr;
 	ads::CDockManager* DockManager = nullptr;
+	ads::CDockWidget* WindowTitleTestDockWidget = nullptr;
 
 	MainWindowPrivate(CMainWindow* _public) : _this(_public) {}
 
@@ -382,6 +383,7 @@ void MainWindowPrivate::createContent()
 	}
 
 	DockWidget = createLongTextLabelDockWidget();
+	WindowTitleTestDockWidget = DockWidget;
 	DockWidget->setFeature(ads::CDockWidget::DockWidgetFocusable, false);
 	DockManager->addDockWidget(ads::LeftDockWidgetArea, DockWidget);
 	auto FileSystemWidget = createFileSystemTreeDockWidget();
@@ -496,6 +498,9 @@ void MainWindowPrivate::createActions()
 	ui.menuTests->addSeparator();
 	a = ui.menuTests->addAction("Show Status Dialog");
 	_this->connect(a, SIGNAL(triggered()), SLOT(showStatusDialog()));
+
+	a = ui.menuTests->addAction("Toggle Label 0 Window Title");
+	_this->connect(a, SIGNAL(triggered()), SLOT(toggleDockWidgetWindowTitle()));
 	ui.menuTests->addSeparator();
 }
 
@@ -743,5 +748,22 @@ void CMainWindow::showStatusDialog()
 {
 	CStatusDialog Dialog(d->DockManager);
 	Dialog.exec();
+}
+
+
+//============================================================================
+void CMainWindow::toggleDockWidgetWindowTitle()
+{
+	QString Title = d->WindowTitleTestDockWidget->windowTitle();
+	int i = Title.indexOf(" (Test)");
+	if (-1 == i)
+	{
+		Title += " (Test)";
+	}
+	else
+	{
+		Title = Title.left(i);
+	}
+	d->WindowTitleTestDockWidget->setWindowTitle(Title);
 }
 
