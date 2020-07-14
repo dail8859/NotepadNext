@@ -35,3 +35,17 @@ SUBDIRS = ScintillaEdit \
 ScintillaEdit.subdir = scintilla/qt/ScintillaEdit
 
 NotepadNext.depends = ScintillaEdit qtsingleapplication lua uchardet ads
+
+win32 {
+    package.target = make_package
+    package.commands = \
+        xcopy $$shell_path($${OUT_PWD}/NotepadNext/NotepadNext.exe) $$shell_path($${OUT_PWD}/package/) /Y && \
+        xcopy $$shell_path($${PWD}/../LICENSE) $$shell_path($${OUT_PWD}/package/) /Y && \
+        windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-angle --no-opengl-sw $$shell_path($${OUT_PWD}/package/NotepadNext.exe)
+
+    zip.target = zip
+    zip.depends = package
+    zip.commands = 7z a -tzip $$quote(NotepadNext.zip) .\package\*
+
+    QMAKE_EXTRA_TARGETS += package zip
+}
