@@ -14,7 +14,8 @@ int main(int argc, char *argv[])
     ads::CDockManager::setConfigFlag(ads::CDockManager::AllTabsHaveCloseButton, true);
     auto dockManager = new ads::CDockManager(&w);
     QObject::connect(dockManager, &ads::CDockManager::focusedDockWidgetChanged, [] (ads::CDockWidget* old, ads::CDockWidget* now) {
-        qDebug() << "CDockManager::focusedDockWidgetChanged: " << now->objectName() << " visible: " << now->isVisible();
+        static int Count = 0;
+    	qDebug() << Count++ << " CDockManager::focusedDockWidgetChanged old: " << (old ? old->objectName() : "-") << " now: " << now->objectName() << " visible: " << now->isVisible();
         now->widget()->setFocus();
     });
 
