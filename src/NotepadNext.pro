@@ -45,7 +45,13 @@ win32 {
 
     zip.target = zip
     zip.depends = package
-    zip.commands = 7z a -tzip $$quote(NotepadNext.zip) .\package\*
+    zip.commands = 7z a -tzip $$quote(NotepadNext.zip) $$shell_path(./package/*)
 
-    QMAKE_EXTRA_TARGETS += package zip
+    prepare_installer.target = prepare_installer
+    prepare_installer.depends = package
+    prepare_installer.commands = \
+        xcopy $$shell_path(./package/*) $$shell_path(../installer/packages/app/data/) /Y/E && \
+        del $$shell_path(../installer/packages/app/data/LICENSE)
+
+    QMAKE_EXTRA_TARGETS += package prepare_installer zip
 }
