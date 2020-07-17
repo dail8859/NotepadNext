@@ -133,6 +133,8 @@ protected:
 	void removeDockContainer(ads::CDockContainerWidget* DockContainer /TransferBack/);
 	ads::CDockOverlay* containerOverlay() const;
 	ads::CDockOverlay* dockAreaOverlay() const;
+    void notifyWidgetOrAreaRelocation(QWidget* RelocatedWidget);
+    void notifyFloatingWidgetDrop(ads::CFloatingDockContainer* FloatingWidget);
 
     virtual void showEvent(QShowEvent *event);
 
@@ -166,6 +168,8 @@ public:
 		FloatingContainerHasWidgetTitle,
 		FloatingContainerHasWidgetIcon,
 		HideSingleCentralWidgetTitleBar,
+        FocusHighlighting,
+        EqualSplitOnInsertion,
         DefaultDockAreaButtons,
 		DefaultBaseConfig,
         DefaultOpaqueConfig,
@@ -211,6 +215,7 @@ public:
 
 public slots:
 	void openPerspective(const QString& PerspectiveName);
+    void setDockWidgetFocused(ads::CDockWidget* DockWidget);
 
 signals:
 	void perspectiveListChanged();
@@ -223,6 +228,7 @@ signals:
     void dockAreaCreated(ads::CDockAreaWidget* DockArea);
     void dockWidgetAboutToBeRemoved(ads::CDockWidget* DockWidget);
     void dockWidgetRemoved(ads::CDockWidget* DockWidget);
+    void focusedDockWidgetChanged(ads::CDockWidget* old, ads::CDockWidget* now);
 };
 
 };

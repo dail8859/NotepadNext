@@ -21,6 +21,7 @@
 #include "NotepadNextApplication.h"
 
 #include <QSettings>
+#include <QSysInfo>
 
 int main(int argc, char *argv[])
 {
@@ -41,10 +42,12 @@ int main(int argc, char *argv[])
     NotepadNextApplication app("Notepad Next Application", argc, argv);
 
     // Log some debug info
+    qInfo("OS: %s", QSysInfo::prettyProductName().toLatin1().constData());
     qInfo("Name: %s", QApplication::applicationName().toLatin1().constData());
     qInfo("Version: v%s", QApplication::applicationVersion().toLatin1().constData());
     qInfo("File Path: %s", QApplication::applicationFilePath().toLatin1().constData());
     qInfo("Arguments: %s", QApplication::arguments().join(' ').toLatin1().constData());
+    qInfo();
 
     if (app.isRunning()) {
         // Simply pass on the commandline arguments for now

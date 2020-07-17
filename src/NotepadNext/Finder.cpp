@@ -39,12 +39,12 @@ void Finder::setSearchText(const QString &text)
     this->text = text;
 }
 
-Sci_CharacterRange Finder::findNext()
+Sci_CharacterRange Finder::findNext(int startPos)
 {
     if (text.isEmpty())
         return {INVALID_POSITION, INVALID_POSITION};
 
-    const int pos = editor->selectionEnd();
+    const int pos = startPos == INVALID_POSITION ? editor->selectionEnd() : startPos;
     const QByteArray textData = text.toUtf8();
 
     editor->setTargetRange(pos, editor->length());
@@ -52,10 +52,35 @@ Sci_CharacterRange Finder::findNext()
     if (editor->searchInTarget(textData.length(), textData.constData()) != INVALID_POSITION) {
         return {static_cast<Sci_PositionCR>(editor->targetStart()), static_cast<Sci_PositionCR>(editor->targetEnd())};
     }
-    else if (wrap){
+    else if (wrap) {
         editor->setTargetRange(0, pos);
         if (editor->searchInTarget(textData.length(), textData.constData()) != INVALID_POSITION) {
             return {static_cast<Sci_PositionCR>(editor->targetStart()), static_cast<Sci_PositionCR>(editor->targetEnd())};
+        }
+    }
+
+    return {INVALID_POSITION, INVALID_POSITION};
+}
+
+Sci_CharacterRange Finder::findPrev()
+{
+    if (text.isEmpty())
+        return {INVALID_POSITION, INVALID_POSITION};
+
+    const int pos = editor->selectionStart();
+    const QByteArray textData = text.toUtf8();
+
+    editor->setTargetRange(pos, editor->length());
+
+    auto range = editor->findText(editor->searchFlags(), textData.constData(), pos, 0);
+
+    if (range.first != INVALID_POSITION) {
+        return {static_cast<Sci_PositionCR>(range.first), static_cast<Sci_PositionCR>(range.second)};
+    }
+    else if (wrap) {
+        range = editor->findText(editor->searchFlags(), textData.constData(), editor->length(), pos);
+        if (range.first != INVALID_POSITION) {
+            return {static_cast<Sci_PositionCR>(range.first), static_cast<Sci_PositionCR>(range.second)};
         }
     }
 

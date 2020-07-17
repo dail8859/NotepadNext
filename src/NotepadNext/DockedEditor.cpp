@@ -32,8 +32,8 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
 {
     ads::CDockManager::setConfigFlag(ads::CDockManager::AllTabsHaveCloseButton, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::AlwaysShowTabs, true);
-    ads::CDockManager::setConfigFlag(ads::CDockManager::FloatingContainerHasWidgetTitle, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasCloseButton, false);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasUndockButton, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaDynamicTabsMenuButtonVisibility, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::FocusHighlighting, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::EqualSplitOnInsertion, true);
@@ -41,24 +41,14 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     m_DockManager = new ads::CDockManager(parent);
     m_DockManager->setStyleSheet("");
 
-    connect(m_DockManager, &ads::CDockManager::dockAreaCreated, [this](ads::CDockAreaWidget* DockArea) {
-        qInfo("Registering new DockArea");
+    connect(m_DockManager, &ads::CDockManager::focusedDockWidgetChanged, [=] (ads::CDockWidget* old, ads::CDockWidget* now) {
+        Q_UNUSED(old)
 
-        this->connect(DockArea, &ads::CDockAreaWidget::destroyed, [](QObject *obj) {
-            qInfo("DockAreaRemoved");
-        });
+        ScintillaNext *editor = qobject_cast<ScintillaNext *>(now->widget());
 
-        this->connect(DockArea, &ads::CDockAreaWidget::currentChanged, [DockArea, this](int index) {
-            qInfo("currentChanged");
-            auto dockWidget = DockArea->dockWidget(index);
-            auto editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
-
-            // Force it to be the active editor to receive input
-            editor->grabFocus();
-
-            currentEditor = editor;
-            emit editorActivated(editor);
-        });
+        currentEditor = editor;
+        editor->grabFocus();
+        emit editorActivated(editor);
     });
 }
 
@@ -135,6 +125,12 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
     dw->setWidget(editor);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetDeleteOnClose, true);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::CustomCloseHandling, true);
+    dw->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetFloatable, false);
+
+    dw->tabWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(dw->tabWidget(), &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
+        emit contextMenuRequestedForEditor(editor);
+    });
 
     // Set the tooltip based on the buffer
     if (buffer->isFile()) {
@@ -155,9 +151,9 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
 
     ads::CDockAreaWidget *area = m_DockManager->addDockWidgetTab(ads::CenterDockWidgetArea, dw);
 
-    // NOTE: If it is the first widget added to an area, manually trigger the signal
+    // NOTE: If it is the first widget added to an area, manually set the focus
     if (area->dockWidgetsCount() == 1) {
-        emit area->currentChanged(0);
+        m_DockManager->setDockWidgetFocused(dw);
     }
 }
 

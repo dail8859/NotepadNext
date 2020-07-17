@@ -35,7 +35,7 @@ class BufferViewModel : public QAbstractTableModel {
     Q_OBJECT
 
 public:
-    BufferViewModel(QList<ScintillaBuffer *> buffers, QObject *parent = Q_NULLPTR);
+    BufferViewModel(const QList<ScintillaBuffer *> &buffers, QObject *parent = Q_NULLPTR);
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

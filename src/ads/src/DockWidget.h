@@ -152,7 +152,8 @@ public:
         DockWidgetFloatable = 0x04,
         DockWidgetDeleteOnClose = 0x08, ///< deletes the dock widget when it is closed
         CustomCloseHandling = 0x10,
-        DefaultDockWidgetFeatures = DockWidgetClosable | DockWidgetMovable | DockWidgetFloatable,
+        DockWidgetFocusable = 0x20,
+        DefaultDockWidgetFeatures = DockWidgetClosable | DockWidgetMovable | DockWidgetFloatable | DockWidgetFocusable,
         AllDockWidgetFeatures = DefaultDockWidgetFeatures | DockWidgetDeleteOnClose | CustomCloseHandling,
         NoDockWidgetFeatures = 0x00
     };

@@ -1319,9 +1319,9 @@ void CDockContainerWidget::removeDockArea(CDockAreaWidget* area)
 	internal::hideEmptyParentSplitters(Splitter);
 
 	// Remove this area from cached areas
-	const auto& cache = d->LastAddedAreaCache;
-	if (auto p = std::find(cache, cache+sizeof(cache)/sizeof(cache[0]), area)) {
-		d->LastAddedAreaCache[std::distance(cache, p)] = nullptr;
+	auto p = std::find(std::begin(d->LastAddedAreaCache), std::end(d->LastAddedAreaCache), area);
+	if (p != std::end(d->LastAddedAreaCache)) {
+		*p = nullptr;
 	}
 
 	// If splitter has more than 1 widgets, we are finished and can leave
@@ -1516,16 +1516,6 @@ void CDockContainerWidget::dropWidget(QWidget* Widget, DockWidgetArea DropArea, 
 	// If there was a top level widget before the drop, then it is not top
 	// level widget anymore
 	CDockWidget::emitTopLevelEventForWidget(SingleDockWidget, false);
-	CDockWidget* DockWidget = qobject_cast<CDockWidget*>(Widget);
-	if (!DockWidget)
-	{
-		CDockAreaWidget* DockArea = qobject_cast<CDockAreaWidget*>(Widget);
-		auto OpenDockWidgets = DockArea->openedDockWidgets();
-		if (OpenDockWidgets.count() == 1)
-		{
-			DockWidget = OpenDockWidgets[0];
-		}
-	}
 
 	window()->activateWindow();
 	d->DockManager->notifyWidgetOrAreaRelocation(Widget);

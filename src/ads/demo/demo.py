@@ -10,11 +10,11 @@ from PyQt5.QtCore import (QCoreApplication, QDir, Qt, QSettings, QSignalBlocker,
                           QtCriticalMsg, QtFatalMsg, QSize)
 from PyQt5.QtGui import (QGuiApplication, QIcon, QCloseEvent)
 from PyQt5.QtWidgets import (QCalendarWidget, QFileSystemModel, QFrame, QLabel,
-                            QMenu, QTreeView, QAction, QWidgetAction,
-                            QComboBox, QStyle, QSizePolicy, QInputDialog, QMenu,
-                            QToolButton, QWidget, QPlainTextEdit,
-                            QTableWidget, QTableWidgetItem, QApplication,
-                            QMessageBox)
+                             QMenu, QTreeView, QAction, QWidgetAction,
+                             QComboBox, QStyle, QSizePolicy, QInputDialog, QMenu,
+                             QToolButton, QWidget, QPlainTextEdit,
+                             QTableWidget, QTableWidgetItem, QApplication,
+                             QMessageBox)
 try:
     from PyQt5.QAxContainer import QAxWidget
 except ImportError:
@@ -48,7 +48,7 @@ def features_string(dock_widget: QtAds.CDockWidget) -> str:
     f = dock_widget.features()
     closable = f & QtAds.CDockWidget.DockWidgetClosable
     movable = f & QtAds.CDockWidget.DockWidgetMovable
-    floatable = f &QtAds.CDockWidget.DockWidgetFloatable
+    floatable = f & QtAds.CDockWidget.DockWidgetFloatable
     
     return "c{} m{} f{}".format("+" if closable else "-",
                                 "+" if movable else "-",
@@ -69,91 +69,7 @@ def svg_icon(filename: str):
     icon = QIcon(filename)
     icon.addPixmap(icon.pixmap(92))
     return icon
-    
 
-def create_long_text_label_dock_widget(view_menu: QMenu) -> QtAds.CDockWidget:
-    label = QLabel()
-    label.setWordWrap(True)
-    label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-    label.setText('''\
-Label {} {} - Lorem ipsum dolor sit amet, consectetuer
-adipiscing elit.  Aenean commodo ligula eget dolor. Aenean massa. Cum
-sociis natoque penatibus et magnis dis parturient montes, nascetur
-ridiculus mus.  Donec quam felis, ultricies nec, pellentesque eu, pretium
-quis, sem.  Nulla consequat massa quis enim. Donec pede justo, fringilla
-vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
-imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis
-pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.
-Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
-consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra
-quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet.
-    '''.format(_State.label_count, datetime.datetime.now().strftime("%H:%M:%S:%f")))
-    dock_widget = QtAds.CDockWidget("Label {}".format(_State.label_count))
-    _State.label_count += 1
-    dock_widget.setWidget(label)
-
-    view_menu.addAction(dock_widget.toggleViewAction())
-    return dock_widget
-
-
-def create_calendar_dock_widget(view_menu: QMenu) -> QtAds.CDockWidget:
-    widget = QCalendarWidget()
-
-    dock_widget = QtAds.CDockWidget("Calendar {}".format(_State.calendar_count))
-    _State.calendar_count += 1
-    # The following lines are for testing the setWidget() and takeWidget()
-    # functionality
-    dock_widget.setWidget(widget)
-    dock_widget.setWidget(widget)  # what happens if we set a widget if a widget is already set
-    dock_widget.takeWidget()  # we remove the widget
-    dock_widget.setWidget(widget)  # and set the widget again - there should be no error
-    dock_widget.setToggleViewActionMode(QtAds.CDockWidget.ActionModeShow)
-    dock_widget.setIcon(svg_icon(":/adsdemo/images/date_range.svg"))
-    view_menu.addAction(dock_widget.toggleViewAction())
-    return dock_widget
-
-
-def create_file_system_tree_dock_widget(view_menu: QMenu) -> QtAds.CDockWidget:
-    widget = QTreeView()
-    widget.setFrameShape(QFrame.NoFrame)
-
-    m = QFileSystemModel(widget)
-    m.setRootPath(QDir.currentPath())
-    widget.setModel(m)
-
-    dock_widget = QtAds.CDockWidget("Filesystem {}".format(_State.file_system_count))
-    _State.file_system_count += 1
-    dock_widget.setWidget(widget)
-    view_menu.addAction(dock_widget.toggleViewAction())
-    return dock_widget
- 
- 
-def create_editor_widget(view_menu: QMenu) -> QtAds.CDockWidget: 
-    widget = QPlainTextEdit()
-    widget.setPlaceholderText("This is an editor. If you close the editor, it will be "
-        "deleted. Enter your text here.")
-    widget.setStyleSheet("border: none")
-    dock_widget = QtAds.CDockWidget("Editor {}".format(_State.editor_count))
-    _State.editor_count += 1
-    dock_widget.setWidget(widget)
-    dock_widget.setIcon(svg_icon(":/adsdemo/images/edit.svg"))
-    dock_widget.setFeature(QtAds.CDockWidget.CustomCloseHandling, True)
-    view_menu.addAction(dock_widget.toggleViewAction())
-
-    options_menu = QMenu(dock_widget)
-    options_menu.setTitle("Options")
-    options_menu.setToolTip(options_menu.title())
-    options_menu.setIcon(svg_icon(":/adsdemo/images/custom-menu-button.svg"))
-    menu_action = options_menu.menuAction()
-    # The object name of the action will be set for the QToolButton that
-    # is created in the dock area title bar. You can use this name for CSS
-    # styling
-    menu_action.setObjectName("options_menu")
-    dock_widget.setTitleBarActions([options_menu.menuAction()])
-    a = options_menu.addAction("Clear Editor")
-    a.triggered.connect(widget.clear)
-
-    return dock_widget
 
 class CMinSizeTableWidget(QTableWidget):
     """Custom QTableWidget with a minimum size hint to test CDockWidget
@@ -162,43 +78,6 @@ class CMinSizeTableWidget(QTableWidget):
     def minimumSizeHint(self) -> QSize:
         return QSize(300, 100)
 
-def create_table_widget(view_menu: QMenu) -> QtAds.CDockWidget: 
-    widget = CMinSizeTableWidget()
-    dock_widget = QtAds.CDockWidget("Table {}".format(_State.table_count))
-    _State.table_count += 1
-    COLCOUNT = 5
-    ROWCOUNT = 30
-    widget.setColumnCount(COLCOUNT)
-    widget.setRowCount(ROWCOUNT)
-    for col in range(ROWCOUNT):
-        widget.setHorizontalHeaderItem(col, QTableWidgetItem("Col {}".format(col+1)))
-        for row in range(ROWCOUNT):
-            widget.setItem(row, col, QTableWidgetItem("T {:}-{:}".format(row+1, col+1)))
-    
-    dock_widget.setWidget(widget)
-    dock_widget.setIcon(svg_icon(":/adsdemo/images/grid_on.svg"))
-    dock_widget.setMinimumSizeHintMode(QtAds.CDockWidget.MinimumSizeHintFromContent)
-    toolbar = dock_widget.createDefaultToolBar()
-    action = toolbar.addAction(svg_icon(":/adsdemo/images/fullscreen.svg"), "Toggle Fullscreen")
-    def on_toggle_fullscreen():
-        if dock_widget.isFullScreen():
-            dock_widget.showNormal()
-        else:
-            dock_widget.showFullScreen()
-    action.triggered.connect(on_toggle_fullscreen)
-    view_menu.addAction(dock_widget.toggleViewAction())
-    return dock_widget
-    
-    
-if ACTIVEX_AVAILABLE:
-    def create_activex_widget(view_menu: QMenu, parent: QWidget = None) -> QtAds.CDockWidget: 
-        widget = QAxWidget("{6bf52a52-394a-11d3-b153-00c04f79faa6}", parent)
-        dock_widget = QtAds.CDockWidget("Active X {}".format(_State.activex_count))
-        _State.activex_count += 1
-        dock_widget.setWidget(widget)
-        view_menu.addAction(dock_widget.toggleViewAction())
-        return dock_widget
-    
     
 class CCustomComponentsFactory(QtAds.CDockComponentsFactory):
 
@@ -235,37 +114,45 @@ class MainWindow(MainWindowUI, MainWindowBase):
         
         # uncomment the following line if you want to use opaque undocking and
         # opaque splitter resizing
-        #QtAds.CDockManager.setConfigFlags(QtAds.CDockManager.DefaultOpaqueConfig);
+        #QtAds.CDockManager.setConfigFlags(QtAds.CDockManager.DefaultOpaqueConfig)
         
         # uncomment the following line if you want a fixed tab width that does
         # not change if the visibility of the close button changes
         #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.RetainTabSizeWhenCloseButtonHidden, True)
 
         # uncomment the following line if you don't want close button on DockArea's title bar
-        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.DockAreaHasCloseButton, false);
+        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.DockAreaHasCloseButton, False)
 
         # uncomment the following line if you don't want undock button on DockArea's title bar
-        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.DockAreaHasUndockButton, false);
+        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.DockAreaHasUndockButton, False)
 
         # uncomment the following line if you don't want tabs menu button on DockArea's title bar
-        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.DockAreaHasTabsMenuButton, false);
+        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.DockAreaHasTabsMenuButton, False)
 
         # uncomment the following line if you don't want disabled buttons to appear on DockArea's title bar
-        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.DockAreaHideDisabledButtons, true);
+        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.DockAreaHideDisabledButtons, True)
 
         # uncomment the following line if you want to show tabs menu button on DockArea's title bar only when there are more than one tab and at least of them has elided title
-        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.DockAreaDynamicTabsMenuButtonVisibility, true);
+        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.DockAreaDynamicTabsMenuButtonVisibility, True)
 
         # uncomment the following line if you want floating container to always show application title instead of active dock widget's title
-        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.FloatingContainerHasWidgetTitle, false);
+        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.FloatingContainerHasWidgetTitle, False)
 
         # uncomment the following line if you want floating container to show active dock widget's icon instead of always showing application icon
-        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.FloatingContainerHasWidgetIcon, true);
+        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.FloatingContainerHasWidgetIcon, True)
 
         # uncomment the following line if you want a central widget in the main dock container (the dock manager) without a titlebar
         # If you enable this code, you can test it in the demo with the Calendar 0
         # dock widget.
-        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.HideSingleCentralWidgetTitleBar, true);
+        #QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.HideSingleCentralWidgetTitleBar, True)
+        
+        # uncomment the following line to enable focus highlighting of the dock
+        # widget that has the focus
+        QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.FocusHighlighting, True)
+        
+        # uncomment if you would like to enable an equal distribution of the
+        # available size of a splitter to all contained dock widgets
+        # QtAds.CDockManager.setConfigFlag(QtAds.CDockManager.EqualSplitOnInsertion, True)
 
         # Now create the dock manager and its content
         self.dock_manager = QtAds.CDockManager(self)
@@ -288,8 +175,7 @@ class MainWindow(MainWindowUI, MainWindowBase):
 
     def create_content(self):
         # Test container docking
-        view_menu = self.menuView
-        dock_widget = create_calendar_dock_widget(view_menu)
+        dock_widget = self.create_calendar_dock_widget()
         dock_widget.setFeature(QtAds.CDockWidget.DockWidgetClosable, False)
         special_dock_area = self.dock_manager.addDockWidget(QtAds.LeftDockWidgetArea, dock_widget)
         
@@ -297,8 +183,10 @@ class MainWindow(MainWindowUI, MainWindowBase):
         special_dock_area.setAllowedAreas(QtAds.OuterDockAreas)
         # special_dock_area.setAllowedAreas(QtAds.LeftDockWidgetArea | QtAds.RightDockWidgetArea) # just for testing
         
-        self.dock_manager.addDockWidget(QtAds.LeftDockWidgetArea, create_long_text_label_dock_widget(view_menu))
-        file_system_widget = create_file_system_tree_dock_widget(view_menu)
+        dock_widget = self.create_long_text_label_dock_widget()
+        dock_widget.setFeature(QtAds.CDockWidget.DockWidgetFocusable, False)
+        self.dock_manager.addDockWidget(QtAds.LeftDockWidgetArea, dock_widget)
+        file_system_widget = self.create_file_system_tree_dock_widget()
         tool_bar = file_system_widget.createDefaultToolBar()
         tool_bar.addAction(self.actionSaveState)
         tool_bar.addAction(self.actionRestoreState)
@@ -306,10 +194,7 @@ class MainWindow(MainWindowUI, MainWindowBase):
         append_feature_string_to_window_title(file_system_widget)
         self.dock_manager.addDockWidget(QtAds.BottomDockWidgetArea, file_system_widget)
         
-        file_system_widget = create_file_system_tree_dock_widget(view_menu)
-        tool_bar = file_system_widget.createDefaultToolBar()
-        tool_bar.addAction(self.actionSaveState)
-        tool_bar.addAction(self.actionRestoreState)
+        file_system_widget = self.create_file_system_tree_dock_widget()
         file_system_widget.setFeature(QtAds.CDockWidget.DockWidgetMovable, False)
         file_system_widget.setFeature(QtAds.CDockWidget.DockWidgetFloatable, False)
         append_feature_string_to_window_title(file_system_widget)
@@ -321,7 +206,7 @@ class MainWindow(MainWindowUI, MainWindowBase):
 
         # We create a calendar widget and clear all flags to prevent the dock area
         # from closing
-        dock_widget = create_calendar_dock_widget(view_menu)
+        dock_widget = self.create_calendar_dock_widget()
         dock_widget.setTabToolTip("Tab ToolTip\nHodie est dies magna")
         dock_area = self.dock_manager.addDockWidget(QtAds.CenterDockWidgetArea, dock_widget, top_dock_area)
 
@@ -336,7 +221,7 @@ class MainWindow(MainWindowUI, MainWindowBase):
         index = title_bar.indexOf(title_bar.tabBar())
         title_bar.insertWidget(index + 1, custom_button)
         def on_button_clicked():
-            dock_widget = create_editor_widget(self.menuView)
+            dock_widget = self.create_editor_widget()
             dock_widget.setFeature(QtAds.CDockWidget.DockWidgetDeleteOnClose, True)
             self.dock_manager.addDockWidgetTabToArea(dock_widget, dock_area)
             dock_widget.closeRequested.connect(self.on_editor_close_requested)
@@ -345,21 +230,21 @@ class MainWindow(MainWindowUI, MainWindowBase):
         # Test dock area docking
         right_dock_area = self.dock_manager.addDockWidget(
             QtAds.RightDockWidgetArea,
-            create_long_text_label_dock_widget(view_menu), top_dock_area)
+            self.create_long_text_label_dock_widget(), top_dock_area)
         self.dock_manager.addDockWidget(
             QtAds.TopDockWidgetArea,
-            create_long_text_label_dock_widget(view_menu), right_dock_area)
+            self.create_long_text_label_dock_widget(), right_dock_area)
     
         bottom_dock_area = self.dock_manager.addDockWidget(
             QtAds.BottomDockWidgetArea,
-            create_long_text_label_dock_widget(view_menu), right_dock_area)
+            self.create_long_text_label_dock_widget(), right_dock_area)
 
         self.dock_manager.addDockWidget(
             QtAds.CenterDockWidgetArea,
-            create_long_text_label_dock_widget(view_menu), right_dock_area)
+            self.create_long_text_label_dock_widget(), right_dock_area)
         self.dock_manager.addDockWidget(
             QtAds.CenterDockWidgetArea,
-            create_long_text_label_dock_widget(view_menu), bottom_dock_area)
+            self.create_long_text_label_dock_widget(), bottom_dock_area)
 
         
         action = self.menuTests.addAction("Set {} Floating".format(dock_widget.windowTitle()))
@@ -373,7 +258,7 @@ class MainWindow(MainWindowUI, MainWindowBase):
             flags = self.dock_manager.configFlags()
             if flags & QtAds.CDockManager.OpaqueUndocking:
                 self.dock_manager.addDockWidget(QtAds.CenterDockWidgetArea,
-                    create_activex_widget(view_menu), right_dock_area)
+                                                self.create_activex_widget(), right_dock_area)
                     
         for dock_widget in self.dock_manager.dockWidgetsMap().values():
             dock_widget.viewToggled.connect(self.on_view_toggled)
@@ -460,13 +345,13 @@ class MainWindow(MainWindowUI, MainWindowBase):
         if dock_widget is None:
             return
 
-        qDebug("{} visibility_changed({})".format(dock_widget.objectName(), visible))
+        # qDebug("{} visibility_changed({})".format(dock_widget.objectName(), visible))
             
     def create_editor(self):
         sender = self.sender()
         floating = sender.property("Floating")
         print("Floating:", floating)
-        dock_widget = create_editor_widget(self.menuView)
+        dock_widget = self.create_editor_widget()
         dock_widget.setFeature(QtAds.CDockWidget.DockWidgetDeleteOnClose, True)
         dock_widget.closeRequested.connect(self.on_editor_close_requested)
         
@@ -484,7 +369,7 @@ class MainWindow(MainWindowUI, MainWindowBase):
             dock_widget.closeDockWidget()
             
     def create_table(self):
-        dock_widget = create_table_widget(self.menuView)
+        dock_widget = self.create_table_widget()
         dock_widget.setFeature(QtAds.CDockWidget.DockWidgetDeleteOnClose, True)
         floating_widget = self.dock_manager.addDockWidgetFloating(dock_widget)
         floating_widget.move(QPoint(40, 40))
@@ -544,6 +429,124 @@ class MainWindow(MainWindowUI, MainWindowBase):
             self.perspective_combo_box.addItems(self.dock_manager.perspectiveNames())
             self.perspective_combo_box.setCurrentText(perspective_name)
             self.save_perspectives()
+
+    def create_long_text_label_dock_widget(self) -> QtAds.CDockWidget:
+        label = QLabel()
+        label.setWordWrap(True)
+        label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+        label.setText('''Label {} {} - Lorem ipsum dolor sit amet, consectetuer
+    adipiscing elit.  Aenean commodo ligula eget dolor. Aenean massa. Cum
+    sociis natoque penatibus et magnis dis parturient montes, nascetur
+    ridiculus mus.  Donec quam felis, ultricies nec, pellentesque eu, pretium
+    quis, sem.  Nulla consequat massa quis enim. Donec pede justo, fringilla
+    vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
+    imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis
+    pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.
+    Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
+    consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra
+    quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet.
+        '''.format(_State.label_count, datetime.datetime.now().strftime("%H:%M:%S:%f")))
+        dock_widget = QtAds.CDockWidget("Label {}".format(_State.label_count))
+        _State.label_count += 1
+        dock_widget.setWidget(label)
+
+        self.menuView.addAction(dock_widget.toggleViewAction())
+        return dock_widget
+
+    def create_calendar_dock_widget(self) -> QtAds.CDockWidget:
+        widget = QCalendarWidget()
+
+        dock_widget = QtAds.CDockWidget("Calendar {}".format(_State.calendar_count))
+        _State.calendar_count += 1
+        # The following lines are for testing the setWidget() and takeWidget()
+        # functionality
+        dock_widget.setWidget(widget)
+        dock_widget.setWidget(widget)  # what happens if we set a widget if a widget is already set
+        dock_widget.takeWidget()  # we remove the widget
+        dock_widget.setWidget(widget)  # and set the widget again - there should be no error
+        dock_widget.setToggleViewActionMode(QtAds.CDockWidget.ActionModeShow)
+        dock_widget.setIcon(svg_icon(":/adsdemo/images/date_range.svg"))
+        self.menuView.addAction(dock_widget.toggleViewAction())
+        return dock_widget
+
+    def create_file_system_tree_dock_widget(self) -> QtAds.CDockWidget:
+        widget = QTreeView()
+        widget.setFrameShape(QFrame.NoFrame)
+
+        m = QFileSystemModel(widget)
+        m.setRootPath(QDir.currentPath())
+        widget.setModel(m)
+
+        dock_widget = QtAds.CDockWidget("Filesystem {}".format(_State.file_system_count))
+        _State.file_system_count += 1
+        dock_widget.setWidget(widget)
+        self.menuView.addAction(dock_widget.toggleViewAction())
+        return dock_widget
+
+    def create_editor_widget(self) -> QtAds.CDockWidget:
+        widget = QPlainTextEdit()
+        widget.setPlaceholderText("This is an editor. If you close the editor, it will be "
+                                  "deleted. Enter your text here.")
+        widget.setStyleSheet("border: none")
+        dock_widget = QtAds.CDockWidget("Editor {}".format(_State.editor_count))
+        _State.editor_count += 1
+        dock_widget.setWidget(widget)
+        dock_widget.setIcon(svg_icon(":/adsdemo/images/edit.svg"))
+        dock_widget.setFeature(QtAds.CDockWidget.CustomCloseHandling, True)
+        self.menuView.addAction(dock_widget.toggleViewAction())
+
+        options_menu = QMenu(dock_widget)
+        options_menu.setTitle("Options")
+        options_menu.setToolTip(options_menu.title())
+        options_menu.setIcon(svg_icon(":/adsdemo/images/custom-menu-button.svg"))
+        menu_action = options_menu.menuAction()
+        # The object name of the action will be set for the QToolButton that
+        # is created in the dock area title bar. You can use this name for CSS
+        # styling
+        menu_action.setObjectName("options_menu")
+        dock_widget.setTitleBarActions([options_menu.menuAction()])
+        a = options_menu.addAction("Clear Editor")
+        a.triggered.connect(widget.clear)
+
+        return dock_widget
+
+
+    def create_table_widget(self) -> QtAds.CDockWidget:
+        widget = CMinSizeTableWidget()
+        dock_widget = QtAds.CDockWidget("Table {}".format(_State.table_count))
+        _State.table_count += 1
+        COLCOUNT = 5
+        ROWCOUNT = 30
+        widget.setColumnCount(COLCOUNT)
+        widget.setRowCount(ROWCOUNT)
+        for col in range(ROWCOUNT):
+            widget.setHorizontalHeaderItem(col, QTableWidgetItem("Col {}".format(col + 1)))
+            for row in range(ROWCOUNT):
+                widget.setItem(row, col, QTableWidgetItem("T {:}-{:}".format(row + 1, col + 1)))
+
+        dock_widget.setWidget(widget)
+        dock_widget.setIcon(svg_icon(":/adsdemo/images/grid_on.svg"))
+        dock_widget.setMinimumSizeHintMode(QtAds.CDockWidget.MinimumSizeHintFromContent)
+        toolbar = dock_widget.createDefaultToolBar()
+        action = toolbar.addAction(svg_icon(":/adsdemo/images/fullscreen.svg"), "Toggle Fullscreen")
+
+        def on_toggle_fullscreen():
+            if dock_widget.isFullScreen():
+                dock_widget.showNormal()
+            else:
+                dock_widget.showFullScreen()
+
+        action.triggered.connect(on_toggle_fullscreen)
+        self.menuView.addAction(dock_widget.toggleViewAction())
+        return dock_widget
+
+    def create_activex_widget(self, parent: QWidget = None) -> QtAds.CDockWidget:
+        widget = QAxWidget("{6bf52a52-394a-11d3-b153-00c04f79faa6}", parent)
+        dock_widget = QtAds.CDockWidget("Active X {}".format(_State.activex_count))
+        _State.activex_count += 1
+        dock_widget.setWidget(widget)
+        self.menuView.addAction(dock_widget.toggleViewAction())
+        return dock_widget
 
 
 def my_message_output(type, context, msg):

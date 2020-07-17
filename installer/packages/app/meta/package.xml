@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <Package>
     <DisplayName>Notepad Next</DisplayName>
-    <Description>Notepad Next v0.3</Description>
-    <Version>0.3</Version>
+    <Description>Notepad Next v0.3.1</Description>
+    <Version>0.3.1</Version>
     <ForcedInstallation>true</ForcedInstallation>
-    <ReleaseDate>2020-06-25</ReleaseDate>
+    <ReleaseDate>2020-07-16</ReleaseDate>
     <!-- <RequiresAdminRights>true</RequiresAdminRights> -->
     <Script>installscript.qs</Script>
     <UserInterfaces>
         <UserInterface>targetwidget.ui</UserInterface>
     </UserInterfaces>
+    <Licenses>
+        <License name="GNU GPLv3" file="LICENSE" />
+    </Licenses>
 </Package>

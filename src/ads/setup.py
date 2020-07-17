@@ -159,8 +159,20 @@ class build_ext(sipdistutils.build_ext):
             return sip_bin
 
         raise SystemExit('Could not find PyQt SIP binary.')
+        
+    def _sip_sipfiles_dir(self):
+        sip_dir = super()._sip_sipfiles_dir()
+        if os.path.exists(sip_dir):
+            return sip_dir
+        
+        return os.path.join(sys.prefix, 'sip', 'PyQt5')
 
     def _sip_compile(self, sip_bin, source, sbf):
+        target_dir = os.path.dirname(__file__) if self.inplace else self.build_lib
+        pyi = os.path.join(target_dir, "PyQtAds", "QtAds", "ads.pyi")
+        if not os.path.exists(os.path.dirname(pyi)):
+            os.makedirs(os.path.dirname(pyi))
+        
         cmd = [sip_bin]
         if hasattr(self, 'sip_opts'):
             cmd += self.sip_opts
@@ -173,11 +185,20 @@ class build_ext(sipdistutils.build_ext):
             "-I", self.inc_dir,
             "-c", self._sip_output_dir(),
             "-b", sbf,
+            "-y", pyi,
             "-w", "-o"]
 
         cmd += shlex.split(self.pyqt_sip_flags)  # use same SIP flags as for PyQt5
         cmd.append(source)
         self.spawn(cmd)
+        
+        if os.path.exists(pyi):
+            with open(pyi) as f:
+                content = f.readlines()
+            with open(pyi, "w") as f:
+                for line in content:
+                    if not line.startswith("class ads"):
+                        f.write(line)
 
     def swig_sources (self, sources, extension=None):
         if not self.extensions:
@@ -210,9 +231,7 @@ class build_ext(sipdistutils.build_ext):
 
         return super().swig_sources(sources, extension)
 
-    def build_extension(self, ext):
-        # /usr/bin/rcc -name ads ../../Qt-Advanced-Docking-System/src/ads.qrc -o release/qrc_ads.cpp
-        
+    def build_extension(self, ext):        
         cppsources = [source for source in ext.sources if source.endswith(".cpp")]
         headersources = ['src/DockAreaTitleBar_p.h']
 
@@ -288,6 +307,17 @@ class build_ext(sipdistutils.build_ext):
                 ext.sources.append(out_file)
 
         sipdistutils.build_ext.build_extension(self, ext)
+        
+        import inspect
+        sys.path.append(os.path.join(self.build_lib, 'PyQtAds', 'QtAds'))
+        import ads
+
+        with open(os.path.join(self.build_lib, 'PyQtAds', 'QtAds', '__init__.py'), 'w') as f:
+            f.write('from .._version import *\n')
+            f.write('from .ads import ads\n')
+            for name, member in sorted(inspect.getmembers(ads.ads)):
+                if not name.startswith('_'):
+                    f.write('{0} = ads.{0}\n'.format(name))
 
 
 class ProcessResourceCommand(cmd.Command):
