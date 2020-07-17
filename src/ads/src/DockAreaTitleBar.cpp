@@ -269,6 +269,8 @@ CDockAreaTitleBar::CDockAreaTitleBar(CDockAreaWidget* parent) :
 	d->createTabBar();
 	d->Layout->addWidget(new CSpacerWidget(this));
 	d->createButtons();
+
+    setFocusPolicy(Qt::NoFocus);
 }
 
 
@@ -577,12 +579,12 @@ void CDockAreaTitleBar::contextMenuEvent(QContextMenuEvent* ev)
 	}
 
 	QMenu Menu(this);
-	auto Action = Menu.addAction(tr("Detach Area"), this, SLOT(onUndockButtonClicked()));
+	auto Action = Menu.addAction(tr("Detach Group"), this, SLOT(onUndockButtonClicked()));
 	Action->setEnabled(d->DockArea->features().testFlag(CDockWidget::DockWidgetFloatable));
 	Menu.addSeparator();
-	Action = Menu.addAction(tr("Close Area"), this, SLOT(onCloseButtonClicked()));
+	Action = Menu.addAction(tr("Close Group"), this, SLOT(onCloseButtonClicked()));
 	Action->setEnabled(d->DockArea->features().testFlag(CDockWidget::DockWidgetClosable));
-	Menu.addAction(tr("Close Other Areas"), d->DockArea, SLOT(closeOtherAreas()));
+	Menu.addAction(tr("Close Other Groups"), d->DockArea, SLOT(closeOtherAreas()));
 	Menu.exec(ev->globalPos());
 }
 
@@ -606,7 +608,7 @@ CTitleBarButton::CTitleBarButton(bool visible, QWidget* parent)
 	  Visible(visible),
 	  HideWhenDisabled(CDockManager::testConfigFlag(CDockManager::DockAreaHideDisabledButtons))
 {
-
+    setFocusPolicy(Qt::NoFocus);
 }
 
 //============================================================================

@@ -28,7 +28,6 @@
 #include <QStandardPaths>
 #include <QWindow>
 #include <QPushButton>
-
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -120,7 +119,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     //        newFile();
     //    }
     //});
-    //connect(tabbedEditor->getTabBar(), &QWidget::customContextMenuRequested, this, &MainWindow::tabBarRightClicked);
+    connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
 
     // Set up the menus
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
@@ -210,7 +209,9 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
             QApplication::clipboard()->setText(buffer->fileInfo.canonicalFilePath());
         }
     });
-    connect(ui->actionCopyFileName, &QAction::triggered, [=]() { QApplication::clipboard()->setText(dockedEditor->getCurrentBuffer()->getName());});
+    connect(ui->actionCopyFileName, &QAction::triggered, [=]() {
+        QApplication::clipboard()->setText(dockedEditor->getCurrentBuffer()->getName());
+    });
     connect(ui->actionCopyFileDirectory, &QAction::triggered, [=]() {
         auto buffer = dockedEditor->getCurrentBuffer();
         if (buffer->isFile()) {
@@ -220,44 +221,62 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionIncrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->tab();});
     connect(ui->actionDecrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->backTab();});
 
-    //connect(ui->actionFind, &QAction::triggered, [=]() {
-    //    // Create it if it doesn't exist
-    //    if (frd == Q_NULLPTR) {
-    //        frd = new FindReplaceDialog(this);
-    //        frd->setEditor(editor);
-    //    }
-    //
-    //    // Get any selected text
-    //    if (!editor->selectionEmpty()) {
-    //        int selection = editor->mainSelection();
-    //        int start = editor->selectionNStart(selection);
-    //        int end = editor->selectionNEnd(selection);
-    //        if (end > start) {
-    //            auto selText = editor->get_text_range(start, end);
-    //            frd->setFindText(QString::fromUtf8(selText));
-    //        }
-    //    }
-    //    else {
-    //        int start = editor->wordStartPosition(editor->currentPos(), true);
-    //        int end = editor->wordEndPosition(editor->currentPos(), true);
-    //        if (end > start) {
-    //            editor->setSelectionStart(start);
-    //            editor->setSelectionEnd(end);
-    //            auto selText = editor->get_text_range(start, end);
-    //            frd->setFindText(QString::fromUtf8(selText));
-    //        }
-    //    }
-    //
-    //    frd->setTab(FindReplaceDialog::FIND_TAB);
-    //    frd->show();
-    //    frd->raise();
-    //    frd->activateWindow();
-    //});
+    connect(ui->actionFind, &QAction::triggered, [=]() {
+        ScintillaNext *editor = dockedEditor->getCurrentEditor();
+
+        // Create it if it doesn't exist
+        if (frd == Q_NULLPTR) {
+            frd = new FindReplaceDialog(this);
+        }
+
+        frd->setEditor(editor);
+
+        // TODO: if dockedEditor::editorActivated() is fired, or if the editor get closed
+        // the FindReplaceDialog's editor pointer needs updated...
+
+        // Get any selected text
+        if (!editor->selectionEmpty()) {
+            int selection = editor->mainSelection();
+            int start = editor->selectionNStart(selection);
+            int end = editor->selectionNEnd(selection);
+            if (end > start) {
+                auto selText = editor->get_text_range(start, end);
+                frd->setFindText(QString::fromUtf8(selText));
+            }
+        }
+        else {
+            int start = editor->wordStartPosition(editor->currentPos(), true);
+            int end = editor->wordEndPosition(editor->currentPos(), true);
+            if (end > start) {
+                editor->setSelectionStart(start);
+                editor->setSelectionEnd(end);
+                auto selText = editor->get_text_range(start, end);
+                frd->setFindText(QString::fromUtf8(selText));
+            }
+        }
+
+        frd->setTab(FindReplaceDialog::FIND_TAB);
+        frd->show();
+        frd->raise();
+        frd->activateWindow();
+    });
 
     connect(ui->actionFindNext, &QAction::triggered, [=]() {
         if (frd != Q_NULLPTR) {
             frd->performLastSearch();
         }
+    });
+
+    connect(ui->actionQuickFind, &QAction::triggered, [=]() {
+        ScintillaNext *editor = this->dockedEditor->getCurrentEditor();
+
+        if (quickFind == Q_NULLPTR) {
+            quickFind = new QuickFindWidget(this);
+        }
+        quickFind->setEditor(editor);
+        quickFind->setFocus();
+
+        quickFind->show();
     });
 
     //connect(ui->actionReplace, &QAction::triggered, [=]() {
@@ -725,15 +744,15 @@ void MainWindow::setupEditor(ScintillaNext *editor)
 
     // Indicators
     // Find Mark Style
-    editor->indicSetFore(31, 0x0000FF);
+    // editor->indicSetFore(31, 0x0000FF);
     // Smart HighLighting
-    editor->indicSetFore(29, 0x00FF00);
+    // editor->indicSetFore(29, 0x00FF00);
     // Incremental highlight all
-    editor->indicSetFore(28, 0xFF8000);
+    // editor->indicSetFore(28, 0xFF8000);
     // Tags match highlighting
-    editor->indicSetFore(27, 0xFF0080);
+    // editor->indicSetFore(27, 0xFF0080);
     // Tags attribute
-    editor->indicSetFore(26, 0x00FFFF);
+    // editor->indicSetFore(26, 0x00FFFF);
 
     /*
     -- Mark Style 1
@@ -961,8 +980,7 @@ void MainWindow::openFileDialog()
         Q_NULLPTR, // caption
         Q_NULLPTR, // dir
         filter, // filter
-        Q_NULLPTR, // selected filter
-        nullptr // Option flags
+        Q_NULLPTR // selected filter
         );
 
     openFileList(fileNames);
@@ -1171,8 +1189,7 @@ bool MainWindow::saveCurrentFileAsDialog()
         Q_NULLPTR, // caption
         dialogDir, // dir
         filter, // filter
-        Q_NULLPTR, // selected filter
-        nullptr // Option flags
+        Q_NULLPTR // selected filter
         );
 
     if (fileName.size() == 0) {
@@ -1215,8 +1232,7 @@ void MainWindow::saveCopyAsDialog()
         Q_NULLPTR, // caption
         dialogDir, // dir
         filter, // filter
-        Q_NULLPTR, // selected filter
-        nullptr // Option flags
+        Q_NULLPTR // selected filter
         );
 
     saveCopyAs(fileName);
@@ -1701,24 +1717,19 @@ void MainWindow::setFoldMarkers(ScintillaNext *editor, const QString &type)
 }
 
 
-void MainWindow::tabBarRightClicked(const QPoint &pos)
+void MainWindow::tabBarRightClicked(ScintillaNext *editor)
 {
-    /*
-    // Check to see if an actual tab was clicked
-    int index = tabbedEditor->getTabBar()->tabAt(pos);
-    if (index == TabbedEditor::INVALID_INDEX) {
-        return;
-    }
+    qInfo(Q_FUNC_INFO);
 
     // Focus on the correct tab
-    tabbedEditor->switchToIndex(index);
+    dockedEditor->switchToBuffer(editor->scintillaBuffer());
 
     // Create the menu and show it
     QMenu *menu = new QMenu(this);
     menu->addAction(ui->actionClose);
-    menu->addAction(ui->actionCloseAllExceptActive);
-    menu->addAction(ui->actionCloseAllToLeft);
-    menu->addAction(ui->actionCloseAllToRight);
+    //menu->addAction(ui->actionCloseAllExceptActive);
+    //menu->addAction(ui->actionCloseAllToLeft);
+    //menu->addAction(ui->actionCloseAllToRight);
     menu->addAction(ui->actionSave);
     menu->addAction(ui->actionSaveAs);
     menu->addAction(ui->actionRename);
@@ -1727,8 +1738,7 @@ void MainWindow::tabBarRightClicked(const QPoint &pos)
     menu->addAction(ui->actionCopyFullPath);
     menu->addAction(ui->actionCopyFileName);
     menu->addAction(ui->actionCopyFileDirectory);
-    menu->popup(tabbedEditor->mapToGlobal(pos));
-    */
+    menu->popup(QCursor::pos());
 }
 
 

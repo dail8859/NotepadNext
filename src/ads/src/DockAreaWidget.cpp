@@ -447,12 +447,15 @@ void CDockAreaWidget::insertDockWidget(int index, CDockWidget* DockWidget,
 void CDockAreaWidget::removeDockWidget(CDockWidget* DockWidget)
 {
     ADS_PRINT("CDockAreaWidget::removeDockWidget");
-	auto NextOpenDockWidget = nextOpenDockWidget(DockWidget);
+    auto CurrentDockWidget = currentDockWidget();
+  	auto NextOpenDockWidget = (DockWidget == CurrentDockWidget) ? nextOpenDockWidget(DockWidget) : nullptr;
 
 	d->ContentsLayout->removeWidget(DockWidget);
 	auto TabWidget = DockWidget->tabWidget();
 	TabWidget->hide();
 	d->tabBar()->removeTab(TabWidget);
+	TabWidget->setParent(DockWidget);
+	DockWidget->setDockArea(nullptr);
 	CDockContainerWidget* DockContainer = dockContainer();
 	if (NextOpenDockWidget)
 	{
@@ -464,7 +467,7 @@ void CDockAreaWidget::removeDockWidget(CDockWidget* DockWidget)
 		DockContainer->removeDockArea(this);
 		this->deleteLater();
 	}
-	else
+	else if (DockWidget == CurrentDockWidget)
 	{
 		// if contents layout is not empty but there are no more open dock
 		// widgets, then we need to hide the dock area because it does not

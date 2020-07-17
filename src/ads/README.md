@@ -13,10 +13,22 @@ integrated development environments (IDEs) such as Visual Studio.
 
 [![Video Advanced Docking](doc/advanced-docking_video.png)](https://www.youtube.com/watch?v=7pdNfafg3Qc)
 
+## New and Noteworthy
+
+The [release 3.5.0](https://github.com/githubuser0xFFFF/Qt-Advanced-Docking-System/releases/tag/3.5.0)
+adds the new [focus highlighting](doc/user-guide.md#focushighlighting) feature.
+This optional feature enables highlighting of the focused dock widget like you
+know it from Visual Studio.
+
+![FocusHighlighting](doc/cfg_flag_FocusHighlighting.gif)
+
+ [learn more...](doc/user-guide.md#focushighlighting)
+
 ## Features
 
 ### Overview
 
+- [New and Noteworthy](#new-and-noteworthy)
 - [Features](#features)
   - [Overview](#overview)
   - [Docking everywhere - no central widget](#docking-everywhere---no-central-widget)
@@ -129,7 +141,7 @@ Normally clicking the close button of a dock widget will just hide the widget an
 
 ### Python PyQt5 Bindings
 
-<img src="doc/python_logo.png" height="140">
+![Python Logo](doc/python_logo.png)
 
 The Advanced Docking System comes with a complete Python integration based on
 PyQt5 bindings. The package is available via [conda-forge](https://github.com/conda-forge/pyqtads-feedstock). The python integration has been contributed to this project
@@ -139,7 +151,7 @@ by the following people:
 - [Hugo Slepicka](https://github.com/hhslepicka)
 - [K Lauer](https://github.com/klauer)
 
-Latest working version: [3.4.2](https://github.com/githubuser0xFFFF/Qt-Advanced-Docking-System/releases/tag/3.4.2)
+Latest working version: [3.5.1](https://github.com/githubuser0xFFFF/Qt-Advanced-Docking-System/releases/tag/3.5.1)
 
 ## Tested Compatible Environments
 

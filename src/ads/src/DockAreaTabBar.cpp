@@ -138,6 +138,8 @@ CDockAreaTabBar::CDockAreaTabBar(CDockAreaWidget* parent) :
 	d->TabsLayout->addStretch(1);
 	d->TabsContainerWidget->setLayout(d->TabsLayout);
 	setWidget(d->TabsContainerWidget);
+
+    setFocusPolicy(Qt::NoFocus);
 }
 
 
@@ -455,6 +457,11 @@ bool CDockAreaTabBar::eventFilter(QObject *watched, QEvent *event)
 		 emit tabOpened(d->TabsLayout->indexOf(Tab));
 		 updateGeometry();
 		 break;
+
+    // Setting the text of a tab will cause a LayoutRequest event
+    case QEvent::LayoutRequest:
+         updateGeometry();
+         break;
 
 	default:
 		break;

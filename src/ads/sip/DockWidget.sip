@@ -31,6 +31,7 @@ public:
 		DockWidgetFloatable,
 		DockWidgetDeleteOnClose,
         CustomCloseHandling,
+        DockWidgetFocusable,
         DefaultDockWidgetFeatures,
         AllDockWidgetFeatures,
 		NoDockWidgetFeatures

@@ -1,32 +1,20 @@
-version: 0.3.0.{build}
+version: 0.3.1.{build}
 image: Visual Studio 2019
 
 init:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
-  - set PATH=C:\Qt\5.14\msvc2017_64\bin\;C:\Qt\Tools\QtCreator\bin\;%PATH%
+  - set PATH=C:\Qt\5.15\msvc2019_64\bin\;C:\Qt\Tools\QtCreator\bin\;%PATH%
   - qmake -v
 
 before_build:
-  - mkdir build_app
-  - cd build_app
-  - qmake ..\src\NotepadNext.pro
+  - mkdir build
+  - cd build
+  - qmake ..\src\NotepadNext.pro "APP_VERSION=%APPVEYOR_BUILD_VERSION%"
 
 build_script:
   - jom
 
 after_build:
-  - cd %APPVEYOR_BUILD_FOLDER%
-  - xcopy build_app\NotepadNext\NotepadNext.exe installer\packages\app\data\
-  - windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-angle --no-opengl-sw installer\packages\app\data\NotepadNext.exe
-  - 7z a NotepadNext.zip .\installer\packages\app\data\*
+  - cd %APPVEYOR_BUILD_FOLDER%\build
+  - jom zip
   - appveyor PushArtifact NotepadNext.zip -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%.zip
-
-deploy:
-  provider: GitHub
-  auth_token:
-    secure: qrw+nu8dQKFLG+lNmky6buHsvHFwlibAai0r0aJ3MYbyBniONVxvgnmyx37bPh44
-  artifact: NotepadNext-v$(appveyor_build_version).zip
-  draft: true
-  force_update: true
-  on:
-    APPVEYOR_REPO_TAG: true

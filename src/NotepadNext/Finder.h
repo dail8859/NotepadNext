@@ -32,7 +32,7 @@ public:
     void setWrap(bool wrap);
     void setSearchText(const QString &text);
 
-    Sci_CharacterRange findNext();
+    Sci_CharacterRange findNext(int startPos = INVALID_POSITION);
     Sci_CharacterRange findPrev();
     int count();
 

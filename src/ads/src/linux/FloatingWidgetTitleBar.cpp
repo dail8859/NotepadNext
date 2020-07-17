@@ -45,7 +45,7 @@ namespace ads
 {
 
 using tTabLabel = CElidingLabel;
-using tCloseButton = QPushButton;
+using tCloseButton = QToolButton;
 
 /**
  * @brief Private data class of public interface CFloatingWidgetTitleBar
@@ -81,7 +81,7 @@ void FloatingWidgetTitleBarPrivate::createLayout()
 
 	CloseButton = new tCloseButton();
 	CloseButton->setObjectName("floatingTitleCloseButton");
-	CloseButton->setFlat(true);
+    CloseButton->setAutoRaise(true);
 
 	// The standard icons do does not look good on high DPI screens
 	QIcon CloseIcon;
@@ -190,8 +190,7 @@ void CFloatingWidgetTitleBar::setTitle(const QString &Text)
 //============================================================================
 void CFloatingWidgetTitleBar::updateStyle()
 {
-    internal::repolishStyle(this);
-    internal::repolishStyle(d->TitleLabel);
+    internal::repolishStyle(this, internal::RepolishDirectChildren);
 }
 
 } // namespace ads

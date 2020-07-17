@@ -30,6 +30,7 @@
 #include "BufferManager.h"
 #include "StatusLabel.h"
 #include "NppImporter.h"
+#include "QuickFindWidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -114,7 +115,7 @@ protected:
     void dropEvent(QDropEvent *event) override;
 
 private slots:
-    void tabBarRightClicked(const QPoint &pos);
+    void tabBarRightClicked(ScintillaNext *editor);
     void languageMenuTriggered();
 
 private:
@@ -148,6 +149,7 @@ private:
     FindReplaceDialog *frd = Q_NULLPTR;
     MacroRunDialog *mrd = Q_NULLPTR;
     PreferencesDialog *pd = Q_NULLPTR;
+    QuickFindWidget *quickFind = Q_NULLPTR;
 
     QVector<Macro *> macros;
     Macro *currentMacro = Q_NULLPTR;
