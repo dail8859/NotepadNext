@@ -20,6 +20,7 @@
 #include "DockedEditor.h"
 #include "DockAreaWidget.h"
 #include "DockWidgetTab.h"
+#include "DockAreaTitleBar.h"
 
 #include "ScintillaNext.h"
 
@@ -49,6 +50,11 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
         currentEditor = editor;
         editor->grabFocus();
         emit editorActivated(editor);
+    });
+
+    connect(m_DockManager, &ads::CDockManager::dockAreaCreated, [=](ads::CDockAreaWidget* DockArea) {
+        // Disable the built in context menu for the title bar since it has options we don't want
+        DockArea->titleBar()->setContextMenuPolicy(Qt::NoContextMenu);
     });
 }
 
@@ -149,12 +155,7 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
 
     connect(dw, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
 
-    ads::CDockAreaWidget *area = m_DockManager->addDockWidgetTab(ads::CenterDockWidgetArea, dw);
-
-    // NOTE: If it is the first widget added to an area, manually set the focus
-    if (area->dockWidgetsCount() == 1) {
-        m_DockManager->setDockWidgetFocused(dw);
-    }
+    m_DockManager->addDockWidgetTab(ads::CenterDockWidgetArea, dw);
 }
 
 void DockedEditor::removeBuffer(ScintillaBuffer *buffer)
