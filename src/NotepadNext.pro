@@ -23,8 +23,6 @@ lessThan(QT_MAJOR_VERSION, 5) {
 
 TEMPLATE = subdirs
 
-CONFIG += ordered
-
 SUBDIRS = ScintillaEdit \
         qtsingleapplication \
         lua \

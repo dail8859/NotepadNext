@@ -27,5 +27,7 @@ CONFIG -= debug_and_release debug_and_release_target
 # Controls if we want to define our own regex engine using QRegularExpression
 DEFINES += SCI_OWNREGEX
 
+DEFINES += ADS_STATIC
+
 msvc:QMAKE_CXXFLAGS += /guard:cf
 msvc:QMAKE_LFLAGS += /guard:cf
