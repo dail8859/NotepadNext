@@ -99,6 +99,7 @@ public slots:
     void updateContentBasedUi(ScintillaNext *editor);
     void updateSaveStatusBasedUi(bool isDirty);
     void updateBufferPositionBasedUi();
+    void updateLanguageBasedUi(ScintillaNext *editor);
     void updateGui(ScintillaNext *editor);
 
     void detectLanguageFromExtension(ScintillaNext *editor);

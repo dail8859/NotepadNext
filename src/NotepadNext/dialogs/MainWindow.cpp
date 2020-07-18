@@ -1364,20 +1364,8 @@ void MainWindow::updateBufferPositionBasedUi()
     //ui->actionCloseAllExceptActive->setEnabled(dockedEditor->count() > 1);
 }
 
-void MainWindow::updateGui(ScintillaNext *editor)
+void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
 {
-    // TODO: Does buffer need passed in? It should only ever operate on the current buffer!
-    // buffer = dockedEditor->getCurrentBuffer();
-    // editor->setEOLMode(buffer->get_eol_mode());
-
-    updateBufferFileStatusBasedUi(editor->scintillaBuffer());
-    updateSaveStatusBasedUi(!editor->scintillaBuffer()->is_save_point());
-    updateEOLBasedUi(editor);
-    updateEncodingBasedUi(editor);
-    updateBufferPositionBasedUi();
-    updateSelectionBasedUi(editor);
-    updateContentBasedUi(editor);
-
     docType->setText(editor->lexerLanguage());
 
     foreach (QAction *action, languageActionGroup->actions()) {
@@ -1386,6 +1374,20 @@ void MainWindow::updateGui(ScintillaNext *editor)
             break;
         }
     }
+}
+
+void MainWindow::updateGui(ScintillaNext *editor)
+{
+    // TODO: Does buffer need passed in? It should only ever operate on the current buffer!
+
+    updateBufferFileStatusBasedUi(editor->scintillaBuffer());
+    updateSaveStatusBasedUi(!editor->scintillaBuffer()->is_save_point());
+    updateEOLBasedUi(editor);
+    updateEncodingBasedUi(editor);
+    updateBufferPositionBasedUi();
+    updateSelectionBasedUi(editor);
+    updateContentBasedUi(editor);
+    updateLanguageBasedUi(editor);
 }
 
 void MainWindow::updateDocumentBasedUi(int updated)
