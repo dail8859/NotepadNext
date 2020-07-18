@@ -46,3 +46,5 @@ target_wrapper.*
 CMakeLists.txt.user*
 
 *.pyc
+
+/installer/packages/app/data/
