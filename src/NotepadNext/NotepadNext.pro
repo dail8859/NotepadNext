@@ -42,8 +42,6 @@ SOURCES += \
     main.cpp \
     ScintillaBuffer.cpp \
     BufferManager.cpp \
-    BufferView.cpp \
-    widgets/NppTabBar.cpp \
     widgets/StatusLabel.cpp \
     NppImporter.cpp \
     RecentFilesListManager.cpp \
@@ -77,8 +75,6 @@ HEADERS += \
     QuickFindWidget.h \
     ScintillaBuffer.h \
     BufferManager.h \
-    BufferView.h \
-    widgets/NppTabBar.h \
     widgets/StatusLabel.h \
     NppImporter.h \
     RecentFilesListManager.h \
