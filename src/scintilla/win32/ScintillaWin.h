@@ -12,7 +12,7 @@ class ScintillaWin;
 
 namespace Scintilla {
 
-int ResourcesRelease(bool fromDllMain);
+int ResourcesRelease(bool fromDllMain) noexcept;
 sptr_t DirectFunction(ScintillaWin *sci, UINT iMessage, uptr_t wParam, sptr_t lParam);
 
 }

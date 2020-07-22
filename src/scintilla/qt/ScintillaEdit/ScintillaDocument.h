@@ -76,9 +76,6 @@ public:
 
     int get_character(int pos); // Calls GetCharacterAndWidth(pos, NULL)
     QByteArray get_character_pointer();
-    void allocate(int bytes);
-    void addref();
-    int release();
     int add_data(const char *s, int length);
 
 signals:

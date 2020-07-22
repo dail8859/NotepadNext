@@ -43,32 +43,31 @@ public:
 		LexerFunction fnFolder_= nullptr,
 		const char * const wordListDescriptions_[]=nullptr,
 		const LexicalClass *lexClasses_=nullptr,
-		size_t nClasses_=0);
+		size_t nClasses_=0) noexcept;
 	LexerModule(
 		int language_,
 		LexerFactoryFunction fnFactory_,
 		const char *languageName_,
-		const char * const wordListDescriptions_[]=nullptr);
-	virtual ~LexerModule();
-	int GetLanguage() const;
+		const char * const wordListDescriptions_[]=nullptr) noexcept;
+	int GetLanguage() const noexcept;
 
 	// -1 is returned if no WordList information is available
-	int GetNumWordLists() const;
-	const char *GetWordListDescription(int index) const;
-	const LexicalClass *LexClasses() const;
-	size_t NamedStyles() const;
+	int GetNumWordLists() const noexcept;
+	const char *GetWordListDescription(int index) const noexcept;
+	const LexicalClass *LexClasses() const noexcept;
+	size_t NamedStyles() const noexcept;
 
 	ILexer5 *Create() const;
 
-	virtual void Lex(Sci_PositionU startPos, Sci_Position lengthDoc, int initStyle,
+	void Lex(Sci_PositionU startPos, Sci_Position lengthDoc, int initStyle,
                   WordList *keywordlists[], Accessor &styler) const;
-	virtual void Fold(Sci_PositionU startPos, Sci_Position lengthDoc, int initStyle,
+	void Fold(Sci_PositionU startPos, Sci_Position lengthDoc, int initStyle,
                   WordList *keywordlists[], Accessor &styler) const;
 
 	friend class CatalogueModules;
 };
 
-inline int Maximum(int a, int b) {
+inline int Maximum(int a, int b) noexcept {
 	return (a > b) ? a : b;
 }
 

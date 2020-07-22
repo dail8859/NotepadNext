@@ -457,6 +457,8 @@
         <tr>
           <td>&cir; <a class="toc" href="#BuildingScintilla">Building Scintilla</a></td>
 
+          <td>&cir; <a class="toc" href="#EndOfLineAnnotations">End of Line Annotations</a></td>
+
         </tr>
       </tbody>
     </table>
@@ -3321,9 +3323,9 @@ struct Sci_TextToFind {
     <p><b id="SCI_SETCARETWIDTH">SCI_SETCARETWIDTH(int pixelWidth)</b><br />
      <b id="SCI_GETCARETWIDTH">SCI_GETCARETWIDTH &rarr; int</b><br />
      The width of the line caret can be set with <code>SCI_SETCARETWIDTH</code> to a value of
-    0, 1, 2 or 3 pixels. The default width is 1 pixel. You can read back the current width with
-    <code>SCI_GETCARETWIDTH</code>. A width of 0 makes the caret invisible (added at version
-    1.50), similar to setting the caret style to CARETSTYLE_INVISIBLE (though not interchangeable).
+    between 0 and 20 pixels. The default width is 1 pixel. You can read back the current width with
+    <code>SCI_GETCARETWIDTH</code>. A width of 0 makes the caret invisible,
+    similar to setting the caret style to CARETSTYLE_INVISIBLE (though not interchangeable).
     This setting only affects the width of the cursor when the cursor style is set to line caret
     mode, it does not affect the width for a block caret.</p>
 
@@ -3725,6 +3727,99 @@ struct Sci_TextToFind {
     before <code>SCI_ANNOTATIONSETSTYLEOFFSET</code> and use the result as the argument to <code>SCI_ANNOTATIONSETSTYLEOFFSET</code>.
     </p>
 
+    <h2 id="EndOfLineAnnotations">End of Line Annotations</h2>
+
+    <p>End of Line Annotations are read-only lines of text at the end of each line of editable text.
+    End of Line Annotations can be used to display an assembler version of code for debugging or to show diagnostic messages inline or to
+    line up different versions of text in a merge tool.</p>
+
+    <p>End of Line Annotations used to display an assembler version of code for debugging</p>
+    <p><img src="eolannotation.png" alt="End of Line Annotations used to display an assembler version of code for debugging" /></p>
+
+    <code>
+     <a class="message" href="#SCI_EOLANNOTATIONSETTEXT">SCI_EOLANNOTATIONSETTEXT(line line, const char *text)</a><br />
+     <a class="message" href="#SCI_EOLANNOTATIONGETTEXT">SCI_EOLANNOTATIONGETTEXT(line line, char *text) &rarr; int</a><br />
+     <a class="message" href="#SCI_EOLANNOTATIONSETSTYLE">SCI_EOLANNOTATIONSETSTYLE(line line, int style)</a><br />
+     <a class="message" href="#SCI_EOLANNOTATIONGETSTYLE">SCI_EOLANNOTATIONGETSTYLE(line line) &rarr; int</a><br />
+     <a class="message" href="#SCI_EOLANNOTATIONCLEARALL">SCI_EOLANNOTATIONCLEARALL</a><br />
+     <a class="message" href="#SCI_EOLANNOTATIONSETVISIBLE">SCI_EOLANNOTATIONSETVISIBLE(int visible)</a><br />
+     <a class="message" href="#SCI_EOLANNOTATIONGETVISIBLE">SCI_EOLANNOTATIONGETVISIBLE &rarr; int</a><br />
+     <a class="message" href="#SCI_EOLANNOTATIONSETSTYLEOFFSET">SCI_EOLANNOTATIONSETSTYLEOFFSET(int style)</a><br />
+     <a class="message" href="#SCI_EOLANNOTATIONGETSTYLEOFFSET">SCI_EOLANNOTATIONGETSTYLEOFFSET &rarr; int</a><br />
+    </code>
+
+    <p>
+     <b id="SCI_EOLANNOTATIONSETTEXT">SCI_EOLANNOTATIONSETTEXT(line line, const char *text)</b><br />
+     <b id="SCI_EOLANNOTATIONGETTEXT">SCI_EOLANNOTATIONGETTEXT(line line, char *text) &rarr; int</b><br />
+     <b id="SCI_EOLANNOTATIONSETSTYLE">SCI_EOLANNOTATIONSETSTYLE(line line, int style)</b><br />
+     <b id="SCI_EOLANNOTATIONGETSTYLE">SCI_EOLANNOTATIONGETSTYLE(line line) &rarr; int</b><br />
+     <b id="SCI_EOLANNOTATIONCLEARALL">SCI_EOLANNOTATIONCLEARALL</b><br />
+     A different string may be set for each line with <code>SCI_EOLANNOTATIONSETTEXT</code>.
+     To clear end of line annotations call <code>SCI_EOLANNOTATIONSETTEXT</code> with a NULL pointer.
+     The whole of the text EOLANNOTATION on a line may be displayed in a particular style with
+     <code>SCI_EOLANNOTATIONSETSTYLE</code> or each character may be individually styled with
+     of the corresponding text byte similar to <code>SCI_SETSTYLINGEX</code>. The text must be set first as it
+     specifies how long the end of line annotation is so how many bytes of styling to read.
+     Setting an end of line annotation will cause a
+     <a class="message" href="#SC_MOD_CHANGEEOLANNOTATION"><code>SC_MOD_CHANGEEOLANNOTATION</code></a>
+     notification to be sent.
+    </p>
+    <p>
+    All the lines can be cleared of end of line annotations with <code>SCI_EOLANNOTATIONCLEARALL</code>
+    which is equivalent to clearing each line (setting to 0) and then deleting other memory used for this feature.
+    </p>
+    <p>
+    Only some style attributes are active in end of line annotations: font, size/sizeFractional, bold/weight, italics, fore, back, and characterSet.
+    </p>
+    <p>
+     <b id="SCI_EOLANNOTATIONSETVISIBLE">SCI_EOLANNOTATIONSETVISIBLE(int visible)</b><br />
+     <b id="SCI_EOLANNOTATIONGETVISIBLE">SCI_EOLANNOTATIONGETVISIBLE &rarr; int</b><br />
+     End of Line Annotations can be made visible in a view and there is a choice of display style when visible.
+     The two messages set and get the annotation display mode. The <code class="parameter">visible</code>
+     argument can be one of:</p>
+
+    <table class="standard" summary="End of Line Annotation visibility">
+      <tbody valign="top">
+        <tr>
+          <th align="left"><code>EOLANNOTATION_HIDDEN</code></th>
+
+          <td>0</td>
+
+          <td>End of Line Annotations are not displayed.</td>
+        </tr>
+
+        <tr>
+          <th align="left"><code>EOLANNOTATION_STANDARD</code></th>
+
+          <td>1</td>
+
+          <td>End of Line Annotations are drawn left justified with no adornment.</td>
+        </tr>
+
+        <tr>
+          <th align="left"><code>EOLANNOTATION_BOXED</code></th>
+
+          <td>2</td>
+
+          <td>End of Line Annotations are indented to match the text and are surrounded by a box.</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <p>
+     <b id="SCI_EOLANNOTATIONSETSTYLEOFFSET">SCI_EOLANNOTATIONSETSTYLEOFFSET(int style)</b><br />
+     <b id="SCI_EOLANNOTATIONGETSTYLEOFFSET">SCI_EOLANNOTATIONGETSTYLEOFFSET &rarr; int</b><br />
+    End of Line Annotation styles may be completely separated from standard text styles by setting a style offset. For example,
+    <code>SCI_EOLANNOTATIONSETSTYLEOFFSET(512)</code> would allow the end of line  annotation styles to be numbered from
+    512 up to 767 so they do not overlap styles set by lexers (or margins if margins offset is 256).
+    Each style number set with <code>SCI_EOLANNOTATIONSETSTYLE</code>
+    or <code>SCI_EOLANNOTATIONSETSTYLES</code> has the offset added before looking up the style.
+    </p>
+    <p>
+    Always call <a class="seealso" href="#SCI_ALLOCATEEXTENDEDSTYLES">SCI_ALLOCATEEXTENDEDSTYLES</a>
+    before <code>SCI_EOLANNOTATIONSETSTYLEOFFSET</code> and use the result as the argument to <code>SCI_EOLANNOTATIONSETSTYLEOFFSET</code>.
+    </p>
     <h2 id="OtherSettings">Other settings</h2>
     <code>
      <a class="message" href="#SCI_SETBUFFEREDDRAW">SCI_SETBUFFEREDDRAW(bool buffered)</a><br />
@@ -3911,6 +4006,7 @@ struct Sci_TextToFind {
      <a class="message" href="#SCI_BRACEHIGHLIGHTINDICATOR">SCI_BRACEHIGHLIGHTINDICATOR(bool useSetting, int indicator)</a><br />
      <a class="message" href="#SCI_BRACEBADLIGHTINDICATOR">SCI_BRACEBADLIGHTINDICATOR(bool useSetting, int indicator)</a><br />
      <a class="message" href="#SCI_BRACEMATCH">SCI_BRACEMATCH(position pos, int maxReStyle) &rarr; position</a><br />
+     <a class="message" href="#SCI_BRACEMATCHNEXT">SCI_BRACEMATCHNEXT(position pos, position startPos) &rarr; position</a><br />
     </code>
 
     <p><b id="SCI_BRACEHIGHLIGHT">SCI_BRACEHIGHLIGHT(position posA, position posB)</b><br />
@@ -3945,6 +4041,10 @@ struct Sci_TextToFind {
     the matching brace is beyond the end of styling. Nested braces are handled correctly. The
     <code class="parameter">maxReStyle</code> parameter must currently be 0 - it may be used in the future to limit
     the length of brace searches.</p>
+
+    <p><b id="SCI_BRACEMATCHNEXT">SCI_BRACEMATCHNEXT(position pos, position startPos) &rarr; position</b><br />
+     Similar to <code>SCI_BRACEMATCH</code>, but matching starts at the explicit start position <code>startPos</code>
+     instead of the implicitly next position <code>pos &plusmn; 1</code>.</p>
 
     <h2 id="TabsAndIndentationGuides">Tabs and Indentation Guides</h2>
 

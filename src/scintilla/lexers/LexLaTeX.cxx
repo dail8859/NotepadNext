@@ -305,6 +305,8 @@ void SCI_METHOD LexerLaTeX::Lex(Sci_PositionU startPos, Sci_Position length, int
 				latexStateReset(mode, state);
 				if (latexLastWordIs(i, styler, "{verbatim}")) {
 					state = SCE_L_VERBATIM;
+				} else if (latexLastWordIs(i, styler, "{lstlisting}")) {
+					state = SCE_L_VERBATIM;
 				} else if (latexLastWordIs(i, styler, "{comment}")) {
 					state = SCE_L_COMMENT2;
 				} else if (latexLastWordIs(i, styler, "{math}") && mode == 0) {
@@ -451,6 +453,9 @@ void SCI_METHOD LexerLaTeX::Lex(Sci_PositionU startPos, Sci_Position length, int
 					match++;
 					if (latexIsTagValid(match, lengthDoc, styler)) {
 						if (latexLastWordIs(match, styler, "{verbatim}")) {
+							styler.ColourTo(i - 1, state);
+							state = SCE_L_COMMAND;
+						} else if (latexLastWordIs(match, styler, "{lstlisting}")) {
 							styler.ColourTo(i - 1, state);
 							state = SCE_L_COMMAND;
 						}

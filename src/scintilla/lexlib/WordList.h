@@ -22,15 +22,15 @@ class WordList {
 public:
 	explicit WordList(bool onlyLineEnds_ = false);
 	~WordList();
-	operator bool() const;
-	bool operator!=(const WordList &other) const;
-	int Length() const;
-	void Clear();
+	operator bool() const noexcept;
+	bool operator!=(const WordList &other) const noexcept;
+	int Length() const noexcept;
+	void Clear() noexcept;
 	bool Set(const char *s);
-	bool InList(const char *s) const;
-	bool InListAbbreviated(const char *s, const char marker) const;
-	bool InListAbridged(const char *s, const char marker) const;
-	const char *WordAt(int n) const;
+	bool InList(const char *s) const noexcept;
+	bool InListAbbreviated(const char *s, const char marker) const noexcept;
+	bool InListAbridged(const char *s, const char marker) const noexcept;
+	const char *WordAt(int n) const noexcept;
 };
 
 }
