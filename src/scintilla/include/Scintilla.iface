@@ -1876,6 +1876,9 @@ fun void BraceBadLightIndicator=2499(bool useSetting, int indicator)
 # The maxReStyle must be 0 for now. It may be defined in a future release.
 fun position BraceMatch=2353(position pos, int maxReStyle)
 
+# Similar to BraceMatch, but matching starts at the explicit start position.
+fun position BraceMatchNext=2369(position pos, position startPos)
+
 # Are the end of line characters visible?
 get bool GetViewEOL=2355(,)
 
@@ -2837,6 +2840,38 @@ get int GetRepresentation=2666(string encodedCharacter, stringresult representat
 # Remove a character representation.
 fun void ClearRepresentation=2667(string encodedCharacter,)
 
+# Set the end of line annotation text for a line
+set void EOLAnnotationSetText=2740(line line, string text)
+
+# Get the end of line annotation text for a line
+get int EOLAnnotationGetText=2741(line line, stringresult text)
+
+# Set the style number for the end of line annotations for a line
+set void EOLAnnotationSetStyle=2742(line line, int style)
+
+# Get the style number for the end of line annotations for a line
+get int EOLAnnotationGetStyle=2743(line line,)
+
+# Clear the end of annotations from all lines
+fun void EOLAnnotationClearAll=2744(,)
+
+enu EOLAnnotationVisible=EOLANNOTATION_
+val EOLANNOTATION_HIDDEN=0
+val EOLANNOTATION_STANDARD=1
+val EOLANNOTATION_BOXED=2
+
+# Set the visibility for the end of line annotations for a view
+set void EOLAnnotationSetVisible=2745(EOLAnnotationVisible visible,)
+
+# Get the visibility for the end of line annotations for a view
+get EOLAnnotationVisible EOLAnnotationGetVisible=2746(,)
+
+# Get the start of the range of style numbers used for end of line annotations
+set void EOLAnnotationSetStyleOffset=2747(int style,)
+
+# Get the start of the range of style numbers used for end of line annotations
+get int EOLAnnotationGetStyleOffset=2748(,)
+
 # Start notifying the container of all key presses and commands.
 fun void StartRecord=3001(,)
 
@@ -2987,7 +3022,8 @@ val SC_MOD_CONTAINER=0x40000
 val SC_MOD_LEXERSTATE=0x80000
 val SC_MOD_INSERTCHECK=0x100000
 val SC_MOD_CHANGETABSTOPS=0x200000
-val SC_MODEVENTMASKALL=0x3FFFFF
+val SC_MOD_CHANGEEOLANNOTATION=0x400000
+val SC_MODEVENTMASKALL=0x7FFFFF
 
 ali SC_MOD_INSERTTEXT=INSERT_TEXT
 ali SC_MOD_DELETETEXT=DELETE_TEXT
@@ -3007,6 +3043,7 @@ ali SC_MOD_CHANGEANNOTATION=CHANGE_ANNOTATION
 ali SC_MOD_LEXERSTATE=LEXER_STATE
 ali SC_MOD_INSERTCHECK=INSERT_CHECK
 ali SC_MOD_CHANGETABSTOPS=CHANGE_TAB_STOPS
+ali SC_MOD_CHANGEEOLANNOTATION=CHANGE_E_O_L_ANNOTATION
 ali SC_MODEVENTMASKALL=EVENT_MASK_ALL
 
 enu Update=SC_UPDATE_

@@ -283,21 +283,6 @@ QByteArray ScintillaDocument::get_character_pointer()
     return QByteArray::fromRawData(doc->BufferPointer(), doc->Length());
 }
 
-void ScintillaDocument::allocate(int bytes)
-{
-    (static_cast<Document *>(pdoc))->Allocate(bytes);
-}
-
-void ScintillaDocument::addref()
-{
-    (static_cast<Document *>(pdoc))->AddRef();
-}
-
-int ScintillaDocument::release()
-{
-    return (static_cast<Document *>(pdoc))->Release();
-}
-
 int ScintillaDocument::add_data(const char *s, int length)
 {
     return (static_cast<Document *>(pdoc))->AddData(s, length);

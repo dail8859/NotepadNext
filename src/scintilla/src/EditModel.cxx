@@ -97,7 +97,7 @@ const char *EditModel::GetDefaultFoldDisplayText() const noexcept {
 	return defaultFoldDisplayText.get();
 }
 
-const char *EditModel::GetFoldDisplayText(Sci::Line lineDoc) const {
+const char *EditModel::GetFoldDisplayText(Sci::Line lineDoc) const noexcept {
 	if (foldDisplayTextStyle == SC_FOLDDISPLAYTEXT_HIDDEN || pcs->GetExpanded(lineDoc)) {
 		return nullptr;
 	}

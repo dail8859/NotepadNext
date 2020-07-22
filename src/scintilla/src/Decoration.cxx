@@ -113,10 +113,10 @@ public:
 	Sci::Position Start(int indicator, Sci::Position position) noexcept override;
 	Sci::Position End(int indicator, Sci::Position position) noexcept override;
 
-	bool ClickNotified() const override {
+	bool ClickNotified() const noexcept override {
 		return clickNotified;
 	}
-	void SetClickNotified(bool notified) override {
+	void SetClickNotified(bool notified) noexcept override {
 		clickNotified = notified;
 	}
 };

@@ -24,6 +24,7 @@
 **.lua = native
 **.nim = native
 **.pl = native
+**.p6 = native
 **.rb = native
 **.tcl = native
 **.err = native

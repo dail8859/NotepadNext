@@ -68,7 +68,7 @@ class OptionSet {
 			}
 			return false;
 		}
-		const char *Get() const {
+		const char *Get() const noexcept {
 			return value.c_str();
 		}
 	};
@@ -83,8 +83,6 @@ class OptionSet {
 		names += name;
 	}
 public:
-	virtual ~OptionSet() {
-	}
 	void DefineProperty(const char *name, plcob pb, std::string description="") {
 		nameToDef[name] = Option(pb, description);
 		AppendName(name);
@@ -97,7 +95,7 @@ public:
 		nameToDef[name] = Option(ps, description);
 		AppendName(name);
 	}
-	const char *PropertyNames() const {
+	const char *PropertyNames() const noexcept {
 		return names.c_str();
 	}
 	int PropertyType(const char *name) {
@@ -141,7 +139,7 @@ public:
 		}
 	}
 
-	const char *DescribeWordListSets() const {
+	const char *DescribeWordListSets() const noexcept {
 		return wordLists.c_str();
 	}
 };

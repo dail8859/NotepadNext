@@ -34,7 +34,7 @@ const LexerModule *Catalogue::Find(int language) {
 	return catalogueDefault.Find(language);
 }
 
-const LexerModule *Catalogue::Find(const char *languageName) {
+const LexerModule *Catalogue::Find(const char *languageName) noexcept {
 	return catalogueDefault.Find(languageName);
 }
 

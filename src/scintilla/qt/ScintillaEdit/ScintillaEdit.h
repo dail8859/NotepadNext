@@ -480,6 +480,7 @@ public:
 	void braceBadLight(sptr_t pos);
 	void braceBadLightIndicator(bool useSetting, sptr_t indicator);
 	sptr_t braceMatch(sptr_t pos, sptr_t maxReStyle);
+	sptr_t braceMatchNext(sptr_t pos, sptr_t startPos);
 	bool viewEOL() const;
 	void setViewEOL(bool visible);
 	sptr_t docPointer() const;
@@ -740,6 +741,15 @@ public:
 	void setRepresentation(const char * encodedCharacter, const char * representation);
 	QByteArray representation(const char * encodedCharacter) const;
 	void clearRepresentation(const char * encodedCharacter);
+	void eOLAnnotationSetText(sptr_t line, const char * text);
+	QByteArray eOLAnnotationText(sptr_t line) const;
+	void eOLAnnotationSetStyle(sptr_t line, sptr_t style);
+	sptr_t eOLAnnotationStyle(sptr_t line) const;
+	void eOLAnnotationClearAll();
+	void eOLAnnotationSetVisible(sptr_t visible);
+	sptr_t eOLAnnotationVisible() const;
+	void eOLAnnotationSetStyleOffset(sptr_t style);
+	sptr_t eOLAnnotationStyleOffset() const;
 	void startRecord();
 	void stopRecord();
 	void setLexer(sptr_t lexer);
