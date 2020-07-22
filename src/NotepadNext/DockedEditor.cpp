@@ -24,10 +24,6 @@
 
 #include "ScintillaNext.h"
 
-#include <QVariant>
-#include <QApplication>
-
-Q_DECLARE_METATYPE(ScintillaBuffer*)
 
 DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
 {
@@ -138,6 +134,8 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
 
     dw->tabWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(dw->tabWidget(), &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
+        Q_UNUSED(pos)
+
         emit contextMenuRequestedForEditor(editor);
     });
 
