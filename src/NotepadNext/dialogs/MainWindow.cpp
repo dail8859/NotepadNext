@@ -973,7 +973,7 @@ void MainWindow::setupStatusBar()
 
 void MainWindow::openFileDialog()
 {
-    QString filter = getFileDialogFilter();
+    QString filter = app->getFileDialogFilter();
 
     QStringList fileNames = QFileDialog::getOpenFileNames(
         this, // parent
@@ -1153,30 +1153,10 @@ bool MainWindow::saveFile(ScintillaBuffer *buffer)
     return false;
 }
 
-QString MainWindow::getFileDialogFilter()
-{
-    // TODO: cache the result?
-
-    QString filter = app->getLuaState()->executeAndReturn<QString>(
-                R"=(
-                local filter = {"All files (*)"}
-                for name, L in pairs(languages) do
-                    local extensions = {}
-                    for _, ext in ipairs(L.extensions) do
-                        extensions[#extensions + 1] = "*." .. ext
-                    end
-                    filter[#filter + 1] = L.name .. " Files (" .. table.concat(extensions, " ") .. ")"
-                end
-                return table.concat(filter, ";;")
-                )=");
-
-    return filter;
-}
-
 bool MainWindow::saveCurrentFileAsDialog()
 {
     QString dialogDir = QString();
-    QString filter = getFileDialogFilter();
+    QString filter = app->getFileDialogFilter();
     auto buffer = dockedEditor->getCurrentBuffer();
 
     // Use the file path if possible
@@ -1219,7 +1199,7 @@ bool MainWindow::saveFileAs(ScintillaBuffer *buffer, const QString &fileName)
 void MainWindow::saveCopyAsDialog()
 {
     QString dialogDir = QString();
-    QString filter = getFileDialogFilter();
+    QString filter = app->getFileDialogFilter();
     auto buffer = dockedEditor->getCurrentBuffer();
 
     // Use the file path if possible

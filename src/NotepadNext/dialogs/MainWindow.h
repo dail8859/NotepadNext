@@ -157,7 +157,6 @@ private:
 
     // Docked widgets
     LuaConsoleDock *luaConsoleDock = Q_NULLPTR;
-    QString getFileDialogFilter();
 };
 
 #endif // MAINWINDOW_H
