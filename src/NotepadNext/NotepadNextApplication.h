@@ -36,6 +36,7 @@ public:
     bool init();
     LuaState *getLuaState() const;
     QString getFileDialogFilter() const;
+    Settings *getSettings() const;
 
 private:
     QList<MainWindow *> windows;

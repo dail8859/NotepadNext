@@ -87,7 +87,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(dockedEditor, &DockedEditor::editorCloseRequested, [=](ScintillaNext *editor) {
         this->closeFile(editor->scintillaBuffer());
     });
-    connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::bufferActivated);
+    connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::editorActivated);
 
 
     // Set up the lua state and the extension. Need to intialize it after the first file was created
@@ -412,7 +412,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     connect(ui->actionPreferences, &QAction::triggered, [=] {
         if (pd == Q_NULLPTR)
-            pd = new PreferencesDialog(this->settings, this);
+            pd = new PreferencesDialog(app->getSettings(), this);
         pd->show();
         pd->raise();
         pd->activateWindow();
@@ -584,29 +584,15 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         ui->menuHelp->addSeparator()->setText("pickles");
         ui->menuHelp->addAction(luaConsoleDock->toggleViewAction());
     }
-}
 
-MainWindow::~MainWindow()
-{
-    Q_ASSERT(dockedEditor->count() == 0);
-}
-
-void MainWindow::initialize(Settings *settings)
-{
-    qInfo(Q_FUNC_INFO);
-
-    this->settings = settings;
-    connect(settings, &Settings::showMenuBarChanged, [=](bool showMenuBar) {
+    connect(app->getSettings(), &Settings::showMenuBarChanged, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
     });
-    connect(settings, &Settings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
-    //connect(settings, &Settings::showTabBarChanged, tabbedEditor->getTabBar(), &QTabBar::setVisible);
-    connect(settings, &Settings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
-
+    connect(app->getSettings(), &Settings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
+    //connect(app->getSettings(), &Settings::showTabBarChanged, tabbedEditor->getTabBar(), &QTabBar::setVisible);
+    connect(app->getSettings(), &Settings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
     //connect(settings, &Settings::tabsClosableChanged, tabbedEditor->getTabBar(), &QTabBar::setTabsClosable);
-
-    //setupEditor(editor);
 
     // The first time it is triggered it doesn't see it as checked for some reason
     ui->actionShowWhitespaceandTab->setChecked(true);
@@ -615,16 +601,18 @@ void MainWindow::initialize(Settings *settings)
 
     setupLanguageMenu();
 
-    if (dockedEditor->count() == 0)
-        newFile();
-
-    //editor->grabFocus();
-
     // Put the style sheet here for now
     QFile f(":/stylesheets/npp.css");
     f.open(QFile::ReadOnly);
     setStyleSheet(f.readAll());
     f.close();
+
+    newFile();
+}
+
+MainWindow::~MainWindow()
+{
+    Q_ASSERT(dockedEditor->count() == 0);
 }
 
 void MainWindow::setupLanguageMenu()
@@ -1465,7 +1453,7 @@ return "null"
     return;
 }
 
-void MainWindow::bufferActivated(ScintillaNext *editor)
+void MainWindow::editorActivated(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -1598,7 +1586,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 
     // While tabs are being closed, turn off UI updates so the main window doesn't continuously refresh.
-    disconnect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::bufferActivated);
+    disconnect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::editorActivated);
 
     closeAllFiles(true);
 

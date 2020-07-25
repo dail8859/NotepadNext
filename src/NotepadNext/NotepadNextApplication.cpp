@@ -147,7 +147,12 @@ QString NotepadNextApplication::getFileDialogFilter() const
                 return table.concat(filter, ";;")
                 )=");
 
-    return filter;
+        return filter;
+}
+
+Settings *NotepadNextApplication::getSettings() const
+{
+    return settings;
 }
 
 void NotepadNextApplication::applyArguments(const QStringList &args)
@@ -174,8 +179,6 @@ MainWindow *NotepadNextApplication::createNewWindow()
     MainWindow *w = new MainWindow(this);
 
     windows.append(w);
-
-    w->initialize(settings);
 
     return w;
 }
