@@ -55,8 +55,6 @@ public:
     explicit MainWindow(NotepadNextApplication *app, QWidget *parent = nullptr);
     ~MainWindow() override;
 
-    void initialize(Settings *settings);
-
     bool isAnyUnsaved();
 
     void setupLanguageMenu();
@@ -103,7 +101,7 @@ public slots:
     void updateGui(ScintillaNext *editor);
 
     void detectLanguageFromExtension(ScintillaNext *editor);
-    void bufferActivated(ScintillaNext *editor);
+    void editorActivated(ScintillaNext *editor);
 
     void setLanguage(ScintillaNext *editor, const QString &languageName);
 
@@ -125,7 +123,6 @@ private:
     BufferManager *bufferManager = Q_NULLPTR;
     DockedEditor *dockedEditor = Q_NULLPTR;
     MacroRecorder *recorder = Q_NULLPTR;
-    Settings *settings = Q_NULLPTR;
 
     bool isInInitialState();
     void openFileList(const QStringList &fileNames);
