@@ -34,8 +34,8 @@ public:
     NotepadNextApplication(const QString &id, int &argc, char **argv);
 
     bool init();
-
-    LuaState *getLuaState();
+    LuaState *getLuaState() const;
+    QString getFileDialogFilter() const;
 
 private:
     QList<MainWindow *> windows;
