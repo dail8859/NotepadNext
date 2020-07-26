@@ -36,9 +36,9 @@ static inline int countDigits(quint32 x)
 }
 
 LineNumbers::LineNumbers(ScintillaEdit *editor) :
-    Plugin(editor)
+    EditorDecorator(editor)
 {
-    connect(this, &Plugin::stateChanged, [=](bool b) {
+    connect(this, &EditorDecorator::stateChanged, [=](bool b) {
         if (b) {
             adjustMarginWidth();
         }

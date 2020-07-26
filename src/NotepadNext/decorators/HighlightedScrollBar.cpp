@@ -22,8 +22,8 @@
 #include "HighlightedScrollBar.h"
 
 
-HighlightedScrollBarPlugin::HighlightedScrollBarPlugin(ScintillaEdit *editor)
-    : Plugin(editor)
+HighlightedScrollBarDecorator::HighlightedScrollBarDecorator(ScintillaEdit *editor)
+    : EditorDecorator(editor)
 {
     scrollBar = new HighlightedScrollBar(this, Qt::Vertical, editor);
     connect(scrollBar, &QScrollBar::valueChanged, editor, &ScintillaEdit::scrollVertical);
@@ -34,11 +34,11 @@ HighlightedScrollBarPlugin::HighlightedScrollBarPlugin(ScintillaEdit *editor)
     cursor.color = Qt::darkGray;
 }
 
-HighlightedScrollBarPlugin::~HighlightedScrollBarPlugin()
+HighlightedScrollBarDecorator::~HighlightedScrollBarDecorator()
 {
 }
 
-void HighlightedScrollBarPlugin::notify(const SCNotification *pscn)
+void HighlightedScrollBarDecorator::notify(const SCNotification *pscn)
 {
     if (pscn->nmhdr.code == SCN_UPDATEUI && pscn->updated & (SC_UPDATE_CONTENT | SC_UPDATE_SELECTION)) {
         cursor.line = editor->visibleFromDocLine(editor->lineFromPosition(editor->currentPos()));
@@ -54,7 +54,7 @@ void HighlightedScrollBar::paintEvent(QPaintEvent *event)
     // Paint the default scrollbar first
     QScrollBar::paintEvent(event);
 
-    ScintillaEdit *editor = plugin->getEditor();
+    ScintillaEdit *editor = decorator->getEditor();
     QPainter p(this);
 
     double lineCount = static_cast<double>(editor->visibleFromDocLine(editor->lineCount()));
@@ -63,16 +63,16 @@ void HighlightedScrollBar::paintEvent(QPaintEvent *event)
     drawIndicator(p, 29);
 
     // Draw the current line
-    if (plugin->cursor.line != -1) {
-        int yy = plugin->cursor.line / lineCount * rect().height();
+    if (decorator->cursor.line != -1) {
+        int yy = decorator->cursor.line / lineCount * rect().height();
         yy = qMin(yy, rect().height() - 4);
-        p.fillRect(rect().x() + 2, yy, rect().width() - 4, 3, plugin->cursor.color);
+        p.fillRect(rect().x() + 2, yy, rect().width() - 4, 3, decorator->cursor.color);
     }
 }
 
 void HighlightedScrollBar::drawMarker(QPainter &p, int marker)
 {
-    ScintillaEdit *editor = plugin->getEditor();
+    ScintillaEdit *editor = decorator->getEditor();
     const double lineCount = static_cast<double>(editor->visibleFromDocLine(editor->lineCount()));
     int curLine = 0;
 
@@ -85,7 +85,7 @@ void HighlightedScrollBar::drawMarker(QPainter &p, int marker)
 
 void HighlightedScrollBar::drawIndicator(QPainter &p, int indicator)
 {
-    ScintillaEdit *editor = plugin->getEditor();
+    ScintillaEdit *editor = decorator->getEditor();
     const double lineCount = static_cast<double>(editor->visibleFromDocLine(editor->lineCount()));
     int curPos = editor->indicatorEnd(indicator, 0);
     int color = editor->indicFore(indicator);

@@ -17,25 +17,35 @@
  */
 
 
-#ifndef LINENUMBERS_H
-#define LINENUMBERS_H
+#ifndef EDITORDECORATOR_H
+#define EDITORDECORATOR_H
 
 #include <QObject>
 
-#include "Plugin.h"
+#include "ScintillaEdit.h"
 
-class LineNumbers : public Plugin
+class EditorDecorator : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY stateChanged)
 
 public:
-    LineNumbers(ScintillaEdit *editor);
+    explicit EditorDecorator(ScintillaEdit *editor) : QObject(editor), editor(editor) {}
+    virtual ~EditorDecorator() {}
 
-private:
-    void adjustMarginWidth();
+    bool isEnabled() const { return enabled; }
+    ScintillaEdit *getEditor() const { return editor; }
 
 public slots:
-    void notify(const SCNotification *pscn) override;
+    void setEnabled(bool b);
+    virtual void notify(const SCNotification *pscn) = 0;
+
+signals:
+    void stateChanged(bool b);
+
+protected:
+    ScintillaEdit *editor;
+    bool enabled = false;
 };
 
-#endif // LINENUMBERS_H
+#endif // EDITORDECORATOR_H

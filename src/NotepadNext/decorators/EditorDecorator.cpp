@@ -17,24 +17,18 @@
  */
 
 
-#ifndef BRACEMATCH_H
-#define BRACEMATCH_H
+#include "EditorDecorator.h"
 
-#include "Plugin.h"
-
-class BraceMatch : public Plugin
+void EditorDecorator::setEnabled(bool b)
 {
-    Q_OBJECT
+    enabled = b;
 
-public:
-    BraceMatch(ScintillaEdit *editor);
+    if (enabled) {
+        connect(editor, &ScintillaEdit::notify, this, &EditorDecorator::notify);
+    }
+    else {
+        disconnect(editor, nullptr, this, nullptr);
+    }
 
-private:
-    void doHighlighting();
-    void clearHighlighting();
-
-public slots:
-    void notify(const SCNotification *pscn) override;
-};
-
-#endif // BRACEMATCH_H
+    emit stateChanged(enabled);
+}

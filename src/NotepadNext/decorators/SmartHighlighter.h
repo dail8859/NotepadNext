@@ -17,35 +17,23 @@
  */
 
 
-#ifndef PLUGIN_H
-#define PLUGIN_H
+#ifndef SMARTHIGHLIGHTER_H
+#define SMARTHIGHLIGHTER_H
 
-#include <QObject>
+#include "EditorDecorator.h"
 
-#include "ScintillaEdit.h"
-
-class Plugin : public QObject
+class SmartHighlighter : public EditorDecorator
 {
     Q_OBJECT
-    Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY stateChanged)
 
 public:
-    explicit Plugin(ScintillaEdit *editor) : QObject(editor), editor(editor) {}
-    virtual ~Plugin() {}
+    SmartHighlighter(ScintillaEdit *editor);
 
-    bool isEnabled() const { return enabled; }
-    ScintillaEdit *getEditor() const { return editor; }
+private:
+    void highlightCurrentView();
 
 public slots:
-    void setEnabled(bool b);
-    virtual void notify(const SCNotification *pscn) = 0;
-
-signals:
-    void stateChanged(bool b);
-
-protected:
-    ScintillaEdit *editor;
-    bool enabled = false;
+    void notify(const SCNotification *pscn) override;
 };
 
-#endif // PLUGIN_H
+#endif // SMARTHIGHLIGHTER_H

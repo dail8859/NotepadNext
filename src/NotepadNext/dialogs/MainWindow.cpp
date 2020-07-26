@@ -42,7 +42,7 @@
 #include "ScintillaBuffer.h"
 #include "BufferManager.h"
 
-// Editor plugins
+// Editor decorators
 #include "BraceMatch.h"
 #include "HighlightedScrollBar.h"
 #include "SmartHighlighter.h"
@@ -785,11 +785,11 @@ void MainWindow::setupEditor(ScintillaNext *editor)
     // STYLE_CALLTIP
     // STYLE_FOLDDISPLAYTEXT
 
-    // Plugins
+    // Decorators
     SmartHighlighter *s = new SmartHighlighter(editor);
     s->setEnabled(true);
 
-    HighlightedScrollBarPlugin *h = new HighlightedScrollBarPlugin(editor);
+    HighlightedScrollBarDecorator *h = new HighlightedScrollBarDecorator(editor);
     h->setEnabled(true);
 
     BraceMatch *b = new BraceMatch(editor);
