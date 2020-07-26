@@ -24,7 +24,7 @@
 static const QList<char> braces = {'[', ']', '(', ')', '{', '}'};
 
 BraceMatch::BraceMatch(ScintillaEdit *editor) :
-    Plugin(editor)
+    EditorDecorator(editor)
 {
     setObjectName("BraceMatch");
 
@@ -45,7 +45,7 @@ BraceMatch::BraceMatch(ScintillaEdit *editor) :
 
     editor->setIndentationGuides(SC_IV_LOOKBOTH);
 
-    connect(this, &Plugin::stateChanged, [=](bool b) {
+    connect(this, &EditorDecorator::stateChanged, [=](bool b) {
         if (b) {
             doHighlighting();
         }

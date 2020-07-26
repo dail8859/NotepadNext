@@ -17,18 +17,25 @@
  */
 
 
-#include "Plugin.h"
+#ifndef LINENUMBERS_H
+#define LINENUMBERS_H
 
-void Plugin::setEnabled(bool b)
+#include <QObject>
+
+#include "EditorDecorator.h"
+
+class LineNumbers : public EditorDecorator
 {
-    enabled = b;
+    Q_OBJECT
 
-    if (enabled) {
-        connect(editor, &ScintillaEdit::notify, this, &Plugin::notify);
-    }
-    else {
-        disconnect(editor, nullptr, this, nullptr);
-    }
+public:
+    LineNumbers(ScintillaEdit *editor);
 
-    emit stateChanged(enabled);
-}
+private:
+    void adjustMarginWidth();
+
+public slots:
+    void notify(const SCNotification *pscn) override;
+};
+
+#endif // LINENUMBERS_H
