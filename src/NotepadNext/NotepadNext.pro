@@ -53,6 +53,7 @@ SOURCES += \
     ScintillaBuffer.cpp \
     ScintillaNext.cpp \
     Settings.cpp \
+    decorators/SurroundSelection.cpp \
     dialogs/FindReplaceDialog.cpp \
     dialogs/LuaConsoleDock.cpp \
     dialogs/MacroRunDialog.cpp \
@@ -87,6 +88,7 @@ HEADERS += \
     ScintillaBuffer.h \
     ScintillaNext.h \
     Settings.h \
+    decorators/SurroundSelection.h \
     dialogs/FindReplaceDialog.h \
     dialogs/LuaConsoleDock.h \
     dialogs/MacroRunDialog.h \
