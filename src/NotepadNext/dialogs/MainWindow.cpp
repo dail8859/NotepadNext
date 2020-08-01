@@ -718,8 +718,10 @@ void MainWindow::setupEditor(ScintillaNext *editor)
     editor->setCaretLineVisible(true);
     editor->setCaretLineVisibleAlways(true);
     editor->setCaretFore(0xFF0080);
-    editor->setEdgeColour(0x80FFFF);
+    editor->setCaretWidth(2);
     editor->setSelBack(true, 0xC0C0C0);
+
+    editor->setEdgeColour(0x80FFFF);
 
     editor->setWhitespaceFore(true, 0x6AB5FF);
 
