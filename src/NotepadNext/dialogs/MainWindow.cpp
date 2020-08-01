@@ -46,6 +46,7 @@
 #include "BraceMatch.h"
 #include "HighlightedScrollBar.h"
 #include "SmartHighlighter.h"
+#include "SurroundSelection.h"
 
 #include "RecentFilesListManager.h"
 #include "LuaExtension.h"
@@ -797,6 +798,9 @@ void MainWindow::setupEditor(ScintillaNext *editor)
 
     LineNumbers *l = new LineNumbers(editor);
     l->setEnabled(true);
+
+    SurroundSelection *ss = new SurroundSelection(editor);
+    ss->setEnabled(true);
 
     // Connect the editor to the UI
     connect(editor, &ScintillaNext::savePointChanged, this, &MainWindow::updateSaveStatusBasedUi);

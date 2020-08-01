@@ -38,6 +38,8 @@ static inline int countDigits(quint32 x)
 LineNumbers::LineNumbers(ScintillaEdit *editor) :
     EditorDecorator(editor)
 {
+    editor->setMarginWidthN(0, 0);
+
     connect(this, &EditorDecorator::stateChanged, [=](bool b) {
         if (b) {
             adjustMarginWidth();
