@@ -110,6 +110,17 @@ void DockedEditor::dockWidgetCloseRequested()
     emit editorCloseRequested(editor);
 }
 
+ads::CDockAreaWidget * DockedEditor::currentDockArea()
+{
+    foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
+        if (dockWidget->property("focused").toBool()) {
+            return dockWidget->dockAreaWidget();
+        }
+    }
+
+    return Q_NULLPTR;
+}
+
 void DockedEditor::addBuffer(ScintillaBuffer *buffer)
 {
     qInfo(Q_FUNC_INFO);
@@ -156,7 +167,7 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
 
     connect(dw, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
 
-    m_DockManager->addDockWidgetTab(ads::CenterDockWidgetArea, dw);
+    m_DockManager->addDockWidget(ads::CenterDockWidgetArea, dw, currentDockArea());
 }
 
 void DockedEditor::removeBuffer(ScintillaBuffer *buffer)
