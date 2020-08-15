@@ -33,6 +33,8 @@ private:
     ads::CDockManager* m_DockManager = Q_NULLPTR;
     ScintillaNext *currentEditor = Q_NULLPTR;
 
+    ads::CDockAreaWidget *currentDockArea();
+
 public:
     explicit DockedEditor(QWidget *parent);
 
