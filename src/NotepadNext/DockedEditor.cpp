@@ -78,6 +78,16 @@ int DockedEditor::count() const
     return total;
 }
 
+QVector<ScintillaNext *> DockedEditor::editors() const
+{
+    QVector<ScintillaNext *> editors;
+    foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
+        editors.append(qobject_cast<ScintillaNext *>(dockWidget->widget()));
+    }
+
+    return editors;
+}
+
 QVector<ScintillaBuffer *> DockedEditor::buffers() const
 {
     QVector<ScintillaBuffer *> buffers;
