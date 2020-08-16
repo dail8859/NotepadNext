@@ -1071,42 +1071,37 @@ void MainWindow::closeAllExceptActive()
 
 void MainWindow::closeAllToLeft()
 {
-    /*
-    // Save the current index since checkBuffersBeforeClose() might change it
-    int curIndex = tabbedEditor->currentIndex();
+    const int index = dockedEditor->currentDockArea()->currentIndex();
+    QVector<ScintillaNext *> editors;
 
-    if (!checkBuffersBeforeClose(0, curIndex)) {
-        return;
+    for (int i = 0; i < index; ++i) {
+        auto editor = qobject_cast<ScintillaNext *>(dockedEditor->currentDockArea()->dockWidget(i)->widget());
+        editors.append(editor);
     }
 
-    // Restore it now that everything is ready to be closed
-    tabbedEditor->switchToIndex(curIndex);
-
-    while (tabbedEditor->currentIndex() > 0) {
-        auto buffer = tabbedEditor->getBufferFromIndex(0);
-        bufferManager->closeBuffer(buffer);
+    if (checkEditorsBeforeClose(editors)) {
+        foreach (ScintillaNext *editor, editors) {
+            bufferManager->closeBuffer(editor->scintillaBuffer());
+        }
     }
-    */
 }
 
 void MainWindow::closeAllToRight()
 {
-    /*
-    // Save the current index since checkBuffersBeforeClose() might change it
-    int curIndex = tabbedEditor->currentIndex();
+    const int index = dockedEditor->currentDockArea()->currentIndex();
+    const int total = dockedEditor->currentDockArea()->dockWidgetsCount();
+    QVector<ScintillaNext *> editors;
 
-    if (!checkBuffersBeforeClose(curIndex, dockedEditor->count())) {
-        return;
+    for (int i = index + 1; i < total; ++i) {
+        auto editor = qobject_cast<ScintillaNext *>(dockedEditor->currentDockArea()->dockWidget(i)->widget());
+        editors.append(editor);
     }
 
-    // Restore it now that everything is ready to be closed
-    tabbedEditor->switchToIndex(curIndex);
-
-    while (curIndex < dockedEditor->count() - 1) {
-        auto buffer = tabbedEditor->getBufferFromIndex(curIndex + 1);
-        bufferManager->closeBuffer(buffer);
+    if (checkEditorsBeforeClose(editors)) {
+        foreach (ScintillaNext *editor, editors) {
+            bufferManager->closeBuffer(editor->scintillaBuffer());
+        }
     }
-    */
 }
 
 bool MainWindow::saveCurrentFile()
@@ -1319,9 +1314,11 @@ void MainWindow::updateSaveStatusBasedUi(bool isDirty)
 
 void MainWindow::updateBufferPositionBasedUi()
 {
-    //int curIndex = tabbedEditor->currentIndex();
-    //ui->actionCloseAllToLeft->setEnabled(curIndex != 0);
-    //ui->actionCloseAllToRight->setEnabled(curIndex != dockedEditor->count() - 1);
+    const int index = dockedEditor->currentDockArea()->currentIndex();
+    const int total = dockedEditor->currentDockArea()->dockWidgetsCount();
+
+    ui->actionCloseAllToLeft->setEnabled(index > 0);
+    ui->actionCloseAllToRight->setEnabled(index < (total - 1));
     ui->actionCloseAllExceptActive->setEnabled(dockedEditor->count() > 1);
 }
 
@@ -1691,8 +1688,8 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
     QMenu *menu = new QMenu(this);
     menu->addAction(ui->actionClose);
     menu->addAction(ui->actionCloseAllExceptActive);
-    //menu->addAction(ui->actionCloseAllToLeft);
-    //menu->addAction(ui->actionCloseAllToRight);
+    menu->addAction(ui->actionCloseAllToLeft);
+    menu->addAction(ui->actionCloseAllToRight);
     menu->addSeparator();
     menu->addAction(ui->actionSave);
     menu->addAction(ui->actionSaveAs);
