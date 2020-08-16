@@ -126,7 +126,7 @@ private:
 
     bool isInInitialState();
     void openFileList(const QStringList &fileNames);
-    bool checkBuffersBeforeClose(int startIndex, int endIndex);
+    bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     void setupStatusBar();
     bool checkBufferForModification(ScintillaBuffer *buffer);
     void setFoldMarkers(ScintillaNext *editor, const QString &type);

@@ -895,15 +895,15 @@ void MainWindow::openFileList(const QStringList &fileNames)
     //}
 }
 
-bool MainWindow::checkBuffersBeforeClose(int startIndex, int endIndex)
+bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
 {
-    // TODO: use index
+    foreach (ScintillaNext *editor,editors) {
+        auto buffer = editor->scintillaBuffer();
 
-    // Check if any need saved
-    foreach (ScintillaBuffer *buffer, dockedEditor->buffers()) {
         if (!buffer->is_save_point()) {
             // Switch to it
             dockedEditor->switchToBuffer(buffer);
+
             // Ask the user what to do
             QString message = QString("Save file <b>%1</b>?").arg(buffer->getName());
             auto reply = QMessageBox::question(this, "Save File", message, QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save);
@@ -1041,7 +1041,7 @@ void MainWindow::closeFile(ScintillaBuffer *buffer)
 void MainWindow::closeAllFiles(bool forceClose = false)
 {
     if (!forceClose) {
-        if (!checkBuffersBeforeClose(0, dockedEditor->count())) {
+        if (!checkEditorsBeforeClose(dockedEditor->editors())) {
             return;
         }
     }
@@ -1057,29 +1057,16 @@ void MainWindow::closeAllFiles(bool forceClose = false)
 
 void MainWindow::closeAllExceptActive()
 {
-    /*
-    const ScintillaBuffer *currentBuffer = dockedEditor->getCurrentBuffer();
+    auto e = dockedEditor->getCurrentEditor();
+    auto editors = dockedEditor->editors();
 
-    int curIndex = tabbedEditor->currentIndex();
-    if (!checkBuffersBeforeClose(0, curIndex)) {
-        return;
-    }
-    if (!checkBuffersBeforeClose(curIndex + 1, dockedEditor->count())) {
-        return;
-    }
+    editors.removeOne(e);
 
-    // Iterate the buffers but skip the one we want to keep
-    int i = 0;
-    while (dockedEditor->count() > 1) {
-        ScintillaBuffer *buffer = tabbedEditor->getBufferFromIndex(i);
-        if (buffer == currentBuffer) {
-            i++;
-        }
-        else {
-            bufferManager->closeBuffer(buffer);
+    if (checkEditorsBeforeClose(editors)) {
+        foreach (ScintillaNext *editor, editors) {
+            bufferManager->closeBuffer(editor->scintillaBuffer());
         }
     }
-    */
 }
 
 void MainWindow::closeAllToLeft()
@@ -1335,7 +1322,7 @@ void MainWindow::updateBufferPositionBasedUi()
     //int curIndex = tabbedEditor->currentIndex();
     //ui->actionCloseAllToLeft->setEnabled(curIndex != 0);
     //ui->actionCloseAllToRight->setEnabled(curIndex != dockedEditor->count() - 1);
-    //ui->actionCloseAllExceptActive->setEnabled(dockedEditor->count() > 1);
+    ui->actionCloseAllExceptActive->setEnabled(dockedEditor->count() > 1);
 }
 
 void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
@@ -1586,7 +1573,7 @@ void MainWindow::focusIn()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if (!checkBuffersBeforeClose(0, dockedEditor->count())) {
+    if (!checkEditorsBeforeClose(dockedEditor->editors())) {
         event->ignore();
         return;
     }
@@ -1703,12 +1690,14 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
     // Create the menu and show it
     QMenu *menu = new QMenu(this);
     menu->addAction(ui->actionClose);
-    //menu->addAction(ui->actionCloseAllExceptActive);
+    menu->addAction(ui->actionCloseAllExceptActive);
     //menu->addAction(ui->actionCloseAllToLeft);
     //menu->addAction(ui->actionCloseAllToRight);
+    menu->addSeparator();
     menu->addAction(ui->actionSave);
     menu->addAction(ui->actionSaveAs);
     menu->addAction(ui->actionRename);
+    menu->addSeparator();
     menu->addAction(ui->actionReload);
     menu->addSeparator();
     menu->addAction(ui->actionCopyFullPath);
