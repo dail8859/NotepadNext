@@ -20,6 +20,7 @@
 #ifndef NOTEPADNEXTAPPLICATION_H
 #define NOTEPADNEXTAPPLICATION_H
 
+#include "BufferManager.h"
 #include "QtSingleApplication"
 #include "Settings.h"
 
@@ -33,16 +34,21 @@ class NotepadNextApplication : public QtSingleApplication
 public:
     NotepadNextApplication(const QString &id, int &argc, char **argv);
 
-    bool init();
+    bool initGui();
+
+    BufferManager *getBufferManager() const { return bufferManager; };
+
     LuaState *getLuaState() const;
     QString getFileDialogFilter() const;
     Settings *getSettings() const;
 
 private:
-    QList<MainWindow *> windows;
-    QWidget *currentlyFocusedWidget = Q_NULLPTR;
+    BufferManager *bufferManager = Q_NULLPTR;
     LuaState *luaState = Q_NULLPTR;
     Settings *settings = Q_NULLPTR;
+
+    QList<MainWindow *> windows;
+    QWidget *currentlyFocusedWidget = Q_NULLPTR;
 
     void applyArguments(const QStringList &args);
     MainWindow *createNewWindow();

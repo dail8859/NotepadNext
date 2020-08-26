@@ -27,7 +27,6 @@
 #include "DockedEditor.h"
 
 #include "ScintillaNext.h"
-#include "BufferManager.h"
 #include "StatusLabel.h"
 #include "NppImporter.h"
 #include "QuickFindWidget.h"
@@ -120,7 +119,6 @@ private slots:
 private:
     Ui::MainWindow *ui = Q_NULLPTR;
     NotepadNextApplication *app = Q_NULLPTR;
-    BufferManager *bufferManager = Q_NULLPTR;
     DockedEditor *dockedEditor = Q_NULLPTR;
     MacroRecorder *recorder = Q_NULLPTR;
 
