@@ -78,8 +78,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     setupStatusBar();
 
-     // TODO: these belongs in main app so they can be shared?
-    bufferManager = new BufferManager(this);
     recentFilesListManager = new RecentFilesListManager(ui->menuRecentFiles);
 
     // The windows editor manager that supports docking
@@ -99,10 +97,10 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
 #ifdef QT_DEBUG
     // Print some debug messages: connect these first in case something bad happens during a later slot
-    connect(bufferManager, &BufferManager::bufferCreated, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferCreated(%s)", buffer->getName().toUtf8().constData());});
-    //connect(bufferManager, &BufferManager::bufferSaved, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferSaved(%s)", buffer->getName().toUtf8().constData());});
-    connect(bufferManager, &BufferManager::bufferClosed, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferClosed(%s)", buffer->getName().toUtf8().constData());});
-    connect(bufferManager, &BufferManager::bufferRenamed, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferRenamed(%s)", buffer->getName().toUtf8().constData());});
+    connect(app->getBufferManager(), &BufferManager::bufferCreated, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferCreated(%s)", buffer->getName().toUtf8().constData());});
+    //connect(app->getBufferManager(), &BufferManager::bufferSaved, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferSaved(%s)", buffer->getName().toUtf8().constData());});
+    connect(app->getBufferManager(), &BufferManager::bufferClosed, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferClosed(%s)", buffer->getName().toUtf8().constData());});
+    connect(app->getBufferManager(), &BufferManager::bufferRenamed, [](ScintillaBuffer *buffer) { qInfo("BufferManager::bufferRenamed(%s)", buffer->getName().toUtf8().constData());});
 
     //connect(editor, &ScintillaNext::savePointChanged, [](bool b) { qInfo("savePointChanged(%s)", b ? "true" : "false");});
     //connect(editor, &ScintillaNext::updateUi, [](int updated) { qInfo("updateUi(%d)", updated);});
@@ -141,17 +139,17 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, recentFilesListManager, &RecentFilesListManager::clear);
-    connect(bufferManager, &BufferManager::bufferClosed, [=](ScintillaBuffer *buffer) {
+    connect(app->getBufferManager(), &BufferManager::bufferClosed, [=](ScintillaBuffer *buffer) {
         if (buffer->isFile()) {
             recentFilesListManager->addFile(buffer->fileInfo.canonicalFilePath());
         }
     });
-    connect(bufferManager, &BufferManager::bufferCreated, [=](ScintillaBuffer *buffer) {
+    connect(app->getBufferManager(), &BufferManager::bufferCreated, [=](ScintillaBuffer *buffer) {
         if (buffer->isFile()) {
             recentFilesListManager->removeFile(buffer->fileInfo.canonicalFilePath());
         }
     });
-    connect(bufferManager, &BufferManager::bufferRenamed, [=](ScintillaBuffer *buffer) {
+    connect(app->getBufferManager(), &BufferManager::bufferRenamed, [=](ScintillaBuffer *buffer) {
         recentFilesListManager->removeFile(buffer->fileInfo.filePath());
     });
     connect(ui->actionRestoreRecentlyClosedFile, &QAction::triggered, [=]() {
@@ -556,14 +554,14 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     //connect(tabbedEditor->getTabBar(), &QTabBar::tabMoved, this, &MainWindow::updateBufferPositionBasedUi);
 
     // Send some events to the tabbed editor to automatcially manage the tabs
-    connect(bufferManager, &BufferManager::bufferCreated, dockedEditor, &DockedEditor::addBuffer);
-    connect(bufferManager, &BufferManager::bufferClosed, dockedEditor, &DockedEditor::removeBuffer);
-    connect(bufferManager, &BufferManager::bufferRenamed, dockedEditor, &DockedEditor::renamedBuffer);
+    connect(app->getBufferManager(), &BufferManager::bufferCreated, dockedEditor, &DockedEditor::addBuffer);
+    connect(app->getBufferManager(), &BufferManager::bufferClosed, dockedEditor, &DockedEditor::removeBuffer);
+    connect(app->getBufferManager(), &BufferManager::bufferRenamed, dockedEditor, &DockedEditor::renamedBuffer);
 
     // If the current file is saved update the window title incase the file was renamed
     connect(dockedEditor, &DockedEditor::editorCreated, this, &MainWindow::detectLanguageFromExtension);
-    //connect(bufferManager, &BufferManager::bufferClosed, this, &MainWindow::updateBufferPositionBasedUi);
-    connect(bufferManager, &BufferManager::bufferRenamed, [=] (ScintillaBuffer *buffer) {
+    //connect(app->getBufferManager(), &BufferManager::bufferClosed, this, &MainWindow::updateBufferPositionBasedUi);
+    connect(app->getBufferManager(), &BufferManager::bufferRenamed, [=] (ScintillaBuffer *buffer) {
         updateBufferFileStatusBasedUi(buffer);
         //detectLanguageFromExtension(buffer);
         updateBufferFileStatusBasedUi(buffer);
@@ -831,7 +829,7 @@ void MainWindow::newFile()
 
     static int count = 1;
 
-    bufferManager->createEmtpyBuffer(QString("New %1").arg(count++));
+    app->getBufferManager()->createEmtpyBuffer(QString("New %1").arg(count++));
 }
 
 // One unedited, new blank document
@@ -859,7 +857,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
         qInfo(qUtf8Printable(filePath));
 
         // Search currently open buffers to see if it is already open
-        ScintillaBuffer *buffer = bufferManager->getBufferByFilePath(filePath);
+        ScintillaBuffer *buffer = app->getBufferManager()->getBufferByFilePath(filePath);
         if (buffer != Q_NULLPTR) {
             // The file has already been opened
             //mostRecentBuffer = buffer;
@@ -870,7 +868,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
         if (!fileInfo.isFile()) {
             auto reply = QMessageBox::question(this, "Create File", QString("<b>%1</b> does not exist. Do you want to create it?").arg(filePath));
             if (reply == QMessageBox::Yes) {
-                buffer = bufferManager->createBufferFromFile(filePath);
+                buffer = app->getBufferManager()->createBufferFromFile(filePath);
                 //mostRecentBuffer = buffer;
             }
             else {
@@ -879,7 +877,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
             }
         }
         else {
-            buffer = bufferManager->createBufferFromFile(filePath);
+            buffer = app->getBufferManager()->createBufferFromFile(filePath);
             //mostRecentBuffer = buffer;
         }
     }
@@ -996,7 +994,7 @@ void MainWindow::reloadFile()
     auto reply = QMessageBox::question(this, "Reload File", QString("Are you sure you want to reload <b>%1</b>? Any unsaved changes will be lost.").arg(buffer->getName()));
 
     if (reply == QMessageBox::Yes) {
-        bufferManager->reloadBuffer(buffer);
+        app->getBufferManager()->reloadBuffer(buffer);
     }
 }
 
@@ -1013,7 +1011,7 @@ void MainWindow::closeFile(ScintillaBuffer *buffer)
     }
 
     if(buffer->is_save_point()) {
-        bufferManager->closeBuffer(buffer);
+        app->getBufferManager()->closeBuffer(buffer);
     }
     else {
         // The user needs be asked what to do about this file, so switch to it
@@ -1034,7 +1032,7 @@ void MainWindow::closeFile(ScintillaBuffer *buffer)
                 return;
         }
 
-        bufferManager->closeBuffer(buffer);
+        app->getBufferManager()->closeBuffer(buffer);
     }
 }
 
@@ -1048,7 +1046,7 @@ void MainWindow::closeAllFiles(bool forceClose = false)
 
     // Ask the buffer manager to close the buffers the dockedEditor knows about
     foreach (ScintillaBuffer *buffer, dockedEditor->buffers()) {
-        bufferManager->closeBuffer(buffer);
+        app->getBufferManager()->closeBuffer(buffer);
     }
 
     if (!forceClose)
@@ -1064,7 +1062,7 @@ void MainWindow::closeAllExceptActive()
 
     if (checkEditorsBeforeClose(editors)) {
         foreach (ScintillaNext *editor, editors) {
-            bufferManager->closeBuffer(editor->scintillaBuffer());
+            app->getBufferManager()->closeBuffer(editor->scintillaBuffer());
         }
     }
 }
@@ -1081,7 +1079,7 @@ void MainWindow::closeAllToLeft()
 
     if (checkEditorsBeforeClose(editors)) {
         foreach (ScintillaNext *editor, editors) {
-            bufferManager->closeBuffer(editor->scintillaBuffer());
+            app->getBufferManager()->closeBuffer(editor->scintillaBuffer());
         }
     }
 }
@@ -1099,7 +1097,7 @@ void MainWindow::closeAllToRight()
 
     if (checkEditorsBeforeClose(editors)) {
         foreach (ScintillaNext *editor, editors) {
-            bufferManager->closeBuffer(editor->scintillaBuffer());
+            app->getBufferManager()->closeBuffer(editor->scintillaBuffer());
         }
     }
 }
@@ -1120,7 +1118,7 @@ bool MainWindow::saveFile(ScintillaBuffer *buffer)
         return saveCurrentFileAsDialog();
     }
     else {
-        bool didItGetSaved = bufferManager->saveBuffer(buffer);
+        bool didItGetSaved = app->getBufferManager()->saveBuffer(buffer);
         if (didItGetSaved) {
             return true;
         }
@@ -1167,7 +1165,7 @@ bool MainWindow::saveFileAs(ScintillaBuffer *buffer, const QString &fileName)
 {
     qInfo("saveFileAs(%s)", qUtf8Printable(fileName));
 
-    bool didItGetSaved = bufferManager->saveBufferAs(buffer, fileName);
+    bool didItGetSaved = app->getBufferManager()->saveBufferAs(buffer, fileName);
 
     return didItGetSaved;
 }
@@ -1197,7 +1195,7 @@ void MainWindow::saveCopyAsDialog()
 void MainWindow::saveCopyAs(const QString &fileName)
 {
     auto buffer = dockedEditor->getCurrentBuffer();
-    bufferManager->saveBufferCopyAs(buffer, fileName);
+    app->getBufferManager()->saveBufferCopyAs(buffer, fileName);
 }
 
 void MainWindow::saveAll()
@@ -1220,12 +1218,12 @@ void MainWindow::renameFile()
     }
 
     // The new fileName might be to one of the existing buffers.
-    auto otherBuffer = bufferManager->getBufferByFilePath(fileName);
+    auto otherBuffer = app->getBufferManager()->getBufferByFilePath(fileName);
 
-    bool renameSuccessful = bufferManager->renameBuffer(buffer, fileName);
+    bool renameSuccessful = app->getBufferManager()->renameBuffer(buffer, fileName);
 
     if (renameSuccessful && otherBuffer) {
-        bufferManager->closeBuffer(otherBuffer);
+        app->getBufferManager()->closeBuffer(otherBuffer);
     }
 }
 
@@ -1547,7 +1545,7 @@ bool MainWindow::checkBufferForModification(ScintillaBuffer *buffer)
     }
     else if (state == ScintillaBuffer::Modified) {
         qInfo("ScintillaBuffer::Modified");
-        bufferManager->reloadBuffer(buffer);
+        app->getBufferManager()->reloadBuffer(buffer);
     }
     else if (state == ScintillaBuffer::Deleted) {
         qInfo("ScintillaBuffer::Deleted");
