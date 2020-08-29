@@ -6,8 +6,6 @@ QT += core gui widgets
 
 include(../../Config.pri)
 
-DEFINES += ADS_STATIC
-
 windows {
 	# MinGW
 	*-g++* {

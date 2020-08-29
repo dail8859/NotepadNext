@@ -24,18 +24,18 @@
 #include <QPointer>
 
 #include "ScintillaEdit.h"
-#include "Plugin.h"
+#include "EditorDecorator.h"
 
 
 class HighlightedScrollBar;
 
-class HighlightedScrollBarPlugin : public Plugin
+class HighlightedScrollBarDecorator : public EditorDecorator
 {
     Q_OBJECT
 
 public:
-    HighlightedScrollBarPlugin(ScintillaEdit *editor);
-    ~HighlightedScrollBarPlugin() override;
+    HighlightedScrollBarDecorator(ScintillaEdit *editor);
+    ~HighlightedScrollBarDecorator() override;
 
     struct Highlight {
         int line;
@@ -56,8 +56,8 @@ class HighlightedScrollBar : public QScrollBar
     Q_OBJECT
 
 public:
-    explicit HighlightedScrollBar(HighlightedScrollBarPlugin *plugin, Qt::Orientation orientation, QWidget *parent = nullptr)
-        : QScrollBar(orientation, parent), plugin(plugin) {}
+    explicit HighlightedScrollBar(HighlightedScrollBarDecorator *decorator, Qt::Orientation orientation, QWidget *parent = nullptr)
+        : QScrollBar(orientation, parent), decorator(decorator) {}
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -66,7 +66,7 @@ private:
     void drawMarker(QPainter &p, int marker);
     void drawIndicator(QPainter &p, int indicator);
 
-    HighlightedScrollBarPlugin *plugin;
+    HighlightedScrollBarDecorator *decorator;
 };
 
 #endif // HIGHLIGHTEDSCROLLBAR_H

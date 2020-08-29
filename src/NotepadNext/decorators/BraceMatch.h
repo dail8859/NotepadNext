@@ -17,23 +17,24 @@
  */
 
 
-#ifndef SMARTHIGHLIGHTER_H
-#define SMARTHIGHLIGHTER_H
+#ifndef BRACEMATCH_H
+#define BRACEMATCH_H
 
-#include "Plugin.h"
+#include "EditorDecorator.h"
 
-class SmartHighlighter : public Plugin
+class BraceMatch : public EditorDecorator
 {
     Q_OBJECT
 
 public:
-    SmartHighlighter(ScintillaEdit *editor);
+    BraceMatch(ScintillaEdit *editor);
 
 private:
-    void highlightCurrentView();
+    void doHighlighting();
+    void clearHighlighting();
 
 public slots:
     void notify(const SCNotification *pscn) override;
 };
 
-#endif // SMARTHIGHLIGHTER_H
+#endif // BRACEMATCH_H

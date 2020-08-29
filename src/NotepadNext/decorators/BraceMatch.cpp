@@ -24,7 +24,7 @@
 static const QList<char> braces = {'[', ']', '(', ')', '{', '}'};
 
 BraceMatch::BraceMatch(ScintillaEdit *editor) :
-    Plugin(editor)
+    EditorDecorator(editor)
 {
     setObjectName("BraceMatch");
 
@@ -32,20 +32,22 @@ BraceMatch::BraceMatch(ScintillaEdit *editor) :
     const int INDIC_BRACEBADLIGHT = 9;
 
     editor->indicSetStyle(INDIC_BRACEHIGHLIGHT, INDIC_FULLBOX);
+    editor->indicSetFore(INDIC_BRACEHIGHLIGHT, 0x777777);
+    editor->indicSetAlpha(INDIC_BRACEHIGHLIGHT, 100);
+    editor->indicSetOutlineAlpha(INDIC_BRACEHIGHLIGHT, 200);
     editor->indicSetUnder(INDIC_BRACEHIGHLIGHT, true);
-    editor->indicSetFore(INDIC_BRACEHIGHLIGHT, 0x77CC77);
-    editor->indicSetAlpha(INDIC_BRACEHIGHLIGHT, 255);
     editor->braceHighlightIndicator(true, INDIC_BRACEHIGHLIGHT);
 
     editor->indicSetStyle(INDIC_BRACEBADLIGHT, INDIC_FULLBOX);
+    editor->indicSetFore(INDIC_BRACEBADLIGHT, 0x0000FF);
+    editor->indicSetAlpha(INDIC_BRACEBADLIGHT, 100);
+    editor->indicSetOutlineAlpha(INDIC_BRACEBADLIGHT, 200);
     editor->indicSetUnder(INDIC_BRACEBADLIGHT, true);
-    editor->indicSetFore(INDIC_BRACEBADLIGHT, 0x7777CC);
-    editor->indicSetAlpha(INDIC_BRACEBADLIGHT, 255);
     editor->braceBadLightIndicator(true, INDIC_BRACEBADLIGHT);
 
     editor->setIndentationGuides(SC_IV_LOOKBOTH);
 
-    connect(this, &Plugin::stateChanged, [=](bool b) {
+    connect(this, &EditorDecorator::stateChanged, [=](bool b) {
         if (b) {
             doHighlighting();
         }

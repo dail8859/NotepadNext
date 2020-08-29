@@ -17,36 +17,23 @@
  */
 
 
-#ifndef BUFFERVIEW_H
-#define BUFFERVIEW_H
+#ifndef SMARTHIGHLIGHTER_H
+#define SMARTHIGHLIGHTER_H
 
-#include <ScintillaEdit.h>
-#include <ScintillaBuffer.h>
+#include "EditorDecorator.h"
 
-struct SelectedRange {
-    int caret;
-    int anchor;
-    SelectedRange(int caret_= INVALID_POSITION, int anchor_= INVALID_POSITION) :
-        caret(caret_), anchor(anchor_) {
-    }
-};
-
-class BufferView
+class SmartHighlighter : public EditorDecorator
 {
+    Q_OBJECT
+
 public:
-    explicit BufferView(ScintillaBuffer *buffer_);
-
-    ScintillaBuffer *getBuffer() { return buffer; }
-
-    void saveView(ScintillaEdit *editor);
-    void restoreView(ScintillaEdit *editor);
+    SmartHighlighter(ScintillaEdit *editor);
 
 private:
-    ScintillaBuffer *buffer;
+    void highlightCurrentView();
 
-    QVector<SelectedRange> selectedRanges;
-    int firstVisibleLine;
-    int scrollWidth;
+public slots:
+    void notify(const SCNotification *pscn) override;
 };
 
-#endif // BUFFERVIEW_H
+#endif // SMARTHIGHLIGHTER_H

@@ -70,11 +70,11 @@ WordList::~WordList() {
 	Clear();
 }
 
-WordList::operator bool() const {
+WordList::operator bool() const noexcept {
 	return len ? true : false;
 }
 
-bool WordList::operator!=(const WordList &other) const {
+bool WordList::operator!=(const WordList &other) const noexcept {
 	if (len != other.len)
 		return true;
 	for (int i=0; i<len; i++) {
@@ -84,17 +84,17 @@ bool WordList::operator!=(const WordList &other) const {
 	return false;
 }
 
-int WordList::Length() const {
+int WordList::Length() const noexcept {
 	return len;
 }
 
-void WordList::Clear() {
+void WordList::Clear() noexcept {
 	if (words) {
 		delete []list;
 		delete []words;
 	}
-	words = 0;
-	list = 0;
+	words = nullptr;
+	list = nullptr;
 	len = 0;
 }
 
@@ -160,7 +160,7 @@ bool WordList::Set(const char *s) {
  * Prefix elements start with '^' and match all strings that start with the rest of the element
  * so '^GTK_' matches 'GTK_X', 'GTK_MAJOR_VERSION', and 'GTK_'.
  */
-bool WordList::InList(const char *s) const {
+bool WordList::InList(const char *s) const noexcept {
 	if (0 == words)
 		return false;
 	const unsigned char firstChar = s[0];
@@ -202,7 +202,7 @@ bool WordList::InList(const char *s) const {
  * with def to be a keyword, but also defi, defin and define are valid.
  * The marker is ~ in this case.
  */
-bool WordList::InListAbbreviated(const char *s, const char marker) const {
+bool WordList::InListAbbreviated(const char *s, const char marker) const noexcept {
 	if (0 == words)
 		return false;
 	const unsigned char firstChar = s[0];
@@ -256,7 +256,7 @@ bool WordList::InListAbbreviated(const char *s, const char marker) const {
 * The marker is ~ in this case.
 * No multiple markers check is done and wont work.
 */
-bool WordList::InListAbridged(const char *s, const char marker) const {
+bool WordList::InListAbridged(const char *s, const char marker) const noexcept {
 	if (0 == words)
 		return false;
 	const unsigned char firstChar = s[0];
@@ -309,7 +309,7 @@ bool WordList::InListAbridged(const char *s, const char marker) const {
 	return false;
 }
 
-const char *WordList::WordAt(int n) const {
+const char *WordList::WordAt(int n) const noexcept {
 	return words[n];
 }
 

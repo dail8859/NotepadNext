@@ -554,6 +554,10 @@
       </tr><tr>
 	<td>Shmuel Zeigerman</td>
 	<td>Chris Graham</td>
+	<td>Hugues Larrive</td>
+	<td>Prakash Sahni</td>
+      </tr><tr>
+	<td>Michel Sauvard</td>
     </tr>
     </table>
     <p>
@@ -566,6 +570,66 @@
       </li>
     </ul>
     <h3>
+       <a href="https://www.scintilla.org/scite444.zip">Release 4.4.4</a>
+    </h3>
+    <ul>
+	<li>
+	Released 21 July 2020.
+	</li>
+	<li>
+	End of line annotations implemented.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2141/">Bug #2141</a>.
+	</li>
+	<li>
+	Add SCI_BRACEMATCHNEXT API.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1368/">Feature #1368</a>.
+	</li>
+	<li>
+	The latex lexer supports lstlisting environment that is similar to verbatim.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1358/">Feature #1358</a>.
+	</li>
+	<li>
+	For SciTE on Linux, place liblexilla.so and libscintilla.so in /usr/lib/scite.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2184/">Bug #2184</a>.
+	</li>
+	<li>
+	Round SCI_TEXTWIDTH instead of truncating as this may be more accurate when sizing application
+	elements to match text.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1355/">Feature #1355</a>.
+	</li>
+	<li>
+	Display DEL control character as visible "DEL" block like other control characters.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1369/">Feature #1369</a>.
+	</li>
+	<li>
+	Allow caret width to be up to 20 pixels.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1361/">Feature #1361</a>.
+	</li>
+	<li>
+	SciTE on Windows adds create.hidden.console option to stop console window flashing
+	when Lua script calls os.execute or io.popen.
+	</li>
+	<li>
+	Fix translucent rectangle drawing on Qt. When drawing a translucent selection, there were edge
+	artifacts as the calls used were drawing outlines over fill areas. Make bottom and right borders on
+	INDIC_ROUNDBOX be same intensity as top and left.
+	Replaced some deprecated Qt calls with currently supported calls.
+	</li>
+	<li>
+	Fix printing on Windows to use correct text size.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2185/">Bug #2185</a>.
+	</li>
+	<li>
+	Fix bug on Win32 where calling WM_GETTEXT for more text than in document could return
+	less text than in document.
+	</li>
+	<li>
+	Fixed a bug in SciTE with Lua stack balance causing failure to find
+	functions after reloading script.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2176/">Bug #2176</a>.
+	</li>
+    </ul>
+    <h3>
        <a href="https://www.scintilla.org/scite443.zip">Release 4.4.3</a>
     </h3>
     <ul>
@@ -576,7 +640,7 @@
 	Fix syntax highlighting for SciTE on Windows by setting executable directory for loading Lexilla.
 	<a href="https://sourceforge.net/p/scintilla/bugs/2181/">Bug #2181</a>.
 	</li>
-    <ul>
+    </ul>
     <h3>
        <a href="https://www.scintilla.org/scite442.zip">Release 4.4.2</a>
     </h3>

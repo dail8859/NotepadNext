@@ -172,7 +172,7 @@ void MarginView::RefreshPixMaps(Surface *surfaceWindow, WindowID wid, const View
 	}
 }
 
-static int SubstituteMarkerIfEmpty(int markerCheck, int markerDefault, const ViewStyle &vs) {
+static int SubstituteMarkerIfEmpty(int markerCheck, int markerDefault, const ViewStyle &vs) noexcept {
 	if (vs.markers[markerCheck].markType == SC_MARK_EMPTY)
 		return markerDefault;
 	return markerCheck;
@@ -432,25 +432,25 @@ void MarginView::PaintMargin(Surface *surface, Sci::Line topLine, PRectangle rc,
 				if (marks) {
 					for (int markBit = 0; (markBit < 32) && marks; markBit++) {
 						if (marks & 1) {
-							LineMarker::typeOfFold tFold = LineMarker::undefined;
+							LineMarker::FoldPart part = LineMarker::FoldPart::undefined;
 							if ((vs.ms[margin].mask & SC_MASK_FOLDERS) && highlightDelimiter.IsFoldBlockHighlighted(lineDoc)) {
 								if (highlightDelimiter.IsBodyOfFoldBlock(lineDoc)) {
-									tFold = LineMarker::body;
+									part = LineMarker::FoldPart::body;
 								} else if (highlightDelimiter.IsHeadOfFoldBlock(lineDoc)) {
 									if (firstSubLine) {
-										tFold = headWithTail ? LineMarker::headWithTail : LineMarker::head;
+										part = headWithTail ? LineMarker::FoldPart::headWithTail : LineMarker::FoldPart::head;
 									} else {
 										if (model.pcs->GetExpanded(lineDoc) || headWithTail) {
-											tFold = LineMarker::body;
+											part = LineMarker::FoldPart::body;
 										} else {
-											tFold = LineMarker::undefined;
+											part = LineMarker::FoldPart::undefined;
 										}
 									}
 								} else if (highlightDelimiter.IsTailOfFoldBlock(lineDoc)) {
-									tFold = LineMarker::tail;
+									part = LineMarker::FoldPart::tail;
 								}
 							}
-							vs.markers[markBit].Draw(surface, rcMarker, fontLineNumber, tFold, vs.ms[margin].style);
+							vs.markers[markBit].Draw(surface, rcMarker, fontLineNumber, part, vs.ms[margin].style);
 						}
 						marks >>= 1;
 					}

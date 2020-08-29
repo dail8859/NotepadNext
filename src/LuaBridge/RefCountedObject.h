@@ -36,12 +36,14 @@
 */
 //==============================================================================
 
-#ifndef LUABRIDGE_REFCOUNTEDOBJECT_HEADER
-#define LUABRIDGE_REFCOUNTEDOBJECT_HEADER
+#pragma once
 
-//#define LUABRIDGE_COMPILER_SUPPORTS_MOVE_SEMANTICS 1
+#include <LuaBridge/detail/Config.h>
+#include <LuaBridge/detail/TypeTraits.h>
 
 #include <cassert>
+
+namespace luabridge {
 
 //==============================================================================
 /**
@@ -96,7 +98,9 @@ public:
       delete this;
   }
 
-  /** Returns the object's current reference count. */
+  /** Returns the object's current reference count.
+   * @returns The reference count.
+  */
   inline int getReferenceCount() const
   {
     return static_cast <int> (refCount);
@@ -163,8 +167,9 @@ public:
   }
 
   /** Creates a pointer to an object.
-
       This will increment the object's reference-count if it is non-null.
+
+      @param refCountedObject A reference counted object to own.
   */
   inline RefCountedObjectPtr (ReferenceCountedObjectClass* const refCountedObject)
       : referencedObject (refCountedObject)
@@ -175,6 +180,8 @@ public:
 
   /** Copies another pointer.
       This will increment the object's reference-count (if it is non-null).
+
+      @param other Another pointer.
   */
   inline RefCountedObjectPtr (const RefCountedObjectPtr& other)
       : referencedObject (other.referencedObject)
@@ -183,8 +190,12 @@ public:
         referencedObject->incReferenceCount();
   }
 
-#if LUABRIDGE_COMPILER_SUPPORTS_MOVE_SEMANTICS
-  /** Takes-over the object from another pointer. */
+#ifdef LUABRIDGE_CXX11
+  /**
+    Takes-over the object from another pointer.
+
+    @param other Another pointer.
+  */
   inline RefCountedObjectPtr (RefCountedObjectPtr&& other)
       : referencedObject (other.referencedObject)
   {
@@ -194,6 +205,8 @@ public:
 
   /** Copies another pointer.
       This will increment the object's reference-count (if it is non-null).
+
+      @param other Another pointer.
   */
   template <class DerivedClass>
   inline RefCountedObjectPtr (const RefCountedObjectPtr<DerivedClass>& other)
@@ -207,6 +220,9 @@ public:
 
       The reference count of the old object is decremented, and it might be
       deleted if it hits zero. The new object's count is incremented.
+
+      @param other A pointer to assign from.
+      @returns This pointer.
   */
   RefCountedObjectPtr& operator= (const RefCountedObjectPtr& other)
   {
@@ -214,9 +230,11 @@ public:
   }
 
   /** Changes this pointer to point at a different object.
-
       The reference count of the old object is decremented, and it might be
       deleted if it hits zero. The new object's count is incremented.
+
+      @param other A pointer to assign from.
+      @returns This pointer.
   */
   template <class DerivedClass>
   RefCountedObjectPtr& operator= (const RefCountedObjectPtr<DerivedClass>& other)
@@ -224,8 +242,13 @@ public:
     return operator= (static_cast <ReferenceCountedObjectClass*> (other.getObject()));
   }
 
-#if LUABRIDGE_COMPILER_SUPPORTS_MOVE_SEMANTICS
-  /** Takes-over the object from another pointer. */
+#ifdef LUABRIDGE_CXX11
+  /**
+    Takes-over the object from another pointer.
+
+    @param other A pointer to assign from.
+    @returns This pointer.
+   */
   RefCountedObjectPtr& operator= (RefCountedObjectPtr&& other)
   {
     std::swap (referencedObject, other.referencedObject);
@@ -234,9 +257,11 @@ public:
 #endif
 
   /** Changes this pointer to point at a different object.
-
       The reference count of the old object is decremented, and it might be
       deleted if it hits zero. The new object's count is incremented.
+
+      @param newObject A reference counted object to own.
+      @returns This pointer.
   */
   RefCountedObjectPtr& operator= (ReferenceCountedObjectClass* const newObject)
   {
@@ -256,34 +281,41 @@ public:
   }
 
   /** Destructor.
-
       This will decrement the object's reference-count, and may delete it if it
       gets to zero.
   */
-  inline ~RefCountedObjectPtr()
+  ~RefCountedObjectPtr()
   {
     if (referencedObject != 0)
       referencedObject->decReferenceCount();
   }
 
   /** Returns the object that this pointer references.
-      The pointer returned may be zero, of course.
-  */
-  inline operator ReferenceCountedObjectClass*() const
-  {
-    return referencedObject;
-  }
+      The returned pointer may be null.
 
-  // the -> operator is called on the referenced object
-  inline ReferenceCountedObjectClass* operator->() const
+      @returns The pointee.
+  */
+  operator ReferenceCountedObjectClass*() const
   {
     return referencedObject;
   }
 
   /** Returns the object that this pointer references.
-      The pointer returned may be zero, of course.
+      The returned pointer may be null.
+
+      @returns The pointee.
   */
-  inline ReferenceCountedObjectClass* getObject() const
+  ReferenceCountedObjectClass* operator->() const
+  {
+    return referencedObject;
+  }
+
+  /** Returns the object that this pointer references.
+      The returned pointer may be null.
+
+      @returns The pointee.
+  */
+  ReferenceCountedObjectClass* getObject() const
   {
     return referencedObject;
   }
@@ -337,13 +369,6 @@ bool operator!= (ReferenceCountedObjectClass* object1, RefCountedObjectPtr<Refer
 
 //==============================================================================
 
-namespace luabridge
-{
-
-// forward declaration
-template <class T>
-struct ContainerTraits;
-
 template <class T>
 struct ContainerTraits <RefCountedObjectPtr <T> >
 {
@@ -355,9 +380,6 @@ struct ContainerTraits <RefCountedObjectPtr <T> >
   }
 };
 
-}
-
 //==============================================================================
 
-#endif
-
+} // namespace luabridge

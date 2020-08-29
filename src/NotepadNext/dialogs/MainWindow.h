@@ -27,7 +27,6 @@
 #include "DockedEditor.h"
 
 #include "ScintillaNext.h"
-#include "BufferManager.h"
 #include "StatusLabel.h"
 #include "NppImporter.h"
 #include "QuickFindWidget.h"
@@ -54,8 +53,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(NotepadNextApplication *app, QWidget *parent = nullptr);
     ~MainWindow() override;
-
-    void initialize(Settings *settings);
 
     bool isAnyUnsaved();
 
@@ -99,10 +96,11 @@ public slots:
     void updateContentBasedUi(ScintillaNext *editor);
     void updateSaveStatusBasedUi(bool isDirty);
     void updateBufferPositionBasedUi();
+    void updateLanguageBasedUi(ScintillaNext *editor);
     void updateGui(ScintillaNext *editor);
 
     void detectLanguageFromExtension(ScintillaNext *editor);
-    void bufferActivated(ScintillaNext *editor);
+    void editorActivated(ScintillaNext *editor);
 
     void setLanguage(ScintillaNext *editor, const QString &languageName);
 
@@ -121,14 +119,12 @@ private slots:
 private:
     Ui::MainWindow *ui = Q_NULLPTR;
     NotepadNextApplication *app = Q_NULLPTR;
-    BufferManager *bufferManager = Q_NULLPTR;
     DockedEditor *dockedEditor = Q_NULLPTR;
     MacroRecorder *recorder = Q_NULLPTR;
-    Settings *settings = Q_NULLPTR;
 
     bool isInInitialState();
     void openFileList(const QStringList &fileNames);
-    bool checkBuffersBeforeClose(int startIndex, int endIndex);
+    bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     void setupStatusBar();
     bool checkBufferForModification(ScintillaBuffer *buffer);
     void setFoldMarkers(ScintillaNext *editor, const QString &type);
@@ -156,7 +152,6 @@ private:
 
     // Docked widgets
     LuaConsoleDock *luaConsoleDock = Q_NULLPTR;
-    QString getFileDialogFilter();
 };
 
 #endif // MAINWINDOW_H

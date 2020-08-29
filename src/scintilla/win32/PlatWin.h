@@ -14,8 +14,9 @@ namespace Scintilla {
 #define USER_DEFAULT_SCREEN_DPI		96
 #endif
 
-extern void Platform_Initialise(void *hInstance);
-extern void Platform_Finalise(bool fromDllMain);
+extern void Platform_Initialise(void *hInstance) noexcept;
+
+extern void Platform_Finalise(bool fromDllMain) noexcept;
 
 constexpr RECT RectFromPRectangle(PRectangle prc) noexcept {
 	RECT rc = { static_cast<LONG>(prc.left), static_cast<LONG>(prc.top),
@@ -55,6 +56,23 @@ T DLLFunction(HMODULE hModule, LPCSTR lpProcName) noexcept {
 	memcpy(&fp, &function, sizeof(T));
 	return fp;
 }
+
+// Release an IUnknown* and set to nullptr.
+// While IUnknown::Release must be noexcept, it isn't marked as such so produces
+// warnings which are avoided by the catch.
+template <class T>
+void ReleaseUnknown(T *&ppUnknown) noexcept {
+	if (ppUnknown) {
+		try {
+			ppUnknown->Release();
+		}
+		catch (...) {
+			// Never occurs
+		}
+		ppUnknown = nullptr;
+	}
+}
+
 
 UINT DpiForWindow(WindowID wid) noexcept;
 
