@@ -15,6 +15,8 @@
 # along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
 
 
+include(Version.pri)
+
 lessThan(QT_MAJOR_VERSION, 5) {
     lessThan(QT_MINOR_VERSION, 13) {
         error(Qt v5.13.x is required)
@@ -43,7 +45,7 @@ win32 {
 
     zip.target = zip
     zip.depends = package
-    zip.commands = 7z a -tzip $$quote(NotepadNext.zip) $$shell_path(./package/*)
+    zip.commands = 7z a -tzip $$quote(NotepadNext-v$${APP_VERSION}.zip) $$shell_path(./package/*)
 
     prepare_installer.target = prepare_installer
     prepare_installer.depends = package

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <Package>
     <DisplayName>Notepad Next</DisplayName>
-    <Description>Notepad Next v0.3.1</Description>
-    <Version>0.3.1</Version>
+    <Description>Notepad Next v0.3.2</Description>
+    <Version>0.3.2</Version>
     <ForcedInstallation>true</ForcedInstallation>
-    <ReleaseDate>2020-07-16</ReleaseDate>
+    <ReleaseDate>2020-08-29</ReleaseDate>
     <!-- <RequiresAdminRights>true</RequiresAdminRights> -->
     <Script>installscript.qs</Script>
     <UserInterfaces>
