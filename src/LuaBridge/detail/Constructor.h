@@ -27,8 +27,10 @@
 */
 //==============================================================================
 
-#ifndef LUABRIDGE_CONSTRUCTOR_HEADER
-#define LUABRIDGE_CONSTRUCTOR_HEADER
+#pragma once
+
+namespace luabridge {
+namespace detail {
 
 /*
 * Constructor generators.  These templates allow you to call operator new and
@@ -201,4 +203,6 @@ struct Constructor <T, TypeList <P1, TypeList <P2, TypeList <P3,
   }
 };
 
-#endif
+} // namespace detail
+
+} // namespace luabridge

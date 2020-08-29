@@ -27,6 +27,12 @@
 */
 //==============================================================================
 
+#pragma once
+
+#include <cassert>
+
+namespace luabridge {
+
 // These are for Lua versions prior to 5.2.0.
 //
 #if LUA_VERSION_NUM < 502
@@ -141,3 +147,5 @@ inline bool equalstates (lua_State* L1, lua_State* L2)
   return lua_topointer (L1, LUA_REGISTRYINDEX) ==
          lua_topointer (L2, LUA_REGISTRYINDEX);
 }
+
+} // namespace luabridge

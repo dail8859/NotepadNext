@@ -148,6 +148,7 @@ INCLUDEPATH += $$PWD/../uchardet/src
 DEPENDPATH += $$PWD/../uchardet/src
 
 INCLUDEPATH += $$PWD/../LuaBridge
+INCLUDEPATH += $$PWD/../
 DEFINES += LUA_VERSION_NUM=503
 
 win32-g++:LIBS += libUser32

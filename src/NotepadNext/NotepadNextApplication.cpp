@@ -152,7 +152,7 @@ QString NotepadNextApplication::getFileDialogFilter() const
                 return table.concat(filter, ";;")
                 )=");
 
-        return filter;
+    return filter;
 }
 
 Settings *NotepadNextApplication::getSettings() const
