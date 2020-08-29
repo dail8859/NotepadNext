@@ -46,8 +46,8 @@ public:
 	virtual Sci::Position Start(int indicator, Sci::Position position) noexcept = 0;
 	virtual Sci::Position End(int indicator, Sci::Position position) noexcept = 0;
 
-	virtual bool ClickNotified() const = 0;
-	virtual void SetClickNotified(bool notified) = 0;
+	virtual bool ClickNotified() const noexcept = 0;
+	virtual void SetClickNotified(bool notified) noexcept = 0;
 };
 
 std::unique_ptr<IDecoration> DecorationCreate(bool largeDocument, int indicator);

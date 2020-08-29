@@ -20,18 +20,18 @@
 #include "DockedEditor.h"
 #include "DockAreaWidget.h"
 #include "DockWidgetTab.h"
+#include "DockAreaTitleBar.h"
 
 #include "ScintillaNext.h"
 
-#include <QVariant>
-#include <QApplication>
-
-Q_DECLARE_METATYPE(ScintillaBuffer*)
 
 DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
 {
     ads::CDockManager::setConfigFlag(ads::CDockManager::AllTabsHaveCloseButton, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::AlwaysShowTabs, true);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::OpaqueSplitterResize, true);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::DragPreviewIsDynamic, true);
+    ads::CDockManager::setConfigFlag(ads::CDockManager::DragPreviewShowsContentPixmap, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasCloseButton, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasUndockButton, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaDynamicTabsMenuButtonVisibility, true);
@@ -49,6 +49,11 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
         currentEditor = editor;
         editor->grabFocus();
         emit editorActivated(editor);
+    });
+
+    connect(m_DockManager, &ads::CDockManager::dockAreaCreated, [=](ads::CDockAreaWidget* DockArea) {
+        // Disable the built in context menu for the title bar since it has options we don't want
+        DockArea->titleBar()->setContextMenuPolicy(Qt::NoContextMenu);
     });
 }
 
@@ -71,6 +76,16 @@ int DockedEditor::count() const
         total += m_DockManager->dockArea(i)->dockWidgetsCount();
 
     return total;
+}
+
+QVector<ScintillaNext *> DockedEditor::editors() const
+{
+    QVector<ScintillaNext *> editors;
+    foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
+        editors.append(qobject_cast<ScintillaNext *>(dockWidget->widget()));
+    }
+
+    return editors;
 }
 
 QVector<ScintillaBuffer *> DockedEditor::buffers() const
@@ -105,6 +120,17 @@ void DockedEditor::dockWidgetCloseRequested()
     emit editorCloseRequested(editor);
 }
 
+ads::CDockAreaWidget * DockedEditor::currentDockArea()
+{
+    foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
+        if (dockWidget->property("focused").toBool()) {
+            return dockWidget->dockAreaWidget();
+        }
+    }
+
+    return Q_NULLPTR;
+}
+
 void DockedEditor::addBuffer(ScintillaBuffer *buffer)
 {
     qInfo(Q_FUNC_INFO);
@@ -129,6 +155,8 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
 
     dw->tabWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(dw->tabWidget(), &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
+        Q_UNUSED(pos)
+
         emit contextMenuRequestedForEditor(editor);
     });
 
@@ -149,12 +177,7 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
 
     connect(dw, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
 
-    ads::CDockAreaWidget *area = m_DockManager->addDockWidgetTab(ads::CenterDockWidgetArea, dw);
-
-    // NOTE: If it is the first widget added to an area, manually set the focus
-    if (area->dockWidgetsCount() == 1) {
-        m_DockManager->setDockWidgetFocused(dw);
-    }
+    m_DockManager->addDockWidget(ads::CenterDockWidgetArea, dw, currentDockArea());
 }
 
 void DockedEditor::removeBuffer(ScintillaBuffer *buffer)

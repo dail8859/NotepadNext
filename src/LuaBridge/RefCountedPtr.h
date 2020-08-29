@@ -2,6 +2,7 @@
 /*
   https://github.com/vinniefalco/LuaBridge
   
+  Copyright 2019, Dmitry Tarakanov
   Copyright 2012, Vinnie Falco <vinnie.falco@gmail.com>
   Copyright 2007, Nathan Reed
 
@@ -27,15 +28,15 @@
 */
 //==============================================================================
 
-#ifndef LUABRIDGE_REFCOUNTEDPTR_HEADER
-#define LUABRIDGE_REFCOUNTEDPTR_HEADER
+#pragma once
 
-#ifdef _MSC_VER
-# include <hash_map>
-#else
-# include <stdint.h>
-# include <ext/hash_map>
-#endif
+#include <LuaBridge/RefCountedObject.h>
+
+#include <unordered_map>
+
+namespace luabridge {
+
+namespace detail {
 
 //==============================================================================
 /**
@@ -44,27 +45,17 @@
 struct RefCountedPtrBase
 {
   // Declaration of container for the refcounts
-#ifdef _MSC_VER
-  typedef stdext::hash_map <const void *, int> RefCountsType;
-#else
-  struct ptr_hash
-  {
-    size_t operator () (const void * const v) const
-    {
-      static __gnu_cxx::hash<unsigned int> H;
-      return H(uintptr_t(v));
-    }
-  };
-  typedef __gnu_cxx::hash_map<const void *, int, ptr_hash> RefCountsType;
-#endif
+  typedef std::unordered_map <const void *, int> RefCountsType;
 
 protected:
-  inline RefCountsType& getRefCounts ()
+  RefCountsType& getRefCounts () const
   {
     static RefCountsType refcounts;
     return refcounts ;
   }
 };
+
+} // namespace detail
 
 //==============================================================================
 /**
@@ -86,7 +77,7 @@ protected:
   @todo Provide an intrusive version of RefCountedPtr.
 */
 template <class T>
-class RefCountedPtr : private RefCountedPtrBase
+class RefCountedPtr : private detail::RefCountedPtrBase
 {
 public:
   template <typename Other>
@@ -117,8 +108,8 @@ public:
 
       @invariant A pointer to U must be convertible to a pointer to T.
 
-      @param  rhs The RefCountedPtr to assign from.
       @tparam U   The other object type.
+      @param  rhs The RefCountedPtr to assign from.
   */
   template <typename U>
   RefCountedPtr (RefCountedPtr <U> const& rhs) : m_p (static_cast <T*> (rhs.get()))
@@ -138,7 +129,7 @@ public:
   /** Assign from another RefCountedPtr.
 
       @param  rhs The RefCountedPtr to assign from.
-      @return     A reference to the RefCountedPtr.
+      @returns     A reference to the RefCountedPtr.
   */
   RefCountedPtr <T>& operator= (RefCountedPtr <T> const& rhs)
   {
@@ -157,7 +148,7 @@ public:
 
       @tparam U   The other object type.
       @param  rhs The other RefCountedPtr to assign from.
-      @return     A reference to the RefCountedPtr.
+      @returns     A reference to the RefCountedPtr.
   */
   template <typename U>
   RefCountedPtr <T>& operator= (RefCountedPtr <U> const& rhs)
@@ -170,7 +161,7 @@ public:
 
   /** Retrieve the raw pointer.
 
-      @return A pointer to the object.
+      @returns A pointer to the object.
   */
   T* get () const
   {
@@ -179,7 +170,7 @@ public:
 
   /** Retrieve the raw pointer.
 
-      @return A pointer to the object.
+      @returns A pointer to the object.
   */
   T* operator* () const
   {
@@ -188,7 +179,7 @@ public:
 
   /** Retrieve the raw pointer.
 
-      @return A pointer to the object.
+      @returns A pointer to the object.
   */
   T* operator-> () const
   {
@@ -199,7 +190,7 @@ public:
 
       @note This is not thread-safe.
 
-      @return The number of active references.
+      @returns The number of active references.
   */
   long use_count () const
   {
@@ -226,10 +217,19 @@ private:
   T* m_p;
 };
 
-//==============================================================================
-
-namespace luabridge
+template <class T>
+bool operator== (const RefCountedPtr <T>& lhs, const RefCountedPtr <T>& rhs)
 {
+  return lhs.get () == rhs.get ();
+}
+
+template <class T>
+bool operator!= (const RefCountedPtr <T>& lhs, const RefCountedPtr <T>& rhs)
+{
+  return lhs.get() != rhs.get();
+}
+
+//==============================================================================
 
 // forward declaration
 template <class T>
@@ -246,6 +246,4 @@ struct ContainerTraits <RefCountedPtr <T> >
   }
 };
 
-}
-
-#endif
+} // namespace luabridge

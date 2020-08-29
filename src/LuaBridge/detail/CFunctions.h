@@ -1,7 +1,8 @@
 //------------------------------------------------------------------------------
 /*
   https://github.com/vinniefalco/LuaBridge
-  
+
+  Copyright 2019, Dmitry Tarakanov
   Copyright 2012, Vinnie Falco <vinnie.falco@gmail.com>
 
   License: The MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -26,123 +27,180 @@
 */
 //==============================================================================
 
+#pragma once
+
+#include <LuaBridge/detail/Config.h>
+#include <LuaBridge/detail/FuncTraits.h>
+
+#include <string>
+
+namespace luabridge {
+namespace detail {
+
 // We use a structure so we can define everything in the header.
 //
 struct CFunc
 {
-  //----------------------------------------------------------------------------
-  /**
-      __index metamethod for a namespace or class static members.
-
-      This handles:
-        Retrieving functions and class static methods, stored in the metatable.
-        Reading global and class static data, stored in the __propget table.
-        Reading global and class properties, stored in the __propget table.
-  */
-  static int indexMetaMethod (lua_State* L)
+  static void addGetter (lua_State* L, const char* name, int tableIndex)
   {
-    int result = 0;
-    lua_getmetatable (L, 1);                // push metatable of arg1
-    for (;;)
-    {
-      lua_pushvalue (L, 2);                 // push key arg2
-      lua_rawget (L, -2);                   // lookup key in metatable
-      if (lua_isnil (L, -1))                // not found
-      {
-        lua_pop (L, 1);                     // discard nil
-        rawgetfield (L, -1, "__propget");   // lookup __propget in metatable
-        lua_pushvalue (L, 2);               // push key arg2
-        lua_rawget (L, -2);                 // lookup key in __propget
-        lua_remove (L, -2);                 // discard __propget
-        if (lua_iscfunction (L, -1))
-        {
-          lua_remove (L, -2);               // discard metatable
-          lua_pushvalue (L, 1);             // push arg1
-          lua_call (L, 1, 1);               // call cfunction
-          result = 1;
-          break;
-        }
-        else
-        {
-          assert (lua_isnil (L, -1));
-          lua_pop (L, 1);                   // discard nil and fall through
-        }
-      }
-      else
-      {
-        assert (lua_istable (L, -1) || lua_iscfunction (L, -1));
-        lua_remove (L, -2);
-        result = 1;
-        break;
-      }
+    assert (lua_istable (L, tableIndex));
+    assert (lua_iscfunction (L, -1)); // Stack: getter
 
-      rawgetfield (L, -1, "__parent");
-      if (lua_istable (L, -1))
-      {
-        // Remove metatable and repeat the search in __parent.
-        lua_remove (L, -2);
-      }
-      else
-      {
-        // Discard metatable and return nil.
-        assert (lua_isnil (L, -1));
-        lua_remove (L, -2);
-        result = 1;
-        break;
-      }
-    }
+    lua_rawgetp (L, tableIndex, getPropgetKey ()); // Stack: getter, propget table (pg)
+    lua_pushvalue (L, -2); // Stack: getter, pg, getter
+    rawsetfield (L, -2, name); // Stack: getter, pg
+    lua_pop (L, 2); // Stack: -
+  }
 
-    return result;
+  static void addSetter (lua_State* L, const char* name, int tableIndex)
+  {
+    assert (lua_istable (L, tableIndex));
+    assert (lua_iscfunction (L, -1)); // Stack: setter
+
+    lua_rawgetp (L, tableIndex, getPropsetKey ()); // Stack: setter, propset table (ps)
+    lua_pushvalue (L, -2); // Stack: setter, ps, setter
+    rawsetfield (L, -2, name); // Stack: setter, ps
+    lua_pop (L, 2); // Stack: -
   }
 
   //----------------------------------------------------------------------------
   /**
-      __newindex metamethod for a namespace or class static members.
-
-      The __propset table stores proxy functions for assignment to:
-        Global and class static data.
-        Global and class properties.
+      __index metamethod for a namespace or class static and non-static members.
+      Retrieves functions from metatables and properties from propget tables.
+      Looks through the class hierarchy if inheritance is present.
   */
-  static int newindexMetaMethod (lua_State* L)
+  static int indexMetaMethod (lua_State* L)
   {
-    int result = 0;
-    lua_getmetatable (L, 1);                // push metatable of arg1
+    assert (lua_istable (L, 1) || lua_isuserdata (L, 1)); // Stack (further not shown): table | userdata, name
+
+    lua_getmetatable (L, 1); // Stack: class/const table (mt)
+    assert (lua_istable (L, -1));
+
     for (;;)
     {
-      rawgetfield (L, -1, "__propset");     // lookup __propset in metatable
-      assert (lua_istable (L, -1));
-      lua_pushvalue (L, 2);                 // push key arg2
-      lua_rawget (L, -2);                   // lookup key in __propset
-      lua_remove (L, -2);                   // discard __propset
-      if (lua_iscfunction (L, -1))          // ensure value is a cfunction
+      lua_pushvalue (L, 2); // Stack: mt, field name
+      lua_rawget (L, -2);  // Stack: mt, field | nil
+
+      if (lua_iscfunction (L, -1)) // Stack: mt, field
       {
-        lua_remove (L, -2);                 // discard metatable
-        lua_pushvalue (L, 3);               // push new value arg3
-        lua_call (L, 1, 0);                 // call cfunction
-        result = 0;
-        break;
-      }
-      else
-      {
-        assert (lua_isnil (L, -1));
-        lua_pop (L, 1);
+        lua_remove (L, -2);  // Stack: field
+        return 1;
       }
 
-      rawgetfield (L, -1, "__parent");
-      if (lua_istable (L, -1))
+      assert (lua_isnil (L, -1)); // Stack: mt, nil
+      lua_pop (L, 1); // Stack: mt
+
+      lua_rawgetp (L, -1, getPropgetKey ()); // Stack: mt, propget table (pg)
+      assert (lua_istable (L, -1));
+
+      lua_pushvalue (L, 2); // Stack: mt, pg, field name
+      lua_rawget (L, -2);  // Stack: mt, pg, getter | nil
+      lua_remove (L, -2); // Stack: mt, getter | nil
+
+      if (lua_iscfunction (L, -1)) // Stack: mt, getter
       {
-        // Remove metatable and repeat the search in __parent.
-        lua_remove (L, -2);
+        lua_remove (L, -2);  // Stack: getter
+        lua_pushvalue (L, 1); // Stack: getter, table | userdata
+        lua_call (L, 1, 1); // Stack: value
+        return 1;
       }
-      else
+
+      assert (lua_isnil (L, -1)); // Stack: mt, nil
+      lua_pop (L, 1); // Stack: mt
+
+      // It may mean that the field may be in const table and it's constness violation.
+      // Don't check that, just return nil
+
+      // Repeat the lookup in the parent metafield,
+      // or return nil if the field doesn't exist.
+      lua_rawgetp (L, -1, getParentKey ()); // Stack: mt, parent mt | nil
+
+      if (lua_isnil (L, -1)) // Stack: mt, nil
       {
-        assert (lua_isnil (L, -1));
-        lua_pop (L, 2);
-        result = luaL_error (L,"no writable variable '%s'", lua_tostring (L, 2));
+        lua_remove (L, -2); // Stack: nil
+        return 1;
       }
+
+      // Removethe  metatable and repeat the search in the parent one.
+      assert (lua_istable (L, -1)); // Stack: mt, parent mt
+      lua_remove (L, -2); // Stack: parent mt
     }
 
-    return result;
+    // no return
+  }
+
+  //----------------------------------------------------------------------------
+  /**
+      __newindex metamethod for namespace or class static members.
+      Retrieves properties from propset tables.
+  */
+  static int newindexStaticMetaMethod (lua_State* L)
+  {
+    return newindexMetaMethod (L, false);
+  }
+
+  //----------------------------------------------------------------------------
+  /**
+      __newindex metamethod for non-static members.
+      Retrieves properties from propset tables.
+  */
+  static int newindexObjectMetaMethod (lua_State* L)
+  {
+    return newindexMetaMethod (L, true);
+  }
+
+  static int newindexMetaMethod (lua_State* L, bool pushSelf)
+  {
+    assert (lua_istable (L, 1) || lua_isuserdata (L, 1)); // Stack (further not shown): table | userdata, name, new value
+
+    lua_getmetatable (L, 1); // Stack: metatable (mt)
+    assert (lua_istable (L, -1));
+
+    for (;;)
+    {
+      lua_rawgetp (L, -1, getPropsetKey ()); // Stack: mt, propset table (ps) | nil
+
+      if (lua_isnil (L, -1)) // Stack: mt, nil
+      {
+        lua_pop (L, 2); // Stack: -
+        return luaL_error (L, "No member named '%s'", lua_tostring (L, 2));
+      }
+
+      assert (lua_istable (L, -1));
+
+      lua_pushvalue (L, 2); // Stack: mt, ps, field name
+      lua_rawget (L, -2); // Stack: mt, ps, setter | nil
+      lua_remove (L, -2); // Stack: mt, setter | nil
+
+      if (lua_iscfunction (L, -1)) // Stack: mt, setter
+      {
+        lua_remove (L, -2); // Stack: setter
+        if (pushSelf)
+        {
+          lua_pushvalue (L, 1); // Stack: setter, table | userdata
+        }
+        lua_pushvalue (L, 3); // Stack: setter, table | userdata, new value
+        lua_call (L, pushSelf ? 2 : 1, 0); // Stack: -
+        return 0;
+      }
+
+      assert (lua_isnil (L, -1)); // Stack: mt, nil
+      lua_pop (L, 1); // Stack: mt
+
+      lua_rawgetp (L, -1, getParentKey ()); // Stack: mt, parent mt | nil
+
+      if (lua_isnil (L, -1)) // Stack: mt, nil
+      {
+        lua_pop (L, 1); // Stack: -
+        return luaL_error (L, "No writable member '%s'", lua_tostring (L, 2));
+      }
+
+      assert (lua_istable (L, -1)); // Stack: mt, parent mt
+      lua_remove (L, -2); // Stack: parent mt
+      // Repeat the search in the parent
+    }
+
+    // no return
   }
 
   //----------------------------------------------------------------------------
@@ -154,12 +212,12 @@ struct CFunc
   static int readOnlyError (lua_State* L)
   {
     std::string s;
-    
+
     s = s + "'" + lua_tostring (L, lua_upvalueindex (1)) + "' is read-only";
 
     return luaL_error (L, s.c_str ());
   }
-  
+
   //----------------------------------------------------------------------------
   /**
       lua_CFunction to get a variable.
@@ -203,45 +261,20 @@ struct CFunc
       This is used for global functions, global properties, class static methods,
       and class static properties.
 
-      The function pointer is in the first upvalue.
+      The function pointer (lightuserdata) in the first upvalue.
   */
-  template <class FnPtr,
-            class ReturnType = typename FuncTraits <FnPtr>::ReturnType>
+  template <class FnPtr>
   struct Call
   {
     typedef typename FuncTraits <FnPtr>::Params Params;
+    typedef typename FuncTraits <FnPtr>::ReturnType ReturnType;
+
     static int f (lua_State* L)
     {
-      assert (isfulluserdata (L, lua_upvalueindex (1)));
-      FnPtr const& fnptr = *static_cast <FnPtr const*> (lua_touserdata (L, lua_upvalueindex (1)));
+      assert (lua_islightuserdata (L, lua_upvalueindex (1)));
+      FnPtr fnptr = reinterpret_cast <FnPtr> (lua_touserdata (L, lua_upvalueindex (1)));
       assert (fnptr != 0);
-      ArgList <Params> args (L);
-      Stack <typename FuncTraits <FnPtr>::ReturnType>::push (L, FuncTraits <FnPtr>::call (fnptr, args));
-      return 1;
-    }
-  };
-
-  //----------------------------------------------------------------------------
-  /**
-      lua_CFunction to call a function with no return value.
-
-      This is used for global functions, global properties, class static methods,
-      and class static properties.
-
-      The function pointer is in the first upvalue.
-  */
-  template <class FnPtr>
-  struct Call <FnPtr, void>
-  {
-    typedef typename FuncTraits <FnPtr>::Params Params;
-    static int f (lua_State* L)
-    {
-      assert (isfulluserdata (L, lua_upvalueindex (1)));
-      FnPtr const& fnptr = *static_cast <FnPtr const*> (lua_touserdata (L, lua_upvalueindex (1)));
-      assert (fnptr != 0);
-      ArgList <Params> args (L);
-      FuncTraits <FnPtr>::call (fnptr, args);
-      return 0;
+      return Invoke <ReturnType, Params, 1>::run (L, fnptr);
     }
   };
 
@@ -252,12 +285,12 @@ struct CFunc
       The member function pointer is in the first upvalue.
       The class userdata object is at the top of the Lua stack.
   */
-  template <class MemFnPtr,
-            class ReturnType = typename FuncTraits <MemFnPtr>::ReturnType>
+  template <class MemFnPtr>
   struct CallMember
   {
     typedef typename FuncTraits <MemFnPtr>::ClassType T;
     typedef typename FuncTraits <MemFnPtr>::Params Params;
+    typedef typename FuncTraits <MemFnPtr>::ReturnType ReturnType;
 
     static int f (lua_State* L)
     {
@@ -265,18 +298,16 @@ struct CFunc
       T* const t = Userdata::get <T> (L, 1, false);
       MemFnPtr const& fnptr = *static_cast <MemFnPtr const*> (lua_touserdata (L, lua_upvalueindex (1)));
       assert (fnptr != 0);
-      ArgList <Params, 2> args (L);
-      Stack <ReturnType>::push (L, FuncTraits <MemFnPtr>::call (t, fnptr, args));
-      return 1;
+      return Invoke <ReturnType, Params, 2>::run (L, t, fnptr);
     }
   };
 
-  template <class MemFnPtr,
-            class ReturnType = typename FuncTraits <MemFnPtr>::ReturnType>
+  template <class MemFnPtr>
   struct CallConstMember
   {
     typedef typename FuncTraits <MemFnPtr>::ClassType T;
     typedef typename FuncTraits <MemFnPtr>::Params Params;
+    typedef typename FuncTraits <MemFnPtr>::ReturnType ReturnType;
 
     static int f (lua_State* L)
     {
@@ -284,52 +315,7 @@ struct CFunc
       T const* const t = Userdata::get <T> (L, 1, true);
       MemFnPtr const& fnptr = *static_cast <MemFnPtr const*> (lua_touserdata (L, lua_upvalueindex (1)));
       assert (fnptr != 0);
-      ArgList <Params, 2> args(L);
-      Stack <ReturnType>::push (L, FuncTraits <MemFnPtr>::call (t, fnptr, args));
-      return 1;
-    }
-  };
-
-  //----------------------------------------------------------------------------
-  /**
-      lua_CFunction to call a class member function with no return value.
-
-      The member function pointer is in the first upvalue.
-      The class userdata object is at the top of the Lua stack.
-  */
-  template <class MemFnPtr>
-  struct CallMember <MemFnPtr, void>
-  {
-    typedef typename FuncTraits <MemFnPtr>::ClassType T;
-    typedef typename FuncTraits <MemFnPtr>::Params Params;
-
-    static int f (lua_State* L)
-    {
-      assert (isfulluserdata (L, lua_upvalueindex (1)));
-      T* const t = Userdata::get <T> (L, 1, false);
-      MemFnPtr const& fnptr = *static_cast <MemFnPtr const*> (lua_touserdata (L, lua_upvalueindex (1)));
-      assert (fnptr != 0);
-      ArgList <Params, 2> args (L);
-      FuncTraits <MemFnPtr>::call (t, fnptr, args);
-      return 0;
-    }
-  };
-
-  template <class MemFnPtr>
-  struct CallConstMember <MemFnPtr, void>
-  {
-    typedef typename FuncTraits <MemFnPtr>::ClassType T;
-    typedef typename FuncTraits <MemFnPtr>::Params Params;
-
-    static int f (lua_State* L)
-    {
-      assert (isfulluserdata (L, lua_upvalueindex (1)));
-      T const* const t = Userdata::get <T> (L, 1, true);
-      MemFnPtr const& fnptr = *static_cast <MemFnPtr const*> (lua_touserdata (L, lua_upvalueindex (1)));
-      assert (fnptr != 0);
-      ArgList <Params, 2> args (L);
-      FuncTraits <MemFnPtr>::call (t, fnptr, args);
-      return 0;
+      return Invoke <ReturnType, Params, 2>::run (L, t, fnptr);
     }
   };
 
@@ -338,7 +324,7 @@ struct CFunc
       lua_CFunction to call a class member lua_CFunction.
 
       The member function pointer is in the first upvalue.
-      The class userdata object is at the top of the Lua stack.
+      The object userdata ('this') value is at top ot the Lua stack.
   */
   template <class T>
   struct CallMemberCFunction
@@ -346,7 +332,7 @@ struct CFunc
     static int f (lua_State* L)
     {
       assert (isfulluserdata (L, lua_upvalueindex (1)));
-      typedef int (T::*MFP)(lua_State* L);
+      typedef int (T::*MFP) (lua_State* L);
       T* const t = Userdata::get <T> (L, 1, false);
       MFP const& fnptr = *static_cast <MFP const*> (lua_touserdata (L, lua_upvalueindex (1)));
       assert (fnptr != 0);
@@ -360,13 +346,53 @@ struct CFunc
     static int f (lua_State* L)
     {
       assert (isfulluserdata (L, lua_upvalueindex (1)));
-      typedef int (T::*MFP)(lua_State* L);
+      typedef int (T::*MFP) (lua_State* L);
       T const* const t = Userdata::get <T> (L, 1, true);
       MFP const& fnptr = *static_cast <MFP const*> (lua_touserdata (L, lua_upvalueindex (1)));
       assert (fnptr != 0);
       return (t->*fnptr) (L);
     }
   };
+
+#ifdef LUABRIDGE_CXX11
+
+  //--------------------------------------------------------------------------
+  /**
+      lua_CFunction to call on a object.
+
+      The proxy function pointer (lightuserdata) is in the first upvalue.
+      The class userdata object is at the top of the Lua stack.
+  */
+  template <class FnPtr>
+  struct CallProxyFunction
+  {
+    using Params = typename FuncTraits <FnPtr>::Params;
+    using ReturnType = typename FuncTraits <FnPtr>::ReturnType;
+
+    static int f (lua_State* L)
+    {
+      assert (lua_islightuserdata (L, lua_upvalueindex (1)));
+      auto fnptr = reinterpret_cast <FnPtr> (lua_touserdata (L, lua_upvalueindex (1)));
+      assert (fnptr != 0);
+      return Invoke <ReturnType, Params, 1>::run (L, fnptr);
+    }
+  };
+
+  template <class Functor>
+  struct CallProxyFunctor
+  {
+    using Params = typename FuncTraits <Functor>::Params;
+    using ReturnType = typename FuncTraits <Functor>::ReturnType;
+
+    static int f (lua_State* L)
+    {
+      assert (isfulluserdata (L, lua_upvalueindex (1)));
+      Functor& fn = *static_cast <Functor*> (lua_touserdata (L, lua_upvalueindex (1)));
+      return Invoke <ReturnType, Params, 1>::run (L, fn);
+    }
+  };
+
+#endif
 
   //--------------------------------------------------------------------------
 
@@ -408,6 +434,18 @@ struct CFunc
     return 0;
   }
 
+  /**
+      __gc metamethod for an arbitrary class.
+  */
+  template <class T>
+  static int gcMetaMethodAny (lua_State* L)
+  {
+    assert (isfulluserdata (L, 1));
+    T* t = static_cast <T*> (lua_touserdata (L, 1));
+    t->~T ();
+    return 0;
+  }
+
   //--------------------------------------------------------------------------
   /**
       lua_CFunction to get a class data member.
@@ -418,9 +456,16 @@ struct CFunc
   template <class C, typename T>
   static int getProperty (lua_State* L)
   {
-    C const* const c = Userdata::get <C> (L, 1, true);
+    C* const c = Userdata::get <C> (L, 1, true);
     T C::** mp = static_cast <T C::**> (lua_touserdata (L, lua_upvalueindex (1)));
-    Stack <T>::push (L, c->**mp);
+    try
+    {
+      Stack <T&>::push (L, c->**mp);
+    }
+    catch (const std::exception& e)
+    {
+      luaL_error (L, e.what ());
+    }
     return 1;
   }
 
@@ -436,7 +481,18 @@ struct CFunc
   {
     C* const c = Userdata::get <C> (L, 1, false);
     T C::** mp = static_cast <T C::**> (lua_touserdata (L, lua_upvalueindex (1)));
-    c->**mp = Stack <T>::get (L, 2);
+    try
+    {
+      c->**mp = Stack <T>::get (L, 2);
+    }
+    catch (const std::exception& e)
+    {
+      luaL_error (L, e.what ());
+    }
     return 0;
   }
 };
+
+} // namespace detail
+
+} // namespace luabridge

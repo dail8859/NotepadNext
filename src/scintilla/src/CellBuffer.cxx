@@ -667,7 +667,7 @@ bool CellBuffer::SetStyleAt(Sci::Position position, char styleValue) noexcept {
 	}
 }
 
-bool CellBuffer::SetStyleFor(Sci::Position position, Sci::Position lengthStyle, char styleValue) {
+bool CellBuffer::SetStyleFor(Sci::Position position, Sci::Position lengthStyle, char styleValue) noexcept {
 	if (!hasStyles) {
 		return false;
 	}

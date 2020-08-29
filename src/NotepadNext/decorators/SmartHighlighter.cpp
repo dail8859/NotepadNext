@@ -21,7 +21,7 @@
 #include "ScintillaNext.h"
 
 SmartHighlighter::SmartHighlighter(ScintillaEdit *editor) :
-    Plugin(editor)
+    EditorDecorator(editor)
 {
     setObjectName("SmartHighlighter");
 

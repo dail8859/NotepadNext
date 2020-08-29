@@ -17,20 +17,35 @@
  */
 
 
-#ifndef NPPTABBAR_H
-#define NPPTABBAR_H
+#ifndef EDITORDECORATOR_H
+#define EDITORDECORATOR_H
 
-#include <QTabBar>
+#include <QObject>
 
-class NppTabBar : public QTabBar
+#include "ScintillaEdit.h"
+
+class EditorDecorator : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY stateChanged)
 
 public:
-    explicit NppTabBar(QWidget *parent = Q_NULLPTR);
+    explicit EditorDecorator(ScintillaEdit *editor) : QObject(editor), editor(editor) {}
+    virtual ~EditorDecorator() {}
+
+    bool isEnabled() const { return enabled; }
+    ScintillaEdit *getEditor() const { return editor; }
+
+public slots:
+    void setEnabled(bool b);
+    virtual void notify(const SCNotification *pscn) = 0;
+
+signals:
+    void stateChanged(bool b);
 
 protected:
-    void mousePressEvent(QMouseEvent *event) override;
+    ScintillaEdit *editor;
+    bool enabled = false;
 };
 
-#endif // NPPTABBAR_H
+#endif // EDITORDECORATOR_H

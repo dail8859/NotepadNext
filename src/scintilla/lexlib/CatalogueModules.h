@@ -15,7 +15,7 @@ namespace Scintilla {
 class CatalogueModules {
 	std::vector<LexerModule *> lexerCatalogue;
 public:
-	const LexerModule *Find(int language) {
+	const LexerModule *Find(int language) const {
 		for (const LexerModule *lm : lexerCatalogue) {
 			if (lm->GetLanguage() == language) {
 				return lm;
@@ -24,7 +24,7 @@ public:
 		return nullptr;
 	}
 
-	const LexerModule *Find(const char *languageName) {
+	const LexerModule *Find(const char *languageName) const noexcept {
 		if (languageName) {
 			for (const LexerModule *lm : lexerCatalogue) {
 				if (lm->languageName && (0 == strcmp(lm->languageName, languageName))) {
@@ -39,11 +39,11 @@ public:
 		lexerCatalogue.push_back(plm);
 	}
 
-	unsigned int Count() {
+	unsigned int Count() const noexcept {
 		return static_cast<unsigned int>(lexerCatalogue.size());
 	}
 
-	const char *Name(unsigned int index) {
+	const char *Name(unsigned int index) const noexcept {
 		if (index < static_cast<unsigned int>(lexerCatalogue.size())) {
 			return lexerCatalogue[index]->languageName;
 		} else {
@@ -51,12 +51,12 @@ public:
 		}
 	}
 
-	LexerFactoryFunction Factory(unsigned int index) {
+	LexerFactoryFunction Factory(unsigned int index) const noexcept {
 		// Works for object lexers but not for function lexers
 		return lexerCatalogue[index]->fnFactory;
 	}
 
-	ILexer5 *Create(unsigned int index) {
+	ILexer5 *Create(unsigned int index) const {
 		const LexerModule *plm = lexerCatalogue[index];
 		if (!plm) {
 			return nullptr;

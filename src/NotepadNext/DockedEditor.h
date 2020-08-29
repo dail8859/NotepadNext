@@ -38,10 +38,15 @@ public:
 
     ScintillaNext *getCurrentEditor() const;
     ScintillaBuffer *getCurrentBuffer() const;
+    ads::CDockAreaWidget *currentDockArea();
+
+    QVector<ScintillaNext *> editors() const;
+    QVector<ScintillaBuffer *> buffers() const;
+
+    void switchToEditor(const ScintillaNext *editor);
+    void switchToBuffer(const ScintillaBuffer *buffer);
 
     int count() const;
-    QVector<ScintillaBuffer *> buffers() const;
-    void switchToBuffer(const ScintillaBuffer *buffer);
 
 private slots:
     void dockWidgetCloseRequested();

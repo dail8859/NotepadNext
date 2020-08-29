@@ -1,6 +1,6 @@
 /*
  * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * Copyright 2020 Justin Dailey
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,24 +17,30 @@
  */
 
 
-#ifndef BRACEMATCH_H
-#define BRACEMATCH_H
+#ifndef SURROUNDSELECTION_H
+#define SURROUNDSELECTION_H
 
-#include "Plugin.h"
+#include <QObject>
+#include <QWidget>
 
-class BraceMatch : public Plugin
+#include "ScintillaEdit.h"
+#include "EditorDecorator.h"
+
+
+class SurroundSelection : public EditorDecorator
 {
     Q_OBJECT
-
 public:
-    BraceMatch(ScintillaEdit *editor);
+    SurroundSelection(ScintillaEdit *editor);
 
-private:
-    void doHighlighting();
-    void clearHighlighting();
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
 public slots:
     void notify(const SCNotification *pscn) override;
+
+private:
+    void surroundSelections(const char ch1, const char ch2);
 };
 
-#endif // BRACEMATCH_H
+#endif // SURROUNDSELECTION_H

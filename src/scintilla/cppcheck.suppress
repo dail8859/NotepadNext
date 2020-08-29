@@ -1,10 +1,6 @@
 // File to suppress cppcheck warnings for files that will not be fixed.
 // Does not suppress warnings where an additional occurrence of the warning may be of interest.
 
-// unreadVariable has expanded in cppcheck 1.90 to match assigning a struct then reading
-// only from members which is a common idiom
-unreadVariable
-
 // Coding style is to use assignments in constructor when there are many
 // members to initialize or the initialization is complex or has comments.
 useInitializationList
@@ -14,18 +10,24 @@ useInitializationList
 // produces same result on empty collections
 useStlAlgorithm
 
-// Currently shift by word size is implementation defined but is OK on all used compilers
-// In C++20, it will be well-defined.
-shiftTooManyBitsSigned
+// Written with variable for consistency
+knownArgument:scintilla/src/SparseVector.h
+knownArgument:scintilla/src/RESearch.cxx
 
 // The two sections are for different purposes: C1 control set and UTF-8 invalid bytes
 duplicateCondition:scintilla/src/Editor.cxx
+
+// Appears to not understand lambda
+knownConditionTrueFalse:scintilla/src/PerLine.cxx
 
 // Some non-explicit constructors are used for conversions or are private to lexers
 noExplicitConstructor
 
 // MarginView access to all bits is safe and is better defined in later versions of C++
 shiftTooManyBitsSigned:scintilla/src/MarginView.cxx
+
+// The styler parameter is not const as LexAccessor::operator[] is not const
+constParameter:scintilla/lexlib/StyleContext.cxx
 
 // ScintillaDocument is providing an API and there are no consumers of the API inside Scintilla
 unusedFunction:scintilla/qt/ScintillaEdit/ScintillaDocument.cpp
@@ -53,9 +55,12 @@ unreadVariable:scintilla/lexers/LexBaan.cxx
 constParameter:scintilla/lexers/LexBash.cxx
 uninitMemberVar:scintilla/lexers/LexBash.cxx
 variableScope:scintilla/lexers/LexBash.cxx
+knownConditionTrueFalse:scintilla/lexers/LexBash.cxx
 variableScope:scintilla/lexers/LexBatch.cxx
 constParameter:scintilla/lexers/LexBullant.cxx
 variableScope:scintilla/lexers/LexCmake.cxx
+constParameter:scintilla/lexers/LexCmake.cxx
+knownConditionTrueFalse:scintilla/lexers/LexCmake.cxx
 constParameter:scintilla/lexers/LexCLW.cxx
 constParameter:scintilla/lexers/LexCOBOL.cxx
 constParameter:scintilla/lexers/LexCoffeeScript.cxx
@@ -68,6 +73,7 @@ constParameter:scintilla/lexers/LexEiffel.cxx
 variableScope:scintilla/lexers/LexErlang.cxx
 knownConditionTrueFalse:scintilla/lexers/LexEScript.cxx
 constParameter:scintilla/lexers/LexFortran.cxx
+constParameter:scintilla/lexers/LexGap.cxx
 variableScope:scintilla/lexers/LexGui4Cli.cxx
 constParameter:scintilla/lexers/LexHaskell.cxx
 constParameter:scintilla/lexers/LexHex.cxx
@@ -78,6 +84,7 @@ variableScope:scintilla/lexers/LexLaTeX.cxx
 constParameter:scintilla/lexers/LexLaTeX.cxx
 constParameter:scintilla/lexers/LexLisp.cxx
 constParameter:scintilla/lexers/LexMagik.cxx
+knownArgument:scintilla/lexers/LexMarkdown.cxx
 constParameter:scintilla/lexers/LexMatlab.cxx
 unreadVariable:scintilla/lexers/LexMatlab.cxx
 variableScope:scintilla/lexers/LexMetapost.cxx
@@ -89,7 +96,10 @@ constParameter:scintilla/lexers/LexNim.cxx
 constParameter:scintilla/lexers/LexNimrod.cxx
 variableScope:scintilla/lexers/LexNimrod.cxx
 variableScope:scintilla/lexers/LexNsis.cxx
+constParameter:scintilla/lexers/LexNsis.cxx
+knownConditionTrueFalse:scintilla/lexers/LexNsis.cxx
 variableScope:scintilla/lexers/LexOpal.cxx
+constParameter:scintilla/lexers/LexOpal.cxx
 constParameter:scintilla/lexers/LexOScript.cxx
 constParameter:scintilla/lexers/LexPascal.cxx
 variableScope:scintilla/lexers/LexPB.cxx
@@ -97,6 +107,7 @@ constParameter:scintilla/lexers/LexPerl.cxx
 constParameter:scintilla/lexers/LexPLM.cxx
 constParameter:scintilla/lexers/LexPython.cxx
 shadowVariable:scintilla/lexers/LexPowerPro.cxx
+knownConditionTrueFalse:scintilla/lexers/LexPowerPro.cxx
 constParameter:scintilla/lexers/LexProgress.cxx
 variableScope:scintilla/lexers/LexProgress.cxx
 constParameter:scintilla/lexers/LexRaku.cxx
@@ -106,6 +117,7 @@ constParameter:scintilla/lexers/LexRuby.cxx
 variableScope:scintilla/lexers/LexRuby.cxx
 uninitMemberVar:scintilla/lexers/LexRuby.cxx
 constParameter:scintilla/lexers/LexRust.cxx
+knownConditionTrueFalse:scintilla/lexers/LexRust.cxx
 constParameter:scintilla/lexers/LexScriptol.cxx
 variableScope:scintilla/lexers/LexSpecman.cxx
 constParameter:scintilla/lexers/LexSpice.cxx
@@ -117,12 +129,11 @@ clarifyCalculation:scintilla/lexers/LexTADS3.cxx
 constParameter:scintilla/lexers/LexTADS3.cxx
 constParameter:scintilla/lexers/LexTAL.cxx
 invalidscanf:scintilla/lexers/LexTCMD.cxx
-knownConditionTrueFalse:scintilla/lexers/LexTCMD.cxx
 constParameter:scintilla/lexers/LexTeX.cxx
 variableScope:scintilla/lexers/LexTeX.cxx
+knownArgument:scintilla/lexers/LexTxt2tags.cxx
 constParameter:scintilla/lexers/LexVB.cxx
-knownConditionTrueFalse:scintilla/lexers/LexVerilog.cxx
-constArgument:scintilla/lexers/LexVerilog.cxx
+knownArgument:scintilla/lexers/LexVerilog.cxx
 constParameter:scintilla/lexers/LexVerilog.cxx
 constParameter:scintilla/lexers/LexVHDL.cxx
 shadowVariable:scintilla/lexers/LexVHDL.cxx

@@ -36,74 +36,72 @@ win32 {
 
 
 SOURCES += \
+    BufferManager.cpp \
     DockedEditor.cpp \
     Finder.cpp \
-    QuickFindWidget.cpp \
-    main.cpp \
-    ScintillaBuffer.cpp \
-    BufferManager.cpp \
-    BufferView.cpp \
-    widgets/NppTabBar.cpp \
-    widgets/StatusLabel.cpp \
-    NppImporter.cpp \
-    RecentFilesListManager.cpp \
-    ScintillaNext.cpp \
-    QRegexSearch.cpp \
-    LuaState.cpp \
     IFaceTable.cpp \
-    LuaExtension.cpp \
-    SciIFaceTable.cpp \
     IFaceTableMixer.cpp \
-    NotepadNextApplication.cpp \
+    LuaExtension.cpp \
+    LuaState.cpp \
     MacroRecorder.cpp \
+    NotepadNextApplication.cpp \
+    NppImporter.cpp \
+    QRegexSearch.cpp \
+    QuickFindWidget.cpp \
+    RecentFilesListManager.cpp \
+    SciIFaceTable.cpp \
+    ScintillaBuffer.cpp \
+    ScintillaNext.cpp \
     Settings.cpp \
-    dialogs/MacroRunDialog.cpp \
-    dialogs/MacroSaveDialog.cpp \
-    dialogs/WindowListDialog.cpp \
-    dialogs/PreferencesDialog.cpp \
-    dialogs/MainWindow.cpp \
+    decorators/SurroundSelection.cpp \
     dialogs/FindReplaceDialog.cpp \
     dialogs/LuaConsoleDock.cpp \
-    plugins/Plugin.cpp \
-    plugins/HighlightedScrollBar.cpp \
-    plugins/SmartHighlighter.cpp \
-    plugins/BraceMatch.cpp \
-    plugins/LineNumbers.cpp
+    dialogs/MacroRunDialog.cpp \
+    dialogs/MacroSaveDialog.cpp \
+    dialogs/MainWindow.cpp \
+    dialogs/PreferencesDialog.cpp \
+    dialogs/WindowListDialog.cpp \
+    main.cpp \
+    decorators/BraceMatch.cpp \
+    decorators/EditorDecorator.cpp \
+    decorators/HighlightedScrollBar.cpp \
+    decorators/LineNumbers.cpp \
+    decorators/SmartHighlighter.cpp \
+    widgets/StatusLabel.cpp
 
 HEADERS += \
+    BufferManager.h \
     DockedEditor.h \
     Finder.h \
     FocusWatcher.h \
-    QuickFindWidget.h \
-    ScintillaBuffer.h \
-    BufferManager.h \
-    BufferView.h \
-    widgets/NppTabBar.h \
-    widgets/StatusLabel.h \
-    NppImporter.h \
-    RecentFilesListManager.h \
-    ScintillaNext.h \
-    QRegexSearch.h \
-    LuaState.h \
     IFaceTable.h \
-    LuaExtension.h \
-    SciIFaceTable.h \
     IFaceTableMixer.h \
-    NotepadNextApplication.h \
+    LuaExtension.h \
+    LuaState.h \
     MacroRecorder.h \
+    NotepadNextApplication.h \
+    NppImporter.h \
+    QRegexSearch.h \
+    QuickFindWidget.h \
+    RecentFilesListManager.h \
+    SciIFaceTable.h \
+    ScintillaBuffer.h \
+    ScintillaNext.h \
     Settings.h \
-    dialogs/MainWindow.h \
+    decorators/SurroundSelection.h \
     dialogs/FindReplaceDialog.h \
     dialogs/LuaConsoleDock.h \
     dialogs/MacroRunDialog.h \
     dialogs/MacroSaveDialog.h \
-    dialogs/WindowListDialog.h \
+    dialogs/MainWindow.h \
     dialogs/PreferencesDialog.h \
-    plugins/Plugin.h \
-    plugins/HighlightedScrollBar.h \
-    plugins/SmartHighlighter.h \
-    plugins/BraceMatch.h \
-    plugins/LineNumbers.h
+    dialogs/WindowListDialog.h \
+    decorators/BraceMatch.h \
+    decorators/EditorDecorator.h \
+    decorators/HighlightedScrollBar.h \
+    decorators/LineNumbers.h \
+    decorators/SmartHighlighter.h \
+    widgets/StatusLabel.h
 
 FORMS += \
     QuickFindWidget.ui \
@@ -119,7 +117,7 @@ RESOURCES += \
     resources.qrc \
     scripts.qrc
 
-INCLUDEPATH += $$PWD/plugins
+INCLUDEPATH += $$PWD/decorators
 INCLUDEPATH += $$PWD/dialogs
 INCLUDEPATH += $$PWD/widgets
 
@@ -150,6 +148,7 @@ INCLUDEPATH += $$PWD/../uchardet/src
 DEPENDPATH += $$PWD/../uchardet/src
 
 INCLUDEPATH += $$PWD/../LuaBridge
+INCLUDEPATH += $$PWD/../
 DEFINES += LUA_VERSION_NUM=503
 
 win32-g++:LIBS += libUser32

@@ -45,20 +45,52 @@ struct luabridge::Stack <QString const&>
 NotepadNextApplication::NotepadNextApplication(const QString &id, int &argc, char **argv)
     : QtSingleApplication(id, argc, argv)
 {
-}
-
-bool NotepadNextApplication::init()
-{
-    Q_ASSERT(luaState == Q_NULLPTR);
-
     qInfo(Q_FUNC_INFO);
+
+    bufferManager = new BufferManager(this);
 
     luaState = new LuaState();
     luaState->executeFile(":/scripts/init.lua");
 
     settings = new Settings(this);
 
+    // LuaBridge is not a long term solution
+    // This is probably temporary, but it is quick and works
+    luabridge::setHideMetatables(false);
+    luabridge::getGlobalNamespace(luaState->L)
+        .beginNamespace("nn")
+            .beginClass<Settings>("Settings")
+                .addFunction("showMenuBar", &Settings::setShowMenuBar)
+                .addFunction("showToolBar", &Settings::setShowToolBar)
+                .addFunction("showTabBar", &Settings::setShowTabBar)
+                .addFunction("showStatusBar", &Settings::setShowStatusBar)
+            .endClass()
+        .endNamespace();
+    luabridge::setGlobal(luaState->L, settings, "settings");
+}
+
+bool NotepadNextApplication::initGui()
+{
+    qInfo(Q_FUNC_INFO);
+
     createNewWindow();
+
+    luabridge::getGlobalNamespace(luaState->L)
+        .beginNamespace("nn")
+            .beginClass<QWidget>("QWidget")
+                .addFunction("exit", &QWidget::close)
+            .endClass()
+            .deriveClass<MainWindow, QWidget>("MainWindow")
+                .addFunction("newFile", &MainWindow::newFile)
+                .addFunction("openFile", &MainWindow::openFile)
+                .addFunction("openFileDialog", &MainWindow::openFileDialog)
+                .addFunction("reloadFile", &MainWindow::reloadFile)
+                .addFunction("saveFile", &MainWindow::saveCurrentFile)
+                .addFunction("saveFileAs", &MainWindow::saveCurrentFileAs)
+                .addFunction("closeFile", &MainWindow::closeCurrentFile)
+            .endClass()
+        .endNamespace();
+    luabridge::setGlobal(luaState->L, windows.first(), "window");
 
     // If the application is activated (e.g. user switching to another program and them back) the focus
     // needs to be reset on whatever object previously had focus (e.g. the find dialog)
@@ -89,33 +121,6 @@ bool NotepadNextApplication::init()
         }
     });
 
-    // LuaBridge is not a long term solution
-    // This is probably temporary, but it is quick and works
-    luabridge::setHideMetatables(false);
-    luabridge::getGlobalNamespace(luaState->L)
-        .beginNamespace("nn")
-            .beginClass<QWidget>("QWidget")
-                .addFunction("exit", &QWidget::close)
-            .endClass()
-            .deriveClass<MainWindow, QWidget>("MainWindow")
-                .addFunction("newFile", &MainWindow::newFile)
-                .addFunction("openFile", &MainWindow::openFile)
-                .addFunction("openFileDialog", &MainWindow::openFileDialog)
-                .addFunction("reloadFile", &MainWindow::reloadFile)
-                .addFunction("saveFile", &MainWindow::saveCurrentFile)
-                .addFunction("saveFileAs", &MainWindow::saveCurrentFileAs)
-                .addFunction("closeFile", &MainWindow::closeCurrentFile)
-            .endClass()
-            .beginClass<Settings>("Settings")
-                .addFunction("showMenuBar", &Settings::setShowMenuBar)
-                .addFunction("showToolBar", &Settings::setShowToolBar)
-                .addFunction("showTabBar", &Settings::setShowTabBar)
-                .addFunction("showStatusBar", &Settings::setShowStatusBar)
-            .endClass()
-        .endNamespace();
-    luabridge::setGlobal(luaState->L, windows.first(), "window");
-    luabridge::setGlobal(luaState->L, settings, "settings");
-
     applyArguments(QtSingleApplication::arguments());
 
     // Everything should be ready, so do it!
@@ -125,9 +130,34 @@ bool NotepadNextApplication::init()
     return true;
 }
 
-LuaState *NotepadNextApplication::getLuaState()
+LuaState *NotepadNextApplication::getLuaState() const
 {
     return luaState;
+}
+
+QString NotepadNextApplication::getFileDialogFilter() const
+{
+    // TODO: cache the result?
+
+    QString filter = getLuaState()->executeAndReturn<QString>(
+                R"=(
+                local filter = {"All files (*)"}
+                for name, L in pairs(languages) do
+                    local extensions = {}
+                    for _, ext in ipairs(L.extensions) do
+                        extensions[#extensions + 1] = "*." .. ext
+                    end
+                    filter[#filter + 1] = L.name .. " Files (" .. table.concat(extensions, " ") .. ")"
+                end
+                return table.concat(filter, ";;")
+                )=");
+
+    return filter;
+}
+
+Settings *NotepadNextApplication::getSettings() const
+{
+    return settings;
 }
 
 void NotepadNextApplication::applyArguments(const QStringList &args)
@@ -154,8 +184,6 @@ MainWindow *NotepadNextApplication::createNewWindow()
     MainWindow *w = new MainWindow(this);
 
     windows.append(w);
-
-    w->initialize(settings);
 
     return w;
 }
