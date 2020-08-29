@@ -17,4 +17,4 @@ build_script:
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%\build
   - jom zip
-  - appveyor PushArtifact NotepadNext.zip -FileName NotepadNext-v%APPVEYOR_BUILD_VERSION%.zip
+  - ps: Get-ChildItem .\NotepadNext*.zip | % { Push-AppveyorArtifact $_ -FileName $_.FullName }
