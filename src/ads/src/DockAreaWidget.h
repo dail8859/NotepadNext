@@ -65,6 +65,7 @@ private:
 	friend class CDockWidget;
 	friend struct DockManagerPrivate;
 	friend class CDockManager;
+	void onDockWidgetFeaturesChanged();
 
 private slots:
 	void onTabCloseRequested(int Index);
@@ -144,6 +145,16 @@ public:
 	using Super = QFrame;
 
 	/**
+	 * Dock area related flags
+	 */
+	enum eDockAreaFlag
+	{
+		HideSingleWidgetTitleBar = 0x0001,
+		DefaultFlags = 0x0000
+	};
+	Q_DECLARE_FLAGS(DockAreaFlags, eDockAreaFlag)
+
+    /**
 	 * Default Constructor
 	 */
 	CDockAreaWidget(CDockManager* DockManager, CDockContainerWidget* parent);
@@ -276,6 +287,30 @@ public:
 	 * Returns the title bar of this dock area
 	 */
 	CDockAreaTitleBar* titleBar() const;
+
+	/**
+	 * Returns the dock area flags - a combination of flags that configure the
+	 * appearance and features of the dock area.
+	 * \see setDockAreaFlasg()
+	 */
+	DockAreaFlags dockAreaFlags() const;
+
+	/**
+	 * Sets the dock area flags - a combination of flags that configure the
+	 * appearance and features of the dock area
+	 */
+	void setDockAreaFlags(DockAreaFlags Flags);
+
+	/**
+	 * Sets the dock area flag Flag on this widget if on is true; otherwise
+	 * clears the flag.
+	 */
+	void setDockAreaFlag(eDockAreaFlag Flag, bool On);
+
+    /**
+     * Returns true if the area contains the central widget of it's manager.
+     */
+    bool isCentralWidgetArea() const;
 
 public slots:
 	/**
