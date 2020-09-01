@@ -58,6 +58,8 @@ know it from Visual Studio.
   - [Qt Design Studio](#qt-design-studio)
   - [QmixElements](#qmixelements)
   - [ezEditor](#ezeditor)
+  - [D-Tect X](#d-tect-x)
+  - [HiveWE](#hivewe)
 
 ### Docking everywhere - no central widget
 
@@ -151,7 +153,7 @@ by the following people:
 - [Hugo Slepicka](https://github.com/hhslepicka)
 - [K Lauer](https://github.com/klauer)
 
-Latest working version: [3.5.1](https://github.com/githubuser0xFFFF/Qt-Advanced-Docking-System/releases/tag/3.5.1)
+Latest working version: [3.5.2](https://github.com/githubuser0xFFFF/Qt-Advanced-Docking-System/releases/tag/3.5.2)
 
 ## Tested Compatible Environments
 
@@ -311,7 +313,7 @@ If this project help you reduce time to develop or if you just like it, you can 
 From version 4.12 on, Qt Creator uses the Advanced Docking Framework for its
 Qt Quick Designer. This improves the usability when using multiple screens.
 
-![Qt Creator](doc/qtcreator.png)
+![Qt Creator](doc/showcase_qtcreator.png)
 
 ### [Qt Design Studio](https://www.qt.io/ui-design-tools)
 
@@ -319,7 +321,7 @@ Taken from the [Qt Blog](https://www.qt.io/blog/qt-design-studio-1.5-beta-releas
 
 > The most obvious change in [Qt Design Studio 1.5](https://www.qt.io/blog/qt-design-studio-1.5-beta-released) is the integration of dock widgets using the Qt Advanced Docking System. This allows the user to fully customize the workspace and also to undock any view into its own top level window. This especially improves the usability when using multiple screens.
 
-![Qt Design Studio](doc/qt_design_studio.png)
+![Qt Design Studio](doc/showcase_qt_design_studio.png)
 
 ### [QmixElements](https://www.cetoni.com/products/qmixelements/)
 
@@ -327,7 +329,7 @@ The QmixElements software from [CETONI](https://www.cetoni.com) is a comprehensi
 plugin-based and modular laboratory automation software for controlling CETONI devices using a joint graphical user interface. The software features a powerful script system to automate processes. This [blog post](https://www.cetoni.com/blog/qmixelements-advanced-docking-system/) gives a nice overview about the use of the Qt
 Advanced Docking System in the QmixElements sofware.
 
-![QmixElements](doc/qmix_elements.png)
+![QmixElements](doc/showcase_qmix_elements.png)
 
 ### [ezEditor](https://github.com/ezEngine/ezEngine)
 
@@ -335,4 +337,24 @@ The ezEditor is a full blown graphical editor used for editing scenes and
 importing and authoring assets for the [ezEngine](https://github.com/ezEngine/ezEngine) -
 an open source C++ game engine in active development.
 
-![ezEditor](doc/ezEngine_editor.png)
+![ezEditor](doc/showcase_ezEngine_editor.png)
+
+### [D-Tect X](https://www.duerr-ndt.com/products/ndt-software/d-tect-xray-inspection-software.html)
+
+D-Tect X is a X-ray inspection software for industrial radiography. It is a state-of-the-art 64-bit application which supports GPU (Graphics Processing Unit) acceleration and takes full advantage of computers with multiple CPU cores. A large set of tools assist the user in image analysis and evaluation. Thanks to the Qt Advanced Docking System the flexible and intuitive user interface can be completely customized to  each user’s preference.
+
+[learn more...](https://www.duerr-ndt.com/products/ndt-software/d-tect-xray-inspection-software.html)
+
+![D-TectX](doc/showcase_d-tect-x.jpg)
+
+### [HiveWE](https://github.com/stijnherfst/HiveWE)
+
+HiveWE is a Warcraft III world editor. It focusses on speed and ease of use,
+especially for large maps where the regular World Editor is often too slow and clunky.
+It has a JASS editor with syntax hightlighting, tabs, code completion and more.
+The JASS editor uses the Qt Advanced Docking System for the management and layout
+of the open editor windows.
+
+[learn more...](https://github.com/stijnherfst/HiveWE)
+
+![HiveWE](doc/showcase_hivewe.png)

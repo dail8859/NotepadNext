@@ -51,6 +51,7 @@ public:
 
 	void setAllowedAreas(DockWidgetAreas areas);
 	DockWidgetAreas allowedAreas() const;
+	void setHideSingleWidgetTitleBar(bool hide);
 	CDockAreaTitleBar* titleBar() const;
 
 public slots:

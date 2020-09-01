@@ -83,6 +83,10 @@ static void updateDockAreaFocusStyle(CDockAreaWidget* DockArea, bool Focused)
 #ifdef Q_OS_LINUX
 static void updateFloatingWidgetFocusStyle(CFloatingDockContainer* FloatingWidget, bool Focused)
 {
+	if (FloatingWidget->hasNativeTitleBar())
+	{
+		return;
+	}
     auto TitleBar = qobject_cast<CFloatingWidgetTitleBar*>(FloatingWidget->titleBarWidget());
     if (!TitleBar)
     {

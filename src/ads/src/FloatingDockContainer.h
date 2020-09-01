@@ -185,6 +185,11 @@ protected: // reimplements QWidget
 	virtual void moveEvent(QMoveEvent *event) override;
 #endif
 
+#ifdef Q_OS_LINUX
+	virtual void moveEvent(QMoveEvent *event) override;
+	virtual void resizeEvent(QResizeEvent *event) override;
+#endif
+
 #ifdef Q_OS_WIN
 	/**
 	 * Native event filter for handling WM_MOVING messages on Windows
@@ -194,7 +199,7 @@ protected: // reimplements QWidget
 
 
 public:
-	using Super = QWidget;
+	using Super = tFloatingWidgetBase;
 
 	/**
 	 * Create empty floating widget - required for restore state
@@ -248,6 +253,44 @@ public:
      * function of the internal container widget.
      */
     QList<CDockWidget*> dockWidgets() const;
+
+#ifdef Q_OS_LINUX
+    /**
+	 * This is a function that responds to FloatingWidgetTitleBar::maximizeRequest()
+	 * Maximize or normalize the container size.
+     */
+    void onMaximizeRequest();
+
+	/**
+	 * Normalize (Unmaximize) the window.
+	 *	fixGeometry parameter fixes a "bug" in QT where immediately after calling showNormal
+	 *	geometry is not set properly.
+	 *	Set this true when moving the window immediately after normalizing.
+	 */
+	void showNormal(bool fixGeometry=false);
+
+	/**
+	 * Maximizes the window.
+	 */
+	void showMaximized();
+
+	/**
+	 * Returns if the window is currently maximized or not.
+	 */
+	bool isMaximized() const;
+
+	/**
+	 * Patched show to prevent the window from appearing in the taskbar.
+	 */
+	void show();
+
+	/**
+	 * Returns true if the floating widget has a native titlebar or false if
+	 * the floating widget has a QWidget based title bar
+	 */
+	bool hasNativeTitleBar();
+#endif
+
 }; // class FloatingDockContainer
 }
  // namespace ads

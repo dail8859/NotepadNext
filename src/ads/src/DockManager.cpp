@@ -108,6 +108,7 @@ struct DockManagerPrivate
 	bool RestoringState = false;
 	QVector<CFloatingDockContainer*> UninitializedFloatingWidgets;
 	CDockFocusController* FocusController = nullptr;
+    CDockWidget* CentralWidget = nullptr;
 
 	/**
 	 * Private data constructor
@@ -296,11 +297,11 @@ bool DockManagerPrivate::restoreStateFromXml(const QByteArray &state,  int versi
     {
 		// Delete remaining empty floating widgets
 		int FloatingWidgetIndex = DockContainerCount - 1;
-		int DeleteCount = FloatingWidgets.count() - FloatingWidgetIndex;
-		for (int i = 0; i < DeleteCount; ++i)
+		for (int i = FloatingWidgetIndex; i < FloatingWidgets.count(); ++i)
 		{
-			FloatingWidgets[FloatingWidgetIndex + i]->deleteLater();
-			_this->removeDockContainer(FloatingWidgets[FloatingWidgetIndex + i]->dockContainer());
+			auto* floatingWidget = FloatingWidgets[i];
+			_this->removeDockContainer(floatingWidget->dockContainer());
+			floatingWidget->deleteLater();
 		}
     }
 
@@ -367,8 +368,6 @@ void DockManagerPrivate::restoreDockAreasIndices()
     }
 }
 
-
-
 //============================================================================
 void DockManagerPrivate::emitTopLevelEvents()
 {
@@ -406,6 +405,7 @@ bool DockManagerPrivate::restoreState(const QByteArray& State, int version)
     	return false;
     }
 
+    CentralWidget = nullptr;
     // Hide updates of floating widgets from use
     hideFloatingWidgets();
     markDockWidgetsDirty();
@@ -474,6 +474,10 @@ CDockManager::CDockManager(QWidget *parent) :
 	{
 		d->FocusController = new CDockFocusController(this);
 	}
+
+#ifdef Q_OS_LINUX
+	window()->installEventFilter(this);
+#endif
 }
 
 //============================================================================
@@ -487,6 +491,70 @@ CDockManager::~CDockManager()
 	delete d;
 }
 
+//============================================================================
+#ifdef Q_OS_LINUX
+bool CDockManager::eventFilter(QObject *obj, QEvent *e)
+{
+	// Emulate Qt:Tool behaviour.
+	// Required because on some WMs Tool windows can't be maximized.
+
+	// Window always on top of the MainWindow.
+	if (e->type() == QEvent::WindowActivate)
+	{
+		for (auto _window : floatingWidgets())
+		{
+			if (!_window->isVisible() || window()->isMinimized())
+			{
+				continue;
+			}
+			// setWindowFlags(Qt::WindowStaysOnTopHint) will hide the window and thus requires a show call.
+			// This then leads to flickering and a nasty endless loop (also buggy behaviour on Ubuntu).
+			// So we just do it ourself.
+			internal::xcb_update_prop(true, _window->window()->winId(),
+				"_NET_WM_STATE", "_NET_WM_STATE_ABOVE", "_NET_WM_STATE_STAYS_ON_TOP");
+		}
+	}
+	else if (e->type() == QEvent::WindowDeactivate)
+	{
+		for (auto _window : floatingWidgets())
+		{
+			if (!_window->isVisible() || window()->isMinimized())
+			{
+				continue;
+			}
+			internal::xcb_update_prop(false, _window->window()->winId(),
+				"_NET_WM_STATE", "_NET_WM_STATE_ABOVE", "_NET_WM_STATE_STAYS_ON_TOP");
+			_window->raise();
+		}
+	}
+
+	// Sync minimize with MainWindow
+	if (e->type() == QEvent::WindowStateChange)
+	{
+		for (auto _window : floatingWidgets())
+		{
+			if (! _window->isVisible())
+			{
+				continue;
+			}
+
+			if (window()->isMinimized())
+			{
+				_window->showMinimized();
+			}
+			else
+			{
+				_window->setWindowState(_window->windowState() & (~Qt::WindowMinimized));
+			}
+		}
+		if (!window()->isMinimized())
+		{
+			QApplication::setActiveWindow(window());
+		}
+	}
+	return Super::eventFilter(obj, e);
+}
+#endif
 
 //============================================================================
 void CDockManager::registerFloatingWidget(CFloatingDockContainer* FloatingWidget)
@@ -814,6 +882,40 @@ void CDockManager::loadPerspectives(QSettings& Settings)
 	}
 
 	Settings.endArray();
+}
+
+
+//============================================================================
+CDockWidget* CDockManager::centralWidget() const
+{
+    return d->CentralWidget;
+}
+
+
+//============================================================================
+CDockAreaWidget* CDockManager::setCentralWidget(CDockWidget* widget)
+{
+	if (!widget)
+	{
+		d->CentralWidget = nullptr;
+		return nullptr;
+	}
+
+	// Setting a new central widget is now allowed if there is alread a central
+	// widget
+	if (d->CentralWidget)
+	{
+		return nullptr;
+	}
+
+
+	widget->setFeature(CDockWidget::DockWidgetClosable, false);
+	widget->setFeature(CDockWidget::DockWidgetMovable, false);
+	widget->setFeature(CDockWidget::DockWidgetFloatable, false);
+	d->CentralWidget = widget;
+	CDockAreaWidget* CentralArea = addDockWidget(CenterDockWidgetArea, widget);
+	CentralArea->setDockAreaFlag(CDockAreaWidget::eDockAreaFlag::HideSingleWidgetTitleBar, true);
+	return CentralArea;
 }
 
 //============================================================================

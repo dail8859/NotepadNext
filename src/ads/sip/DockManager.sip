@@ -1,7 +1,7 @@
 %Import QtWidgets/QtWidgetsmod.sip
 
 %If (Qt_5_0_0 -)
-    
+
 %MappedType QMap<QString, ads::CDockWidget*>
         /TypeHint="Dict[QString, CDockWidget*]", TypeHintValue="{}"/
 {
@@ -224,11 +224,11 @@ signals:
     void stateRestored();
     void openingPerspective(const QString& PerspectiveName);
     void perspectiveOpened(const QString& PerspectiveName);
-	void floatingWidgetCreated(CFloatingDockContainer* FloatingWidget);
-    void dockAreaCreated(ads::CDockAreaWidget* DockArea);
-    void dockWidgetAboutToBeRemoved(ads::CDockWidget* DockWidget);
-    void dockWidgetRemoved(ads::CDockWidget* DockWidget);
-    void focusedDockWidgetChanged(ads::CDockWidget* old, ads::CDockWidget* now);
+	void floatingWidgetCreated(ads::CFloatingDockContainer*);
+    void dockAreaCreated(ads::CDockAreaWidget*);
+    void dockWidgetAboutToBeRemoved(ads::CDockWidget*);
+    void dockWidgetRemoved(ads::CDockWidget*);
+    void focusedDockWidgetChanged(ads::CDockWidget*, ads::CDockWidget*);
 };
 
 };

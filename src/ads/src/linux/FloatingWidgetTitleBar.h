@@ -30,6 +30,7 @@
 //                                   INCLUDES
 //============================================================================
 #include <QFrame>
+#include <QIcon>
 
 namespace ads
 {
@@ -48,6 +49,8 @@ struct FloatingWidgetTitleBarPrivate;
 class CFloatingWidgetTitleBar : public QFrame
 {
 	Q_OBJECT
+    Q_PROPERTY(QIcon maximizeIcon READ maximizeIcon WRITE setMaximizeIcon)
+    Q_PROPERTY(QIcon normalIcon READ normalIcon WRITE setNormalIcon)
 private:
 	FloatingWidgetTitleBarPrivate *d; ///< private data (pimpl)
 
@@ -55,6 +58,12 @@ protected:
 	virtual void mousePressEvent(QMouseEvent *ev) override;
 	virtual void mouseReleaseEvent(QMouseEvent *ev) override;
 	virtual void mouseMoveEvent(QMouseEvent *ev) override;
+    virtual void mouseDoubleClickEvent(QMouseEvent *event) override;
+
+    void setMaximizeIcon(const QIcon& Icon);
+    QIcon maximizeIcon() const;
+    void setNormalIcon(const QIcon& Icon);
+    QIcon normalIcon() const;
 
 public:
 	using Super = QWidget;
@@ -80,11 +89,21 @@ public:
      */
     void updateStyle();
 
+	/**
+	 * Change the maximize button icon according to current windows state
+	 */
+    void setMaximizedIcon(bool maximized);
+
 signals:
 	/**
 	 * This signal is emitted, if the close button is clicked.
 	 */
 	void closeRequested();
+
+    /**
+    * This signal is emitted, if the maximize button is clicked.
+    */
+    void maximizeRequested();
 };
 } // namespace ads
 #endif // FLOATINGWIDGETTITLEBAR_H

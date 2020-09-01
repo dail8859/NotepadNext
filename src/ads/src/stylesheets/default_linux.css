@@ -92,11 +92,23 @@ QScrollArea#dockWidgetScrollArea {
 	qproperty-iconSize: 16px;	
 }
 
-#floatingTitleCloseButton {
-   qproperty-icon: url(:/ads/images/close-button.svg);
+
+ads--CFloatingWidgetTitleBar {
+    background: palette(midlight);
+    qproperty-maximizeIcon: url(:/ads/images/maximize-button.svg);
+    qproperty-normalIcon: url(:/ads/images/restore-button.svg);
+}
+
+
+#floatingTitleCloseButton, #floatingTitleMaximizeButton {
    qproperty-iconSize: 16px;
    border: none;
    margin: 3px;
+}
+
+
+#floatingTitleCloseButton {
+   qproperty-icon: url(:/ads/images/close-button.svg);
 }
 
 #floatingTitleCloseButton:hover {
