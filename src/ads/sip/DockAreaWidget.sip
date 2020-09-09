@@ -28,6 +28,13 @@ protected slots:
 	void toggleView(bool Open);
     
 public:
+    enum eDockAreaFlag
+	{
+		HideSingleWidgetTitleBar,
+		DefaultFlags
+	};
+    typedef QFlags<ads::CDockAreaWidget::eDockAreaFlag> DockAreaFlags;
+    
 	CDockAreaWidget(ads::CDockManager* DockManager /TransferThis/, ads::CDockContainerWidget* parent /TransferThis/);
 	virtual ~CDockAreaWidget();
 	ads::CDockManager* dockManager() const;
@@ -51,8 +58,13 @@ public:
 
 	void setAllowedAreas(DockWidgetAreas areas);
 	DockWidgetAreas allowedAreas() const;
-	void setHideSingleWidgetTitleBar(bool hide);
 	CDockAreaTitleBar* titleBar() const;
+    
+    DockAreaFlags dockAreaFlags() const;
+    void setDockAreaFlags(DockAreaFlags Flags);
+    void setDockAreaFlag(eDockAreaFlag Flag, bool On);
+    
+    bool isCentralWidgetArea() const;
 
 public slots:
 	void setCurrentIndex(int index);

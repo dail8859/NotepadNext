@@ -203,8 +203,8 @@ class MainWindow(MainWindowUI, MainWindowBase):
         QtAds.CDockComponentsFactory.setFactory(CCustomComponentsFactory())
         top_dock_area = self.dock_manager.addDockWidget(QtAds.TopDockWidgetArea, file_system_widget)
         # Uncomment the next line if you would like to test the
-        # setHideSingleWidgetTitleBar() functionality
-        # top_dock_area.setHideSingleWidgetTitleBar(True)
+        # HideSingleWidgetTitleBar functionality
+        # top_dock_area.setDockAreaFlag(QtAds.CDockAreaWidget.HideSingleWidgetTitleBar, True)
         QtAds.CDockComponentsFactory.resetDefaultFactory()
 
         # We create a calendar widget and clear all flags to prevent the dock area

@@ -15,6 +15,7 @@
 #include <QFileDialog>
 #include <QSettings>
 #include <QMessageBox>
+#include <QPlainTextEdit>
 
 #include "DockAreaWidget.h"
 #include "DockAreaTitleBar.h"
@@ -31,12 +32,14 @@ CMainWindow::CMainWindow(QWidget *parent)
     ui->setupUi(this);
     CDockManager::setConfigFlag(CDockManager::OpaqueSplitterResize, true);
     CDockManager::setConfigFlag(CDockManager::XmlCompressionEnabled, false);
+    CDockManager::setConfigFlag(CDockManager::FocusHighlighting, true);
     DockManager = new CDockManager(this);
 
     // Set central widget
-    QCalendarWidget* calendar = new QCalendarWidget();
+    QPlainTextEdit* w = new QPlainTextEdit();
+	w->setPlaceholderText("This is the central editor. Enter your text here.");
     CDockWidget* CentralDockWidget = new CDockWidget("CentralWidget");
-    CentralDockWidget->setWidget(calendar);
+    CentralDockWidget->setWidget(w);
     auto* CentralDockArea = DockManager->setCentralWidget(CentralDockWidget);
     CentralDockArea->setAllowedAreas(DockWidgetArea::OuterDockAreas);
 
@@ -65,8 +68,8 @@ CMainWindow::CMainWindow(QWidget *parent)
     ui->menuView->addAction(TableDockWidget->toggleViewAction());
 
     QTableWidget* propertiesTable = new QTableWidget();
-    table->setColumnCount(3);
-    table->setRowCount(10);
+    propertiesTable->setColumnCount(3);
+    propertiesTable->setRowCount(10);
     CDockWidget* PropertiesDockWidget = new CDockWidget("Properties");
     PropertiesDockWidget->setWidget(propertiesTable);
     PropertiesDockWidget->setMinimumSizeHintMode(CDockWidget::MinimumSizeHintFromDockWidget);

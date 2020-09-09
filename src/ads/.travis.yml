@@ -9,6 +9,8 @@ matrix:
     os: linux
     dist: trusty
     group: stable
+    before_install:
+      - sudo apt-get -y install libqt5x11extras5-dev
     addons:
       apt:
         sources:
@@ -19,6 +21,7 @@ matrix:
         - qt55base
         - qt55tools
         - qt55x11extras
+        - libqt5x11extras5-dev
         - gcc-9
         - g++-9
     script:
@@ -36,6 +39,8 @@ matrix:
     services:
         - xvfb
     compiler: gcc
+    before_install:
+      - sudo apt-get -y install libqt5x11extras5-dev
     addons:
       apt:
         sources:
@@ -46,6 +51,7 @@ matrix:
         - qt514base
         - qt514tools
         - qt514x11extras
+        - libqt5x11extras5-dev
         - gcc-9
         - g++-9
         - libc6-i386
@@ -67,7 +73,9 @@ matrix:
     services:
         - xvfb
     compiler: gcc
-    addons:
+    before_install:
+      - sudo apt-get -y install libqt5x11extras5-dev  
+    addons:  
       apt:
         sources:
         - ubuntu-toolchain-r-test
@@ -77,6 +85,7 @@ matrix:
         - qt514base
         - qt514tools
         - qt514x11extras
+        - libqt5x11extras5-dev
         - gcc-9
         - g++-9
         - libc6-i386
@@ -98,6 +107,8 @@ matrix:
     services:
         - xvfb
     compiler: gcc
+    before_install:
+      - sudo apt-get -y install libqt5x11extras5-dev
     addons:
       apt:
         sources:
@@ -108,6 +119,7 @@ matrix:
         - qt514base
         - qt514tools
         - qt514x11extras
+        - libqt5x11extras5-dev
         - gcc-9
         - g++-9
         - libc6-i386
@@ -135,6 +147,8 @@ matrix:
     services:
         - xvfb
     compiler: gcc
+    before_install:
+      - sudo apt-get -y install libqt5x11extras5-dev
     addons:
       apt:
         sources:
@@ -145,6 +159,7 @@ matrix:
         - qt514base
         - qt514tools
         - qt514x11extras
+        - libqt5x11extras5-dev
         - gcc-9
         - g++-9
         - libc6-i386

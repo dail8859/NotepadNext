@@ -381,6 +381,13 @@ void CDockFocusController::onStateRestored()
 	}
 }
 
+
+//==========================================================================
+CDockWidget* CDockFocusController::focusedDockWidget() const
+{
+	return d->FocusedDockWidget.data();
+}
+
 } // namespace ads
 
 //---------------------------------------------------------------------------
