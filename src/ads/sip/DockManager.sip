@@ -170,6 +170,8 @@ public:
 		HideSingleCentralWidgetTitleBar,
         FocusHighlighting,
         EqualSplitOnInsertion,
+        FloatingContainerForceNativeTitleBar,
+        FloatingContainerForceQWidgetTitleBar,
         DefaultDockAreaButtons,
 		DefaultBaseConfig,
         DefaultOpaqueConfig,
@@ -206,6 +208,8 @@ public:
 	QStringList perspectiveNames() const;
 	void savePerspectives(QSettings& Settings) const;
 	void loadPerspectives(QSettings& Settings);
+    CDockWidget* centralWidget() const;
+    CDockAreaWidget* setCentralWidget(CDockWidget* widget /Transfer/);
 	QAction* addToggleViewActionToMenu(QAction* ToggleViewAction /Transfer/,
 		const QString& Group = QString(), const QIcon& GroupIcon = QIcon());
 	QMenu* viewMenu() const;

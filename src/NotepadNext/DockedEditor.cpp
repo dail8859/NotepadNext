@@ -122,25 +122,12 @@ void DockedEditor::dockWidgetCloseRequested()
 
 ads::CDockAreaWidget * DockedEditor::currentDockArea()
 {
-    QMap<QString, ads::CDockWidget*> dockwidgets = m_DockManager->dockWidgetsMap();
+    auto dockWidget = m_DockManager->focusedDockWidget();
 
-    if (dockwidgets.size() == 0) {
+    if (dockWidget)
+        return dockWidget->dockAreaWidget();
+    else
         return Q_NULLPTR;
-    }
-    else if (dockwidgets.size() == 1) {
-        // If no dockwidget has had the focus set yet, just return the only one
-        return dockwidgets.first()->dockAreaWidget();
-    }
-
-    // Search the list for the one that has had the focus set
-    foreach (ads::CDockWidget* dockWidget, dockwidgets) {
-        if (dockWidget->property("focused").toBool()) {
-            return dockWidget->dockAreaWidget();
-        }
-    }
-
-    // There was no area that had the focus
-    return Q_NULLPTR;
 }
 
 void DockedEditor::addBuffer(ScintillaBuffer *buffer)

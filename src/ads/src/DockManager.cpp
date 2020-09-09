@@ -1042,6 +1042,20 @@ void CDockManager::setDockWidgetFocused(CDockWidget* DockWidget)
 }
 
 
+//===========================================================================
+CDockWidget* CDockManager::focusedDockWidget() const
+{
+	if (!d->FocusController)
+	{
+		return nullptr;
+	}
+	else
+	{
+		return d->FocusController->focusedDockWidget();
+	}
+}
+
+
 } // namespace ads
 
 //---------------------------------------------------------------------------

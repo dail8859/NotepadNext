@@ -166,6 +166,7 @@ struct MainWindowPrivate
 	QComboBox* PerspectiveComboBox = nullptr;
 	ads::CDockManager* DockManager = nullptr;
 	ads::CDockWidget* WindowTitleTestDockWidget = nullptr;
+	ads::CDockWidget* LastDockedEditor = nullptr;
 
 	MainWindowPrivate(CMainWindow* _public) : _this(_public) {}
 
@@ -720,7 +721,17 @@ void CMainWindow::createEditor()
     }
     else
     {
-    	d->DockManager->addDockWidget(ads::TopDockWidgetArea, DockWidget);
+    	ads::CDockAreaWidget* EditorArea = d->LastDockedEditor ? d->LastDockedEditor->dockAreaWidget() : nullptr;
+    	if (EditorArea)
+    	{
+    		d->DockManager->setConfigFlag(ads::CDockManager::EqualSplitOnInsertion, true);
+    		d->DockManager->addDockWidget(ads::RightDockWidgetArea, DockWidget, EditorArea);
+    	}
+    	else
+    	{
+    		d->DockManager->addDockWidget(ads::TopDockWidgetArea, DockWidget);
+    	}
+    	d->LastDockedEditor = DockWidget;
     }
 }
 

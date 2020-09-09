@@ -21,7 +21,7 @@ class MainWindow(MainWindowUI, MainWindowBase):
  
         # Create the dock manager. Because the parent parameter is a QMainWindow
         # the dock manager registers itself as the central widget.
-        self.dock_manager1 = QtAds.CDockManager(self)
+        self.dock_manager = QtAds.CDockManager(self)
         
         # Create example content label - this can be any application specific
         # widget
@@ -35,41 +35,13 @@ class MainWindow(MainWindowUI, MainWindowBase):
         dock_widget = QtAds.CDockWidget("Label 1")
         dock_widget.setWidget(l)
         
-        l = QLabel()
-        l.setWordWrap(True)
-        l.setAlignment(Qt.AlignTop | Qt.AlignLeft);
-        l.setText("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ")
-
-        # Create a dock widget with the title Label 1 and set the created label
-        # as the dock widget content
-        dock_widget2 = QtAds.CDockWidget("Label 2")
-        dock_widget2.setWidget(l)
 
         # Add the toggleViewAction of the dock widget to the menu to give
         # the user the possibility to show the dock widget if it has been closed
         self.menuView.addAction(dock_widget.toggleViewAction())
 
         # Add the dock widget to the top dock widget area
-        self.dock_manager1.addDockWidget(QtAds.TopDockWidgetArea, dock_widget)
-        
-        def remove_first_manager():
-            self.dock_manager1.removeDockWidget(dock_widget)
-            del self.dock_manager1
-        QTimer.singleShot(3000, remove_first_manager)
-            
-        def add_second_manager():
-            self.dock_manager2 = QtAds.CDockManager(self)
-            self.dock_manager2.addDockWidget(QtAds.TopDockWidgetArea, dock_widget)
-        QTimer.singleShot(5000, add_second_manager)
-        
-    def closeEvent(self, event: QCloseEvent):
-        super().closeEvent(event)
-        
-        if hasattr(self, 'dock_manager1'):
-            self.dock_manager1.deleteLater()
-            
-        if hasattr(self, 'dock_manager2'):
-            self.dock_manager2.deleteLater()
+        self.dock_manager.addDockWidget(QtAds.TopDockWidgetArea, dock_widget)
 
 
 if __name__ == '__main__':

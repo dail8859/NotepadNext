@@ -476,6 +476,14 @@ public:
 	bool eventFilter(QObject *obj, QEvent *e) override;
 #endif
 
+	/**
+	 * Returns the dock widget that has focus style in the ui or a nullptr if
+	 * not dock widget is painted focused.
+	 * If the flag FocusHighlighting is disabled, this function always returns
+	 * nullptr.
+	 */
+	CDockWidget* focusedDockWidget() const;
+
 public slots:
 	/**
 	 * Opens the perspective with the given name.
