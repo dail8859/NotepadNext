@@ -59,7 +59,7 @@ def UpdateVersionNumbers(sci, root):
     UpdateLineInPlistFile(cocoa / "ScintillaFramework/Info.plist",
         "CFBundleShortVersionString", sci.versionDotted)
 
-    UpdateLineInPlistFile(cocoa / "Scintilla" / "Scintilla" / "Info.plist",
+    UpdateLineInPlistFile(cocoa / "Scintilla" / "Info.plist",
         "CFBundleShortVersionString", sci.versionDotted)
     ReplaceREInFile(cocoa / "Scintilla"/ "Scintilla.xcodeproj" / "project.pbxproj",
         "CURRENT_PROJECT_VERSION = [0-9.]+;",

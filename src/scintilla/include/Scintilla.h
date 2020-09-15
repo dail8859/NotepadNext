@@ -703,6 +703,7 @@ typedef sptr_t (*SciFnDirect)(sptr_t ptr, unsigned int iMessage, uptr_t wParam, 
 #define SCI_SETEDGECOLOUR 2365
 #define SCI_MULTIEDGEADDLINE 2694
 #define SCI_MULTIEDGECLEARALL 2695
+#define SCI_GETMULTIEDGECOLUMN 2749
 #define SCI_SEARCHANCHOR 2366
 #define SCI_SEARCHNEXT 2367
 #define SCI_SEARCHPREV 2368

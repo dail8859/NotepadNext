@@ -449,7 +449,7 @@ class ScintillaWin :
 	void ChangeScrollPos(int barType, Sci::Position pos);
 	sptr_t GetTextLength();
 	sptr_t GetText(uptr_t wParam, sptr_t lParam);
-	Window::Cursor ContextCursor();
+	Window::Cursor ContextCursor(Point pt);
 	sptr_t ShowContextMenu(unsigned int iMessage, uptr_t wParam, sptr_t lParam);
 	void SizeWindow();
 	sptr_t MouseMessage(unsigned int iMessage, uptr_t wParam, sptr_t lParam);
@@ -1363,19 +1363,20 @@ sptr_t ScintillaWin::GetText(uptr_t wParam, sptr_t lParam) {
 	}
 }
 
-Window::Cursor ScintillaWin::ContextCursor() {
+Window::Cursor ScintillaWin::ContextCursor(Point pt) {
 	if (inDragDrop == ddDragging) {
 		return Window::cursorUp;
 	} else {
 		// Display regular (drag) cursor over selection
-		POINT pt;
-		if (0 != ::GetCursorPos(&pt)) {
-			::ScreenToClient(MainHWND(), &pt);
-			if (PointInSelMargin(PointFromPOINT(pt))) {
-				return GetMarginCursor(PointFromPOINT(pt));
-			} else if (PointInSelection(PointFromPOINT(pt)) && !SelectionEmpty()) {
-				return Window::cursorArrow;
-			} else if (PointIsHotspot(PointFromPOINT(pt))) {
+		if (PointInSelMargin(pt)) {
+			return GetMarginCursor(pt);
+		} else if (!SelectionEmpty() && PointInSelection(pt)) {
+			return Window::cursorArrow;
+		} else if (PointIsHotspot(pt)) {
+			return Window::cursorHand;
+		} else if (hoverIndicatorPos != Sci::invalidPosition) {
+			const Sci::Position pos = PositionFromLocation(pt, true, true);
+			if (pos != Sci::invalidPosition) {
 				return Window::cursorHand;
 			}
 		}
@@ -1919,7 +1920,11 @@ sptr_t ScintillaWin::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam
 
 		case WM_SETCURSOR:
 			if (LOWORD(lParam) == HTCLIENT) {
-				DisplayCursor(ContextCursor());
+				POINT pt;
+				if (::GetCursorPos(&pt)) {
+					::ScreenToClient(MainHWND(), &pt);
+					DisplayCursor(ContextCursor(PointFromPOINT(pt)));
+				}
 				return TRUE;
 			} else {
 				return ::DefWindowProc(MainHWND(), iMessage, wParam, lParam);
