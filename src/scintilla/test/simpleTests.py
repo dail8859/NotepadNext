@@ -2319,6 +2319,46 @@ class TestCallTip(unittest.TestCase):
 		self.ed.CallTipCancel()
 		self.assertEquals(self.ed.CallTipActive(), 0)
 
+class TestEdge(unittest.TestCase):
+
+	def setUp(self):
+		self.xite = Xite.xiteFrame
+		self.ed = self.xite.ed
+		self.ed.ClearAll()
+
+	def testBasics(self):
+		self.ed.EdgeColumn = 3
+		self.assertEquals(self.ed.EdgeColumn, 3)
+		self.ed.SetEdgeColour(0xA0)
+		self.assertEquals(self.ed.GetEdgeColour(), 0xA0)
+
+	def testMulti(self):
+		self.assertEquals(self.ed.GetMultiEdgeColumn(-1), -1)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(0), -1)
+		self.ed.MultiEdgeAddLine(5, 0x50)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(0), 5)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(1), -1)
+		self.ed.MultiEdgeAddLine(6, 0x60)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(0), 5)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(1), 6)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(2), -1)
+		self.ed.MultiEdgeAddLine(4, 0x40)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(0), 4)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(1), 5)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(2), 6)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(3), -1)
+		self.ed.MultiEdgeClearAll()
+		self.assertEquals(self.ed.GetMultiEdgeColumn(0), -1)
+
+	def testSameTwice(self):
+		# Tests that adding a column twice retains both
+		self.ed.MultiEdgeAddLine(5, 0x50)
+		self.ed.MultiEdgeAddLine(5, 0x55)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(0), 5)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(1), 5)
+		self.assertEquals(self.ed.GetMultiEdgeColumn(2), -1)
+		self.ed.MultiEdgeClearAll()
+
 class TestAutoComplete(unittest.TestCase):
 
 	def setUp(self):

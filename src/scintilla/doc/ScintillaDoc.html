@@ -119,7 +119,7 @@
 
     <h1>Scintilla Documentation</h1>
 
-    <p>Last edited 29 March 2020 NH</p>
+    <p>Last edited 9 September 2020 NH</p>
 
     <p>There is <a class="jump" href="Design.html">an overview of the internal design of
     Scintilla</a>.<br />
@@ -288,6 +288,16 @@
     so can be loaded by applications that support this.
     As the protocol only supports object lexers, an additional function <code>CreateLexer(const char *name)</code>
     is exposed which will create a lexer object (ILexer5 *) for any object lexer or function lexer.
+    </p>
+   
+    <p>Lexer libraries that provide the same functions as Lexilla may provide lexers for use by Scintilla,
+    augmenting or replacing those provided by Lexilla.
+    To allow initialisation of lexer libraries, a <code>SetLibraryProperty(const char *key, const char *value)</code>
+    may optionally be implemented. For example, a lexer library that uses XML based lexer definitions may
+    be provided with a directory to search for such definitions.
+    Lexer libraries should ignore any properties that they do not understand.
+    The set of properties supported by a lexer library is specified as a '\n' separated list of property names by
+    an optional <code>const char *GetLibraryPropertyNames()</code> function.
     </p>
 
     <p>A lexer created by Lexilla may be used in Scintilla by calling
@@ -6856,6 +6866,8 @@ sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
      <br />
      <a class="message" href="#SCI_MULTIEDGEADDLINE">SCI_MULTIEDGEADDLINE(position column, colour edgeColour)</a><br />
      <a class="message" href="#SCI_MULTIEDGECLEARALL">SCI_MULTIEDGECLEARALL</a><br />
+     <a class="message" href="#SCI_GETMULTIEDGECOLUMN">SCI_GETMULTIEDGECOLUMN(int which)</a>
+     <br />
     </code>
 
     <p><b id="SCI_SETEDGEMODE">SCI_SETEDGEMODE(int edgeMode)</b><br />
@@ -6933,10 +6945,13 @@ sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
     <p><b id="SCI_MULTIEDGEADDLINE">SCI_MULTIEDGEADDLINE(position column,
     <a class="jump" href="#colour">colour</a> edgeColour)</b><br />
      <b id="SCI_MULTIEDGECLEARALL">SCI_MULTIEDGECLEARALL</b><br />
+     <b id="SCI_GETMULTIEDGECOLUMN">SCI_GETMULTIEDGECOLUMN(int which)</b><br />
      <code>SCI_MULTIEDGEADDLINE</code> adds a new vertical edge to the view. The edge will be
     displayed at the given column number. The resulting edge position depends on the metric
     of a space character in <code>STYLE_DEFAULT</code>. All the edges can be cleared with
-    <code>SCI_MULTIEDGECLEARALL</code>.</p>
+    <code>SCI_MULTIEDGECLEARALL</code>. <code>SCI_GETMULTIEDGECOLUMN</code> returns the column of the
+    Nth vertical edge (indexed from 0). If <code class="parameter">which</code> is greater or equal
+    to the number of vertical edges, this returns -1.</p>
 
     <h2 id="Accessibility">Accessibility</h2>
 

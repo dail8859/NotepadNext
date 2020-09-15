@@ -1823,6 +1823,10 @@ void ScintillaEdit::multiEdgeClearAll() {
     send(SCI_MULTIEDGECLEARALL, 0, 0);
 }
 
+sptr_t ScintillaEdit::multiEdgeColumn(sptr_t which) const {
+    return send(SCI_GETMULTIEDGECOLUMN, which, 0);
+}
+
 void ScintillaEdit::searchAnchor() {
     send(SCI_SEARCHANCHOR, 0, 0);
 }
