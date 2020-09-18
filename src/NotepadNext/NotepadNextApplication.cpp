@@ -73,7 +73,7 @@ bool NotepadNextApplication::initGui()
 {
     qInfo(Q_FUNC_INFO);
 
-    createNewWindow();
+    createNewWindow()->openFile("C:/pickles.txt");
 
     luabridge::getGlobalNamespace(luaState->L)
         .beginNamespace("nn")
