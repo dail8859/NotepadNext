@@ -59,9 +59,10 @@ SOURCES += \
     DockFocusController.cpp
 
 
-unix {
-    HEADERS += linux/FloatingWidgetTitleBar.h
-    SOURCES += linux/FloatingWidgetTitleBar.cpp
+unix:!macx {
+HEADERS += linux/FloatingWidgetTitleBar.h
+SOURCES += linux/FloatingWidgetTitleBar.cpp
+QT += x11extras
 }
 
 DISTFILES +=
