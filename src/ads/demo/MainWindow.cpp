@@ -109,7 +109,7 @@ static void appendFeaturStringToWindowTitle(ads::CDockWidget* DockWidget)
 static QIcon svgIcon(const QString& File)
 {
 	// This is a workaround, because in item views SVG icons are not
-	// properly scaled an look blurry or pixelate
+	// properly scaled and look blurry or pixelate
 	QIcon SvgIcon(File);
 	SvgIcon.addPixmap(SvgIcon.pixmap(92));
 	return SvgIcon;

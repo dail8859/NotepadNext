@@ -398,9 +398,12 @@ public:
      * movable, floatable or closable and the titlebar of the central
      * dock area is not visible.
      * If the given widget could be set as central widget, the function returns
-     * the created cok area. If the widget could not be set, because there
+     * the created dock area. If the widget could not be set, because there
      * is already a central widget, this function returns a nullptr.
      * To clear the central widget, pass a nullptr to the function.
+     * \note Setting a central widget is only possible if no other dock widgets
+     * have been registered before. That means, this function should be the
+     * first function that you call before you add other dock widgets.
      * \retval != 0 The dock area that contains the central widget
      * \retval nullptr Indicates that the given widget can not be set as central
      *         widget because there is already a central widget.
@@ -551,6 +554,12 @@ signals:
      * tooltips for the DockArea buttons.
      */
     void dockAreaCreated(ads::CDockAreaWidget* DockArea);
+
+    /**
+     * This signal is emitted if a dock widget has been added to this
+     * dock manager instance.
+     */
+    void dockWidgetAdded(ads::CDockWidget* DockWidget);
 
     /**
      * This signal is emitted just before the given dock widget is removed

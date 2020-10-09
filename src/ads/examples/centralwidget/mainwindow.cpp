@@ -16,6 +16,7 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <QPlainTextEdit>
+#include <QToolBar>
 
 #include "DockAreaWidget.h"
 #include "DockAreaTitleBar.h"
@@ -24,6 +25,18 @@
 #include "DockComponentsFactory.h"
 
 using namespace ads;
+
+/**
+ * Helper function to create an SVG icon
+ */
+static QIcon svgIcon(const QString& File)
+{
+	// This is a workaround, because in item views SVG icons are not
+	// properly scaled and look blurry or pixelate
+	QIcon SvgIcon(File);
+	SvgIcon.addPixmap(SvgIcon.pixmap(92));
+	return SvgIcon;
+}
 
 CMainWindow::CMainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -77,10 +90,46 @@ CMainWindow::CMainWindow(QWidget *parent)
     PropertiesDockWidget->setMinimumSize(200,150);
     DockManager->addDockWidget(DockWidgetArea::RightDockWidgetArea, PropertiesDockWidget, CentralDockArea);
     ui->menuView->addAction(PropertiesDockWidget->toggleViewAction());
+
+    createPerspectiveUi();
 }
 
 CMainWindow::~CMainWindow()
 {
     delete ui;
+}
+
+
+void CMainWindow::createPerspectiveUi()
+{
+	SavePerspectiveAction = new QAction("Create Perspective", this);
+	SavePerspectiveAction->setIcon(svgIcon(":/adsdemo/images/picture_in_picture.svg"));
+	connect(SavePerspectiveAction, SIGNAL(triggered()), SLOT(savePerspective()));
+	PerspectiveListAction = new QWidgetAction(this);
+	PerspectiveComboBox = new QComboBox(this);
+	PerspectiveComboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+	PerspectiveComboBox->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	connect(PerspectiveComboBox, SIGNAL(activated(const QString&)),
+		DockManager, SLOT(openPerspective(const QString&)));
+	PerspectiveListAction->setDefaultWidget(PerspectiveComboBox);
+	ui->toolBar->addSeparator();
+	ui->toolBar->addAction(PerspectiveListAction);
+	ui->toolBar->addAction(SavePerspectiveAction);
+}
+
+
+void CMainWindow::savePerspective()
+{
+	QString PerspectiveName = QInputDialog::getText(this, "Save Perspective", "Enter unique name:");
+	if (PerspectiveName.isEmpty())
+	{
+		return;
+	}
+
+	DockManager->addPerspective(PerspectiveName);
+	QSignalBlocker Blocker(PerspectiveComboBox);
+	PerspectiveComboBox->clear();
+	PerspectiveComboBox->addItems(DockManager->perspectiveNames());
+	PerspectiveComboBox->setCurrentText(PerspectiveName);
 }
 

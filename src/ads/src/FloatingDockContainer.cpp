@@ -752,7 +752,7 @@ bool CFloatingDockContainer::nativeEvent(const QByteArray &eventType, void *mess
 		case WM_NCLBUTTONDOWN:
 			 if (msg->wParam == HTCAPTION && d->isState(DraggingInactive))
 			 {
-				ADS_PRINT("CFloatingDockContainer::nativeEvent WM_NCLBUTTONDOWN" << e->type());
+				ADS_PRINT("CFloatingDockContainer::nativeEvent WM_NCLBUTTONDOWN");
 				d->DragStartPos = pos();
 				d->setState(DraggingMousePressed);
 			 }
@@ -765,7 +765,7 @@ bool CFloatingDockContainer::nativeEvent(const QByteArray &eventType, void *mess
 		case WM_ENTERSIZEMOVE:
 			 if (d->isState(DraggingMousePressed))
 			 {
-				ADS_PRINT("CFloatingDockContainer::nativeEvent WM_ENTERSIZEMOVE" << e->type());
+				ADS_PRINT("CFloatingDockContainer::nativeEvent WM_ENTERSIZEMOVE");
 				d->setState(DraggingFloatingWidget);
 				d->updateDropOverlays(QCursor::pos());
 			 }
@@ -774,7 +774,7 @@ bool CFloatingDockContainer::nativeEvent(const QByteArray &eventType, void *mess
 		case WM_EXITSIZEMOVE:
 			 if (d->isState(DraggingFloatingWidget))
 			 {
-				ADS_PRINT("CFloatingDockContainer::nativeEvent WM_EXITSIZEMOVE" << e->type());
+				ADS_PRINT("CFloatingDockContainer::nativeEvent WM_EXITSIZEMOVE");
 				if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
 				{
 					d->handleEscapeKey();

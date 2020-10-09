@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QComboBox>
+#include <QWidgetAction>
 
 #include "DockManager.h"
 #include "DockAreaWidget.h"
@@ -20,13 +22,19 @@ public:
     ~CMainWindow();
 
 private:
-    static const QString kTableTopLayout;
-    static const QString kTableBottomLayout;
+	QAction* SavePerspectiveAction = nullptr;
+	QWidgetAction* PerspectiveListAction = nullptr;
+	QComboBox* PerspectiveComboBox = nullptr;
 
     Ui::CMainWindow *ui;
 
     ads::CDockManager* DockManager;
     ads::CDockAreaWidget* StatusDockArea;
     ads::CDockWidget* TimelineDockWidget;
+
+    void createPerspectiveUi();
+
+private slots:
+	void savePerspective();
 };
 #endif // MAINWINDOW_H
