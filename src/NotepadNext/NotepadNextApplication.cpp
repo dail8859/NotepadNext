@@ -73,6 +73,8 @@ bool NotepadNextApplication::initGui()
 {
     qInfo(Q_FUNC_INFO);
 
+    createNewWindow();
+
     luabridge::getGlobalNamespace(luaState->L)
         .beginNamespace("nn")
             .beginClass<QWidget>("QWidget")
