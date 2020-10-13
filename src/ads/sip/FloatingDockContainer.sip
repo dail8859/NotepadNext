@@ -52,11 +52,20 @@ protected:
 
 protected:
 	virtual void changeEvent(QEvent *event);
-	virtual void moveEvent(QMoveEvent *event);
-	virtual bool event(QEvent *e);
 	virtual void closeEvent(QCloseEvent *event);
 	virtual void hideEvent(QHideEvent *event);
 	virtual void showEvent(QShowEvent *event);
+    
+    %If (WS_MACX)
+    virtual bool event(QEvent *e);
+	virtual void moveEvent(QMoveEvent *event);
+    %End
+    
+    %If (WS_X11)
+    virtual void moveEvent(QMoveEvent *event);
+	virtual void resizeEvent(QResizeEvent *event);
+    %End
+    
 	%If (WS_WIN)
 	virtual bool nativeEvent(const QByteArray &eventType, void *message, long *result);
 	%End
@@ -72,6 +81,15 @@ public:
     bool hasTopLevelDockWidget() const;
     ads::CDockWidget* topLevelDockWidget() const;
     QList<ads::CDockWidget*> dockWidgets() const;
+    
+    %If (WS_X11)
+    void onMaximizeRequest();
+	void showNormal(bool fixGeometry);
+	void showMaximized();
+	bool isMaximized() const;
+	void show();
+	bool hasNativeTitleBar();
+    %End
 };
 
 };

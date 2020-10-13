@@ -494,6 +494,7 @@ public:
 	void setEdgeColour(sptr_t edgeColour);
 	void multiEdgeAddLine(sptr_t column, sptr_t edgeColour);
 	void multiEdgeClearAll();
+	sptr_t multiEdgeColumn(sptr_t which) const;
 	void searchAnchor();
 	sptr_t searchNext(sptr_t searchFlags, const char * text);
 	sptr_t searchPrev(sptr_t searchFlags, const char * text);

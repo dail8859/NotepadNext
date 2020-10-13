@@ -10,7 +10,7 @@ Example bat script to build release
 
 ```
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
-set PATH=C:\Qt\5.15.0\msvc2019_64\bin\;C:\Qt\Tools\QtCreator\bin\;%PATH%
+set PATH=C:\Qt\5.15.1\msvc2019_64\bin\;C:\Qt\Tools\QtCreator\bin\;%PATH%
 mkdir build
 cd build
 qmake ..\src\NotepadNext.pro
@@ -23,4 +23,7 @@ mkdir installer_build
 cd installer_build
 qmake ..\installer\installer.pro
 jom
+cd ..
+copy build\NotepadNext*.zip .
+copy installer_build\NotepadNext*.exe .
 ```

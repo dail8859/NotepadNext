@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 project(QtAdvancedDockingSystem LANGUAGES CXX VERSION ${VERSION_SHORT})
 find_package(Qt5 5.5 COMPONENTS Core Gui Widgets REQUIRED)
+if (UNIX)
+	find_package(Qt5 5.5 COMPONENTS X11Extras REQUIRED)
+endif()
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 if(BUILD_STATIC)
     set(CMAKE_STATIC_LIBRARY_SUFFIX "_static${CMAKE_STATIC_LIBRARY_SUFFIX}")
@@ -57,6 +60,9 @@ else()
     target_compile_definitions(qtadvanceddocking PRIVATE ADS_SHARED_EXPORT)
 endif()
 target_link_libraries(qtadvanceddocking PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets)
+if (UNIX)
+    target_link_libraries(qtadvanceddocking PUBLIC Qt5::X11Extras)
+endif()
 set_target_properties(qtadvanceddocking PROPERTIES 
     AUTOMOC ON
     AUTORCC ON

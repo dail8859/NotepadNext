@@ -32,6 +32,7 @@ protected:
 	ads::CDockWidget* topLevelDockWidget() const;
 	ads::CDockAreaWidget* topLevelDockArea() const;
     QList<ads::CDockWidget*> dockWidgets() const;
+    void updateSplitterHandles(QSplitter* splitter);
     
 public:
 	/**

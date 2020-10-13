@@ -102,6 +102,20 @@ QWidget* CDockSplitter::lastWidget() const
 	return (count() > 0) ? widget(count() - 1) : nullptr;
 }
 
+//============================================================================
+bool CDockSplitter::isResizingWithContainer() const
+{
+    for (auto area : findChildren<CDockAreaWidget*>())
+    {
+        if(area->isCentralWidgetArea())
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 } // namespace ads
 
 //---------------------------------------------------------------------------

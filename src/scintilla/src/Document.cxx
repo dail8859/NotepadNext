@@ -2366,10 +2366,12 @@ void Document::AnnotationSetText(Sci::Line line, const char *text) {
 }
 
 void Document::AnnotationSetStyle(Sci::Line line, int style) {
-	Annotations()->SetStyle(line, style);
-	const DocModification mh(SC_MOD_CHANGEANNOTATION, LineStart(line),
-		0, 0, 0, line);
-	NotifyModified(mh);
+	if (line >= 0 && line < LinesTotal()) {
+		Annotations()->SetStyle(line, style);
+		const DocModification mh(SC_MOD_CHANGEANNOTATION, LineStart(line),
+			0, 0, 0, line);
+		NotifyModified(mh);
+	}
 }
 
 void Document::AnnotationSetStyles(Sci::Line line, const unsigned char *styles) {
@@ -2406,10 +2408,12 @@ void Document::EOLAnnotationSetText(Sci::Line line, const char *text) {
 }
 
 void Document::EOLAnnotationSetStyle(Sci::Line line, int style) {
-	EOLAnnotations()->SetStyle(line, style);
-	const DocModification mh(SC_MOD_CHANGEEOLANNOTATION, LineStart(line),
-		0, 0, 0, line);
-	NotifyModified(mh);
+	if (line >= 0 && line < LinesTotal()) {
+		EOLAnnotations()->SetStyle(line, style);
+		const DocModification mh(SC_MOD_CHANGEEOLANNOTATION, LineStart(line),
+			0, 0, 0, line);
+		NotifyModified(mh);
+	}
 }
 
 void Document::EOLAnnotationClearAll() {

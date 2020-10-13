@@ -1928,6 +1928,9 @@ fun void MultiEdgeAddLine=2694(position column, colour edgeColour)
 # Clear all vertical edges.
 fun void MultiEdgeClearAll=2695(,)
 
+# Get multi edge positions.
+get position GetMultiEdgeColumn=2749(int which,)
+
 # Sets the current caret position to be the search anchor.
 fun void SearchAnchor=2366(,)
 

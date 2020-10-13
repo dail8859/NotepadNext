@@ -558,6 +558,9 @@
 	<td>Prakash Sahni</td>
       </tr><tr>
 	<td>Michel Sauvard</td>
+	<td>uhf7</td>
+	<td>gnombat</td>
+	<td>Derek Brown</td>
     </tr>
     </table>
     <p>
@@ -568,6 +571,75 @@
         <a href="http://sourceforge.net/projects/icon-collection/">
         Icons</a> Copyright(C) 1998 by Dean S. Jones<br />
       </li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scite445.zip">Release 4.4.5</a>
+    </h3>
+    <ul>
+	<li>
+	Released 11 September 2020.
+	</li>
+	<li>
+	Lexilla interface supports setting initialisation properties on lexer libraries with
+	SetLibraryProperty and GetLibraryPropertyNames functions.
+	These are called by SciTE which will forward properties to lexer libraries that are prefixed with
+	"lexilla.context.".
+	</li>
+	<li>
+	Allow cross-building for GTK by choosing pkg-config.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2189/">Bug #2189</a>.
+	</li>
+	<li>
+	On GTK, allow setting CPPFLAGS (and LDFLAGS for SciTE) to support hardening.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2191/">Bug #2191</a>.
+	</li>
+	<li>
+	Changed SciTE's indent.auto mode to set tab size to indent size when file uses tabs for indentation.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2198/">Bug #2198</a>.
+	</li>
+	<li>
+	Fix position of marker symbols for SC_MARGIN_RTEXT which were being moved based on
+	width of text.
+	</li>
+	<li>
+	Fixed bug on Win32 where cursor was flickering between hand and text over an
+	indicator with hover style.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2170/">Bug #2170</a>.
+	</li>
+	<li>
+	Fixed bug where hovered indicator was not returning to non-hover
+	appearance when mouse moved out of window or into margin.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2193/">Bug #2193</a>.
+	</li>
+	<li>
+	Fixed bug where a hovered INDIC_TEXTFORE indicator was not applying the hover
+	colour to the whole range.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2199/">Bug #2199</a>.
+	</li>
+	<li>
+	Fixed bug where gradient indicators were not showing hovered appearance.
+	</li>
+	<li>
+	Fixed bug where layout caching was ineffective.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2197/">Bug #2197</a>.
+	</li>
+	<li>
+	For SciTE, don't show the output pane for quiet jobs.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1365/">Feature #1365</a>.
+	</li>
+	<li>
+	Support command.quiet for SciTE on GTK.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1365/">Feature #1365</a>.
+	</li>
+	<li>
+	Fixed a bug in SciTE with stack balance when a syntax error in the Lua startup script
+	caused continuing failures to find functions after the syntax error was corrected.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2176/">Bug #2176</a>.
+	</li>
+	<li>
+	Added method for iterating through multiple vertical edges: SCI_GETMULTIEDGECOLUMN.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1350/">Feature #1350</a>.
+	</li>
     </ul>
     <h3>
        <a href="https://www.scintilla.org/scite444.zip">Release 4.4.4</a>

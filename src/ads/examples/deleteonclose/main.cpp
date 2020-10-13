@@ -5,14 +5,36 @@
 #include <QMenuBar>
 #include "DockManager.h"
 
+
+class MainWindow : public QMainWindow
+{
+private:
+    ads::CDockManager* m_DockManager = nullptr;
+
+protected:
+    virtual void closeEvent(QCloseEvent *event) override
+    {
+        QMainWindow::closeEvent(event);
+        if (m_DockManager)
+        {
+            m_DockManager->deleteLater();
+        }
+    }
+
+public:
+    void setDockManager(ads::CDockManager* DockManager) {m_DockManager = DockManager;}
+};
+
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QMainWindow w;
+    MainWindow w;
 
     ads::CDockManager::setConfigFlag(ads::CDockManager::FocusHighlighting, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::AllTabsHaveCloseButton, true);
     auto dockManager = new ads::CDockManager(&w);
+    w.setDockManager(dockManager);
     QObject::connect(dockManager, &ads::CDockManager::focusedDockWidgetChanged, [] (ads::CDockWidget* old, ads::CDockWidget* now) {
         static int Count = 0;
     	qDebug() << Count++ << " CDockManager::focusedDockWidgetChanged old: " << (old ? old->objectName() : "-") << " now: " << now->objectName() << " visible: " << now->isVisible();

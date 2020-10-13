@@ -16,6 +16,7 @@ jobs:
       run: |
         sudo apt-get update --fix-missing
         sudo apt-get install qt5-default
+        sudo apt-get install libqt5x11extras5-dev
     - name: qmake
       run: qmake
     - name: make

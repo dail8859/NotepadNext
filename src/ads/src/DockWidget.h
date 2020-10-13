@@ -149,10 +149,10 @@ public:
     {
         DockWidgetClosable = 0x01,///< dock widget has a close button
         DockWidgetMovable = 0x02,///< dock widget is movable and can be moved to a new position in the current dock container
-        DockWidgetFloatable = 0x04,
+        DockWidgetFloatable = 0x04,///< dock widget can be dragged into a floating window
         DockWidgetDeleteOnClose = 0x08, ///< deletes the dock widget when it is closed
-        CustomCloseHandling = 0x10,
-        DockWidgetFocusable = 0x20,
+        CustomCloseHandling = 0x10, ///< clicking the close button will not close the dock widget but emits the closeRequested() signal instead
+        DockWidgetFocusable = 0x20, ///< if this is enabled, a dock widget can get focus highlighting
         DefaultDockWidgetFeatures = DockWidgetClosable | DockWidgetMovable | DockWidgetFloatable | DockWidgetFocusable,
         AllDockWidgetFeatures = DefaultDockWidgetFeatures | DockWidgetDeleteOnClose | CustomCloseHandling,
         NoDockWidgetFeatures = 0x00
@@ -197,7 +197,7 @@ public:
      * To ensure, that a dock widget does not block resizing, the dock widget
      * reimplements minimumSizeHint() function to return a very small minimum
      * size hint. If you would like to adhere the minimumSizeHint() from the
-     * content widget, the set the minimumSizeHintMode() to
+     * content widget, then set the minimumSizeHintMode() to
      * MinimumSizeHintFromContent.
      */
     enum eMinimumSizeHintMode
@@ -359,6 +359,11 @@ public:
      * \see eMinimumSizeHintMode for a detailed description
      */
     void setMinimumSizeHintMode(eMinimumSizeHintMode Mode);
+
+    /**
+     * Returns true if the dock widget is set as central widget of it's dock manager
+     */
+    bool isCentralWidget() const;
 
     /**
      * Sets the dock widget icon that is shown in tabs and in toggle view
@@ -577,7 +582,7 @@ signals:
      * This signal is emitted when the features property changes.
      * The features parameter gives the new value of the property.
      */
-    void featuresChanged(DockWidgetFeatures features);
+    void featuresChanged(ads::CDockWidget::DockWidgetFeatures features);
 }; // class DockWidget
 }
  // namespace ads

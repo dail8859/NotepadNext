@@ -108,6 +108,7 @@ struct DockManagerPrivate
 	bool RestoringState = false;
 	QVector<CFloatingDockContainer*> UninitializedFloatingWidgets;
 	CDockFocusController* FocusController = nullptr;
+    CDockWidget* CentralWidget = nullptr;
 
 	/**
 	 * Private data constructor
@@ -278,6 +279,27 @@ bool DockManagerPrivate::restoreStateFromXml(const QByteArray &state,  int versi
     int  DockContainers = s.attributes().value("Containers").toInt();
 #endif
     ADS_PRINT(DockContainers);
+
+    if (CentralWidget)
+    {
+		const auto CentralWidgetAttribute = s.attributes().value("CentralWidget");
+		// If we have a central widget but a state without central widget, then
+		// something is wrong.
+		if (CentralWidgetAttribute.isEmpty())
+		{
+			qWarning() << "Dock manager has central widget but saved state does not have central widget.";
+			return false;
+		}
+
+		// If the object name of the central widget does not match the name of the
+		// saved central widget, the something is wrong
+		if (CentralWidget->objectName() != CentralWidgetAttribute.toString())
+		{
+			qWarning() << "Object name of central widget does not match name of central widget in saved state.";
+			return false;
+		}
+    }
+
     int DockContainerCount = 0;
     while (s.readNextStartElement())
     {
@@ -296,11 +318,11 @@ bool DockManagerPrivate::restoreStateFromXml(const QByteArray &state,  int versi
     {
 		// Delete remaining empty floating widgets
 		int FloatingWidgetIndex = DockContainerCount - 1;
-		int DeleteCount = FloatingWidgets.count() - FloatingWidgetIndex;
-		for (int i = 0; i < DeleteCount; ++i)
+		for (int i = FloatingWidgetIndex; i < FloatingWidgets.count(); ++i)
 		{
-			FloatingWidgets[FloatingWidgetIndex + i]->deleteLater();
-			_this->removeDockContainer(FloatingWidgets[FloatingWidgetIndex + i]->dockContainer());
+			auto* floatingWidget = FloatingWidgets[i];
+			_this->removeDockContainer(floatingWidget->dockContainer());
+			floatingWidget->deleteLater();
 		}
     }
 
@@ -367,8 +389,6 @@ void DockManagerPrivate::restoreDockAreasIndices()
     }
 }
 
-
-
 //============================================================================
 void DockManagerPrivate::emitTopLevelEvents()
 {
@@ -419,6 +439,7 @@ bool DockManagerPrivate::restoreState(const QByteArray& State, int version)
     restoreDockWidgetsOpenState();
     restoreDockAreasIndices();
     emitTopLevelEvents();
+    _this->dumpLayout();
 
     return true;
 }
@@ -474,6 +495,10 @@ CDockManager::CDockManager(QWidget *parent) :
 	{
 		d->FocusController = new CDockFocusController(this);
 	}
+
+#ifdef Q_OS_LINUX
+	window()->installEventFilter(this);
+#endif
 }
 
 //============================================================================
@@ -487,6 +512,70 @@ CDockManager::~CDockManager()
 	delete d;
 }
 
+//============================================================================
+#ifdef Q_OS_LINUX
+bool CDockManager::eventFilter(QObject *obj, QEvent *e)
+{
+	// Emulate Qt:Tool behaviour.
+	// Required because on some WMs Tool windows can't be maximized.
+
+	// Window always on top of the MainWindow.
+	if (e->type() == QEvent::WindowActivate)
+	{
+		for (auto _window : floatingWidgets())
+		{
+			if (!_window->isVisible() || window()->isMinimized())
+			{
+				continue;
+			}
+			// setWindowFlags(Qt::WindowStaysOnTopHint) will hide the window and thus requires a show call.
+			// This then leads to flickering and a nasty endless loop (also buggy behaviour on Ubuntu).
+			// So we just do it ourself.
+			internal::xcb_update_prop(true, _window->window()->winId(),
+				"_NET_WM_STATE", "_NET_WM_STATE_ABOVE", "_NET_WM_STATE_STAYS_ON_TOP");
+		}
+	}
+	else if (e->type() == QEvent::WindowDeactivate)
+	{
+		for (auto _window : floatingWidgets())
+		{
+			if (!_window->isVisible() || window()->isMinimized())
+			{
+				continue;
+			}
+			internal::xcb_update_prop(false, _window->window()->winId(),
+				"_NET_WM_STATE", "_NET_WM_STATE_ABOVE", "_NET_WM_STATE_STAYS_ON_TOP");
+			_window->raise();
+		}
+	}
+
+	// Sync minimize with MainWindow
+	if (e->type() == QEvent::WindowStateChange)
+	{
+		for (auto _window : floatingWidgets())
+		{
+			if (! _window->isVisible())
+			{
+				continue;
+			}
+
+			if (window()->isMinimized())
+			{
+				_window->showMinimized();
+			}
+			else
+			{
+				_window->setWindowState(_window->windowState() & (~Qt::WindowMinimized));
+			}
+		}
+		if (!window()->isMinimized())
+		{
+			QApplication::setActiveWindow(window());
+		}
+	}
+	return Super::eventFilter(obj, e);
+}
+#endif
 
 //============================================================================
 void CDockManager::registerFloatingWidget(CFloatingDockContainer* FloatingWidget)
@@ -568,6 +657,10 @@ QByteArray CDockManager::saveState(int version) const
 		s.writeAttribute("Version", QString::number(CurrentVersion));
 		s.writeAttribute("UserVersion", QString::number(version));
 		s.writeAttribute("Containers", QString::number(d->Containers.count()));
+		if (d->CentralWidget)
+		{
+			s.writeAttribute("CentralWidget", d->CentralWidget->objectName());
+		}
 		for (auto Container : d->Containers)
 		{
 			Container->saveState(s);
@@ -638,6 +731,7 @@ CFloatingDockContainer* CDockManager::addDockWidgetFloating(CDockWidget* Dockwid
 	{
 		d->UninitializedFloatingWidgets.append(FloatingWidget);
 	}
+	emit dockWidgetAdded(Dockwidget);
 	return FloatingWidget;
 }
 
@@ -664,7 +758,9 @@ CDockAreaWidget* CDockManager::addDockWidget(DockWidgetArea area,
 	CDockWidget* Dockwidget, CDockAreaWidget* DockAreaWidget)
 {
 	d->DockWidgetsMap.insert(Dockwidget->objectName(), Dockwidget);
-	return CDockContainerWidget::addDockWidget(area, Dockwidget, DockAreaWidget);
+	auto AreaOfAddedDockWidget = CDockContainerWidget::addDockWidget(area, Dockwidget, DockAreaWidget);
+	emit dockWidgetAdded(Dockwidget);
+	return AreaOfAddedDockWidget;
 }
 
 
@@ -816,6 +912,50 @@ void CDockManager::loadPerspectives(QSettings& Settings)
 	Settings.endArray();
 }
 
+
+//============================================================================
+CDockWidget* CDockManager::centralWidget() const
+{
+    return d->CentralWidget;
+}
+
+
+//============================================================================
+CDockAreaWidget* CDockManager::setCentralWidget(CDockWidget* widget)
+{
+	if (!widget)
+	{
+		d->CentralWidget = nullptr;
+		return nullptr;
+	}
+
+	// Setting a new central widget is now allowed if there is already a central
+	// widget or if there are already other dock widgets
+	if (d->CentralWidget)
+	{
+		qWarning("Setting a central widget not possible because there is already a central widget.");
+		return nullptr;
+	}
+
+	// Setting a central widget is now allowed if there are already other
+	// dock widgets.
+	if (!d->DockWidgetsMap.isEmpty())
+	{
+		qWarning("Setting a central widget not possible - the central widget need to be the first "
+			"dock widget that is added to the dock manager.");
+		return nullptr;
+	}
+
+
+	widget->setFeature(CDockWidget::DockWidgetClosable, false);
+	widget->setFeature(CDockWidget::DockWidgetMovable, false);
+	widget->setFeature(CDockWidget::DockWidgetFloatable, false);
+	d->CentralWidget = widget;
+	CDockAreaWidget* CentralArea = addDockWidget(CenterDockWidgetArea, widget);
+	CentralArea->setDockAreaFlag(CDockAreaWidget::eDockAreaFlag::HideSingleWidgetTitleBar, true);
+	return CentralArea;
+}
+
 //============================================================================
 QAction* CDockManager::addToggleViewActionToMenu(QAction* ToggleViewAction,
 	const QString& Group, const QIcon& GroupIcon)
@@ -936,6 +1076,20 @@ void CDockManager::setDockWidgetFocused(CDockWidget* DockWidget)
 	if (d->FocusController)
 	{
 		d->FocusController->setDockWidgetFocused(DockWidget);
+	}
+}
+
+
+//===========================================================================
+CDockWidget* CDockManager::focusedDockWidget() const
+{
+	if (!d->FocusController)
+	{
+		return nullptr;
+	}
+	else
+	{
+		return d->FocusController->focusedDockWidget();
 	}
 }
 

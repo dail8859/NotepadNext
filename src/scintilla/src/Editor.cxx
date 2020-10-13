@@ -4436,7 +4436,8 @@ void Editor::TrimAndSetSelection(Sci::Position currentPos_, Sci::Position anchor
 }
 
 void Editor::LineSelection(Sci::Position lineCurrentPos_, Sci::Position lineAnchorPos_, bool wholeLine) {
-	Sci::Position selCurrentPos, selAnchorPos;
+	Sci::Position selCurrentPos;
+	Sci::Position selAnchorPos;
 	if (wholeLine) {
 		const Sci::Line lineCurrent_ = pdoc->SciLineFromPosition(lineCurrentPos_);
 		const Sci::Line lineAnchor_ = pdoc->SciLineFromPosition(lineAnchorPos_);
@@ -4506,6 +4507,7 @@ void Editor::DwellEnd(bool mouseMoved) {
 
 void Editor::MouseLeave() {
 	SetHotSpotRange(nullptr);
+	SetHoverIndicatorPosition(Sci::invalidPosition);
 	if (!HaveMouseCapture()) {
 		ptMouseLast = Point(-1, -1);
 		DwellEnd(true);
@@ -4585,7 +4587,8 @@ void Editor::ButtonDownWithModifiers(Point pt, unsigned int curTime, int modifie
 				charPos = MovePositionOutsideChar(charPos, -1);
 			}
 
-			Sci::Position startWord, endWord;
+			Sci::Position startWord;
+			Sci::Position endWord;
 			if ((sel.MainCaret() >= originalAnchorPos) && !pdoc->IsLineEndPosition(charPos)) {
 				startWord = pdoc->ExtendWordSelect(pdoc->MovePositionOutsideChar(charPos + 1, 1), -1);
 				endWord = pdoc->ExtendWordSelect(charPos, 1);
@@ -4874,12 +4877,14 @@ void Editor::ButtonMoveWithModifiers(Point pt, unsigned int, int modifiers) {
 			if (PointInSelMargin(pt)) {
 				DisplayCursor(GetMarginCursor(pt));
 				SetHotSpotRange(nullptr);
+				SetHoverIndicatorPosition(Sci::invalidPosition);
 				return; 	// No need to test for selection
 			}
 		}
 		// Display regular (drag) cursor over selection
 		if (PointInSelection(pt) && !SelectionEmpty()) {
 			DisplayCursor(Window::cursorArrow);
+			SetHoverIndicatorPosition(Sci::invalidPosition);
 		} else {
 			SetHoverIndicatorPoint(pt);
 			if (PointIsHotspot(pt)) {
@@ -5615,7 +5620,7 @@ Sci::Position Editor::ReplaceTarget(bool replacePatterns, const char *text, Sci:
 	targetRange.end = targetRange.start;
 
 	// Realize virtual space of target start
-	Sci::Position startAfterSpaceInsertion = RealizeVirtualSpace(targetRange.start.Position(), targetRange.start.VirtualSpace());
+	const Sci::Position startAfterSpaceInsertion = RealizeVirtualSpace(targetRange.start.Position(), targetRange.start.VirtualSpace());
 	targetRange.start.SetPosition(startAfterSpaceInsertion);
 	targetRange.end = targetRange.start;
 
@@ -5762,6 +5767,9 @@ sptr_t Editor::StyleGetMessage(unsigned int iMessage, uptr_t wParam, sptr_t lPar
 }
 
 void Editor::SetSelectionNMessage(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
+	if (wParam >= sel.Count()) {
+		return;
+	}
 	InvalidateRange(sel.Range(wParam).Start().Position(), sel.Range(wParam).End().Position());
 
 	switch (iMessage) {
@@ -7697,7 +7705,7 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
 		break;
 
 	case SCI_MULTIEDGEADDLINE:
-		vs.theMultiEdge.push_back(EdgeProperties(wParam, lParam));
+		vs.AddMultiEdge(wParam, lParam);
 		InvalidateStyleRedraw();
 		break;
 
@@ -7705,6 +7713,15 @@ sptr_t Editor::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
 		std::vector<EdgeProperties>().swap(vs.theMultiEdge); // Free vector and memory, C++03 compatible
 		InvalidateStyleRedraw();
 		break;
+
+	case SCI_GETMULTIEDGECOLUMN: {
+			const size_t which = wParam;
+			// size_t is unsigned so this also handles negative inputs.
+			if (which >= vs.theMultiEdge.size()) {
+				return -1;
+			}
+			return vs.theMultiEdge[which].column;
+		}
 
 	case SCI_GETACCESSIBILITY:
 		return SC_ACCESSIBILITY_DISABLED;

@@ -51,3 +51,13 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    QMainWindow::closeEvent(event);
+    if (m_DockManager)
+    {
+        m_DockManager->deleteLater();
+    }
+}

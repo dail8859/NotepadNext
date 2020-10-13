@@ -122,12 +122,24 @@ void DockedEditor::dockWidgetCloseRequested()
 
 ads::CDockAreaWidget * DockedEditor::currentDockArea()
 {
-    foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
+    QMap<QString, ads::CDockWidget*> dockwidgets = m_DockManager->dockWidgetsMap();
+
+    if (dockwidgets.size() == 0) {
+        return Q_NULLPTR;
+    }
+    else if (dockwidgets.size() == 1) {
+        // If no dockwidget has had the focus set yet, just return the only one
+        return dockwidgets.first()->dockAreaWidget();
+    }
+
+    // Search the list for the one that has had the focus set
+    foreach (ads::CDockWidget* dockWidget, dockwidgets) {
         if (dockWidget->property("focused").toBool()) {
             return dockWidget->dockAreaWidget();
         }
     }
 
+    // There was no area that had the focus
     return Q_NULLPTR;
 }
 

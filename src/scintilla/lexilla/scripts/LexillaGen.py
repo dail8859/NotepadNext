@@ -117,7 +117,7 @@ def RegenerateAll(rootDirectory):
 
     lexerReferences = ScintillaData.FindLexersInXcode(lexillaXcodeProject)
 
-    UpdateLineInPlistFile(lexillaXcode / "Lexilla" / "Info.plist",
+    UpdateLineInPlistFile(lexillaXcode / "Info.plist",
         "CFBundleShortVersionString", versionDotted)
 
     ReplaceREInFile(lexillaXcodeProject, "CURRENT_PROJECT_VERSION = [0-9.]+;",
