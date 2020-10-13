@@ -18,6 +18,7 @@ public:
 	bool hasVisibleContent() const;
 	QWidget* firstWidget() const;
 	QWidget* lastWidget() const;
+    bool isResizingWithContainer() const;
 
 };
 

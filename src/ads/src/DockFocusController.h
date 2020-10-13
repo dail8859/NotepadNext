@@ -77,6 +77,12 @@ public:
 	 */
 	void notifyFloatingWidgetDrop(CFloatingDockContainer* FloatingWidget);
 
+	/**
+	 * Returns the dock widget that has focus style in the ui or a nullptr if
+	 * not dock widget is painted focused.
+	 */
+	CDockWidget* focusedDockWidget() const;
+
 public slots:
 	/**
 	 * Request a focus change to the given dock widget

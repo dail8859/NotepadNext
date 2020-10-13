@@ -144,7 +144,9 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
             recentFilesListManager->addFile(buffer->fileInfo.canonicalFilePath());
         }
     });
-    connect(app->getBufferManager(), &BufferManager::bufferCreated, [=](ScintillaBuffer *buffer) {
+
+    connect(dockedEditor, &DockedEditor::editorCreated, [=](ScintillaNext *editor) {
+        ScintillaBuffer *buffer = editor->scintillaBuffer();
         if (buffer->isFile()) {
             recentFilesListManager->removeFile(buffer->fileInfo.canonicalFilePath());
         }

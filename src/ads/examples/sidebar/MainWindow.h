@@ -22,6 +22,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+protected:
+    virtual void closeEvent(QCloseEvent *event) override;
+
 private:
     Ui::MainWindow *ui;
     ads::CDockManager* m_DockManager;

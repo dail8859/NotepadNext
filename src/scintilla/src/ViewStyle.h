@@ -193,6 +193,8 @@ public:
 	bool WhitespaceBackgroundDrawn() const noexcept;
 	ColourDesired WrapColour() const noexcept;
 
+	void AddMultiEdge(uptr_t wParam, sptr_t lParam);
+
 	bool SetWrapState(int wrapState_) noexcept;
 	bool SetWrapVisualFlags(int wrapVisualFlags_) noexcept;
 	bool SetWrapVisualFlagsLocation(int wrapVisualFlagsLocation_) noexcept;

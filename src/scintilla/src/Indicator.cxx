@@ -172,8 +172,8 @@ void Indicator::Draw(Surface *surface, const PRectangle &rc, const PRectangle &r
 			rcBox.top = rcLine.top + 1;
 			rcBox.bottom = rcLine.bottom;
 			const Surface::GradientOptions options = Surface::GradientOptions::topToBottom;
-			const ColourAlpha start(sacNormal.fore, fillAlpha);
-			const ColourAlpha end(sacNormal.fore, 0);
+			const ColourAlpha start(sacDraw.fore, fillAlpha);
+			const ColourAlpha end(sacDraw.fore, 0);
 			std::vector<ColourStop> stops;
 			switch (sacDraw.style) {
 			case INDIC_GRADIENT:
