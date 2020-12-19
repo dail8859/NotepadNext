@@ -20,6 +20,7 @@
 #include <QDebug>
 #include <QSettings>
 #include <QSysInfo>
+#include <QApplication>
 
 #include "BufferManager.h"
 #include "NotepadNextApplication.h"
@@ -40,7 +41,7 @@ int main(int argc, char *argv[])
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
 
-    NotepadNextApplication app("Notepad Next Application", new BufferManager(), argc, argv);
+    NotepadNextApplication app(new BufferManager(), argc, argv);
 
     // Log some debug info
     qInfo("OS: %s", QSysInfo::prettyProductName().toLatin1().constData());
@@ -50,22 +51,15 @@ int main(int argc, char *argv[])
     qInfo("Arguments: %s", QApplication::arguments().join(' ').toLatin1().constData());
     qInfo();
 
-    if (app.isRunning()) {
-        // Simply pass on the commandline arguments for now
-        QStringList quotedArgs;
+    if(app.isPrimary()) {
+        app.initGui();
 
-        foreach (const QString &arg, QtSingleApplication::arguments()) {
-            quotedArgs << "\"" + arg + "\"";
-        }
-
-        app.sendMessage(quotedArgs.join(" "), 500);
-
-        return 0;
-    }
-    else if (app.initGui()) {
         return app.exec();
     }
     else {
+        // This API requires LIBS += User32.lib to be added to the project
+        //AllowSetForegroundWindow( DWORD( app.primaryPid() ) );
+        qInfo("Secondary instance closing");
         return 0;
     }
 }
