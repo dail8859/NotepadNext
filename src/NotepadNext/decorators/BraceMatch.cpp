@@ -32,7 +32,7 @@ BraceMatch::BraceMatch(ScintillaEdit *editor) :
     const int INDIC_BRACEBADLIGHT = 9;
 
     editor->indicSetStyle(INDIC_BRACEHIGHLIGHT, INDIC_FULLBOX);
-    editor->indicSetFore(INDIC_BRACEHIGHLIGHT, 0x777777);
+    editor->indicSetFore(INDIC_BRACEHIGHLIGHT, 0x999999);
     editor->indicSetAlpha(INDIC_BRACEHIGHLIGHT, 100);
     editor->indicSetOutlineAlpha(INDIC_BRACEHIGHLIGHT, 200);
     editor->indicSetUnder(INDIC_BRACEHIGHLIGHT, true);

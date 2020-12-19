@@ -17,11 +17,12 @@
  */
 
 
-#include "MainWindow.h"
-#include "NotepadNextApplication.h"
-
+#include <QDebug>
 #include <QSettings>
 #include <QSysInfo>
+
+#include "BufferManager.h"
+#include "NotepadNextApplication.h"
 
 int main(int argc, char *argv[])
 {
@@ -39,7 +40,7 @@ int main(int argc, char *argv[])
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
 
-    NotepadNextApplication app("Notepad Next Application", argc, argv);
+    NotepadNextApplication app("Notepad Next Application", new BufferManager(), argc, argv);
 
     // Log some debug info
     qInfo("OS: %s", QSysInfo::prettyProductName().toLatin1().constData());
