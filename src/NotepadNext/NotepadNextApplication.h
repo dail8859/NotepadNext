@@ -32,7 +32,7 @@ class NotepadNextApplication : public QtSingleApplication
     Q_OBJECT
 
 public:
-    NotepadNextApplication(const QString &id, int &argc, char **argv);
+    NotepadNextApplication(const QString &id, BufferManager *bm, int &argc, char **argv);
 
     bool initGui();
 
@@ -43,7 +43,7 @@ public:
     Settings *getSettings() const;
 
 private:
-    BufferManager *bufferManager = Q_NULLPTR;
+    BufferManager *bufferManager;
     LuaState *luaState = Q_NULLPTR;
     Settings *settings = Q_NULLPTR;
 

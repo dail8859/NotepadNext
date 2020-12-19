@@ -42,12 +42,13 @@ struct luabridge::Stack <QString const&>
 };
 
 
-NotepadNextApplication::NotepadNextApplication(const QString &id, int &argc, char **argv)
+NotepadNextApplication::NotepadNextApplication(const QString &id, BufferManager *bm, int &argc, char **argv)
     : QtSingleApplication(id, argc, argv)
 {
     qInfo(Q_FUNC_INFO);
 
-    bufferManager = new BufferManager(this);
+    bufferManager = bm;
+    bufferManager->setParent(this);
 
     luaState = new LuaState();
     luaState->executeFile(":/scripts/init.lua");

@@ -47,6 +47,7 @@
 #include "HighlightedScrollBar.h"
 #include "SmartHighlighter.h"
 #include "SurroundSelection.h"
+#include "LineNumbers.h"
 
 #include "RecentFilesListManager.h"
 #include "LuaExtension.h"
@@ -56,7 +57,6 @@
 #include "LuaConsoleDock.h"
 
 #include "FindReplaceDialog.h"
-#include "LineNumbers.h"
 #include "MacroRunDialog.h"
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
@@ -508,7 +508,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
             macros.append(currentMacro);
         }
-
     });
 
     connect(ui->menuWindows, &QMenu::aboutToShow, [=]() {
@@ -805,7 +804,10 @@ void MainWindow::setupEditor(ScintillaNext *editor)
     ss->setEnabled(true);
 
     // Connect the editor to the UI
+    // TODO: what if a non focused editor sends this signal
     connect(editor, &ScintillaNext::savePointChanged, this, &MainWindow::updateSaveStatusBasedUi);
+
+    // These should only ever occur for the focused editor
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
     connect(editor, &ScintillaNext::marginClicked, [editor](int position, int modifiers, int margin) {
         Q_UNUSED(modifiers);
@@ -852,47 +854,49 @@ void MainWindow::openFileList(const QStringList &fileNames)
     if (fileNames.size() == 0)
         return;
 
-    //bool wasInitialState = isInInitialState();
-    //const ScintillaBuffer *mostRecentBuffer = Q_NULLPTR;
+    bool wasInitialState = isInInitialState();
+    const ScintillaBuffer *mostRecentBuffer = Q_NULLPTR;
 
     foreach (const QString &filePath , fileNames) {
         qInfo(qUtf8Printable(filePath));
 
         // Search currently open buffers to see if it is already open
         ScintillaBuffer *buffer = app->getBufferManager()->getBufferByFilePath(filePath);
-        if (buffer != Q_NULLPTR) {
-            // The file has already been opened
-            //mostRecentBuffer = buffer;
-            continue;
-        }
 
-        QFileInfo fileInfo(filePath);
-        if (!fileInfo.isFile()) {
-            auto reply = QMessageBox::question(this, "Create File", QString("<b>%1</b> does not exist. Do you want to create it?").arg(filePath));
-            if (reply == QMessageBox::Yes) {
-                buffer = app->getBufferManager()->createBufferFromFile(filePath);
-                //mostRecentBuffer = buffer;
+        if (buffer == Q_NULLPTR) {
+            QFileInfo fileInfo(filePath);
+
+            if (!fileInfo.isFile()) {
+                auto reply = QMessageBox::question(this, "Create File", QString("<b>%1</b> does not exist. Do you want to create it?").arg(filePath));
+
+                if (reply == QMessageBox::Yes) {
+                    buffer = app->getBufferManager()->createBufferFromFile(filePath);
+                }
+                else {
+                    // Make sure it is not still in the recent files list still.
+                    // Normally when a file is opened it is removed from the file list,
+                    // but if a user doesn't want to create the file, remove it explicitly.
+                    recentFilesListManager->removeFile(filePath);
+                    continue;
+                }
             }
             else {
-                // Make sure it is not still in the recent files list
-                recentFilesListManager->removeFile(filePath);
+                buffer = app->getBufferManager()->createBufferFromFile(filePath);
             }
         }
-        else {
-            buffer = app->getBufferManager()->createBufferFromFile(filePath);
-            //mostRecentBuffer = buffer;
-        }
+
+        mostRecentBuffer = buffer;
     }
 
     // If any were successful, switch to the last one
-    //if (mostRecentBuffer) {
-    //    dockedEditor->switchToBuffer(mostRecentBuffer);
-    //
-    //    if (wasInitialState) {
-    //        // TODO: fix this
-    //        //closeFile(0);
-    //    }
-    //}
+    if (mostRecentBuffer) {
+        dockedEditor->switchToBuffer(mostRecentBuffer);
+    }
+
+    if (wasInitialState) {
+        ScintillaBuffer *bufferToClose = dockedEditor->buffers()[0];
+        app->getBufferManager()->closeBuffer(bufferToClose);
+    }
 }
 
 bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
@@ -1324,11 +1328,10 @@ void MainWindow::updateBufferPositionBasedUi()
 
 void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
 {
-    docType->setText(editor->lexerLanguage());
-
     foreach (QAction *action, languageActionGroup->actions()) {
         if (action->data().toString() == editor->lexerLanguage()) {
             action->setChecked(true);
+            docType->setText(action->text());
             break;
         }
     }
@@ -1401,7 +1404,8 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
                 QLocale::system().toString(editor->countCharacters(start, end)),
                 QLocale::system().toString(lines));
     }
-    int pos = editor->currentPos();
+
+    const int pos = editor->currentPos();
     QString positionText = QString("Ln: %1    Col: %2    ").arg(
             QLocale::system().toString(editor->lineFromPosition(pos) + 1),
             QLocale::system().toString(editor->column(pos) + 1));
@@ -1421,7 +1425,7 @@ void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
     }
 
     // See if it already has a language
-    if (buffer->lexer != "null")
+    if (editor->lexerLanguage() != "")
         return;
 
     const QString ext = buffer->fileInfo.suffix();
