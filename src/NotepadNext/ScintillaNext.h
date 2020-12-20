@@ -41,6 +41,9 @@ public:
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+
+private:
+    ScintillaBuffer *buffer = Q_NULLPTR;
 };
 
 // Stick this in the header file...because C++, that's why

@@ -893,10 +893,18 @@ void MainWindow::openFileList(const QStringList &fileNames)
         dockedEditor->switchToBuffer(mostRecentBuffer);
     }
 
-    if (wasInitialState) {
-        ScintillaBuffer *bufferToClose = dockedEditor->buffers()[0];
-        app->getBufferManager()->closeBuffer(bufferToClose);
-    }
+    /* This code breaks things on start up. During initial launch of the application, if a file is
+     * specified via the command line, then the default new file would be closed. But if a buffer is closed
+     * then the DockedEditor doesn't know about it, since focusedDockWidgetChanged is not emitted
+     * leaving the currentEditor pointer pointing to a widget that is set to be deleted. Then during focusIn()
+     * it needs the currentEditor pointer to check if the document has been modified
+     *
+     * if (wasInitialState) {
+     *     QVector<ScintillaBuffer *> buffers = dockedEditor->buffers();
+     *     ScintillaBuffer *bufferToClose = buffers.first();
+     *     app->getBufferManager()->closeBuffer(bufferToClose);
+     * }
+    */
 }
 
 bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
