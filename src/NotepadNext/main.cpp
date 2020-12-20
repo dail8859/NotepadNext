@@ -57,9 +57,9 @@ int main(int argc, char *argv[])
         return app.exec();
     }
     else {
-        // This API requires LIBS += User32.lib to be added to the project
-        //AllowSetForegroundWindow( DWORD( app.primaryPid() ) );
-        qInfo("Secondary instance closing");
+        qInfo("Secondary instance closing...");
+        app.exit(0);
+
         return 0;
     }
 }
