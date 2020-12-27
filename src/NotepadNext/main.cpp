@@ -21,6 +21,7 @@
 #include <QSettings>
 #include <QSysInfo>
 #include <QApplication>
+#include <QDataStream>
 
 #include "BufferManager.h"
 #include "NotepadNextApplication.h"
@@ -44,12 +45,13 @@ int main(int argc, char *argv[])
     NotepadNextApplication app(new BufferManager(), argc, argv);
 
     // Log some debug info
+    qInfo("=============================");
     qInfo("OS: %s", QSysInfo::prettyProductName().toLatin1().constData());
     qInfo("Name: %s", QApplication::applicationName().toLatin1().constData());
     qInfo("Version: v%s", QApplication::applicationVersion().toLatin1().constData());
     qInfo("File Path: %s", QApplication::applicationFilePath().toLatin1().constData());
     qInfo("Arguments: %s", QApplication::arguments().join(' ').toLatin1().constData());
-    qInfo();
+    qInfo("=============================");
 
     if(app.isPrimary()) {
         app.initGui();
@@ -57,9 +59,22 @@ int main(int argc, char *argv[])
         return app.exec();
     }
     else {
-        qInfo("Secondary instance closing...");
-        app.exit(0);
+        // This eventually needs moved into the NotepadNextApplication to keep
+        // sending/receiving logic in the same place
+        QByteArray buffer;
+        QDataStream stream(&buffer, QIODevice::WriteOnly);
 
+        stream << app.arguments();
+
+        qDebug() << "App already running...";
+        qDebug() << "Primary instance PID: " << app.primaryPid();
+        qDebug() << "Sending:" << buffer;
+
+        app.sendMessage(buffer);
+
+        qInfo("Secondary instance closing...");
+
+        app.exit(0);
         return 0;
     }
 }
