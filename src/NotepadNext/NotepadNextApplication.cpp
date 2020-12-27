@@ -45,12 +45,16 @@ struct luabridge::Stack <QString const&>
 
 
 NotepadNextApplication::NotepadNextApplication(BufferManager *bm, int &argc, char **argv)
-    : SingleApplication(argc, argv, true, opts)
+    : SingleApplication(argc, argv, true, opts), bufferManager(bm)
 {
     qInfo(Q_FUNC_INFO);
 
-    bufferManager = bm;
     bufferManager->setParent(this);
+}
+
+bool NotepadNextApplication::initGui()
+{
+    qInfo(Q_FUNC_INFO);
 
     luaState = new LuaState();
     luaState->executeFile(":/scripts/init.lua");
@@ -70,11 +74,6 @@ NotepadNextApplication::NotepadNextApplication(BufferManager *bm, int &argc, cha
             .endClass()
         .endNamespace();
     luabridge::setGlobal(luaState->L, settings, "settings");
-}
-
-bool NotepadNextApplication::initGui()
-{
-    qInfo(Q_FUNC_INFO);
 
     createNewWindow();
 
@@ -105,6 +104,15 @@ bool NotepadNextApplication::initGui()
     });
 
     QObject::connect(this, &SingleApplication::instanceStarted, this->windows.first(), &MainWindow::bringWindowToForeground);
+
+    QObject::connect(this, &SingleApplication::receivedMessage, [&] (quint32 instanceId, QByteArray message) {
+        QDataStream stream(&message, QIODevice::ReadOnly);
+        QStringList args;
+
+        stream >> args;
+
+        applyArguments(args);
+    });
 
     QObject::connect(this, &NotepadNextApplication::applicationStateChanged, [&](Qt::ApplicationState state) {
         if (state == Qt::ApplicationActive) {
