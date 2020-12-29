@@ -27,3 +27,13 @@ jobs:
         run: |
           cd build
           nmake
+
+      - name: Create Zip
+        run: |
+          cd build
+          jom zip
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: "NotepadNext.zip"
+          path: ".\NotepadNext*.zip"
