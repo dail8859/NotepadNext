@@ -19,13 +19,12 @@ jobs:
       - name: QMake Version
         run: qmake -v
 
-      - name: Pre-build
+      - name: QMake
         run: |
           mkdir build
           cd build
-
-      - name: QMake
-        run: qmake ..\src\NotepadNext.pro "APP_VERSION=0.3.3"
+          pwd
+          qmake ..\src\NotepadNext.pro "APP_VERSION=0.3.3"
       
       - name: Build
         run: jom
