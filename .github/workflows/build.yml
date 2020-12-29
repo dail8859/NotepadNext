@@ -24,4 +24,6 @@ jobs:
           qmake ..\src\NotepadNext.pro "APP_VERSION=0.3.3"
       
       - name: Build
-        run: nmake
+        run: |
+          cd build
+          nmake
