@@ -7,23 +7,20 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with:
           submodules: true
 
       - uses: jurplel/install-qt-action@v2.11.1
 
-      - uses: microsoft/setup-msbuild@v1
-
-      - name: QMake Version
-        run: qmake -v
+      - uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x64
 
       - name: QMake
         run: |
           mkdir build
           cd build
-          pwd
           qmake ..\src\NotepadNext.pro "APP_VERSION=0.3.3"
       
       - name: Build
