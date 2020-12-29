@@ -17,6 +17,9 @@ jobs:
         with:
           arch: x64
 
+      - name: Install jom
+        run: choco install jom
+
       - name: QMake
         run: |
           mkdir build
@@ -26,7 +29,7 @@ jobs:
       - name: Build
         run: |
           cd build
-          nmake
+          jom
 
       - name: Create Zip
         run: |
