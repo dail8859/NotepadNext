@@ -40,5 +40,5 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: "NotepadNext.zip"
-          path: "build/package/NotepadNext-v0.3.3.zip"
+          name: NotepadNext
+          path: ${{ github.workspace }}/build/package/
