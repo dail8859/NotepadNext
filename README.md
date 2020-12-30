@@ -2,8 +2,8 @@
 
 | Branch | Status |
 |---|---|
-| master | [![Build status](https://ci.appveyor.com/api/projects/status/ix8wdx6tu5t3you0/branch/master?svg=true)](https://ci.appveyor.com/project/dail8859/notepadnext/branch/master) |
-| dev | [![Build status](https://ci.appveyor.com/api/projects/status/ix8wdx6tu5t3you0/branch/dev?svg=true)](https://ci.appveyor.com/project/dail8859/notepadnext/branch/dev) |
+| master | ![Build Notepad Next](https://github.com/dail8859/NotepadNext/workflows/Build%20Notepad%20Next/badge.svg) |
+| dev | ![Build Notepad Next](https://github.com/dail8859/NotepadNext/workflows/Build%20Notepad%20Next/badge.svg?branch=dev) |
 
 
 
