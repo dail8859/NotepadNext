@@ -43,7 +43,6 @@ public:
 
     // Helper methods
     bool RunString(const char *s);
-    bool RunFile(const wchar_t *filename);
     bool OnExecute(const char *s);
     void CallShortcut(int id);
 
