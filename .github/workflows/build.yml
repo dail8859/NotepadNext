@@ -36,7 +36,9 @@ jobs:
           cd build
           jom zip
 
+      - run: pwd
+
       - uses: actions/upload-artifact@v2
         with:
           name: "NotepadNext.zip"
-          path: "build/package/NotepadNext*.zip"
+          path: "package/NotepadNext*.zip"
