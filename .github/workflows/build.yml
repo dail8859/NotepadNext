@@ -11,16 +11,18 @@ jobs:
         with:
           submodules: true
 
-      - uses: jurplel/install-qt-action@v2.11.1
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.11.1
 
-      - uses: egor-tensin/vs-shell@v2
+      - name: Setup VS tools
+        uses: egor-tensin/vs-shell@v2
         with:
           arch: x64
 
       - name: Install jom
         run: choco install jom
 
-      - name: QMake
+      - name: Run QMake
         run: |
           mkdir build
           cd build
@@ -31,14 +33,13 @@ jobs:
           cd build
           jom
 
-      - name: Create Zip
+      - name: Create package
         run: |
           cd build
-          jom zip
+          jom make_package
 
-      - run: pwd
-
-      - uses: actions/upload-artifact@v2
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
         with:
           name: NotepadNext
           path: ${{ github.workspace }}/build/package/
