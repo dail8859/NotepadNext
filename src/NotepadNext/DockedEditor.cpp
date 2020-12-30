@@ -150,7 +150,7 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
     Q_ASSERT(buffer != Q_NULLPTR);
 
     // Need a new editor
-    auto editor = new ScintillaNext(buffer);
+    auto editor = new ScintillaNext(buffer, m_DockManager);
 
     if (currentEditor == Q_NULLPTR) {
         currentEditor = editor;

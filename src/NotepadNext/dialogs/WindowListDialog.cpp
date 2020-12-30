@@ -100,7 +100,7 @@ QVariant BufferViewModel::data(const QModelIndex &index, int role) const
         else if (col == 1)
             return buffers.at(row)->isFile() ? buffers.at(row)->fileInfo.filePath() : QString("");
         else if (col == 2)
-            return buffers.at(row)->lexer;
+            return "lexer_name";
     }
 
     return QVariant();

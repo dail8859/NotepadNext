@@ -772,26 +772,6 @@ bool LuaExtension::RunString(const char *s) {
     return true;
 }
 
-bool LuaExtension::RunFile(const wchar_t *filename) {
-    std::ifstream filestream(filename, std::ios::in | std::ios::binary);
-    std::string buff;
-
-    if (!filestream.is_open()) return true; // this is ok since nothing actually "failed"
-
-    filestream.seekg(0, std::ios::end);
-    buff.reserve((size_t)filestream.tellg());
-    filestream.seekg(0, std::ios::beg);
-
-    buff.assign(std::istreambuf_iterator<char>(filestream), std::istreambuf_iterator<char>());
-    filestream.close();
-
-    // Skip the UTF-8-BOM
-    int idx = 0;
-    if (buff.compare(0, 3, "\xEF\xBB\xBF") == 0) idx = 3;
-
-    return RunString(&buff.c_str()[idx]);
-}
-
 bool LuaExtension::OnExecute(const char *s) {
     static bool isFirstLine = true;
     static std::string chunk;
