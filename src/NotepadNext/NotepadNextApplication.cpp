@@ -27,6 +27,8 @@
 #include <QCommandLineParser>
 #include <QSettings>
 
+const SingleApplication::Options opts = SingleApplication::ExcludeAppPath | SingleApplication::ExcludeAppVersion | SingleApplication::SecondaryNotification;
+
 template <>
 struct luabridge::Stack <QString const&>
 {
@@ -42,12 +44,17 @@ struct luabridge::Stack <QString const&>
 };
 
 
-NotepadNextApplication::NotepadNextApplication(const QString &id, int &argc, char **argv)
-    : QtSingleApplication(id, argc, argv)
+NotepadNextApplication::NotepadNextApplication(BufferManager *bm, int &argc, char **argv)
+    : SingleApplication(argc, argv, true, opts), bufferManager(bm)
 {
     qInfo(Q_FUNC_INFO);
 
-    bufferManager = new BufferManager(this);
+    bufferManager->setParent(this);
+}
+
+bool NotepadNextApplication::initGui()
+{
+    qInfo(Q_FUNC_INFO);
 
     luaState = new LuaState();
     luaState->executeFile(":/scripts/init.lua");
@@ -67,11 +74,6 @@ NotepadNextApplication::NotepadNextApplication(const QString &id, int &argc, cha
             .endClass()
         .endNamespace();
     luabridge::setGlobal(luaState->L, settings, "settings");
-}
-
-bool NotepadNextApplication::initGui()
-{
-    qInfo(Q_FUNC_INFO);
 
     createNewWindow();
 
@@ -101,14 +103,15 @@ bool NotepadNextApplication::initGui()
         }
     });
 
-    QObject::connect(this, &NotepadNextApplication::messageReceived, [&](const QString &message) {
-        QStringList args = message.split("\" \"");
-        args.first().remove(0,1); // remove beginning quote from first arg
-        args.last().chop(1); // remove trailing quote from last arg
-        applyArguments(args);
+    QObject::connect(this, &SingleApplication::instanceStarted, this->windows.first(), &MainWindow::bringWindowToForeground);
 
-        // Received a message from another NN instance, so bring the existing one to the foreground
-        windows.first()->bringWindowToForeground();
+    QObject::connect(this, &SingleApplication::receivedMessage, [&] (quint32 instanceId, QByteArray message) {
+        QDataStream stream(&message, QIODevice::ReadOnly);
+        QStringList args;
+
+        stream >> args;
+
+        applyArguments(args);
     });
 
     QObject::connect(this, &NotepadNextApplication::applicationStateChanged, [&](Qt::ApplicationState state) {
@@ -121,7 +124,7 @@ bool NotepadNextApplication::initGui()
         }
     });
 
-    applyArguments(QtSingleApplication::arguments());
+    applyArguments(SingleApplication::arguments());
 
     // Everything should be ready, so do it!
     windows.first()->show();

@@ -1,0 +1,45 @@
+name: Build Notepad Next
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.11.1
+
+      - name: Setup VS tools
+        uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x64
+
+      - name: Install jom
+        run: choco install jom
+
+      - name: Run QMake
+        run: |
+          mkdir build
+          cd build
+          qmake ..\src\NotepadNext.pro "APP_VERSION=0.3.3"
+      
+      - name: Build
+        run: |
+          cd build
+          jom
+
+      - name: Create package
+        run: |
+          cd build
+          jom make_package
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: NotepadNext
+          path: ${{ github.workspace }}/build/package/

@@ -29,18 +29,13 @@ ScintillaNext::ScintillaNext(ScintillaBuffer *buffer, QWidget *parent) :
     if (buffer) {
         setDocPointer(reinterpret_cast<sptr_t>(buffer->pointer()));
 
-        QObject *obj = this;
-        QVariant var = QVariant::fromValue(buffer);
-        obj->setProperty("ScintillaBufferPointer", var);
+        this->buffer = buffer;
     }
 }
 
 ScintillaBuffer *ScintillaNext::scintillaBuffer()
 {
-    QObject *obj = this;
-    auto var = obj->property("ScintillaBufferPointer");
-
-    return var.value<ScintillaBuffer*>();
+    return this->buffer;
 }
 
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)

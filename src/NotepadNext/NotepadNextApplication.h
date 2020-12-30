@@ -21,18 +21,20 @@
 #define NOTEPADNEXTAPPLICATION_H
 
 #include "BufferManager.h"
-#include "QtSingleApplication"
 #include "Settings.h"
+
+#include "SingleApplication"
+
 
 class MainWindow;
 class LuaState;
 
-class NotepadNextApplication : public QtSingleApplication
+class NotepadNextApplication : public SingleApplication
 {
     Q_OBJECT
 
 public:
-    NotepadNextApplication(const QString &id, int &argc, char **argv);
+    NotepadNextApplication(BufferManager *bm, int &argc, char **argv);
 
     bool initGui();
 
@@ -43,7 +45,7 @@ public:
     Settings *getSettings() const;
 
 private:
-    BufferManager *bufferManager = Q_NULLPTR;
+    BufferManager *bufferManager;
     LuaState *luaState = Q_NULLPTR;
     Settings *settings = Q_NULLPTR;
 

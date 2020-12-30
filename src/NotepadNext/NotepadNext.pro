@@ -23,6 +23,9 @@ TEMPLATE = app
 
 include(../Config.pri)
 
+include(../singleapplication/singleapplication.pri)
+DEFINES += QAPPLICATION_CLASS=QApplication
+
 # Set variables for output executable
 VERSION = $$APP_VERSION
 
@@ -131,11 +134,6 @@ INCLUDEPATH += \
     $$PWD/../scintilla/src \
     $$PWD/../scintilla/lexlib
 DEPENDPATH += $$PWD/../scintilla/qt/ScintillaEdit
-
-# Statically link in qtsingleapplication
-LIBS += -L$$OUT_PWD/../qtsingleapplication/ -lqtsingleapplication
-INCLUDEPATH += $$PWD/../qtsingleapplication/src
-DEPENDPATH += $$PWD/../qtsingleapplication/src
 
 # Statically link in Lua
 LIBS += -L$$OUT_PWD/../lua/ -lLua

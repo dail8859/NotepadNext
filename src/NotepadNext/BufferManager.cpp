@@ -138,6 +138,8 @@ bool BufferManager::saveBuffer(ScintillaBuffer *buffer, bool forceSave, const QF
 
 void BufferManager::closeBuffer(ScintillaBuffer *buffer)
 {
+    qInfo(Q_FUNC_INFO);
+
     bool b = buffers.removeOne(buffer);
 
     Q_ASSERT(b == true);
