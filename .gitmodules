@@ -1,3 +1,6 @@
 [submodule "src/singleapplication"]
 	path = src/singleapplication
 	url = https://github.com/itay-grudev/SingleApplication.git
+[submodule "src/uchardet"]
+	path = src/uchardet
+	url = https://gitlab.freedesktop.org/uchardet/uchardet.git

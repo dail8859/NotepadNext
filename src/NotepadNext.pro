@@ -27,13 +27,12 @@ TEMPLATE = subdirs
 
 SUBDIRS = ScintillaEdit \
         lua \
-        uchardet \
         ads \
         NotepadNext
 
 ScintillaEdit.subdir = scintilla/qt/ScintillaEdit
 
-NotepadNext.depends = ScintillaEdit lua uchardet ads
+NotepadNext.depends = ScintillaEdit lua ads
 
 win32 {
     package.target = make_package
