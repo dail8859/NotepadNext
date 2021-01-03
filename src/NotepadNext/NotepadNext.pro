@@ -26,6 +26,8 @@ include(../Config.pri)
 include(../singleapplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
 
+include(../uchardet.pri)
+
 # Set variables for output executable
 VERSION = $$APP_VERSION
 
@@ -139,11 +141,6 @@ DEPENDPATH += $$PWD/../scintilla/qt/ScintillaEdit
 LIBS += -L$$OUT_PWD/../lua/ -lLua
 INCLUDEPATH += $$PWD/../lua/src
 DEPENDPATH += $$PWD/../lua/src
-
-# Statically link in uchardet
-LIBS += -L$$OUT_PWD/../uchardet/ -luchardet
-INCLUDEPATH += $$PWD/../uchardet/src
-DEPENDPATH += $$PWD/../uchardet/src
 
 INCLUDEPATH += $$PWD/../LuaBridge
 INCLUDEPATH += $$PWD/../

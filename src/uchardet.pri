@@ -15,13 +15,9 @@
 # along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
 
 
-TARGET = uchardet
-TEMPLATE = lib
-CONFIG += lib_bundle
-CONFIG += staticlib
+SOURCES += $$files($$PWD/uchardet/src/*.cpp, false)
+SOURCES += $$files($$PWD/uchardet/src/LangModels/*.cpp, false)
+HEADERS += $$files($$PWD/uchardet/src/*.h, false)
 
-include(../Config.pri)
+INCLUDEPATH += $$PWD/uchardet/src/
 
-SOURCES += $$files(src/*.cpp, false)
-SOURCES += $$files(src/LangModels/*.cpp, false)
-HEADERS += $$files(src/*.h, false)
