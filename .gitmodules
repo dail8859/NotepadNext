@@ -4,3 +4,6 @@
 [submodule "src/uchardet"]
 	path = src/uchardet
 	url = https://gitlab.freedesktop.org/uchardet/uchardet.git
+[submodule "src/editorconfig-core-qt"]
+	path = src/editorconfig-core-qt
+	url = https://github.com/editorconfig/editorconfig-core-qt.git

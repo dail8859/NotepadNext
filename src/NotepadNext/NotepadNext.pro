@@ -28,6 +28,7 @@ DEFINES += QAPPLICATION_CLASS=QApplication
 
 include(../uchardet.pri)
 include(../lua.pri)
+include(../editorconfig-core-qt/EditorConfig.pri)
 
 # Set variables for output executable
 VERSION = $$APP_VERSION

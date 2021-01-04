@@ -16,19 +16,31 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
 #include "BufferManager.h"
 #include "Scintilla.h"
 
 #include <ScintillaBuffer.h>
 #include <QSaveFile>
 #include <QDir>
+#include <QDebug>
+
+#include <EditorConfig>
+
 
 BufferManager::BufferManager(QObject *parent) :
     QObject(parent)
 {
     connect(this, &BufferManager::bufferCreated, this, &BufferManager::detectEols);
     connect(this, &BufferManager::bufferCreated, this, &BufferManager::detectEncoding);
+    connect(this, &BufferManager::bufferCreated, [&](ScintillaBuffer *buffer) {
+        if (buffer->isFile()) {
+            qDebug() << "EditorConfig settings for:" << buffer->fileInfo.canonicalFilePath();
+            EditorConfigSettings settings = EditorConfig::getFileSettings(buffer->fileInfo.canonicalFilePath());
+            for(auto &setting : settings.toStdMap()) {
+                qDebug() << setting.first << "=" << setting.second;
+            }
+        }
+    });
 }
 
 BufferManager::~BufferManager()
