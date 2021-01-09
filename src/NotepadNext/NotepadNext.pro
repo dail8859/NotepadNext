@@ -28,6 +28,7 @@ DEFINES += QAPPLICATION_CLASS=QApplication
 
 include(../uchardet.pri)
 include(../lua.pri)
+include(../ads.pri)
 include(../editorconfig-core-qt/EditorConfig.pri)
 
 # Set variables for output executable
@@ -145,7 +146,3 @@ DEFINES += LUA_VERSION_NUM=503
 
 win32-g++:LIBS += libUser32
 win32-msvc*:LIBS += User32.lib
-
-LIBS += -L$$OUT_PWD/../ads/src -lads
-INCLUDEPATH += $$PWD/../ads/src
-DEPENDPATH += $$PWD/../ads/src
