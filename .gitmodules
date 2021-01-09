@@ -7,3 +7,6 @@
 [submodule "src/editorconfig-core-qt"]
 	path = src/editorconfig-core-qt
 	url = https://github.com/editorconfig/editorconfig-core-qt.git
+[submodule "src/ads"]
+	path = src/ads
+	url = https://github.com/githubuser0xFFFF/Qt-Advanced-Docking-System.git
