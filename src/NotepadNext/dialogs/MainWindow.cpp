@@ -204,6 +204,11 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     });
     connect(ui->actionPaste, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->paste();});
     connect(ui->actionSelect_All, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->selectAll();});
+    connect(ui->actionSelect_Next, &QAction::triggered, [=]() {
+        // Set search flags here?
+        dockedEditor->getCurrentEditor()->targetWholeDocument();
+        dockedEditor->getCurrentEditor()->multipleSelectAddNext();
+    });
     connect(ui->actionCopyFullPath, &QAction::triggered, [=]() {
         auto buffer = dockedEditor->getCurrentBuffer();
         if (buffer->isFile()) {
