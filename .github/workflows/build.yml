@@ -12,7 +12,7 @@ jobs:
           submodules: true
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.11.1
+        uses: jurplel/install-qt-action@v2
 
       - name: Setup VS tools
         uses: egor-tensin/vs-shell@v2
