@@ -137,6 +137,7 @@
     <addaction name="actionPaste"/>
     <addaction name="actionDelete"/>
     <addaction name="actionSelect_All"/>
+    <addaction name="actionSelect_Next"/>
     <addaction name="separator"/>
     <addaction name="menuCopyMore"/>
     <addaction name="menuIndent"/>
@@ -881,6 +882,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+I</string>
+   </property>
+  </action>
+  <action name="actionSelect_Next">
+   <property name="text">
+    <string>Select Next Instance</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
  </widget>
