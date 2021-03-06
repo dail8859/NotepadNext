@@ -355,33 +355,34 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     showSymbolActionGroup->addAction(ui->actionShowAllCharacters);
     showSymbolActionGroup->setExclusive(false);
 
-    //connect(showSymbolActionGroup, &QActionGroup::triggered, [=](QAction *action) {
-    //    if (!action->isChecked()) {
-    //        editor->setViewWS(SCWS_INVISIBLE);
-    //        editor->setViewEOL(false);
-    //    }
-    //    else {
-    //        // Uncheck all other actions
-    //        foreach (QAction *otherAction, showSymbolActionGroup->actions()) {
-    //            if (otherAction != action) {
-    //                otherAction->setChecked(false);
-    //            }
-    //        }
-    //
-    //        if (action == ui->actionShowWhitespaceandTab) {
-    //            editor->setViewWS(SCWS_VISIBLEALWAYS);
-    //            editor->setViewEOL(false);
-    //        }
-    //        else if (action == ui->actionShowEndofLine) {
-    //            editor->setViewWS(SCWS_INVISIBLE);
-    //            editor->setViewEOL(true);
-    //        }
-    //        else if (action == ui->actionShowAllCharacters) {
-    //            editor->setViewWS(SCWS_VISIBLEALWAYS);
-    //            editor->setViewEOL(true);
-    //        }
-    //    }
-    //});
+    connect(showSymbolActionGroup, &QActionGroup::triggered, [=](QAction *action) {
+        ScintillaNext *editor = dockedEditor->getCurrentEditor();
+        if (!action->isChecked()) {
+            editor->setViewWS(SCWS_INVISIBLE);
+            editor->setViewEOL(false);
+        }
+        else {
+            // Uncheck all other actions
+            foreach (QAction *otherAction, showSymbolActionGroup->actions()) {
+                if (otherAction != action) {
+                    otherAction->setChecked(false);
+                }
+            }
+
+            if (action == ui->actionShowWhitespaceandTab) {
+                editor->setViewWS(SCWS_VISIBLEALWAYS);
+                editor->setViewEOL(false);
+            }
+            else if (action == ui->actionShowEndofLine) {
+                editor->setViewWS(SCWS_INVISIBLE);
+                editor->setViewEOL(true);
+            }
+            else if (action == ui->actionShowAllCharacters) {
+                editor->setViewWS(SCWS_VISIBLEALWAYS);
+                editor->setViewEOL(true);
+            }
+        }
+    });
 
     connect(ui->actionShowWrapSymbol, &QAction::triggered, [=](bool b) {
         dockedEditor->getCurrentEditor()->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
@@ -594,10 +595,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(app->getSettings(), &Settings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
     //connect(settings, &Settings::tabsClosableChanged, tabbedEditor->getTabBar(), &QTabBar::setTabsClosable);
 
-    // The first time it is triggered it doesn't see it as checked for some reason
-    ui->actionShowWhitespaceandTab->setChecked(true);
-    ui->actionShowWhitespaceandTab->trigger();
-    ui->actionShowWhitespaceandTab->trigger();
 
     setupLanguageMenu();
 
@@ -676,7 +673,7 @@ void MainWindow::setupEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    setFoldMarkers(editor, "circle");
+    setFoldMarkers(editor, "box");
     editor->setIdleStyling(SC_IDLESTYLING_TOVISIBLE);
     editor->setEndAtLastLine(false);
 
@@ -723,6 +720,7 @@ void MainWindow::setupEditor(ScintillaNext *editor)
     editor->setEdgeColour(0x80FFFF);
 
     editor->setWhitespaceFore(true, 0x6AB5FF);
+    editor->setWhitespaceSize(2);
 
     editor->setFoldMarginColour(true, 0xFFFFFF);
     editor->setFoldMarginHiColour(true, 0xE9E9E9);
