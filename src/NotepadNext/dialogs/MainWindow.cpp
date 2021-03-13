@@ -624,10 +624,8 @@ void MainWindow::setupLanguageMenu()
     QStringList language_names = app->getLuaState()->executeAndReturn<QStringList>(
                 R"(
                 local names = {}
-                for _, L in pairs(languages) do
-                    names[#names + 1] = L.lexer
-                end
-                table.sort(names)
+                for k in pairs(languages) do table.insert(names, k) end
+                table.sort(names, function (a, b) return string.lower(a) < string.lower(b) end)
                 return names
                 )");
 
@@ -638,13 +636,9 @@ void MainWindow::setupLanguageMenu()
 
         // Get all consecutive names that start with the same letter
         // NOTE: this loop always runs once since i == j the first time
-        while (j < language_names.size() &&
-               language_names[i][0].toUpper() == language_names[j][0].toUpper()) {
-            const QString &key = language_names[j];
-            const QString languageName = app->getLuaState()->executeAndReturn<QString>(
-                QString("return languages[\"%1\"].name").arg(key).toLatin1().constData()
-            );
-            QAction *action = new QAction(languageName);
+        while (j < language_names.size() && language_names[i][0].toUpper() == language_names[j][0].toUpper()) {
+            const QString key = language_names[j];
+            QAction *action = new QAction(key);
             action->setCheckable(true);
             action->setData(key);
             connect(action, &QAction::triggered, this, &MainWindow::languageMenuTriggered);
@@ -1339,8 +1333,12 @@ void MainWindow::updateBufferPositionBasedUi()
 
 void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
 {
+    qInfo(Q_FUNC_INFO);
+
+    const QString language_name = editor->property("nn.meta.language");
+
     foreach (QAction *action, languageActionGroup->actions()) {
-        if (action->data().toString() == editor->lexerLanguage()) {
+        if (action->data().toString() == language_name) {
             action->setChecked(true);
             docType->setText(action->text());
             break;
@@ -1350,6 +1348,8 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
 
 void MainWindow::updateGui(ScintillaNext *editor)
 {
+    qInfo(Q_FUNC_INFO);
+
     // TODO: Does buffer need passed in? It should only ever operate on the current buffer!
 
     updateBufferFileStatusBasedUi(editor->scintillaBuffer());
@@ -1441,19 +1441,19 @@ void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
 
     const QString ext = buffer->fileInfo.suffix();
 
-    QString lexer = app->getLuaState()->executeAndReturn<QString>(QString(R"(
+    QString language_name = app->getLuaState()->executeAndReturn<QString>(QString(R"(
 local ext = "%1"
 for name, L in pairs(languages) do
     for _, v in ipairs(L.extensions) do
         if v == ext then
-            return L.lexer
+            return name
         end
     end
 end
 return "null"
 )").arg(ext).toLatin1().constData());
 
-    setLanguage(editor, lexer);
+    setLanguage(editor, language_name);
 
     return;
 }
@@ -1470,12 +1470,9 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 {
     qInfo(Q_FUNC_INFO);
 
-    editor->setLexerLanguage(languageName.toLocal8Bit().constData());
-
-    docType->setText(editor->lexerLanguage());
     LuaExtension::Instance().setEditor(editor);
 
-    app->getLuaState()->execute(QString("lexer = \"%1\"").arg(QString(editor->lexerLanguage())).toLatin1().constData());
+    app->getLuaState()->execute(QString("lexer = \"%1\"").arg(QString(languageName)).toLatin1().constData());
     app->getLuaState()->execute(R"(
         local L = languages[lexer]
         -- this resets the style definitions but keeps
@@ -1516,6 +1513,9 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
         -- since SC_IDLESTYLING_TOVISIBLE is used
         editor:Colourise(0, 1);
         )");
+
+    editor->setProperty("nn.meta.language", languageName.toLatin1().constData());
+    updateLanguageBasedUi(editor);
 }
 
 void MainWindow::bringWindowToForeground()
