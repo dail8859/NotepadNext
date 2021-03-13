@@ -150,7 +150,7 @@ QString NotepadNextApplication::getFileDialogFilter() const
                     for _, ext in ipairs(L.extensions) do
                         extensions[#extensions + 1] = "*." .. ext
                     end
-                    filter[#filter + 1] = L.name .. " Files (" .. table.concat(extensions, " ") .. ")"
+                    filter[#filter + 1] = name .. " Files (" .. table.concat(extensions, " ") .. ")"
                 end
                 return table.concat(filter, ";;")
                 )=");
