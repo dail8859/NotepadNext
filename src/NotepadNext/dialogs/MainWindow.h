@@ -40,6 +40,7 @@ class ScintillaBuffer;
 class FindReplaceDialog;
 class RecentFilesListManager;
 class LuaConsoleDock;
+class LanguageInspectorDock;
 class MacroRecorder;
 class MacroRunDialog;
 class Macro;
@@ -58,6 +59,8 @@ public:
 
     void setupLanguageMenu();
     void setupEditor(ScintillaNext *editor);
+    ScintillaNext *currentEditor();
+    DockedEditor *getDockedEditor();
 
 public slots:
     void newFile();
@@ -152,6 +155,7 @@ private:
 
     // Docked widgets
     LuaConsoleDock *luaConsoleDock = Q_NULLPTR;
+    LanguageInspectorDock *languageInspectorDock = Q_NULLPTR;
 };
 
 #endif // MAINWINDOW_H

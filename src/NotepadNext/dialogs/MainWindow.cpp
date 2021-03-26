@@ -55,6 +55,7 @@
 #include "MacroRecorder.h"
 
 #include "LuaConsoleDock.h"
+#include "LanguageInspectorDock.h"
 
 #include "FindReplaceDialog.h"
 #include "MacroRunDialog.h"
@@ -591,6 +592,13 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         ui->menuHelp->addAction(luaConsoleDock->toggleViewAction());
     }
 
+    if (languageInspectorDock == Q_NULLPTR) {
+        languageInspectorDock = new LanguageInspectorDock(this);
+        languageInspectorDock->hide();
+        addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
+        ui->menuHelp->addAction(languageInspectorDock->toggleViewAction());
+    }
+
     connect(app->getSettings(), &Settings::showMenuBarChanged, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
@@ -822,6 +830,16 @@ void MainWindow::setupEditor(ScintillaNext *editor)
             }
         }
     });
+}
+
+ScintillaNext *MainWindow::currentEditor()
+{
+    return dockedEditor->getCurrentEditor();
+}
+
+DockedEditor *MainWindow::getDockedEditor()
+{
+    return dockedEditor;
 }
 
 void MainWindow::newFile()
