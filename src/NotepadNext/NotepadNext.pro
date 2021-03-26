@@ -63,6 +63,7 @@ SOURCES += \
     Settings.cpp \
     decorators/SurroundSelection.cpp \
     dialogs/FindReplaceDialog.cpp \
+    dialogs/LanguageInspectorDock.cpp \
     dialogs/LuaConsoleDock.cpp \
     dialogs/MacroRunDialog.cpp \
     dialogs/MacroSaveDialog.cpp \
@@ -98,6 +99,7 @@ HEADERS += \
     Settings.h \
     decorators/SurroundSelection.h \
     dialogs/FindReplaceDialog.h \
+    dialogs/LanguageInspectorDock.h \
     dialogs/LuaConsoleDock.h \
     dialogs/MacroRunDialog.h \
     dialogs/MacroSaveDialog.h \
@@ -113,6 +115,7 @@ HEADERS += \
 
 FORMS += \
     QuickFindWidget.ui \
+    dialogs/LanguageInspectorDock.ui \
     dialogs/MainWindow.ui \
     dialogs/FindReplaceDialog.ui \
     dialogs/LuaConsoleDock.ui \
