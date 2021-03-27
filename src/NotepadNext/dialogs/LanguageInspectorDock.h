@@ -4,7 +4,7 @@
 #include <QDockWidget>
 
 class MainWindow;
-class DockedEditor;
+class ScintillaNext;
 
 namespace Ui {
 class LanguageInspectorDock;
@@ -18,9 +18,16 @@ public:
     explicit LanguageInspectorDock(MainWindow *parent);
     ~LanguageInspectorDock();
 
+private slots:
+    void updateInformation(ScintillaNext *editor);
+
 private:
     Ui::LanguageInspectorDock *ui;
-    DockedEditor *dockedEditor;
+
+    void updateLanguageName(ScintillaNext *editor);
+    void updatePropertyInfo(ScintillaNext *editor);
+    void updateKeywordInfo(ScintillaNext *editor);
+    void updateStyleInfo(ScintillaNext *editor);
 };
 
 #endif // LANGUAGEINSPECTORDOCK_H
