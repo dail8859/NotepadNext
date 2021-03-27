@@ -30,9 +30,11 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
 
         QSignalBlocker(ui->tblProperties);
         QSignalBlocker(ui->tblKeywords);
+        QSignalBlocker(ui->tblStyles);
 
         ui->tblProperties->clear();
         ui->tblKeywords->clear();
+        ui->tblStyles->clear();
 
         QStringList properties = QString(editor->propertyNames()).split('\n');
         ui->tblProperties->setColumnCount(4);
@@ -67,7 +69,6 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
         ui->tblProperties->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
         ui->tblProperties->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
 
-
         QStringList keywords = QString(editor->describeKeyWordSets()).split('\n');
         ui->tblKeywords->setColumnCount(2);
         ui->tblKeywords->setRowCount(keywords.size());
@@ -91,6 +92,35 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
         ui->tblKeywords->setHorizontalHeaderLabels(QStringList() << "Index" << "Description");
         ui->tblKeywords->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
         ui->tblKeywords->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+
+
+        const int num_styles = editor->namedStyles();
+        ui->tblStyles->setColumnCount(4);
+        ui->tblStyles->setRowCount(num_styles);
+        for(int i = 0; i < num_styles; i++) {
+            QTableWidgetItem *item;
+
+            item = new QTableWidgetItem(QString::number(i));
+            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+            ui->tblStyles->setItem(i, 0, item);
+
+            item = new QTableWidgetItem(QString(editor->nameOfStyle(i)));
+            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+            ui->tblStyles->setItem(i, 1, item);
+
+            item = new QTableWidgetItem(QString(editor->tagsOfStyle(i)));
+            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+            ui->tblStyles->setItem(i, 2, item);
+
+            item = new QTableWidgetItem(QString(editor->descriptionOfStyle(i)));
+            item->setToolTip(QString(editor->descriptionOfStyle(i)));
+            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+            ui->tblStyles->setItem(i, 3, item);
+        }
+
+        ui->tblStyles->setHorizontalHeaderLabels(QStringList() << "Index" << "Name" << "Tags" << "Description");
+        ui->tblStyles->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+        ui->tblStyles->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     });
 
     //connect(ui->tblProperties, &QTableWidget::cellChanged, [=](int row, int column) {
