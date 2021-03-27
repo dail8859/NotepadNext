@@ -16,6 +16,14 @@ QString property_type_to_string(int type) {
     }
 }
 
+QTableWidgetItem *default_widget_item(const QString &name) {
+    QTableWidgetItem *item = new QTableWidgetItem(name);
+    item->setToolTip(name);
+    item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+
+    return item;
+}
+
 LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
     QDockWidget(parent),
     ui(new Ui::LanguageInspectorDock)
@@ -80,24 +88,10 @@ void LanguageInspectorDock::updatePropertyInfo(ScintillaNext *editor)
 
         int row = 0;
         foreach (const QString &property, properties) {
-            QTableWidgetItem *item;
-
-            item = new QTableWidgetItem(property);
-            item->setToolTip(property);
-            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-            ui->tblProperties->setItem(row, 0, item);
-
-            item = new QTableWidgetItem(property_type_to_string(editor->propertyType(property.toLatin1().constData())));
-            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-            ui->tblProperties->setItem(row, 1, item);
-
-            item = new QTableWidgetItem(QString(editor->describeProperty(property.toLatin1().constData())));
-            item->setToolTip(QString(editor->describeProperty(property.toLatin1().constData())));
-            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-            ui->tblProperties->setItem(row, 2, item);
-
-            item = new QTableWidgetItem(QString(editor->property(property.toLatin1().constData())));
-            ui->tblProperties->setItem(row, 3, item);
+            ui->tblProperties->setItem(row, 0, default_widget_item(property));
+            ui->tblProperties->setItem(row, 1, default_widget_item(property_type_to_string(editor->propertyType(property.toLatin1().constData()))));
+            ui->tblProperties->setItem(row, 2, default_widget_item(editor->describeProperty(property.toLatin1().constData())));
+            ui->tblProperties->setItem(row, 3, default_widget_item(editor->property(property.toLatin1().constData())));
 
             row++;
         }
@@ -125,16 +119,8 @@ void LanguageInspectorDock::updateKeywordInfo(ScintillaNext *editor)
 
         int row = 0;
         foreach (const QString &keyword, keywords) {
-            QTableWidgetItem *item;
-
-            item = new QTableWidgetItem(QString::number(row));
-            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-            ui->tblKeywords->setItem(row, 0, item);
-
-            item = new QTableWidgetItem(keyword);
-            item->setToolTip(keyword);
-            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-            ui->tblKeywords->setItem(row, 1, item);
+            ui->tblKeywords->setItem(row, 0, default_widget_item(QString::number(row)));
+            ui->tblKeywords->setItem(row, 1, default_widget_item(keyword));
 
             row++;
         }
@@ -156,24 +142,10 @@ void LanguageInspectorDock::updateStyleInfo(ScintillaNext *editor)
     ui->tblStyles->setRowCount(num_styles);
 
     for(int i = 0; i < num_styles; i++) {
-        QTableWidgetItem *item;
-
-        item = new QTableWidgetItem(QString::number(i));
-        item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-        ui->tblStyles->setItem(i, 0, item);
-
-        item = new QTableWidgetItem(QString(editor->nameOfStyle(i)));
-        item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-        ui->tblStyles->setItem(i, 1, item);
-
-        item = new QTableWidgetItem(QString(editor->tagsOfStyle(i)));
-        item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-        ui->tblStyles->setItem(i, 2, item);
-
-        item = new QTableWidgetItem(QString(editor->descriptionOfStyle(i)));
-        item->setToolTip(QString(editor->descriptionOfStyle(i)));
-        item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-        ui->tblStyles->setItem(i, 3, item);
+        ui->tblStyles->setItem(i, 0, default_widget_item(QString::number(i)));
+        ui->tblStyles->setItem(i, 1, default_widget_item(editor->nameOfStyle(i)));
+        ui->tblStyles->setItem(i, 2, default_widget_item(editor->tagsOfStyle(i)));
+        ui->tblStyles->setItem(i, 3, default_widget_item(editor->descriptionOfStyle(i)));
     }
 
     ui->tblStyles->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
