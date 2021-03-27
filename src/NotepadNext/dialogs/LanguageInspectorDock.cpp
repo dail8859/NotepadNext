@@ -21,23 +21,61 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
     ui(new Ui::LanguageInspectorDock)
 {
     ui->setupUi(this);
-    dockedEditor = parent->getDockedEditor();
 
+    DockedEditor *dockedEditor = parent->getDockedEditor();
 
-    connect(dockedEditor, &DockedEditor::editorActivated, [=](ScintillaNext *editor) {
-        ui->editLanguage->setText(editor->property("nn.meta.language"));
-        ui->editLexer->setText(editor->lexerLanguage());
+    connect(dockedEditor, &DockedEditor::editorActivated, this, &LanguageInspectorDock::updateInformation);
+    connect(this, &LanguageInspectorDock::visibilityChanged, [=](bool visible) {
+        if (visible) {
+            MainWindow *mw = qobject_cast<MainWindow *>(this->parent());
+            updateInformation(mw->currentEditor());
+        }
+    });
 
-        QSignalBlocker(ui->tblProperties);
-        QSignalBlocker(ui->tblKeywords);
-        QSignalBlocker(ui->tblStyles);
+    //connect(ui->tblProperties, &QTableWidget::cellChanged, [=](int row, int column) {
+    //    if (column != 3) return;
+    //
+    //    QString property = ui->tableWidget->item(row, 0)->text();
+    //    QString value = ui->tableWidget->item(row, column)->text();
+    //    auto editor = dockedEditor->getCurrentEditor();
+    //
+    //    editor->setProperty(property.toLatin1().constData(), value.toLatin1().constData());
+    //
+    //    editor->colourise(0, -1);
+    //});
+}
 
-        ui->tblProperties->clear();
-        ui->tblKeywords->clear();
-        ui->tblStyles->clear();
+LanguageInspectorDock::~LanguageInspectorDock()
+{
+    delete ui;
+}
 
-        QStringList properties = QString(editor->propertyNames()).split('\n');
-        ui->tblProperties->setColumnCount(4);
+void LanguageInspectorDock::updateInformation(ScintillaNext *editor)
+{
+    // Don't update if the dock widget is not visible
+    if (this->isHidden()) return;
+
+    this->updateLanguageName(editor);
+    this->updatePropertyInfo(editor);
+    this->updateKeywordInfo(editor);
+    this->updateStyleInfo(editor);
+}
+
+void LanguageInspectorDock::updateLanguageName(ScintillaNext *editor)
+{
+    ui->editLanguage->setText(editor->property("nn.meta.language"));
+    ui->editLexer->setText(editor->lexerLanguage());
+}
+
+void LanguageInspectorDock::updatePropertyInfo(ScintillaNext *editor)
+{
+    const QString propertyNames = QString(editor->propertyNames());
+    const QSignalBlocker blocker(ui->tblProperties);
+
+    ui->tblProperties->clearContents();
+
+    if (!propertyNames.isEmpty()) {
+        const QStringList properties = propertyNames.split('\n');
         ui->tblProperties->setRowCount(properties.size());
 
         int row = 0;
@@ -64,16 +102,28 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
             row++;
         }
 
-        ui->tblProperties->setHorizontalHeaderLabels(QStringList() << "Property" << "Type" << "Description" << "Value");
         ui->tblProperties->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
         ui->tblProperties->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
         ui->tblProperties->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
+    }
+    else {
+        ui->tblProperties->setRowCount(0);
+    }
+}
 
-        QStringList keywords = QString(editor->describeKeyWordSets()).split('\n');
-        ui->tblKeywords->setColumnCount(2);
+void LanguageInspectorDock::updateKeywordInfo(ScintillaNext *editor)
+{
+    const QString keyWordSets = QString(editor->describeKeyWordSets());
+    const QSignalBlocker blocker(ui->tblKeywords);
+
+    ui->tblKeywords->clearContents();
+
+    if (!keyWordSets.isEmpty()) {
+        const QStringList keywords = keyWordSets.split('\n');
+
         ui->tblKeywords->setRowCount(keywords.size());
 
-        row = 0;
+        int row = 0;
         foreach (const QString &keyword, keywords) {
             QTableWidgetItem *item;
 
@@ -89,54 +139,43 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
             row++;
         }
 
-        ui->tblKeywords->setHorizontalHeaderLabels(QStringList() << "Index" << "Description");
         ui->tblKeywords->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
         ui->tblKeywords->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
-
-
-        const int num_styles = editor->namedStyles();
-        ui->tblStyles->setColumnCount(4);
-        ui->tblStyles->setRowCount(num_styles);
-        for(int i = 0; i < num_styles; i++) {
-            QTableWidgetItem *item;
-
-            item = new QTableWidgetItem(QString::number(i));
-            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-            ui->tblStyles->setItem(i, 0, item);
-
-            item = new QTableWidgetItem(QString(editor->nameOfStyle(i)));
-            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-            ui->tblStyles->setItem(i, 1, item);
-
-            item = new QTableWidgetItem(QString(editor->tagsOfStyle(i)));
-            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-            ui->tblStyles->setItem(i, 2, item);
-
-            item = new QTableWidgetItem(QString(editor->descriptionOfStyle(i)));
-            item->setToolTip(QString(editor->descriptionOfStyle(i)));
-            item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-            ui->tblStyles->setItem(i, 3, item);
-        }
-
-        ui->tblStyles->setHorizontalHeaderLabels(QStringList() << "Index" << "Name" << "Tags" << "Description");
-        ui->tblStyles->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-        ui->tblStyles->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    });
-
-    //connect(ui->tblProperties, &QTableWidget::cellChanged, [=](int row, int column) {
-    //    if (column != 3) return;
-    //
-    //    QString property = ui->tableWidget->item(row, 0)->text();
-    //    QString value = ui->tableWidget->item(row, column)->text();
-    //    auto editor = dockedEditor->getCurrentEditor();
-    //
-    //    editor->setProperty(property.toLatin1().constData(), value.toLatin1().constData());
-    //
-    //    editor->colourise(0, -1);
-    //});
+    }
+    else {
+        ui->tblKeywords->setRowCount(0);
+    }
 }
 
-LanguageInspectorDock::~LanguageInspectorDock()
+void LanguageInspectorDock::updateStyleInfo(ScintillaNext *editor)
 {
-    delete ui;
+    const int num_styles = editor->namedStyles();
+    const QSignalBlocker blocker(ui->tblStyles);
+
+    ui->tblStyles->clearContents();
+    ui->tblStyles->setRowCount(num_styles);
+
+    for(int i = 0; i < num_styles; i++) {
+        QTableWidgetItem *item;
+
+        item = new QTableWidgetItem(QString::number(i));
+        item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+        ui->tblStyles->setItem(i, 0, item);
+
+        item = new QTableWidgetItem(QString(editor->nameOfStyle(i)));
+        item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+        ui->tblStyles->setItem(i, 1, item);
+
+        item = new QTableWidgetItem(QString(editor->tagsOfStyle(i)));
+        item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+        ui->tblStyles->setItem(i, 2, item);
+
+        item = new QTableWidgetItem(QString(editor->descriptionOfStyle(i)));
+        item->setToolTip(QString(editor->descriptionOfStyle(i)));
+        item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+        ui->tblStyles->setItem(i, 3, item);
+    }
+
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
 }
