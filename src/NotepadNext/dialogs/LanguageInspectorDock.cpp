@@ -3,6 +3,8 @@
 
 #include "MainWindow.h"
 
+#include <QCheckBox>
+
 QString property_type_to_string(int type) {
     switch (type) {
     case SC_TYPE_BOOLEAN:
@@ -16,12 +18,35 @@ QString property_type_to_string(int type) {
     }
 }
 
-QTableWidgetItem *default_widget_item(const QString &name) {
+QTableWidgetItem *item_string(const QString &name, bool edit = false) {
     QTableWidgetItem *item = new QTableWidgetItem(name);
     item->setToolTip(name);
-    item->setFlags(item->flags() ^ Qt::ItemIsEditable);
+
+    if (!edit)
+        item->setFlags(item->flags() ^ Qt::ItemIsEditable);
 
     return item;
+}
+
+QTableWidgetItem *item_int(int value, bool edit = false) {
+    QTableWidgetItem *item = new QTableWidgetItem(QString::number(value), edit);
+    item->setTextAlignment(Qt::AlignCenter);
+
+    return item;
+}
+
+QWidget *item_bool(bool checked) {
+    QWidget *pWidget = new QWidget();
+    QCheckBox *pCheckBox = new QCheckBox();
+    QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
+
+    pCheckBox->setChecked(checked);
+    pLayout->addWidget(pCheckBox);
+    pLayout->setAlignment(Qt::AlignCenter);
+    pLayout->setContentsMargins(0,0,0,0);
+    pWidget->setLayout(pLayout);
+
+    return pWidget;
 }
 
 LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
@@ -40,17 +65,17 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
         }
     });
 
-    //connect(ui->tblProperties, &QTableWidget::cellChanged, [=](int row, int column) {
-    //    if (column != 3) return;
-    //
-    //    QString property = ui->tableWidget->item(row, 0)->text();
-    //    QString value = ui->tableWidget->item(row, column)->text();
-    //    auto editor = dockedEditor->getCurrentEditor();
-    //
-    //    editor->setProperty(property.toLatin1().constData(), value.toLatin1().constData());
-    //
-    //    editor->colourise(0, -1);
-    //});
+    connect(ui->tblProperties, &QTableWidget::cellChanged, [=](int row, int column) {
+        if (column != 3) return;
+
+        QString property = ui->tblProperties->item(row, 0)->text();
+        QString value = ui->tblProperties->item(row, column)->text();
+        auto editor = dockedEditor->getCurrentEditor();
+
+        editor->setProperty(property.toLatin1().constData(), value.toLatin1().constData());
+
+        editor->colourise(0, -1);
+    });
 }
 
 LanguageInspectorDock::~LanguageInspectorDock()
@@ -88,14 +113,15 @@ void LanguageInspectorDock::updatePropertyInfo(ScintillaNext *editor)
 
         int row = 0;
         foreach (const QString &property, properties) {
-            ui->tblProperties->setItem(row, 0, default_widget_item(property));
-            ui->tblProperties->setItem(row, 1, default_widget_item(property_type_to_string(editor->propertyType(property.toLatin1().constData()))));
-            ui->tblProperties->setItem(row, 2, default_widget_item(editor->describeProperty(property.toLatin1().constData())));
-            ui->tblProperties->setItem(row, 3, default_widget_item(editor->property(property.toLatin1().constData())));
+            ui->tblProperties->setItem(row, 0, item_string(property));
+            ui->tblProperties->setItem(row, 1, item_string(property_type_to_string(editor->propertyType(property.toLatin1().constData()))));
+            ui->tblProperties->setItem(row, 2, item_string(editor->describeProperty(property.toLatin1().constData())));
+            ui->tblProperties->setItem(row, 3, item_string(editor->property(property.toLatin1().constData()), true));
 
             row++;
         }
 
+        ui->tblProperties->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
         ui->tblProperties->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
         ui->tblProperties->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
         ui->tblProperties->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
@@ -119,8 +145,8 @@ void LanguageInspectorDock::updateKeywordInfo(ScintillaNext *editor)
 
         int row = 0;
         foreach (const QString &keyword, keywords) {
-            ui->tblKeywords->setItem(row, 0, default_widget_item(QString::number(row)));
-            ui->tblKeywords->setItem(row, 1, default_widget_item(keyword));
+            ui->tblKeywords->setItem(row, 0, item_int(row));
+            ui->tblKeywords->setItem(row, 1, item_string(keyword));
 
             row++;
         }
@@ -142,12 +168,44 @@ void LanguageInspectorDock::updateStyleInfo(ScintillaNext *editor)
     ui->tblStyles->setRowCount(num_styles);
 
     for(int i = 0; i < num_styles; i++) {
-        ui->tblStyles->setItem(i, 0, default_widget_item(QString::number(i)));
-        ui->tblStyles->setItem(i, 1, default_widget_item(editor->nameOfStyle(i)));
-        ui->tblStyles->setItem(i, 2, default_widget_item(editor->tagsOfStyle(i)));
-        ui->tblStyles->setItem(i, 3, default_widget_item(editor->descriptionOfStyle(i)));
+        ui->tblStyles->setItem(i, 0, item_int(i));
+        ui->tblStyles->setItem(i, 1, item_string(editor->nameOfStyle(i)));
+        ui->tblStyles->setItem(i, 2, item_string(editor->tagsOfStyle(i)));
+        ui->tblStyles->setItem(i, 3, item_string(editor->descriptionOfStyle(i)));
+        ui->tblStyles->setItem(i, 4, item_string(editor->styleFont(i)));
+        ui->tblStyles->setItem(i, 5, item_int(editor->styleSize(i)));
+        ui->tblStyles->setItem(i, 6, item_int(editor->styleSizeFractional(i)));
+        ui->tblStyles->setCellWidget(i, 7, item_bool(editor->styleBold(i)));
+        ui->tblStyles->setItem(i, 8, item_int(editor->styleWeight(i)));
+        ui->tblStyles->setCellWidget(i, 9, item_bool(editor->styleItalic(i)));
+        ui->tblStyles->setCellWidget(i, 10, item_bool(editor->styleUnderline(i)));
+        ui->tblStyles->setItem(i, 11, item_int(editor->styleFore(i)));
+        ui->tblStyles->setItem(i, 12, item_int(editor->styleBack(i)));
+        ui->tblStyles->setCellWidget(i, 13, item_bool(editor->styleEOLFilled(i)));
+        ui->tblStyles->setItem(i, 14, item_int(editor->styleCharacterSet(i)));
+        ui->tblStyles->setItem(i, 15, item_int(editor->styleCase(i)));
+        ui->tblStyles->setCellWidget(i, 16, item_bool(editor->styleVisible(i)));
+        ui->tblStyles->setCellWidget(i, 17, item_bool(editor->styleChangeable(i)));
+        ui->tblStyles->setCellWidget(i, 18, item_bool(editor->styleHotSpot(i)));
     }
 
     ui->tblStyles->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     ui->tblStyles->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(4, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(5, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(6, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(6, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(7, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(8, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(9, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(10, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(11, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(12, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(13, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(14, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(15, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(16, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(17, QHeaderView::ResizeToContents);
+    ui->tblStyles->horizontalHeader()->setSectionResizeMode(18, QHeaderView::ResizeToContents);
 }
