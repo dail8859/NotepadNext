@@ -137,7 +137,7 @@
           </attribute>
           <column>
            <property name="text">
-            <string>Index</string>
+            <string>ID</string>
            </property>
           </column>
           <column>
@@ -161,7 +161,7 @@
           </attribute>
           <column>
            <property name="text">
-            <string>Index</string>
+            <string>ID</string>
            </property>
           </column>
           <column>
@@ -177,6 +177,81 @@
           <column>
            <property name="text">
             <string>Descriptions</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Font</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Size</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Fractional</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Bold</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Weight</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Italic</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Underline</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Fore</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Back</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>EOL Filled</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Character Set</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Case</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Visible</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Changeable</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Hotspot</string>
            </property>
           </column>
          </widget>
