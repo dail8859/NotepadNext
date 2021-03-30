@@ -29,7 +29,7 @@ QTableWidgetItem *item_string(const QString &name, bool edit = false) {
 }
 
 QTableWidgetItem *item_int(int value, bool edit = false) {
-    QTableWidgetItem *item = new QTableWidgetItem(QString::number(value), edit);
+    QTableWidgetItem *item = item_string(QString::number(value), edit);
     item->setTextAlignment(Qt::AlignCenter);
 
     return item;
@@ -75,6 +75,29 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
         editor->setProperty(property.toLatin1().constData(), value.toLatin1().constData());
 
         editor->colourise(0, -1);
+    });
+
+    connect(ui->tblStyles, &QTableWidget::cellChanged, [=](int row, int column) {
+        if (column == 5) {
+            int id = ui->tblStyles->item(row, 0)->text().toInt();
+            int size = ui->tblStyles->item(row, column)->text().toInt();
+
+            auto editor = dockedEditor->getCurrentEditor();
+
+            editor->styleSetSize(id, size);
+
+            editor->colourise(0, -1);
+        }
+        else if (column == 7) {
+            int id = ui->tblStyles->item(row, 0)->text().toInt();
+            bool bold = qobject_cast<QCheckBox *>(ui->tblStyles->cellWidget(row, column))->isChecked();
+
+            auto editor = dockedEditor->getCurrentEditor();
+
+            editor->styleSetBold(id, bold);
+
+            editor->colourise(0, -1);
+        }
     });
 }
 
@@ -173,7 +196,7 @@ void LanguageInspectorDock::updateStyleInfo(ScintillaNext *editor)
         ui->tblStyles->setItem(i, 2, item_string(editor->tagsOfStyle(i)));
         ui->tblStyles->setItem(i, 3, item_string(editor->descriptionOfStyle(i)));
         ui->tblStyles->setItem(i, 4, item_string(editor->styleFont(i)));
-        ui->tblStyles->setItem(i, 5, item_int(editor->styleSize(i)));
+        ui->tblStyles->setItem(i, 5, item_int(editor->styleSize(i), true));
         ui->tblStyles->setItem(i, 6, item_int(editor->styleSizeFractional(i)));
         ui->tblStyles->setCellWidget(i, 7, item_bool(editor->styleBold(i)));
         ui->tblStyles->setItem(i, 8, item_int(editor->styleWeight(i)));

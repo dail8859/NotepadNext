@@ -176,7 +176,7 @@
           </column>
           <column>
            <property name="text">
-            <string>Descriptions</string>
+            <string>Description</string>
            </property>
           </column>
           <column>
