@@ -2,21 +2,9 @@
 #include "ui_LanguageInspectorDock.h"
 
 #include "MainWindow.h"
+#include "LanguagePropertiesModel.h"
 
 #include <QCheckBox>
-
-QString property_type_to_string(int type) {
-    switch (type) {
-    case SC_TYPE_BOOLEAN:
-        return "bool";
-    case SC_TYPE_INTEGER:
-        return "integer";
-    case SC_TYPE_STRING:
-        return "string";
-    default:
-        return "unknown";
-    }
-}
 
 QTableWidgetItem *item_string(const QString &name, bool edit = false) {
     QTableWidgetItem *item = new QTableWidgetItem(name);
@@ -65,18 +53,6 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
         }
     });
 
-    connect(ui->tblProperties, &QTableWidget::cellChanged, [=](int row, int column) {
-        if (column != 3) return;
-
-        QString property = ui->tblProperties->item(row, 0)->text();
-        QString value = ui->tblProperties->item(row, column)->text();
-        auto editor = dockedEditor->getCurrentEditor();
-
-        editor->setProperty(property.toLatin1().constData(), value.toLatin1().constData());
-
-        editor->colourise(0, -1);
-    });
-
     connect(ui->tblStyles, &QTableWidget::cellChanged, [=](int row, int column) {
         if (column == 5) {
             int id = ui->tblStyles->item(row, 0)->text().toInt();
@@ -112,7 +88,16 @@ void LanguageInspectorDock::updateInformation(ScintillaNext *editor)
     if (this->isHidden()) return;
 
     this->updateLanguageName(editor);
-    this->updatePropertyInfo(editor);
+
+    ui->tblProperties->model()->deleteLater();
+    ui->tblProperties->setModel(new LanguagePropertiesModel(editor));
+
+    ui->tblProperties->resizeColumnToContents(0);
+    ui->tblProperties->resizeColumnToContents(1);
+    ui->tblProperties->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+    ui->tblProperties->resizeColumnToContents(3);
+
+
     this->updateKeywordInfo(editor);
     this->updateStyleInfo(editor);
 }
@@ -121,37 +106,6 @@ void LanguageInspectorDock::updateLanguageName(ScintillaNext *editor)
 {
     ui->editLanguage->setText(editor->property("nn.meta.language"));
     ui->editLexer->setText(editor->lexerLanguage());
-}
-
-void LanguageInspectorDock::updatePropertyInfo(ScintillaNext *editor)
-{
-    const QString propertyNames = QString(editor->propertyNames());
-    const QSignalBlocker blocker(ui->tblProperties);
-
-    ui->tblProperties->clearContents();
-
-    if (!propertyNames.isEmpty()) {
-        const QStringList properties = propertyNames.split('\n');
-        ui->tblProperties->setRowCount(properties.size());
-
-        int row = 0;
-        foreach (const QString &property, properties) {
-            ui->tblProperties->setItem(row, 0, item_string(property));
-            ui->tblProperties->setItem(row, 1, item_string(property_type_to_string(editor->propertyType(property.toLatin1().constData()))));
-            ui->tblProperties->setItem(row, 2, item_string(editor->describeProperty(property.toLatin1().constData())));
-            ui->tblProperties->setItem(row, 3, item_string(editor->property(property.toLatin1().constData()), true));
-
-            row++;
-        }
-
-        ui->tblProperties->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-        ui->tblProperties->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-        ui->tblProperties->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
-        ui->tblProperties->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
-    }
-    else {
-        ui->tblProperties->setRowCount(0);
-    }
 }
 
 void LanguageInspectorDock::updateKeywordInfo(ScintillaNext *editor)
