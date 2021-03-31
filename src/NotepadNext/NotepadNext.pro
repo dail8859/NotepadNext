@@ -49,6 +49,7 @@ SOURCES += \
     Finder.cpp \
     IFaceTable.cpp \
     IFaceTableMixer.cpp \
+    LanguageKeywordsModel.cpp \
     LanguagePropertiesModel.cpp \
     LuaExtension.cpp \
     LuaState.cpp \
@@ -86,6 +87,7 @@ HEADERS += \
     FocusWatcher.h \
     IFaceTable.h \
     IFaceTableMixer.h \
+    LanguageKeywordsModel.h \
     LanguagePropertiesModel.h \
     LuaExtension.h \
     LuaState.h \

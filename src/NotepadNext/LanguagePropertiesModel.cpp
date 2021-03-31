@@ -40,7 +40,7 @@ int LanguagePropertiesModel::rowCount(const QModelIndex &parent) const
     if (propertyNames.isEmpty())
         return 0;
     else
-        return editor->propertyNames().split('\n').count();
+        return propertyNames.split('\n').count();
 }
 
 int LanguagePropertiesModel::columnCount(const QModelIndex &parent) const
