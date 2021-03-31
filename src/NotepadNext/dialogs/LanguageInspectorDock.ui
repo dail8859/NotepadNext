@@ -102,21 +102,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QTableWidget" name="tblKeywords">
-          <attribute name="verticalHeaderVisible">
-           <bool>false</bool>
-          </attribute>
-          <column>
-           <property name="text">
-            <string>ID</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Description</string>
-           </property>
-          </column>
-         </widget>
+         <widget class="QTableView" name="tblKeywords"/>
         </item>
         <item>
          <widget class="QLabel" name="label_5">

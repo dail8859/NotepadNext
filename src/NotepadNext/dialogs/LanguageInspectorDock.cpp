@@ -3,7 +3,7 @@
 
 #include "MainWindow.h"
 #include "LanguagePropertiesModel.h"
-
+#include "LanguageKeywordsModel.h"
 #include <QCheckBox>
 
 QTableWidgetItem *item_string(const QString &name, bool edit = false) {
@@ -89,15 +89,7 @@ void LanguageInspectorDock::updateInformation(ScintillaNext *editor)
 
     this->updateLanguageName(editor);
 
-    ui->tblProperties->model()->deleteLater();
-    ui->tblProperties->setModel(new LanguagePropertiesModel(editor));
-
-    ui->tblProperties->resizeColumnToContents(0);
-    ui->tblProperties->resizeColumnToContents(1);
-    ui->tblProperties->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
-    ui->tblProperties->resizeColumnToContents(3);
-
-
+    this->updatePropertyInfo(editor);
     this->updateKeywordInfo(editor);
     this->updateStyleInfo(editor);
 }
@@ -108,32 +100,24 @@ void LanguageInspectorDock::updateLanguageName(ScintillaNext *editor)
     ui->editLexer->setText(editor->lexerLanguage());
 }
 
+void LanguageInspectorDock::updatePropertyInfo(ScintillaNext *editor)
+{
+    ui->tblProperties->model()->deleteLater();
+    ui->tblProperties->setModel(new LanguagePropertiesModel(editor));
+
+    ui->tblProperties->resizeColumnToContents(0);
+    ui->tblProperties->resizeColumnToContents(1);
+    ui->tblProperties->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+    ui->tblProperties->resizeColumnToContents(3);
+}
+
 void LanguageInspectorDock::updateKeywordInfo(ScintillaNext *editor)
 {
-    const QString keyWordSets = QString(editor->describeKeyWordSets());
-    const QSignalBlocker blocker(ui->tblKeywords);
+    ui->tblKeywords->model()->deleteLater();
+    ui->tblKeywords->setModel(new LanguageKeywordsModel(editor));
 
-    ui->tblKeywords->clearContents();
-
-    if (!keyWordSets.isEmpty()) {
-        const QStringList keywords = keyWordSets.split('\n');
-
-        ui->tblKeywords->setRowCount(keywords.size());
-
-        int row = 0;
-        foreach (const QString &keyword, keywords) {
-            ui->tblKeywords->setItem(row, 0, item_int(row));
-            ui->tblKeywords->setItem(row, 1, item_string(keyword));
-
-            row++;
-        }
-
-        ui->tblKeywords->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-        ui->tblKeywords->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
-    }
-    else {
-        ui->tblKeywords->setRowCount(0);
-    }
+    ui->tblKeywords->resizeColumnToContents(0);
+    ui->tblKeywords->horizontalHeader()->setStretchLastSection(true);
 }
 
 void LanguageInspectorDock::updateStyleInfo(ScintillaNext *editor)
