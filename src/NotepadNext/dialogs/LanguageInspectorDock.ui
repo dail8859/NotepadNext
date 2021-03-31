@@ -88,39 +88,10 @@
          </widget>
         </item>
         <item>
-         <widget class="QTableWidget" name="tblProperties">
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <property name="rowCount">
-           <number>0</number>
-          </property>
-          <property name="columnCount">
-           <number>4</number>
-          </property>
+         <widget class="QTableView" name="tblProperties">
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
-          <column>
-           <property name="text">
-            <string>Property</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Type</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Description</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Value</string>
-           </property>
-          </column>
          </widget>
         </item>
         <item>

@@ -25,7 +25,6 @@ private:
     Ui::LanguageInspectorDock *ui;
 
     void updateLanguageName(ScintillaNext *editor);
-    void updatePropertyInfo(ScintillaNext *editor);
     void updateKeywordInfo(ScintillaNext *editor);
     void updateStyleInfo(ScintillaNext *editor);
 };
