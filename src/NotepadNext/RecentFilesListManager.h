@@ -31,7 +31,7 @@ class RecentFilesListManager : public QObject
     Q_OBJECT
 
 public:
-    RecentFilesListManager(QMenu *_menu, QWidget *parent = Q_NULLPTR);
+    RecentFilesListManager(QWidget *parent = Q_NULLPTR);
     ~RecentFilesListManager();
 
     void addFile(const QString &filePath);
@@ -44,6 +44,8 @@ public:
 
     int count() const { return recentFiles.size(); }
 
+    void populateMenu(QMenu *menu);
+
 signals:
     void fileOpenRequest(const QString &filePath);
 
@@ -51,8 +53,6 @@ private slots:
     void recentFileActionTriggered();
 
 private:
-    QMenu *menu;
-    QList<QAction *> recentFileListActions;
     QStringList recentFiles;
 };
 
