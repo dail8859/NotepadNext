@@ -16,29 +16,30 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef LANGUAGEKEYWORDSMODEL_H
-#define LANGUAGEKEYWORDSMODEL_H
+#ifndef SPINBOXDELEGATE_H
+#define SPINBOXDELEGATE_H
 
-#include <QAbstractTableModel>
+#include <QSpinBox>
+#include <QStyledItemDelegate>
 
-class ScintillaNext;
+typedef QSpinBox*(*QSpinBoxFactory)();
 
-class LanguageKeywordsModel : public QAbstractTableModel
+class SpinBoxDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 
 public:
-    explicit LanguageKeywordsModel(ScintillaNext *editor, QObject *parent = nullptr);
+    SpinBoxDelegate(QSpinBoxFactory factory, QObject *parent = nullptr);
 
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    void setEditorData(QWidget *editor, const QModelIndex &index) const override;
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
 
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 private:
-    ScintillaNext *editor;
+    QSpinBoxFactory factory;
 };
 
-#endif // LANGUAGEKEYWORDSMODEL_H
+#endif // SPINBOXDELEGATE_H

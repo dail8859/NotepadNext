@@ -106,6 +106,8 @@ bool NotepadNextApplication::initGui()
     QObject::connect(this, &SingleApplication::instanceStarted, this->windows.first(), &MainWindow::bringWindowToForeground);
 
     QObject::connect(this, &SingleApplication::receivedMessage, [&] (quint32 instanceId, QByteArray message) {
+        Q_UNUSED(instanceId)
+
         QDataStream stream(&message, QIODevice::ReadOnly);
         QStringList args;
 
@@ -118,7 +120,7 @@ bool NotepadNextApplication::initGui()
         if (state == Qt::ApplicationActive) {
             windows.first()->focusIn();
 
-            if (currentlyFocusedWidget) {
+            if (currentlyFocusedWidget && !currentlyFocusedWidget.isNull()) {
                 currentlyFocusedWidget->activateWindow();
             }
         }
