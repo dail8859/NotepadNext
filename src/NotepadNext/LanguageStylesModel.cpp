@@ -214,7 +214,7 @@ bool LanguageStylesModel::setData(const QModelIndex &index, const QVariant &valu
             case 13: // EOL Filled
                 editor->styleSetEOLFilled(index.row(), value.toBool());
                 break;
-            case 15:
+            case 15: // Case
                 editor->styleSetCase(index.row(), value.toInt());
                 break;
             case 16: // Visible
@@ -248,11 +248,6 @@ Qt::ItemFlags LanguageStylesModel::flags(const QModelIndex &index) const
         return Qt::NoItemFlags;
 
     switch (index.column()) {
-        case 0: // ID
-        case 1: // Name
-        case 2: // Tags
-        case 3: // Description
-            return default_flags;
         case 4: // Font
         case 5: // Size
         case 6: // Fractional
