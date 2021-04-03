@@ -45,12 +45,15 @@ win32 {
 
 SOURCES += \
     BufferManager.cpp \
+    ColorPickerDelegate.cpp \
+    ComboBoxDelegate.cpp \
     DockedEditor.cpp \
     Finder.cpp \
     IFaceTable.cpp \
     IFaceTableMixer.cpp \
     LanguageKeywordsModel.cpp \
     LanguagePropertiesModel.cpp \
+    LanguageStylesModel.cpp \
     LuaExtension.cpp \
     LuaState.cpp \
     MacroRecorder.cpp \
@@ -63,6 +66,7 @@ SOURCES += \
     ScintillaBuffer.cpp \
     ScintillaNext.cpp \
     Settings.cpp \
+    SpinBoxDelegate.cpp \
     decorators/SurroundSelection.cpp \
     dialogs/FindReplaceDialog.cpp \
     dialogs/LanguageInspectorDock.cpp \
@@ -82,6 +86,8 @@ SOURCES += \
 
 HEADERS += \
     BufferManager.h \
+    ColorPickerDelegate.h \
+    ComboBoxDelegate.h \
     DockedEditor.h \
     Finder.h \
     FocusWatcher.h \
@@ -89,6 +95,7 @@ HEADERS += \
     IFaceTableMixer.h \
     LanguageKeywordsModel.h \
     LanguagePropertiesModel.h \
+    LanguageStylesModel.h \
     LuaExtension.h \
     LuaState.h \
     MacroRecorder.h \
@@ -101,6 +108,7 @@ HEADERS += \
     ScintillaBuffer.h \
     ScintillaNext.h \
     Settings.h \
+    SpinBoxDelegate.h \
     decorators/SurroundSelection.h \
     dialogs/FindReplaceDialog.h \
     dialogs/LanguageInspectorDock.h \

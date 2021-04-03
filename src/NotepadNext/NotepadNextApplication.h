@@ -25,6 +25,8 @@
 
 #include "SingleApplication"
 
+#include <QPointer>
+
 
 class MainWindow;
 class LuaState;
@@ -50,7 +52,7 @@ private:
     Settings *settings = Q_NULLPTR;
 
     QList<MainWindow *> windows;
-    QWidget *currentlyFocusedWidget = Q_NULLPTR;
+    QPointer<QWidget> currentlyFocusedWidget; // Keep a weak pointer to the QWidget since we don't own it
 
     void applyArguments(const QStringList &args);
     MainWindow *createNewWindow();

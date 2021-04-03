@@ -1,40 +1,50 @@
+/*
+ * This file is part of Notepad Next.
+ * Copyright 2021 Justin Dailey
+ *
+ * Notepad Next is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Notepad Next is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "LanguageInspectorDock.h"
 #include "ui_LanguageInspectorDock.h"
 
 #include "MainWindow.h"
 #include "LanguagePropertiesModel.h"
 #include "LanguageKeywordsModel.h"
-#include <QCheckBox>
+#include "LanguageStylesModel.h"
 
-QTableWidgetItem *item_string(const QString &name, bool edit = false) {
-    QTableWidgetItem *item = new QTableWidgetItem(name);
-    item->setToolTip(name);
+#include "SpinBoxDelegate.h"
+#include "ColorPickerDelegate.h"
+#include "ComboBoxDelegate.h"
 
-    if (!edit)
-        item->setFlags(item->flags() ^ Qt::ItemIsEditable);
-
-    return item;
+static QSpinBox *FontSizeSpinBoxFactory()
+{
+    QSpinBox *editor = new QSpinBox();
+    editor->setFrame(false);
+    editor->setRange(2, 24);
+    editor->setAlignment(Qt::AlignHCenter);
+    return editor;
 }
 
-QTableWidgetItem *item_int(int value, bool edit = false) {
-    QTableWidgetItem *item = item_string(QString::number(value), edit);
-    item->setTextAlignment(Qt::AlignCenter);
-
-    return item;
-}
-
-QWidget *item_bool(bool checked) {
-    QWidget *pWidget = new QWidget();
-    QCheckBox *pCheckBox = new QCheckBox();
-    QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
-
-    pCheckBox->setChecked(checked);
-    pLayout->addWidget(pCheckBox);
-    pLayout->setAlignment(Qt::AlignCenter);
-    pLayout->setContentsMargins(0,0,0,0);
-    pWidget->setLayout(pLayout);
-
-    return pWidget;
+static QSpinBox *FontWeightSpinBoxFactory()
+{
+    QSpinBox *editor = new QSpinBox();
+    editor->setFrame(false);
+    editor->setRange(100, 2400);
+    editor->setSingleStep(10);
+    editor->setAlignment(Qt::AlignHCenter);
+    return editor;
 }
 
 LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
@@ -53,28 +63,26 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
         }
     });
 
-    connect(ui->tblStyles, &QTableWidget::cellChanged, [=](int row, int column) {
-        if (column == 5) {
-            int id = ui->tblStyles->item(row, 0)->text().toInt();
-            int size = ui->tblStyles->item(row, column)->text().toInt();
+    SpinBoxDelegate *fontSizeDelegate = new SpinBoxDelegate(FontSizeSpinBoxFactory, this);
+    ui->tblStyles->setItemDelegateForColumn(5, fontSizeDelegate);
 
-            auto editor = dockedEditor->getCurrentEditor();
+    SpinBoxDelegate *fontWeightDelegate = new SpinBoxDelegate(FontWeightSpinBoxFactory, this);
+    ui->tblStyles->setItemDelegateForColumn(6, fontWeightDelegate);
 
-            editor->styleSetSize(id, size);
+    ColorPickerDelegate *foreColorDelegate = new ColorPickerDelegate(this);
+    ui->tblStyles->setItemDelegateForColumn(11, foreColorDelegate);
 
-            editor->colourise(0, -1);
-        }
-        else if (column == 7) {
-            int id = ui->tblStyles->item(row, 0)->text().toInt();
-            bool bold = qobject_cast<QCheckBox *>(ui->tblStyles->cellWidget(row, column))->isChecked();
+    ColorPickerDelegate *backColorDelegate = new ColorPickerDelegate(this);
+    ui->tblStyles->setItemDelegateForColumn(12, backColorDelegate);
 
-            auto editor = dockedEditor->getCurrentEditor();
-
-            editor->styleSetBold(id, bold);
-
-            editor->colourise(0, -1);
-        }
-    });
+    QList<ComboBoxItem> caseItems{
+        {"SC_CASE_MIXED", SC_CASE_MIXED},
+        {"SC_CASE_UPPER", SC_CASE_UPPER},
+        {"SC_CASE_LOWER", SC_CASE_LOWER},
+        {"SC_CASE_CAMEL", SC_CASE_CAMEL}
+    };
+    ComboBoxDelegate *caseComoboDelegate = new ComboBoxDelegate(caseItems, this);
+    ui->tblStyles->setItemDelegateForColumn(15, caseComoboDelegate);
 }
 
 LanguageInspectorDock::~LanguageInspectorDock()
@@ -88,7 +96,6 @@ void LanguageInspectorDock::updateInformation(ScintillaNext *editor)
     if (this->isHidden()) return;
 
     this->updateLanguageName(editor);
-
     this->updatePropertyInfo(editor);
     this->updateKeywordInfo(editor);
     this->updateStyleInfo(editor);
@@ -122,51 +129,23 @@ void LanguageInspectorDock::updateKeywordInfo(ScintillaNext *editor)
 
 void LanguageInspectorDock::updateStyleInfo(ScintillaNext *editor)
 {
-    const int num_styles = editor->namedStyles();
-    const QSignalBlocker blocker(ui->tblStyles);
+    ui->tblStyles->model()->deleteLater();
+    ui->tblStyles->setModel(new LanguageStylesModel(editor));
 
-    ui->tblStyles->clearContents();
-    ui->tblStyles->setRowCount(num_styles);
-
-    for(int i = 0; i < num_styles; i++) {
-        ui->tblStyles->setItem(i, 0, item_int(i));
-        ui->tblStyles->setItem(i, 1, item_string(editor->nameOfStyle(i)));
-        ui->tblStyles->setItem(i, 2, item_string(editor->tagsOfStyle(i)));
-        ui->tblStyles->setItem(i, 3, item_string(editor->descriptionOfStyle(i)));
-        ui->tblStyles->setItem(i, 4, item_string(editor->styleFont(i)));
-        ui->tblStyles->setItem(i, 5, item_int(editor->styleSize(i), true));
-        ui->tblStyles->setItem(i, 6, item_int(editor->styleSizeFractional(i)));
-        ui->tblStyles->setCellWidget(i, 7, item_bool(editor->styleBold(i)));
-        ui->tblStyles->setItem(i, 8, item_int(editor->styleWeight(i)));
-        ui->tblStyles->setCellWidget(i, 9, item_bool(editor->styleItalic(i)));
-        ui->tblStyles->setCellWidget(i, 10, item_bool(editor->styleUnderline(i)));
-        ui->tblStyles->setItem(i, 11, item_int(editor->styleFore(i)));
-        ui->tblStyles->setItem(i, 12, item_int(editor->styleBack(i)));
-        ui->tblStyles->setCellWidget(i, 13, item_bool(editor->styleEOLFilled(i)));
-        ui->tblStyles->setItem(i, 14, item_int(editor->styleCharacterSet(i)));
-        ui->tblStyles->setItem(i, 15, item_int(editor->styleCase(i)));
-        ui->tblStyles->setCellWidget(i, 16, item_bool(editor->styleVisible(i)));
-        ui->tblStyles->setCellWidget(i, 17, item_bool(editor->styleChangeable(i)));
-        ui->tblStyles->setCellWidget(i, 18, item_bool(editor->styleHotSpot(i)));
-    }
-
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(4, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(5, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(6, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(6, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(7, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(8, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(9, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(10, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(11, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(12, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(13, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(14, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(15, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(16, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(17, QHeaderView::ResizeToContents);
-    ui->tblStyles->horizontalHeader()->setSectionResizeMode(18, QHeaderView::ResizeToContents);
+    ui->tblStyles->resizeColumnToContents(0);
+    ui->tblStyles->resizeColumnToContents(1);
+    ui->tblStyles->resizeColumnToContents(5);
+    ui->tblStyles->resizeColumnToContents(6);
+    ui->tblStyles->resizeColumnToContents(7);
+    ui->tblStyles->resizeColumnToContents(8);
+    ui->tblStyles->resizeColumnToContents(9);
+    ui->tblStyles->resizeColumnToContents(10);
+    ui->tblStyles->resizeColumnToContents(11);
+    ui->tblStyles->resizeColumnToContents(12);
+    ui->tblStyles->resizeColumnToContents(13);
+    ui->tblStyles->resizeColumnToContents(14);
+    ui->tblStyles->resizeColumnToContents(15);
+    ui->tblStyles->resizeColumnToContents(16);
+    ui->tblStyles->resizeColumnToContents(17);
+    ui->tblStyles->resizeColumnToContents(18);
 }
