@@ -31,7 +31,7 @@ class RecentFilesListManager : public QObject
     Q_OBJECT
 
 public:
-    RecentFilesListManager(QWidget *parent = Q_NULLPTR);
+    RecentFilesListManager(QObject *parent = Q_NULLPTR);
     ~RecentFilesListManager();
 
     void addFile(const QString &filePath);

@@ -21,7 +21,7 @@
 
 #include "RecentFilesListManager.h"
 
-RecentFilesListManager::RecentFilesListManager(QWidget *parent) :
+RecentFilesListManager::RecentFilesListManager(QObject *parent) :
     QObject(parent)
 {
 }

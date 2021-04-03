@@ -38,7 +38,6 @@ class MainWindow;
 class NotepadNextApplication;
 class ScintillaBuffer;
 class FindReplaceDialog;
-class RecentFilesListManager;
 class LuaConsoleDock;
 class LanguageInspectorDock;
 class MacroRecorder;
@@ -133,7 +132,6 @@ private:
     void setFoldMarkers(ScintillaNext *editor, const QString &type);
 
     QActionGroup *languageActionGroup;
-    RecentFilesListManager *recentFilesListManager;
 
     QLabel *docType;
     QLabel *docSize;

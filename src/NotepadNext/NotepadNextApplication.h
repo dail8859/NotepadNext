@@ -30,6 +30,7 @@
 
 class MainWindow;
 class LuaState;
+class RecentFilesListManager;
 
 class NotepadNextApplication : public SingleApplication
 {
@@ -41,6 +42,7 @@ public:
     bool initGui();
 
     BufferManager *getBufferManager() const { return bufferManager; };
+    RecentFilesListManager *getRecentFilesListManager() const { return recentFilesListManager; };
 
     LuaState *getLuaState() const;
     QString getFileDialogFilter() const;
@@ -48,6 +50,8 @@ public:
 
 private:
     BufferManager *bufferManager;
+    RecentFilesListManager *recentFilesListManager;
+
     LuaState *luaState = Q_NULLPTR;
     Settings *settings = Q_NULLPTR;
 
