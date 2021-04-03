@@ -21,7 +21,7 @@
 
 #include <QStyledItemDelegate>
 
-using ComboBoxItem = QPair<QString, int>;
+using ComboBoxItem = QPair<QString, QVariant>;
 
 class ComboBoxDelegate : public QStyledItemDelegate
 {

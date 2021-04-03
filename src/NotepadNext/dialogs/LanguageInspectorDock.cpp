@@ -16,6 +16,8 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <QFontDatabase>
+
 #include "LanguageInspectorDock.h"
 #include "ui_LanguageInspectorDock.h"
 
@@ -83,6 +85,14 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
     };
     ComboBoxDelegate *caseComoboDelegate = new ComboBoxDelegate(caseItems, this);
     ui->tblStyles->setItemDelegateForColumn(15, caseComoboDelegate);
+
+    QFontDatabase fontDatabase;
+    QList<ComboBoxItem> fontNames;
+    foreach(const QString font, fontDatabase.families()) {
+        fontNames.append(QPair(font, font));
+    }
+    ComboBoxDelegate *fontComboDelegate = new ComboBoxDelegate(fontNames, this);
+    ui->tblStyles->setItemDelegateForColumn(4, fontComboDelegate);
 }
 
 LanguageInspectorDock::~LanguageInspectorDock()
