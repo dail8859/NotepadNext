@@ -161,7 +161,6 @@ QVariant LanguageStylesModel::data(const QModelIndex &index, int role) const
             case 0:
             case 5:
             case 6:
-            case 7:
             case 8:
                 return Qt::AlignCenter;
         }
@@ -185,6 +184,9 @@ bool LanguageStylesModel::setData(const QModelIndex &index, const QVariant &valu
 
     if (role == Qt::EditRole) {
         switch (index.column()) {
+            case 4: // Font
+                editor->styleSetFont(index.row(), value.toString().toLatin1().constData());
+                break;
             case 5: // Size
                 editor->styleSetSize(index.row(), value.toInt());
                 break;
@@ -251,7 +253,7 @@ Qt::ItemFlags LanguageStylesModel::flags(const QModelIndex &index) const
         case 2: // Tags
         case 3: // Description
             return default_flags;
-        //case 4: // Font
+        case 4: // Font
         case 5: // Size
         case 6: // Fractional
         case 7: // Bold
