@@ -19,6 +19,8 @@
 
 #include "MainWindow.h"
 #include "NotepadNextApplication.h"
+#include "RecentFilesListManager.h"
+#include "BufferManager.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
@@ -49,7 +51,28 @@ NotepadNextApplication::NotepadNextApplication(BufferManager *bm, int &argc, cha
 {
     qInfo(Q_FUNC_INFO);
 
+    // Should the recentFilesListManger get passed in as well?
+    recentFilesListManager = new RecentFilesListManager(this);
     bufferManager->setParent(this);
+
+    // Connect the buffer manager and recent files list manager
+    connect(bufferManager, &BufferManager::bufferClosed, [=](ScintillaBuffer *buffer) {
+        if (buffer->isFile()) {
+            recentFilesListManager->addFile(buffer->fileInfo.canonicalFilePath());
+        }
+    });
+
+    connect(bufferManager, &BufferManager::bufferRenamed, [=](ScintillaBuffer *buffer) {
+        recentFilesListManager->removeFile(buffer->fileInfo.filePath());
+    });
+
+    // Restore some settings and schedule saving the settings on quit
+    QSettings settings;
+    recentFilesListManager->setFileList(settings.value("App/RecentFilesList").toStringList());
+    connect(this, &NotepadNextApplication::aboutToQuit, [=]() {
+        QSettings settings;
+        settings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
+    });
 }
 
 bool NotepadNextApplication::initGui()

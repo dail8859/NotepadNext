@@ -79,17 +79,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     setupStatusBar();
 
-    recentFilesListManager = new RecentFilesListManager(this);
-    connect(ui->menuRecentFiles, &QMenu::aboutToShow, [=]() {
-        // NOTE: its unfortunate that this has to be hard coded, but there's no way
-        // to easily determine what should or shouldn't be there
-        while (ui->menuRecentFiles->actions().size() > 4) {
-            delete ui->menuRecentFiles->actions().takeLast();
-        }
-
-        recentFilesListManager->populateMenu(ui->menuRecentFiles);
-    });
-
     // The windows editor manager that supports docking
     dockedEditor = new DockedEditor(this);
     connect(dockedEditor, &DockedEditor::editorCreated, this, &MainWindow::setupEditor);
@@ -97,7 +86,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         this->closeFile(editor->scintillaBuffer());
     });
     connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::editorActivated);
-
 
     // Set up the lua state and the extension. Need to intialize it after the first file was created
     LuaExtension::Instance().Initialise(app->getLuaState()->L, Q_NULLPTR);
@@ -148,31 +136,35 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionSaveAll, &QAction::triggered, this, &MainWindow::saveAll);
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
 
-    connect(ui->actionClearRecentFilesList, &QAction::triggered, recentFilesListManager, &RecentFilesListManager::clear);
-    connect(app->getBufferManager(), &BufferManager::bufferClosed, [=](ScintillaBuffer *buffer) {
-        if (buffer->isFile()) {
-            recentFilesListManager->addFile(buffer->fileInfo.canonicalFilePath());
+    connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
+
+    connect(ui->menuRecentFiles, &QMenu::aboutToShow, [=]() {
+        // NOTE: its unfortunate that this has to be hard coded, but there's no way
+        // to easily determine what should or shouldn't be there
+        while (ui->menuRecentFiles->actions().size() > 4) {
+            delete ui->menuRecentFiles->actions().takeLast();
         }
+
+        app->getRecentFilesListManager()->populateMenu(ui->menuRecentFiles);
     });
 
     connect(dockedEditor, &DockedEditor::editorCreated, [=](ScintillaNext *editor) {
         ScintillaBuffer *buffer = editor->scintillaBuffer();
         if (buffer->isFile()) {
-            recentFilesListManager->removeFile(buffer->fileInfo.canonicalFilePath());
+            app->getRecentFilesListManager()->removeFile(buffer->fileInfo.canonicalFilePath());
         }
     });
-    connect(app->getBufferManager(), &BufferManager::bufferRenamed, [=](ScintillaBuffer *buffer) {
-        recentFilesListManager->removeFile(buffer->fileInfo.filePath());
-    });
+
     connect(ui->actionRestoreRecentlyClosedFile, &QAction::triggered, [=]() {
-        if (recentFilesListManager->count() > 0) {
-            openFileList(QStringList() << recentFilesListManager->mostRecentFile());
+        if (app->getRecentFilesListManager()->count() > 0) {
+            openFileList(QStringList() << app->getRecentFilesListManager()->mostRecentFile());
         }
     });
+
     connect(ui->actionOpenAllRecentFiles, &QAction::triggered, [=]() {
-        openFileList(recentFilesListManager->fileList());
+        openFileList(app->getRecentFilesListManager()->fileList());
     });
-    connect(recentFilesListManager, &RecentFilesListManager::fileOpenRequest, this, &MainWindow::openFile);
+    connect(app->getRecentFilesListManager(), &RecentFilesListManager::fileOpenRequest, this, &MainWindow::openFile);
 
     QActionGroup *eolActionGroup = new QActionGroup(this);
     eolActionGroup->addAction(ui->actionWindows);
@@ -591,7 +583,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     QSettings settings;
     restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
     restoreState(settings.value("MainWindow/windowState").toByteArray());
-    recentFilesListManager->setFileList(settings.value("App/RecentFilesList").toStringList());
 
     if (luaConsoleDock == Q_NULLPTR) {
         luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
@@ -900,7 +891,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
                     // Make sure it is not still in the recent files list still.
                     // Normally when a file is opened it is removed from the file list,
                     // but if a user doesn't want to create the file, remove it explicitly.
-                    recentFilesListManager->removeFile(filePath);
+                    app->getRecentFilesListManager()->removeFile(filePath);
                     continue;
                 }
             }
@@ -1625,7 +1616,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QSettings settings;
     settings.setValue("MainWindow/geometry", saveGeometry());
     settings.setValue("MainWindow/windowState", saveState());
-    settings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
 
     event->accept();
 
