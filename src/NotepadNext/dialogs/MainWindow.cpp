@@ -79,7 +79,16 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     setupStatusBar();
 
-    recentFilesListManager = new RecentFilesListManager(ui->menuRecentFiles);
+    recentFilesListManager = new RecentFilesListManager(this);
+    connect(ui->menuRecentFiles, &QMenu::aboutToShow, [=]() {
+        // NOTE: its unfortunate that this has to be hard coded, but there's no way
+        // to easily determine what should or shouldn't be there
+        while (ui->menuRecentFiles->actions().size() > 4) {
+            delete ui->menuRecentFiles->actions().takeLast();
+        }
+
+        recentFilesListManager->populateMenu(ui->menuRecentFiles);
+    });
 
     // The windows editor manager that supports docking
     dockedEditor = new DockedEditor(this);
