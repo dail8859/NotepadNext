@@ -38,6 +38,61 @@ ScintillaBuffer *ScintillaNext::scintillaBuffer()
     return this->buffer;
 }
 
+void ScintillaNext::close()
+{
+    emit closed();
+
+    deleteLater();
+}
+
+bool ScintillaNext::save()
+{
+    return buffer->save();
+}
+
+void ScintillaNext::reload()
+{
+    buffer->reloadFromFile();
+}
+
+bool ScintillaNext::saveAs(const QString &newFilePath)
+{
+    if (buffer->saveAs(newFilePath)) {
+        //emit bufferRenamed(buffer);
+        return true;
+    }
+
+    return false;
+}
+
+bool ScintillaNext::saveCopyAs(const QString &filePath)
+{
+    return buffer->saveCopyAs(filePath);
+}
+
+bool ScintillaNext::rename(const QString &newFilePath)
+{
+    // TODO: check if newFilePath is already opened as another buffer?
+
+    // Write out the buffer to the new path
+    if (saveCopyAs(newFilePath)) {
+        // Remove the old file
+        const QString oldPath = buffer->fileInfo.canonicalFilePath();
+        QFile::remove(oldPath);
+
+        // Everything worked fine, so update the buffer's info
+        buffer->setFileInfo(newFilePath);
+        buffer->updateTimestamp();
+        buffer->set_save_point();
+
+        //emit bufferRenamed(buffer);
+
+        return true;
+    }
+
+    return false;
+}
+
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)
 {
     // Ignore all drag and drop events with urls and let the main application handle it

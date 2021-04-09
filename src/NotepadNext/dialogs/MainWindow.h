@@ -57,7 +57,6 @@ public:
     bool isAnyUnsaved();
 
     void setupLanguageMenu();
-    void setupEditor(ScintillaNext *editor);
     ScintillaNext *currentEditor();
     DockedEditor *getDockedEditor();
 
@@ -70,18 +69,18 @@ public slots:
     void reloadFile();
 
     void closeCurrentFile();
-    void closeFile(ScintillaBuffer *buffer);
+    void closeFile(ScintillaNext *editor);
     void closeAllFiles(bool forceClose);
     void closeAllExceptActive();
     void closeAllToLeft();
     void closeAllToRight();
 
     bool saveCurrentFile();
-    bool saveFile(ScintillaBuffer *buffer);
+    bool saveFile(ScintillaNext *editor);
 
     bool saveCurrentFileAsDialog();
     bool saveCurrentFileAs(const QString &fileName);
-    bool saveFileAs(ScintillaBuffer *buffer, const QString &fileName);
+    bool saveFileAs(ScintillaNext *editor, const QString &fileName);
 
     void saveCopyAsDialog();
     void saveCopyAs(const QString &fileName);
@@ -109,6 +108,8 @@ public slots:
     void bringWindowToForeground();
     void focusIn();
 
+    void addEditor(ScintillaNext *editor);
+
 protected:
     void closeEvent(QCloseEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -128,8 +129,8 @@ private:
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     void setupStatusBar();
-    bool checkBufferForModification(ScintillaBuffer *buffer);
-    void setFoldMarkers(ScintillaNext *editor, const QString &type);
+    bool checkBufferForModification(ScintillaNext *editor);
+    void connectEditor(ScintillaNext *editor);
 
     QActionGroup *languageActionGroup;
 

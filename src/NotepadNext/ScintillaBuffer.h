@@ -32,7 +32,9 @@ class ScintillaBuffer : public ScintillaDocument
 {
     Q_OBJECT
 
-friend class BufferManager;
+    friend class BufferManager;
+    friend class EditorManager;
+    friend class ScintillaNext;
 
 public:
     enum BufferType {

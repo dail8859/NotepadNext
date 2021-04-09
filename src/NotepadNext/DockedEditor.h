@@ -52,12 +52,13 @@ private slots:
     void dockWidgetCloseRequested();
 
 public slots:
-    void addBuffer(ScintillaBuffer *buffer);
-    void removeBuffer(ScintillaBuffer *buffer);
+    void addEditor(ScintillaNext *editor);
+    void removeEditor(ScintillaNext *editor);
     void renamedBuffer(ScintillaBuffer *buffer);
 
+
 signals:
-    void editorCreated(ScintillaNext *editor);
+    void editorAdded(ScintillaNext *editor);
     void editorCloseRequested(ScintillaNext *editor);
     void editorActivated(ScintillaNext *editor);
 
