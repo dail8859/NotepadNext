@@ -36,7 +36,6 @@ class MainWindow;
 }
 
 class NotepadNextApplication;
-class ScintillaBuffer;
 class FindReplaceDialog;
 class LuaConsoleDock;
 class LanguageInspectorDock;
@@ -89,14 +88,14 @@ public slots:
     void renameFile();
     void convertEOLs(int eolMode);
 
-    void updateBufferFileStatusBasedUi(ScintillaBuffer *buffer);
+    void updateFileStatusBasedUi(ScintillaNext *editor);
     void updateEOLBasedUi(ScintillaNext *editor);
     void updateEncodingBasedUi(ScintillaNext *editor);
     void updateDocumentBasedUi(int updated);
     void updateSelectionBasedUi(ScintillaNext *editor);
     void updateContentBasedUi(ScintillaNext *editor);
     void updateSaveStatusBasedUi(bool isDirty);
-    void updateBufferPositionBasedUi();
+    void updateEditorPositionBasedUi();
     void updateLanguageBasedUi(ScintillaNext *editor);
     void updateGui(ScintillaNext *editor);
 
@@ -129,7 +128,7 @@ private:
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     void setupStatusBar();
-    bool checkBufferForModification(ScintillaNext *editor);
+    bool checkFileForModification(ScintillaNext *editor);
     void connectEditor(ScintillaNext *editor);
 
     QActionGroup *languageActionGroup;

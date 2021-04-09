@@ -44,7 +44,6 @@ public:
     QVector<ScintillaBuffer *> buffers() const;
 
     void switchToEditor(const ScintillaNext *editor);
-    void switchToBuffer(const ScintillaBuffer *buffer);
 
     int count() const;
 
