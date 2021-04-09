@@ -37,7 +37,6 @@ public:
     explicit DockedEditor(QWidget *parent);
 
     ScintillaNext *getCurrentEditor() const;
-    ScintillaBuffer *getCurrentBuffer() const;
     ads::CDockAreaWidget *currentDockArea();
 
     QVector<ScintillaNext *> editors() const;

@@ -344,7 +344,7 @@ bool ScintillaBuffer::readFromDisk(QFile &file)
     return true;
 }
 
-const QString &ScintillaBuffer::getName() const
+QString ScintillaBuffer::getName() const
 {
     return name;
 }

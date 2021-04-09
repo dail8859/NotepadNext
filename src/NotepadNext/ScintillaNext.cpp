@@ -48,6 +48,16 @@ bool ScintillaNext::isFile()
     return this->buffer->isFile();
 }
 
+QString ScintillaNext::getName()
+{
+    return this->buffer->getName();
+}
+
+QString ScintillaNext::canonicalFilePath()
+{
+    return this->buffer->fileInfo.canonicalFilePath();
+}
+
 void ScintillaNext::close()
 {
     emit closed();

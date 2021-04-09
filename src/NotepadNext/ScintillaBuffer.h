@@ -49,9 +49,6 @@ public:
         Restored,
     };
 
-    const QString &getName() const;
-    BufferType type() const;
-
     BufferStateChange checkForBufferStateChange();
 
     QFileInfo fileInfo;
@@ -65,19 +62,19 @@ private:
     void setFileInfo(const QString &filePath);
     bool isFile() const;
     bool isSavedToDisk();
-
-    QString name;
-    BufferType bufferType;
-
-    QDateTime modifiedTime;
+    QString getName() const;
+    BufferType type() const;
     QDateTime fileTimestamp();
     void updateTimestamp();
-
     bool save();
     bool saveAs(const QString &newFilePath);
     bool saveCopyAs(const QString &filePath);
     bool reloadFromFile();
     bool readFromDisk(QFile &file);
+
+    QString name;
+    BufferType bufferType;
+    QDateTime modifiedTime;
 };
 
 #endif // SCINTILLABUFFER_H

@@ -40,6 +40,8 @@ public:
 
     bool isSavedToDisk();
     bool isFile();
+    QString getName();
+    QString canonicalFilePath();
 
 public slots:
     void close();
