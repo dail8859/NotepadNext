@@ -215,9 +215,9 @@ ScintillaBuffer::BufferStateChange ScintillaBuffer::checkForBufferStateChange()
     return BufferStateChange::NoChange;
 }
 
-bool ScintillaBuffer::is_save_point()
+bool ScintillaBuffer::isSavedToDisk()
 {
-    return bufferType != ScintillaBuffer::FileMissing && ScintillaDocument::is_save_point();
+    return bufferType != ScintillaBuffer::FileMissing && is_save_point();
 }
 
 ScintillaBuffer *ScintillaBuffer::fromFile(const QString &filePath)

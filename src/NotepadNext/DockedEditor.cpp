@@ -88,18 +88,6 @@ QVector<ScintillaNext *> DockedEditor::editors() const
     return editors;
 }
 
-QVector<ScintillaBuffer *> DockedEditor::buffers() const
-{
-    QVector<ScintillaBuffer *> buffers;
-    foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
-        auto editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
-
-        buffers.append(editor->scintillaBuffer());
-    }
-
-    return buffers;
-}
-
 void DockedEditor::switchToEditor(const ScintillaNext *editor)
 {
     foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
@@ -173,7 +161,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     });
 
     // Set the tooltip based on the buffer
-    if (buffer->isFile()) {
+    if (editor->isFile()) {
         dw->tabWidget()->setToolTip(buffer->fileInfo.canonicalFilePath());
     }
     else {
@@ -182,7 +170,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     // Set the icon
     dw->tabWidget()->setIcon(QIcon(":/icons/saved.png"));
-    connect(buffer, &ScintillaBuffer::save_point, [=](bool atSavePoint) {
+    connect(editor, &ScintillaNext::savePointChanged, [=](bool atSavePoint) {
         const QString iconPath = atSavePoint ? ":/icons/saved.png" : ":/icons/unsaved.png";
         dw->tabWidget()->setIcon(QIcon(iconPath));
     });
@@ -212,7 +200,7 @@ void DockedEditor::renamedBuffer(ScintillaBuffer *buffer)
         if (buffer == editor->scintillaBuffer()) {
             dockWidget->setObjectName(buffer->getName());
 
-            if (buffer->isFile()) {
+            if (editor->isFile()) {
                 dockWidget->tabWidget()->setToolTip(buffer->fileInfo.canonicalFilePath());
             }
             else {

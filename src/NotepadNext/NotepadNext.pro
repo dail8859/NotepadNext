@@ -75,7 +75,6 @@ SOURCES += \
     dialogs/MacroSaveDialog.cpp \
     dialogs/MainWindow.cpp \
     dialogs/PreferencesDialog.cpp \
-    dialogs/WindowListDialog.cpp \
     main.cpp \
     decorators/BraceMatch.cpp \
     decorators/EditorDecorator.cpp \
@@ -117,7 +116,6 @@ HEADERS += \
     dialogs/MacroSaveDialog.h \
     dialogs/MainWindow.h \
     dialogs/PreferencesDialog.h \
-    dialogs/WindowListDialog.h \
     decorators/BraceMatch.h \
     decorators/EditorDecorator.h \
     decorators/HighlightedScrollBar.h \

@@ -38,6 +38,16 @@ ScintillaBuffer *ScintillaNext::scintillaBuffer()
     return this->buffer;
 }
 
+bool ScintillaNext::isSavedToDisk()
+{
+    return this->buffer->isSavedToDisk();
+}
+
+bool ScintillaNext::isFile()
+{
+    return this->buffer->isFile();
+}
+
 void ScintillaNext::close()
 {
     emit closed();

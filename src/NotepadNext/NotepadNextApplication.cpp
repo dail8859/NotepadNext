@@ -69,9 +69,8 @@ NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     //});
 
     connect(editorManager, &EditorManager::editorCreated, [=](ScintillaNext *editor) {
-        ScintillaBuffer *buffer = editor->scintillaBuffer();
-        if (buffer->isFile()) {
-            recentFilesListManager->removeFile(buffer->fileInfo.canonicalFilePath());
+        if (editor->isFile()) {
+            recentFilesListManager->removeFile(editor->scintillaBuffer()->fileInfo.canonicalFilePath());
         }
     });
 
