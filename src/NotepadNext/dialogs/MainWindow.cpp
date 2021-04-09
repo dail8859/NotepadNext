@@ -183,16 +183,16 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionCopyFullPath, &QAction::triggered, [=]() {
         auto editor = dockedEditor->getCurrentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(editor->scintillaBuffer()->fileInfo.canonicalFilePath());
+            QApplication::clipboard()->setText(editor->canonicalFilePath());
         }
     });
     connect(ui->actionCopyFileName, &QAction::triggered, [=]() {
-        QApplication::clipboard()->setText(dockedEditor->getCurrentBuffer()->getName());
+        QApplication::clipboard()->setText(dockedEditor->getCurrentEditor()->getName());
     });
     connect(ui->actionCopyFileDirectory, &QAction::triggered, [=]() {
         auto editor = dockedEditor->getCurrentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(editor->scintillaBuffer()->fileInfo.canonicalFilePath());
+            QApplication::clipboard()->setText(editor->canonicalFilePath());
         }
     });
     connect(ui->actionIncrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->tab();});
@@ -760,14 +760,12 @@ void MainWindow::openFileList(const QStringList &fileNames)
 bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
 {
     foreach (ScintillaNext *editor, editors) {
-        auto buffer = editor->scintillaBuffer();
-
         if (!editor->isSavedToDisk()) {
             // Switch to it
             dockedEditor->switchToEditor(editor);
 
             // Ask the user what to do
-            QString message = QString("Save file <b>%1</b>?").arg(buffer->getName());
+            QString message = QString("Save file <b>%1</b>?").arg(editor->getName());
             auto reply = QMessageBox::question(this, "Save File", message, QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save);
 
             if (reply == QMessageBox::Cancel) {
@@ -855,7 +853,7 @@ void MainWindow::reloadFile()
         return;
     }
 
-    auto reply = QMessageBox::question(this, "Reload File", QString("Are you sure you want to reload <b>%1</b>? Any unsaved changes will be lost.").arg(editor->scintillaBuffer()->getName()));
+    auto reply = QMessageBox::question(this, "Reload File", QString("Are you sure you want to reload <b>%1</b>? Any unsaved changes will be lost.").arg(editor->getName()));
 
     if (reply == QMessageBox::Yes) {
         editor->reload();
@@ -881,7 +879,7 @@ void MainWindow::closeFile(ScintillaNext *editor)
         // The user needs be asked what to do about this file, so switch to it
         dockedEditor->switchToEditor(editor);
 
-        QString message = QString("Save file <b>%1</b>?").arg(editor->scintillaBuffer()->getName());
+        QString message = QString("Save file <b>%1</b>?").arg(editor->getName());
         auto reply = QMessageBox::question(this, "Save File", message, QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save);
 
         if (reply == QMessageBox::Cancel) {
@@ -996,11 +994,10 @@ bool MainWindow::saveCurrentFileAsDialog()
     QString dialogDir = QString();
     QString filter = app->getFileDialogFilter();
     auto editor = dockedEditor->getCurrentEditor();
-    auto buffer = editor->scintillaBuffer();
 
     // Use the file path if possible
     if (editor->isFile()) {
-        dialogDir = buffer->fileInfo.canonicalFilePath();
+        dialogDir = editor->canonicalFilePath();
     }
 
     QString fileName = QFileDialog::getSaveFileName(
@@ -1043,7 +1040,7 @@ void MainWindow::saveCopyAsDialog()
 
     // Use the file path if possible
     if (editor->isFile()) {
-        dialogDir = editor->scintillaBuffer()->fileInfo.canonicalFilePath();
+        dialogDir = editor->canonicalFilePath();
     }
 
     QString fileName = QFileDialog::getSaveFileName(
@@ -1076,7 +1073,7 @@ void MainWindow::renameFile()
 
     Q_ASSERT(editor->isFile());
 
-    QString fileName = QFileDialog::getSaveFileName(this, "", editor->scintillaBuffer()->fileInfo.canonicalFilePath());
+    QString fileName = QFileDialog::getSaveFileName(this, "", editor->canonicalFilePath());
 
     if (fileName.size() == 0) {
         return;
@@ -1103,7 +1100,7 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
 {
     bool isFile = editor->isFile();
 
-    QString title = QString("[*]%1 - Notepad Next").arg(editor->scintillaBuffer()->getName());
+    QString title = QString("[*]%1 - Notepad Next").arg(editor->getName());
     setWindowTitle(title);
 
     ui->actionReload->setEnabled(isFile);

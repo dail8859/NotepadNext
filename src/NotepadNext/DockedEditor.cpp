@@ -63,11 +63,6 @@ ScintillaNext *DockedEditor::getCurrentEditor() const
     return currentEditor;
 }
 
-ScintillaBuffer *DockedEditor::getCurrentBuffer() const
-{
-    return currentEditor->scintillaBuffer();
-}
-
 int DockedEditor::count() const
 {
     int total = 0;
@@ -147,7 +142,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     emit editorAdded(editor);
 
     // Create the dock widget for the editor
-    ads::CDockWidget* dw = new ads::CDockWidget(editor->scintillaBuffer()->getName());
+    ads::CDockWidget* dw = new ads::CDockWidget(editor->getName());
     dw->setWidget(editor);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetDeleteOnClose, true);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::CustomCloseHandling, true);
@@ -165,7 +160,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
         dw->tabWidget()->setToolTip(buffer->fileInfo.canonicalFilePath());
     }
     else {
-        dw->tabWidget()->setToolTip(buffer->getName());
+        dw->tabWidget()->setToolTip(editor->getName());
     }
 
     // Set the icon
@@ -198,13 +193,13 @@ void DockedEditor::renamedBuffer(ScintillaBuffer *buffer)
         auto editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
 
         if (buffer == editor->scintillaBuffer()) {
-            dockWidget->setObjectName(buffer->getName());
+            dockWidget->setObjectName(editor->getName());
 
             if (editor->isFile()) {
                 dockWidget->tabWidget()->setToolTip(buffer->fileInfo.canonicalFilePath());
             }
             else {
-                dockWidget->tabWidget()->setToolTip(buffer->getName());
+                dockWidget->tabWidget()->setToolTip(editor->getName());
             }
         }
     }
