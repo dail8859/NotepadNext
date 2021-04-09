@@ -32,7 +32,6 @@ class ScintillaBuffer : public ScintillaDocument
 {
     Q_OBJECT
 
-    friend class BufferManager;
     friend class EditorManager;
     friend class ScintillaNext;
 
@@ -51,21 +50,21 @@ public:
     };
 
     const QString &getName() const;
-    bool isFile() const;
     BufferType type() const;
 
     BufferStateChange checkForBufferStateChange();
-    bool is_save_point() override;
 
     QFileInfo fileInfo;
-
-    static ScintillaBuffer *fromFile(const QString &filePath);
 
 private:
     explicit ScintillaBuffer(const QString &name);
     virtual ~ScintillaBuffer();
 
+    static ScintillaBuffer *fromFile(const QString &filePath);
+
     void setFileInfo(const QString &filePath);
+    bool isFile() const;
+    bool isSavedToDisk();
 
     QString name;
     BufferType bufferType;

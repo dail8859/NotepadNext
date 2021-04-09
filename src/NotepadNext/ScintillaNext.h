@@ -38,6 +38,9 @@ public:
 
     ScintillaBuffer *scintillaBuffer();
 
+    bool isSavedToDisk();
+    bool isFile();
+
 public slots:
     void close();
     bool save();

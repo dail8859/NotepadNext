@@ -41,7 +41,6 @@ public:
     ads::CDockAreaWidget *currentDockArea();
 
     QVector<ScintillaNext *> editors() const;
-    QVector<ScintillaBuffer *> buffers() const;
 
     void switchToEditor(const ScintillaNext *editor);
 
