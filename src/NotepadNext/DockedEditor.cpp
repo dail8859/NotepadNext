@@ -100,12 +100,12 @@ QVector<ScintillaBuffer *> DockedEditor::buffers() const
     return buffers;
 }
 
-void DockedEditor::switchToBuffer(const ScintillaBuffer *buffer)
+void DockedEditor::switchToEditor(const ScintillaNext *editor)
 {
     foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
-        auto editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
+        auto dockedEditor = qobject_cast<ScintillaNext *>(dockWidget->widget());
 
-        if (buffer == editor->scintillaBuffer()) {
+        if (editor == dockedEditor) {
             dockWidget->raise();
             return;
         }

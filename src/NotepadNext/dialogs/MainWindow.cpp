@@ -488,31 +488,31 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
-    connect(ui->menuWindows, &QMenu::aboutToShow, [=]() {
-        auto actions = ui->menuWindows->actions();
-
-        // Keep the original 2 in the list (seperator and Window command)
-        // delete the rest since nobody has ownership of them
-        while (actions.size() > 2) {
-            delete actions.takeFirst();
-        }
-
-        ScintillaBuffer *currentBuffer = dockedEditor->getCurrentBuffer();
-        foreach (ScintillaBuffer *buffer, dockedEditor->buffers()) {
-            QAction *action = new QAction(buffer->getName());
-            if (buffer == currentBuffer) {
-                action->setCheckable(true);
-                action->setChecked(true);
-            }
-
-            //connect(action, &QAction::triggered, [=]() {
-            //    tabbedEditor->switchToIndex(i);
-            //});
-
-            // NOTE: the menu does not take ownership when using insertAction
-            ui->menuWindows->insertAction(actions.at(0), action);
-        }
-    });
+    //connect(ui->menuWindows, &QMenu::aboutToShow, [=]() {
+    //    auto actions = ui->menuWindows->actions();
+    //
+    //    // Keep the original 2 in the list (seperator and Window command)
+    //    // delete the rest since nobody has ownership of them
+    //    while (actions.size() > 2) {
+    //        delete actions.takeFirst();
+    //    }
+    //
+    //    ScintillaBuffer *currentBuffer = dockedEditor->getCurrentBuffer();
+    //    foreach (ScintillaBuffer *buffer, dockedEditor->buffers()) {
+    //        QAction *action = new QAction(buffer->getName());
+    //        if (buffer == currentBuffer) {
+    //            action->setCheckable(true);
+    //            action->setChecked(true);
+    //        }
+    //
+    //        //connect(action, &QAction::triggered, [=]() {
+    //        //    tabbedEditor->switchToIndex(i);
+    //        //});
+    //
+    //        // NOTE: the menu does not take ownership when using insertAction
+    //        ui->menuWindows->insertAction(actions.at(0), action);
+    //    }
+    //});
 
     connect(ui->actionWindowsList, &QAction::triggered, [=]() {
         WindowListDialog wld(this, dockedEditor->buffers().toList(), this);
@@ -706,7 +706,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
         return;
 
     bool wasInitialState = isInInitialState();
-    const ScintillaBuffer *mostRecentBuffer = Q_NULLPTR;
+    const ScintillaNext *mostRecentEditor = Q_NULLPTR;
 
     foreach (const QString &filePath , fileNames) {
         qInfo(qUtf8Printable(filePath));
@@ -736,12 +736,12 @@ void MainWindow::openFileList(const QStringList &fileNames)
             }
         }
 
-        mostRecentBuffer = editor->scintillaBuffer();
+        mostRecentEditor = editor;
     }
 
     // If any were successful, switch to the last one
-    if (mostRecentBuffer) {
-        dockedEditor->switchToBuffer(mostRecentBuffer);
+    if (mostRecentEditor) {
+        dockedEditor->switchToEditor(mostRecentEditor);
     }
 
     /* This code breaks things on start up. During initial launch of the application, if a file is
@@ -765,7 +765,7 @@ bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors
 
         if (!buffer->is_save_point()) {
             // Switch to it
-            dockedEditor->switchToBuffer(buffer);
+            dockedEditor->switchToEditor(editor);
 
             // Ask the user what to do
             QString message = QString("Save file <b>%1</b>?").arg(buffer->getName());
@@ -882,7 +882,7 @@ void MainWindow::closeFile(ScintillaNext *editor)
     }
     else {
         // The user needs be asked what to do about this file, so switch to it
-        dockedEditor->switchToBuffer(buffer);
+        dockedEditor->switchToEditor(editor);
 
         QString message = QString("Save file <b>%1</b>?").arg(buffer->getName());
         auto reply = QMessageBox::question(this, "Save File", message, QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save);
@@ -981,7 +981,7 @@ bool MainWindow::saveFile(ScintillaNext *editor)
 
     if (!editor->scintillaBuffer()->isFile()) {
         // Switch to the buffer and show the saveas dialog
-        dockedEditor->switchToBuffer(editor->scintillaBuffer());
+        dockedEditor->switchToEditor(editor);
         return saveCurrentFileAsDialog();
     }
     else {
@@ -1102,8 +1102,9 @@ void MainWindow::convertEOLs(int eolMode)
     updateEOLBasedUi(editor);
 }
 
-void MainWindow::updateBufferFileStatusBasedUi(ScintillaBuffer *buffer)
+void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
 {
+    auto buffer = editor->scintillaBuffer();
     QString title = QString("[*]%1 - Notepad Next").arg(buffer->getName());
     setWindowTitle(title);
 
@@ -1177,7 +1178,7 @@ void MainWindow::updateSaveStatusBasedUi(bool isDirty)
     }
 }
 
-void MainWindow::updateBufferPositionBasedUi()
+void MainWindow::updateEditorPositionBasedUi()
 {
     const int index = dockedEditor->currentDockArea()->currentIndex();
     const int total = dockedEditor->currentDockArea()->dockWidgetsCount();
@@ -1206,13 +1207,11 @@ void MainWindow::updateGui(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    // TODO: Does buffer need passed in? It should only ever operate on the current buffer!
-
-    updateBufferFileStatusBasedUi(editor->scintillaBuffer());
+    updateFileStatusBasedUi(editor);
     updateSaveStatusBasedUi(!editor->scintillaBuffer()->is_save_point());
     updateEOLBasedUi(editor);
     updateEncodingBasedUi(editor);
-    updateBufferPositionBasedUi();
+    updateEditorPositionBasedUi();
     updateSelectionBasedUi(editor);
     updateContentBasedUi(editor);
     updateLanguageBasedUi(editor);
@@ -1318,7 +1317,7 @@ void MainWindow::editorActivated(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    checkBufferForModification(editor);
+    checkFileForModification(editor);
     updateGui(editor);
 }
 
@@ -1407,7 +1406,7 @@ void MainWindow::bringWindowToForeground()
 #endif
 }
 
-bool MainWindow::checkBufferForModification(ScintillaNext *editor)
+bool MainWindow::checkFileForModification(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -1434,7 +1433,7 @@ void MainWindow::focusIn()
 {
     qInfo(Q_FUNC_INFO);
 
-    if (checkBufferForModification(dockedEditor->getCurrentEditor())) {
+    if (checkFileForModification(dockedEditor->getCurrentEditor())) {
         updateGui(dockedEditor->getCurrentEditor());
     }
 }
@@ -1475,7 +1474,7 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
     // application
     // Text dragging within the editor object itself is handled by Scintilla, but if the text
     // is dragged to other parts (tabs, menu, etc) it will be handled by the application to
-    // create a new buffer from the text.
+    // create a new editor from the text.
 
     // Accept urls and text
     if (event->mimeData()->hasUrls() || event->mimeData()->hasText()) {
@@ -1528,7 +1527,7 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
     qInfo(Q_FUNC_INFO);
 
     // Focus on the correct tab
-    dockedEditor->switchToBuffer(editor->scintillaBuffer());
+    dockedEditor->switchToEditor(editor);
 
     // Create the menu and show it
     QMenu *menu = new QMenu(this);
