@@ -143,23 +143,23 @@ ads::CDockAreaWidget * DockedEditor::currentDockArea()
     return Q_NULLPTR;
 }
 
-void DockedEditor::addBuffer(ScintillaBuffer *buffer)
+void DockedEditor::addEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    Q_ASSERT(buffer != Q_NULLPTR);
+    Q_ASSERT(editor != Q_NULLPTR);
 
-    // Need a new editor
-    auto editor = new ScintillaNext(buffer, m_DockManager);
+    editor->setParent(m_DockManager);
+    ScintillaBuffer *buffer = editor->scintillaBuffer();
 
     if (currentEditor == Q_NULLPTR) {
         currentEditor = editor;
     }
 
-    emit editorCreated(editor);
+    emit editorAdded(editor);
 
     // Create the dock widget for the editor
-    ads::CDockWidget* dw = new ads::CDockWidget(buffer->getName());
+    ads::CDockWidget* dw = new ads::CDockWidget(editor->scintillaBuffer()->getName());
     dw->setWidget(editor);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetDeleteOnClose, true);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::CustomCloseHandling, true);
@@ -192,12 +192,12 @@ void DockedEditor::addBuffer(ScintillaBuffer *buffer)
     m_DockManager->addDockWidget(ads::CenterDockWidgetArea, dw, currentDockArea());
 }
 
-void DockedEditor::removeBuffer(ScintillaBuffer *buffer)
+void DockedEditor::removeEditor(ScintillaNext *editor)
 {
     foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
-        auto editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
+        ScintillaNext *editorToCheck = qobject_cast<ScintillaNext *>(dockWidget->widget());
 
-        if (buffer == editor->scintillaBuffer())
+        if (editor == editorToCheck)
             dockWidget->closeDockWidget();
     }
 }

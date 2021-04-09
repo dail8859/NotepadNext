@@ -23,7 +23,6 @@
 #include <QApplication>
 #include <QDataStream>
 
-#include "BufferManager.h"
 #include "NotepadNextApplication.h"
 
 int main(int argc, char *argv[])
@@ -42,7 +41,7 @@ int main(int argc, char *argv[])
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
 
-    NotepadNextApplication app(new BufferManager(), argc, argv);
+    NotepadNextApplication app(argc, argv);
 
     // Log some debug info
     qInfo("=============================");

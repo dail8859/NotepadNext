@@ -38,6 +38,21 @@ public:
 
     ScintillaBuffer *scintillaBuffer();
 
+public slots:
+    void close();
+    bool save();
+    void reload();
+    bool saveAs(const QString &newFilePath);
+    bool saveCopyAs(const QString &filePath);
+    bool rename(const QString &newFilePath);
+
+signals:
+    void closed();
+    //bool saveBuffer(ScintillaBuffer *buffer, bool forceSave = false, const QFileInfo *fileInfo = Q_NULLPTR);
+    //bool saveBufferAs(ScintillaBuffer *buffer, const QString &newFilePath);
+    //bool saveBufferCopyAs(ScintillaBuffer *buffer, const QString &filePath);
+    //bool renameBuffer(ScintillaBuffer *buffer, const QString &newFilePath);
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;

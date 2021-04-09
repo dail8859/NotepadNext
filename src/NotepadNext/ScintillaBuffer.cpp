@@ -78,6 +78,7 @@ void ScintillaBuffer::updateTimestamp()
 bool ScintillaBuffer::save()
 {
     qInfo(Q_FUNC_INFO);
+
     Q_ASSERT(isFile());
 
     bool writeSuccessful = writeToDisk(this->get_character_pointer(), this->fileInfo.filePath());

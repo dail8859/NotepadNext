@@ -20,7 +20,7 @@
 #include "MainWindow.h"
 #include "NotepadNextApplication.h"
 #include "RecentFilesListManager.h"
-#include "BufferManager.h"
+#include "EditorManager.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
@@ -46,24 +46,33 @@ struct luabridge::Stack <QString const&>
 };
 
 
-NotepadNextApplication::NotepadNextApplication(BufferManager *bm, int &argc, char **argv)
-    : SingleApplication(argc, argv, true, opts), bufferManager(bm)
+NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
+    : SingleApplication(argc, argv, true, opts)
 {
     qInfo(Q_FUNC_INFO);
 
-    // Should the recentFilesListManger get passed in as well?
+    // Should all these managers get passed in?
     recentFilesListManager = new RecentFilesListManager(this);
-    bufferManager->setParent(this);
+    editorManager = new EditorManager(this);
 
-    // Connect the buffer manager and recent files list manager
-    connect(bufferManager, &BufferManager::bufferClosed, [=](ScintillaBuffer *buffer) {
+    //connect(bufferManager, &BufferManager::bufferCreated, editorManager, &EditorManager::addBuffer);
+
+    //connect(editorManager, &EditorManager::editorClosed, [=](ScintillaNext *editor) {
+    //    ScintillaBuffer *buffer = editor->scintillaBuffer();
+    //    if (buffer->isFile()) {
+    //        recentFilesListManager->addFile(buffer->fileInfo.canonicalFilePath());
+    //    }
+    //});
+
+    //connect(bufferManager, &BufferManager::bufferRenamed, [=](ScintillaBuffer *buffer) {
+    //    recentFilesListManager->removeFile(buffer->fileInfo.filePath());
+    //});
+
+    connect(editorManager, &EditorManager::editorCreated, [=](ScintillaNext *editor) {
+        ScintillaBuffer *buffer = editor->scintillaBuffer();
         if (buffer->isFile()) {
-            recentFilesListManager->addFile(buffer->fileInfo.canonicalFilePath());
+            recentFilesListManager->removeFile(buffer->fileInfo.canonicalFilePath());
         }
-    });
-
-    connect(bufferManager, &BufferManager::bufferRenamed, [=](ScintillaBuffer *buffer) {
-        recentFilesListManager->removeFile(buffer->fileInfo.filePath());
     });
 
     // Restore some settings and schedule saving the settings on quit
@@ -99,6 +108,7 @@ bool NotepadNextApplication::initGui()
     luabridge::setGlobal(luaState->L, settings, "settings");
 
     createNewWindow();
+    connect(editorManager, &EditorManager::editorCreated, windows.first(), &MainWindow::addEditor);
 
     luabridge::getGlobalNamespace(luaState->L)
         .beginNamespace("nn")
@@ -152,16 +162,14 @@ bool NotepadNextApplication::initGui()
     applyArguments(SingleApplication::arguments());
 
     // Everything should be ready, so do it!
+    windows.first()->newFile();
     windows.first()->show();
     windows.first()->bringWindowToForeground();
 
     return true;
 }
 
-LuaState *NotepadNextApplication::getLuaState() const
-{
-    return luaState;
-}
+
 
 QString NotepadNextApplication::getFileDialogFilter() const
 {
@@ -183,10 +191,7 @@ QString NotepadNextApplication::getFileDialogFilter() const
     return filter;
 }
 
-Settings *NotepadNextApplication::getSettings() const
-{
-    return settings;
-}
+
 
 void NotepadNextApplication::applyArguments(const QStringList &args)
 {

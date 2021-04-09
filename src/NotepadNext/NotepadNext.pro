@@ -44,10 +44,10 @@ win32 {
 
 
 SOURCES += \
-    BufferManager.cpp \
     ColorPickerDelegate.cpp \
     ComboBoxDelegate.cpp \
     DockedEditor.cpp \
+    EditorManager.cpp \
     Finder.cpp \
     IFaceTable.cpp \
     IFaceTableMixer.cpp \
@@ -85,10 +85,10 @@ SOURCES += \
     widgets/StatusLabel.cpp
 
 HEADERS += \
-    BufferManager.h \
     ColorPickerDelegate.h \
     ComboBoxDelegate.h \
     DockedEditor.h \
+    EditorManager.h \
     Finder.h \
     FocusWatcher.h \
     IFaceTable.h \

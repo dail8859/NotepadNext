@@ -20,7 +20,6 @@
 #ifndef NOTEPADNEXTAPPLICATION_H
 #define NOTEPADNEXTAPPLICATION_H
 
-#include "BufferManager.h"
 #include "Settings.h"
 
 #include "SingleApplication"
@@ -30,6 +29,7 @@
 
 class MainWindow;
 class LuaState;
+class EditorManager;
 class RecentFilesListManager;
 
 class NotepadNextApplication : public SingleApplication
@@ -37,19 +37,19 @@ class NotepadNextApplication : public SingleApplication
     Q_OBJECT
 
 public:
-    NotepadNextApplication(BufferManager *bm, int &argc, char **argv);
+    NotepadNextApplication(int &argc, char **argv);
 
     bool initGui();
 
-    BufferManager *getBufferManager() const { return bufferManager; };
-    RecentFilesListManager *getRecentFilesListManager() const { return recentFilesListManager; };
+    RecentFilesListManager *getRecentFilesListManager() const { return recentFilesListManager; }
+    EditorManager *getEditorManager() const { return editorManager; }
 
-    LuaState *getLuaState() const;
+    LuaState *getLuaState() const { return luaState; }
     QString getFileDialogFilter() const;
-    Settings *getSettings() const;
+    Settings *getSettings() const { return settings; }
 
 private:
-    BufferManager *bufferManager;
+    EditorManager *editorManager;
     RecentFilesListManager *recentFilesListManager;
 
     LuaState *luaState = Q_NULLPTR;
