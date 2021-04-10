@@ -51,26 +51,19 @@ NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
 {
     qInfo(Q_FUNC_INFO);
 
-    // Should all these managers get passed in?
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(this);
-
-    //connect(bufferManager, &BufferManager::bufferCreated, editorManager, &EditorManager::addBuffer);
-
-    //connect(editorManager, &EditorManager::editorClosed, [=](ScintillaNext *editor) {
-    //    ScintillaBuffer *buffer = editor->scintillaBuffer();
-    //    if (buffer->isFile()) {
-    //        recentFilesListManager->addFile(buffer->fileInfo.canonicalFilePath());
-    //    }
-    //});
-
-    //connect(bufferManager, &BufferManager::bufferRenamed, [=](ScintillaBuffer *buffer) {
-    //    recentFilesListManager->removeFile(buffer->fileInfo.filePath());
-    //});
+    settings = new Settings(this);
 
     connect(editorManager, &EditorManager::editorCreated, [=](ScintillaNext *editor) {
         if (editor->isFile()) {
-            recentFilesListManager->removeFile(editor->scintillaBuffer()->fileInfo.canonicalFilePath());
+            recentFilesListManager->removeFile(editor->canonicalFilePath());
+        }
+    });
+
+    connect(editorManager, &EditorManager::editorClosed, [=](ScintillaNext *editor) {
+        if (editor->isFile()) {
+            recentFilesListManager->addFile(editor->canonicalFilePath());
         }
     });
 
@@ -89,8 +82,6 @@ bool NotepadNextApplication::initGui()
 
     luaState = new LuaState();
     luaState->executeFile(":/scripts/init.lua");
-
-    settings = new Settings(this);
 
     // LuaBridge is not a long term solution
     // This is probably temporary, but it is quick and works
@@ -152,7 +143,7 @@ bool NotepadNextApplication::initGui()
         if (state == Qt::ApplicationActive) {
             windows.first()->focusIn();
 
-            if (currentlyFocusedWidget && !currentlyFocusedWidget.isNull()) {
+            if (!currentlyFocusedWidget.isNull()) {
                 currentlyFocusedWidget->activateWindow();
             }
         }
@@ -167,8 +158,6 @@ bool NotepadNextApplication::initGui()
 
     return true;
 }
-
-
 
 QString NotepadNextApplication::getFileDialogFilter() const
 {

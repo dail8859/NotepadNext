@@ -94,7 +94,7 @@ public slots:
     void updateDocumentBasedUi(int updated);
     void updateSelectionBasedUi(ScintillaNext *editor);
     void updateContentBasedUi(ScintillaNext *editor);
-    void updateSaveStatusBasedUi(bool isDirty);
+    void updateSaveStatusBasedUi(ScintillaNext *editor);
     void updateEditorPositionBasedUi();
     void updateLanguageBasedUi(ScintillaNext *editor);
     void updateGui(ScintillaNext *editor);
@@ -129,7 +129,6 @@ private:
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     void setupStatusBar();
     bool checkFileForModification(ScintillaNext *editor);
-    void connectEditor(ScintillaNext *editor);
 
     QActionGroup *languageActionGroup;
 

@@ -39,7 +39,6 @@
 #include "Settings.h"
 
 #include "ScintillaNext.h"
-#include "ScintillaBuffer.h"
 
 #include "RecentFilesListManager.h"
 #include "EditorManager.h"
@@ -86,12 +85,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         LuaExtension::Instance().setEditor(editor);
     });
 
-    // TODO: replace with + button on bar
-    //connect(tabbedEditor->getTabBar(), &QTabBar::tabBarDoubleClicked, this, [=](int index) {
-    //    if (index == TabbedEditor::INVALID_INDEX) {
-    //        newFile();
-    //    }
-    //});
     connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
 
     // Set up the menus
@@ -133,6 +126,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionOpenAllRecentFiles, &QAction::triggered, [=]() {
         openFileList(app->getRecentFilesListManager()->fileList());
     });
+
     connect(app->getRecentFilesListManager(), &RecentFilesListManager::fileOpenRequest, this, &MainWindow::openFile);
 
     QActionGroup *eolActionGroup = new QActionGroup(this);
@@ -487,34 +481,33 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
-    //connect(ui->menuWindows, &QMenu::aboutToShow, [=]() {
-    //    auto actions = ui->menuWindows->actions();
-    //
-    //    // Keep the original 2 in the list (seperator and Window command)
-    //    // delete the rest since nobody has ownership of them
-    //    while (actions.size() > 2) {
-    //        delete actions.takeFirst();
-    //    }
-    //
-    //    ScintillaBuffer *currentBuffer = dockedEditor->getCurrentBuffer();
-    //    foreach (ScintillaBuffer *buffer, dockedEditor->buffers()) {
-    //        QAction *action = new QAction(buffer->getName());
-    //        if (buffer == currentBuffer) {
-    //            action->setCheckable(true);
-    //            action->setChecked(true);
-    //        }
-    //
-    //        //connect(action, &QAction::triggered, [=]() {
-    //        //    tabbedEditor->switchToIndex(i);
-    //        //});
-    //
-    //        // NOTE: the menu does not take ownership when using insertAction
-    //        ui->menuWindows->insertAction(actions.at(0), action);
-    //    }
-    //});
+    connect(ui->menuWindows, &QMenu::aboutToShow, [=]() {
+        auto actions = ui->menuWindows->actions();
 
+        // Keep the original 2 in the list (seperator and Window command)
+        // delete the rest since nobody has ownership of them
+        while (actions.size() > 2) {
+            delete actions.takeFirst();
+        }
+
+        ScintillaNext *currentEditor = dockedEditor->getCurrentEditor();
+        foreach (ScintillaNext *editor, dockedEditor->editors()) {
+            QAction *action = new QAction(editor->getName());
+            if (editor == currentEditor) {
+                action->setCheckable(true);
+                action->setChecked(true);
+            }
+
+            connect(action, &QAction::triggered, [=]() { dockedEditor->switchToEditor(editor); });
+
+            // NOTE: the menu does not take ownership when using insertAction
+            ui->menuWindows->insertAction(actions.at(0), action);
+        }
+    });
+
+    // TODO
     //connect(ui->actionWindowsList, &QAction::triggered, [=]() {
-    //    WindowListDialog wld(this, dockedEditor->buffers().toList(), this);
+    //    WindowListDialog wld(this, dockedEditor->editor().toList(), this);
     //    wld.show();
     //    wld.raise();
     //    wld.activateWindow();
@@ -528,15 +521,10 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
                                 .arg(APP_VERSION, APP_COPYRIGHT));
     });
 
-    //connect(app->getBufferManager(), &BufferManager::bufferCreated, dockedEditor, &DockedEditor::addBuffer);
-    //connect(app->getEditorManager(), &EditorManager::editorClosed, dockedEditor, &DockedEditor::removeEditor);
-    //connect(app->getBufferManager(), &BufferManager::bufferRenamed, dockedEditor, &DockedEditor::renamedBuffer);
-
     // If the current file is saved update the window title incase the file was renamed
-    connect(dockedEditor, &DockedEditor::editorAdded, this, &MainWindow::detectLanguageFromExtension);
+    //connect(dockedEditor, &DockedEditor::editorAdded, this, &MainWindow::detectLanguageFromExtension);
 
-    //connect(app->getBufferManager(), &BufferManager::bufferClosed, this, &MainWindow::updateBufferPositionBasedUi);
-
+    // TODO: handle renamed files
     //connect(app->getBufferManager(), &BufferManager::bufferRenamed, [=] (ScintillaBuffer *buffer) {
     //    updateBufferFileStatusBasedUi(buffer);
     //    //detectLanguageFromExtension(buffer);
@@ -574,7 +562,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     //connect(app->getSettings(), &Settings::showTabBarChanged, tabbedEditor->getTabBar(), &QTabBar::setVisible);
     connect(app->getSettings(), &Settings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
     //connect(settings, &Settings::tabsClosableChanged, tabbedEditor->getTabBar(), &QTabBar::setTabsClosable);
-
 
     setupLanguageMenu();
 
@@ -636,37 +623,6 @@ void MainWindow::setupLanguageMenu()
     }
 }
 
-void MainWindow::connectEditor(ScintillaNext *editor)
-{
-    qInfo(Q_FUNC_INFO);
-
-    // Connect the editor to the UI
-    // TODO: what if a non focused editor sends this signal
-
-    connect(editor, &ScintillaNext::closed, [=]() { dockedEditor->removeEditor(editor); });
-
-    connect(editor, &ScintillaNext::savePointChanged, this, &MainWindow::updateSaveStatusBasedUi);
-
-    // These should only ever occur for the focused editor
-    connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
-    connect(editor, &ScintillaNext::marginClicked, [editor](int position, int modifiers, int margin) {
-        Q_UNUSED(modifiers);
-
-        if (margin == 1) {
-            int line = editor->lineFromPosition(position);
-
-            if (editor->markerGet(line) & (1 << 24)) {
-                while (editor->markerGet(line) & (1 << 24)) {
-                    editor->markerDelete(line, 24);
-                }
-            }
-            else {
-                editor->markerAdd(line, 24);
-            }
-        }
-    });
-}
-
 ScintillaNext *MainWindow::currentEditor()
 {
     return dockedEditor->getCurrentEditor();
@@ -710,7 +666,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
     foreach (const QString &filePath , fileNames) {
         qInfo(qUtf8Printable(filePath));
 
-        // Search currently open buffers to see if it is already open
+        // Search currently open editors to see if it is already open
         ScintillaNext *editor = app->getEditorManager()->getEditorByFilePath(filePath);
 
         if (editor == Q_NULLPTR) {
@@ -743,6 +699,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
         dockedEditor->switchToEditor(mostRecentEditor);
     }
 
+    // TODO: reevaluate this now that the MainWindows doesn't deal with buffers any more
     /* This code breaks things on start up. During initial launch of the application, if a file is
      * specified via the command line, then the default new file would be closed. But if a buffer is closed
      * then the DockedEditor doesn't know about it, since focusedDockWidgetChanged is not emitted
@@ -906,7 +863,7 @@ void MainWindow::closeAllFiles(bool forceClose = false)
         }
     }
 
-    // Ask the buffer manager to close the buffers the dockedEditor knows about
+    // Ask the manager to close the editors the dockedEditor knows about
     foreach (ScintillaNext *editor, dockedEditor->editors()) {
         editor->close();
     }
@@ -971,11 +928,11 @@ bool MainWindow::saveCurrentFile()
 
 bool MainWindow::saveFile(ScintillaNext *editor)
 {
-    if (editor->modify())
+    if (!editor->modify())
         return true;
 
     if (!editor->isFile()) {
-        // Switch to the buffer and show the saveas dialog
+        // Switch to the editor and show the saveas dialog
         dockedEditor->switchToEditor(editor);
         return saveCurrentFileAsDialog();
     }
@@ -1080,12 +1037,11 @@ void MainWindow::renameFile()
     }
 
     // TODO
-    // The new fileName might be to one of the existing buffers.
-    //auto otherBuffer = app->getBufferManager()->getBufferByFilePath(fileName);
-    //bool renameSuccessful = app->getBufferManager()->renameBuffer(buffer, fileName);
-    //if (renameSuccessful && otherBuffer) {
-    //    app->getBufferManager()->closeBuffer(otherBuffer);
-    //}
+    // The new fileName might be to one of the existing editos.
+    //auto otherEditor = app->getEditorByFilePath(fileName);
+
+    bool renameSuccessful = editor->rename(fileName);
+    Q_UNUSED(renameSuccessful)
 }
 
 void MainWindow::convertEOLs(int eolMode)
@@ -1153,15 +1109,16 @@ void MainWindow::updateEncodingBasedUi(ScintillaNext *editor)
     }
 }
 
-void MainWindow::updateSaveStatusBasedUi(bool isDirty)
+void MainWindow::updateSaveStatusBasedUi(ScintillaNext *editor)
 {
+    bool isDirty = !editor->isSavedToDisk();
+
     setWindowModified(isDirty);
 
     ui->actionSave->setEnabled(isDirty);
     ui->actionSaveAll->setEnabled(isDirty || isAnyUnsaved());
 
     if (dockedEditor->count() == 1) {
-        ScintillaNext *editor = dockedEditor->getCurrentEditor();
         bool ableToClose = editor->isFile() || isDirty;
         ui->actionClose->setEnabled(ableToClose);
         ui->actionCloseAll->setEnabled(ableToClose);
@@ -1202,7 +1159,7 @@ void MainWindow::updateGui(ScintillaNext *editor)
     qInfo(Q_FUNC_INFO);
 
     updateFileStatusBasedUi(editor);
-    updateSaveStatusBasedUi(!editor->isSavedToDisk());
+    updateSaveStatusBasedUi(editor);
     updateEOLBasedUi(editor);
     updateEncodingBasedUi(editor);
     updateEditorPositionBasedUi();
@@ -1286,7 +1243,7 @@ void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
     if (editor->lexerLanguage() != "")
         return;
 
-    const QString ext = editor->scintillaBuffer()->fileInfo.suffix();
+    const QString ext = editor->suffix();
 
     QString language_name = app->getLuaState()->executeAndReturn<QString>(QString(R"(
 local ext = "%1"
@@ -1402,20 +1359,20 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    auto state = editor->scintillaBuffer()->checkForBufferStateChange();
+    auto state = editor->checkFileForStateChange();
 
-    if (state == ScintillaBuffer::NoChange) {
+    if (state == ScintillaNext::NoChange) {
         return false;
     }
-    else if (state == ScintillaBuffer::Modified) {
-        qInfo("ScintillaBuffer::Modified");
+    else if (state == ScintillaNext::Modified) {
+        qInfo("ScintillaNext::Modified");
         editor->reload();
     }
-    else if (state == ScintillaBuffer::Deleted) {
-        qInfo("ScintillaBuffer::Deleted");
+    else if (state == ScintillaNext::Deleted) {
+        qInfo("ScintillaNext::Deleted");
     }
-    else if (state == ScintillaBuffer::Restored) {
-        qInfo("ScintillaBuffer::Restored");
+    else if (state == ScintillaNext::Restored) {
+        qInfo("ScintillaNext::Restored");
     }
 
     return true;
@@ -1433,7 +1390,30 @@ void MainWindow::focusIn()
 void MainWindow::addEditor(ScintillaNext *editor)
 {
     dockedEditor->addEditor(editor);
-    connectEditor(editor);
+
+    // TODO: This needs to be in the app, not the window
+    detectLanguageFromExtension(editor);
+
+    // These should only ever occur for the focused editor??
+    connect(editor, &ScintillaNext::savePointChanged, [=]() { updateSaveStatusBasedUi(editor); });
+    connect(editor, &ScintillaNext::renamed, [=]() { updateFileStatusBasedUi(editor); });
+    connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
+    connect(editor, &ScintillaNext::marginClicked, [editor](int position, int modifiers, int margin) {
+        Q_UNUSED(modifiers);
+
+        if (margin == 1) {
+            int line = editor->lineFromPosition(position);
+
+            if (editor->markerGet(line) & (1 << 24)) {
+                while (editor->markerGet(line) & (1 << 24)) {
+                    editor->markerDelete(line, 24);
+                }
+            }
+            else {
+                editor->markerAdd(line, 24);
+            }
+        }
+    });
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

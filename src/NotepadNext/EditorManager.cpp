@@ -35,6 +35,11 @@ const int MARK_HIDELINESUNDERLINE = 21;
 
 EditorManager::EditorManager(QObject *parent) : QObject(parent)
 {
+    connect(this, &EditorManager::editorCreated, [=](ScintillaNext *editor) {
+        connect(editor, &ScintillaNext::destroyed, [=]() {
+            emit editorClosed(editor);
+        });
+    });
 }
 
 ScintillaNext *EditorManager::createEmptyEditor(const QString &name)
@@ -71,23 +76,12 @@ ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
     purgeOldEditorPointers();
 
     foreach (ScintillaNext *editor, editors) {
-        if (editor->scintillaBuffer()->fileInfo == newInfo) {
+        if (editor->isFile() && editor->fileInfo() == newInfo) {
             return editor;
         }
     }
 
     return Q_NULLPTR;
-}
-
-void EditorManager::addBuffer(ScintillaBuffer *buffer)
-{
-    ScintillaNext *editor = new ScintillaNext(buffer);
-    QPointer<ScintillaNext> pointer = QPointer<ScintillaNext>(editor);
-    editors.append(pointer);
-
-    setupEditor(editor);
-
-    emit editorCreated(editor);
 }
 
 void EditorManager::setupEditor(ScintillaNext *editor)
@@ -223,7 +217,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     ss->setEnabled(true);
 }
 
-// TODO: Move this into the editor eventually
+// TODO: Move this into the editor eventually?
 void EditorManager::setFoldMarkers(ScintillaNext *editor, const QString &type)
 {
     QMap<QString, QList<int>> map{
@@ -254,11 +248,11 @@ void EditorManager::setFoldMarkers(ScintillaNext *editor, const QString &type)
 
 void EditorManager::purgeOldEditorPointers()
 {
-    QMutableListIterator<QPointer<ScintillaNext>> i(editors);
+    QMutableListIterator<QPointer<ScintillaNext>> it(editors);
 
-    while (i.hasNext()) {
-        QPointer<ScintillaNext> pointer = i.next();
+    while (it.hasNext()) {
+        QPointer<ScintillaNext> pointer = it.next();
         if (pointer.isNull())
-            i.remove();
+            it.remove();
     }
 }

@@ -36,12 +36,19 @@ public:
     template<typename Func>
     void forEachMatch(const QByteArray &byteArray, Func callback);
 
-    ScintillaBuffer *scintillaBuffer();
-
     bool isSavedToDisk();
     bool isFile();
+    QFileInfo fileInfo();
     QString getName();
     QString canonicalFilePath();
+    QString suffix();
+
+    enum FileStateChange {
+        NoChange,
+        Modified,
+        Deleted,
+        Restored,
+    };
 
 public slots:
     void close();
@@ -50,13 +57,11 @@ public slots:
     bool saveAs(const QString &newFilePath);
     bool saveCopyAs(const QString &filePath);
     bool rename(const QString &newFilePath);
+    ScintillaNext::FileStateChange checkFileForStateChange();
 
 signals:
     void closed();
-    //bool saveBuffer(ScintillaBuffer *buffer, bool forceSave = false, const QFileInfo *fileInfo = Q_NULLPTR);
-    //bool saveBufferAs(ScintillaBuffer *buffer, const QString &newFilePath);
-    //bool saveBufferCopyAs(ScintillaBuffer *buffer, const QString &filePath);
-    //bool renameBuffer(ScintillaBuffer *buffer, const QString &newFilePath);
+    void renamed();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
