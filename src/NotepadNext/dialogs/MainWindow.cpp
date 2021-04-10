@@ -167,6 +167,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionCopy, &QAction::triggered, [=]() {
         dockedEditor->getCurrentEditor()->copyAllowLine();
     });
+    connect(ui->actionDelete, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->clear();});
     connect(ui->actionPaste, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->paste();});
     connect(ui->actionSelect_All, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->selectAll();});
     connect(ui->actionSelect_Next, &QAction::triggered, [=]() {
@@ -1199,7 +1200,6 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
 {
     bool hasAnySelections = !editor->selectionEmpty();
 
-    ui->actionDelete->setEnabled(hasAnySelections);
     ui->actionPaste->setEnabled(editor->canPaste());
 
     ui->actionLowerCase->setEnabled(hasAnySelections);
