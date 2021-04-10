@@ -29,6 +29,7 @@
 class DockedEditor : public QObject
 {
     Q_OBJECT
+
 private:
     ads::CDockManager* m_DockManager = Q_NULLPTR;
     ScintillaNext *currentEditor = Q_NULLPTR;
@@ -51,8 +52,7 @@ private slots:
 public slots:
     void addEditor(ScintillaNext *editor);
     void removeEditor(ScintillaNext *editor);
-    void renamedBuffer(ScintillaBuffer *buffer);
-
+    void renameEditor(ScintillaNext *editor);
 
 signals:
     void editorAdded(ScintillaNext *editor);

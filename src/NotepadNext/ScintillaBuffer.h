@@ -35,7 +35,12 @@ class ScintillaBuffer : public ScintillaDocument
     friend class EditorManager;
     friend class ScintillaNext;
 
-public:
+private:
+    explicit ScintillaBuffer(const QString &name);
+    virtual ~ScintillaBuffer();
+
+    static ScintillaBuffer *fromFile(const QString &filePath);
+
     enum BufferType {
         Temporary = 0, // A temporary buffer, e.g. "New 1"
         File = 1, // Buffer tied to a file on the file system
@@ -49,16 +54,6 @@ public:
         Restored,
     };
 
-    BufferStateChange checkForBufferStateChange();
-
-    QFileInfo fileInfo;
-
-private:
-    explicit ScintillaBuffer(const QString &name);
-    virtual ~ScintillaBuffer();
-
-    static ScintillaBuffer *fromFile(const QString &filePath);
-
     void setFileInfo(const QString &filePath);
     bool isFile() const;
     bool isSavedToDisk();
@@ -71,10 +66,12 @@ private:
     bool saveCopyAs(const QString &filePath);
     bool reloadFromFile();
     bool readFromDisk(QFile &file);
+    BufferStateChange checkForBufferStateChange();
 
     QString name;
     BufferType bufferType;
     QDateTime modifiedTime;
+    QFileInfo fileInfo;
 };
 
 #endif // SCINTILLABUFFER_H

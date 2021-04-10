@@ -51,9 +51,9 @@ public:
 private:
     EditorManager *editorManager;
     RecentFilesListManager *recentFilesListManager;
+    Settings *settings;
 
     LuaState *luaState = Q_NULLPTR;
-    Settings *settings = Q_NULLPTR;
 
     QList<MainWindow *> windows;
     QPointer<QWidget> currentlyFocusedWidget; // Keep a weak pointer to the QWidget since we don't own it

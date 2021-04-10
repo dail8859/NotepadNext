@@ -28,6 +28,7 @@ class ScintillaNext;
 class EditorManager : public QObject
 {
     Q_OBJECT
+
 public:
     explicit EditorManager(QObject *parent = nullptr);
 
@@ -36,15 +37,9 @@ public:
 
     ScintillaNext *getEditorByFilePath(const QString &filePath);
 
-public slots:
-    void addBuffer(ScintillaBuffer *buffer);
-//    void removeBuffer(ScintillaBuffer *buffer);
-//    void renamedBuffer(ScintillaBuffer *buffer);
-
 signals:
     void editorCreated(ScintillaNext *editor);
-    //void editorCloseRequested(ScintillaNext *editor);
-    //void editorActivated(ScintillaNext *editor);
+    void editorClosed(ScintillaNext *editor);
 
 private:
     void setupEditor(ScintillaNext *editor);

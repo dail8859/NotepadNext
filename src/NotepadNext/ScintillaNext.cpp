@@ -33,11 +33,6 @@ ScintillaNext::ScintillaNext(ScintillaBuffer *buffer, QWidget *parent) :
     }
 }
 
-ScintillaBuffer *ScintillaNext::scintillaBuffer()
-{
-    return this->buffer;
-}
-
 bool ScintillaNext::isSavedToDisk()
 {
     return this->buffer->isSavedToDisk();
@@ -48,6 +43,11 @@ bool ScintillaNext::isFile()
     return this->buffer->isFile();
 }
 
+QFileInfo ScintillaNext::fileInfo()
+{
+    return this->buffer->fileInfo;
+}
+
 QString ScintillaNext::getName()
 {
     return this->buffer->getName();
@@ -56,6 +56,11 @@ QString ScintillaNext::getName()
 QString ScintillaNext::canonicalFilePath()
 {
     return this->buffer->fileInfo.canonicalFilePath();
+}
+
+QString ScintillaNext::suffix()
+{
+    return this->buffer->fileInfo.suffix();
 }
 
 void ScintillaNext::close()
@@ -77,12 +82,7 @@ void ScintillaNext::reload()
 
 bool ScintillaNext::saveAs(const QString &newFilePath)
 {
-    if (buffer->saveAs(newFilePath)) {
-        //emit bufferRenamed(buffer);
-        return true;
-    }
-
-    return false;
+    return buffer->saveAs(newFilePath);
 }
 
 bool ScintillaNext::saveCopyAs(const QString &filePath)
@@ -92,25 +92,40 @@ bool ScintillaNext::saveCopyAs(const QString &filePath)
 
 bool ScintillaNext::rename(const QString &newFilePath)
 {
-    // TODO: check if newFilePath is already opened as another buffer?
+    // TODO: check if newFilePath is already opened as another editor?
 
     // Write out the buffer to the new path
     if (saveCopyAs(newFilePath)) {
         // Remove the old file
         const QString oldPath = buffer->fileInfo.canonicalFilePath();
-        QFile::remove(oldPath);
+
+        bool didOldFileGetRemoved = QFile::remove(oldPath);
 
         // Everything worked fine, so update the buffer's info
         buffer->setFileInfo(newFilePath);
         buffer->updateTimestamp();
         buffer->set_save_point();
 
-        //emit bufferRenamed(buffer);
+        emit renamed();
 
         return true;
     }
 
     return false;
+}
+
+ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
+{
+    // TODO: Is this the best way to handle this? It is a simple renaming of enums
+    // but at least for now this hides the ScintillaBuffer implementation
+    ScintillaBuffer::BufferStateChange bufferState = this->buffer->checkForBufferStateChange();
+
+    switch (bufferState) {
+        case ScintillaBuffer::NoChange: return ScintillaNext::NoChange;
+        case ScintillaBuffer::Modified: return ScintillaNext::Modified;
+        case ScintillaBuffer::Deleted: return ScintillaNext::Deleted;
+        case ScintillaBuffer::Restored: return ScintillaNext::Restored;
+    }
 }
 
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)

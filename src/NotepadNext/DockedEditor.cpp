@@ -133,7 +133,6 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     Q_ASSERT(editor != Q_NULLPTR);
 
     editor->setParent(m_DockManager);
-    ScintillaBuffer *buffer = editor->scintillaBuffer();
 
     if (currentEditor == Q_NULLPTR) {
         currentEditor = editor;
@@ -157,7 +156,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     // Set the tooltip based on the buffer
     if (editor->isFile()) {
-        dw->tabWidget()->setToolTip(buffer->fileInfo.canonicalFilePath());
+        dw->tabWidget()->setToolTip(editor->canonicalFilePath());
     }
     else {
         dw->tabWidget()->setToolTip(editor->getName());
@@ -165,10 +164,13 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     // Set the icon
     dw->tabWidget()->setIcon(QIcon(":/icons/saved.png"));
-    connect(editor, &ScintillaNext::savePointChanged, [=](bool atSavePoint) {
-        const QString iconPath = atSavePoint ? ":/icons/saved.png" : ":/icons/unsaved.png";
+    connect(editor, &ScintillaNext::savePointChanged, [=](bool dirty) {
+        const QString iconPath = dirty ? ":/icons/unsaved.png" : ":/icons/saved.png";
         dw->tabWidget()->setIcon(QIcon(iconPath));
     });
+
+    connect(editor, &ScintillaNext::closed, [=]() { removeEditor(editor); });
+    connect(editor, &ScintillaNext::renamed, [=]() { renameEditor(editor); });
 
     connect(dw, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
 
@@ -180,23 +182,26 @@ void DockedEditor::removeEditor(ScintillaNext *editor)
     foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
         ScintillaNext *editorToCheck = qobject_cast<ScintillaNext *>(dockWidget->widget());
 
-        if (editor == editorToCheck)
+        if (editor == editorToCheck) {
             dockWidget->closeDockWidget();
+        }
     }
 }
 
-void DockedEditor::renamedBuffer(ScintillaBuffer *buffer)
+void DockedEditor::renameEditor(ScintillaNext *editor)
 {
-    Q_ASSERT(buffer != Q_NULLPTR);
+    Q_ASSERT(editor != Q_NULLPTR);
 
     foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
-        auto editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
+        ScintillaNext *editorToCheck = qobject_cast<ScintillaNext *>(dockWidget->widget());
 
-        if (buffer == editor->scintillaBuffer()) {
-            dockWidget->setObjectName(editor->getName());
+        if (editor == editorToCheck) {
+            QString newName = editor->getName();
+            qDebug("Renamed to %s", qUtf8Printable(newName));
+            dockWidget->setWindowTitle(newName);
 
             if (editor->isFile()) {
-                dockWidget->tabWidget()->setToolTip(buffer->fileInfo.canonicalFilePath());
+                dockWidget->tabWidget()->setToolTip(editor->canonicalFilePath());
             }
             else {
                 dockWidget->tabWidget()->setToolTip(editor->getName());
