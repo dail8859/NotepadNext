@@ -61,6 +61,7 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
     if ((flags & SCFIND_MATCHCASE) == 0)
         options |= QRegularExpression::CaseInsensitiveOption;
 
+    // TODO: does (*ANYCRLF) need prepended to the search string?
     QRegularExpression re(s, options);
     if (!re.isValid())
         return -1; // Invalid regular expression
