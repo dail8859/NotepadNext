@@ -16,12 +16,10 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
-#include "HighlightedScrollBar.h"
 #include "ScintillaNext.h"
-#include "SmartHighlighter.h"
 
 #include <QMouseEvent>
+
 
 ScintillaNext::ScintillaNext(ScintillaBuffer *buffer, QWidget *parent) :
     ScintillaEdit(parent)
@@ -33,9 +31,106 @@ ScintillaNext::ScintillaNext(ScintillaBuffer *buffer, QWidget *parent) :
     }
 }
 
-ScintillaBuffer *ScintillaNext::scintillaBuffer()
+bool ScintillaNext::isSavedToDisk()
 {
-    return this->buffer;
+    return this->buffer->isSavedToDisk();
+}
+
+bool ScintillaNext::isFile()
+{
+    return this->buffer->isFile();
+}
+
+QFileInfo ScintillaNext::fileInfo()
+{
+    return this->buffer->fileInfo;
+}
+
+QString ScintillaNext::getName()
+{
+    return this->buffer->getName();
+}
+
+QString ScintillaNext::canonicalFilePath()
+{
+    return this->buffer->fileInfo.canonicalFilePath();
+}
+
+QString ScintillaNext::suffix()
+{
+    return this->buffer->fileInfo.suffix();
+}
+
+void ScintillaNext::close()
+{
+    emit closed();
+
+    deleteLater();
+}
+
+bool ScintillaNext::save()
+{
+    emit aboutToSave();
+
+    return buffer->save();
+}
+
+void ScintillaNext::reload()
+{
+    buffer->reloadFromFile();
+}
+
+bool ScintillaNext::saveAs(const QString &newFilePath)
+{
+    emit aboutToSave();
+
+    return buffer->saveAs(newFilePath);
+}
+
+bool ScintillaNext::saveCopyAs(const QString &filePath)
+{
+    return buffer->saveCopyAs(filePath);
+}
+
+bool ScintillaNext::rename(const QString &newFilePath)
+{
+    // TODO: check if newFilePath is already opened as another editor?
+
+    emit aboutToSave();
+
+    // Write out the buffer to the new path
+    if (saveCopyAs(newFilePath)) {
+        // Remove the old file
+        const QString oldPath = buffer->fileInfo.canonicalFilePath();
+        QFile::remove(oldPath);
+
+        // Everything worked fine, so update the buffer's info
+        buffer->setFileInfo(newFilePath);
+        buffer->updateTimestamp();
+        buffer->set_save_point();
+
+        emit renamed();
+
+        return true;
+    }
+
+    return false;
+}
+
+ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
+{
+    // TODO: Is this the best way to handle this? It is a simple renaming of enums
+    // but at least for now this hides the ScintillaBuffer implementation
+    ScintillaBuffer::BufferStateChange bufferState = this->buffer->checkForBufferStateChange();
+
+    switch (bufferState) {
+        case ScintillaBuffer::NoChange: return ScintillaNext::NoChange;
+        case ScintillaBuffer::Modified: return ScintillaNext::Modified;
+        case ScintillaBuffer::Deleted: return ScintillaNext::Deleted;
+        case ScintillaBuffer::Restored: return ScintillaNext::Restored;
+    }
+
+    return ScintillaNext::NoChange;
 }
 
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)

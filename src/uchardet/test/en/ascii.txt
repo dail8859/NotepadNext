@@ -1,4 +1,0 @@
-This is an ASCII TEST.
-We still want uchardet to detect it as ASCII, even with the presence of
-an escape character: 
-Or with the HZ encoding escape sequence: ~{

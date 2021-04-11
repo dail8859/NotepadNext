@@ -26,6 +26,11 @@ include(../Config.pri)
 include(../singleapplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
 
+include(../uchardet.pri)
+include(../lua.pri)
+include(../ads.pri)
+include(../editorconfig-core-qt/EditorConfig.pri)
+
 # Set variables for output executable
 VERSION = $$APP_VERSION
 
@@ -39,11 +44,16 @@ win32 {
 
 
 SOURCES += \
-    BufferManager.cpp \
+    ColorPickerDelegate.cpp \
+    ComboBoxDelegate.cpp \
     DockedEditor.cpp \
+    EditorManager.cpp \
     Finder.cpp \
     IFaceTable.cpp \
     IFaceTableMixer.cpp \
+    LanguageKeywordsModel.cpp \
+    LanguagePropertiesModel.cpp \
+    LanguageStylesModel.cpp \
     LuaExtension.cpp \
     LuaState.cpp \
     MacroRecorder.cpp \
@@ -56,14 +66,17 @@ SOURCES += \
     ScintillaBuffer.cpp \
     ScintillaNext.cpp \
     Settings.cpp \
+    SpinBoxDelegate.cpp \
+    decorators/ApplicationDecorator.cpp \
+    decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
     dialogs/FindReplaceDialog.cpp \
+    dialogs/LanguageInspectorDock.cpp \
     dialogs/LuaConsoleDock.cpp \
     dialogs/MacroRunDialog.cpp \
     dialogs/MacroSaveDialog.cpp \
     dialogs/MainWindow.cpp \
     dialogs/PreferencesDialog.cpp \
-    dialogs/WindowListDialog.cpp \
     main.cpp \
     decorators/BraceMatch.cpp \
     decorators/EditorDecorator.cpp \
@@ -73,12 +86,17 @@ SOURCES += \
     widgets/StatusLabel.cpp
 
 HEADERS += \
-    BufferManager.h \
+    ColorPickerDelegate.h \
+    ComboBoxDelegate.h \
     DockedEditor.h \
+    EditorManager.h \
     Finder.h \
     FocusWatcher.h \
     IFaceTable.h \
     IFaceTableMixer.h \
+    LanguageKeywordsModel.h \
+    LanguagePropertiesModel.h \
+    LanguageStylesModel.h \
     LuaExtension.h \
     LuaState.h \
     MacroRecorder.h \
@@ -91,14 +109,17 @@ HEADERS += \
     ScintillaBuffer.h \
     ScintillaNext.h \
     Settings.h \
+    SpinBoxDelegate.h \
+    decorators/ApplicationDecorator.h \
+    decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
     dialogs/FindReplaceDialog.h \
+    dialogs/LanguageInspectorDock.h \
     dialogs/LuaConsoleDock.h \
     dialogs/MacroRunDialog.h \
     dialogs/MacroSaveDialog.h \
     dialogs/MainWindow.h \
     dialogs/PreferencesDialog.h \
-    dialogs/WindowListDialog.h \
     decorators/BraceMatch.h \
     decorators/EditorDecorator.h \
     decorators/HighlightedScrollBar.h \
@@ -108,6 +129,7 @@ HEADERS += \
 
 FORMS += \
     QuickFindWidget.ui \
+    dialogs/LanguageInspectorDock.ui \
     dialogs/MainWindow.ui \
     dialogs/FindReplaceDialog.ui \
     dialogs/LuaConsoleDock.ui \
@@ -135,23 +157,9 @@ INCLUDEPATH += \
     $$PWD/../scintilla/lexlib
 DEPENDPATH += $$PWD/../scintilla/qt/ScintillaEdit
 
-# Statically link in Lua
-LIBS += -L$$OUT_PWD/../lua/ -lLua
-INCLUDEPATH += $$PWD/../lua/src
-DEPENDPATH += $$PWD/../lua/src
-
-# Statically link in uchardet
-LIBS += -L$$OUT_PWD/../uchardet/ -luchardet
-INCLUDEPATH += $$PWD/../uchardet/src
-DEPENDPATH += $$PWD/../uchardet/src
-
 INCLUDEPATH += $$PWD/../LuaBridge
 INCLUDEPATH += $$PWD/../
 DEFINES += LUA_VERSION_NUM=503
 
 win32-g++:LIBS += libUser32
 win32-msvc*:LIBS += User32.lib
-
-LIBS += -L$$OUT_PWD/../ads/src -lads
-INCLUDEPATH += $$PWD/../ads/src
-DEPENDPATH += $$PWD/../ads/src

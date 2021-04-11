@@ -36,10 +36,9 @@ class MainWindow;
 }
 
 class NotepadNextApplication;
-class ScintillaBuffer;
 class FindReplaceDialog;
-class RecentFilesListManager;
 class LuaConsoleDock;
+class LanguageInspectorDock;
 class MacroRecorder;
 class MacroRunDialog;
 class Macro;
@@ -57,7 +56,8 @@ public:
     bool isAnyUnsaved();
 
     void setupLanguageMenu();
-    void setupEditor(ScintillaNext *editor);
+    ScintillaNext *currentEditor();
+    DockedEditor *getDockedEditor();
 
 public slots:
     void newFile();
@@ -68,18 +68,18 @@ public slots:
     void reloadFile();
 
     void closeCurrentFile();
-    void closeFile(ScintillaBuffer *buffer);
+    void closeFile(ScintillaNext *editor);
     void closeAllFiles(bool forceClose);
     void closeAllExceptActive();
     void closeAllToLeft();
     void closeAllToRight();
 
     bool saveCurrentFile();
-    bool saveFile(ScintillaBuffer *buffer);
+    bool saveFile(ScintillaNext *editor);
 
     bool saveCurrentFileAsDialog();
     bool saveCurrentFileAs(const QString &fileName);
-    bool saveFileAs(ScintillaBuffer *buffer, const QString &fileName);
+    bool saveFileAs(ScintillaNext *editor, const QString &fileName);
 
     void saveCopyAsDialog();
     void saveCopyAs(const QString &fileName);
@@ -88,14 +88,14 @@ public slots:
     void renameFile();
     void convertEOLs(int eolMode);
 
-    void updateBufferFileStatusBasedUi(ScintillaBuffer *buffer);
+    void updateFileStatusBasedUi(ScintillaNext *editor);
     void updateEOLBasedUi(ScintillaNext *editor);
     void updateEncodingBasedUi(ScintillaNext *editor);
     void updateDocumentBasedUi(int updated);
     void updateSelectionBasedUi(ScintillaNext *editor);
     void updateContentBasedUi(ScintillaNext *editor);
-    void updateSaveStatusBasedUi(bool isDirty);
-    void updateBufferPositionBasedUi();
+    void updateSaveStatusBasedUi(ScintillaNext *editor);
+    void updateEditorPositionBasedUi();
     void updateLanguageBasedUi(ScintillaNext *editor);
     void updateGui(ScintillaNext *editor);
 
@@ -106,6 +106,8 @@ public slots:
 
     void bringWindowToForeground();
     void focusIn();
+
+    void addEditor(ScintillaNext *editor);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -126,11 +128,9 @@ private:
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     void setupStatusBar();
-    bool checkBufferForModification(ScintillaBuffer *buffer);
-    void setFoldMarkers(ScintillaNext *editor, const QString &type);
+    bool checkFileForModification(ScintillaNext *editor);
 
     QActionGroup *languageActionGroup;
-    RecentFilesListManager *recentFilesListManager;
 
     QLabel *docType;
     QLabel *docSize;
@@ -152,6 +152,7 @@ private:
 
     // Docked widgets
     LuaConsoleDock *luaConsoleDock = Q_NULLPTR;
+    LanguageInspectorDock *languageInspectorDock = Q_NULLPTR;
 };
 
 #endif // MAINWINDOW_H

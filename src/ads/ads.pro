@@ -1,5 +1,0 @@
-TEMPLATE = subdirs
-
-SUBDIRS = \
-    src
-

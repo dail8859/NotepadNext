@@ -21,39 +21,9 @@
 
 #include "RecentFilesListManager.h"
 
-RecentFilesListManager::RecentFilesListManager(QMenu *_menu, QWidget *parent) :
-    QObject(parent),
-    menu(_menu)
+RecentFilesListManager::RecentFilesListManager(QObject *parent) :
+    QObject(parent)
 {
-    menu->menuAction()->setVisible(false);
-
-    connect(menu, &QMenu::aboutToShow, [=]() {
-        qInfo(Q_FUNC_INFO);
-
-        Q_ASSERT(recentFiles.size() > 0);
-
-        // Remove the old list of actinos
-        while (!recentFileListActions.isEmpty()) {
-            QAction *action = recentFileListActions.takeFirst();
-            menu->removeAction(action);
-            delete action;
-        }
-
-        // Build a new list of actions
-        int i = 0;
-        foreach (const QString &file, recentFiles) {
-            ++i;
-            QAction *action = new QAction(QString("%1%2: %3").arg(i < 10 ? "&" : "").arg(i).arg(file));
-
-            action->setData(file);
-            connect(action, &QAction::triggered, this, &RecentFilesListManager::recentFileActionTriggered);
-
-            recentFileListActions.append(action);
-        }
-
-        // Prepend this list of actions to the menu
-        menu->addActions(recentFileListActions);
-    });
 }
 
 RecentFilesListManager::~RecentFilesListManager()
@@ -74,36 +44,17 @@ void RecentFilesListManager::addFile(const QString &filePath)
     }
 
     recentFiles.prepend(filePath);
-
-    if (recentFiles.size() == 1) {
-        // First one was added, so show the menu
-        menu->menuAction()->setVisible(true);
-    }
 }
 
 void RecentFilesListManager::removeFile(const QString &filePath)
 {
     recentFiles.removeOne(filePath);
-
-    if (recentFiles.isEmpty()) {
-        menu->menuAction()->setVisible(false);
-    }
 }
 
 void RecentFilesListManager::clear()
 {
-    // Remove the old list of actions
-    while (!recentFileListActions.isEmpty()) {
-        QAction *action = recentFileListActions.takeFirst();
-        menu->removeAction(action);
-        delete action;
-    }
-
     // Clear the file list
     recentFiles.clear();
-
-    // Hide the menu
-    menu->menuAction()->setVisible(false);
 }
 
 QString RecentFilesListManager::mostRecentFile() const
@@ -122,10 +73,24 @@ void RecentFilesListManager::setFileList(const QStringList &list)
 {
     clear();
     recentFiles.append(list);
+}
 
-    if (recentFiles.size() > 0) {
-        menu->menuAction()->setVisible(true);
+void RecentFilesListManager::populateMenu(QMenu *menu)
+{
+    int i = 0;
+
+    QList<QAction *> recentFileListActions;
+    foreach (const QString &file, recentFiles) {
+        ++i;
+        QAction *action = new QAction(QString("%1%2: %3").arg(i < 10 ? "&" : "").arg(i).arg(file), menu);
+
+        action->setData(file);
+        connect(action, &QAction::triggered, this, &RecentFilesListManager::recentFileActionTriggered);
+
+        recentFileListActions.append(action);
     }
+
+    menu->addActions(recentFileListActions);
 }
 
 void RecentFilesListManager::recentFileActionTriggered()

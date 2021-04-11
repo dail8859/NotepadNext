@@ -29,6 +29,7 @@
 class DockedEditor : public QObject
 {
     Q_OBJECT
+
 private:
     ads::CDockManager* m_DockManager = Q_NULLPTR;
     ScintillaNext *currentEditor = Q_NULLPTR;
@@ -37,14 +38,11 @@ public:
     explicit DockedEditor(QWidget *parent);
 
     ScintillaNext *getCurrentEditor() const;
-    ScintillaBuffer *getCurrentBuffer() const;
     ads::CDockAreaWidget *currentDockArea();
 
     QVector<ScintillaNext *> editors() const;
-    QVector<ScintillaBuffer *> buffers() const;
 
     void switchToEditor(const ScintillaNext *editor);
-    void switchToBuffer(const ScintillaBuffer *buffer);
 
     int count() const;
 
@@ -52,12 +50,12 @@ private slots:
     void dockWidgetCloseRequested();
 
 public slots:
-    void addBuffer(ScintillaBuffer *buffer);
-    void removeBuffer(ScintillaBuffer *buffer);
-    void renamedBuffer(ScintillaBuffer *buffer);
+    void addEditor(ScintillaNext *editor);
+    void removeEditor(ScintillaNext *editor);
+    void renameEditor(ScintillaNext *editor);
 
 signals:
-    void editorCreated(ScintillaNext *editor);
+    void editorAdded(ScintillaNext *editor);
     void editorCloseRequested(ScintillaNext *editor);
     void editorActivated(ScintillaNext *editor);
 

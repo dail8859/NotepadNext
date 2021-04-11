@@ -78,6 +78,7 @@ void ScintillaBuffer::updateTimestamp()
 bool ScintillaBuffer::save()
 {
     qInfo(Q_FUNC_INFO);
+
     Q_ASSERT(isFile());
 
     bool writeSuccessful = writeToDisk(this->get_character_pointer(), this->fileInfo.filePath());
@@ -214,9 +215,9 @@ ScintillaBuffer::BufferStateChange ScintillaBuffer::checkForBufferStateChange()
     return BufferStateChange::NoChange;
 }
 
-bool ScintillaBuffer::is_save_point()
+bool ScintillaBuffer::isSavedToDisk()
 {
-    return bufferType != ScintillaBuffer::FileMissing && ScintillaDocument::is_save_point();
+    return bufferType != ScintillaBuffer::FileMissing && is_save_point();
 }
 
 ScintillaBuffer *ScintillaBuffer::fromFile(const QString &filePath)
@@ -343,7 +344,7 @@ bool ScintillaBuffer::readFromDisk(QFile &file)
     return true;
 }
 
-const QString &ScintillaBuffer::getName() const
+QString ScintillaBuffer::getName() const
 {
     return name;
 }

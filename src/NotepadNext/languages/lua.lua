@@ -1,18 +1,10 @@
 local L = {}
 
-L.name = "Lua"
 L.lexer = "lua"
 
 L.extensions = {
-    "lua",
+	"lua",
 }
-
-L.commentLine = "--"
-
-L.tabSettings = "tabs"
-L.tabSize = 4
-
-L.properties = {}
 
 L.keywords = {
 	[0] = "and break do else elseif end false for function goto if in local nil not or repeat return then true until while",
@@ -109,5 +101,4 @@ L.styles = {
 		fontStyle = 1,
 	},
 }
-
 return L

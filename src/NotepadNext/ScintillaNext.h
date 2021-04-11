@@ -36,7 +36,33 @@ public:
     template<typename Func>
     void forEachMatch(const QByteArray &byteArray, Func callback);
 
-    ScintillaBuffer *scintillaBuffer();
+    bool isSavedToDisk();
+    bool isFile();
+    QFileInfo fileInfo();
+    QString getName();
+    QString canonicalFilePath();
+    QString suffix();
+
+    enum FileStateChange {
+        NoChange,
+        Modified,
+        Deleted,
+        Restored,
+    };
+
+public slots:
+    void close();
+    bool save();
+    void reload();
+    bool saveAs(const QString &newFilePath);
+    bool saveCopyAs(const QString &filePath);
+    bool rename(const QString &newFilePath);
+    ScintillaNext::FileStateChange checkFileForStateChange();
+
+signals:
+    void aboutToSave();
+    void closed();
+    void renamed();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
