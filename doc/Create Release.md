@@ -1,16 +1,15 @@
 ## Prepare Release
 
-1. Update version in `appveyor.yml`
-2. Update version in `installer/config/config.xml`
-3. Update version and date in `installer/packages/app/meta/package.xml`
-4. Update version in `src/Version.pri`
+1. Update version in `installer/config/config.xml`
+2. Update version and date in `installer/packages/app/meta/package.xml`
+3. Update version in `src/Version.pri`
 
 ## Build Release
 Example bat script to build release
 
 ```
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
-set PATH=C:\Qt\5.15.1\msvc2019_64\bin\;C:\Qt\Tools\QtCreator\bin\;%PATH%
+set PATH=C:\Qt\5.15.2\msvc2019_64\bin\;C:\Qt\Tools\QtCreator\bin\;%PATH%
 mkdir build
 cd build
 qmake ..\src\NotepadNext.pro
