@@ -48,7 +48,7 @@ public:
     void begin_undo_action();
     void end_undo_action();
     void set_save_point();
-    virtual bool is_save_point();
+    bool is_save_point();
     void set_read_only(bool read_only);
     bool is_read_only();
     void insert_string(int position, QByteArray &str);

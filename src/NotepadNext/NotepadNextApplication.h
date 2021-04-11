@@ -20,37 +20,43 @@
 #ifndef NOTEPADNEXTAPPLICATION_H
 #define NOTEPADNEXTAPPLICATION_H
 
-#include "BufferManager.h"
 #include "Settings.h"
 
 #include "SingleApplication"
 
+#include <QPointer>
+
 
 class MainWindow;
 class LuaState;
+class EditorManager;
+class RecentFilesListManager;
 
 class NotepadNextApplication : public SingleApplication
 {
     Q_OBJECT
 
 public:
-    NotepadNextApplication(BufferManager *bm, int &argc, char **argv);
+    NotepadNextApplication(int &argc, char **argv);
 
     bool initGui();
 
-    BufferManager *getBufferManager() const { return bufferManager; };
+    RecentFilesListManager *getRecentFilesListManager() const { return recentFilesListManager; }
+    EditorManager *getEditorManager() const { return editorManager; }
 
-    LuaState *getLuaState() const;
+    LuaState *getLuaState() const { return luaState; }
     QString getFileDialogFilter() const;
-    Settings *getSettings() const;
+    Settings *getSettings() const { return settings; }
 
 private:
-    BufferManager *bufferManager;
+    EditorManager *editorManager;
+    RecentFilesListManager *recentFilesListManager;
+    Settings *settings;
+
     LuaState *luaState = Q_NULLPTR;
-    Settings *settings = Q_NULLPTR;
 
     QList<MainWindow *> windows;
-    QWidget *currentlyFocusedWidget = Q_NULLPTR;
+    QPointer<QWidget> currentlyFocusedWidget; // Keep a weak pointer to the QWidget since we don't own it
 
     void applyArguments(const QStringList &args);
     MainWindow *createNewWindow();

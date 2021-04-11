@@ -19,10 +19,14 @@
 
 #include "MainWindow.h"
 #include "NotepadNextApplication.h"
+#include "RecentFilesListManager.h"
+#include "EditorManager.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
 #include "LuaBridge.h"
+
+#include "EditorConfigAppDecorator.h"
 
 #include <QCommandLineParser>
 #include <QSettings>
@@ -44,12 +48,37 @@ struct luabridge::Stack <QString const&>
 };
 
 
-NotepadNextApplication::NotepadNextApplication(BufferManager *bm, int &argc, char **argv)
-    : SingleApplication(argc, argv, true, opts), bufferManager(bm)
+NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
+    : SingleApplication(argc, argv, true, opts)
 {
     qInfo(Q_FUNC_INFO);
 
-    bufferManager->setParent(this);
+    recentFilesListManager = new RecentFilesListManager(this);
+    editorManager = new EditorManager(this);
+    settings = new Settings(this);
+
+    connect(editorManager, &EditorManager::editorCreated, [=](ScintillaNext *editor) {
+        if (editor->isFile()) {
+            recentFilesListManager->removeFile(editor->canonicalFilePath());
+        }
+    });
+
+    connect(editorManager, &EditorManager::editorClosed, [=](ScintillaNext *editor) {
+        if (editor->isFile()) {
+            recentFilesListManager->addFile(editor->canonicalFilePath());
+        }
+    });
+
+    // Restore some settings and schedule saving the settings on quit
+    QSettings settings;
+    recentFilesListManager->setFileList(settings.value("App/RecentFilesList").toStringList());
+    connect(this, &NotepadNextApplication::aboutToQuit, [=]() {
+        QSettings settings;
+        settings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
+    });
+
+    EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
+    ecad->setEnabled(true);
 }
 
 bool NotepadNextApplication::initGui()
@@ -58,8 +87,6 @@ bool NotepadNextApplication::initGui()
 
     luaState = new LuaState();
     luaState->executeFile(":/scripts/init.lua");
-
-    settings = new Settings(this);
 
     // LuaBridge is not a long term solution
     // This is probably temporary, but it is quick and works
@@ -76,6 +103,7 @@ bool NotepadNextApplication::initGui()
     luabridge::setGlobal(luaState->L, settings, "settings");
 
     createNewWindow();
+    connect(editorManager, &EditorManager::editorCreated, windows.first(), &MainWindow::addEditor);
 
     luabridge::getGlobalNamespace(luaState->L)
         .beginNamespace("nn")
@@ -106,6 +134,8 @@ bool NotepadNextApplication::initGui()
     QObject::connect(this, &SingleApplication::instanceStarted, this->windows.first(), &MainWindow::bringWindowToForeground);
 
     QObject::connect(this, &SingleApplication::receivedMessage, [&] (quint32 instanceId, QByteArray message) {
+        Q_UNUSED(instanceId)
+
         QDataStream stream(&message, QIODevice::ReadOnly);
         QStringList args;
 
@@ -118,7 +148,7 @@ bool NotepadNextApplication::initGui()
         if (state == Qt::ApplicationActive) {
             windows.first()->focusIn();
 
-            if (currentlyFocusedWidget) {
+            if (!currentlyFocusedWidget.isNull()) {
                 currentlyFocusedWidget->activateWindow();
             }
         }
@@ -127,15 +157,11 @@ bool NotepadNextApplication::initGui()
     applyArguments(SingleApplication::arguments());
 
     // Everything should be ready, so do it!
+    windows.first()->newFile();
     windows.first()->show();
     windows.first()->bringWindowToForeground();
 
     return true;
-}
-
-LuaState *NotepadNextApplication::getLuaState() const
-{
-    return luaState;
 }
 
 QString NotepadNextApplication::getFileDialogFilter() const
@@ -150,7 +176,7 @@ QString NotepadNextApplication::getFileDialogFilter() const
                     for _, ext in ipairs(L.extensions) do
                         extensions[#extensions + 1] = "*." .. ext
                     end
-                    filter[#filter + 1] = L.name .. " Files (" .. table.concat(extensions, " ") .. ")"
+                    filter[#filter + 1] = name .. " Files (" .. table.concat(extensions, " ") .. ")"
                 end
                 return table.concat(filter, ";;")
                 )=");
@@ -158,10 +184,7 @@ QString NotepadNextApplication::getFileDialogFilter() const
     return filter;
 }
 
-Settings *NotepadNextApplication::getSettings() const
-{
-    return settings;
-}
+
 
 void NotepadNextApplication::applyArguments(const QStringList &args)
 {
