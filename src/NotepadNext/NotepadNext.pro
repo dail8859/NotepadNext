@@ -67,6 +67,8 @@ SOURCES += \
     ScintillaNext.cpp \
     Settings.cpp \
     SpinBoxDelegate.cpp \
+    decorators/ApplicationDecorator.cpp \
+    decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
     dialogs/FindReplaceDialog.cpp \
     dialogs/LanguageInspectorDock.cpp \
@@ -108,6 +110,8 @@ HEADERS += \
     ScintillaNext.h \
     Settings.h \
     SpinBoxDelegate.h \
+    decorators/ApplicationDecorator.h \
+    decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
     dialogs/FindReplaceDialog.h \
     dialogs/LanguageInspectorDock.h \

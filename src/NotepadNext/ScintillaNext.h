@@ -60,6 +60,7 @@ public slots:
     ScintillaNext::FileStateChange checkFileForStateChange();
 
 signals:
+    void aboutToSave();
     void closed();
     void renamed();
 

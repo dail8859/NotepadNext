@@ -16,12 +16,10 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
-#include "HighlightedScrollBar.h"
 #include "ScintillaNext.h"
-#include "SmartHighlighter.h"
 
 #include <QMouseEvent>
+
 
 ScintillaNext::ScintillaNext(ScintillaBuffer *buffer, QWidget *parent) :
     ScintillaEdit(parent)
@@ -72,6 +70,8 @@ void ScintillaNext::close()
 
 bool ScintillaNext::save()
 {
+    emit aboutToSave();
+
     return buffer->save();
 }
 
@@ -82,6 +82,8 @@ void ScintillaNext::reload()
 
 bool ScintillaNext::saveAs(const QString &newFilePath)
 {
+    emit aboutToSave();
+
     return buffer->saveAs(newFilePath);
 }
 
@@ -94,12 +96,13 @@ bool ScintillaNext::rename(const QString &newFilePath)
 {
     // TODO: check if newFilePath is already opened as another editor?
 
+    emit aboutToSave();
+
     // Write out the buffer to the new path
     if (saveCopyAs(newFilePath)) {
         // Remove the old file
         const QString oldPath = buffer->fileInfo.canonicalFilePath();
-
-        bool didOldFileGetRemoved = QFile::remove(oldPath);
+        QFile::remove(oldPath);
 
         // Everything worked fine, so update the buffer's info
         buffer->setFileInfo(newFilePath);
@@ -126,6 +129,8 @@ ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
         case ScintillaBuffer::Deleted: return ScintillaNext::Deleted;
         case ScintillaBuffer::Restored: return ScintillaNext::Restored;
     }
+
+    return ScintillaNext::NoChange;
 }
 
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)

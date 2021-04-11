@@ -26,6 +26,8 @@
 #include "lua.hpp"
 #include "LuaBridge.h"
 
+#include "EditorConfigAppDecorator.h"
+
 #include <QCommandLineParser>
 #include <QSettings>
 
@@ -74,6 +76,9 @@ NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
         QSettings settings;
         settings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
     });
+
+    EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
+    ecad->setEnabled(true);
 }
 
 bool NotepadNextApplication::initGui()
