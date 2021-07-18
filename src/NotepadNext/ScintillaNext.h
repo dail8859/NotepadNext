@@ -43,6 +43,8 @@ public:
     QString canonicalFilePath();
     QString suffix();
 
+    ScintillaBuffer *getBuffer() const { return buffer; }
+
     enum FileStateChange {
         NoChange,
         Modified,
