@@ -1276,6 +1276,8 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 
     LuaExtension::Instance().setEditor(editor);
 
+    editor->setProperty("nn.meta.language", languageName.toLatin1().constData());
+
     app->getLuaState()->execute(QString("lexer = \"%1\"").arg(QString(languageName)).toLatin1().constData());
     app->getLuaState()->execute(R"(
         local L = languages[lexer]
@@ -1318,7 +1320,6 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
         editor:Colourise(0, 1);
         )");
 
-    editor->setProperty("nn.meta.language", languageName.toLatin1().constData());
     updateLanguageBasedUi(editor);
 }
 
