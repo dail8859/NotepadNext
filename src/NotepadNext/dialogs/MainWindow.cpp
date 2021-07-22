@@ -107,6 +107,26 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
 
+    connect(ui->actionMoveToTrash, &QAction::triggered, [=]() {
+        ScintillaNext *editor = dockedEditor->getCurrentEditor();
+
+        auto reply = QMessageBox::question(this, "Delete File", QString("Are you sure you want to move <b>%1</b> to the trash?").arg(editor->getName()));
+
+        if (reply == QMessageBox::Yes) {
+            const QString filePath = editor->fileInfo().canonicalFilePath();
+
+            if (editor->moveToTrash()) {
+                closeCurrentFile();
+
+                // Since the file no longer exists, specifically remove it from the recent files list
+                app->getRecentFilesListManager()->removeFile(filePath);
+            }
+            else {
+                QMessageBox::warning(this, "Error Deleting File",  QString("Something went wrong deleting <b>%1</b>?").arg(editor->getName()));
+            }
+        }
+    });
+
     connect(ui->menuRecentFiles, &QMenu::aboutToShow, [=]() {
         // NOTE: its unfortunate that this has to be hard coded, but there's no way
         // to easily determine what should or shouldn't be there
@@ -1062,6 +1082,7 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
 
     ui->actionReload->setEnabled(isFile);
     ui->actionRename->setEnabled(isFile);
+    ui->actionMoveToTrash->setEnabled(isFile);
     ui->actionCopyFullPath->setEnabled(isFile);
     ui->actionCopyFileDirectory->setEnabled(isFile);
 }

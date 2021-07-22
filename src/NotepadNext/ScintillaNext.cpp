@@ -133,6 +133,11 @@ ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
     return ScintillaNext::NoChange;
 }
 
+bool ScintillaNext::moveToTrash()
+{
+    return this->buffer->moveToTrash();
+}
+
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)
 {
     // Ignore all drag and drop events with urls and let the main application handle it

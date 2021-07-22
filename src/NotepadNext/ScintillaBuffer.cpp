@@ -215,6 +215,17 @@ ScintillaBuffer::BufferStateChange ScintillaBuffer::checkForBufferStateChange()
     return BufferStateChange::NoChange;
 }
 
+bool ScintillaBuffer::moveToTrash()
+{
+    if (QFile::exists(this->fileInfo.canonicalFilePath())) {
+        QFile f(this->fileInfo.canonicalFilePath());
+
+        return f.moveToTrash();
+    }
+
+    return false;
+}
+
 bool ScintillaBuffer::isSavedToDisk()
 {
     return bufferType != ScintillaBuffer::FileMissing && is_save_point();
