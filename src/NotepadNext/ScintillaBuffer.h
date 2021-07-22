@@ -67,6 +67,7 @@ private:
     bool reloadFromFile();
     bool readFromDisk(QFile &file);
     BufferStateChange checkForBufferStateChange();
+    bool moveToTrash();
 
     QString name;
     BufferType bufferType;

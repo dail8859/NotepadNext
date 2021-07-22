@@ -60,6 +60,7 @@ public slots:
     bool saveCopyAs(const QString &filePath);
     bool rename(const QString &newFilePath);
     ScintillaNext::FileStateChange checkFileForStateChange();
+    bool moveToTrash();
 
 signals:
     void aboutToSave();
