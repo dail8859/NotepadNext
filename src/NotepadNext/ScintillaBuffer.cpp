@@ -321,7 +321,9 @@ bool ScintillaBuffer::readFromDisk(QFile &file)
             } else {
                 qWarning("No avialable Codecs for: \"%s\"", qUtf8Printable(encoding));
                 qWarning("Falling back to QTextCodec::codecForUtfText()");
-                qWarning("%d %d", chunk.at(0), chunk.at(1));
+
+                if (chunk.size() >= 2)
+                    qWarning("%d %d", chunk.at(0), chunk.at(1));
 
                 codec = QTextCodec::codecForUtfText(chunk);
                 decoder = codec->makeDecoder();
