@@ -1302,13 +1302,17 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 
     editor->setProperty("nn.meta.language", languageName.toLatin1().constData());
 
-    app->getLuaState()->execute(QString("lexer = \"%1\"").arg(QString(languageName)).toLatin1().constData());
+    app->getLuaState()->execute(QString("languageName = \"%1\"").arg(QString(languageName)).toLatin1().constData());
+
+    const QString lexer = app->getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
+    editor->setILexer(reinterpret_cast<sptr_t>(CreateLexer(lexer.toLatin1().constData())));
+
     app->getLuaState()->execute(R"(
-        local L = languages[lexer]
+        local L = languages[languageName]
         -- this resets the style definitions but keeps
         -- the "wanted" stuff, such as line numbers, etc
         -- resetEditorStyle()
-        editor.LexerLanguage = L.lexer
+        --editor.LexerLanguage = L.lexer
 
         --editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
         --editor.TabWidth = L.tabSize or 4
