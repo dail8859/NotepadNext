@@ -26,6 +26,9 @@ include(../Config.pri)
 include(../singleapplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
 
+
+include(../scintilla.pri)
+include(../lexilla.pri)
 include(../uchardet.pri)
 include(../lua.pri)
 include(../ads.pri)
@@ -146,20 +149,12 @@ INCLUDEPATH += $$PWD/decorators
 INCLUDEPATH += $$PWD/dialogs
 INCLUDEPATH += $$PWD/widgets
 
-# Statically link in Scintilla
-DEFINES += EXPORT_IMPORT_API=
-LIBS += -L$$OUT_PWD/../scintilla/qt/ScintillaEdit/ -lScintillaEdit
-INCLUDEPATH += \
-    $$PWD/../scintilla/qt/ScintillaEditBase \
-    $$PWD/../scintilla/qt/ScintillaEdit \
-    $$PWD/../scintilla/include \
-    $$PWD/../scintilla/src \
-    $$PWD/../scintilla/lexlib
-DEPENDPATH += $$PWD/../scintilla/qt/ScintillaEdit
 
 INCLUDEPATH += $$PWD/../LuaBridge
 INCLUDEPATH += $$PWD/../
 DEFINES += LUA_VERSION_NUM=503
+
+INCLUDEPATH += $$PWD/../lexilla/include
 
 win32-g++:LIBS += libUser32
 win32-msvc*:LIBS += User32.lib

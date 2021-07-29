@@ -9,12 +9,14 @@
 #include <string>
 #include <string_view>
 
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
+#include <ole2.h>
 
 #include "UniConversion.h"
 #include "HanjaDic.h"
 
-namespace Scintilla {
+namespace Scintilla::Internal {
 
 namespace HanjaDict {
 
@@ -80,7 +82,12 @@ public:
 	~HanjaDic() {
 		if (SUCCEEDED(hr)) {
 			hr = HJinterface->CloseMainDic();
-			HJinterface->Release();
+			try {
+				// This can never fail but IUnknown::Release is not marked noexcept.
+				HJinterface->Release();
+			} catch (...) {
+				// Ignore any exception
+			}
 		}
 	}
 

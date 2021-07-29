@@ -8,7 +8,7 @@
 #ifndef DBCS_H
 #define DBCS_H
 
-namespace Scintilla {
+namespace Scintilla::Internal {
 
 constexpr bool IsDBCSCodePage(int codePage) noexcept {
 	return codePage == 932

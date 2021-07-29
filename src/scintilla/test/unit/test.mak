@@ -12,12 +12,14 @@ CXXFLAGS = /EHsc /std:c++17 /D_HAS_AUTO_PTR_ETC=1 /wd 4805 $(INCLUDEDIRS)
 TESTSRC=test*.cxx
 # Files being tested from scintilla/src directory
 TESTEDSRC=\
- ../../lexlib/WordList.cxx \
  ../../src/CellBuffer.cxx \
+ ../../src/CharacterCategoryMap.cxx \
  ../../src/CharClassify.cxx \
  ../../src/ContractionState.cxx \
  ../../src/Decoration.cxx \
+ ../../src/Document.cxx \
  ../../src/PerLine.cxx \
+ ../../src/RESearch.cxx \
  ../../src/RunStyles.cxx \
  ../../src/UniConversion.cxx \
  ../../src/UniqueString.cxx

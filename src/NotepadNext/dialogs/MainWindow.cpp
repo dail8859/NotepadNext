@@ -39,6 +39,9 @@
 #include "Settings.h"
 
 #include "ScintillaNext.h"
+#include "ILexer.h"
+#include "Lexilla.h"
+#include "SciLexer.h"
 
 #include "RecentFilesListManager.h"
 #include "EditorManager.h"
@@ -1190,17 +1193,17 @@ void MainWindow::updateGui(ScintillaNext *editor)
     updateLanguageBasedUi(editor);
 }
 
-void MainWindow::updateDocumentBasedUi(int updated)
+void MainWindow::updateDocumentBasedUi(Scintilla::Update updated)
 {
     ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
 
     // TODO: what if this is triggered by an editor that is not the active editor?
 
-    if (updated & SC_UPDATE_CONTENT) {
+    if (Scintilla::FlagSet(updated, Scintilla::Update::Content)) {
         updateSelectionBasedUi(editor);
     }
 
-    if (updated & (SC_UPDATE_CONTENT | SC_UPDATE_SELECTION)) {
+    if (Scintilla::FlagSet(updated, Scintilla::Update::Content) || Scintilla::FlagSet(updated, Scintilla::Update::Selection)) {
         updateContentBasedUi(editor);
 
     }
@@ -1256,7 +1259,7 @@ void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
 
     // Only real files have extensions
     if (!editor->isFile()) {
-        editor->setLexer(SCLEX_NULL);
+        editor->setILexer(reinterpret_cast<sptr_t>(CreateLexer("null")));
         return;
     }
 
@@ -1420,7 +1423,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
     connect(editor, &ScintillaNext::savePointChanged, [=]() { updateSaveStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::renamed, [=]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
-    connect(editor, &ScintillaNext::marginClicked, [editor](int position, int modifiers, int margin) {
+    connect(editor, &ScintillaNext::marginClicked, [editor](Scintilla::Position position, Scintilla::KeyMod modifiers, int margin) {
         Q_UNUSED(modifiers);
 
         if (margin == 1) {

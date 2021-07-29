@@ -8,7 +8,7 @@
 #ifndef UNICONVERSION_H
 #define UNICONVERSION_H
 
-namespace Scintilla {
+namespace Scintilla::Internal {
 
 constexpr int UTF8MaxBytes = 4;
 

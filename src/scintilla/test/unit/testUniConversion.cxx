@@ -1,20 +1,23 @@
-// Unit Tests for Scintilla internal data structures
+/** @file testUniConversion.cxx
+ ** Unit Tests for Scintilla internal data structures
+ **/
 
 #include <cstring>
 
 #include <string>
 #include <string_view>
 #include <vector>
+#include <optional>
 #include <algorithm>
 #include <memory>
 
-#include "Platform.h"
+#include "Debugging.h"
 
 #include "UniConversion.h"
 
 #include "catch.hpp"
 
-using namespace Scintilla;
+using namespace Scintilla::Internal;
 
 // Test UniConversion.
 // Use examples from Wikipedia:
@@ -252,7 +255,7 @@ TEST_CASE("UniConversion") {
 namespace {
 
 // Simple adapter to avoid casting
-int UTFClass(const char *s) {
+int UTFClass(const char *s) noexcept {
 	return UTF8Classify(reinterpret_cast<const unsigned char *>(s), static_cast<int>(strlen(s)));
 }
 

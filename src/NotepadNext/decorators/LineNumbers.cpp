@@ -19,6 +19,7 @@
 
 #include "LineNumbers.h"
 
+using namespace Scintilla;
 
 static inline int countDigits(quint32 x)
 {
@@ -57,9 +58,9 @@ void LineNumbers::adjustMarginWidth()
     editor->setMarginWidthN(0, pixelWidth);
 }
 
-void LineNumbers::notify(const SCNotification *pscn)
+void LineNumbers::notify(const NotificationData *pscn)
 {
-    if ((pscn->nmhdr.code == SCN_UPDATEUI && pscn->updated & SC_UPDATE_V_SCROLL) || pscn->nmhdr.code == SCN_ZOOM) {
+    if ((FlagSet(pscn->nmhdr.code, Notification::UpdateUI) && FlagSet(pscn->updated, Update::VScroll)) || FlagSet(pscn->nmhdr.code, Notification::Zoom)) {
         adjustMarginWidth();
     }
 }

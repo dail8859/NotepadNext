@@ -21,6 +21,8 @@
 
 #include "BraceMatch.h"
 
+using namespace Scintilla;
+
 static const QList<char> braces = {'[', ']', '(', ')', '{', '}'};
 
 BraceMatch::BraceMatch(ScintillaEdit *editor) :
@@ -101,9 +103,11 @@ void BraceMatch::clearHighlighting()
     editor->setHighlightGuide(0);
 }
 
-void BraceMatch::notify(const SCNotification *pscn)
+void BraceMatch::notify(const NotificationData *pscn)
 {
-    if (pscn->nmhdr.code == SCN_UPDATEUI && pscn->updated & (SC_UPDATE_CONTENT | SC_UPDATE_SELECTION)) {
-        doHighlighting();
+    if (FlagSet(pscn->nmhdr.code, Notification::UpdateUI)) {
+        if (FlagSet(pscn->updated, Update::Content) && FlagSet(pscn->updated, Update::Selection)) {
+            doHighlighting();
+        }
     }
 }
