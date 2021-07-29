@@ -23,6 +23,7 @@
 #include "ScintillaEdit.h"
 #include "ScintillaBuffer.h"
 
+
 class ScintillaNext : public ScintillaEdit
 {
     Q_OBJECT

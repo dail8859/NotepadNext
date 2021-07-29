@@ -25,9 +25,8 @@
 using namespace Scintilla;
 
 HighlightedScrollBarDecorator::HighlightedScrollBarDecorator(ScintillaEdit *editor)
-    : EditorDecorator(editor)
+    : EditorDecorator(editor), scrollBar(new HighlightedScrollBar(this, Qt::Vertical, editor))
 {
-    scrollBar = new HighlightedScrollBar(this, Qt::Vertical, editor);
     connect(scrollBar, &QScrollBar::valueChanged, editor, &ScintillaEdit::scrollVertical);
 
     editor->setVerticalScrollBar(scrollBar);
@@ -42,11 +41,11 @@ HighlightedScrollBarDecorator::~HighlightedScrollBarDecorator()
 
 void HighlightedScrollBarDecorator::notify(const NotificationData *pscn)
 {
-    if (FlagSet(pscn->nmhdr.code, Notification::UpdateUI) && (FlagSet(pscn->updated, Update::Content) || FlagSet(pscn->updated, Update::Selection))) {
+    if (pscn->nmhdr.code == Notification::UpdateUI && (FlagSet(pscn->updated, Update::Content) || FlagSet(pscn->updated, Update::Selection))) {
         cursor.line = editor->visibleFromDocLine(editor->lineFromPosition(editor->currentPos()));
         scrollBar->update();
     }
-    else if (FlagSet(pscn->nmhdr.code, Notification::Modified) && FlagSet(pscn->modificationType, ModificationFlags::ChangeMarker)) {
+    else if (pscn->nmhdr.code == Notification::Modified && FlagSet(pscn->modificationType, ModificationFlags::ChangeMarker)) {
         scrollBar->update();
     }
 }

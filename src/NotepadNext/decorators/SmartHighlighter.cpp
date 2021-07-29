@@ -22,6 +22,7 @@
 
 using namespace Scintilla;
 
+
 SmartHighlighter::SmartHighlighter(ScintillaEdit *editor) :
     EditorDecorator(editor)
 {
@@ -36,7 +37,7 @@ SmartHighlighter::SmartHighlighter(ScintillaEdit *editor) :
 
 void SmartHighlighter::notify(const NotificationData *pscn)
 {
-    if (FlagSet(pscn->nmhdr.code, Notification::UpdateUI) && (FlagSet(pscn->updated, Update::Content) || FlagSet(pscn->updated, Update::Selection))) {
+    if (pscn->nmhdr.code == Notification::UpdateUI && (FlagSet(pscn->updated, Update::Content) || FlagSet(pscn->updated, Update::Selection))) {
         highlightCurrentView();
     }
 }

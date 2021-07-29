@@ -22,6 +22,7 @@
 
 #include "EditorDecorator.h"
 
+
 class BraceMatch : public EditorDecorator
 {
     Q_OBJECT

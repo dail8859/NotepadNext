@@ -82,7 +82,7 @@ QString MacroAction::toString() const
     }
 }
 
-
+Macro::Macro() : name("<Current Recorded Macro>") {}
 
 Macro::~Macro()
 {
@@ -94,14 +94,14 @@ void Macro::addMacroStep(Message message, uptr_t wParam, sptr_t lParam)
 {
     qInfo(Q_FUNC_INFO);
 
-    // Combine SCI_REPLACESEL messages into a single string
+    // Combine ReplaceSel messages into a single string
     if (message == Message::ReplaceSel && !actions.empty() && actions.constLast()->message == Message::ReplaceSel) {
         actions.last()->str->append(reinterpret_cast<const char*>(lParam));
     }
-    // Combine backspace with replacesel
+    // Combine DeleteBack (backspace) with ReplaceSel
     else if (message == Message::DeleteBack && !actions.empty() && actions.constLast()->message == Message::ReplaceSel) {
         if (actions.last()->str->size() == 1) {
-            // A single char left so just remoe the action
+            // A single char left so just remvoe the action
             delete actions.takeLast();
         }
         else {
@@ -183,10 +183,7 @@ void Macro::replayTillEndOfFile(ScintillaNext *editor) const
 
 QString Macro::getName() const
 {
-    if (name.length() > 0)
-        return name;
-    else
-        return "<Current Recorded Macro>";
+    return name;
 }
 
 void Macro::setName(const QString &value)
