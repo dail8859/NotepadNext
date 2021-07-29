@@ -250,6 +250,7 @@ Editor.o: \
 	../src/CaseFolder.h \
 	../src/Document.h \
 	../src/UniConversion.h \
+	../src/DBCS.h \
 	../src/Selection.h \
 	../src/PositionCache.h \
 	../src/EditModel.h \

@@ -150,6 +150,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\CaseConvert.cxx" />
+    <ClCompile Include="..\..\src\CaseFolder.cxx" />
     <ClCompile Include="..\..\src\CellBuffer.cxx" />
     <ClCompile Include="..\..\src\CharacterCategoryMap.cxx" />
     <ClCompile Include="..\..\src\CharClassify.cxx" />

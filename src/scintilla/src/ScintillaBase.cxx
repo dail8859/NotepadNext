@@ -257,16 +257,17 @@ void ScintillaBase::AutoCompleteStart(Sci::Position lenEntered, const char *list
 			return;
 		}
 	}
-	ac.Start(wMain, idAutoComplete, sel.MainCaret(), PointMainCaret(),
-				lenEntered, vs.lineHeight, IsUnicodeMode(), technology);
 
 	ListOptions options{
 		vs.ElementColour(Element::List),
 		vs.ElementColour(Element::ListBack),
 		vs.ElementColour(Element::ListSelected),
-		vs.ElementColour(Element::ListSelectedBack)
+		vs.ElementColour(Element::ListSelectedBack),
+		ac.options,
 	};
-	ac.lb->SetOptions(options);
+
+	ac.Start(wMain, idAutoComplete, sel.MainCaret(), PointMainCaret(),
+				lenEntered, vs.lineHeight, IsUnicodeMode(), technology, options);
 
 	const PRectangle rcClient = GetClientRectangle();
 	Point pt = LocationFromPosition(sel.MainCaret() - lenEntered);
@@ -941,6 +942,13 @@ sptr_t ScintillaBase::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) {
 
 	case Message::AutoCGetAutoHide:
 		return ac.autoHide;
+
+	case Message::AutoCSetOptions:
+		ac.options = static_cast<AutoCompleteOption>(wParam);
+		break;
+
+	case Message::AutoCGetOptions:
+		return static_cast<sptr_t>(ac.options);
 
 	case Message::AutoCSetDropRestOfWord:
 		ac.dropRestOfWord = wParam != 0;

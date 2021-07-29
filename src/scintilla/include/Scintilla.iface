@@ -1009,6 +1009,18 @@ set void AutoCSetAutoHide=2118(bool autoHide,)
 # Retrieve whether or not autocompletion is hidden automatically when nothing matches.
 get bool AutoCGetAutoHide=2119(,)
 
+# Define option flags for autocompletion lists
+enu AutoCompleteOption=SC_AUTOCOMPLETE_
+val SC_AUTOCOMPLETE_NORMAL=0
+# Win32 specific:
+val SC_AUTOCOMPLETE_FIXED_SIZE=1
+
+# Set autocompletion options.
+set void AutoCSetOptions=2638(AutoCompleteOption options,)
+
+# Retrieve autocompletion options.
+get AutoCompleteOption AutoCGetOptions=2639(,)
+
 # Set whether or not autocompletion deletes any word characters
 # after the inserted text upon completion.
 set void AutoCSetDropRestOfWord=2270(bool dropRestOfWord,)
@@ -1195,6 +1207,9 @@ fun position GetLine=2153(line line, stringresult text)
 
 # Returns the number of lines in the document. There is always at least one.
 get line GetLineCount=2154(,)
+
+# Enlarge the number of lines allocated.
+set void AllocateLines=2089(line lines,)
 
 # Sets the size in pixels of the left margin.
 set void SetMarginLeft=2155(, int pixelWidth)

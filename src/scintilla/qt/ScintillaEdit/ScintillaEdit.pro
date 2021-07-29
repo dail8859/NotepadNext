@@ -10,12 +10,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = ScintillaEdit
 TEMPLATE = lib
 CONFIG += lib_bundle
-CONFIG += staticlib
+CONFIG += c++1z
 
-include(../../../Config.pri)
-include(../../../lexilla.pri)
-
-VERSION = 5.1.0
+VERSION = 5.1.1
 
 SOURCES += \
     ScintillaEdit.cpp \
@@ -65,13 +62,13 @@ OTHER_FILES +=
 
 INCLUDEPATH += ../ScintillaEditBase ../../include ../../src
 
-DEFINES += SCINTILLA_QT=1 MAKING_LIBRARY=1 SCI_LEXER=1 _CRT_SECURE_NO_DEPRECATE=1
+DEFINES += SCINTILLA_QT=1 MAKING_LIBRARY=1 _CRT_SECURE_NO_DEPRECATE=1
 CONFIG(release, debug|release) {
     DEFINES += NDEBUG=1
 }
 
-#DESTDIR = ../../bin
-#DLLDESTDIR = ../../bin
+DESTDIR = ../../bin
+DLLDESTDIR = ../../bin
 
 macx {
 	QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/../Frameworks/

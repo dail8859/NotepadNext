@@ -27,19 +27,21 @@ protected:
 	void GapTo(ptrdiff_t position) noexcept {
 		if (position != part1Length) {
 			try {
-				// This can never fail but std::move and std::move_backward are not noexcept.
-				if (position < part1Length) {
-					// Moving the gap towards start so moving elements towards end
-					std::move_backward(
-						body.data() + position,
-						body.data() + part1Length,
-						body.data() + gapLength + part1Length);
-				} else {	// position > part1Length
-					// Moving the gap towards end so moving elements towards start
-					std::move(
-						body.data() + part1Length + gapLength,
-						body.data() + gapLength + position,
-						body.data() + part1Length);
+				if (gapLength > 0) {	// If gap to move
+					// This can never fail but std::move and std::move_backward are not noexcept.
+					if (position < part1Length) {
+						// Moving the gap towards start so moving elements towards end
+						std::move_backward(
+							body.data() + position,
+							body.data() + part1Length,
+							body.data() + gapLength + part1Length);
+					} else {	// position > part1Length
+						// Moving the gap towards end so moving elements towards start
+						std::move(
+							body.data() + part1Length + gapLength,
+							body.data() + gapLength + position,
+							body.data() + part1Length);
+					}
 				}
 				part1Length = position;
 			} catch (...) {
@@ -51,7 +53,7 @@ protected:
 	/// Check that there is room in the buffer for an insertion,
 	/// reallocating if more space needed.
 	void RoomFor(ptrdiff_t insertionLength) {
-		if (gapLength <= insertionLength) {
+		if (gapLength < insertionLength) {
 			while (growSize < static_cast<ptrdiff_t>(body.size() / 6))
 				growSize *= 2;
 			ReAllocate(body.size() + insertionLength + growSize);
@@ -323,6 +325,16 @@ public:
 			} else {
 				return body.data() + position;
 			}
+		} else {
+			return body.data() + position + gapLength;
+		}
+	}
+
+	/// Return a pointer to a single element.
+	/// Does not rearrange the buffer.
+	const T *ElementPointer(ptrdiff_t position) const noexcept {
+		if (position < part1Length) {
+			return body.data() + position;
 		} else {
 			return body.data() + position + gapLength;
 		}

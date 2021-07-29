@@ -936,6 +936,14 @@ bool ScintillaCall::AutoCGetAutoHide() {
 	return Call(Message::AutoCGetAutoHide);
 }
 
+void ScintillaCall::AutoCSetOptions(Scintilla::AutoCompleteOption options) {
+	Call(Message::AutoCSetOptions, static_cast<uintptr_t>(options));
+}
+
+AutoCompleteOption ScintillaCall::AutoCGetOptions() {
+	return static_cast<Scintilla::AutoCompleteOption>(Call(Message::AutoCGetOptions));
+}
+
 void ScintillaCall::AutoCSetDropRestOfWord(bool dropRestOfWord) {
 	Call(Message::AutoCSetDropRestOfWord, dropRestOfWord);
 }
@@ -1118,6 +1126,10 @@ std::string ScintillaCall::GetLine(Line line) {
 
 Line ScintillaCall::LineCount() {
 	return Call(Message::GetLineCount);
+}
+
+void ScintillaCall::AllocateLines(Line lines) {
+	Call(Message::AllocateLines, lines);
 }
 
 void ScintillaCall::SetMarginLeft(int pixelWidth) {

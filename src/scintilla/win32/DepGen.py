@@ -19,12 +19,6 @@ def Generate():
 	# Create the dependencies file for g++
 	deps = Dependencies.FindDependencies(["../win32/*.cxx"] + sources,  ["../win32"] + includes, ".o", "../win32/")
 
-	# Add ScintillaBaseL as the same as ScintillaBase
-	deps = Dependencies.InsertSynonym(deps, "ScintillaBase.o", "ScintillaBaseL.o")
-
-	# Add CatalogueL as the same as Catalogue
-	deps = Dependencies.InsertSynonym(deps, "Catalogue.o", "CatalogueL.o")
-
 	Dependencies.UpdateDependencies("../win32/deps.mak", deps, topComment)
 
 	# Create the dependencies file for MSVC
