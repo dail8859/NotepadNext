@@ -20,35 +20,40 @@
 #include "MacroRecorder.h"
 #include "ScintillaNext.h"
 
-inline bool MessageHasString(Scintilla::Message message) {
-    return message == Scintilla::Message::ReplaceSel || message == Scintilla::Message::InsertText || message == Scintilla::Message::AddText || message == Scintilla::Message::AppendText;
+using namespace Scintilla;
+
+inline bool MessageHasString(Message message) {
+    return message == Message::ReplaceSel ||
+            message == Message::InsertText ||
+            message == Message::AddText ||
+            message == Message::AppendText;
 }
 
 
 class MacroAction {
 public:
-    MacroAction(Scintilla::Message message, uptr_t wParam, sptr_t lParam);
+    MacroAction(Message message, uptr_t wParam,  sptr_t lParam);
     ~MacroAction();
 
     QString toString() const;
 
-    Scintilla::Message message;
-    int wParam;
+    Message message;
+    uptr_t wParam;
     union {
-        int lParam;
+        sptr_t lParam;
         QByteArray *str;
     };
 };
 
-MacroAction::MacroAction(Scintilla::Message message, uptr_t wParam, sptr_t lParam) :
+MacroAction::MacroAction(Message message, uptr_t wParam, sptr_t lParam) :
     message(message),
     wParam(wParam)
 {
-    if (message == Scintilla::Message::ReplaceSel || message == Scintilla::Message::InsertText) {
+    if (message == Message::ReplaceSel || message == Message::InsertText) {
         // wParam is 0 for replace, and position for insert
         this->str = new QByteArray(reinterpret_cast<const char*>(lParam));
     }
-    else if (message == Scintilla::Message::AddText || message == Scintilla::Message::AppendText) {
+    else if (message == Message::AddText || message == Message::AppendText) {
         // wParam is length of text
         this->str = new QByteArray(reinterpret_cast<const char*>(lParam), wParam);
     }
@@ -85,16 +90,16 @@ Macro::~Macro()
         delete actions.takeLast();
 }
 
-void Macro::addMacroStep(Scintilla::Message message, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam)
+void Macro::addMacroStep(Message message, uptr_t wParam, sptr_t lParam)
 {
     qInfo(Q_FUNC_INFO);
 
     // Combine SCI_REPLACESEL messages into a single string
-    if (message == Scintilla::Message::ReplaceSel && !actions.empty() && actions.constLast()->message == Scintilla::Message::ReplaceSel) {
+    if (message == Message::ReplaceSel && !actions.empty() && actions.constLast()->message == Message::ReplaceSel) {
         actions.last()->str->append(reinterpret_cast<const char*>(lParam));
     }
     // Combine backspace with replacesel
-    else if (message == Scintilla::Message::DeleteBack && !actions.empty() && actions.constLast()->message == Scintilla::Message::ReplaceSel) {
+    else if (message == Message::DeleteBack && !actions.empty() && actions.constLast()->message == Message::ReplaceSel) {
         if (actions.last()->str->size() == 1) {
             // A single char left so just remoe the action
             delete actions.takeLast();
@@ -158,7 +163,7 @@ void Macro::replayTillEndOfFile(ScintillaNext *editor) const
             int deltaLength = editor->length() - length;
             int deltaPos = editor->currentPos() - curPos;
             if (deltaPos > deltaLength) {
-                // Cursor position is moving forward than document is growing
+                // Cursor position is moving forward more than document is growing
                 continue;
             }
         }
@@ -217,7 +222,7 @@ Macro *MacroRecorder::stopRecording()
     return m;
 }
 
-void MacroRecorder::recordMacroStep(Scintilla::Message message, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam)
+void MacroRecorder::recordMacroStep(Message message, uptr_t wParam, sptr_t lParam)
 {
     qInfo(Q_FUNC_INFO);
 
