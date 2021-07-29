@@ -22,6 +22,7 @@
 
 #include "EditorDecorator.h"
 
+
 class SmartHighlighter : public EditorDecorator
 {
     Q_OBJECT

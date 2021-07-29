@@ -30,6 +30,7 @@ class MacroAction;
 class Macro
 {
 public:
+    Macro();
     ~Macro();
 
     void addMacroStep(Scintilla::Message message, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);

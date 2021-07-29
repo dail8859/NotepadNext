@@ -60,7 +60,7 @@ void LineNumbers::adjustMarginWidth()
 
 void LineNumbers::notify(const NotificationData *pscn)
 {
-    if ((FlagSet(pscn->nmhdr.code, Notification::UpdateUI) && FlagSet(pscn->updated, Update::VScroll)) || FlagSet(pscn->nmhdr.code, Notification::Zoom)) {
+    if (pscn->nmhdr.code == Notification::UpdateUI && (FlagSet(pscn->updated, Update::VScroll) || FlagSet(pscn->nmhdr.code, Notification::Zoom))) {
         adjustMarginWidth();
     }
 }
