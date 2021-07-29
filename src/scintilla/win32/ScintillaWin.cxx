@@ -456,6 +456,7 @@ class ScintillaWin :
 	bool IsCompatibleDC(HDC hOtherDC) noexcept;
 	DWORD EffectFromState(DWORD grfKeyState) const noexcept;
 
+	bool IsVisible() const noexcept;
 	int SetScrollInfo(int nBar, LPCSCROLLINFO lpsi, BOOL bRedraw) noexcept;
 	bool GetScrollInfo(int nBar, LPSCROLLINFO lpsi) noexcept;
 	void ChangeScrollPos(int barType, Sci::Position pos);
@@ -1328,12 +1329,28 @@ std::string ScintillaWin::EncodeWString(std::wstring_view wsv) {
 }
 
 sptr_t ScintillaWin::GetTextLength() {
-	return pdoc->CountUTF16(0, pdoc->Length());
+	if (pdoc->dbcsCodePage == 0 || pdoc->dbcsCodePage == CpUtf8) {
+		return pdoc->CountUTF16(0, pdoc->Length());
+	} else {
+		// Count the number of UTF-16 code units line by line
+		const UINT cpSrc = CodePageOfDocument();
+		const Sci::Line lines = pdoc->LinesTotal();
+		Sci::Position codeUnits = 0;
+		std::string lineBytes;
+		for (Sci::Line line = 0; line < lines; line++) {
+			const Sci::Position start = pdoc->LineStart(line);
+			const Sci::Position width = pdoc->LineStart(line+1) - start;
+			lineBytes.resize(width);
+			pdoc->GetCharRange(lineBytes.data(), start, width);
+			codeUnits += WideCharLenFromMultiByte(cpSrc, lineBytes);
+		}
+		return codeUnits;
+	}
 }
 
 sptr_t ScintillaWin::GetText(uptr_t wParam, sptr_t lParam) {
 	if (lParam == 0) {
-		return pdoc->CountUTF16(0, pdoc->Length());
+		return GetTextLength();
 	}
 	if (wParam == 0) {
 		return 0;
@@ -1344,27 +1361,41 @@ sptr_t ScintillaWin::GetText(uptr_t wParam, sptr_t lParam) {
 		return 0;
 	}
 	const Sci::Position lengthWanted = wParam - 1;
-	Sci::Position sizeRequestedRange = pdoc->GetRelativePositionUTF16(0, lengthWanted);
-	if (sizeRequestedRange < 0) {
-		// Requested more text than there is in the document.
-		sizeRequestedRange = pdoc->Length();
-	}
-	std::string docBytes(sizeRequestedRange, '\0');
-	pdoc->GetCharRange(&docBytes[0], 0, sizeRequestedRange);
 	if (IsUnicodeMode()) {
+		Sci::Position sizeRequestedRange = pdoc->GetRelativePositionUTF16(0, lengthWanted);
+		if (sizeRequestedRange < 0) {
+			// Requested more text than there is in the document.
+			sizeRequestedRange = pdoc->Length();
+		}
+		std::string docBytes(sizeRequestedRange, '\0');
+		pdoc->GetCharRange(&docBytes[0], 0, sizeRequestedRange);
 		const size_t uLen = UTF16FromUTF8(docBytes, ptr, lengthWanted);
 		ptr[uLen] = L'\0';
 		return uLen;
 	} else {
 		// Not Unicode mode
 		// Convert to Unicode using the current Scintilla code page
+		// Retrieve as UTF-16 line by line
 		const UINT cpSrc = CodePageOfDocument();
-		int lengthUTF16 = WideCharLenFromMultiByte(cpSrc, docBytes);
-		if (lengthUTF16 > lengthWanted)
-			lengthUTF16 = static_cast<int>(lengthWanted);
-		WideCharFromMultiByte(cpSrc, docBytes, ptr, lengthUTF16);
-		ptr[lengthUTF16] = L'\0';
-		return lengthUTF16;
+		const Sci::Line lines = pdoc->LinesTotal();
+		Sci::Position codeUnits = 0;
+		std::string lineBytes;
+		std::wstring lineAsUTF16;
+		for (Sci::Line line = 0; line < lines && codeUnits < lengthWanted; line++) {
+			const Sci::Position start = pdoc->LineStart(line);
+			const Sci::Position width = pdoc->LineStart(line + 1) - start;
+			lineBytes.resize(width);
+			pdoc->GetCharRange(lineBytes.data(), start, width);
+			const Sci::Position codeUnitsLine = WideCharLenFromMultiByte(cpSrc, lineBytes);
+			lineAsUTF16.resize(codeUnitsLine);
+			const Sci::Position lengthLeft = lengthWanted - codeUnits;
+			WideCharFromMultiByte(cpSrc, lineBytes, lineAsUTF16.data(), lineAsUTF16.length());
+			const Sci::Position lengthToCopy = std::min(lengthLeft, codeUnitsLine);
+			lineAsUTF16.copy(ptr + codeUnits, lengthToCopy);
+			codeUnits += lengthToCopy;
+		}
+		ptr[codeUnits] = L'\0';
+		return codeUnits;
 	}
 }
 
@@ -1832,6 +1863,7 @@ sptr_t ScintillaWin::SciMessage(Message iMessage, uptr_t wParam, sptr_t lParam) 
 				}
 				DropRenderTarget();
 				technology = technologyNew;
+				view.bufferedDraw = technologyNew == Technology::Default;
 				// Invalidate all cached information including layout.
 				DropGraphics();
 				InvalidateStyleRedraw();
@@ -1988,6 +2020,15 @@ sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) {
 
 		case WM_ERASEBKGND:
 			return 1;   // Avoid any background erasure as whole window painted.
+
+		case WM_SETREDRAW:
+			::DefWindowProc(MainHWND(), msg, wParam, lParam);
+			if (wParam) {
+				SetScrollBars();
+				SetVerticalScrollPos();
+				SetHorizontalScrollPos();
+			}
+			return 0;
 
 		case WM_CAPTURECHANGED:
 			capturedMouse = false;
@@ -2224,6 +2265,10 @@ void ScintillaWin::UpdateSystemCaret() {
 	}
 }
 
+bool ScintillaWin::IsVisible() const noexcept {
+	return GetWindowStyle(MainHWND()) & WS_VISIBLE;
+}
+
 int ScintillaWin::SetScrollInfo(int nBar, LPCSCROLLINFO lpsi, BOOL bRedraw) noexcept {
 	return ::SetScrollInfo(MainHWND(), nBar, lpsi, bRedraw);
 }
@@ -2234,6 +2279,10 @@ bool ScintillaWin::GetScrollInfo(int nBar, LPSCROLLINFO lpsi) noexcept {
 
 // Change the scroll position but avoid repaint if changing to same value
 void ScintillaWin::ChangeScrollPos(int barType, Sci::Position pos) {
+	if (!IsVisible()) {
+		return;
+	}
+
 	SCROLLINFO sci = {
 		sizeof(sci), 0, 0, 0, 0, 0, 0
 	};
@@ -2255,6 +2304,10 @@ void ScintillaWin::SetHorizontalScrollPos() {
 }
 
 bool ScintillaWin::ModifyScrollBars(Sci::Line nMax, Sci::Line nPage) {
+	if (!IsVisible()) {
+		return false;
+	}
+
 	bool modified = false;
 	SCROLLINFO sci = {
 		sizeof(sci), 0, 0, 0, 0, 0, 0

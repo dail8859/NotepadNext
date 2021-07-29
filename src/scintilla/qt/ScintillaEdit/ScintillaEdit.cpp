@@ -855,6 +855,14 @@ bool ScintillaEdit::autoCAutoHide() const {
     return send(SCI_AUTOCGETAUTOHIDE, 0, 0);
 }
 
+void ScintillaEdit::autoCSetOptions(sptr_t options) {
+    send(SCI_AUTOCSETOPTIONS, options, 0);
+}
+
+sptr_t ScintillaEdit::autoCOptions() const {
+    return send(SCI_AUTOCGETOPTIONS, 0, 0);
+}
+
 void ScintillaEdit::autoCSetDropRestOfWord(bool dropRestOfWord) {
     send(SCI_AUTOCSETDROPRESTOFWORD, dropRestOfWord, 0);
 }
@@ -1025,6 +1033,10 @@ QByteArray ScintillaEdit::getLine(sptr_t line) {
 
 sptr_t ScintillaEdit::lineCount() const {
     return send(SCI_GETLINECOUNT, 0, 0);
+}
+
+void ScintillaEdit::allocateLines(sptr_t lines) {
+    send(SCI_ALLOCATELINES, lines, 0);
 }
 
 void ScintillaEdit::setMarginLeft(sptr_t pixelWidth) {

@@ -252,6 +252,8 @@ public:
 	void userListShow(sptr_t listType, const char * itemList);
 	void autoCSetAutoHide(bool autoHide);
 	bool autoCAutoHide() const;
+	void autoCSetOptions(sptr_t options);
+	sptr_t autoCOptions() const;
 	void autoCSetDropRestOfWord(bool dropRestOfWord);
 	bool autoCDropRestOfWord() const;
 	void registerImage(sptr_t type, const char * xpmData);
@@ -295,6 +297,7 @@ public:
 	sptr_t firstVisibleLine() const;
 	QByteArray getLine(sptr_t line);
 	sptr_t lineCount() const;
+	void allocateLines(sptr_t lines);
 	void setMarginLeft(sptr_t pixelWidth);
 	sptr_t marginLeft() const;
 	void setMarginRight(sptr_t pixelWidth);

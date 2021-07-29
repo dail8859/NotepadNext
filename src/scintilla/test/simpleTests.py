@@ -1854,6 +1854,32 @@ class TestModalSelection(unittest.TestCase):
 		self.assertEquals(self.ed.GetSelectionNAnchor(0), 0)
 		self.ed.ClearSelections()
 
+class TestTechnology(unittest.TestCase):
+	""" These tests are just to ensure that the calls set and retrieve values.
+	They assume running on a Direct2D compatible version of Windows.
+	They do not check visual appearance.
+	"""
+	def setUp(self):
+		self.xite = Xite.xiteFrame
+		self.ed = self.xite.ed
+		self.ed.ClearAll()
+		self.ed.EmptyUndoBuffer()
+
+	def tearDown(self):
+		self.ed.ClearAll()
+		self.ed.EmptyUndoBuffer()
+
+	def testTechnologyAndBufferedDraw(self):
+		self.ed.Technology = self.ed.SC_TECHNOLOGY_DEFAULT
+		self.assertEquals(self.ed.GetTechnology(), self.ed.SC_TECHNOLOGY_DEFAULT)
+		if sys.platform == "win32":
+			self.ed.Technology = self.ed.SC_TECHNOLOGY_DIRECTWRITE
+			self.assertEquals(self.ed.GetTechnology(), self.ed.SC_TECHNOLOGY_DIRECTWRITE)
+			self.assertEquals(self.ed.BufferedDraw, False)
+			self.ed.Technology = self.ed.SC_TECHNOLOGY_DEFAULT
+			self.assertEquals(self.ed.GetTechnology(), self.ed.SC_TECHNOLOGY_DEFAULT)
+			self.assertEquals(self.ed.BufferedDraw, True)
+
 class TestStyleAttributes(unittest.TestCase):
 	""" These tests are just to ensure that the calls set and retrieve values.
 	They do not check the visual appearance of the style attributes.

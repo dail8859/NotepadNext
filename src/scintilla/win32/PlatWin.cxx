@@ -2932,10 +2932,11 @@ class ListBoxX : public ListBox {
 	Point location;	// Caret location at which the list is opened
 	int wheelDelta; // mouse wheel residue
 	ListOptions options;
+	DWORD frameStyle = WS_THICKFRAME;
 
 	HWND GetHWND() const noexcept;
 	void AppendListItem(const char *text, const char *numword);
-	static void AdjustWindowRect(PRectangle *rc, UINT dpi) noexcept;
+	void AdjustWindowRect(PRectangle *rc, UINT dpiAdjust) const noexcept;
 	int ItemHeight() const;
 	int MinClientWidth() const noexcept;
 	int TextOffset() const;
@@ -3014,7 +3015,7 @@ void ListBoxX::Create(Window &parent_, int ctrlID_, Point location_, int lineHei
 	// Window created as popup so not clipped within parent client area
 	wid = ::CreateWindowEx(
 		WS_EX_WINDOWEDGE, ListBoxX_ClassName, TEXT(""),
-		WS_POPUP | WS_THICKFRAME,
+		WS_POPUP | frameStyle,
 		100,100, 150,80, hwndParent,
 		NULL,
 		hinstanceParent,
@@ -3318,14 +3319,15 @@ void ListBoxX::SetList(const char *list, char separator, char typesep) {
 
 void ListBoxX::SetOptions(ListOptions options_) {
 	options = options_;
+	frameStyle = FlagSet(options.options, AutoCompleteOption::FixedSize) ? WS_BORDER : WS_THICKFRAME;
 }
 
-void ListBoxX::AdjustWindowRect(PRectangle *rc, UINT dpi) noexcept {
+void ListBoxX::AdjustWindowRect(PRectangle *rc, UINT dpiAdjust) const noexcept {
 	RECT rcw = RectFromPRectangle(*rc);
 	if (fnAdjustWindowRectExForDpi) {
-		fnAdjustWindowRectExForDpi(&rcw, WS_THICKFRAME, false, WS_EX_WINDOWEDGE, dpi);
+		fnAdjustWindowRectExForDpi(&rcw, frameStyle, false, WS_EX_WINDOWEDGE, dpiAdjust);
 	} else {
-		::AdjustWindowRectEx(&rcw, WS_THICKFRAME, false, WS_EX_WINDOWEDGE);
+		::AdjustWindowRectEx(&rcw, frameStyle, false, WS_EX_WINDOWEDGE);
 	}
 	*rc = PRectangle::FromInts(rcw.left, rcw.top, rcw.right, rcw.bottom);
 }

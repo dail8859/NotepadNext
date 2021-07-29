@@ -54,7 +54,8 @@ def UpdateVersionNumbers(sci, root):
         "CFBundleShortVersionString", sci.versionDotted)
     ReplaceREInFile(cocoa / "Scintilla"/ "Scintilla.xcodeproj" / "project.pbxproj",
         "CURRENT_PROJECT_VERSION = [0-9.]+;",
-        f'CURRENT_PROJECT_VERSION = {sci.versionDotted};')
+        f'CURRENT_PROJECT_VERSION = {sci.versionDotted};',
+        0)
 
 def RegenerateAll(rootDirectory):
     

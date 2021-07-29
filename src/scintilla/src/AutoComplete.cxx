@@ -39,6 +39,7 @@ AutoComplete::AutoComplete() :
 	typesep('?'),
 	ignoreCase(false),
 	chooseSingle(false),
+	options(AutoCompleteOption::Normal),
 	posStart(0),
 	startLen(0),
 	cancelAtStartPos(true),
@@ -63,10 +64,11 @@ bool AutoComplete::Active() const noexcept {
 
 void AutoComplete::Start(Window &parent, int ctrlID,
 	Sci::Position position, Point location, Sci::Position startLen_,
-	int lineHeight, bool unicodeMode, Technology technology) {
+	int lineHeight, bool unicodeMode, Technology technology, ListOptions listOptions) {
 	if (active) {
 		Cancel();
 	}
+	lb->SetOptions(listOptions);
 	lb->Create(parent, ctrlID, location, lineHeight, unicodeMode, technology);
 	lb->Clear();
 	active = true;

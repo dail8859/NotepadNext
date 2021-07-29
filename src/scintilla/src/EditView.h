@@ -40,6 +40,7 @@ void DrawTextNoClipPhase(Surface *surface, PRectangle rc, const Style &style, XY
 	std::string_view text, DrawPhase phase);
 void DrawStyledText(Surface *surface, const ViewStyle &vs, int styleOffset, PRectangle rcText,
 	const StyledText &st, size_t start, size_t length, DrawPhase phase);
+void Hexits(char *hexits, int ch) noexcept;
 
 typedef void (*DrawTabArrowFn)(Surface *surface, PRectangle rcTab, int ymid,
 	const ViewStyle &vsDraw, Stroke stroke);

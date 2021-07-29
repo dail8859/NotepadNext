@@ -39,4 +39,16 @@ bool DBCSIsLeadByte(int codePage, char ch) noexcept {
 	return false;
 }
 
+bool IsDBCSValidSingleByte(int codePage, int ch) noexcept {
+	switch (codePage) {
+	case 932:
+		return ch == 0x80
+			|| (ch >= 0xA0 && ch <= 0xDF)
+			|| (ch >= 0xFD);
+
+	default:
+		return false;
+	}
+}
+
 }

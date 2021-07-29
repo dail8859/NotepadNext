@@ -230,6 +230,11 @@ enum class IndicFlag {
 	ValueFore = 1,
 };
 
+enum class AutoCompleteOption {
+	Normal = 0,
+	FixedSize = 1,
+};
+
 enum class IndentView {
 	None = 0,
 	Real = 1,

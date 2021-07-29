@@ -561,11 +561,52 @@
 	<td>Petko Georgiev</td>
 	<td>YX Hao</td>
 	<td>Damiano Lombardi</td>
+      </tr><tr>
+	<td>Michael Neuroth</td>
     </tr>
     </table>
     <h2>Releases</h2>
     <h3>
-       <a href="https://www.scintilla.org/scintilla504.zip">Release 5.1.0</a>
+       <a href="https://www.scintilla.org/scintilla511.zip">Release 5.1.1</a>
+    </h3>
+    <ul>
+	<li>
+	Released 26 July 2021.
+	</li>
+	<li>
+	In DBCS encodings, treat valid DBCS lead byte followed by invalid trail byte as single byte.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1408/">Feature #1408</a>.
+	</li>
+	<li>
+	Searching was optimized for documents that contain mostly ASCII text and is often 2-3 times faster.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1381/">Feature #1381</a>.
+	</li>
+	<li>
+	Word searching behaves more consistently at start and end of document.
+	</li>
+	<li>
+	Add SCI_ALLOCATELINES to allocate indices to hold some number of lines.
+	This can decrease reallocation overhead when the application can count or estimate the number of lines in huge files.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1370/">Feature #1370</a>.
+	</li>
+	<li>
+	Add SCI_AUTOCSETOPTIONS to allow choosing a non-resizeable autocompletion list
+	on Win32.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1284/">Feature #1284</a>.
+	</li>
+	<li>
+	On Win32, when technology is changed, buffering is set to a reasonable value for the technology:
+	on for GDI and off for Direct2D as Direct2D performs its own buffering.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1400/">Feature #1400</a>.
+	</li>
+	<li>
+	On Win32, implement WM_SETREDRAW to turn off scroll bar updates.
+	This can be used to reduce overhead when making many changes.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1411/">Feature #1411</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla510.zip">Release 5.1.0</a>
     </h3>
     <ul>
 	<li>
@@ -591,7 +632,7 @@
 	and support setting a representation for the "\r\n" line end sequence.
 	</li>
 	<li>
-	Add SCI_PASTERECTANGULAR to insert text like a rectangular paste.
+	Add SCI_REPLACERECTANGULAR to insert text like a rectangular paste.
 	</li>
 	<li>
 	Fixed bug with SCI_GETLASTCHILD.

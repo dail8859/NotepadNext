@@ -19,6 +19,7 @@ constexpr bool IsDBCSCodePage(int codePage) noexcept {
 }
 
 bool DBCSIsLeadByte(int codePage, char ch) noexcept;
+bool IsDBCSValidSingleByte(int codePage, int ch) noexcept;
 
 }
 

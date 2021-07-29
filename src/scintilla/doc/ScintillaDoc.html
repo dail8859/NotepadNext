@@ -128,7 +128,7 @@
 
     <h1>Scintilla Documentation</h1>
 
-    <p>Last edited 17 June 2021 NH</p>
+    <p>Last edited 17 July 2021 NH</p>
 
     <p style="background:#90F0C0">Scintilla 5 has moved the lexers from Scintilla into a new
     <a href="Lexilla.html">Lexilla</a> project.<br />
@@ -531,6 +531,7 @@
      <a class="message" href="#SCI_GETREADONLY">SCI_GETREADONLY &rarr; bool</a><br />
      <a class="message" href="#SCI_GETTEXTRANGE">SCI_GETTEXTRANGE(&lt;unused&gt;, Sci_TextRange *tr) &rarr; position</a><br />
      <a class="message" href="#SCI_ALLOCATE">SCI_ALLOCATE(position bytes)</a><br />
+     <a class="message" href="#SCI_ALLOCATELINES">SCI_ALLOCATELINES(line lines)</a><br />
      <a class="message" href="#SCI_ADDTEXT">SCI_ADDTEXT(position length, const char *text)</a><br />
      <a class="message" href="#SCI_ADDSTYLEDTEXT">SCI_ADDSTYLEDTEXT(position length, cell *c)</a><br />
      <a class="message" href="#SCI_APPENDTEXT">SCI_APPENDTEXT(position length, const char *text)</a><br />
@@ -644,6 +645,12 @@
     <p><b id="SCI_ALLOCATE">SCI_ALLOCATE(position bytes)</b><br />
      Allocate a document buffer large enough to store a given number of bytes.
      The document will not be made smaller than its current contents.</p>
+
+    <p><b id="SCI_ALLOCATELINES">SCI_ALLOCATELINES(line lines)</b><br />
+     Allocate line indices to match the <code class="parameter">lines</code> argument.
+     This is an optimization that can prevent multiple reallocations of the indices as text is inserted
+     if the application can estimate the number of lines in the document.
+     The number of lines will not be reduced by this call.</p>
 
     <p><b id="SCI_ADDTEXT">SCI_ADDTEXT(position length, const char *text)</b><br />
      This inserts the first <code class="parameter">length</code> characters from the string
@@ -4511,8 +4518,14 @@ struct Sci_TextToFind {
     is retained after being presented which may prevent drawing failures on some cards and drivers.
     <code>SC_TECHNOLOGY_DIRECTWRITEDC</code> differs from
     <code>SC_TECHNOLOGY_DIRECTWRITE</code> by using DirectWrite to draw into a GDI DC.
-    Since Direct2D buffers drawing, Scintilla's buffering can be turned off with
-    <code>SCI_SETBUFFEREDDRAW(0)</code>.
+    </p>
+    <p>
+    On Win32, buffered drawing is set to a reasonable value for the technology: on for GDI and off for Direct2D
+    as Direct2D performs its own buffering.
+    This can be changed after setting technology with
+    <a class="seealso" href="#SCI_SETBUFFEREDDRAW">SCI_SETBUFFEREDDRAW</a>.
+    </p>
+    <p>
     When using DirectWrite, you can use
     <a class="message" href="#SCI_SETFONTLOCALE"><code>SCI_SETFONTLOCALE</code></a>
     to set an appropriate font locale to draw text with expected language-dependent glyphs.
@@ -5728,6 +5741,8 @@ struct Sci_TextToFind {
      <a class="message" href="#SCI_AUTOCSETDROPRESTOFWORD">SCI_AUTOCSETDROPRESTOFWORD(bool
     dropRestOfWord)</a><br />
      <a class="message" href="#SCI_AUTOCGETDROPRESTOFWORD">SCI_AUTOCGETDROPRESTOFWORD &rarr; bool</a><br />
+     <a class="message" href="#SCI_AUTOCSETOPTIONS">SCI_AUTOCSETOPTIONS(int options)</a><br />
+     <a class="message" href="#SCI_AUTOCGETOPTIONS">SCI_AUTOCGETOPTIONS &rarr; int</a><br />
      <a class="message" href="#SCI_REGISTERIMAGE">SCI_REGISTERIMAGE(int type, const char *xpmData)</a><br />
      <a class="message" href="#SCI_REGISTERRGBAIMAGE">SCI_REGISTERRGBAIMAGE(int type, const char *pixels)</a><br />
      <a class="message" href="#SCI_CLEARREGISTEREDIMAGES">SCI_CLEARREGISTEREDIMAGES</a><br />
@@ -5873,6 +5888,42 @@ struct Sci_TextToFind {
      <b id="SCI_AUTOCGETDROPRESTOFWORD">SCI_AUTOCGETDROPRESTOFWORD &rarr; bool</b><br />
      When an item is selected, any word characters following the caret are first erased if
     <code class="parameter">dropRestOfWord</code> is set <code>true</code>. The default is <code>false</code>.</p>
+
+    <p><b id="SCI_AUTOCSETOPTIONS">SCI_AUTOCSETOPTIONS(int options)</b><br />
+     <b id="SCI_AUTOCGETOPTIONS">SCI_AUTOCGETOPTIONS &rarr; int</b><br />
+     Set options for autocompletion from the following list.</p>
+
+    <table class="standard" summary="Autocompletion options">
+      <tbody>
+        <tr>
+          <th align="left">Symbol</th>
+
+          <th>Value</th>
+
+          <th align="left">Purpose</th>
+        </tr>
+      </tbody>
+
+      <tbody valign="top">
+        <tr>
+          <td align="left"><code>SC_AUTOCOMPLETE_NORMAL</code></td>
+
+          <td align="center">0</td>
+
+          <td>Display autocompletion using default settings.</td>
+        </tr>
+
+        <tr>
+          <td align="left"><code>SC_AUTOCOMPLETE_FIXED_SIZE</code></td>
+
+          <td align="center">1</td>
+
+          <td>On Win32 only, use a fixed size list instead of one that can be resized by the user.
+	  This also avoids a header rectangle above the list.</td>
+        </tr>
+
+      </tbody>
+    </table>
 
     <p>
       <b id="SCI_REGISTERIMAGE">SCI_REGISTERIMAGE(int type, const char *xpmData)</b><br />
