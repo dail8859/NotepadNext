@@ -24,7 +24,6 @@
 #include <QDateTime>
 
 #include <ScintillaDocument.h>
-#include <SciLexer.h>
 
 // TODO: Clean up this class
 

@@ -32,7 +32,7 @@ class Macro
 public:
     ~Macro();
 
-    void addMacroStep(int message, uptr_t wParam, sptr_t lParam);
+    void addMacroStep(Scintilla::Message message, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
     int size() const { return actions.size(); }
     void replay(ScintillaNext *editor, int n = 1) const;
     void replayTillEndOfFile(ScintillaNext *editor) const;
@@ -57,7 +57,7 @@ public:
     Macro *stopRecording();
 
 public slots:
-    void recordMacroStep(int message, uptr_t wParam, sptr_t lParam);
+    void recordMacroStep(Scintilla::Message message, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
 
 private:
     ScintillaNext *editor = Q_NULLPTR;

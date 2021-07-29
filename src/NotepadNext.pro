@@ -25,12 +25,7 @@ lessThan(QT_MAJOR_VERSION, 5) {
 
 TEMPLATE = subdirs
 
-SUBDIRS = ScintillaEdit \
-        NotepadNext
-
-ScintillaEdit.subdir = scintilla/qt/ScintillaEdit
-
-NotepadNext.depends = ScintillaEdit
+SUBDIRS = NotepadNext
 
 win32 {
     package.target = make_package

@@ -12,7 +12,7 @@
 
 #include "UniqueString.h"
 
-namespace Scintilla {
+namespace Scintilla::Internal {
 
 /// Equivalent to strdup but produces a std::unique_ptr<const char[]> allocation to go
 /// into collections.

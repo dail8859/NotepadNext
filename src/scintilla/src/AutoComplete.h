@@ -8,7 +8,7 @@
 #ifndef AUTOCOMPLETE_H
 #define AUTOCOMPLETE_H
 
-namespace Scintilla {
+namespace Scintilla::Internal {
 
 /**
  */
@@ -32,14 +32,14 @@ public:
 	bool cancelAtStartPos;
 	bool autoHide;
 	bool dropRestOfWord;
-	unsigned int ignoreCaseBehaviour;
+	Scintilla::CaseInsensitiveBehaviour ignoreCaseBehaviour;
 	int widthLBDefault;
 	int heightLBDefault;
-	/** SC_ORDER_PRESORTED:   Assume the list is presorted; selection will fail if it is not alphabetical<br />
-	 *  SC_ORDER_PERFORMSORT: Sort the list alphabetically; start up performance cost for sorting<br />
-	 *  SC_ORDER_CUSTOM:      Handle non-alphabetical entries; start up performance cost for generating a sorted lookup table
+	/** Ordering::PreSorted:   Assume the list is presorted; selection will fail if it is not alphabetical<br />
+	 *  Ordering::PerformSort: Sort the list alphabetically; start up performance cost for sorting<br />
+	 *  Ordering::Custom:      Handle non-alphabetical entries; start up performance cost for generating a sorted lookup table
 	 */
-	int autoSort;
+	Scintilla::Ordering autoSort;
 
 	AutoComplete();
 	~AutoComplete();
@@ -49,7 +49,7 @@ public:
 
 	/// Display the auto completion list positioned to be near a character position
 	void Start(Window &parent, int ctrlID, Sci::Position position, Point location,
-		Sci::Position startLen_, int lineHeight, bool unicodeMode, int technology);
+		Sci::Position startLen_, int lineHeight, bool unicodeMode, Scintilla::Technology technology);
 
 	/// The stop chars are characters which, when typed, cause the auto completion list to disappear
 	void SetStopChars(const char *stopChars_);

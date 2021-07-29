@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # Requires Python 2.7 or later
 
-import ctypes, os, sys, unittest
+import ctypes, os, platform, sys, unittest
 
 from PySide.QtCore import *
 from PySide.QtGui import *
@@ -18,6 +18,26 @@ scintillaScriptsDirectory = os.path.join(scintillaDirectory, "scripts")
 sys.path.append(scintillaScriptsDirectory)
 import Face
 
+scintillaIncludesLexers = False
+# Lexilla may optionally be tested it is built and can be loaded
+lexillaAvailable = False
+
+lexillaDirectory = os.path.join(scintillaDirectory, "..", "lexilla")
+lexillaBinDirectory = os.path.join(lexillaDirectory, "bin")
+lexillaIncludeDirectory = os.path.join(lexillaDirectory, "include")
+
+lexName = "liblexilla.so"
+try:
+	lexillaSOPath = os.path.join(lexillaBinDirectory, lexName)
+	lexillaLibrary = ctypes.cdll.LoadLibrary(lexillaSOPath)
+	createLexer = lexillaLibrary.CreateLexer
+	createLexer.restype = ctypes.c_void_p
+	lexillaAvailable = True
+	print("Found Lexilla")
+except OSError:
+	print("Can't find " + lexName)
+	print("Python is built for " + " ".join(platform.architecture()))
+
 class Form(QDialog):
 
 	def __init__(self, parent=None):
@@ -30,6 +50,12 @@ class XiteWin():
 	def __init__(self, test=""):
 		self.face = Face.Face()
 		self.face.ReadFromFile(os.path.join(scintillaIncludeDirectory, "Scintilla.iface"))
+		try:
+			faceLex = Face.Face()
+			faceLex.ReadFromFile(os.path.join(lexillaIncludeDirectory, "LexicalStyles.iface"))
+			self.face.features.update(faceLex.features)
+		except FileNotFoundError:
+			print("Can't find " + "LexicalStyles.iface")
 
 		self.test = test
 
@@ -55,6 +81,15 @@ class XiteWin():
 		results = runner.run(tests)
 		print(results)
 		sys.exit(0)
+
+	def ChooseLexer(self, lexer):
+		if scintillaIncludesLexers:
+			self.ed.LexerLanguage = lexer
+		elif lexillaAvailable:
+			pLexilla = createLexer(lexer)
+			self.ed.SetILexer(0, pLexilla)
+		else:	# No lexers available
+			pass
 
 xiteFrame = None
 
