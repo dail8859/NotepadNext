@@ -71,6 +71,7 @@ SOURCES += \
     Settings.cpp \
     SpinBoxDelegate.cpp \
     decorators/ApplicationDecorator.cpp \
+    decorators/BetterMultiSelection.cpp \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
     dialogs/FindReplaceDialog.cpp \
@@ -114,6 +115,7 @@ HEADERS += \
     Settings.h \
     SpinBoxDelegate.h \
     decorators/ApplicationDecorator.h \
+    decorators/BetterMultiSelection.h \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
     dialogs/FindReplaceDialog.h \
