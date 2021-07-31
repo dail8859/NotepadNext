@@ -68,7 +68,7 @@ bool SurroundSelection::eventFilter(QObject *obj, QEvent *event)
 }
 
 
-void SurroundSelection::notify(const SCNotification *pscn)
+void SurroundSelection::notify(const Scintilla::NotificationData *pscn)
 {
     Q_UNUSED(pscn)
 }

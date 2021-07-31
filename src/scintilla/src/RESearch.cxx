@@ -212,7 +212,7 @@
 #include "CharClassify.h"
 #include "RESearch.h"
 
-using namespace Scintilla;
+using namespace Scintilla::Internal;
 
 #define OKP     1
 #define NOP     0
@@ -237,10 +237,7 @@ using namespace Scintilla;
  * The following defines are not meant to be changeable.
  * They are for readability only.
  */
-#define BLKIND  0370
 #define BITIND  07
-
-static const char bitarr[] = { 1, 2, 4, 8, 16, 32, 64, '\200' };
 
 #define badpat(x)	(*nfa = END, x)
 
@@ -287,7 +284,7 @@ void RESearch::GrabMatches(const CharacterIndexer &ci) {
 }
 
 void RESearch::ChSet(unsigned char c) noexcept {
-	bittab[((c) & BLKIND) >> 3] |= bitarr[(c) & BITIND];
+	bittab[c >> 3] |= 1 << (c & BITIND);
 }
 
 void RESearch::ChSetWithCase(unsigned char c, bool caseSensitive) noexcept {
@@ -301,7 +298,9 @@ void RESearch::ChSetWithCase(unsigned char c, bool caseSensitive) noexcept {
 	}
 }
 
-static unsigned char escapeValue(unsigned char ch) noexcept {
+namespace {
+
+constexpr unsigned char escapeValue(unsigned char ch) noexcept {
 	switch (ch) {
 	case 'a':	return '\a';
 	case 'b':	return '\b';
@@ -314,7 +313,7 @@ static unsigned char escapeValue(unsigned char ch) noexcept {
 	return 0;
 }
 
-static int GetHexaChar(unsigned char hd1, unsigned char hd2) noexcept {
+constexpr int GetHexaChar(unsigned char hd1, unsigned char hd2) noexcept {
 	int hexValue = 0;
 	if (hd1 >= '0' && hd1 <= '9') {
 		hexValue += 16 * (hd1 - '0');
@@ -335,6 +334,12 @@ static int GetHexaChar(unsigned char hd1, unsigned char hd2) noexcept {
 		return -1;
 	}
 	return hexValue;
+}
+
+constexpr int isinset(const char *ap, unsigned char c) noexcept {
+	return ap[c >> 3] & (1 << (c & BITIND));
+}
+
 }
 
 /**
@@ -829,11 +834,7 @@ int RESearch::Execute(const CharacterIndexer &ci, Sci::Position lp, Sci::Positio
  *  by tagged expressions (n = 1 to 9).
  */
 
-extern void re_fail(char *,char);
-
-static inline int isinset(const char *ap, unsigned char c) noexcept {
-	return ap[(c & BLKIND) >> 3] & bitarr[c & BITIND];
-}
+//extern void re_fail(char *,char);
 
 /*
  * skip values for CLO XXX to skip past the closure

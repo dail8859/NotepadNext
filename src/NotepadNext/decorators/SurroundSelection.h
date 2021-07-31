@@ -37,7 +37,7 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 
 public slots:
-    void notify(const SCNotification *pscn) override;
+    void notify(const Scintilla::NotificationData *pscn) override;
 
 private:
     void surroundSelections(const char ch1, const char ch2);

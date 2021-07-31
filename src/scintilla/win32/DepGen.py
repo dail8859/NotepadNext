@@ -13,17 +13,11 @@ from scripts import Dependencies
 topComment = "# Created by DepGen.py. To recreate, run DepGen.py.\n"
 
 def Generate():
-	sources = ["../src/*.cxx", "../lexlib/*.cxx", "../lexers/*.cxx"]
-	includes = ["../include", "../src", "../lexlib"]
+	sources = ["../src/*.cxx"]
+	includes = ["../include", "../src"]
 
 	# Create the dependencies file for g++
 	deps = Dependencies.FindDependencies(["../win32/*.cxx"] + sources,  ["../win32"] + includes, ".o", "../win32/")
-
-	# Add ScintillaBaseL as the same as ScintillaBase
-	deps = Dependencies.InsertSynonym(deps, "ScintillaBase.o", "ScintillaBaseL.o")
-
-	# Add CatalogueL as the same as Catalogue
-	deps = Dependencies.InsertSynonym(deps, "Catalogue.o", "CatalogueL.o")
 
 	Dependencies.UpdateDependencies("../win32/deps.mak", deps, topComment)
 

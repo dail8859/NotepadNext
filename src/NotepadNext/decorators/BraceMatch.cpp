@@ -21,7 +21,8 @@
 
 #include "BraceMatch.h"
 
-static const QList<char> braces = {'[', ']', '(', ')', '{', '}'};
+using namespace Scintilla;
+
 
 BraceMatch::BraceMatch(ScintillaEdit *editor) :
     EditorDecorator(editor)
@@ -59,6 +60,8 @@ BraceMatch::BraceMatch(ScintillaEdit *editor) :
 
 void BraceMatch::doHighlighting()
 {
+    static const QList<char> braces = {'[', ']', '(', ')', '{', '}'};
+
     const Sci_Position pos = static_cast<Sci_Position>(editor->currentPos());
 
     // Check the character before the caret first
@@ -101,9 +104,11 @@ void BraceMatch::clearHighlighting()
     editor->setHighlightGuide(0);
 }
 
-void BraceMatch::notify(const SCNotification *pscn)
+void BraceMatch::notify(const NotificationData *pscn)
 {
-    if (pscn->nmhdr.code == SCN_UPDATEUI && pscn->updated & (SC_UPDATE_CONTENT | SC_UPDATE_SELECTION)) {
-        doHighlighting();
+    if (pscn->nmhdr.code == Notification::UpdateUI) {
+        if (FlagSet(pscn->updated, Update::Content) || FlagSet(pscn->updated, Update::Selection)) {
+            doHighlighting();
+        }
     }
 }

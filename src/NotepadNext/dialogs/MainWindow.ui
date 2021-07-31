@@ -80,6 +80,7 @@
     <addaction name="actionClose"/>
     <addaction name="actionCloseAll"/>
     <addaction name="menuClose_More"/>
+    <addaction name="actionMoveToTrash"/>
     <addaction name="separator"/>
     <addaction name="menuRecentFiles"/>
     <addaction name="separator"/>
@@ -890,6 +891,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionMoveToTrash">
+   <property name="text">
+    <string>Move to Trash...</string>
+   </property>
+   <property name="iconText">
+    <string>Move to Trash</string>
    </property>
   </action>
  </widget>

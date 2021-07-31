@@ -27,34 +27,71 @@
 #include <memory>
 #include <stdexcept>
 
-#include "Sci_Position.h"
-#include "Position.h"
-#include "CharacterCategory.h"
-#include "Scintilla.h"
-#include "Platform.h"
+
+// TODO: Fix this mess. Scintilla makes you include everything...in the correct order...
+// this was copied from Editor.cxx just to get it to compile
+
+
+#include <cstddef>
+#include <cstdlib>
+#include <cassert>
+#include <cstring>
+#include <cstdio>
+#include <cmath>
+
+#include <stdexcept>
+#include <string>
+#include <string_view>
+#include <vector>
+#include <map>
+#include <set>
+#include <forward_list>
+#include <optional>
+#include <algorithm>
+#include <iterator>
+#include <memory>
+#include <chrono>
+
+#include "ScintillaTypes.h"
+#include "ScintillaMessages.h"
+#include "ScintillaStructures.h"
+#include "ILoader.h"
 #include "ILexer.h"
+
+#include "Debugging.h"
+#include "Geometry.h"
+#include "Platform.h"
+
+#include "CharacterType.h"
+#include "CharacterCategoryMap.h"
+#include "Position.h"
 #include "UniqueString.h"
 #include "SplitVector.h"
 #include "Partitioning.h"
 #include "RunStyles.h"
+#include "ContractionState.h"
 #include "CellBuffer.h"
+#include "PerLine.h"
+#include "KeyMap.h"
 #include "Indicator.h"
-#include "XPM.h"
 #include "LineMarker.h"
 #include "Style.h"
+#include "ViewStyle.h"
 #include "CharClassify.h"
 #include "Decoration.h"
 #include "CaseFolder.h"
-#include "ILoader.h"
 #include "Document.h"
+#include "Scintilla.h"
 
-class QRegexSearch : public Scintilla::RegexSearchBase
+using namespace Scintilla::Internal;
+
+class QRegexSearch : public RegexSearchBase
 {
 public:
     QRegexSearch();
 
-    Sci::Position FindText(Scintilla::Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, bool caseSensitive, bool word, bool wordStart, int flags, Sci::Position *length) override;
-    const char *SubstituteByPosition(Scintilla::Document *doc, const char *text, Sci::Position *length) override;
+    Sci::Position FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, bool caseSensitive, bool word, bool wordStart, Scintilla::FindOption flags, Sci::Position *length) override;
+    const char *SubstituteByPosition(Document *doc, const char *text, Sci::Position *length) override;
 
 private:
     QRegularExpressionMatch match;
