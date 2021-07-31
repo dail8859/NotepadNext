@@ -20,6 +20,9 @@
 #include "SmartHighlighter.h"
 #include "ScintillaNext.h"
 
+using namespace Scintilla;
+
+
 SmartHighlighter::SmartHighlighter(ScintillaEdit *editor) :
     EditorDecorator(editor)
 {
@@ -32,9 +35,9 @@ SmartHighlighter::SmartHighlighter(ScintillaEdit *editor) :
     editor->indicSetUnder(29, true);
 }
 
-void SmartHighlighter::notify(const SCNotification *pscn)
+void SmartHighlighter::notify(const NotificationData *pscn)
 {
-    if (pscn->nmhdr.code == SCN_UPDATEUI && pscn->updated & (SC_UPDATE_CONTENT | SC_UPDATE_SELECTION)) {
+    if (pscn->nmhdr.code == Notification::UpdateUI && (FlagSet(pscn->updated, Update::Content) || FlagSet(pscn->updated, Update::Selection))) {
         highlightCurrentView();
     }
 }

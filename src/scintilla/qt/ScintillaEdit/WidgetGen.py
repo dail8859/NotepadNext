@@ -42,6 +42,7 @@ typeAliases = {
 	"line": "int",
 	"pointer": "int",
 	"colour": "int",
+	"colouralpha": "int",
 	"keymod": "int",
 	"string": "const char *",
 	"stringresult": "const char *",
@@ -57,7 +58,7 @@ def cppAlias(s):
 		return s
 
 understoodTypes = ["", "void", "int", "bool", "position", "line", "pointer",
-	"colour", "keymod", "string", "stringresult", "cells"]
+	"colour", "colouralpha", "keymod", "string", "stringresult", "cells"]
 
 def understoodType(t):
 	return t in understoodTypes or Face.IsEnumeration(t)
@@ -160,7 +161,7 @@ def printCPPFile(f, options):
 					if stringResult:
 						returns += "    " + returnStatement + "TextReturner(" + featureDefineName + ", "
 						if "*" in cppAlias(v["Param1Type"]):
-							returns += "(sptr_t)"
+							returns += "(uptr_t)"
 						if v["Param1Name"]:
 							returns += normalisedName(v["Param1Name"], options)
 						else:
@@ -169,7 +170,7 @@ def printCPPFile(f, options):
 					else:
 						returns += "    " + returnStatement + "send(" + featureDefineName + ", "
 						if "*" in cppAlias(v["Param1Type"]):
-							returns += "(sptr_t)"
+							returns += "(uptr_t)"
 						if v["Param1Name"]:
 							returns += normalisedName(v["Param1Name"], options)
 						else:

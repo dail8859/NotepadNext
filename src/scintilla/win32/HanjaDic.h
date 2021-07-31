@@ -9,7 +9,7 @@
 #ifndef HANJADIC_H
 #define HANJADIC_H
 
-namespace Scintilla {
+namespace Scintilla::Internal {
 
 namespace HanjaDict {
 

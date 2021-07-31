@@ -48,6 +48,7 @@ xcuserdata/
 *.xcsettings
 xcschememanagement.plist
 .DS_Store
+Release
 Debug
 cocoa/build
 cocoa/ScintillaFramework/build
@@ -73,3 +74,5 @@ meson-logs
 build.ninja
 .ninja*
 compile_commands.json
+.vscode
+VTune Profiler Results

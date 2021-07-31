@@ -8,39 +8,25 @@
 #ifndef STYLE_H
 #define STYLE_H
 
-namespace Scintilla {
+namespace Scintilla::Internal {
 
 struct FontSpecification {
 	const char *fontName;
-	int weight;
+	Scintilla::FontWeight weight;
 	bool italic;
 	int size;
-	int characterSet;
-	int extraFontFlag;
+	Scintilla::CharacterSet characterSet;
+	Scintilla::FontQuality extraFontFlag;
 	FontSpecification() noexcept :
 		fontName(nullptr),
-		weight(SC_WEIGHT_NORMAL),
+		weight(Scintilla::FontWeight::Normal),
 		italic(false),
-		size(10 * SC_FONT_SIZE_MULTIPLIER),
-		characterSet(0),
-		extraFontFlag(0) {
+		size(10 * Scintilla::FontSizeMultiplier),
+		characterSet(Scintilla::CharacterSet::Ansi),
+		extraFontFlag(Scintilla::FontQuality::QualityDefault) {
 	}
 	bool operator==(const FontSpecification &other) const noexcept;
 	bool operator<(const FontSpecification &other) const noexcept;
-};
-
-// Just like Font but only has a copy of the FontID so should not delete it
-class FontAlias : public Font {
-public:
-	FontAlias() noexcept;
-	// FontAlias objects can not be assigned except for initialization
-	FontAlias(const FontAlias &) noexcept;
-	FontAlias(FontAlias &&)  = delete;
-	FontAlias &operator=(const FontAlias &) = delete;
-	FontAlias &operator=(FontAlias &&) = delete;
-	~FontAlias() override;
-	void MakeAlias(const Font &fontOrigin) noexcept;
-	void ClearFont() noexcept;
 };
 
 struct FontMeasurements {
@@ -58,32 +44,32 @@ struct FontMeasurements {
  */
 class Style : public FontSpecification, public FontMeasurements {
 public:
-	ColourDesired fore;
-	ColourDesired back;
+	ColourRGBA fore;
+	ColourRGBA back;
 	bool eolFilled;
 	bool underline;
-	enum ecaseForced {caseMixed, caseUpper, caseLower, caseCamel};
-	ecaseForced caseForce;
+	enum class CaseForce {mixed, upper, lower, camel};
+	CaseForce caseForce;
 	bool visible;
 	bool changeable;
 	bool hotspot;
 
-	FontAlias font;
+	std::shared_ptr<Font> font;
 
 	Style();
 	Style(const Style &source) noexcept;
-	Style(Style &&) = delete;
+	Style(Style &&) noexcept = default;
 	~Style();
 	Style &operator=(const Style &source) noexcept;
 	Style &operator=(Style &&) = delete;
-	void Clear(ColourDesired fore_, ColourDesired back_,
+	void Clear(ColourRGBA fore_, ColourRGBA back_,
 	           int size_,
-	           const char *fontName_, int characterSet_,
-	           int weight_, bool italic_, bool eolFilled_,
-	           bool underline_, ecaseForced caseForce_,
+	           const char *fontName_, Scintilla::CharacterSet characterSet_,
+	           Scintilla::FontWeight weight_, bool italic_, bool eolFilled_,
+	           bool underline_, CaseForce caseForce_,
 	           bool visible_, bool changeable_, bool hotspot_) noexcept;
 	void ClearTo(const Style &source) noexcept;
-	void Copy(const Font &font_, const FontMeasurements &fm_) noexcept;
+	void Copy(std::shared_ptr<Font> font_, const FontMeasurements &fm_) noexcept;
 	bool IsProtected() const noexcept { return !(changeable && visible);}
 };
 

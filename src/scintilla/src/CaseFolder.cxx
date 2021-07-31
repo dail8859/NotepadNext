@@ -12,7 +12,7 @@
 #include "CaseFolder.h"
 #include "CaseConvert.h"
 
-using namespace Scintilla;
+using namespace Scintilla::Internal;
 
 CaseFolder::~CaseFolder() {
 }
@@ -53,7 +53,7 @@ void CaseFolderTable::StandardASCII() noexcept {
 
 CaseFolderUnicode::CaseFolderUnicode() {
 	StandardASCII();
-	converter = ConverterFor(CaseConversionFold);
+	converter = ConverterFor(CaseConversion::fold);
 }
 
 size_t CaseFolderUnicode::Fold(char *folded, size_t sizeFolded, const char *mixed, size_t lenMixed) {

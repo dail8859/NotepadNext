@@ -13,19 +13,21 @@
 #include <stdexcept>
 #include <string_view>
 #include <vector>
+#include <optional>
 #include <algorithm>
 #include <memory>
 
-#include "Platform.h"
+#include "ScintillaTypes.h"
 
-#include "Scintilla.h"
+#include "Debugging.h"
+
 #include "Position.h"
 #include "SplitVector.h"
 #include "Partitioning.h"
 #include "RunStyles.h"
 #include "Decoration.h"
 
-using namespace Scintilla;
+using namespace Scintilla::Internal;
 
 namespace {
 
@@ -229,7 +231,7 @@ template <typename POS>
 void DecorationList<POS>::DeleteLexerDecorations() {
 	decorationList.erase(std::remove_if(decorationList.begin(), decorationList.end(),
 		[](const std::unique_ptr<Decoration<POS>> &deco) noexcept {
-		return deco->Indicator() < INDICATOR_CONTAINER ;
+		return deco->Indicator() < static_cast<int>(Scintilla::IndicatorNumbers::Container);
 	}), decorationList.end());
 	current = nullptr;
 	SetView();
@@ -260,7 +262,7 @@ int DecorationList<POS>::AllOnFor(Sci::Position position) const noexcept {
 	int mask = 0;
 	for (const std::unique_ptr<Decoration<POS>> &deco : decorationList) {
 		if (deco->rs.ValueAt(static_cast<POS>(position))) {
-			if (deco->Indicator() < INDICATOR_IME) {
+			if (deco->Indicator() < static_cast<int>(Scintilla::IndicatorNumbers::Ime)) {
 				mask |= 1 << deco->Indicator();
 			}
 		}
@@ -297,7 +299,7 @@ Sci::Position DecorationList<POS>::End(int indicator, Sci::Position position) no
 
 }
 
-namespace Scintilla {
+namespace Scintilla::Internal {
 
 std::unique_ptr<IDecoration> DecorationCreate(bool largeDocument, int indicator) {
 	if (largeDocument)

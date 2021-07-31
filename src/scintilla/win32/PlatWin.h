@@ -8,7 +8,7 @@
 #ifndef PLATWIN_H
 #define PLATWIN_H
 
-namespace Scintilla {
+namespace Scintilla::Internal {
 
 #ifndef USER_DEFAULT_SCREEN_DPI
 #define USER_DEFAULT_SCREEN_DPI		96
@@ -52,7 +52,7 @@ T DLLFunction(HMODULE hModule, LPCSTR lpProcName) noexcept {
 	}
 	FARPROC function = ::GetProcAddress(hModule, lpProcName);
 	static_assert(sizeof(T) == sizeof(function));
-	T fp;
+	T fp {};
 	memcpy(&fp, &function, sizeof(T));
 	return fp;
 }
