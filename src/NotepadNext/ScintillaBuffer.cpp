@@ -215,6 +215,17 @@ ScintillaBuffer::BufferStateChange ScintillaBuffer::checkForBufferStateChange()
     return BufferStateChange::NoChange;
 }
 
+bool ScintillaBuffer::moveToTrash()
+{
+    if (QFile::exists(this->fileInfo.canonicalFilePath())) {
+        QFile f(this->fileInfo.canonicalFilePath());
+
+        return f.moveToTrash();
+    }
+
+    return false;
+}
+
 bool ScintillaBuffer::isSavedToDisk()
 {
     return bufferType != ScintillaBuffer::FileMissing && is_save_point();
@@ -310,7 +321,9 @@ bool ScintillaBuffer::readFromDisk(QFile &file)
             } else {
                 qWarning("No avialable Codecs for: \"%s\"", qUtf8Printable(encoding));
                 qWarning("Falling back to QTextCodec::codecForUtfText()");
-                qWarning("%d %d", chunk.at(0), chunk.at(1));
+
+                if (chunk.size() >= 2)
+                    qWarning("%d %d", chunk.at(0), chunk.at(1));
 
                 codec = QTextCodec::codecForUtfText(chunk);
                 decoder = codec->makeDecoder();

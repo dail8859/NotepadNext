@@ -8,7 +8,7 @@
 #ifndef UNICONVERSION_H
 #define UNICONVERSION_H
 
-namespace Scintilla {
+namespace Scintilla::Internal {
 
 constexpr int UTF8MaxBytes = 4;
 
@@ -48,8 +48,13 @@ inline constexpr bool UTF8IsTrailByte(unsigned char ch) noexcept {
 	return (ch >= 0x80) && (ch < 0xc0);
 }
 
-inline constexpr bool UTF8IsAscii(int ch) noexcept {
+inline constexpr bool UTF8IsAscii(unsigned char ch) noexcept {
 	return ch < 0x80;
+}
+
+inline constexpr bool UTF8IsAscii(char ch) noexcept {
+	const unsigned char uch = ch;
+	return uch < 0x80;
 }
 
 enum { UTF8MaskWidth=0x7, UTF8MaskInvalid=0x8 };

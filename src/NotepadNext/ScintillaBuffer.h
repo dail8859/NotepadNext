@@ -24,7 +24,6 @@
 #include <QDateTime>
 
 #include <ScintillaDocument.h>
-#include <SciLexer.h>
 
 // TODO: Clean up this class
 
@@ -67,6 +66,7 @@ private:
     bool reloadFromFile();
     bool readFromDisk(QFile &file);
     BufferStateChange checkForBufferStateChange();
+    bool moveToTrash();
 
     QString name;
     BufferType bufferType;

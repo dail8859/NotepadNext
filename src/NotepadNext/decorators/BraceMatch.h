@@ -22,6 +22,7 @@
 
 #include "EditorDecorator.h"
 
+
 class BraceMatch : public EditorDecorator
 {
     Q_OBJECT
@@ -34,7 +35,7 @@ private:
     void clearHighlighting();
 
 public slots:
-    void notify(const SCNotification *pscn) override;
+    void notify(const Scintilla::NotificationData *pscn) override;
 };
 
 #endif // BRACEMATCH_H

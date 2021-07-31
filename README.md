@@ -16,13 +16,12 @@ There are numerous bugs and half working implementations. Pull requests are grea
 ![screenshot](/doc/screenshot.png)
 
 # Development
-Current development has been done using Visual Studio 2019 and Qt v5.15. Other platforms/compilers have not been tested but should be usable.
+Current development is done using Visual Studio 2019 and Qt v5.15. Other platforms/compilers have not been tested but should be usable with minor modifications.
 
-1. Install Visual Studio 2019 (Community Edition is fine)
-1. Download the [Qt Installer](https://www.qt.io/download-qt-installer)
-1. Use the Qt Installer to install `Qt 5.15.X` (MSVC 2019 64-bit) and `Qt Creator` 
-1. Open `src/NotepadNext.pro`
-1. Build/Run the project
+If you are familiar with building C++ Qt desktop applications, then this should be as simple as opening `src/NotepadNext.pro` and build/run the project.
+
+If you are new to building C++ Qt desktop applications, there is a more detailed guide [here](/doc/Building.md)
+
 
 # License
 This code is released under the [GNU General Public License version 3](http://www.gnu.org/licenses/gpl-3.0.txt).

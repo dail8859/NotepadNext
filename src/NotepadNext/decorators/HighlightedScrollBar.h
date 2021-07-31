@@ -44,10 +44,10 @@ public:
     Highlight cursor;
 
 public slots:
-    void notify(const SCNotification *pscn) override;
+    void notify(const Scintilla::NotificationData *pscn) override;
 
 private:
-    HighlightedScrollBar *scrollBar = nullptr;
+    HighlightedScrollBar *scrollBar;
 };
 
 

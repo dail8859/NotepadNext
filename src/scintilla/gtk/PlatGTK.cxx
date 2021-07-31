@@ -13,6 +13,7 @@
 #include <string_view>
 #include <vector>
 #include <map>
+#include <optional>
 #include <algorithm>
 #include <memory>
 #include <sstream>
@@ -23,12 +24,15 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "ScintillaTypes.h"
+#include "ScintillaMessages.h"
+
+#include "Debugging.h"
+#include "Geometry.h"
 #include "Platform.h"
 
 #include "Scintilla.h"
 #include "ScintillaWidget.h"
-#include "StringCopy.h"
-#include "IntegerRectangle.h"
 #include "XPM.h"
 #include "UniConversion.h"
 
@@ -40,10 +44,13 @@
 #endif
 
 using namespace Scintilla;
+using namespace Scintilla::Internal;
 
 namespace {
 
 constexpr double kPi = 3.14159265358979323846;
+
+constexpr double degrees = kPi / 180.0;
 
 // The Pango version guard for pango_units_from_double and pango_units_to_double
 // is more complex than simply implementing these here.
@@ -56,9 +63,19 @@ constexpr float floatFromPangoUnits(int pu) noexcept {
 	return static_cast<float>(pu) / PANGO_SCALE;
 }
 
-cairo_surface_t *CreateSimilarSurface(GdkWindow *window, cairo_content_t content, int width, int height) noexcept {
-	return gdk_window_create_similar_surface(window, content, width, height);
-}
+struct IntegerRectangle {
+	int left;
+	int top;
+	int right;
+	int bottom;
+
+	explicit IntegerRectangle(PRectangle rc) noexcept :
+		left(static_cast<int>(rc.left)), top(static_cast<int>(rc.top)),
+		right(static_cast<int>(rc.right)), bottom(static_cast<int>(rc.bottom)) {
+	}
+	int Width() const noexcept { return right - left; }
+	int Height() const noexcept { return bottom - top; }
+};
 
 GdkWindow *WindowFromWidget(GtkWidget *w) noexcept {
 	return gtk_widget_get_window(w);
@@ -68,18 +85,29 @@ GtkWidget *PWidget(WindowID wid) noexcept {
 	return static_cast<GtkWidget *>(wid);
 }
 
-enum encodingType { singleByte, UTF8, dbcs };
+enum class EncodingType { singleByte, utf8, dbcs };
 
 // Holds a PangoFontDescription*.
-class FontHandle {
+class FontHandle : public Font {
 public:
-	PangoFontDescription *pfd;
-	int characterSet;
-	FontHandle() noexcept : pfd(nullptr), characterSet(-1) {
+	PangoFontDescription *pfd = nullptr;
+	CharacterSet characterSet;
+	FontHandle() noexcept : pfd(nullptr), characterSet(CharacterSet::Ansi) {
 	}
-	FontHandle(PangoFontDescription *pfd_, int characterSet_) noexcept {
+	FontHandle(PangoFontDescription *pfd_, CharacterSet characterSet_) noexcept {
 		pfd = pfd_;
 		characterSet = characterSet_;
+	}
+	FontHandle(const FontParameters &fp) {
+		pfd = pango_font_description_new();
+		if (pfd) {
+			pango_font_description_set_family(pfd,
+				(fp.faceName[0] == '!') ? fp.faceName + 1 : fp.faceName);
+			pango_font_description_set_size(pfd, pangoUnitsFromDouble(fp.size));
+			pango_font_description_set_weight(pfd, static_cast<PangoWeight>(fp.weight));
+			pango_font_description_set_style(pfd, fp.italic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
+		}
+		characterSet = fp.characterSet;
 	}
 	// Deleted so FontHandle objects can not be copied.
 	FontHandle(const FontHandle &) = delete;
@@ -91,45 +119,19 @@ public:
 			pango_font_description_free(pfd);
 		pfd = nullptr;
 	}
-	static FontHandle *CreateNewFont(const FontParameters &fp);
 };
-
-FontHandle *FontHandle::CreateNewFont(const FontParameters &fp) {
-	PangoFontDescription *pfd = pango_font_description_new();
-	if (pfd) {
-		pango_font_description_set_family(pfd,
-						  (fp.faceName[0] == '!') ? fp.faceName+1 : fp.faceName);
-		pango_font_description_set_size(pfd, pangoUnitsFromDouble(fp.size));
-		pango_font_description_set_weight(pfd, static_cast<PangoWeight>(fp.weight));
-		pango_font_description_set_style(pfd, fp.italic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
-		return new FontHandle(pfd, fp.characterSet);
-	}
-
-	return nullptr;
-}
 
 // X has a 16 bit coordinate space, so stop drawing here to avoid wrapping
 constexpr int maxCoordinate = 32000;
 
-FontHandle *PFont(const Font &f) noexcept {
-	return static_cast<FontHandle *>(f.GetID());
+const FontHandle *PFont(const Font *f) noexcept {
+	return dynamic_cast<const FontHandle *>(f);
 }
 
 }
 
-Font::Font() noexcept : fid(nullptr) {}
-
-Font::~Font() {}
-
-void Font::Create(const FontParameters &fp) {
-	Release();
-	fid = FontHandle::CreateNewFont(fp);
-}
-
-void Font::Release() {
-	if (fid)
-		delete static_cast<FontHandle *>(fid);
-	fid = nullptr;
+std::shared_ptr<Font> Font::Allocate(const FontParameters &fp) {
+	return std::make_shared<FontHandle>(fp);
 }
 
 // Required on OS X
@@ -137,20 +139,23 @@ namespace Scintilla {
 
 // SurfaceID is a cairo_t*
 class SurfaceImpl : public Surface {
-	encodingType et;
-	cairo_t *context;
-	cairo_surface_t *psurf;
-	int x;
-	int y;
-	bool inited;
-	bool createdGC;
-	PangoContext *pcontext;
-	PangoLayout *layout;
+	SurfaceMode mode;
+	EncodingType et= EncodingType::singleByte;
+	WindowID widSave = nullptr;
+	cairo_t *context = nullptr;
+	cairo_surface_t *psurf = nullptr;
+	bool inited = false;
+	bool createdGC = false;
+	PangoContext *pcontext = nullptr;
+	PangoLayout *layout = nullptr;
 	Converter conv;
-	int characterSet;
-	void SetConverter(int characterSet_);
+	CharacterSet characterSet = static_cast<CharacterSet>(-1);
+	void PenColourAlpha(ColourRGBA fore) noexcept;
+	void SetConverter(CharacterSet characterSet_);
+	void CairoRectangle(PRectangle rc) noexcept;
 public:
 	SurfaceImpl() noexcept;
+	SurfaceImpl(cairo_t *context_, int width, int height, SurfaceMode mode_, WindowID wid) noexcept;
 	// Deleted so SurfaceImpl objects can not be copied.
 	SurfaceImpl(const SurfaceImpl&) = delete;
 	SurfaceImpl(SurfaceImpl&&) = delete;
@@ -160,114 +165,164 @@ public:
 
 	void Init(WindowID wid) override;
 	void Init(SurfaceID sid, WindowID wid) override;
-	void InitPixMap(int width, int height, Surface *surface_, WindowID wid) override;
+	std::unique_ptr<Surface> AllocatePixMap(int width, int height) override;
+
+	void SetMode(SurfaceMode mode_) override;
 
 	void Clear() noexcept;
-	void Release() override;
+	void Release() noexcept override;
+	int SupportsFeature(Supports feature) noexcept override;
 	bool Initialised() override;
-	void PenColour(ColourDesired fore) override;
 	int LogPixelsY() override;
+	int PixelDivisions() override;
 	int DeviceHeightFont(int points) override;
-	void MoveTo(int x_, int y_) override;
-	void LineTo(int x_, int y_) override;
-	void Polygon(Point *pts, size_t npts, ColourDesired fore, ColourDesired back) override;
-	void RectangleDraw(PRectangle rc, ColourDesired fore, ColourDesired back) override;
-	void FillRectangle(PRectangle rc, ColourDesired back) override;
+	void LineDraw(Point start, Point end, Stroke stroke) override;
+	void PolyLine(const Point *pts, size_t npts, Stroke stroke) override;
+	void Polygon(const Point *pts, size_t npts, FillStroke fillStroke) override;
+	void RectangleDraw(PRectangle rc, FillStroke fillStroke) override;
+	void RectangleFrame(PRectangle rc, Stroke stroke) override;
+	void FillRectangle(PRectangle rc, Fill fill) override;
+	void FillRectangleAligned(PRectangle rc, Fill fill) override;
 	void FillRectangle(PRectangle rc, Surface &surfacePattern) override;
-	void RoundedRectangle(PRectangle rc, ColourDesired fore, ColourDesired back) override;
-	void AlphaRectangle(PRectangle rc, int cornerSize, ColourDesired fill, int alphaFill,
-			    ColourDesired outline, int alphaOutline, int flags) override;
+	void RoundedRectangle(PRectangle rc, FillStroke fillStroke) override;
+	void AlphaRectangle(PRectangle rc, XYPOSITION cornerSize, FillStroke fillStroke) override;
 	void GradientRectangle(PRectangle rc, const std::vector<ColourStop> &stops, GradientOptions options) override;
 	void DrawRGBAImage(PRectangle rc, int width, int height, const unsigned char *pixelsImage) override;
-	void Ellipse(PRectangle rc, ColourDesired fore, ColourDesired back) override;
+	void Ellipse(PRectangle rc, FillStroke fillStroke) override;
+	void Stadium(PRectangle rc, FillStroke fillStroke, Ends ends) override;
 	void Copy(PRectangle rc, Point from, Surface &surfaceSource) override;
 
 	std::unique_ptr<IScreenLineLayout> Layout(const IScreenLine *screenLine) override;
 
-	void DrawTextBase(PRectangle rc, const Font &font_, XYPOSITION ybase, std::string_view text, ColourDesired fore);
-	void DrawTextNoClip(PRectangle rc, Font &font_, XYPOSITION ybase, std::string_view text, ColourDesired fore, ColourDesired back) override;
-	void DrawTextClipped(PRectangle rc, Font &font_, XYPOSITION ybase, std::string_view text, ColourDesired fore, ColourDesired back) override;
-	void DrawTextTransparent(PRectangle rc, Font &font_, XYPOSITION ybase, std::string_view text, ColourDesired fore) override;
-	void MeasureWidths(Font &font_, std::string_view text, XYPOSITION *positions) override;
-	XYPOSITION WidthText(Font &font_, std::string_view text) override;
-	XYPOSITION Ascent(Font &font_) override;
-	XYPOSITION Descent(Font &font_) override;
-	XYPOSITION InternalLeading(Font &font_) override;
-	XYPOSITION Height(Font &font_) override;
-	XYPOSITION AverageCharWidth(Font &font_) override;
+	void DrawTextBase(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text, ColourRGBA fore);
+	void DrawTextNoClip(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text, ColourRGBA fore, ColourRGBA back) override;
+	void DrawTextClipped(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text, ColourRGBA fore, ColourRGBA back) override;
+	void DrawTextTransparent(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text, ColourRGBA fore) override;
+	void MeasureWidths(const Font *font_, std::string_view text, XYPOSITION *positions) override;
+	XYPOSITION WidthText(const Font *font_, std::string_view text) override;
+
+	void DrawTextBaseUTF8(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text, ColourRGBA fore);
+	void DrawTextNoClipUTF8(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text, ColourRGBA fore, ColourRGBA back) override;
+	void DrawTextClippedUTF8(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text, ColourRGBA fore, ColourRGBA back) override;
+	void DrawTextTransparentUTF8(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text, ColourRGBA fore) override;
+	void MeasureWidthsUTF8(const Font *font_, std::string_view text, XYPOSITION *positions) override;
+	XYPOSITION WidthTextUTF8(const Font *font_, std::string_view text) override;
+
+	XYPOSITION Ascent(const Font *font_) override;
+	XYPOSITION Descent(const Font *font_) override;
+	XYPOSITION InternalLeading(const Font *font_) override;
+	XYPOSITION Height(const Font *font_) override;
+	XYPOSITION AverageCharWidth(const Font *font_) override;
 
 	void SetClip(PRectangle rc) override;
+	void PopClip() override;
 	void FlushCachedState() override;
-
-	void SetUnicodeMode(bool unicodeMode_) override;
-	void SetDBCSMode(int codePage) override;
-	void SetBidiR2L(bool bidiR2L_) override;
+	void FlushDrawing() override;
 };
+
+const Supports SupportsGTK[] = {
+	Supports::LineDrawsFinal,
+	Supports::FractionalStrokeWidth,
+	Supports::TranslucentStroke,
+	Supports::PixelModification,
+};
+
 }
 
-const char *CharacterSetID(int characterSet) noexcept {
+const char *CharacterSetID(CharacterSet characterSet) noexcept {
 	switch (characterSet) {
-	case SC_CHARSET_ANSI:
+	case CharacterSet::Ansi:
 		return "";
-	case SC_CHARSET_DEFAULT:
+	case CharacterSet::Default:
 		return "ISO-8859-1";
-	case SC_CHARSET_BALTIC:
+	case CharacterSet::Baltic:
 		return "ISO-8859-13";
-	case SC_CHARSET_CHINESEBIG5:
+	case CharacterSet::ChineseBig5:
 		return "BIG-5";
-	case SC_CHARSET_EASTEUROPE:
+	case CharacterSet::EastEurope:
 		return "ISO-8859-2";
-	case SC_CHARSET_GB2312:
+	case CharacterSet::GB2312:
 		return "CP936";
-	case SC_CHARSET_GREEK:
+	case CharacterSet::Greek:
 		return "ISO-8859-7";
-	case SC_CHARSET_HANGUL:
+	case CharacterSet::Hangul:
 		return "CP949";
-	case SC_CHARSET_MAC:
+	case CharacterSet::Mac:
 		return "MACINTOSH";
-	case SC_CHARSET_OEM:
+	case CharacterSet::Oem:
 		return "ASCII";
-	case SC_CHARSET_RUSSIAN:
+	case CharacterSet::Russian:
 		return "KOI8-R";
-	case SC_CHARSET_OEM866:
+	case CharacterSet::Oem866:
 		return "CP866";
-	case SC_CHARSET_CYRILLIC:
+	case CharacterSet::Cyrillic:
 		return "CP1251";
-	case SC_CHARSET_SHIFTJIS:
+	case CharacterSet::ShiftJis:
 		return "SHIFT-JIS";
-	case SC_CHARSET_SYMBOL:
+	case CharacterSet::Symbol:
 		return "";
-	case SC_CHARSET_TURKISH:
+	case CharacterSet::Turkish:
 		return "ISO-8859-9";
-	case SC_CHARSET_JOHAB:
+	case CharacterSet::Johab:
 		return "CP1361";
-	case SC_CHARSET_HEBREW:
+	case CharacterSet::Hebrew:
 		return "ISO-8859-8";
-	case SC_CHARSET_ARABIC:
+	case CharacterSet::Arabic:
 		return "ISO-8859-6";
-	case SC_CHARSET_VIETNAMESE:
+	case CharacterSet::Vietnamese:
 		return "";
-	case SC_CHARSET_THAI:
+	case CharacterSet::Thai:
 		return "ISO-8859-11";
-	case SC_CHARSET_8859_15:
+	case CharacterSet::Iso8859_15:
 		return "ISO-8859-15";
 	default:
 		return "";
 	}
 }
 
-void SurfaceImpl::SetConverter(int characterSet_) {
+void SurfaceImpl::PenColourAlpha(ColourRGBA fore) noexcept {
+	if (context) {
+		cairo_set_source_rgba(context,
+			fore.GetRedComponent(),
+			fore.GetGreenComponent(),
+			fore.GetBlueComponent(),
+			fore.GetAlphaComponent());
+	}
+}
+
+void SurfaceImpl::SetConverter(CharacterSet characterSet_) {
 	if (characterSet != characterSet_) {
 		characterSet = characterSet_;
 		conv.Open("UTF-8", CharacterSetID(characterSet), false);
 	}
 }
 
-SurfaceImpl::SurfaceImpl() noexcept : et(singleByte),
-	context(nullptr),
-	psurf(nullptr),
-	x(0), y(0), inited(false), createdGC(false),
-	pcontext(nullptr), layout(nullptr), characterSet(-1) {
+void SurfaceImpl::CairoRectangle(PRectangle rc) noexcept {
+	cairo_rectangle(context, rc.left, rc.top, rc.Width(), rc.Height());
+}
+
+SurfaceImpl::SurfaceImpl() noexcept {
+}
+
+SurfaceImpl::SurfaceImpl(cairo_t *context_, int width, int height, SurfaceMode mode_, WindowID wid) noexcept {
+	if (height > 0 && width > 0) {
+		cairo_surface_t *psurfContext = cairo_get_target(context_);
+		psurf = cairo_surface_create_similar(
+			psurfContext,
+			CAIRO_CONTENT_COLOR_ALPHA, width, height);
+		context = cairo_create(psurf);
+		pcontext = gtk_widget_create_pango_context(PWidget(wid));
+		PLATFORM_ASSERT(pcontext);
+		layout = pango_layout_new(pcontext);
+		PLATFORM_ASSERT(layout);
+		cairo_rectangle(context, 0, 0, width, height);
+		cairo_set_source_rgb(context, 1.0, 0, 0);
+		cairo_fill(context);
+		cairo_set_line_width(context, 1);
+		createdGC = true;
+		inited = true;
+		mode = mode_;
+	}
 }
 
 SurfaceImpl::~SurfaceImpl() {
@@ -275,7 +330,7 @@ SurfaceImpl::~SurfaceImpl() {
 }
 
 void SurfaceImpl::Clear() noexcept {
-	et = singleByte;
+	et = EncodingType::singleByte;
 	if (createdGC) {
 		createdGC = false;
 		cairo_destroy(context);
@@ -291,14 +346,12 @@ void SurfaceImpl::Clear() noexcept {
 		g_object_unref(pcontext);
 	pcontext = nullptr;
 	conv.Close();
-	characterSet = -1;
-	x = 0;
-	y = 0;
+	characterSet = static_cast<CharacterSet>(-1);
 	inited = false;
 	createdGC = false;
 }
 
-void SurfaceImpl::Release() {
+void SurfaceImpl::Release() noexcept {
 	Clear();
 }
 
@@ -323,6 +376,7 @@ bool SurfaceImpl::Initialised() {
 }
 
 void SurfaceImpl::Init(WindowID wid) {
+	widSave = wid;
 	Release();
 	PLATFORM_ASSERT(wid);
 	// if we are only created from a window ID, we can't perform drawing
@@ -337,6 +391,7 @@ void SurfaceImpl::Init(WindowID wid) {
 }
 
 void SurfaceImpl::Init(SurfaceID sid, WindowID wid) {
+	widSave = wid;
 	PLATFORM_ASSERT(sid);
 	Release();
 	PLATFORM_ASSERT(wid);
@@ -350,48 +405,37 @@ void SurfaceImpl::Init(SurfaceID sid, WindowID wid) {
 	inited = true;
 }
 
-void SurfaceImpl::InitPixMap(int width, int height, Surface *surface_, WindowID wid) {
-	PLATFORM_ASSERT(surface_);
-	Release();
-	SurfaceImpl *surfImpl = dynamic_cast<SurfaceImpl *>(surface_);
-	PLATFORM_ASSERT(surfImpl);
-	PLATFORM_ASSERT(wid);
-	context = cairo_reference(surfImpl->context);
-	pcontext = gtk_widget_create_pango_context(PWidget(wid));
-	// update the Pango context in case surface_ isn't the widget's surface
-	pango_cairo_update_context(context, pcontext);
-	PLATFORM_ASSERT(pcontext);
-	layout = pango_layout_new(pcontext);
-	PLATFORM_ASSERT(layout);
-	if (height > 0 && width > 0)
-		psurf = CreateSimilarSurface(
-				WindowFromWidget(PWidget(wid)),
-				CAIRO_CONTENT_COLOR_ALPHA, width, height);
-	cairo_destroy(context);
-	context = cairo_create(psurf);
-	cairo_rectangle(context, 0, 0, width, height);
-	cairo_set_source_rgb(context, 1.0, 0, 0);
-	cairo_fill(context);
-	// This produces sharp drawing more similar to GDK:
-	//cairo_set_antialias(context, CAIRO_ANTIALIAS_NONE);
-	cairo_set_line_width(context, 1);
-	createdGC = true;
-	inited = true;
-	et = surfImpl->et;
+std::unique_ptr<Surface> SurfaceImpl::AllocatePixMap(int width, int height) {
+	// widSave must be alive now so safe for creating a PangoContext
+	return std::make_unique<SurfaceImpl>(context, width, height, mode, widSave);
 }
 
-void SurfaceImpl::PenColour(ColourDesired fore) {
-	if (context) {
-		const ColourDesired cdFore(fore.AsInteger());
-		cairo_set_source_rgb(context,
-				     cdFore.GetRed() / 255.0,
-				     cdFore.GetGreen() / 255.0,
-				     cdFore.GetBlue() / 255.0);
+void SurfaceImpl::SetMode(SurfaceMode mode_) {
+	mode = mode_;
+	if (mode.codePage == SC_CP_UTF8) {
+		et = EncodingType::utf8;
+	} else if (mode.codePage) {
+		et = EncodingType::dbcs;
+	} else {
+		et = EncodingType::singleByte;
 	}
+}
+
+int SurfaceImpl::SupportsFeature(Supports feature) noexcept {
+	for (const Supports f : SupportsGTK) {
+		if (f == feature)
+			return 1;
+	}
+	return 0;
 }
 
 int SurfaceImpl::LogPixelsY() {
 	return 72;
+}
+
+int SurfaceImpl::PixelDivisions() {
+	// GTK uses device pixels.
+	return 1;
 }
 
 int SurfaceImpl::DeviceHeightFont(int points) {
@@ -399,86 +443,75 @@ int SurfaceImpl::DeviceHeightFont(int points) {
 	return (points * logPix + logPix / 2) / 72;
 }
 
-void SurfaceImpl::MoveTo(int x_, int y_) {
-	x = x_;
-	y = y_;
-}
-
-static int Delta(int difference) noexcept {
-	if (difference < 0)
-		return -1;
-	else if (difference > 0)
-		return 1;
-	else
-		return 0;
-}
-
-void SurfaceImpl::LineTo(int x_, int y_) {
-	// cairo_line_to draws the end position, unlike Win32 or GDK with GDK_CAP_NOT_LAST.
-	// For simple cases, move back one pixel from end.
-	if (context) {
-		const int xDiff = x_ - x;
-		const int xDelta = Delta(xDiff);
-		const int yDiff = y_ - y;
-		const int yDelta = Delta(yDiff);
-		if ((xDiff == 0) || (yDiff == 0)) {
-			// Horizontal or vertical lines can be more precisely drawn as a filled rectangle
-			const int xEnd = x_ - xDelta;
-			const int left = std::min(x, xEnd);
-			const int width = std::abs(x - xEnd) + 1;
-			const int yEnd = y_ - yDelta;
-			const int top = std::min(y, yEnd);
-			const int height = std::abs(y - yEnd) + 1;
-			cairo_rectangle(context, left, top, width, height);
-			cairo_fill(context);
-		} else if ((std::abs(xDiff) == std::abs(yDiff))) {
-			// 45 degree slope
-			cairo_move_to(context, x + 0.5, y + 0.5);
-			cairo_line_to(context, x_ + 0.5 - xDelta, y_ + 0.5 - yDelta);
-		} else {
-			// Line has a different slope so difficult to avoid last pixel
-			cairo_move_to(context, x + 0.5, y + 0.5);
-			cairo_line_to(context, x_ + 0.5, y_ + 0.5);
-		}
-		cairo_stroke(context);
-	}
-	x = x_;
-	y = y_;
-}
-
-void SurfaceImpl::Polygon(Point *pts, size_t npts, ColourDesired fore,
-			  ColourDesired back) {
+void SurfaceImpl::LineDraw(Point start, Point end, Stroke stroke) {
 	PLATFORM_ASSERT(context);
-	PenColour(back);
-	cairo_move_to(context, pts[0].x + 0.5, pts[0].y + 0.5);
-	for (size_t i = 1; i < npts; i++) {
-		cairo_line_to(context, pts[i].x + 0.5, pts[i].y + 0.5);
-	}
-	cairo_close_path(context);
-	cairo_fill_preserve(context);
-	PenColour(fore);
+	if (!context)
+		return;
+	PenColourAlpha(stroke.colour);
+	cairo_set_line_width(context, stroke.width);
+	cairo_move_to(context, start.x, start.y);
+	cairo_line_to(context, end.x, end.y);
 	cairo_stroke(context);
 }
 
-void SurfaceImpl::RectangleDraw(PRectangle rc, ColourDesired fore, ColourDesired back) {
+void SurfaceImpl::PolyLine(const Point *pts, size_t npts, Stroke stroke) {
+	// TODO: set line joins and caps
+	PLATFORM_ASSERT(context && npts > 1);
+	if (!context)
+		return;
+	PenColourAlpha(stroke.colour);
+	cairo_set_line_width(context, stroke.width);
+	cairo_move_to(context, pts[0].x, pts[0].y);
+	for (size_t i = 1; i < npts; i++) {
+		cairo_line_to(context, pts[i].x, pts[i].y);
+	}
+	cairo_stroke(context);
+}
+
+void SurfaceImpl::Polygon(const Point *pts, size_t npts, FillStroke fillStroke) {
+	PLATFORM_ASSERT(context);
+	PenColourAlpha(fillStroke.fill.colour);
+	cairo_move_to(context, pts[0].x, pts[0].y);
+	for (size_t i = 1; i < npts; i++) {
+		cairo_line_to(context, pts[i].x, pts[i].y);
+	}
+	cairo_close_path(context);
+	cairo_fill_preserve(context);
+	PenColourAlpha(fillStroke.stroke.colour);
+	cairo_set_line_width(context, fillStroke.stroke.width);
+	cairo_stroke(context);
+}
+
+void SurfaceImpl::RectangleDraw(PRectangle rc, FillStroke fillStroke) {
 	if (context) {
-		cairo_rectangle(context, rc.left + 0.5, rc.top + 0.5,
-				rc.Width() - 1, rc.Height() - 1);
-		PenColour(back);
+		CairoRectangle(rc.Inset(fillStroke.stroke.width / 2));
+		PenColourAlpha(fillStroke.fill.colour);
 		cairo_fill_preserve(context);
-		PenColour(fore);
+		PenColourAlpha(fillStroke.stroke.colour);
+		cairo_set_line_width(context, fillStroke.stroke.width);
 		cairo_stroke(context);
 	}
 }
 
-void SurfaceImpl::FillRectangle(PRectangle rc, ColourDesired back) {
-	PenColour(back);
+void SurfaceImpl::RectangleFrame(PRectangle rc, Stroke stroke) {
+	if (context) {
+		CairoRectangle(rc.Inset(stroke.width / 2));
+		PenColourAlpha(stroke.colour);
+		cairo_set_line_width(context, stroke.width);
+		cairo_stroke(context);
+	}
+}
+
+void SurfaceImpl::FillRectangle(PRectangle rc, Fill fill) {
+	PenColourAlpha(fill.colour);
 	if (context && (rc.left < maxCoordinate)) {	// Protect against out of range
-		rc.left = std::round(rc.left);
-		rc.right = std::round(rc.right);
-		cairo_rectangle(context, rc.left, rc.top, rc.Width(), rc.Height());
+		CairoRectangle(rc);
 		cairo_fill(context);
 	}
+}
+
+void SurfaceImpl::FillRectangleAligned(PRectangle rc, Fill fill) {
+	FillRectangle(PixelAlign(rc, 1), fill);
 }
 
 void SurfaceImpl::FillRectangle(PRectangle rc, Surface &surfacePattern) {
@@ -492,7 +525,7 @@ void SurfaceImpl::FillRectangle(PRectangle rc, Surface &surfacePattern) {
 	}
 }
 
-void SurfaceImpl::RoundedRectangle(PRectangle rc, ColourDesired fore, ColourDesired back) {
+void SurfaceImpl::RoundedRectangle(PRectangle rc, FillStroke fillStroke) {
 	if (((rc.right - rc.left) > 4) && ((rc.bottom - rc.top) > 4)) {
 		// Approximate a round rect with some cut off corners
 		Point pts[] = {
@@ -505,15 +538,13 @@ void SurfaceImpl::RoundedRectangle(PRectangle rc, ColourDesired fore, ColourDesi
 			Point(rc.left, rc.bottom - 2),
 			Point(rc.left, rc.top + 2),
 		};
-		Polygon(pts, std::size(pts), fore, back);
+		Polygon(pts, std::size(pts), fillStroke);
 	} else {
-		RectangleDraw(rc, fore, back);
+		RectangleDraw(rc, fillStroke);
 	}
 }
 
 static void PathRoundRectangle(cairo_t *context, double left, double top, double width, double height, double radius) noexcept {
-	constexpr double degrees = kPi / 180.0;
-
 	cairo_new_sub_path(context);
 	cairo_arc(context, left + width - radius, top + radius, radius, -90 * degrees, 0 * degrees);
 	cairo_arc(context, left + width - radius, top + height - radius, radius, 0 * degrees, 90 * degrees);
@@ -522,31 +553,27 @@ static void PathRoundRectangle(cairo_t *context, double left, double top, double
 	cairo_close_path(context);
 }
 
-void SurfaceImpl::AlphaRectangle(PRectangle rc, int cornerSize, ColourDesired fill, int alphaFill,
-				 ColourDesired outline, int alphaOutline, int /*flags*/) {
+void SurfaceImpl::AlphaRectangle(PRectangle rc, XYPOSITION cornerSize, FillStroke fillStroke) {
 	if (context && rc.Width() > 0) {
-		const ColourDesired cdFill(fill.AsInteger());
-		cairo_set_source_rgba(context,
-				      cdFill.GetRed() / 255.0,
-				      cdFill.GetGreen() / 255.0,
-				      cdFill.GetBlue() / 255.0,
-				      alphaFill / 255.0);
+		const float halfStroke = fillStroke.stroke.width / 2.0f;
+		const float doubleStroke = fillStroke.stroke.width * 2.0f;
+		PenColourAlpha(fillStroke.fill.colour);
 		if (cornerSize > 0)
-			PathRoundRectangle(context, rc.left + 1.0, rc.top + 1.0, rc.Width() - 2.0, rc.Height() - 2.0, cornerSize);
+			PathRoundRectangle(context, rc.left + fillStroke.stroke.width, rc.top + fillStroke.stroke.width,
+				rc.Width() - doubleStroke, rc.Height() - doubleStroke, cornerSize);
 		else
-			cairo_rectangle(context, rc.left + 1.0, rc.top + 1.0, rc.Width() - 2.0, rc.Height() - 2.0);
+			cairo_rectangle(context, rc.left + fillStroke.stroke.width, rc.top + fillStroke.stroke.width,
+				rc.Width() - doubleStroke, rc.Height() - doubleStroke);
 		cairo_fill(context);
 
-		const ColourDesired cdOutline(outline.AsInteger());
-		cairo_set_source_rgba(context,
-				      cdOutline.GetRed() / 255.0,
-				      cdOutline.GetGreen() / 255.0,
-				      cdOutline.GetBlue() / 255.0,
-				      alphaOutline / 255.0);
+		PenColourAlpha(fillStroke.stroke.colour);
 		if (cornerSize > 0)
-			PathRoundRectangle(context, rc.left + 0.5, rc.top + 0.5, rc.Width() - 1, rc.Height() - 1, cornerSize);
+			PathRoundRectangle(context, rc.left + halfStroke, rc.top + halfStroke,
+				rc.Width() - fillStroke.stroke.width, rc.Height() - fillStroke.stroke.width, cornerSize);
 		else
-			cairo_rectangle(context, rc.left + 0.5, rc.top + 0.5, rc.Width() - 1, rc.Height() - 1);
+			cairo_rectangle(context, rc.left + halfStroke, rc.top + halfStroke,
+				rc.Width() - fillStroke.stroke.width, rc.Height() - fillStroke.stroke.width);
+		cairo_set_line_width(context, fillStroke.stroke.width);
 		cairo_stroke(context);
 	}
 }
@@ -603,13 +630,72 @@ void SurfaceImpl::DrawRGBAImage(PRectangle rc, int width, int height, const unsi
 	cairo_surface_destroy(psurfImage);
 }
 
-void SurfaceImpl::Ellipse(PRectangle rc, ColourDesired fore, ColourDesired back) {
+void SurfaceImpl::Ellipse(PRectangle rc, FillStroke fillStroke) {
 	PLATFORM_ASSERT(context);
-	PenColour(back);
+	PenColourAlpha(fillStroke.fill.colour);
 	cairo_arc(context, (rc.left + rc.right) / 2, (rc.top + rc.bottom) / 2,
-		  std::min(rc.Width(), rc.Height()) / 2, 0, 2*kPi);
+		  (std::min(rc.Width(), rc.Height()) - fillStroke.stroke.width) / 2, 0, 2*kPi);
 	cairo_fill_preserve(context);
-	PenColour(fore);
+	PenColourAlpha(fillStroke.stroke.colour);
+	cairo_set_line_width(context, fillStroke.stroke.width);
+	cairo_stroke(context);
+}
+
+void SurfaceImpl::Stadium(PRectangle rc, FillStroke fillStroke, Ends ends) {
+	const XYPOSITION midLine = rc.Centre().y;
+	const XYPOSITION halfStroke = fillStroke.stroke.width / 2.0f;
+	const XYPOSITION radius = rc.Height() / 2.0f - halfStroke;
+	PRectangle rcInner = rc;
+	rcInner.left += radius;
+	rcInner.right -= radius;
+
+	cairo_new_sub_path(context);
+
+	const Ends leftSide = static_cast<Ends>(static_cast<int>(ends) & 0xf);
+	const Ends rightSide = static_cast<Ends>(static_cast<int>(ends) & 0xf0);
+	switch (leftSide) {
+		case Ends::leftFlat:
+			cairo_move_to(context, rc.left + halfStroke, rc.top + halfStroke);
+			cairo_line_to(context, rc.left + halfStroke, rc.bottom - halfStroke);
+			break;
+		case Ends::leftAngle:
+			cairo_move_to(context, rcInner.left + halfStroke, rc.top + halfStroke);
+			cairo_line_to(context, rc.left + halfStroke, rc.Centre().y);
+			cairo_line_to(context, rcInner.left + halfStroke, rc.bottom - halfStroke);
+			break;
+		case Ends::semiCircles:
+		default:
+			cairo_move_to(context, rcInner.left + halfStroke, rc.top + halfStroke);
+			cairo_arc_negative(context, rcInner.left + halfStroke, midLine, radius,
+				270 * degrees, 90 * degrees);
+			break;
+	}
+
+	switch (rightSide) {
+		case Ends::rightFlat:
+			cairo_line_to(context, rc.right - halfStroke, rc.bottom - halfStroke);
+			cairo_line_to(context, rc.right - halfStroke, rc.top + halfStroke);
+			break;
+		case Ends::rightAngle:
+			cairo_line_to(context, rcInner.right - halfStroke, rc.bottom - halfStroke);
+			cairo_line_to(context, rc.right - halfStroke, rc.Centre().y);
+			cairo_line_to(context, rcInner.right - halfStroke, rc.top + halfStroke);
+			break;
+		case Ends::semiCircles:
+		default:
+			cairo_line_to(context, rcInner.right - halfStroke, rc.bottom - halfStroke);
+			cairo_arc_negative(context, rcInner.right - halfStroke, midLine, radius,
+				90 * degrees, 270 * degrees);
+			break;
+	}
+
+	// Close the path to enclose it for stroking and for filling, then draw it
+	cairo_close_path(context);
+	PenColourAlpha(fillStroke.fill.colour);
+	cairo_fill_preserve(context);
+
+	PenColourAlpha(fillStroke.stroke.colour);
+	cairo_set_line_width(context, fillStroke.stroke.width);
 	cairo_stroke(context);
 }
 
@@ -684,14 +770,14 @@ size_t MultiByteLenFromIconv(const Converter &conv, const char *s, size_t len) n
 
 }
 
-void SurfaceImpl::DrawTextBase(PRectangle rc, const Font &font_, XYPOSITION ybase, std::string_view text,
-			       ColourDesired fore) {
-	PenColour(fore);
+void SurfaceImpl::DrawTextBase(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text,
+			       ColourRGBA fore) {
 	if (context) {
+		PenColourAlpha(fore);
 		const XYPOSITION xText = rc.left;
 		if (PFont(font_)->pfd) {
 			std::string utfForm;
-			if (et == UTF8) {
+			if (et == EncodingType::utf8) {
 				pango_layout_set_text(layout, text.data(), text.length());
 			} else {
 				SetConverter(PFont(font_)->characterSet);
@@ -710,21 +796,21 @@ void SurfaceImpl::DrawTextBase(PRectangle rc, const Font &font_, XYPOSITION ybas
 	}
 }
 
-void SurfaceImpl::DrawTextNoClip(PRectangle rc, Font &font_, XYPOSITION ybase, std::string_view text,
-				 ColourDesired fore, ColourDesired back) {
-	FillRectangle(rc, back);
+void SurfaceImpl::DrawTextNoClip(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text,
+				 ColourRGBA fore, ColourRGBA back) {
+	FillRectangleAligned(rc, back);
 	DrawTextBase(rc, font_, ybase, text, fore);
 }
 
 // On GTK+, exactly same as DrawTextNoClip
-void SurfaceImpl::DrawTextClipped(PRectangle rc, Font &font_, XYPOSITION ybase, std::string_view text,
-				  ColourDesired fore, ColourDesired back) {
-	FillRectangle(rc, back);
+void SurfaceImpl::DrawTextClipped(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text,
+				  ColourRGBA fore, ColourRGBA back) {
+	FillRectangleAligned(rc, back);
 	DrawTextBase(rc, font_, ybase, text, fore);
 }
 
-void SurfaceImpl::DrawTextTransparent(PRectangle rc, Font &font_, XYPOSITION ybase, std::string_view text,
-				      ColourDesired fore) {
+void SurfaceImpl::DrawTextTransparent(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text,
+				      ColourRGBA fore) {
 	// Avoid drawing spaces in transparent mode
 	for (size_t i=0; i<text.length(); i++) {
 		if (text[i] != ' ') {
@@ -774,102 +860,100 @@ public:
 	}
 };
 
-void SurfaceImpl::MeasureWidths(Font &font_, std::string_view text, XYPOSITION *positions) {
-	if (font_.GetID()) {
-		if (PFont(font_)->pfd) {
-			pango_layout_set_font_description(layout, PFont(font_)->pfd);
-			if (et == UTF8) {
-				// Simple and direct as UTF-8 is native Pango encoding
-				int i = 0;
-				pango_layout_set_text(layout, text.data(), text.length());
-				ClusterIterator iti(layout, text.length());
-				while (!iti.finished) {
-					iti.Next();
-					const int places = iti.curIndex - i;
-					while (i < iti.curIndex) {
-						// Evenly distribute space among bytes of this cluster.
-						// Would be better to find number of characters and then
-						// divide evenly between characters with each byte of a character
-						// being at the same position.
-						positions[i] = iti.position - (iti.curIndex - 1 - i) * iti.distance / places;
-						i++;
-					}
+void SurfaceImpl::MeasureWidths(const Font *font_, std::string_view text, XYPOSITION *positions) {
+	if (PFont(font_)->pfd) {
+		pango_layout_set_font_description(layout, PFont(font_)->pfd);
+		if (et == EncodingType::utf8) {
+			// Simple and direct as UTF-8 is native Pango encoding
+			int i = 0;
+			pango_layout_set_text(layout, text.data(), text.length());
+			ClusterIterator iti(layout, text.length());
+			while (!iti.finished) {
+				iti.Next();
+				const int places = iti.curIndex - i;
+				while (i < iti.curIndex) {
+					// Evenly distribute space among bytes of this cluster.
+					// Would be better to find number of characters and then
+					// divide evenly between characters with each byte of a character
+					// being at the same position.
+					positions[i] = iti.position - (iti.curIndex - 1 - i) * iti.distance / places;
+					i++;
 				}
-				PLATFORM_ASSERT(static_cast<size_t>(i) == text.length());
-			} else {
-				int positionsCalculated = 0;
-				if (et == dbcs) {
-					SetConverter(PFont(font_)->characterSet);
-					std::string utfForm = UTF8FromIconv(conv, text);
-					if (!utfForm.empty()) {
-						// Convert to UTF-8 so can ask Pango for widths, then
-						// Loop through UTF-8 and DBCS forms, taking account of different
-						// character byte lengths.
-						Converter convMeasure("UCS-2", CharacterSetID(characterSet), false);
-						pango_layout_set_text(layout, utfForm.c_str(), strlen(utfForm.c_str()));
-						int i = 0;
-						int clusterStart = 0;
-						ClusterIterator iti(layout, strlen(utfForm.c_str()));
-						while (!iti.finished) {
-							iti.Next();
-							const int clusterEnd = iti.curIndex;
-							const int places = g_utf8_strlen(utfForm.c_str() + clusterStart, clusterEnd - clusterStart);
-							int place = 1;
-							while (clusterStart < clusterEnd) {
-								size_t lenChar = MultiByteLenFromIconv(convMeasure, text.data()+i, text.length()-i);
-								while (lenChar--) {
-									positions[i++] = iti.position - (places - place) * iti.distance / places;
-									positionsCalculated++;
-								}
-								clusterStart += UTF8BytesOfLead[static_cast<unsigned char>(utfForm[clusterStart])];
-								place++;
-							}
-						}
-						PLATFORM_ASSERT(static_cast<size_t>(i) == text.length());
-					}
-				}
-				if (positionsCalculated < 1) {
-					const size_t lenPositions = text.length();
-					// Either 8-bit or DBCS conversion failed so treat as 8-bit.
-					SetConverter(PFont(font_)->characterSet);
-					const bool rtlCheck = PFont(font_)->characterSet == SC_CHARSET_HEBREW ||
-							      PFont(font_)->characterSet == SC_CHARSET_ARABIC;
-					std::string utfForm = UTF8FromIconv(conv, text);
-					if (utfForm.empty()) {
-						utfForm = UTF8FromLatin1(text);
-					}
-					pango_layout_set_text(layout, utfForm.c_str(), utfForm.length());
-					size_t i = 0;
+			}
+			PLATFORM_ASSERT(static_cast<size_t>(i) == text.length());
+		} else {
+			int positionsCalculated = 0;
+			if (et == EncodingType::dbcs) {
+				SetConverter(PFont(font_)->characterSet);
+				std::string utfForm = UTF8FromIconv(conv, text);
+				if (!utfForm.empty()) {
+					// Convert to UTF-8 so can ask Pango for widths, then
+					// Loop through UTF-8 and DBCS forms, taking account of different
+					// character byte lengths.
+					Converter convMeasure("UCS-2", CharacterSetID(characterSet), false);
+					pango_layout_set_text(layout, utfForm.c_str(), strlen(utfForm.c_str()));
+					int i = 0;
 					int clusterStart = 0;
-					// Each 8-bit input character may take 1 or 2 bytes in UTF-8
-					// and groups of up to 3 may be represented as ligatures.
-					ClusterIterator iti(layout, utfForm.length());
+					ClusterIterator iti(layout, strlen(utfForm.c_str()));
 					while (!iti.finished) {
 						iti.Next();
 						const int clusterEnd = iti.curIndex;
-						const int ligatureLength = g_utf8_strlen(utfForm.c_str() + clusterStart, clusterEnd - clusterStart);
-						if (rtlCheck && ((clusterEnd <= clusterStart) || (ligatureLength == 0) || (ligatureLength > 3))) {
-							// Something has gone wrong: exit quickly but pretend all the characters are equally spaced:
-							int widthLayout = 0;
-							pango_layout_get_size(layout, &widthLayout, nullptr);
-							const XYPOSITION widthTotal = floatFromPangoUnits(widthLayout);
-							for (size_t bytePos=0; bytePos<lenPositions; bytePos++) {
-								positions[bytePos] = widthTotal / lenPositions * (bytePos + 1);
+						const int places = g_utf8_strlen(utfForm.c_str() + clusterStart, clusterEnd - clusterStart);
+						int place = 1;
+						while (clusterStart < clusterEnd) {
+							size_t lenChar = MultiByteLenFromIconv(convMeasure, text.data()+i, text.length()-i);
+							while (lenChar--) {
+								positions[i++] = iti.position - (places - place) * iti.distance / places;
+								positionsCalculated++;
 							}
-							return;
+							clusterStart += UTF8BytesOfLead[static_cast<unsigned char>(utfForm[clusterStart])];
+							place++;
 						}
-						PLATFORM_ASSERT(ligatureLength > 0 && ligatureLength <= 3);
-						for (int charInLig=0; charInLig<ligatureLength; charInLig++) {
-							positions[i++] = iti.position - (ligatureLength - 1 - charInLig) * iti.distance / ligatureLength;
-						}
-						clusterStart = clusterEnd;
 					}
-					while (i < lenPositions) {
-						// If something failed, fill in rest of the positions
-						positions[i++] = clusterStart;
-					}
-					PLATFORM_ASSERT(i == text.length());
+					PLATFORM_ASSERT(static_cast<size_t>(i) == text.length());
 				}
+			}
+			if (positionsCalculated < 1) {
+				const size_t lenPositions = text.length();
+				// Either 8-bit or DBCS conversion failed so treat as 8-bit.
+				SetConverter(PFont(font_)->characterSet);
+				const bool rtlCheck = PFont(font_)->characterSet == CharacterSet::Hebrew ||
+							    PFont(font_)->characterSet == CharacterSet::Arabic;
+				std::string utfForm = UTF8FromIconv(conv, text);
+				if (utfForm.empty()) {
+					utfForm = UTF8FromLatin1(text);
+				}
+				pango_layout_set_text(layout, utfForm.c_str(), utfForm.length());
+				size_t i = 0;
+				int clusterStart = 0;
+				// Each 8-bit input character may take 1 or 2 bytes in UTF-8
+				// and groups of up to 3 may be represented as ligatures.
+				ClusterIterator iti(layout, utfForm.length());
+				while (!iti.finished) {
+					iti.Next();
+					const int clusterEnd = iti.curIndex;
+					const int ligatureLength = g_utf8_strlen(utfForm.c_str() + clusterStart, clusterEnd - clusterStart);
+					if (rtlCheck && ((clusterEnd <= clusterStart) || (ligatureLength == 0) || (ligatureLength > 3))) {
+						// Something has gone wrong: exit quickly but pretend all the characters are equally spaced:
+						int widthLayout = 0;
+						pango_layout_get_size(layout, &widthLayout, nullptr);
+						const XYPOSITION widthTotal = floatFromPangoUnits(widthLayout);
+						for (size_t bytePos=0; bytePos<lenPositions; bytePos++) {
+							positions[bytePos] = widthTotal / lenPositions * (bytePos + 1);
+						}
+						return;
+					}
+					PLATFORM_ASSERT(ligatureLength > 0 && ligatureLength <= 3);
+					for (int charInLig=0; charInLig<ligatureLength; charInLig++) {
+						positions[i++] = iti.position - (ligatureLength - 1 - charInLig) * iti.distance / ligatureLength;
+					}
+					clusterStart = clusterEnd;
+				}
+				while (i < lenPositions) {
+					// If something failed, fill in rest of the positions
+					positions[i++] = clusterStart;
+				}
+				PLATFORM_ASSERT(i == text.length());
 			}
 		}
 	} else {
@@ -880,37 +964,111 @@ void SurfaceImpl::MeasureWidths(Font &font_, std::string_view text, XYPOSITION *
 	}
 }
 
-XYPOSITION SurfaceImpl::WidthText(Font &font_, std::string_view text) {
-	if (font_.GetID()) {
-		if (PFont(font_)->pfd) {
-			std::string utfForm;
-			pango_layout_set_font_description(layout, PFont(font_)->pfd);
-			if (et == UTF8) {
-				pango_layout_set_text(layout, text.data(), text.length());
-			} else {
-				SetConverter(PFont(font_)->characterSet);
-				utfForm = UTF8FromIconv(conv, text);
-				if (utfForm.empty()) {	// iconv failed so treat as Latin1
-					utfForm = UTF8FromLatin1(text);
-				}
-				pango_layout_set_text(layout, utfForm.c_str(), utfForm.length());
+XYPOSITION SurfaceImpl::WidthText(const Font *font_, std::string_view text) {
+	if (PFont(font_)->pfd) {
+		std::string utfForm;
+		pango_layout_set_font_description(layout, PFont(font_)->pfd);
+		if (et == EncodingType::utf8) {
+			pango_layout_set_text(layout, text.data(), text.length());
+		} else {
+			SetConverter(PFont(font_)->characterSet);
+			utfForm = UTF8FromIconv(conv, text);
+			if (utfForm.empty()) {	// iconv failed so treat as Latin1
+				utfForm = UTF8FromLatin1(text);
 			}
-			PangoLayoutLine *pangoLine = pango_layout_get_line_readonly(layout, 0);
-			PangoRectangle pos {};
-			pango_layout_line_get_extents(pangoLine, nullptr, &pos);
-			return floatFromPangoUnits(pos.width);
+			pango_layout_set_text(layout, utfForm.c_str(), utfForm.length());
 		}
-		return 1;
-	} else {
-		return 1;
+		PangoLayoutLine *pangoLine = pango_layout_get_line_readonly(layout, 0);
+		PangoRectangle pos {};
+		pango_layout_line_get_extents(pangoLine, nullptr, &pos);
+		return floatFromPangoUnits(pos.width);
 	}
+	return 1;
+}
+
+void SurfaceImpl::DrawTextBaseUTF8(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text,
+	ColourRGBA fore) {
+	if (context) {
+		PenColourAlpha(fore);
+		const XYPOSITION xText = rc.left;
+		if (PFont(font_)->pfd) {
+			pango_layout_set_text(layout, text.data(), text.length());
+			pango_layout_set_font_description(layout, PFont(font_)->pfd);
+			pango_cairo_update_layout(context, layout);
+			PangoLayoutLine *pll = pango_layout_get_line_readonly(layout, 0);
+			cairo_move_to(context, xText, ybase);
+			pango_cairo_show_layout_line(context, pll);
+		}
+	}
+}
+
+void SurfaceImpl::DrawTextNoClipUTF8(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text,
+	ColourRGBA fore, ColourRGBA back) {
+	FillRectangleAligned(rc, back);
+	DrawTextBaseUTF8(rc, font_, ybase, text, fore);
+}
+
+// On GTK+, exactly same as DrawTextNoClip
+void SurfaceImpl::DrawTextClippedUTF8(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text,
+	ColourRGBA fore, ColourRGBA back) {
+	FillRectangleAligned(rc, back);
+	DrawTextBaseUTF8(rc, font_, ybase, text, fore);
+}
+
+void SurfaceImpl::DrawTextTransparentUTF8(PRectangle rc, const Font *font_, XYPOSITION ybase, std::string_view text,
+	ColourRGBA fore) {
+	// Avoid drawing spaces in transparent mode
+	for (size_t i = 0; i < text.length(); i++) {
+		if (text[i] != ' ') {
+			DrawTextBaseUTF8(rc, font_, ybase, text, fore);
+			return;
+		}
+	}
+}
+
+void SurfaceImpl::MeasureWidthsUTF8(const Font *font_, std::string_view text, XYPOSITION *positions) {
+	if (PFont(font_)->pfd) {
+		pango_layout_set_font_description(layout, PFont(font_)->pfd);
+		// Simple and direct as UTF-8 is native Pango encoding
+		int i = 0;
+		pango_layout_set_text(layout, text.data(), text.length());
+		ClusterIterator iti(layout, text.length());
+		while (!iti.finished) {
+			iti.Next();
+			const int places = iti.curIndex - i;
+			while (i < iti.curIndex) {
+				// Evenly distribute space among bytes of this cluster.
+				// Would be better to find number of characters and then
+				// divide evenly between characters with each byte of a character
+				// being at the same position.
+				positions[i] = iti.position - (iti.curIndex - 1 - i) * iti.distance / places;
+				i++;
+			}
+		}
+		PLATFORM_ASSERT(static_cast<size_t>(i) == text.length());
+	} else {
+		// No font so return an ascending range of values
+		for (size_t i = 0; i < text.length(); i++) {
+			positions[i] = i + 1;
+		}
+	}
+}
+
+XYPOSITION SurfaceImpl::WidthTextUTF8(const Font *font_, std::string_view text) {
+	if (PFont(font_)->pfd) {
+		pango_layout_set_font_description(layout, PFont(font_)->pfd);
+		pango_layout_set_text(layout, text.data(), text.length());
+		PangoLayoutLine *pangoLine = pango_layout_get_line_readonly(layout, 0);
+		PangoRectangle pos{};
+		pango_layout_line_get_extents(pangoLine, nullptr, &pos);
+		return floatFromPangoUnits(pos.width);
+	}
+	return 1;
 }
 
 // Ascent and descent determined by Pango font metrics.
 
-XYPOSITION SurfaceImpl::Ascent(Font &font_) {
-	if (!(font_.GetID()))
-		return 1;
+XYPOSITION SurfaceImpl::Ascent(const Font *font_) {
 	XYPOSITION ascent = 0;
 	if (PFont(font_)->pfd) {
 		PangoFontMetrics *metrics = pango_context_get_metrics(pcontext,
@@ -925,9 +1083,7 @@ XYPOSITION SurfaceImpl::Ascent(Font &font_) {
 	return ascent;
 }
 
-XYPOSITION SurfaceImpl::Descent(Font &font_) {
-	if (!(font_.GetID()))
-		return 1;
+XYPOSITION SurfaceImpl::Descent(const Font *font_) {
 	if (PFont(font_)->pfd) {
 		PangoFontMetrics *metrics = pango_context_get_metrics(pcontext,
 					    PFont(font_)->pfd, pango_context_get_language(pcontext));
@@ -939,46 +1095,42 @@ XYPOSITION SurfaceImpl::Descent(Font &font_) {
 	return 0;
 }
 
-XYPOSITION SurfaceImpl::InternalLeading(Font &) {
+XYPOSITION SurfaceImpl::InternalLeading(const Font *) {
 	return 0;
 }
 
-XYPOSITION SurfaceImpl::Height(Font &font_) {
+XYPOSITION SurfaceImpl::Height(const Font *font_) {
 	return Ascent(font_) + Descent(font_);
 }
 
-XYPOSITION SurfaceImpl::AverageCharWidth(Font &font_) {
+XYPOSITION SurfaceImpl::AverageCharWidth(const Font *font_) {
 	return WidthText(font_, "n");
 }
 
 void SurfaceImpl::SetClip(PRectangle rc) {
 	PLATFORM_ASSERT(context);
-	cairo_rectangle(context, rc.left, rc.top, rc.Width(), rc.Height());
+	cairo_save(context);
+	CairoRectangle(rc);
 	cairo_clip(context);
+}
+
+void SurfaceImpl::PopClip() {
+	PLATFORM_ASSERT(context);
+	cairo_restore(context);
 }
 
 void SurfaceImpl::FlushCachedState() {}
 
-void SurfaceImpl::SetUnicodeMode(bool unicodeMode_) {
-	if (unicodeMode_)
-		et = UTF8;
+void SurfaceImpl::FlushDrawing() {
 }
 
-void SurfaceImpl::SetDBCSMode(int codePage) {
-	if (codePage && (codePage != SC_CP_UTF8))
-		et = dbcs;
+std::unique_ptr<Surface> Surface::Allocate(Technology) {
+	return std::make_unique<SurfaceImpl>();
 }
 
-void SurfaceImpl::SetBidiR2L(bool) {
-}
+Window::~Window() noexcept {}
 
-Surface *Surface::Allocate(int) {
-	return new SurfaceImpl();
-}
-
-Window::~Window() {}
-
-void Window::Destroy() {
+void Window::Destroy() noexcept {
 	if (wid) {
 		ListBox *listbox = dynamic_cast<ListBox *>(this);
 		if (listbox) {
@@ -1012,7 +1164,7 @@ PRectangle Window::GetPosition() const {
 }
 
 void Window::SetPosition(PRectangle rc) {
-	GtkAllocation alloc;
+	GtkAllocation alloc {};
 	alloc.x = static_cast<int>(rc.left);
 	alloc.y = static_cast<int>(rc.top);
 	alloc.width = static_cast<int>(rc.Width());
@@ -1092,10 +1244,6 @@ void Window::InvalidateRectangle(PRectangle rc) {
 	}
 }
 
-void Window::SetFont(Font &) {
-	// Can not be done generically but only needed for ListBox
-}
-
 void Window::SetCursor(Cursor curs) {
 	// We don't set the cursor to same value numerous times under gtk because
 	// it stores the cursor in the window once it's set
@@ -1107,27 +1255,27 @@ void Window::SetCursor(Cursor curs) {
 
 	GdkCursor *gdkCurs;
 	switch (curs) {
-	case cursorText:
+	case Cursor::text:
 		gdkCurs = gdk_cursor_new_for_display(pdisplay, GDK_XTERM);
 		break;
-	case cursorArrow:
+	case Cursor::arrow:
 		gdkCurs = gdk_cursor_new_for_display(pdisplay, GDK_LEFT_PTR);
 		break;
-	case cursorUp:
+	case Cursor::up:
 		gdkCurs = gdk_cursor_new_for_display(pdisplay, GDK_CENTER_PTR);
 		break;
-	case cursorWait:
+	case Cursor::wait:
 		gdkCurs = gdk_cursor_new_for_display(pdisplay, GDK_WATCH);
 		break;
-	case cursorHand:
+	case Cursor::hand:
 		gdkCurs = gdk_cursor_new_for_display(pdisplay, GDK_HAND2);
 		break;
-	case cursorReverseArrow:
+	case Cursor::reverseArrow:
 		gdkCurs = gdk_cursor_new_for_display(pdisplay, GDK_RIGHT_PTR);
 		break;
 	default:
 		gdkCurs = gdk_cursor_new_for_display(pdisplay, GDK_LEFT_PTR);
-		cursorLast = cursorArrow;
+		cursorLast = Cursor::arrow;
 		break;
 	}
 
@@ -1182,7 +1330,7 @@ static void list_image_free(gpointer, gpointer value, gpointer) noexcept {
 ListBox::ListBox() noexcept {
 }
 
-ListBox::~ListBox() {
+ListBox::~ListBox() noexcept {
 }
 
 enum {
@@ -1224,7 +1372,7 @@ public:
 	ListBoxX(ListBoxX&&) = delete;
 	ListBoxX&operator=(const ListBoxX&) = delete;
 	ListBoxX&operator=(ListBoxX&&) = delete;
-	~ListBoxX() override {
+	~ListBoxX() noexcept override {
 		if (pixhash) {
 			g_hash_table_foreach((GHashTable *) pixhash, list_image_free, nullptr);
 			g_hash_table_destroy((GHashTable *) pixhash);
@@ -1240,32 +1388,32 @@ public:
 		}
 #endif
 	}
-	void SetFont(Font &font) override;
-	void Create(Window &parent, int ctrlID, Point location_, int lineHeight_, bool unicodeMode_, int technology_) override;
+	void SetFont(const Font *font) override;
+	void Create(Window &parent, int ctrlID, Point location_, int lineHeight_, bool unicodeMode_, Technology technology_) override;
 	void SetAverageCharWidth(int width) override;
 	void SetVisibleRows(int rows) override;
 	int GetVisibleRows() const override;
 	int GetRowHeight();
 	PRectangle GetDesiredRect() override;
 	int CaretFromEdge() override;
-	void Clear() override;
+	void Clear() noexcept override;
 	void Append(char *s, int type = -1) override;
 	int Length() override;
 	void Select(int n) override;
 	int GetSelection() override;
 	int Find(const char *prefix) override;
-	void GetValue(int n, char *value, int len) override;
-	void RegisterRGBA(int type, RGBAImage *image);
+	std::string GetValue(int n) override;
+	void RegisterRGBA(int type, std::unique_ptr<RGBAImage> image);
 	void RegisterImage(int type, const char *xpm_data) override;
 	void RegisterRGBAImage(int type, int width, int height, const unsigned char *pixelsImage) override;
 	void ClearRegisteredImages() override;
 	void SetDelegate(IListBoxDelegate *lbDelegate) override;
 	void SetList(const char *listText, char separator, char typesep) override;
+	void SetOptions(ListOptions options_) override;
 };
 
-ListBox *ListBox::Allocate() {
-	ListBoxX *lb = new ListBoxX();
-	return lb;
+std::unique_ptr<ListBox> ListBox::Allocate() {
+	return std::make_unique<ListBoxX>();
 }
 
 static int treeViewGetRowHeight(GtkTreeView *view) {
@@ -1426,7 +1574,7 @@ static void StyleSet(GtkWidget *w, GtkStyle *, void *) {
 #endif
 }
 
-void ListBoxX::Create(Window &parent, int, Point, int, bool, int) {
+void ListBoxX::Create(Window &parent, int, Point, int, bool, Technology) {
 	if (widCached != nullptr) {
 		wid = widCached;
 		return;
@@ -1508,7 +1656,7 @@ void ListBoxX::Create(Window &parent, int, Point, int, bool, int) {
 				     GTK_WINDOW(top));
 }
 
-void ListBoxX::SetFont(Font &font) {
+void ListBoxX::SetFont(const Font *font) {
 	// Only do for Pango font as there have been crashes for GDK fonts
 	if (Created() && PFont(font)->pfd) {
 		// Current font is Pango font
@@ -1659,13 +1807,13 @@ int ListBoxX::CaretFromEdge() {
 	return 4 + renderer_width;
 }
 
-void ListBoxX::Clear() {
+void ListBoxX::Clear() noexcept {
 	GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(list));
 	gtk_list_store_clear(GTK_LIST_STORE(model));
 	maxItemCharacters = 0;
 }
 
-static void init_pixmap(ListImage *list_image) {
+static void init_pixmap(ListImage *list_image) noexcept {
 	if (list_image->rgba_data) {
 		// Drop any existing pixmap/bitmap as data may have changed
 		if (list_image->pixbuf)
@@ -1821,7 +1969,7 @@ int ListBoxX::Find(const char *prefix) {
 	return -1;
 }
 
-void ListBoxX::GetValue(int n, char *value, int len) {
+std::string ListBoxX::GetValue(int n) {
 	char *text = nullptr;
 	GtkTreeIter iter {};
 	GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(list));
@@ -1829,12 +1977,12 @@ void ListBoxX::GetValue(int n, char *value, int len) {
 	if (valid) {
 		gtk_tree_model_get(model, &iter, TEXT_COLUMN, &text, -1);
 	}
-	if (text && len > 0) {
-		g_strlcpy(value, text, len);
-	} else {
-		value[0] = '\0';
+	std::string value;
+	if (text) {
+		value = text;
 	}
 	g_free(text);
+	return value;
 }
 
 // g_return_if_fail causes unnecessary compiler warning in release compile.
@@ -1842,8 +1990,9 @@ void ListBoxX::GetValue(int n, char *value, int len) {
 #pragma warning(disable: 4127)
 #endif
 
-void ListBoxX::RegisterRGBA(int type, RGBAImage *image) {
-	images.Add(type, image);
+void ListBoxX::RegisterRGBA(int type, std::unique_ptr<RGBAImage> image) {
+	images.AddImage(type, std::move(image));
+	const RGBAImage * const observe = images.Get(type);
 
 	if (!pixhash) {
 		pixhash = g_hash_table_new(g_direct_hash, g_direct_equal);
@@ -1855,10 +2004,10 @@ void ListBoxX::RegisterRGBA(int type, RGBAImage *image) {
 		if (list_image->pixbuf)
 			g_object_unref(list_image->pixbuf);
 		list_image->pixbuf = nullptr;
-		list_image->rgba_data = image;
+		list_image->rgba_data = observe;
 	} else {
 		list_image = g_new0(ListImage, 1);
-		list_image->rgba_data = image;
+		list_image->rgba_data = observe;
 		g_hash_table_insert((GHashTable *) pixhash, GINT_TO_POINTER(type),
 				    (gpointer) list_image);
 	}
@@ -1867,11 +2016,11 @@ void ListBoxX::RegisterRGBA(int type, RGBAImage *image) {
 void ListBoxX::RegisterImage(int type, const char *xpm_data) {
 	g_return_if_fail(xpm_data);
 	XPM xpmImage(xpm_data);
-	RegisterRGBA(type, new RGBAImage(xpmImage));
+	RegisterRGBA(type, std::make_unique<RGBAImage>(xpmImage));
 }
 
 void ListBoxX::RegisterRGBAImage(int type, int width, int height, const unsigned char *pixelsImage) {
-	RegisterRGBA(type, new RGBAImage(width, height, 1.0, pixelsImage));
+	RegisterRGBA(type, std::make_unique<RGBAImage>(width, height, 1.0f, pixelsImage));
 }
 
 void ListBoxX::ClearRegisteredImages() {
@@ -1908,6 +2057,9 @@ void ListBoxX::SetList(const char *listText, char separator, char typesep) {
 	}
 }
 
+void ListBoxX::SetOptions(ListOptions) {
+}
+
 Menu::Menu() noexcept : mid(nullptr) {}
 
 void Menu::CreatePopUp() {
@@ -1916,7 +2068,7 @@ void Menu::CreatePopUp() {
 	g_object_ref_sink(G_OBJECT(mid));
 }
 
-void Menu::Destroy() {
+void Menu::Destroy() noexcept {
 	if (mid)
 		g_object_unref(G_OBJECT(mid));
 	mid = nullptr;
@@ -1930,7 +2082,7 @@ static void MenuPositionFunc(GtkMenu *, gint *x, gint *y, gboolean *, gpointer u
 }
 #endif
 
-void Menu::Show(Point pt, Window &w) {
+void Menu::Show(Point pt, const Window &w) {
 	GtkMenu *widget = static_cast<GtkMenu *>(mid);
 	gtk_widget_show_all(GTK_WIDGET(widget));
 #if GTK_CHECK_VERSION(3,22,0)
@@ -1956,52 +2108,12 @@ void Menu::Show(Point pt, Window &w) {
 #endif
 }
 
-class DynamicLibraryImpl : public DynamicLibrary {
-protected:
-	GModule *m;
-public:
-	explicit DynamicLibraryImpl(const char *modulePath) noexcept {
-		m = g_module_open(modulePath, G_MODULE_BIND_LAZY);
-	}
-	// Deleted so DynamicLibraryImpl objects can not be copied.
-	DynamicLibraryImpl(const DynamicLibraryImpl&) = delete;
-	DynamicLibraryImpl(DynamicLibraryImpl&&) = delete;
-	DynamicLibraryImpl&operator=(const DynamicLibraryImpl&) = delete;
-	DynamicLibraryImpl&operator=(DynamicLibraryImpl&&) = delete;
-	~DynamicLibraryImpl() override {
-		if (m != nullptr)
-			g_module_close(m);
-	}
-
-	// Use g_module_symbol to get a pointer to the relevant function.
-	Function FindFunction(const char *name) override {
-		if (m != nullptr) {
-			gpointer fn_address = nullptr;
-			const gboolean status = g_module_symbol(m, name, &fn_address);
-			if (status)
-				return static_cast<Function>(fn_address);
-			else
-				return nullptr;
-		} else {
-			return nullptr;
-		}
-	}
-
-	bool IsValid() override {
-		return m != nullptr;
-	}
-};
-
-DynamicLibrary *DynamicLibrary::Load(const char *modulePath) {
-	return static_cast<DynamicLibrary *>(new DynamicLibraryImpl(modulePath));
+ColourRGBA Platform::Chrome() {
+	return ColourRGBA(0xe0, 0xe0, 0xe0);
 }
 
-ColourDesired Platform::Chrome() {
-	return ColourDesired(0xe0, 0xe0, 0xe0);
-}
-
-ColourDesired Platform::ChromeHighlight() {
-	return ColourDesired(0xff, 0xff, 0xff);
+ColourRGBA Platform::ChromeHighlight() {
+	return ColourRGBA(0xff, 0xff, 0xff);
 }
 
 const char *Platform::DefaultFont() {
@@ -2024,14 +2136,14 @@ unsigned int Platform::DoubleClickTime() {
 	return 500; 	// Half a second
 }
 
-void Platform::DebugDisplay(const char *s) {
+void Platform::DebugDisplay(const char *s) noexcept {
 	fprintf(stderr, "%s", s);
 }
 
 //#define TRACE
 
 #ifdef TRACE
-void Platform::DebugPrintf(const char *format, ...) {
+void Platform::DebugPrintf(const char *format, ...) noexcept {
 	char buffer[2000];
 	va_list pArguments;
 	va_start(pArguments, format);
@@ -2040,20 +2152,20 @@ void Platform::DebugPrintf(const char *format, ...) {
 	Platform::DebugDisplay(buffer);
 }
 #else
-void Platform::DebugPrintf(const char *, ...) {}
+void Platform::DebugPrintf(const char *, ...) noexcept {}
 
 #endif
 
 // Not supported for GTK+
 static bool assertionPopUps = true;
 
-bool Platform::ShowAssertionPopUps(bool assertionPopUps_) {
+bool Platform::ShowAssertionPopUps(bool assertionPopUps_) noexcept {
 	const bool ret = assertionPopUps;
 	assertionPopUps = assertionPopUps_;
 	return ret;
 }
 
-void Platform::Assert(const char *c, const char *file, int line) {
+void Platform::Assert(const char *c, const char *file, int line) noexcept {
 	char buffer[2000];
 	g_snprintf(buffer, sizeof(buffer), "Assertion [%s] failed at %s %d\r\n", c, file, line);
 	Platform::DebugDisplay(buffer);

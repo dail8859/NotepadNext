@@ -22,6 +22,7 @@
 
 #include "EditorDecorator.h"
 
+
 class SmartHighlighter : public EditorDecorator
 {
     Q_OBJECT
@@ -33,7 +34,7 @@ private:
     void highlightCurrentView();
 
 public slots:
-    void notify(const SCNotification *pscn) override;
+    void notify(const Scintilla::NotificationData *pscn) override;
 };
 
 #endif // SMARTHIGHLIGHTER_H

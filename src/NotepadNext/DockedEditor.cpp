@@ -103,7 +103,7 @@ void DockedEditor::dockWidgetCloseRequested()
     emit editorCloseRequested(editor);
 }
 
-ads::CDockAreaWidget * DockedEditor::currentDockArea()
+ads::CDockAreaWidget *DockedEditor::currentDockArea()
 {
     QMap<QString, ads::CDockWidget*> dockwidgets = m_DockManager->dockWidgetsMap();
 

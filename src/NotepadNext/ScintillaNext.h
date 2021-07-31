@@ -23,6 +23,7 @@
 #include "ScintillaEdit.h"
 #include "ScintillaBuffer.h"
 
+
 class ScintillaNext : public ScintillaEdit
 {
     Q_OBJECT
@@ -43,12 +44,16 @@ public:
     QString canonicalFilePath();
     QString suffix();
 
+    ScintillaBuffer *getBuffer() const { return buffer; }
+
     enum FileStateChange {
         NoChange,
         Modified,
         Deleted,
         Restored,
     };
+
+    QString languageName;
 
 public slots:
     void close();
@@ -58,6 +63,7 @@ public slots:
     bool saveCopyAs(const QString &filePath);
     bool rename(const QString &newFilePath);
     ScintillaNext::FileStateChange checkFileForStateChange();
+    bool moveToTrash();
 
 signals:
     void aboutToSave();

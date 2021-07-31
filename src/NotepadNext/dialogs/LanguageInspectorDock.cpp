@@ -58,6 +58,11 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
     DockedEditor *dockedEditor = parent->getDockedEditor();
 
     connect(dockedEditor, &DockedEditor::editorActivated, this, &LanguageInspectorDock::updateInformation);
+    connect(dockedEditor, &DockedEditor::editorAdded, [=](ScintillaNext *editor) {
+        connect(editor->getBuffer(), &ScintillaBuffer::lexer_changed, [=](){
+            updateInformation(editor);
+        });
+    });
     connect(this, &LanguageInspectorDock::visibilityChanged, [=](bool visible) {
         if (visible) {
             MainWindow *mw = qobject_cast<MainWindow *>(this->parent());
@@ -113,7 +118,7 @@ void LanguageInspectorDock::updateInformation(ScintillaNext *editor)
 
 void LanguageInspectorDock::updateLanguageName(ScintillaNext *editor)
 {
-    ui->editLanguage->setText(editor->property("nn.meta.language"));
+    ui->editLanguage->setText(editor->languageName);
     ui->editLexer->setText(editor->lexerLanguage());
 }
 

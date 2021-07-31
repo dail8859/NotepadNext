@@ -82,9 +82,18 @@ void ScintillaNext::reload()
 
 bool ScintillaNext::saveAs(const QString &newFilePath)
 {
+    // Store the type of the buffer before it gets saved (which can change the type)
+    const ScintillaBuffer::BufferType origType = buffer->type();
+
     emit aboutToSave();
 
-    return buffer->saveAs(newFilePath);
+    const bool ret = buffer->saveAs(newFilePath);
+
+    if (ret && origType == ScintillaBuffer::Temporary) {
+        emit renamed();
+    }
+
+    return ret;
 }
 
 bool ScintillaNext::saveCopyAs(const QString &filePath)
@@ -131,6 +140,11 @@ ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
     }
 
     return ScintillaNext::NoChange;
+}
+
+bool ScintillaNext::moveToTrash()
+{
+    return this->buffer->moveToTrash();
 }
 
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)
