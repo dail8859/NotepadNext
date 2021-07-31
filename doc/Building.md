@@ -1,6 +1,8 @@
 # Building Notepad Next
 
-To build Notepad Next you will need a compatible C++ compiler, the Qt libraries, and the Notepad Next source code. This will walk through how to build Notepad Next using Microsoft's Visual Studio 2019 compiler.
+To build Notepad Next you will need a compatible C++ compiler, the Qt libraries, and the Notepad Next source code.
+
+This document specifically describes how to build Notepad Next using Microsoft's Visual Studio 2019 compiler. Other compilers and operating systems have not been tested, but should be possible with minor changes to the project files and source code.
 
 ## Installing Visual Studio 2019
 
