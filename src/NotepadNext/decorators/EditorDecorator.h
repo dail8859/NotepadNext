@@ -38,7 +38,7 @@ public:
 
 public slots:
     void setEnabled(bool b);
-    virtual void notify(const SCNotification *pscn) = 0;
+    virtual void notify(const Scintilla::NotificationData *pscn) = 0;
 
 signals:
     void stateChanged(bool b);

@@ -8,7 +8,7 @@
 #ifndef XPM_H
 #define XPM_H
 
-namespace Scintilla {
+namespace Scintilla::Internal {
 
 /**
  * Hold a pixmap in XPM format.
@@ -18,9 +18,9 @@ class XPM {
 	int width=1;
 	int nColours=1;
 	std::vector<unsigned char> pixels;
-	ColourDesired colourCodeTable[256];
+	ColourRGBA colourCodeTable[256];
 	char codeTransparent=' ';
-	ColourDesired ColourFromCode(int ch) const noexcept;
+	ColourRGBA ColourFromCode(int ch) const noexcept;
 	void FillRun(Surface *surface, int code, int startX, int y, int x) const;
 public:
 	explicit XPM(const char *textForm);
@@ -36,7 +36,7 @@ public:
 	void Draw(Surface *surface, const PRectangle &rc);
 	int GetHeight() const noexcept { return height; }
 	int GetWidth() const noexcept { return width; }
-	void PixelAt(int x, int y, ColourDesired &colour, bool &transparent) const noexcept;
+	ColourRGBA PixelAt(int x, int y) const noexcept;
 private:
 	static std::vector<const char *>LinesFormFromTextForm(const char *textForm);
 };
@@ -65,7 +65,7 @@ public:
 	float GetScaledWidth() const noexcept { return width / scale; }
 	int CountBytes() const noexcept;
 	const unsigned char *Pixels() const noexcept;
-	void SetPixel(int x, int y, ColourDesired colour, int alpha) noexcept;
+	void SetPixel(int x, int y, ColourRGBA colour) noexcept;
 	static void BGRAFromRGBA(unsigned char *pixelsBGRA, const unsigned char *pixelsRGBA, size_t count) noexcept;
 };
 
@@ -88,7 +88,7 @@ public:
 	/// Remove all images.
 	void Clear() noexcept;
 	/// Add an image.
-	void Add(int ident, RGBAImage *image);
+	void AddImage(int ident, std::unique_ptr<RGBAImage> image);
 	/// Get image by id.
 	RGBAImage *Get(int ident);
 	/// Give the largest height of the set.

@@ -21,6 +21,8 @@
 #include "ui_LuaConsoleDock.h"
 
 #include "ScintillaNext.h"
+#include "ILexer.h"
+#include "Lexilla.h"
 #include "SciLexer.h"
 
 #include "LuaState.h"
@@ -116,7 +118,7 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
 
     output->setUndoCollection(false);
     output->setReadOnly(true);
-    output->setLexer(SCLEX_NULL);
+    output->setILexer(reinterpret_cast<sptr_t>(CreateLexer("lua")));
     output->usePopUp(SC_POPUP_NEVER);
     output->setMarginWidthN(1, output->textWidth(STYLE_DEFAULT, ">") * 2);
     output->setMarginTypeN(1, SC_MARGIN_RTEXT);
@@ -124,7 +126,7 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
     output->setScrollWidth(1);
 
     // Have it actually do the lexing
-    input->setLexer(SCLEX_LUA);
+    input->setILexer(reinterpret_cast<sptr_t>(CreateLexer("lua")));
 
     // Setup Keywords
     input->setKeyWords(0, "and break do else elseif end false for function goto if in local nil not or repeat return then true until while");
@@ -188,7 +190,7 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
     input->setMaximumHeight(input->textHeight(0));
     input->installEventFilter(this);
 
-    connect(input, &ScintillaNext::updateUi, [=](int flags) {
+    connect(input, &ScintillaNext::updateUi, [=](Scintilla::Update flags) {
         int curPos = input->currentPos();
         int bracePos = INVALID_POSITION;
 

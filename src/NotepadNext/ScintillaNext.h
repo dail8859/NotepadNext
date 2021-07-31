@@ -23,6 +23,7 @@
 #include "ScintillaEdit.h"
 #include "ScintillaBuffer.h"
 
+
 class ScintillaNext : public ScintillaEdit
 {
     Q_OBJECT
@@ -51,6 +52,8 @@ public:
         Deleted,
         Restored,
     };
+
+    QString languageName;
 
 public slots:
     void close();

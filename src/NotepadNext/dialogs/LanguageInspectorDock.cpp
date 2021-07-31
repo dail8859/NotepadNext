@@ -118,7 +118,7 @@ void LanguageInspectorDock::updateInformation(ScintillaNext *editor)
 
 void LanguageInspectorDock::updateLanguageName(ScintillaNext *editor)
 {
-    ui->editLanguage->setText(editor->property("nn.meta.language"));
+    ui->editLanguage->setText(editor->languageName);
     ui->editLexer->setText(editor->lexerLanguage());
 }
 

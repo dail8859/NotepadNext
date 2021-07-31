@@ -25,7 +25,7 @@
 using namespace Scintilla;
 
 #ifdef SCI_OWNREGEX
-RegexSearchBase *Scintilla::CreateRegexSearch(CharClassify *charClassTable)
+RegexSearchBase *Scintilla::Internal::CreateRegexSearch(CharClassify *charClassTable)
 {
     Q_UNUSED(charClassTable);
 
@@ -40,7 +40,7 @@ QRegexSearch::QRegexSearch()
 
 }
 
-Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, bool caseSensitive, bool word, bool wordStart, int flags, Sci::Position *length)
+Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, bool caseSensitive, bool word, bool wordStart, Scintilla::FindOption flags, Sci::Position *length)
 {
     qInfo(Q_FUNC_INFO);
     qInfo("\tminPos %d", minPos);
@@ -58,7 +58,7 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
 
     auto options = QRegularExpression::MultilineOption | QRegularExpression::UseUnicodePropertiesOption;
 
-    if ((flags & SCFIND_MATCHCASE) == 0)
+    if (FlagSet(flags, FindOption::MatchCase))
         options |= QRegularExpression::CaseInsensitiveOption;
 
     // TODO: does (*ANYCRLF) need prepended to the search string?

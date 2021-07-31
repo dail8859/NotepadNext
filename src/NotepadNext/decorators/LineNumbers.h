@@ -35,7 +35,7 @@ private:
     void adjustMarginWidth();
 
 public slots:
-    void notify(const SCNotification *pscn) override;
+    void notify(const Scintilla::NotificationData *pscn) override;
 };
 
 #endif // LINENUMBERS_H

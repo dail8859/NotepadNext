@@ -39,6 +39,9 @@
 #include "Settings.h"
 
 #include "ScintillaNext.h"
+#include "ILexer.h"
+#include "Lexilla.h"
+#include "SciLexer.h"
 
 #include "RecentFilesListManager.h"
 #include "EditorManager.h"
@@ -1165,7 +1168,7 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    const QString language_name = editor->property("nn.meta.language");
+    const QString language_name = editor->languageName;
 
     foreach (QAction *action, languageActionGroup->actions()) {
         if (action->data().toString() == language_name) {
@@ -1190,17 +1193,17 @@ void MainWindow::updateGui(ScintillaNext *editor)
     updateLanguageBasedUi(editor);
 }
 
-void MainWindow::updateDocumentBasedUi(int updated)
+void MainWindow::updateDocumentBasedUi(Scintilla::Update updated)
 {
     ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
 
     // TODO: what if this is triggered by an editor that is not the active editor?
 
-    if (updated & SC_UPDATE_CONTENT) {
+    if (Scintilla::FlagSet(updated, Scintilla::Update::Content)) {
         updateSelectionBasedUi(editor);
     }
 
-    if (updated & (SC_UPDATE_CONTENT | SC_UPDATE_SELECTION)) {
+    if (Scintilla::FlagSet(updated, Scintilla::Update::Content) || Scintilla::FlagSet(updated, Scintilla::Update::Selection)) {
         updateContentBasedUi(editor);
 
     }
@@ -1256,7 +1259,7 @@ void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
 
     // Only real files have extensions
     if (!editor->isFile()) {
-        editor->setLexer(SCLEX_NULL);
+        editor->setILexer(reinterpret_cast<sptr_t>(CreateLexer("null")));
         return;
     }
 
@@ -1294,18 +1297,23 @@ void MainWindow::editorActivated(ScintillaNext *editor)
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 {
     qInfo(Q_FUNC_INFO);
+    qInfo(qUtf8Printable("Language Name: " + languageName));
 
     LuaExtension::Instance().setEditor(editor);
 
-    editor->setProperty("nn.meta.language", languageName.toLatin1().constData());
+    app->getLuaState()->execute(QString("languageName = \"%1\"").arg(QString(languageName)).toLatin1().constData());
+    const QString lexer = app->getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
 
-    app->getLuaState()->execute(QString("lexer = \"%1\"").arg(QString(languageName)).toLatin1().constData());
+    auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
+    editor->setILexer((sptr_t) lexerInstance);
+    editor->languageName = languageName;
+
     app->getLuaState()->execute(R"(
-        local L = languages[lexer]
+        local L = languages[languageName]
         -- this resets the style definitions but keeps
         -- the "wanted" stuff, such as line numbers, etc
         -- resetEditorStyle()
-        editor.LexerLanguage = L.lexer
+        --editor.LexerLanguage = L.lexer
 
         --editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
         --editor.TabWidth = L.tabSize or 4
@@ -1420,7 +1428,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
     connect(editor, &ScintillaNext::savePointChanged, [=]() { updateSaveStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::renamed, [=]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
-    connect(editor, &ScintillaNext::marginClicked, [editor](int position, int modifiers, int margin) {
+    connect(editor, &ScintillaNext::marginClicked, [editor](Scintilla::Position position, Scintilla::KeyMod modifiers, int margin) {
         Q_UNUSED(modifiers);
 
         if (margin == 1) {
