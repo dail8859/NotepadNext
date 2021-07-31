@@ -1168,7 +1168,7 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    const QString language_name = editor->property("nn.meta.language");
+    const QString language_name = editor->languageName;
 
     foreach (QAction *action, languageActionGroup->actions()) {
         if (action->data().toString() == language_name) {
@@ -1297,15 +1297,16 @@ void MainWindow::editorActivated(ScintillaNext *editor)
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 {
     qInfo(Q_FUNC_INFO);
+    qInfo(qUtf8Printable("Language Name: " + languageName));
 
     LuaExtension::Instance().setEditor(editor);
 
-    editor->setProperty("nn.meta.language", languageName.toLatin1().constData());
-
     app->getLuaState()->execute(QString("languageName = \"%1\"").arg(QString(languageName)).toLatin1().constData());
-
     const QString lexer = app->getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
-    editor->setILexer(reinterpret_cast<sptr_t>(CreateLexer(lexer.toLatin1().constData())));
+
+    auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
+    editor->setILexer((sptr_t) lexerInstance);
+    editor->languageName = languageName;
 
     app->getLuaState()->execute(R"(
         local L = languages[languageName]
