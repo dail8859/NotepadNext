@@ -53,6 +53,8 @@ public:
         Restored,
     };
 
+    QString languageName;
+
 public slots:
     void close();
     bool save();
