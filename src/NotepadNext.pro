@@ -28,7 +28,7 @@ TEMPLATE = subdirs
 SUBDIRS = NotepadNext
 
 win32 {
-    package.target = make_package
+    package.target = package
     package.commands = \
         xcopy $$shell_path($${OUT_PWD}/NotepadNext/NotepadNext.exe) $$shell_path($${OUT_PWD}/package/) /Y && \
         xcopy $$shell_path($${PWD}/../LICENSE) $$shell_path($${OUT_PWD}/package/) /Y && \
@@ -38,11 +38,9 @@ win32 {
     zip.depends = package
     zip.commands = 7z a -tzip $$quote(NotepadNext-v$${APP_VERSION}.zip) $$shell_path(./package/*)
 
-    prepare_installer.target = prepare_installer
-    prepare_installer.depends = package
-    prepare_installer.commands = \
-        xcopy $$shell_path(./package/*) $$shell_path(../installer/packages/app/data/) /Y/E && \
-        del $$shell_path(../installer/packages/app/data/LICENSE)
+    installer.target = installer
+    installer.depends = package
+    installer.commands = makensis /V4 $$shell_path($${OUT_PWD}/../installer/installer.nsi)
 
-    QMAKE_EXTRA_TARGETS += package prepare_installer zip
+    QMAKE_EXTRA_TARGETS += package zip installer
 }
