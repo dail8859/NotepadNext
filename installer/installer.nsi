@@ -4,17 +4,10 @@
 SetCompressor /SOLID lzma
 
 !define MUI_ABORTWARNING # This will warn the user if they exit from the installer.
-
-!insertmacro MUI_PAGE_WELCOME # Welcome to the installer page.
-!insertmacro MUI_PAGE_LICENSE "..\LICENSE"
-!insertmacro MUI_PAGE_DIRECTORY # In which folder install page.
-!insertmacro MUI_PAGE_INSTFILES # Installing page.
-!insertmacro MUI_PAGE_FINISH # Finished installation page.
-
-!insertmacro MUI_LANGUAGE "English"
+!define MUI_ICON "..\src\NotepadNext\icons\newfile.ico"
+!define MUI_UNICON "..\src\NotepadNext\icons\newfile.ico"
 
 !getdllversion "..\build\package\NotepadNext.exe" nnver_
-
 !define APPVERSION ${nnver_1}.${nnver_2}
 !define VERSION_MAJOR ${nnver_1}
 !define VERSION_MINOR ${nnver_2}
@@ -24,6 +17,22 @@ SetCompressor /SOLID lzma
 	!undef APPVERSION
 	!define APPVERSION ${nnver_1}.${nnver_2}.${nnver_3}
 !endif
+
+# Install pages
+!insertmacro MUI_PAGE_WELCOME # Welcome to the installer page.
+!insertmacro MUI_PAGE_LICENSE "..\LICENSE"
+!insertmacro MUI_PAGE_DIRECTORY # In which folder install page.
+!insertmacro MUI_PAGE_INSTFILES # Installing page.
+!insertmacro MUI_PAGE_FINISH # Finished installation page.
+
+# Uninstall pages
+!insertmacro MUI_UNPAGE_WELCOME
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_UNPAGE_FINISH
+
+
+!insertmacro MUI_LANGUAGE "English"
 
 
 Name "Notepad Next v${APPVERSION}" # Name of the installer (usually the name of the application to install).
