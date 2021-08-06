@@ -20,7 +20,6 @@ This document specifically describes how to build Notepad Next using Microsoft's
   * Qt 5.15.2 > MSVC 2019 64-bit
   * Developer and Design Tools > Qt Creator CDB Debugger Support
   * Developer and Design Tools > Debugging Tools for Windows
-  * Developer and Design Tools > Qt Installer framework (optional if you want to build the installer)
 
 # Cloning the Notepad Next Repository
 
