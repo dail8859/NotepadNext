@@ -1,8 +1,6 @@
 ## Prepare Release
 
-1. Update version in `installer/config/config.xml`
-2. Update version and date in `installer/packages/app/meta/package.xml`
-3. Update version in `src/Version.pri`
+Update version in `src/Version.pri`
 
 ## Build Release
 Example bat script to build release
