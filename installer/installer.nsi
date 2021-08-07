@@ -6,6 +6,7 @@ SetCompressor /SOLID lzma
 !define MUI_ABORTWARNING # This will warn the user if they exit from the installer.
 !define MUI_ICON "..\src\NotepadNext\icons\newfile.ico"
 !define MUI_UNICON "..\src\NotepadNext\icons\newfile.ico"
+!define MUI_COMPONENTSPAGE_NODESC
 
 !getdllversion "..\build\package\NotepadNext.exe" nnver_
 !define APPVERSION ${nnver_1}.${nnver_2}
@@ -21,6 +22,7 @@ SetCompressor /SOLID lzma
 # Install pages
 !insertmacro MUI_PAGE_WELCOME # Welcome to the installer page.
 !insertmacro MUI_PAGE_LICENSE "..\LICENSE"
+!insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY # In which folder install page.
 !insertmacro MUI_PAGE_INSTFILES # Installing page.
 !insertmacro MUI_PAGE_FINISH # Finished installation page.
@@ -50,16 +52,13 @@ VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "Notepad Next ${APPVERSI
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "${nnver_1}.${nnver_2}"
 
 
-Section "Notepad Next" # In this section add your files or your folders.
+Section "Notepad Next"
+	SectionIn RO
 	SetOutPath $INSTDIR
+
 	File /r ..\build\package\*
 
 	SetRegView 64
-
-	# Context Menu
-	WriteRegStr HKCR "*\shell\notepadnext" "" "Edit with Notepad Next"
-	WriteRegStr HKCR "*\shell\notepadnext" "icon" "$INSTDIR\NotepadNext.exe"
-	WriteRegStr HKCR "*\shell\notepadnext\command" "" "$INSTDIR\NotepadNext.exe $\"%1$\""
 
 	# Installation info to show up in the Add/Remove panel
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "DisplayName" "Notepad Next ${APPVERSION}"
@@ -79,11 +78,35 @@ Section "Notepad Next" # In this section add your files or your folders.
 	WriteUninstaller "$INSTDIR\uninstall.exe"
 SectionEnd
 
+Section /o "Desktop Shortcut"
+	CreateShortCut "$DESKTOP\Notepad Next.lnk" "$INSTDIR\NotepadNext.exe"
+SectionEnd
+
+Section /o "Start Menu Shortcut"
+	CreateShortCut "$SMPROGRAMS\Notepad Next.lnk" "$INSTDIR\NotepadNext.exe"
+SectionEnd
+
+Section /o "Context Menu"
+	SetRegView 64
+
+	WriteRegStr HKCR "*\shell\notepadnext" "" "Edit with Notepad Next"
+	WriteRegStr HKCR "*\shell\notepadnext" "icon" "$INSTDIR\NotepadNext.exe"
+	WriteRegStr HKCR "*\shell\notepadnext\command" "" "$INSTDIR\NotepadNext.exe $\"%1$\""
+SectionEnd
 
 Section "Uninstall"
 	SetRegView 64
 	RMDir /r $INSTDIR
 
-	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext"
+	# Desktop shortcut
+	Delete "$DESKTOP\Notepad Next.lnk"
+
+	# Start Menu shortcut
+	Delete "$SMPROGRAMS\Notepad Next.lnk"
+
+	# Context menu registry
 	DeleteRegKey HKCR "*\shell\notepadnext"
+
+	# Uninstall registry
+	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext"
 SectionEnd

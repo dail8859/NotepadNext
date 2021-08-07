@@ -47,4 +47,4 @@ CMakeLists.txt.user*
 
 *.pyc
 
-/installer/packages/app/data/
+/build
