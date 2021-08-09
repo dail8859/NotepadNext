@@ -30,6 +30,7 @@
 class SurroundSelection : public EditorDecorator
 {
     Q_OBJECT
+
 public:
     SurroundSelection(ScintillaEdit *editor);
 
