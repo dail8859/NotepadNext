@@ -1,6 +1,6 @@
 /*
  * This file is part of Notepad Next.
- * Copyright 2020 Justin Dailey
+ * Copyright 2021 Justin Dailey
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,22 +17,24 @@
  */
 
 
-#ifndef SURROUNDSELECTION_H
-#define SURROUNDSELECTION_H
+#ifndef BETTERMULTISELECTION_H
+#define BETTERMULTISELECTION_H
+
 
 #include <QObject>
 #include <QWidget>
 
-#include "ScintillaEdit.h"
 #include "EditorDecorator.h"
 
 
-class SurroundSelection : public EditorDecorator
+struct Selection;
+
+class BetterMultiSelection : public EditorDecorator
 {
     Q_OBJECT
 
 public:
-    SurroundSelection(ScintillaEdit *editor);
+    BetterMultiSelection(ScintillaEdit *editor);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
@@ -41,7 +43,10 @@ public slots:
     void notify(const Scintilla::NotificationData *pscn) override;
 
 private:
-    void surroundSelections(const char ch1, const char ch2);
+    QVector<Selection> GetSelections();
+    void SetSelections(const QVector<Selection> &selections);
+    void EditSelections(std::function<void(Selection &selection)> edit);
+    std::function<void(Selection &selection)> SimpleEdit(int message);
 };
 
-#endif // SURROUNDSELECTION_H
+#endif // BETTERMULTISELECTION_H

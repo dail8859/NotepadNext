@@ -27,6 +27,7 @@
 #include "SmartHighlighter.h"
 #include "SurroundSelection.h"
 #include "LineNumbers.h"
+#include "BetterMultiSelection.h"
 
 const int MARK_BOOKMARK = 24;
 const int MARK_HIDELINESBEGIN = 23;
@@ -215,6 +216,9 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     SurroundSelection *ss = new SurroundSelection(editor);
     ss->setEnabled(true);
+
+    BetterMultiSelection *bms = new BetterMultiSelection(editor);
+    bms->setEnabled(true);
 }
 
 // TODO: Move this into the editor eventually?
