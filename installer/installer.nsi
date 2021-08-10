@@ -1,5 +1,6 @@
 !include "MUI.nsh"
 !include "FileFunc.nsh"
+!include "UninstallExisting.nsh"
 
 SetCompressor /SOLID lzma
 
@@ -51,6 +52,25 @@ VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright 2019 Justin Da
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "Notepad Next ${APPVERSION} installer"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "${nnver_1}.${nnver_2}"
 
+
+Function .onInit
+	SetRegView 64
+
+	# Check to see if there is uninstaller information
+	ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "UninstallString"
+	${If} $0 != ""
+		ReadRegStr $1 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "DisplayVersion"
+		${If} ${Cmd} `MessageBox MB_YESNO|MB_ICONQUESTION "Notepad Next v$1 is already installed. Uninstall previous version?" /SD IDYES IDYES`
+			!insertmacro UninstallExisting $0 $0
+			${If} $0 <> 0
+				MessageBox MB_YESNO|MB_ICONSTOP "Failed to uninstall, continue anyway?" /SD IDYES IDYES +2
+				Abort
+			${Else}
+				MessageBox MB_OK "The previous version has been successfully uninstalled."
+			${EndIf}
+		${EndIf}
+	${EndIf}
+FunctionEnd
 
 Section "Notepad Next"
 	SectionIn RO
