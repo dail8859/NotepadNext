@@ -96,6 +96,9 @@ Section "Notepad Next"
 	IntFmt $0 "0x%08X" $0
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "EstimatedSize" "$0"
 
+	# Register the application 
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
+
 	WriteUninstaller "$INSTDIR\uninstall.exe"
 SectionEnd
 
@@ -130,4 +133,7 @@ Section "Uninstall"
 
 	# Uninstall registry
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext"
+
+	# Remove application registration
+	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
 SectionEnd
