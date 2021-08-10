@@ -43,13 +43,14 @@ OutFile "NotepadNext-v${APPVERSION}-Installer.exe" # Name of the installer's fil
 InstallDir "$PROGRAMFILES64\NotepadNext" # Default installing folder ($PROGRAMFILES is Program Files folder).
 ShowInstDetails show # This will always show the installation details.
 RequestExecutionLevel admin
+BrandingText " "
 
 # Installer Information
 VIProductVersion "${nnver_1}.${nnver_2}.${nnver_3}.${nnver_4}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${APPVERSION}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Notepad Next"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright 2019 Justin Dailey"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "Notepad Next ${APPVERSION} installer"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "Notepad Next ${APPVERSION} Installer"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "${nnver_1}.${nnver_2}"
 
 
@@ -66,7 +67,7 @@ Function .onInit
 				MessageBox MB_YESNO|MB_ICONSTOP "Failed to uninstall, continue anyway?" /SD IDYES IDYES +2
 				Abort
 			${Else}
-				MessageBox MB_OK "The previous version has been successfully uninstalled."
+				MessageBox MB_OK|MB_ICONINFORMATION "The previous version has been successfully uninstalled."
 			${EndIf}
 		${EndIf}
 	${EndIf}
@@ -109,9 +110,9 @@ SectionEnd
 Section /o "Context Menu"
 	SetRegView 64
 
-	WriteRegStr HKCR "*\shell\notepadnext" "" "Edit with Notepad Next"
-	WriteRegStr HKCR "*\shell\notepadnext" "icon" "$INSTDIR\NotepadNext.exe"
-	WriteRegStr HKCR "*\shell\notepadnext\command" "" "$INSTDIR\NotepadNext.exe $\"%1$\""
+	WriteRegStr HKCR "*\shell\NotepadNext" "" "Edit with Notepad Next"
+	WriteRegStr HKCR "*\shell\NotepadNext" "icon" "$INSTDIR\NotepadNext.exe"
+	WriteRegStr HKCR "*\shell\NotepadNext\command" "" "$INSTDIR\NotepadNext.exe $\"%1$\""
 SectionEnd
 
 Section "Uninstall"
