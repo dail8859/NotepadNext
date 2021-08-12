@@ -99,6 +99,12 @@ Section "Notepad Next"
 	# Register the application 
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
 
+	# Register 'Open With' menu suggestion. No real good documentation for this. https://stackoverflow.com/a/62783311
+	WriteRegStr HKLM "Software\Classes\NotepadNext\shell" "" "open"
+	WriteRegStr HKLM "Software\Classes\NotepadNext\shell\open\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
+	WriteRegStr HKLM "Software\Classes\.txt\OpenWithProgids" "NotepadNext" ""
+	# TODO: add more
+
 	WriteUninstaller "$INSTDIR\uninstall.exe"
 SectionEnd
 
@@ -136,4 +142,8 @@ Section "Uninstall"
 
 	# Remove application registration
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
+	
+	# Remove 'Open With' menu suggestion
+	DeleteRegValue HKLM "Software\Classes\.txt\OpenWithProgids" "NotepadNext"
+	DeleteRegKey HKLM "Software\Classes\NotepadNext"
 SectionEnd
