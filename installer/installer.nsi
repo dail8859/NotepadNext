@@ -1,5 +1,6 @@
 !include "MUI.nsh"
 !include "FileFunc.nsh"
+!include "UninstallExisting.nsh"
 
 SetCompressor /SOLID lzma
 
@@ -42,15 +43,35 @@ OutFile "NotepadNext-v${APPVERSION}-Installer.exe" # Name of the installer's fil
 InstallDir "$PROGRAMFILES64\NotepadNext" # Default installing folder ($PROGRAMFILES is Program Files folder).
 ShowInstDetails show # This will always show the installation details.
 RequestExecutionLevel admin
+BrandingText " "
 
 # Installer Information
 VIProductVersion "${nnver_1}.${nnver_2}.${nnver_3}.${nnver_4}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${APPVERSION}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Notepad Next"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright 2019 Justin Dailey"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "Notepad Next ${APPVERSION} installer"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "Notepad Next ${APPVERSION} Installer"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "${nnver_1}.${nnver_2}"
 
+
+Function .onInit
+	SetRegView 64
+
+	# Check to see if there is uninstaller information
+	ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "UninstallString"
+	${If} $0 != ""
+		ReadRegStr $1 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "DisplayVersion"
+		${If} ${Cmd} `MessageBox MB_YESNO|MB_ICONQUESTION "Notepad Next v$1 is already installed. Uninstall previous version?" /SD IDYES IDYES`
+			!insertmacro UninstallExisting $0 $0
+			${If} $0 <> 0
+				MessageBox MB_YESNO|MB_ICONSTOP "Failed to uninstall, continue anyway?" /SD IDYES IDYES +2
+				Abort
+			${Else}
+				MessageBox MB_OK|MB_ICONINFORMATION "The previous version has been successfully uninstalled."
+			${EndIf}
+		${EndIf}
+	${EndIf}
+FunctionEnd
 
 Section "Notepad Next"
 	SectionIn RO
@@ -75,6 +96,15 @@ Section "Notepad Next"
 	IntFmt $0 "0x%08X" $0
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "EstimatedSize" "$0"
 
+	# Register the application 
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
+
+	# Register 'Open With' menu suggestion. No real good documentation for this. https://stackoverflow.com/a/62783311
+	WriteRegStr HKLM "Software\Classes\NotepadNext\shell" "" "open"
+	WriteRegStr HKLM "Software\Classes\NotepadNext\shell\open\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
+	WriteRegStr HKLM "Software\Classes\.txt\OpenWithProgids" "NotepadNext" ""
+	# TODO: add more
+
 	WriteUninstaller "$INSTDIR\uninstall.exe"
 SectionEnd
 
@@ -89,9 +119,9 @@ SectionEnd
 Section /o "Context Menu"
 	SetRegView 64
 
-	WriteRegStr HKCR "*\shell\notepadnext" "" "Edit with Notepad Next"
-	WriteRegStr HKCR "*\shell\notepadnext" "icon" "$INSTDIR\NotepadNext.exe"
-	WriteRegStr HKCR "*\shell\notepadnext\command" "" "$INSTDIR\NotepadNext.exe $\"%1$\""
+	WriteRegStr HKCR "*\shell\NotepadNext" "" "Edit with Notepad Next"
+	WriteRegStr HKCR "*\shell\NotepadNext" "icon" "$INSTDIR\NotepadNext.exe"
+	WriteRegStr HKCR "*\shell\NotepadNext\command" "" "$INSTDIR\NotepadNext.exe $\"%1$\""
 SectionEnd
 
 Section "Uninstall"
@@ -109,4 +139,11 @@ Section "Uninstall"
 
 	# Uninstall registry
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext"
+
+	# Remove application registration
+	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
+	
+	# Remove 'Open With' menu suggestion
+	DeleteRegValue HKLM "Software\Classes\.txt\OpenWithProgids" "NotepadNext"
+	DeleteRegKey HKLM "Software\Classes\NotepadNext"
 SectionEnd

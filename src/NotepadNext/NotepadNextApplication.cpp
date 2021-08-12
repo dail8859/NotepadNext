@@ -156,8 +156,13 @@ bool NotepadNextApplication::initGui()
 
     applyArguments(SingleApplication::arguments());
 
-    // Everything should be ready, so do it!
-    windows.first()->newFile();
+    // Everything should be ready at this point
+
+    // If the window does not have any editors (meaning the applyArguments() did not
+    // have any files to open) then create a new empty file
+    if (windows.first()->getDockedEditor()->count() == 0) {
+        windows.first()->newFile();
+    }
     windows.first()->show();
     windows.first()->bringWindowToForeground();
 
