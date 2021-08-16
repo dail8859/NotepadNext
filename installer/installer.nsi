@@ -64,7 +64,7 @@ VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "${nnver_1}.${nnver_2}"
 Function .onInit
 	SetRegView 64
 
-	System::Call 'kernel32::CreateMutex(p 0, i 0, t "myMutex") p .r1 ?e'
+	System::Call 'kernel32::CreateMutex(p 0, i 0, t "NotepadNextInstaller") p .r1 ?e'
 	Pop $R0
 
 	StrCmp $R0 0 +3
