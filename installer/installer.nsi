@@ -1,22 +1,33 @@
+!addplugindir /x86-ansi ".\NsisMultiUser\Plugins\x86-ansi\"
+!addplugindir /x86-unicode ".\NsisMultiUser\Plugins\x86-unicode\"
+!addincludedir ".\NsisMultiUser\Include\"
+
 SetCompressor /SOLID lzma
 
-# Configure the MultiUser settings before including it
-!define MULTIUSER_INSTALLMODE_INSTDIR "NotepadNext"
-!define MULTIUSER_EXECUTIONLEVEL Highest
-!define MULTIUSER_INSTALLMODE_COMMANDLINE
-!define MULTIUSER_USE_PROGRAMFILES64
-
 !getdllversion "..\build\package\NotepadNext.exe" nnver_
-!define APPVERSION ${nnver_1}.${nnver_2}
+!define VERSION ${nnver_1}.${nnver_2}
 !define VERSION_MAJOR ${nnver_1}
 !define VERSION_MINOR ${nnver_2}
 !define VERSION_PATCH ${nnver_3}
 # dont think I'd ever need beyond a patch number
 
 !if ${VERSION_PATCH} != 0
-	!undef APPVERSION
-	!define APPVERSION ${nnver_1}.${nnver_2}.${nnver_3}
+	!undef VERSION
+	!define VERSION ${nnver_1}.${nnver_2}.${nnver_3}
 !endif
+
+# Configure NsisMultiUser: https://github.com/Drizin/NsisMultiUser/wiki
+!define PRODUCT_NAME "Notepad Next"
+!define COMPANY_NAME "${PRODUCT_NAME}"
+!define PROGEXE "notepadnext.exe"
+!define MULTIUSER_INSTALLMODE_UNINSTALL_REGISTRY_KEY "NotepadNext"
+!define MULTIUSER_INSTALLMODE_DISPLAYNAME "${PRODUCT_NAME} v${VERSION}"
+!define MULTIUSER_INSTALLMODE_64_BIT 1
+!define MULTIUSER_INSTALLMODE_DEFAULT_ALLUSERS 1
+!define MULTIUSER_INSTALLMODE_ALLOW_BOTH_INSTALLATIONS 0
+!define MULTIUSER_INSTALLMODE_ALLOW_ELEVATION 1
+!define MULTIUSER_INSTALLMODE_ALLOW_ELEVATION_IF_SILENT 1 ; required for silent-mode allusers-uninstall to work, when using the workaround for Windows elevation bug
+
 
 # Configure MUI
 !define MUI_ABORTWARNING
@@ -24,59 +35,68 @@ SetCompressor /SOLID lzma
 !define MUI_UNICON "..\src\NotepadNext\icons\newfile.ico"
 !define MUI_COMPONENTSPAGE_NODESC
 
-# Now that everything is defined, add includes
-!include "MultiUser.nsh"
+!include "NsisMultiUser.nsh"
+!include "NsisMultiUserLang.nsh"
 !include "MUI2.nsh"
 !include "FileFunc.nsh"
-!include "UninstallExisting.nsh"
+!include "utils.nsh"
+
 
 # Install pages
-!insertmacro MUI_PAGE_WELCOME # Welcome to the installer page.
+!define MUI_PAGE_CUSTOMFUNCTION_PRE PageWelcomeLicensePre
+!insertmacro MUI_PAGE_WELCOME
+!define MUI_PAGE_CUSTOMFUNCTION_PRE PageWelcomeLicensePre
 !insertmacro MUI_PAGE_LICENSE "..\LICENSE"
-!insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
+!insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY # In which folder install page.
 !insertmacro MUI_PAGE_INSTFILES # Installing page.
 !insertmacro MUI_PAGE_FINISH # Finished installation page.
 
+
 # Uninstall pages
 !insertmacro MUI_UNPAGE_WELCOME
 !insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MULTIUSER_UNPAGE_INSTALLMODE
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 
-!insertmacro MUI_LANGUAGE "English"
 
-Name "Notepad Next v${APPVERSION}"
-OutFile "NotepadNext-v${APPVERSION}-Installer.exe"
+# Language stuff
+!insertmacro MUI_LANGUAGE "English"
+!insertmacro MULTIUSER_LANGUAGE_INIT
+
+
+
+Name "Notepad Next v${VERSION}"
+OutFile "NotepadNext-v${VERSION}-Installer.exe"
 ShowInstDetails show
 BrandingText " "
 
 # Installer Information
 VIProductVersion "${nnver_1}.${nnver_2}.${nnver_3}.${nnver_4}"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${APPVERSION}"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${VERSION}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "Notepad Next"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright 2019 Justin Dailey"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "Notepad Next ${APPVERSION} Installer"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "Notepad Next v${VERSION} Installer"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "${nnver_1}.${nnver_2}"
 
 
+Function PageWelcomeLicensePre
+	${if} $InstallShowPagesBeforeComponents == 0
+		Abort ; don't display the Welcome and License pages for the inner instance 
+	${endif}
+FunctionEnd
+
 Function .onInit
-	SetRegView 64
-
-	System::Call 'kernel32::CreateMutex(p 0, i 0, t "NotepadNextInstaller") p .r1 ?e'
-	Pop $R0
-
-	StrCmp $R0 0 +3
-	MessageBox MB_OK|MB_ICONEXCLAMATION "Another instance of the installer is already running."
-	Abort
+	${ifnot} ${UAC_IsInnerInstance}
+		!insertmacro CheckSingleInstance "Setup" "Global" "NotepadNextSetupMutex"
+	${endif}
 
 	!insertmacro MULTIUSER_INIT
 FunctionEnd
 
 Function un.onInit
-	SetRegView 64
-
 	!insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
@@ -85,48 +105,11 @@ Section "Notepad Next"
 	SectionIn RO
 	SetOutPath $INSTDIR
 
-	# Check to see if there is uninstaller information
-	ReadRegStr $0 SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "UninstallString"
-	${If} $0 != ""
-		ReadRegStr $1 SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "DisplayVersion"
-		${If} ${Cmd} `MessageBox MB_YESNO|MB_ICONQUESTION "Notepad Next v$1 is already installed. Uninstall previous version?" /SD IDYES IDYES`
-			!insertmacro UninstallExisting $0 $0
-			${If} $0 <> 0
-				MessageBox MB_YESNO|MB_ICONSTOP "Failed to uninstall, continue anyway?" /SD IDYES IDYES +2
-				Abort
-			${Else}
-				MessageBox MB_OK|MB_ICONINFORMATION "The previous version has been successfully uninstalled."
-			${EndIf}
-		${EndIf}
-	${EndIf}
-
 	File /r ..\build\package\*
 
 	SetRegView 64
 
-	# Installation info to show up in the Add/Remove panel
-	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "DisplayName" "Notepad Next ${APPVERSION}"
-	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "Publisher" "Notepad Next"
-	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "DisplayVersion" "${APPVERSION}"
-	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "DisplayIcon" "$INSTDIR\NotepadNext.exe"
-	WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "NoModify" 1
-	WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "NoRepair" 1
-	
-	# Specifically call the installer however this is set to install
-	${If} $MultiUser.InstallMode == "AllUsers"
-		WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "UninstallString" "$\"$INSTDIR\uninstall.exe$\" /AllUsers"
-		WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "QuietUninstallString" "$\"$INSTDIR\uninstall.exe$\" /AllUsers /S"
-	${Else}
-		WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "UninstallString" "$\"$INSTDIR\uninstall.exe$\" /CurrentUser"
-		WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "QuietUninstallString" "$\"$INSTDIR\uninstall.exe$\" /CurrentUser /S"
-	${EndIf}
-
-	${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
-	IfErrors +3 0
-	IntFmt $0 "0x%08X" $0
-	WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "EstimatedSize" "$0"
-
-	# Register the application 
+	# Register the application (e.g. cmd> start notepadnext)
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
 
 	# Register 'Open With' menu suggestion. No real good documentation for this. https://stackoverflow.com/a/62783311
@@ -136,6 +119,12 @@ Section "Notepad Next"
 	# TODO: add more extensions
 
 	WriteUninstaller "$INSTDIR\uninstall.exe"
+	!insertmacro MULTIUSER_RegistryAddInstallInfo
+
+	${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
+	IfErrors +3 0
+	IntFmt $0 "0x%08X" $0
+	WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "EstimatedSize" "$0"
 SectionEnd
 
 Section /o "Desktop Shortcut"
@@ -154,8 +143,10 @@ Section /o "Context Menu"
 	WriteRegStr SHCTX "Software\Classes\*\shell\NotepadNext\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
 SectionEnd
 
+
 Section "Uninstall"
 	SetRegView 64
+
 	RMDir /r $INSTDIR
 
 	# Desktop shortcut
@@ -167,13 +158,12 @@ Section "Uninstall"
 	# Context menu registry
 	DeleteRegKey SHCTX "Software\Classes\*\shell\NotepadNext"
 
-	# Uninstall registry
-	DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext"
-
 	# Remove application registration
 	DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
-	
+
 	# Remove 'Open With' menu suggestion
 	DeleteRegValue SHCTX "Software\Classes\.txt\OpenWithProgids" "NotepadNext"
 	DeleteRegKey SHCTX "Software\Classes\NotepadNext"
+	
+	!insertmacro MULTIUSER_RegistryRemoveInstallInfo 
 SectionEnd
