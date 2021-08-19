@@ -31,8 +31,8 @@ SetCompressor /SOLID lzma
 
 # Configure MUI
 !define MUI_ABORTWARNING
-!define MUI_ICON "..\src\NotepadNext\icons\newfile.ico"
-!define MUI_UNICON "..\src\NotepadNext\icons\newfile.ico"
+!define MUI_ICON "..\icon\nn.ico"
+!define MUI_UNICON "..\icon\nn.ico"
 !define MUI_COMPONENTSPAGE_NODESC
 
 !include "NsisMultiUser.nsh"
