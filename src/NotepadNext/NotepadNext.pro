@@ -42,7 +42,7 @@ win32 {
     QMAKE_TARGET_DESCRIPTION = Notepad Next
     QMAKE_TARGET_COPYRIGHT = $$APP_COPYRIGHT
     QMAKE_TARGET_PRODUCT = Notepad Next
-    RC_ICONS = icons/newfile.ico
+    RC_ICONS = ../../icon/nn.ico
 }
 
 
