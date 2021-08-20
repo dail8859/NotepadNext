@@ -16,11 +16,6 @@
   <property name="windowTitle">
    <string>Notepad Next[*]</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normalon>:/icons/newfile.png</normalon>
-   </iconset>
-  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="pushExitFullScreen">
     <property name="enabled">
