@@ -130,6 +130,9 @@ private:
     void setupStatusBar();
     bool checkFileForModification(ScintillaNext *editor);
 
+    void saveSettings() const;
+    void restoreSettings();
+
     QActionGroup *languageActionGroup;
 
     QLabel *docType;
