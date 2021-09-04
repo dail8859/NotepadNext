@@ -389,7 +389,9 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionWordWrap, &QAction::triggered, [=](bool b) {
         ScintillaNext *editor = dockedEditor->getCurrentEditor();
         if (b) {
-            dockedEditor->getCurrentEditor()->setWrapMode(SC_WRAP_WORD);
+            for (auto &editor : dockedEditor->editors()) {
+                editor->setWrapMode(SC_WRAP_WORD);
+            }
         }
         else {
             // Store the top line and restore it after the lines have been unwrapped
@@ -559,10 +561,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     ui->actionAboutNotepadNext->setIcon(this->windowIcon());
     ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
 
-    QSettings settings;
-    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
-    restoreState(settings.value("MainWindow/windowState").toByteArray());
-
     if (luaConsoleDock == Q_NULLPTR) {
         luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
         luaConsoleDock->hide();
@@ -594,6 +592,8 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     f.open(QFile::ReadOnly);
     setStyleSheet(f.readAll());
     f.close();
+
+    restoreSettings();
 }
 
 MainWindow::~MainWindow()
@@ -1408,6 +1408,40 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
     return true;
 }
 
+void MainWindow::saveSettings() const
+{
+    qInfo(Q_FUNC_INFO);
+
+    QSettings settings;
+
+    settings.setValue("MainWindow/geometry", saveGeometry());
+    settings.setValue("MainWindow/windowState", saveState());
+
+    settings.setValue("Gui/ShowMenuBar", app->getSettings()->showMenuBar());
+    settings.setValue("Gui/ShowToolBar", app->getSettings()->showToolBar());
+    settings.setValue("Gui/ShowStatusBar", app->getSettings()->showStatusBar());
+
+    settings.setValue("Editor/WordWrap", ui->actionWordWrap->isChecked());
+    settings.setValue("Editor/IndentGuide", ui->actionShowIndentGuide->isChecked());
+}
+
+void MainWindow::restoreSettings()
+{
+    qInfo(Q_FUNC_INFO);
+
+    QSettings settings;
+
+    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
+    restoreState(settings.value("MainWindow/windowState").toByteArray());
+
+    app->getSettings()->setShowMenuBar(settings.value("Gui/ShowMenuBar", true).toBool());
+    app->getSettings()->setShowToolBar(settings.value("Gui/ShowToolBar", true).toBool());
+    app->getSettings()->setShowStatusBar(settings.value("Gui/ShowStatusBar", true).toBool());
+
+    ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
+    ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
+}
+
 void MainWindow::focusIn()
 {
     qInfo(Q_FUNC_INFO);
@@ -1444,6 +1478,11 @@ void MainWindow::addEditor(ScintillaNext *editor)
             }
         }
     });
+
+    if (ui->actionWordWrap->isChecked())
+        editor->setWrapMode(SC_WRAP_WHITESPACE);
+    if (ui->actionShowIndentGuide->isChecked())
+        editor->setIndentationGuides(SC_IV_LOOKBOTH);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -1458,9 +1497,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
     closeAllFiles(true);
 
-    QSettings settings;
-    settings.setValue("MainWindow/geometry", saveGeometry());
-    settings.setValue("MainWindow/windowState", saveState());
+    saveSettings();
 
     event->accept();
 

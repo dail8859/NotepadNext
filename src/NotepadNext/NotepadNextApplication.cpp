@@ -70,11 +70,13 @@ NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     });
 
     // Restore some settings and schedule saving the settings on quit
-    QSettings settings;
-    recentFilesListManager->setFileList(settings.value("App/RecentFilesList").toStringList());
+    QSettings qsettings;
+
+    recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
+
     connect(this, &NotepadNextApplication::aboutToQuit, [=]() {
-        QSettings settings;
-        settings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
+        QSettings qsettings;
+        qsettings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
     });
 
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
