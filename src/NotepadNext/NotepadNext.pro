@@ -140,7 +140,6 @@ FORMS += \
     dialogs/LuaConsoleDock.ui \
     dialogs/MacroRunDialog.ui \
     dialogs/MacroSaveDialog.ui \
-    dialogs/WindowListDialog.ui \
     dialogs/PreferencesDialog.ui
 
 RESOURCES += \
