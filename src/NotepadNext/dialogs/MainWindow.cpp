@@ -507,39 +507,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
-    connect(ui->menuWindows, &QMenu::aboutToShow, [=]() {
-        auto actions = ui->menuWindows->actions();
-
-        // Keep the original 2 in the list (seperator and Window command)
-        // delete the rest since nobody has ownership of them
-        while (actions.size() > 2) {
-            delete actions.takeFirst();
-        }
-
-        ScintillaNext *currentEditor = dockedEditor->getCurrentEditor();
-        foreach (ScintillaNext *editor, dockedEditor->editors()) {
-            QAction *action = new QAction(editor->getName());
-            if (editor == currentEditor) {
-                action->setCheckable(true);
-                action->setChecked(true);
-            }
-
-            connect(action, &QAction::triggered, [=]() { dockedEditor->switchToEditor(editor); });
-
-            // NOTE: the menu does not take ownership when using insertAction
-            ui->menuWindows->insertAction(actions.at(0), action);
-        }
-    });
-
-    // TODO
-    //connect(ui->actionWindowsList, &QAction::triggered, [=]() {
-    //    WindowListDialog wld(this, dockedEditor->editor().toList(), this);
-    //    wld.show();
-    //    wld.raise();
-    //    wld.activateWindow();
-    //    wld.exec();
-    //});
-
     connect(ui->actionAboutQt, &QAction::triggered, &QApplication::aboutQt);
     connect(ui->actionAboutNotepadNext, &QAction::triggered, [=]() {
         QMessageBox::about(this, "About Notepad Next",

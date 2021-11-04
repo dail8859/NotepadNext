@@ -221,13 +221,6 @@
      <string>Run</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menuWindows">
-    <property name="title">
-     <string>Window</string>
-    </property>
-    <addaction name="separator"/>
-    <addaction name="actionWindowsList"/>
-   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuSearch"/>
@@ -237,7 +230,6 @@
    <addaction name="menuSettings"/>
    <addaction name="menuTools"/>
    <addaction name="menuRun"/>
-   <addaction name="menuWindows"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
