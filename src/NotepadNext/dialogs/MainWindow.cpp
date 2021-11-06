@@ -1141,9 +1141,20 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
         if (action->data().toString() == language_name) {
             action->setChecked(true);
             docType->setText(action->text());
-            break;
+
+            // Found one, so we are completely done
+            return;
         }
     }
+
+    // The above loop did not set any action as checked, so make sure they are all unchecked now
+    foreach (QAction *action, languageActionGroup->actions()) {
+        if (action->isChecked()) {
+            action->setChecked(false);
+        }
+    }
+
+    docType->setText("");
 }
 
 void MainWindow::updateGui(ScintillaNext *editor)
@@ -1172,7 +1183,6 @@ void MainWindow::updateDocumentBasedUi(Scintilla::Update updated)
 
     if (Scintilla::FlagSet(updated, Scintilla::Update::Content) || Scintilla::FlagSet(updated, Scintilla::Update::Selection)) {
         updateContentBasedUi(editor);
-
     }
 }
 
