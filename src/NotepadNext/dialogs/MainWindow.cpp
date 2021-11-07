@@ -349,13 +349,17 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionShowWhitespace, &QAction::toggled, [=](bool b) {
         // TODO: could make SCWS_VISIBLEALWAYS configurable via settings. Probably not worth
         // taking up menu space e.g. show all, show leading, show trailing
-        dockedEditor->getCurrentEditor()->setViewWS(b ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
+        for (auto &editor : dockedEditor->editors()) {
+            editor->setViewWS(b ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
+        }
 
         ui->actionShowAllCharacters->setChecked(b && ui->actionShowEndofLine->isChecked());
     });
 
     connect(ui->actionShowEndofLine, &QAction::toggled, [=](bool b) {
-        dockedEditor->getCurrentEditor()->setViewEOL(b);
+        for (auto &editor : dockedEditor->editors()) {
+            editor->setViewEOL(b);
+        }
 
         ui->actionShowAllCharacters->setChecked(b && ui->actionShowWhitespace->isChecked());
     });
@@ -363,6 +367,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionShowWrapSymbol, &QAction::triggered, [=](bool b) {
         dockedEditor->getCurrentEditor()->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
     });
+
     connect(ui->actionShowIndentGuide, &QAction::triggered, [=](bool b) {
         dockedEditor->getCurrentEditor()->setIndentationGuides(b ? SC_IV_LOOKBOTH : SC_IV_NONE);
     });
@@ -1380,6 +1385,9 @@ void MainWindow::saveSettings() const
     settings.setValue("Gui/ShowToolBar", app->getSettings()->showToolBar());
     settings.setValue("Gui/ShowStatusBar", app->getSettings()->showStatusBar());
 
+    settings.setValue("Editor/ShowWhitespace", ui->actionShowWhitespace->isChecked());
+    settings.setValue("Editor/ShowEndOfLine", ui->actionShowEndofLine->isChecked());
+
     settings.setValue("Editor/WordWrap", ui->actionWordWrap->isChecked());
     settings.setValue("Editor/IndentGuide", ui->actionShowIndentGuide->isChecked());
 }
@@ -1396,6 +1404,9 @@ void MainWindow::restoreSettings()
     app->getSettings()->setShowMenuBar(settings.value("Gui/ShowMenuBar", true).toBool());
     app->getSettings()->setShowToolBar(settings.value("Gui/ShowToolBar", true).toBool());
     app->getSettings()->setShowStatusBar(settings.value("Gui/ShowStatusBar", true).toBool());
+
+    ui->actionShowWhitespace->setChecked(settings.value("Editor/ShowWhitespace", false).toBool());
+    ui->actionShowEndofLine->setChecked(settings.value("Editor/ShowEndOfLine", false).toBool());
 
     ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
     ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
@@ -1440,8 +1451,12 @@ void MainWindow::addEditor(ScintillaNext *editor)
 
     if (ui->actionWordWrap->isChecked())
         editor->setWrapMode(SC_WRAP_WHITESPACE);
+
     if (ui->actionShowIndentGuide->isChecked())
         editor->setIndentationGuides(SC_IV_LOOKBOTH);
+
+    editor->setViewWS(ui->actionShowWhitespace->isChecked() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
+    editor->setViewEOL(ui->actionShowEndofLine->isChecked());
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
