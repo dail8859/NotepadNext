@@ -1380,6 +1380,7 @@ void MainWindow::saveSettings() const
 
     settings.setValue("Editor/ShowWhitespace", ui->actionShowWhitespace->isChecked());
     settings.setValue("Editor/ShowEndOfLine", ui->actionShowEndofLine->isChecked());
+    settings.setValue("Editor/ShowWrapSymbol", ui->actionShowWrapSymbol->isChecked());
 
     settings.setValue("Editor/WordWrap", ui->actionWordWrap->isChecked());
     settings.setValue("Editor/IndentGuide", ui->actionShowIndentGuide->isChecked());
@@ -1400,6 +1401,7 @@ void MainWindow::restoreSettings()
 
     ui->actionShowWhitespace->setChecked(settings.value("Editor/ShowWhitespace", false).toBool());
     ui->actionShowEndofLine->setChecked(settings.value("Editor/ShowEndOfLine", false).toBool());
+    ui->actionShowWrapSymbol->setChecked(settings.value("Editor/ShowWrapSymbol", false).toBool());
 
     ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
     ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
@@ -1450,6 +1452,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
 
     editor->setViewWS(ui->actionShowWhitespace->isChecked() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
     editor->setViewEOL(ui->actionShowEndofLine->isChecked());
+    editor->setWrapVisualFlags(ui->actionShowWrapSymbol->isChecked() ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
