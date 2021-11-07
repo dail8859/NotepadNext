@@ -356,7 +356,9 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     });
 
     connect(ui->actionShowWrapSymbol, &QAction::triggered, [=](bool b) {
-        dockedEditor->getCurrentEditor()->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+        for (auto &editor : dockedEditor->editors()) {
+            editor->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+        }
     });
 
     connect(ui->actionShowIndentGuide, &QAction::triggered, [=](bool b) {
