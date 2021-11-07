@@ -309,15 +309,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     //});
 
 
-    connect(ui->actionAlwaysOnTop, &QAction::triggered, [=](bool b) {
-        const Qt::WindowFlags flags = this->windowFlags();
-        if (b)
-            this->setWindowFlags(flags | Qt::WindowStaysOnTopHint);
-        else
-            this->setWindowFlags(flags & ~Qt::WindowStaysOnTopHint);
-        this->show();
-    });
-
     ui->pushExitFullScreen->setParent(this); // This is important
     ui->pushExitFullScreen->setVisible(false);
     connect(ui->pushExitFullScreen, &QPushButton::clicked, ui->actionFullScreen, &QAction::trigger);
