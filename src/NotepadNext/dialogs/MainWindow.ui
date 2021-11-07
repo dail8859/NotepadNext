@@ -177,7 +177,6 @@
      <addaction name="actionShowIndentGuide"/>
      <addaction name="actionShowWrapSymbol"/>
     </widget>
-    <addaction name="actionAlwaysOnTop"/>
     <addaction name="actionFullScreen"/>
     <addaction name="separator"/>
     <addaction name="menuShowSymbol"/>
@@ -778,14 +777,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+H</string>
-   </property>
-  </action>
-  <action name="actionAlwaysOnTop">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Always on Top</string>
    </property>
   </action>
   <action name="actionFullScreen">
