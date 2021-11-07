@@ -170,9 +170,9 @@
      <property name="title">
       <string>Show Symbol</string>
      </property>
-     <addaction name="actionShowWhitespaceandTab"/>
-     <addaction name="actionShowEndofLine"/>
      <addaction name="actionShowAllCharacters"/>
+     <addaction name="actionShowWhitespace"/>
+     <addaction name="actionShowEndofLine"/>
      <addaction name="separator"/>
      <addaction name="actionShowIndentGuide"/>
      <addaction name="actionShowWrapSymbol"/>
@@ -655,12 +655,12 @@
     <enum>QAction::AboutRole</enum>
    </property>
   </action>
-  <action name="actionShowWhitespaceandTab">
+  <action name="actionShowWhitespace">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show Whitespace and Tab</string>
+    <string>Show Whitespace</string>
    </property>
   </action>
   <action name="actionShowEndofLine">

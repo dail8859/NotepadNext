@@ -341,41 +341,23 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
-    // The default behavior of QActionGroup cannot be used since it *must* have one set
-    // but Notepad++ allows none to also be set.
-    QActionGroup *showSymbolActionGroup = new QActionGroup(this);
-    showSymbolActionGroup->addAction(ui->actionShowWhitespaceandTab);
-    showSymbolActionGroup->addAction(ui->actionShowEndofLine);
-    showSymbolActionGroup->addAction(ui->actionShowAllCharacters);
-    showSymbolActionGroup->setExclusive(false);
+    connect(ui->actionShowAllCharacters, &QAction::triggered, [=](bool b) {
+        ui->actionShowWhitespace->setChecked(b);
+        ui->actionShowEndofLine->setChecked(b);
+    });
 
-    connect(showSymbolActionGroup, &QActionGroup::triggered, [=](QAction *action) {
-        ScintillaNext *editor = dockedEditor->getCurrentEditor();
-        if (!action->isChecked()) {
-            editor->setViewWS(SCWS_INVISIBLE);
-            editor->setViewEOL(false);
-        }
-        else {
-            // Uncheck all other actions
-            foreach (QAction *otherAction, showSymbolActionGroup->actions()) {
-                if (otherAction != action) {
-                    otherAction->setChecked(false);
-                }
-            }
+    connect(ui->actionShowWhitespace, &QAction::toggled, [=](bool b) {
+        // TODO: could make SCWS_VISIBLEALWAYS configurable via settings. Probably not worth
+        // taking up menu space e.g. show all, show leading, show trailing
+        dockedEditor->getCurrentEditor()->setViewWS(b ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
 
-            if (action == ui->actionShowWhitespaceandTab) {
-                editor->setViewWS(SCWS_VISIBLEALWAYS);
-                editor->setViewEOL(false);
-            }
-            else if (action == ui->actionShowEndofLine) {
-                editor->setViewWS(SCWS_INVISIBLE);
-                editor->setViewEOL(true);
-            }
-            else if (action == ui->actionShowAllCharacters) {
-                editor->setViewWS(SCWS_VISIBLEALWAYS);
-                editor->setViewEOL(true);
-            }
-        }
+        ui->actionShowAllCharacters->setChecked(b && ui->actionShowEndofLine->isChecked());
+    });
+
+    connect(ui->actionShowEndofLine, &QAction::toggled, [=](bool b) {
+        dockedEditor->getCurrentEditor()->setViewEOL(b);
+
+        ui->actionShowAllCharacters->setChecked(b && ui->actionShowWhitespace->isChecked());
     });
 
     connect(ui->actionShowWrapSymbol, &QAction::triggered, [=](bool b) {
