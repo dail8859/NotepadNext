@@ -40,16 +40,15 @@ int main(int argc, char *argv[])
     // Default settings format
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
-
     NotepadNextApplication app(argc, argv);
 
     // Log some debug info
     qInfo("=============================");
-    qInfo("OS: %s", QSysInfo::prettyProductName().toLatin1().constData());
-    qInfo("Name: %s", QApplication::applicationName().toLatin1().constData());
-    qInfo("Version: v%s", QApplication::applicationVersion().toLatin1().constData());
-    qInfo("File Path: %s", QApplication::applicationFilePath().toLatin1().constData());
-    qInfo("Arguments: %s", QApplication::arguments().join(' ').toLatin1().constData());
+    qInfo("%s (v%s)", qUtf8Printable(QApplication::applicationName()), qUtf8Printable(QApplication::applicationVersion()));
+    qInfo("OS: %s", qUtf8Printable(QSysInfo::prettyProductName()));
+    qInfo("CPU: %s", qUtf8Printable(QSysInfo::currentCpuArchitecture()));
+    qInfo("File Path: %s", qUtf8Printable(QApplication::applicationFilePath()));
+    qInfo("Arguments: %s", qUtf8Printable(QApplication::arguments().join(' ')));
     qInfo("=============================");
 
     if(app.isPrimary()) {
