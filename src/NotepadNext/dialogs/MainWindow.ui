@@ -505,6 +505,10 @@
    </property>
   </action>
   <action name="actionReload">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/arrow_refresh.png</normaloff>:/icons/arrow_refresh.png</iconset>
+   </property>
    <property name="text">
     <string>Re&amp;load</string>
    </property>
@@ -872,6 +876,10 @@
    </property>
   </action>
   <action name="actionMoveToTrash">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/bin_closed.png</normaloff>:/icons/bin_closed.png</iconset>
+   </property>
    <property name="text">
     <string>Move to Trash...</string>
    </property>
