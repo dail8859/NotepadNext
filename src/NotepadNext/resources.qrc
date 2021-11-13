@@ -28,5 +28,7 @@
         <file>icons/saveRecord.png</file>
         <file>icons/text_indent.png</file>
         <file>icons/text_indent_remove.png</file>
+        <file>icons/arrow_refresh.png</file>
+        <file>icons/bin_closed.png</file>
     </qresource>
 </RCC>
