@@ -209,6 +209,8 @@
     </property>
     <addaction name="actionAboutQt"/>
     <addaction name="actionAboutNotepadNext"/>
+    <addaction name="separator"/>
+    <addaction name="actionCheckForUpdates"/>
    </widget>
    <widget class="QMenu" name="menuEncodings">
     <property name="title">
@@ -885,6 +887,11 @@
    </property>
    <property name="iconText">
     <string>Move to Trash</string>
+   </property>
+  </action>
+  <action name="actionCheckForUpdates">
+   <property name="text">
+    <string>Check for Updates...</string>
    </property>
   </action>
  </widget>

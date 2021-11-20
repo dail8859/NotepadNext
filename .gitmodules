@@ -10,3 +10,6 @@
 [submodule "src/ads"]
 	path = src/ads
 	url = https://github.com/githubuser0xFFFF/Qt-Advanced-Docking-System.git
+[submodule "src/QSimpleUpdater"]
+	path = src/QSimpleUpdater
+	url = https://github.com/alex-spataru/QSimpleUpdater

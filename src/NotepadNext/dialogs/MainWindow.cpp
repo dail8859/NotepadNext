@@ -28,6 +28,7 @@
 #include <QStandardPaths>
 #include <QWindow>
 #include <QPushButton>
+#include <QSimpleUpdater.h>
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -522,6 +523,11 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
         ui->menuHelp->addAction(languageInspectorDock->toggleViewAction());
     }
+
+    connect(ui->actionCheckForUpdates, &QAction::triggered, [=]() {
+        QString url = "https://github.com/dail8859/NotepadNext/raw/master/updates.json";
+        QSimpleUpdater::getInstance()->checkForUpdates(url);
+    });
 
     connect(app->getSettings(), &Settings::showMenuBarChanged, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
