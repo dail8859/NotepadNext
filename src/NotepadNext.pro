@@ -31,6 +31,7 @@ win32 {
     package.target = package
     package.commands = \
         xcopy $$shell_path($${OUT_PWD}/NotepadNext/NotepadNext.exe) $$shell_path($${OUT_PWD}/package/) /Y && \
+        xcopy $$shell_path($${OUT_PWD}/NotepadNext/*.dll) $$shell_path($${OUT_PWD}/package/) /Y && \
         xcopy $$shell_path($${PWD}/../LICENSE) $$shell_path($${OUT_PWD}/package/) /Y && \
         windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-angle --no-opengl-sw $$shell_path($${OUT_PWD}/package/NotepadNext.exe)
 
