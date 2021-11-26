@@ -1296,8 +1296,8 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
         -- resetEditorStyle()
         --editor.LexerLanguage = L.lexer
 
-        --editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
-        --editor.TabWidth = L.tabSize or 4
+        editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
+        editor.TabWidth = L.tabSize or 4
         if L.styles then
             for name, style in pairs(L.styles) do
                 editor.StyleFore[style.id] = style.fgColor
