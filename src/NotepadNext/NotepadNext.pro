@@ -99,6 +99,7 @@ HEADERS += \
     ColorPickerDelegate.h \
     ComboBoxDelegate.h \
     DockedEditor.h \
+    DockedEditorTitleBar.h \
     EditorManager.h \
     Finder.h \
     FocusWatcher.h \

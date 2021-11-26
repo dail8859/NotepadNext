@@ -60,6 +60,7 @@ signals:
     void editorActivated(ScintillaNext *editor);
 
     void contextMenuRequestedForEditor(ScintillaNext *editor);
+    void titleBarDoubleClicked();
 };
 
 #endif // DOCKEDEDITOR_H
