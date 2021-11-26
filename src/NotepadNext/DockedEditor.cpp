@@ -20,13 +20,30 @@
 #include "DockedEditor.h"
 #include "DockAreaWidget.h"
 #include "DockWidgetTab.h"
-#include "DockAreaTitleBar.h"
+#include "DockComponentsFactory.h"
+#include "DockedEditorTitleBar.h"
 
 #include "ScintillaNext.h"
 
 
+class DockedEditorComponentsFactory : public ads::CDockComponentsFactory
+{
+public:
+    ads::CDockAreaTitleBar* createDockAreaTitleBar(ads::CDockAreaWidget* DockArea) const {
+        DockedEditorTitleBar *titleBar = new DockedEditorTitleBar(DockArea);
+
+        // Disable the built in context menu for the title bar since it has options we don't want
+        titleBar->setContextMenuPolicy(Qt::NoContextMenu);
+
+        return titleBar;
+    }
+};
+
+
 DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
 {
+    ads::CDockComponentsFactory::setFactory(new DockedEditorComponentsFactory());
+
     ads::CDockManager::setConfigFlag(ads::CDockManager::AllTabsHaveCloseButton, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::AlwaysShowTabs, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::OpaqueSplitterResize, true);
@@ -53,8 +70,8 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     });
 
     connect(m_DockManager, &ads::CDockManager::dockAreaCreated, [=](ads::CDockAreaWidget* DockArea) {
-        // Disable the built in context menu for the title bar since it has options we don't want
-        DockArea->titleBar()->setContextMenuPolicy(Qt::NoContextMenu);
+        DockedEditorTitleBar *titleBar = qobject_cast<DockedEditorTitleBar *>(DockArea->titleBar());
+        connect(titleBar, &DockedEditorTitleBar::doubleClicked, this, &DockedEditor::titleBarDoubleClicked);
     });
 }
 
