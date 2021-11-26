@@ -28,6 +28,8 @@
 #include <QStandardPaths>
 #include <QWindow>
 #include <QPushButton>
+#include <QSimpleUpdater.h>
+#include <QTimer>
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -522,6 +524,21 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
         ui->menuHelp->addAction(languageInspectorDock->toggleViewAction());
     }
+
+    connect(ui->actionCheckForUpdates, &QAction::triggered, this, &MainWindow::checkForUpdates);
+
+    // A bit after startup, see if we need to automatically check for an update
+    QTimer::singleShot(15000, this, [=]() {
+        QSettings settings;
+        QDateTime dt = settings.value("App/LastUpdateCheck", false).toDateTime();
+
+        if (dt.addDays(7) < QDateTime::currentDateTime()) {
+            checkForUpdates(true);
+        }
+        else {
+            qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
+        }
+    });
 
     connect(app->getSettings(), &Settings::showMenuBarChanged, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
@@ -1458,6 +1475,33 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setViewWS(ui->actionShowWhitespace->isChecked() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
     editor->setViewEOL(ui->actionShowEndofLine->isChecked());
     editor->setWrapVisualFlags(ui->actionShowWrapSymbol->isChecked() ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+}
+
+void MainWindow::checkForUpdates(bool silent)
+{
+    qInfo(Q_FUNC_INFO);
+
+    QString url = "https://github.com/dail8859/NotepadNext/raw/master/updates.json";
+    //QSimpleUpdater::getInstance()->setModuleVersion(url, "0.4");
+    QSimpleUpdater::getInstance()->checkForUpdates(url);
+
+    if (!silent) {
+        connect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinished, Qt::UniqueConnection);
+    }
+    else {
+        disconnect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinished);
+    }
+
+    QSettings settings;
+    settings.setValue("App/LastUpdateCheck", QDateTime::currentDateTime());
+
+}
+
+void MainWindow::checkForUpdatesFinished(QString url)
+{
+    if (!QSimpleUpdater::getInstance()->getUpdateAvailable(url)) {
+        QMessageBox::information(this, "Notepad Next", "No updates are availale at this time.");
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
