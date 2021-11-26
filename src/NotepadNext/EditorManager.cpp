@@ -121,8 +121,9 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setScrollWidthTracking(true);
     editor->setScrollWidth(1);
 
-    //editor->clearAllCmdKeys();
     editor->setTabDrawMode(SCTD_STRIKEOUT);
+    editor->setTabWidth(4);
+    editor->setBackSpaceUnIndents(true);
 
     editor->assignCmdKey(SCK_RETURN, SCI_NEWLINE);
 
