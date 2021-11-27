@@ -2,6 +2,10 @@ local L = {}
 
 L.lexer = "python"
 
+L.tabSize = 4
+
+L.tabSettings = "spaces"
+
 L.extensions = {
 	"py",
 	"pyw",

@@ -28,6 +28,7 @@
 #include "SurroundSelection.h"
 #include "LineNumbers.h"
 #include "BetterMultiSelection.h"
+#include "AutoIndentation.h"
 
 const int MARK_BOOKMARK = 24;
 const int MARK_HIDELINESBEGIN = 23;
@@ -121,8 +122,9 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setScrollWidthTracking(true);
     editor->setScrollWidth(1);
 
-    //editor->clearAllCmdKeys();
     editor->setTabDrawMode(SCTD_STRIKEOUT);
+    editor->setTabWidth(4);
+    editor->setBackSpaceUnIndents(true);
 
     editor->assignCmdKey(SCK_RETURN, SCI_NEWLINE);
 
@@ -219,6 +221,9 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     BetterMultiSelection *bms = new BetterMultiSelection(editor);
     bms->setEnabled(true);
+
+    AutoIndentation *ai = new AutoIndentation(editor);
+    ai->setEnabled(true);
 }
 
 // TODO: Move this into the editor eventually?

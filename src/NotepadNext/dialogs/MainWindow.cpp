@@ -28,6 +28,8 @@
 #include <QStandardPaths>
 #include <QWindow>
 #include <QPushButton>
+#include <QSimpleUpdater.h>
+#include <QTimer>
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -89,6 +91,8 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     });
 
     connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
+
+    connect(dockedEditor, &DockedEditor::titleBarDoubleClicked, this, &MainWindow::newFile);
 
     // Set up the menus
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
@@ -309,15 +313,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     //});
 
 
-    connect(ui->actionAlwaysOnTop, &QAction::triggered, [=](bool b) {
-        const Qt::WindowFlags flags = this->windowFlags();
-        if (b)
-            this->setWindowFlags(flags | Qt::WindowStaysOnTopHint);
-        else
-            this->setWindowFlags(flags & ~Qt::WindowStaysOnTopHint);
-        this->show();
-    });
-
     ui->pushExitFullScreen->setParent(this); // This is important
     ui->pushExitFullScreen->setVisible(false);
     connect(ui->pushExitFullScreen, &QPushButton::clicked, ui->actionFullScreen, &QAction::trigger);
@@ -341,46 +336,35 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
-    // The default behavior of QActionGroup cannot be used since it *must* have one set
-    // but Notepad++ allows none to also be set.
-    QActionGroup *showSymbolActionGroup = new QActionGroup(this);
-    showSymbolActionGroup->addAction(ui->actionShowWhitespaceandTab);
-    showSymbolActionGroup->addAction(ui->actionShowEndofLine);
-    showSymbolActionGroup->addAction(ui->actionShowAllCharacters);
-    showSymbolActionGroup->setExclusive(false);
+    connect(ui->actionShowAllCharacters, &QAction::triggered, [=](bool b) {
+        ui->actionShowWhitespace->setChecked(b);
+        ui->actionShowEndofLine->setChecked(b);
+    });
 
-    connect(showSymbolActionGroup, &QActionGroup::triggered, [=](QAction *action) {
-        ScintillaNext *editor = dockedEditor->getCurrentEditor();
-        if (!action->isChecked()) {
-            editor->setViewWS(SCWS_INVISIBLE);
-            editor->setViewEOL(false);
+    connect(ui->actionShowWhitespace, &QAction::toggled, [=](bool b) {
+        // TODO: could make SCWS_VISIBLEALWAYS configurable via settings. Probably not worth
+        // taking up menu space e.g. show all, show leading, show trailing
+        for (auto &editor : dockedEditor->editors()) {
+            editor->setViewWS(b ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
         }
-        else {
-            // Uncheck all other actions
-            foreach (QAction *otherAction, showSymbolActionGroup->actions()) {
-                if (otherAction != action) {
-                    otherAction->setChecked(false);
-                }
-            }
 
-            if (action == ui->actionShowWhitespaceandTab) {
-                editor->setViewWS(SCWS_VISIBLEALWAYS);
-                editor->setViewEOL(false);
-            }
-            else if (action == ui->actionShowEndofLine) {
-                editor->setViewWS(SCWS_INVISIBLE);
-                editor->setViewEOL(true);
-            }
-            else if (action == ui->actionShowAllCharacters) {
-                editor->setViewWS(SCWS_VISIBLEALWAYS);
-                editor->setViewEOL(true);
-            }
+        ui->actionShowAllCharacters->setChecked(b && ui->actionShowEndofLine->isChecked());
+    });
+
+    connect(ui->actionShowEndofLine, &QAction::toggled, [=](bool b) {
+        for (auto &editor : dockedEditor->editors()) {
+            editor->setViewEOL(b);
         }
+
+        ui->actionShowAllCharacters->setChecked(b && ui->actionShowWhitespace->isChecked());
     });
 
     connect(ui->actionShowWrapSymbol, &QAction::triggered, [=](bool b) {
-        dockedEditor->getCurrentEditor()->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+        for (auto &editor : dockedEditor->editors()) {
+            editor->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+        }
     });
+
     connect(ui->actionShowIndentGuide, &QAction::triggered, [=](bool b) {
         dockedEditor->getCurrentEditor()->setIndentationGuides(b ? SC_IV_LOOKBOTH : SC_IV_NONE);
     });
@@ -389,7 +373,9 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionWordWrap, &QAction::triggered, [=](bool b) {
         ScintillaNext *editor = dockedEditor->getCurrentEditor();
         if (b) {
-            dockedEditor->getCurrentEditor()->setWrapMode(SC_WRAP_WORD);
+            for (auto &editor : dockedEditor->editors()) {
+                editor->setWrapMode(SC_WRAP_WORD);
+            }
         }
         else {
             // Store the top line and restore it after the lines have been unwrapped
@@ -505,39 +491,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
-    connect(ui->menuWindows, &QMenu::aboutToShow, [=]() {
-        auto actions = ui->menuWindows->actions();
-
-        // Keep the original 2 in the list (seperator and Window command)
-        // delete the rest since nobody has ownership of them
-        while (actions.size() > 2) {
-            delete actions.takeFirst();
-        }
-
-        ScintillaNext *currentEditor = dockedEditor->getCurrentEditor();
-        foreach (ScintillaNext *editor, dockedEditor->editors()) {
-            QAction *action = new QAction(editor->getName());
-            if (editor == currentEditor) {
-                action->setCheckable(true);
-                action->setChecked(true);
-            }
-
-            connect(action, &QAction::triggered, [=]() { dockedEditor->switchToEditor(editor); });
-
-            // NOTE: the menu does not take ownership when using insertAction
-            ui->menuWindows->insertAction(actions.at(0), action);
-        }
-    });
-
-    // TODO
-    //connect(ui->actionWindowsList, &QAction::triggered, [=]() {
-    //    WindowListDialog wld(this, dockedEditor->editor().toList(), this);
-    //    wld.show();
-    //    wld.raise();
-    //    wld.activateWindow();
-    //    wld.exec();
-    //});
-
     connect(ui->actionAboutQt, &QAction::triggered, &QApplication::aboutQt);
     connect(ui->actionAboutNotepadNext, &QAction::triggered, [=]() {
         QMessageBox::about(this, "About Notepad Next",
@@ -559,10 +512,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     ui->actionAboutNotepadNext->setIcon(this->windowIcon());
     ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
 
-    QSettings settings;
-    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
-    restoreState(settings.value("MainWindow/windowState").toByteArray());
-
     if (luaConsoleDock == Q_NULLPTR) {
         luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
         luaConsoleDock->hide();
@@ -577,6 +526,21 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
         ui->menuHelp->addAction(languageInspectorDock->toggleViewAction());
     }
+
+    connect(ui->actionCheckForUpdates, &QAction::triggered, this, &MainWindow::checkForUpdates);
+
+    // A bit after startup, see if we need to automatically check for an update
+    QTimer::singleShot(15000, this, [=]() {
+        QSettings settings;
+        QDateTime dt = settings.value("App/LastUpdateCheck", false).toDateTime();
+
+        if (dt.addDays(7) < QDateTime::currentDateTime()) {
+            checkForUpdates(true);
+        }
+        else {
+            qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
+        }
+    });
 
     connect(app->getSettings(), &Settings::showMenuBarChanged, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
@@ -594,6 +558,8 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     f.open(QFile::ReadOnly);
     setStyleSheet(f.readAll());
     f.close();
+
+    restoreSettings();
 }
 
 MainWindow::~MainWindow()
@@ -855,6 +821,11 @@ void MainWindow::closeFile(ScintillaNext *editor)
 
     if(editor->isSavedToDisk()) {
         editor->close();
+
+        // If the last document was closed, start with a new one
+        if (dockedEditor->count() == 0) {
+            newFile();
+        }
     }
     else {
         // The user needs be asked what to do about this file, so switch to it
@@ -1174,9 +1145,20 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
         if (action->data().toString() == language_name) {
             action->setChecked(true);
             docType->setText(action->text());
-            break;
+
+            // Found one, so we are completely done
+            return;
         }
     }
+
+    // The above loop did not set any action as checked, so make sure they are all unchecked now
+    foreach (QAction *action, languageActionGroup->actions()) {
+        if (action->isChecked()) {
+            action->setChecked(false);
+        }
+    }
+
+    docType->setText("");
 }
 
 void MainWindow::updateGui(ScintillaNext *editor)
@@ -1205,7 +1187,6 @@ void MainWindow::updateDocumentBasedUi(Scintilla::Update updated)
 
     if (Scintilla::FlagSet(updated, Scintilla::Update::Content) || Scintilla::FlagSet(updated, Scintilla::Update::Selection)) {
         updateContentBasedUi(editor);
-
     }
 }
 
@@ -1315,8 +1296,8 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
         -- resetEditorStyle()
         --editor.LexerLanguage = L.lexer
 
-        --editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
-        --editor.TabWidth = L.tabSize or 4
+        editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
+        editor.TabWidth = L.tabSize or 4
         if L.styles then
             for name, style in pairs(L.styles) do
                 editor.StyleFore[style.id] = style.fgColor
@@ -1408,6 +1389,48 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
     return true;
 }
 
+void MainWindow::saveSettings() const
+{
+    qInfo(Q_FUNC_INFO);
+
+    QSettings settings;
+
+    settings.setValue("MainWindow/geometry", saveGeometry());
+    settings.setValue("MainWindow/windowState", saveState());
+
+    settings.setValue("Gui/ShowMenuBar", app->getSettings()->showMenuBar());
+    settings.setValue("Gui/ShowToolBar", app->getSettings()->showToolBar());
+    settings.setValue("Gui/ShowStatusBar", app->getSettings()->showStatusBar());
+
+    settings.setValue("Editor/ShowWhitespace", ui->actionShowWhitespace->isChecked());
+    settings.setValue("Editor/ShowEndOfLine", ui->actionShowEndofLine->isChecked());
+    settings.setValue("Editor/ShowWrapSymbol", ui->actionShowWrapSymbol->isChecked());
+
+    settings.setValue("Editor/WordWrap", ui->actionWordWrap->isChecked());
+    settings.setValue("Editor/IndentGuide", ui->actionShowIndentGuide->isChecked());
+}
+
+void MainWindow::restoreSettings()
+{
+    qInfo(Q_FUNC_INFO);
+
+    QSettings settings;
+
+    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
+    restoreState(settings.value("MainWindow/windowState").toByteArray());
+
+    app->getSettings()->setShowMenuBar(settings.value("Gui/ShowMenuBar", true).toBool());
+    app->getSettings()->setShowToolBar(settings.value("Gui/ShowToolBar", true).toBool());
+    app->getSettings()->setShowStatusBar(settings.value("Gui/ShowStatusBar", true).toBool());
+
+    ui->actionShowWhitespace->setChecked(settings.value("Editor/ShowWhitespace", false).toBool());
+    ui->actionShowEndofLine->setChecked(settings.value("Editor/ShowEndOfLine", false).toBool());
+    ui->actionShowWrapSymbol->setChecked(settings.value("Editor/ShowWrapSymbol", false).toBool());
+
+    ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
+    ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
+}
+
 void MainWindow::focusIn()
 {
     qInfo(Q_FUNC_INFO);
@@ -1444,6 +1467,42 @@ void MainWindow::addEditor(ScintillaNext *editor)
             }
         }
     });
+
+    if (ui->actionWordWrap->isChecked())
+        editor->setWrapMode(SC_WRAP_WHITESPACE);
+
+    if (ui->actionShowIndentGuide->isChecked())
+        editor->setIndentationGuides(SC_IV_LOOKBOTH);
+
+    editor->setViewWS(ui->actionShowWhitespace->isChecked() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
+    editor->setViewEOL(ui->actionShowEndofLine->isChecked());
+    editor->setWrapVisualFlags(ui->actionShowWrapSymbol->isChecked() ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+}
+
+void MainWindow::checkForUpdates(bool silent)
+{
+    qInfo(Q_FUNC_INFO);
+
+    QString url = "https://github.com/dail8859/NotepadNext/raw/master/updates.json";
+    QSimpleUpdater::getInstance()->setModuleVersion(url, "0.5");
+    QSimpleUpdater::getInstance()->checkForUpdates(url);
+
+    if (!silent) {
+        connect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinished, Qt::UniqueConnection);
+    }
+    else {
+        disconnect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinished);
+    }
+
+    QSettings settings;
+    settings.setValue("App/LastUpdateCheck", QDateTime::currentDateTime());
+}
+
+void MainWindow::checkForUpdatesFinished(QString url)
+{
+    if (!QSimpleUpdater::getInstance()->getUpdateAvailable(url)) {
+        QMessageBox::information(this, "Notepad Next", "No updates are availale at this time.");
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -1458,9 +1517,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
     closeAllFiles(true);
 
-    QSettings settings;
-    settings.setValue("MainWindow/geometry", saveGeometry());
-    settings.setValue("MainWindow/windowState", saveState());
+    saveSettings();
 
     event->accept();
 
