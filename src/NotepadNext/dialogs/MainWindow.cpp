@@ -1484,7 +1484,7 @@ void MainWindow::checkForUpdates(bool silent)
     qInfo(Q_FUNC_INFO);
 
     QString url = "https://github.com/dail8859/NotepadNext/raw/master/updates.json";
-    //QSimpleUpdater::getInstance()->setModuleVersion(url, "0.4");
+    QSimpleUpdater::getInstance()->setModuleVersion(url, "0.5");
     QSimpleUpdater::getInstance()->checkForUpdates(url);
 
     if (!silent) {
@@ -1496,7 +1496,6 @@ void MainWindow::checkForUpdates(bool silent)
 
     QSettings settings;
     settings.setValue("App/LastUpdateCheck", QDateTime::currentDateTime());
-
 }
 
 void MainWindow::checkForUpdatesFinished(QString url)
