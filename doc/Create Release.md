@@ -1,6 +1,11 @@
 ## Prepare Release
 
-Update version in `src/Version.pri`
+- Update version in `src/Version.pri`
+- Commit on `dev` branch
+- Merge into `master`
+- Tag merged commit with new version number
+- Follow procedures below
+- Attach exe and zip to the Github release
 
 ## Build Release
 Example bat script to build release
