@@ -33,6 +33,7 @@ include(../uchardet.pri)
 include(../lua.pri)
 include(../ads.pri)
 include(../editorconfig-core-qt/EditorConfig.pri)
+include(../QSimpleUpdater/QSimpleUpdater.pri)
 
 # Set variables for output executable
 VERSION = $$APP_VERSION
@@ -43,6 +44,11 @@ win32 {
     QMAKE_TARGET_COPYRIGHT = $$APP_COPYRIGHT
     QMAKE_TARGET_PRODUCT = Notepad Next
     RC_ICONS = ../../icon/nn.ico
+
+    CONFIG += file_copies
+    COPIES += openssl
+    openssl.files = $$files(../../deploy/windows/*.dll)
+    openssl.path = $$OUT_PWD
 }
 
 
@@ -71,6 +77,7 @@ SOURCES += \
     Settings.cpp \
     SpinBoxDelegate.cpp \
     decorators/ApplicationDecorator.cpp \
+    decorators/AutoIndentation.cpp \
     decorators/BetterMultiSelection.cpp \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
@@ -93,6 +100,7 @@ HEADERS += \
     ColorPickerDelegate.h \
     ComboBoxDelegate.h \
     DockedEditor.h \
+    DockedEditorTitleBar.h \
     EditorManager.h \
     Finder.h \
     FocusWatcher.h \
@@ -115,6 +123,7 @@ HEADERS += \
     Settings.h \
     SpinBoxDelegate.h \
     decorators/ApplicationDecorator.h \
+    decorators/AutoIndentation.h \
     decorators/BetterMultiSelection.h \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
@@ -140,7 +149,6 @@ FORMS += \
     dialogs/LuaConsoleDock.ui \
     dialogs/MacroRunDialog.ui \
     dialogs/MacroSaveDialog.ui \
-    dialogs/WindowListDialog.ui \
     dialogs/PreferencesDialog.ui
 
 RESOURCES += \
@@ -160,3 +168,8 @@ INCLUDEPATH += $$PWD/../lexilla/include
 
 win32-g++:LIBS += libUser32
 win32-msvc*:LIBS += User32.lib
+
+OBJECTS_DIR = build/obj
+MOC_DIR = build/moc
+RCC_DIR = build/qrc
+UI_DIR = build/ui

@@ -109,6 +109,8 @@ public slots:
 
     void addEditor(ScintillaNext *editor);
 
+    void checkForUpdates(bool silent = false);
+
 protected:
     void closeEvent(QCloseEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -117,6 +119,7 @@ protected:
 private slots:
     void tabBarRightClicked(ScintillaNext *editor);
     void languageMenuTriggered();
+    void checkForUpdatesFinished(QString url);
 
 private:
     Ui::MainWindow *ui = Q_NULLPTR;
@@ -129,6 +132,9 @@ private:
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     void setupStatusBar();
     bool checkFileForModification(ScintillaNext *editor);
+
+    void saveSettings() const;
+    void restoreSettings();
 
     QActionGroup *languageActionGroup;
 
