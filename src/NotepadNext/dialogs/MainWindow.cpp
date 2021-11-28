@@ -1300,10 +1300,6 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 
     app->getLuaState()->execute(R"(
         local L = languages[languageName]
-        -- this resets the style definitions but keeps
-        -- the "wanted" stuff, such as line numbers, etc
-        -- resetEditorStyle()
-        --editor.LexerLanguage = L.lexer
 
         editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
         editor.TabWidth = L.tabSize or 4
