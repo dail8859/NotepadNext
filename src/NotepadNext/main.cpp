@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
     // Set these since other parts of the app references these
     QApplication::setOrganizationName("NotepadNext");
     QApplication::setApplicationName("NotepadNext");
+    QGuiApplication::setApplicationDisplayName("Notepad Next");
 
     // Set some attributes
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);

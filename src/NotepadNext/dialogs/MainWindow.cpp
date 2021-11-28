@@ -120,7 +120,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         auto reply = QMessageBox::question(this, "Delete File", QString("Are you sure you want to move <b>%1</b> to the trash?").arg(editor->getName()));
 
         if (reply == QMessageBox::Yes) {
-            const QString filePath = editor->fileInfo().canonicalFilePath();
+            const QString filePath = editor->canonicalFilePath();
 
             if (editor->moveToTrash()) {
                 closeCurrentFile();
@@ -1049,10 +1049,19 @@ void MainWindow::convertEOLs(int eolMode)
 
 void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
 {
-    bool isFile = editor->isFile();
+    qInfo(Q_FUNC_INFO);
 
-    QString title = QString("[*]%1 - Notepad Next").arg(editor->getName());
-    setWindowTitle(title);
+    bool isFile = editor->isFile();
+    QString fileName;
+
+    if (isFile) {
+        fileName = QDir::toNativeSeparators(editor->canonicalFilePath());
+    }
+    else {
+        fileName = editor->getName();
+    }
+
+    setWindowTitle(QStringLiteral("[*]%1").arg(fileName));
 
     ui->actionReload->setEnabled(isFile);
     ui->actionRename->setEnabled(isFile);
