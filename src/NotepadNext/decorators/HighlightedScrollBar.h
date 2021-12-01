@@ -50,8 +50,8 @@ class HighlightedScrollBar : public QScrollBar
     Q_OBJECT
 
 public:
-    explicit HighlightedScrollBar(HighlightedScrollBarDecorator *decorator, Qt::Orientation orientation, QWidget *parent = nullptr)
-        : QScrollBar(orientation, parent), decorator(decorator) {}
+    explicit HighlightedScrollBar(ScintillaEdit *editor, Qt::Orientation orientation, QWidget *parent = nullptr)
+        : QScrollBar(orientation, parent), editor(editor) {}
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -59,7 +59,7 @@ protected:
 private:
     void drawMarker(QPainter &p, int marker);
     void drawIndicator(QPainter &p, int indicator);
-    void drawCursor(QPainter &p);
+    void drawCursors(QPainter &p);
 
     void drawTickMark(QPainter &p, int y, int height, QColor color);
 
@@ -67,7 +67,7 @@ private:
     int lineToScrollBarY(int line) const;
     int scrollbarArrowHeight() const;
 
-    HighlightedScrollBarDecorator *decorator;
+    ScintillaEdit *editor;
 };
 
 #endif // HIGHLIGHTEDSCROLLBAR_H

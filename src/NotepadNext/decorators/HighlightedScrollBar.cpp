@@ -24,8 +24,11 @@
 
 using namespace Scintilla;
 
+const int DEFAULT_TICK_HEIGHT = 2;
+
+
 HighlightedScrollBarDecorator::HighlightedScrollBarDecorator(ScintillaEdit *editor)
-    : EditorDecorator(editor), scrollBar(new HighlightedScrollBar(this, Qt::Vertical, editor))
+    : EditorDecorator(editor), scrollBar(new HighlightedScrollBar(editor, Qt::Vertical, editor))
 {
     connect(scrollBar, &QScrollBar::valueChanged, editor, &ScintillaEdit::scrollVertical);
 
@@ -57,16 +60,15 @@ void HighlightedScrollBar::paintEvent(QPaintEvent *event)
 
     drawMarker(p, 24);
     drawIndicator(p, 29);
-    drawCursor(p);
+    drawCursors(p);
 }
 
 void HighlightedScrollBar::drawMarker(QPainter &p, int marker)
 {
-    ScintillaEdit *editor = decorator->getEditor();
     int curLine = 0;
 
     while ((curLine = editor->markerNext(curLine, 1 << marker)) != -1) {
-        drawTickMark(p, lineToScrollBarY(curLine ), 3, Qt::blue);
+        drawTickMark(p, lineToScrollBarY(curLine), DEFAULT_TICK_HEIGHT, QColor(100, 100, 255));
 
         curLine++;
     }
@@ -74,30 +76,30 @@ void HighlightedScrollBar::drawMarker(QPainter &p, int marker)
 
 void HighlightedScrollBar::drawIndicator(QPainter &p, int indicator)
 {
-    ScintillaEdit *editor = decorator->getEditor();
     int curPos = editor->indicatorEnd(indicator, 0);
     int color = editor->indicFore(indicator);
 
     if (curPos > 0) {
         while ((curPos = editor->indicatorEnd(29, curPos)) < editor->length()) {
-            drawTickMark(p, posToScrollBarY(curPos), 3, color);
+            drawTickMark(p, posToScrollBarY(curPos), DEFAULT_TICK_HEIGHT, color);
 
             curPos = editor->indicatorEnd(29, curPos);
         }
     }
 }
 
-void HighlightedScrollBar::drawCursor(QPainter &p)
+void HighlightedScrollBar::drawCursors(QPainter &p)
 {
-    ScintillaEdit *editor = decorator->getEditor();
-    int startCaretY = posToScrollBarY(editor->currentPos());
-    int startAnchorY = posToScrollBarY(editor->anchor());
+    for (int i = 0; i < editor->selections() ; i++) {
+        int startCaretY = posToScrollBarY(editor->selectionNCaret(i));
+        int startAnchorY = posToScrollBarY(editor->selectionNAnchor(i));
 
-    if (startCaretY != startAnchorY) {
-        drawTickMark(p, startAnchorY, startCaretY - startAnchorY, QColor(1, 1, 1, 25));
+        if (startCaretY != startAnchorY) {
+            drawTickMark(p, startAnchorY, startCaretY - startAnchorY, QColor(1, 1, 1, 25));
+        }
+
+        drawTickMark(p, startCaretY, DEFAULT_TICK_HEIGHT, Qt::darkGray);
     }
-
-    drawTickMark(p, startCaretY, 3, Qt::darkGray);
 }
 
 void HighlightedScrollBar::drawTickMark(QPainter &p, int y, int height, QColor color)
@@ -107,7 +109,6 @@ void HighlightedScrollBar::drawTickMark(QPainter &p, int y, int height, QColor c
 
 int HighlightedScrollBar::posToScrollBarY(int pos) const
 {
-    ScintillaEdit *editor = decorator->getEditor();
     int line = editor->visibleFromDocLine(editor->lineFromPosition(pos));
 
     return lineToScrollBarY(line);
@@ -115,7 +116,6 @@ int HighlightedScrollBar::posToScrollBarY(int pos) const
 
 int HighlightedScrollBar::lineToScrollBarY(int line) const
 {
-    ScintillaEdit *editor = decorator->getEditor();
     int lineCount = editor->visibleFromDocLine(editor->lineCount());
 
     if (!editor->endAtLastLine()) {
