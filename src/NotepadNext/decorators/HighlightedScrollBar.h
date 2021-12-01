@@ -61,6 +61,12 @@ private:
     void drawIndicator(QPainter &p, int indicator);
     void drawCursor(QPainter &p);
 
+    void drawTickMark(QPainter &p, int y, int height, QColor color);
+
+    int posToScrollBarY(int pos) const;
+    int lineToScrollBarY(int line) const;
+    int scrollbarArrowHeight() const;
+
     HighlightedScrollBarDecorator *decorator;
 };
 
