@@ -46,6 +46,9 @@ void HighlightedScrollBarDecorator::notify(const NotificationData *pscn)
     }
 }
 
+
+
+
 void HighlightedScrollBar::paintEvent(QPaintEvent *event)
 {
     // Paint the default scrollbar first
@@ -60,12 +63,11 @@ void HighlightedScrollBar::paintEvent(QPaintEvent *event)
 void HighlightedScrollBar::drawMarker(QPainter &p, int marker)
 {
     ScintillaEdit *editor = decorator->getEditor();
-    const double lineCount = static_cast<double>(editor->visibleFromDocLine(editor->lineCount()));
     int curLine = 0;
 
     while ((curLine = editor->markerNext(curLine, 1 << marker)) != -1) {
-        int yy = (curLine + 1) / lineCount * rect().height();
-        p.fillRect(rect().x() + 2, yy, rect().width() - 4, 3, Qt::blue);
+        drawTickMark(p, lineToScrollBarY(curLine ), 3, Qt::blue);
+
         curLine++;
     }
 }
@@ -73,15 +75,12 @@ void HighlightedScrollBar::drawMarker(QPainter &p, int marker)
 void HighlightedScrollBar::drawIndicator(QPainter &p, int indicator)
 {
     ScintillaEdit *editor = decorator->getEditor();
-    const double lineCount = static_cast<double>(editor->visibleFromDocLine(editor->lineCount()));
     int curPos = editor->indicatorEnd(indicator, 0);
     int color = editor->indicFore(indicator);
 
     if (curPos > 0) {
         while ((curPos = editor->indicatorEnd(29, curPos)) < editor->length()) {
-            int yy = editor->lineFromPosition(curPos) / lineCount * rect().height();
-            yy = qMin(yy, rect().height() - 4);
-            p.fillRect(rect().x() + 2, yy, rect().width() - 4, 3, color);
+            drawTickMark(p, posToScrollBarY(curPos), 3, color);
 
             curPos = editor->indicatorEnd(29, curPos);
         }
@@ -91,29 +90,45 @@ void HighlightedScrollBar::drawIndicator(QPainter &p, int indicator)
 void HighlightedScrollBar::drawCursor(QPainter &p)
 {
     ScintillaEdit *editor = decorator->getEditor();
-    int caretLine = editor->visibleFromDocLine(editor->lineFromPosition(editor->currentPos()));
-    int anchorLine = editor->visibleFromDocLine(editor->lineFromPosition(editor->anchor()));
+    int startCaretY = posToScrollBarY(editor->currentPos());
+    int startAnchorY = posToScrollBarY(editor->anchor());
+
+    if (startCaretY != startAnchorY) {
+        drawTickMark(p, startAnchorY, startCaretY - startAnchorY, QColor(1, 1, 1, 25));
+    }
+
+    drawTickMark(p, startCaretY, 3, Qt::darkGray);
+}
+
+void HighlightedScrollBar::drawTickMark(QPainter &p, int y, int height, QColor color)
+{
+    p.fillRect(rect().x() + 4, y + scrollbarArrowHeight(), rect().width() - 8, height, color);
+}
+
+int HighlightedScrollBar::posToScrollBarY(int pos) const
+{
+    ScintillaEdit *editor = decorator->getEditor();
+    int line = editor->visibleFromDocLine(editor->lineFromPosition(pos));
+
+    return lineToScrollBarY(line);
+}
+
+int HighlightedScrollBar::lineToScrollBarY(int line) const
+{
+    ScintillaEdit *editor = decorator->getEditor();
     int lineCount = editor->visibleFromDocLine(editor->lineCount());
 
     if (!editor->endAtLastLine()) {
         lineCount += editor->linesOnScreen();
     }
 
-    // There is no offical way to get the height of the scrollbar arrow buttons, however for now we can
-    // assume that the buttons are square, meaning the height of them will be the same as we width of
+    return static_cast<double>(line) / lineCount * (rect().height() - scrollbarArrowHeight() * 2);
+}
+
+int HighlightedScrollBar::scrollbarArrowHeight() const
+{
+    // NOTE: There is no offical way to get the height of the scrollbar arrow buttons, however for now we can
+    // assume that the buttons are square, meaning the height of them will be the same as the width of
     // the scroll bar.
-    int scrollbarArrowHeight = rect().width();
-
-    // What percentage we are at in the document
-    double documentPercentageCaret = static_cast<double>(caretLine) / lineCount;
-    double documentPercentageAnchor = static_cast<double>(anchorLine) / lineCount;
-
-    int startCaretY = documentPercentageCaret * (rect().height() - scrollbarArrowHeight * 2);
-    int startAnchorY = documentPercentageAnchor * (rect().height() - scrollbarArrowHeight * 2);
-
-    if (startCaretY != startAnchorY) {
-        p.fillRect(rect().x() + 4, startAnchorY + scrollbarArrowHeight, rect().width() - 8, startCaretY - startAnchorY, QColor(1, 1, 1, 25));
-    }
-
-    p.fillRect(rect().x() + 4, startCaretY + scrollbarArrowHeight, rect().width() - 8, 3, Qt::darkGray);
+    return rect().width();
 }
