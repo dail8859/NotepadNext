@@ -30,9 +30,6 @@ HighlightedScrollBarDecorator::HighlightedScrollBarDecorator(ScintillaEdit *edit
     connect(scrollBar, &QScrollBar::valueChanged, editor, &ScintillaEdit::scrollVertical);
 
     editor->setVerticalScrollBar(scrollBar);
-
-    cursor.line = -1;
-    cursor.color = Qt::darkGray;
 }
 
 HighlightedScrollBarDecorator::~HighlightedScrollBarDecorator()
@@ -42,7 +39,6 @@ HighlightedScrollBarDecorator::~HighlightedScrollBarDecorator()
 void HighlightedScrollBarDecorator::notify(const NotificationData *pscn)
 {
     if (pscn->nmhdr.code == Notification::UpdateUI && (FlagSet(pscn->updated, Update::Content) || FlagSet(pscn->updated, Update::Selection))) {
-        cursor.line = editor->visibleFromDocLine(editor->lineFromPosition(editor->currentPos()));
         scrollBar->update();
     }
     else if (pscn->nmhdr.code == Notification::Modified && FlagSet(pscn->modificationType, ModificationFlags::ChangeMarker)) {
@@ -58,17 +54,16 @@ void HighlightedScrollBar::paintEvent(QPaintEvent *event)
     ScintillaEdit *editor = decorator->getEditor();
     QPainter p(this);
 
+    int lineStart = editor->visibleFromDocLine(editor->lineFromPosition(editor->currentPos()));
     double lineCount = static_cast<double>(editor->visibleFromDocLine(editor->lineCount()));
 
     drawMarker(p, 24);
     drawIndicator(p, 29);
 
     // Draw the current line
-    if (decorator->cursor.line != -1) {
-        int yy = decorator->cursor.line / lineCount * rect().height();
-        yy = qMin(yy, rect().height() - 4);
-        p.fillRect(rect().x() + 2, yy, rect().width() - 4, 3, decorator->cursor.color);
-    }
+    int yy = lineStart / lineCount * rect().height();
+    yy = qMin(yy, rect().height() - 4);
+    p.fillRect(rect().x() + 2, yy, rect().width() - 4, 3, Qt::darkGray);
 }
 
 void HighlightedScrollBar::drawMarker(QPainter &p, int marker)

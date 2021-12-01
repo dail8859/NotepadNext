@@ -37,12 +37,6 @@ public:
     HighlightedScrollBarDecorator(ScintillaEdit *editor);
     ~HighlightedScrollBarDecorator() override;
 
-    struct Highlight {
-        int line;
-        Qt::GlobalColor color;
-    };
-    Highlight cursor;
-
 public slots:
     void notify(const Scintilla::NotificationData *pscn) override;
 
