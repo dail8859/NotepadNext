@@ -91,20 +91,29 @@ void HighlightedScrollBar::drawIndicator(QPainter &p, int indicator)
 void HighlightedScrollBar::drawCursor(QPainter &p)
 {
     ScintillaEdit *editor = decorator->getEditor();
-    int lineStart = editor->visibleFromDocLine(editor->lineFromPosition(editor->currentPos()));
+    int caretLine = editor->visibleFromDocLine(editor->lineFromPosition(editor->currentPos()));
+    int anchorLine = editor->visibleFromDocLine(editor->lineFromPosition(editor->anchor()));
     int lineCount = editor->visibleFromDocLine(editor->lineCount());
 
-    if (!editor->endAtLastLine())
+    if (!editor->endAtLastLine()) {
         lineCount += editor->linesOnScreen();
-
-    // What percentage we are at in the document
-    double document_percentage = static_cast<double>(lineStart) / lineCount;
+    }
 
     // There is no offical way to get the height of the scrollbar arrow buttons, however for now we can
     // assume that the buttons are square, meaning the height of them will be the same as we width of
     // the scroll bar.
-    int scrollbar_arrow_height = rect().width();
+    int scrollbarArrowHeight = rect().width();
 
-    int start_y = document_percentage * (rect().height() - scrollbar_arrow_height * 2);
-    p.fillRect(rect().x() + 2, start_y + scrollbar_arrow_height, rect().width() - 4, 3, Qt::darkGray);
+    // What percentage we are at in the document
+    double documentPercentageCaret = static_cast<double>(caretLine) / lineCount;
+    double documentPercentageAnchor = static_cast<double>(anchorLine) / lineCount;
+
+    int startCaretY = documentPercentageCaret * (rect().height() - scrollbarArrowHeight * 2);
+    int startAnchorY = documentPercentageAnchor * (rect().height() - scrollbarArrowHeight * 2);
+
+    if (startCaretY != startAnchorY) {
+        p.fillRect(rect().x() + 4, startAnchorY + scrollbarArrowHeight, rect().width() - 8, startCaretY - startAnchorY, QColor(1, 1, 1, 25));
+    }
+
+    p.fillRect(rect().x() + 4, startCaretY + scrollbarArrowHeight, rect().width() - 8, 3, Qt::darkGray);
 }
