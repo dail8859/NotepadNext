@@ -50,20 +50,11 @@ void HighlightedScrollBar::paintEvent(QPaintEvent *event)
 {
     // Paint the default scrollbar first
     QScrollBar::paintEvent(event);
-
-    ScintillaEdit *editor = decorator->getEditor();
     QPainter p(this);
-
-    int lineStart = editor->visibleFromDocLine(editor->lineFromPosition(editor->currentPos()));
-    double lineCount = static_cast<double>(editor->visibleFromDocLine(editor->lineCount()));
 
     drawMarker(p, 24);
     drawIndicator(p, 29);
-
-    // Draw the current line
-    int yy = lineStart / lineCount * rect().height();
-    yy = qMin(yy, rect().height() - 4);
-    p.fillRect(rect().x() + 2, yy, rect().width() - 4, 3, Qt::darkGray);
+    drawCursor(p);
 }
 
 void HighlightedScrollBar::drawMarker(QPainter &p, int marker)
@@ -95,4 +86,25 @@ void HighlightedScrollBar::drawIndicator(QPainter &p, int indicator)
             curPos = editor->indicatorEnd(29, curPos);
         }
     }
+}
+
+void HighlightedScrollBar::drawCursor(QPainter &p)
+{
+    ScintillaEdit *editor = decorator->getEditor();
+    int lineStart = editor->visibleFromDocLine(editor->lineFromPosition(editor->currentPos()));
+    int lineCount = editor->visibleFromDocLine(editor->lineCount());
+
+    if (!editor->endAtLastLine())
+        lineCount += editor->linesOnScreen();
+
+    // What percentage we are at in the document
+    double document_percentage = static_cast<double>(lineStart) / lineCount;
+
+    // There is no offical way to get the height of the scrollbar arrow buttons, however for now we can
+    // assume that the buttons are square, meaning the height of them will be the same as we width of
+    // the scroll bar.
+    int scrollbar_arrow_height = rect().width();
+
+    int start_y = document_percentage * (rect().height() - scrollbar_arrow_height * 2);
+    p.fillRect(rect().x() + 2, start_y + scrollbar_arrow_height, rect().width() - 4, 3, Qt::darkGray);
 }

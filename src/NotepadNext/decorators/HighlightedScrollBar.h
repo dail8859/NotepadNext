@@ -59,6 +59,7 @@ protected:
 private:
     void drawMarker(QPainter &p, int marker);
     void drawIndicator(QPainter &p, int indicator);
+    void drawCursor(QPainter &p);
 
     HighlightedScrollBarDecorator *decorator;
 };
