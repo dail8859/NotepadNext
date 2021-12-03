@@ -525,20 +525,35 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         ui->menuHelp->addAction(languageInspectorDock->toggleViewAction());
     }
 
-    connect(ui->actionCheckForUpdates, &QAction::triggered, this, &MainWindow::checkForUpdates);
 
-    // A bit after startup, see if we need to automatically check for an update
-    QTimer::singleShot(15000, this, [=]() {
-        QSettings settings;
-        QDateTime dt = settings.value("App/LastUpdateCheck", false).toDateTime();
+#ifdef QT_DEBUG
+    if (true) {
+#else
+    QSettings registry(QSettings::NativeFormat, QSettings::UserScope, QApplication::organizationName(), QApplication::applicationName());
+    const bool autoUpdatesEnabled = registry.value("AutoUpdate", 0).toBool();
+    qInfo("AutoUpdates: %d", autoUpdatesEnabled);
 
-        if (dt.addDays(7) < QDateTime::currentDateTime()) {
-            checkForUpdates(true);
-        }
-        else {
-            qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
-        }
-    });
+    if (autoUpdatesEnabled) {
+#endif
+        connect(ui->actionCheckForUpdates, &QAction::triggered, this, &MainWindow::checkForUpdates);
+
+        // A bit after startup, see if we need to automatically check for an update
+        QTimer::singleShot(15000, this, [=]() {
+            QSettings settings;
+            QDateTime dt = settings.value("App/LastUpdateCheck", false).toDateTime();
+
+            if (dt.addDays(7) < QDateTime::currentDateTime()) {
+                checkForUpdates(true);
+            }
+            else {
+                qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
+            }
+        });
+    }
+    else {
+        ui->actionCheckForUpdates->setDisabled(true);
+        ui->actionCheckForUpdates->setVisible(false);
+    }
 
     connect(app->getSettings(), &Settings::showMenuBarChanged, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
@@ -1488,7 +1503,6 @@ void MainWindow::checkForUpdates(bool silent)
     qInfo(Q_FUNC_INFO);
 
     QString url = "https://github.com/dail8859/NotepadNext/raw/master/updates.json";
-    QSimpleUpdater::getInstance()->setModuleVersion(url, "0.5");
     QSimpleUpdater::getInstance()->checkForUpdates(url);
 
     if (!silent) {
