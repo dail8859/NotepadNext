@@ -116,20 +116,18 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     connect(ui->actionMoveToTrash, &QAction::triggered, [=]() {
         ScintillaNext *editor = dockedEditor->getCurrentEditor();
-
-        auto reply = QMessageBox::question(this, "Delete File", QString("Are you sure you want to move <b>%1</b> to the trash?").arg(editor->getName()));
+        const QString filePath = QDir::toNativeSeparators(editor->canonicalFilePath());
+        auto reply = QMessageBox::question(this, "Delete File", QString("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));;
 
         if (reply == QMessageBox::Yes) {
-            const QString filePath = editor->canonicalFilePath();
-
             if (editor->moveToTrash()) {
                 closeCurrentFile();
 
                 // Since the file no longer exists, specifically remove it from the recent files list
-                app->getRecentFilesListManager()->removeFile(filePath);
+                app->getRecentFilesListManager()->removeFile(editor->canonicalFilePath());
             }
             else {
-                QMessageBox::warning(this, "Error Deleting File",  QString("Something went wrong deleting <b>%1</b>?").arg(editor->getName()));
+                QMessageBox::warning(this, "Error Deleting File",  QString("Something went wrong deleting <b>%1</b>?").arg(filePath));
             }
         }
     });
@@ -205,7 +203,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionCopyFullPath, &QAction::triggered, [=]() {
         auto editor = dockedEditor->getCurrentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(editor->canonicalFilePath());
+            QApplication::clipboard()->setText(QDir::toNativeSeparators(editor->canonicalFilePath()));
         }
     });
     connect(ui->actionCopyFileName, &QAction::triggered, [=]() {
@@ -214,7 +212,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionCopyFileDirectory, &QAction::triggered, [=]() {
         auto editor = dockedEditor->getCurrentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(editor->canonicalFilePath());
+            QApplication::clipboard()->setText(QDir::toNativeSeparators(editor->canonicalFilePath()));
         }
     });
     connect(ui->actionIncrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->tab();});
@@ -800,7 +798,8 @@ void MainWindow::reloadFile()
         return;
     }
 
-    auto reply = QMessageBox::question(this, "Reload File", QString("Are you sure you want to reload <b>%1</b>? Any unsaved changes will be lost.").arg(editor->getName()));
+    const QString filePath = QDir::toNativeSeparators(editor->canonicalFilePath());
+    auto reply = QMessageBox::question(this, "Reload File", QString("Are you sure you want to reload <b>%1</b>? Any unsaved changes will be lost.").arg(filePath));
 
     if (reply == QMessageBox::Yes) {
         editor->reload();
