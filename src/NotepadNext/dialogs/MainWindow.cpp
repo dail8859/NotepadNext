@@ -30,6 +30,7 @@
 #include <QPushButton>
 #include <QSimpleUpdater.h>
 #include <QTimer>
+#include <QInputDialog>
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -274,6 +275,23 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         quickFind->setFocus();
 
         quickFind->show();
+    });
+
+    connect(ui->actionGoToLine, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = this->dockedEditor->getCurrentEditor();
+        const int currentLine = editor->lineFromPosition(editor->currentPos()) + 1;
+        const int maxLine = editor->lineCount();
+        bool ok;
+
+        QInputDialog d = QInputDialog(this);
+        Qt::WindowFlags flags = d.windowFlags() & ~Qt::WindowContextHelpButtonHint;
+        int lineToGoTo = d.getInt(this, "Go to line", QString("Line Number (1 - %1)").arg(maxLine), currentLine, 1, maxLine, 1, &ok, flags);
+
+        if (ok) {
+            editor->ensureVisible(lineToGoTo - 1);
+            editor->gotoLine(lineToGoTo - 1);
+            editor->verticalCentreCaret();
+        }
     });
 
     //connect(ui->actionReplace, &QAction::triggered, [=]() {
