@@ -167,8 +167,8 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionLowerCase, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->lowerCase();});
 
     connect(ui->actionDuplicateCurrentLine, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->lineDuplicate();});
-    connect(ui->actionMoveCurrentLineUp, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->moveSelectedLinesUp();});
-    connect(ui->actionMoveCurrentLineDown, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->moveSelectedLinesDown();});
+    connect(ui->actionMoveSelectedLinesUp, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->moveSelectedLinesUp();});
+    connect(ui->actionMoveSelectedLinesDown, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->moveSelectedLinesDown();});
     connect(ui->actionSplitLines, &QAction::triggered, [=]() {
         dockedEditor->getCurrentEditor()->targetFromSelection();
         dockedEditor->getCurrentEditor()->linesSplit(0);
