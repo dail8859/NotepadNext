@@ -38,6 +38,8 @@ include(../QSimpleUpdater/QSimpleUpdater.pri)
 # Set variables for output executable
 VERSION = $$APP_VERSION
 
+CONFIG += file_copies
+
 win32 {
     QMAKE_TARGET_COMPANY = Notepad Next
     QMAKE_TARGET_DESCRIPTION = Notepad Next
@@ -45,11 +47,14 @@ win32 {
     QMAKE_TARGET_PRODUCT = Notepad Next
     RC_ICONS = ../../icon/nn.ico
 
-    CONFIG += file_copies
     COPIES += openssl
     openssl.files = $$files(../../deploy/windows/*.dll)
     openssl.path = $$OUT_PWD
 }
+
+COPIES += license
+license.files = ../../LICENSE
+license.path = $$OUT_PWD
 
 
 SOURCES += \
