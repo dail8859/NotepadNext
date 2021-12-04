@@ -32,6 +32,9 @@ public:
 
 public slots:
     void notify(const Scintilla::NotificationData *pscn) override;
+
+private:
+    void autoIndentLine(int line) const;
 };
 
 #endif // AUTOINDENTATION_H
