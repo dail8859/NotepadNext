@@ -69,14 +69,14 @@ void BraceMatch::doHighlighting()
 
     if (match != INVALID_POSITION) {
          editor->braceHighlight(pos - 1, match);
-         editor->setHighlightGuide(editor->column(pos - 1));
+         editor->setHighlightGuide(editor->column(editor->lineIndentPosition(editor->lineFromPosition(pos - 1))));
     }
     else {
         // Check the character after the caret
         match = editor->braceMatch(pos, 0);
         if (match != INVALID_POSITION) {
              editor->braceHighlight(pos, match);
-             editor->setHighlightGuide(editor->column(pos));
+             editor->setHighlightGuide(editor->column(editor->lineIndentPosition(editor->lineFromPosition(pos))));
         }
         else {
             // Nothing was found, now check to see if we need to badlight something
