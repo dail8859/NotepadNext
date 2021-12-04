@@ -152,6 +152,7 @@
     <addaction name="actionReplace"/>
     <addaction name="separator"/>
     <addaction name="actionQuickFind"/>
+    <addaction name="actionGoToLine"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -898,6 +899,14 @@
   <action name="actionCheckForUpdates">
    <property name="text">
     <string>Check for Updates...</string>
+   </property>
+  </action>
+  <action name="actionGoToLine">
+   <property name="text">
+    <string>&amp;Go to Line...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
    </property>
   </action>
  </widget>
