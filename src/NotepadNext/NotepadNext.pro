@@ -85,6 +85,7 @@ SOURCES += \
     decorators/BetterMultiSelection.cpp \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
+    dialogs/EditorInspectorDock.cpp \
     dialogs/FindReplaceDialog.cpp \
     dialogs/LanguageInspectorDock.cpp \
     dialogs/LuaConsoleDock.cpp \
@@ -130,6 +131,7 @@ HEADERS += \
     decorators/BetterMultiSelection.h \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
+    dialogs/EditorInspectorDock.h \
     dialogs/FindReplaceDialog.h \
     dialogs/LanguageInspectorDock.h \
     dialogs/LuaConsoleDock.h \
@@ -146,6 +148,7 @@ HEADERS += \
 
 FORMS += \
     QuickFindWidget.ui \
+    dialogs/EditorInspectorDock.ui \
     dialogs/LanguageInspectorDock.ui \
     dialogs/MainWindow.ui \
     dialogs/FindReplaceDialog.ui \
