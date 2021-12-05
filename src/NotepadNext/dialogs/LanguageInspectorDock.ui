@@ -44,7 +44,7 @@
          <x>0</x>
          <y>0</y>
          <width>611</width>
-         <height>542</height>
+         <height>540</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -112,6 +112,13 @@
          <widget class="QLabel" name="label_5">
           <property name="text">
            <string>Styles:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblInfo">
+          <property name="text">
+           <string>TextLabel</string>
           </property>
          </widget>
         </item>
