@@ -30,6 +30,7 @@
 #include <QPushButton>
 #include <QSimpleUpdater.h>
 #include <QTimer>
+#include <QInputDialog>
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -116,20 +117,18 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     connect(ui->actionMoveToTrash, &QAction::triggered, [=]() {
         ScintillaNext *editor = dockedEditor->getCurrentEditor();
-
-        auto reply = QMessageBox::question(this, "Delete File", QString("Are you sure you want to move <b>%1</b> to the trash?").arg(editor->getName()));
+        const QString filePath = QDir::toNativeSeparators(editor->canonicalFilePath());
+        auto reply = QMessageBox::question(this, "Delete File", QString("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));;
 
         if (reply == QMessageBox::Yes) {
-            const QString filePath = editor->fileInfo().canonicalFilePath();
-
             if (editor->moveToTrash()) {
                 closeCurrentFile();
 
                 // Since the file no longer exists, specifically remove it from the recent files list
-                app->getRecentFilesListManager()->removeFile(filePath);
+                app->getRecentFilesListManager()->removeFile(editor->canonicalFilePath());
             }
             else {
-                QMessageBox::warning(this, "Error Deleting File",  QString("Something went wrong deleting <b>%1</b>?").arg(editor->getName()));
+                QMessageBox::warning(this, "Error Deleting File",  QString("Something went wrong deleting <b>%1</b>?").arg(filePath));
             }
         }
     });
@@ -169,8 +168,8 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionLowerCase, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->lowerCase();});
 
     connect(ui->actionDuplicateCurrentLine, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->lineDuplicate();});
-    connect(ui->actionMoveCurrentLineUp, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->moveSelectedLinesUp();});
-    connect(ui->actionMoveCurrentLineDown, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->moveSelectedLinesDown();});
+    connect(ui->actionMoveSelectedLinesUp, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->moveSelectedLinesUp();});
+    connect(ui->actionMoveSelectedLinesDown, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->moveSelectedLinesDown();});
     connect(ui->actionSplitLines, &QAction::triggered, [=]() {
         dockedEditor->getCurrentEditor()->targetFromSelection();
         dockedEditor->getCurrentEditor()->linesSplit(0);
@@ -205,7 +204,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionCopyFullPath, &QAction::triggered, [=]() {
         auto editor = dockedEditor->getCurrentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(editor->canonicalFilePath());
+            QApplication::clipboard()->setText(QDir::toNativeSeparators(editor->canonicalFilePath()));
         }
     });
     connect(ui->actionCopyFileName, &QAction::triggered, [=]() {
@@ -214,7 +213,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionCopyFileDirectory, &QAction::triggered, [=]() {
         auto editor = dockedEditor->getCurrentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(editor->canonicalFilePath());
+            QApplication::clipboard()->setText(QDir::toNativeSeparators(editor->canonicalFilePath()));
         }
     });
     connect(ui->actionIncrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->tab();});
@@ -276,6 +275,23 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         quickFind->setFocus();
 
         quickFind->show();
+    });
+
+    connect(ui->actionGoToLine, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = this->dockedEditor->getCurrentEditor();
+        const int currentLine = editor->lineFromPosition(editor->currentPos()) + 1;
+        const int maxLine = editor->lineCount();
+        bool ok;
+
+        QInputDialog d = QInputDialog(this);
+        Qt::WindowFlags flags = d.windowFlags() & ~Qt::WindowContextHelpButtonHint;
+        int lineToGoTo = d.getInt(this, "Go to line", QString("Line Number (1 - %1)").arg(maxLine), currentLine, 1, maxLine, 1, &ok, flags);
+
+        if (ok) {
+            editor->ensureVisible(lineToGoTo - 1);
+            editor->gotoLine(lineToGoTo - 1);
+            editor->verticalCentreCaret();
+        }
     });
 
     //connect(ui->actionReplace, &QAction::triggered, [=]() {
@@ -527,20 +543,35 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         ui->menuHelp->addAction(languageInspectorDock->toggleViewAction());
     }
 
-    connect(ui->actionCheckForUpdates, &QAction::triggered, this, &MainWindow::checkForUpdates);
 
-    // A bit after startup, see if we need to automatically check for an update
-    QTimer::singleShot(15000, this, [=]() {
-        QSettings settings;
-        QDateTime dt = settings.value("App/LastUpdateCheck", false).toDateTime();
+#ifdef QT_DEBUG
+    if (true) {
+#else
+    QSettings registry(QSettings::NativeFormat, QSettings::UserScope, QApplication::organizationName(), QApplication::applicationName());
+    const bool autoUpdatesEnabled = registry.value("AutoUpdate", 0).toBool();
+    qInfo("AutoUpdates: %d", autoUpdatesEnabled);
 
-        if (dt.addDays(7) < QDateTime::currentDateTime()) {
-            checkForUpdates(true);
-        }
-        else {
-            qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
-        }
-    });
+    if (autoUpdatesEnabled) {
+#endif
+        connect(ui->actionCheckForUpdates, &QAction::triggered, this, &MainWindow::checkForUpdates);
+
+        // A bit after startup, see if we need to automatically check for an update
+        QTimer::singleShot(15000, this, [=]() {
+            QSettings settings;
+            QDateTime dt = settings.value("App/LastUpdateCheck", false).toDateTime();
+
+            if (dt.addDays(7) < QDateTime::currentDateTime()) {
+                checkForUpdates(true);
+            }
+            else {
+                qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
+            }
+        });
+    }
+    else {
+        ui->actionCheckForUpdates->setDisabled(true);
+        ui->actionCheckForUpdates->setVisible(false);
+    }
 
     connect(app->getSettings(), &Settings::showMenuBarChanged, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
@@ -800,7 +831,8 @@ void MainWindow::reloadFile()
         return;
     }
 
-    auto reply = QMessageBox::question(this, "Reload File", QString("Are you sure you want to reload <b>%1</b>? Any unsaved changes will be lost.").arg(editor->getName()));
+    const QString filePath = QDir::toNativeSeparators(editor->canonicalFilePath());
+    auto reply = QMessageBox::question(this, "Reload File", QString("Are you sure you want to reload <b>%1</b>? Any unsaved changes will be lost.").arg(filePath));
 
     if (reply == QMessageBox::Yes) {
         editor->reload();
@@ -1049,10 +1081,19 @@ void MainWindow::convertEOLs(int eolMode)
 
 void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
 {
-    bool isFile = editor->isFile();
+    qInfo(Q_FUNC_INFO);
 
-    QString title = QString("[*]%1 - Notepad Next").arg(editor->getName());
-    setWindowTitle(title);
+    bool isFile = editor->isFile();
+    QString fileName;
+
+    if (isFile) {
+        fileName = QDir::toNativeSeparators(editor->canonicalFilePath());
+    }
+    else {
+        fileName = editor->getName();
+    }
+
+    setWindowTitle(QStringLiteral("[*]%1").arg(fileName));
 
     ui->actionReload->setEnabled(isFile);
     ui->actionRename->setEnabled(isFile);
@@ -1291,10 +1332,6 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 
     app->getLuaState()->execute(R"(
         local L = languages[languageName]
-        -- this resets the style definitions but keeps
-        -- the "wanted" stuff, such as line numbers, etc
-        -- resetEditorStyle()
-        --editor.LexerLanguage = L.lexer
 
         editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
         editor.TabWidth = L.tabSize or 4
@@ -1308,6 +1345,9 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
                     end
                     if style.fontStyle & 2 == 2 then
                         editor.StyleItalic[style.id] = true
+                    end
+                    if style.fontStyle & 4 == 4 then
+                        editor.StyleUnderline[style.id] = true
                     end
                 end
             end
@@ -1484,7 +1524,6 @@ void MainWindow::checkForUpdates(bool silent)
     qInfo(Q_FUNC_INFO);
 
     QString url = "https://github.com/dail8859/NotepadNext/raw/master/updates.json";
-    QSimpleUpdater::getInstance()->setModuleVersion(url, "0.5");
     QSimpleUpdater::getInstance()->checkForUpdates(url);
 
     if (!silent) {

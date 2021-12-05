@@ -24,7 +24,7 @@
 #include <iterator>
 
 template<typename Iter>
-typename const std::iterator_traits<Iter>::value_type *binary_find(Iter begin, Iter end, const char *name) {
+typename std::iterator_traits<Iter>::value_type const *binary_find(Iter begin, Iter end, const char *name) {
     auto it = std::lower_bound(begin, end, name, [](const auto &lhs, const char *rhs) {
         return strcmp(lhs.name, rhs) < 0;
     });

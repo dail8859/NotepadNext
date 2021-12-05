@@ -24,15 +24,17 @@
 
 using namespace Scintilla;
 
+const int DEFAULT_TICK_HEIGHT = 3;
+const int DEFAULT_TICK_PADDING = 3;
+const QColor CURSOR_SELECTION_COLOR = QColor(0, 0, 0, 25);
+const QColor CURSOR_CARET_COLOR = QColor(0, 0, 0, 100);
+
 HighlightedScrollBarDecorator::HighlightedScrollBarDecorator(ScintillaEdit *editor)
-    : EditorDecorator(editor), scrollBar(new HighlightedScrollBar(this, Qt::Vertical, editor))
+    : EditorDecorator(editor), scrollBar(new HighlightedScrollBar(editor, Qt::Vertical, editor))
 {
     connect(scrollBar, &QScrollBar::valueChanged, editor, &ScintillaEdit::scrollVertical);
 
     editor->setVerticalScrollBar(scrollBar);
-
-    cursor.line = -1;
-    cursor.color = Qt::darkGray;
 }
 
 HighlightedScrollBarDecorator::~HighlightedScrollBarDecorator()
@@ -42,7 +44,6 @@ HighlightedScrollBarDecorator::~HighlightedScrollBarDecorator()
 void HighlightedScrollBarDecorator::notify(const NotificationData *pscn)
 {
     if (pscn->nmhdr.code == Notification::UpdateUI && (FlagSet(pscn->updated, Update::Content) || FlagSet(pscn->updated, Update::Selection))) {
-        cursor.line = editor->visibleFromDocLine(editor->lineFromPosition(editor->currentPos()));
         scrollBar->update();
     }
     else if (pscn->nmhdr.code == Notification::Modified && FlagSet(pscn->modificationType, ModificationFlags::ChangeMarker)) {
@@ -50,54 +51,87 @@ void HighlightedScrollBarDecorator::notify(const NotificationData *pscn)
     }
 }
 
+
+
+
 void HighlightedScrollBar::paintEvent(QPaintEvent *event)
 {
     // Paint the default scrollbar first
     QScrollBar::paintEvent(event);
-
-    ScintillaEdit *editor = decorator->getEditor();
     QPainter p(this);
-
-    double lineCount = static_cast<double>(editor->visibleFromDocLine(editor->lineCount()));
 
     drawMarker(p, 24);
     drawIndicator(p, 29);
-
-    // Draw the current line
-    if (decorator->cursor.line != -1) {
-        int yy = decorator->cursor.line / lineCount * rect().height();
-        yy = qMin(yy, rect().height() - 4);
-        p.fillRect(rect().x() + 2, yy, rect().width() - 4, 3, decorator->cursor.color);
-    }
+    drawCursors(p);
 }
 
 void HighlightedScrollBar::drawMarker(QPainter &p, int marker)
 {
-    ScintillaEdit *editor = decorator->getEditor();
-    const double lineCount = static_cast<double>(editor->visibleFromDocLine(editor->lineCount()));
+    // NOTE: SCI_MARKERGETBACK doesn't exist...so can't use the marker color
     int curLine = 0;
 
     while ((curLine = editor->markerNext(curLine, 1 << marker)) != -1) {
-        int yy = (curLine + 1) / lineCount * rect().height();
-        p.fillRect(rect().x() + 2, yy, rect().width() - 4, 3, Qt::blue);
+        drawTickMark(p, lineToScrollBarY(curLine), DEFAULT_TICK_HEIGHT, QColor(100, 100, 255));
+
         curLine++;
     }
 }
 
 void HighlightedScrollBar::drawIndicator(QPainter &p, int indicator)
 {
-    ScintillaEdit *editor = decorator->getEditor();
-    const double lineCount = static_cast<double>(editor->visibleFromDocLine(editor->lineCount()));
     int curPos = editor->indicatorEnd(indicator, 0);
     int color = editor->indicFore(indicator);
 
     if (curPos > 0) {
         while ((curPos = editor->indicatorEnd(29, curPos)) < editor->length()) {
-            int yy = editor->lineFromPosition(curPos) / lineCount * rect().height();
-            yy = qMin(yy, rect().height() - 4);
-            p.fillRect(rect().x() + 2, yy, rect().width() - 4, 3, color);
+            drawTickMark(p, posToScrollBarY(curPos), DEFAULT_TICK_HEIGHT, color);
 
             curPos = editor->indicatorEnd(29, curPos);
         }
     }
+}
+
+void HighlightedScrollBar::drawCursors(QPainter &p)
+{
+    for (int i = 0; i < editor->selections() ; i++) {
+        int startCaretY = posToScrollBarY(editor->selectionNCaret(i));
+        int startAnchorY = posToScrollBarY(editor->selectionNAnchor(i));
+
+        if (startCaretY != startAnchorY) {
+            drawTickMark(p, startAnchorY, startCaretY - startAnchorY, CURSOR_SELECTION_COLOR);
+        }
+
+        drawTickMark(p, startCaretY, DEFAULT_TICK_HEIGHT, CURSOR_CARET_COLOR);
+    }
+}
+
+void HighlightedScrollBar::drawTickMark(QPainter &p, int y, int height, QColor color)
+{
+    p.fillRect(rect().x() + DEFAULT_TICK_PADDING, y + scrollbarArrowHeight(), rect().width() - (DEFAULT_TICK_PADDING * 2), height, color);
+}
+
+int HighlightedScrollBar::posToScrollBarY(int pos) const
+{
+    int line = editor->visibleFromDocLine(editor->lineFromPosition(pos));
+
+    return lineToScrollBarY(line);
+}
+
+int HighlightedScrollBar::lineToScrollBarY(int line) const
+{
+    int lineCount = editor->visibleFromDocLine(editor->lineCount());
+
+    if (!editor->endAtLastLine()) {
+        lineCount += editor->linesOnScreen();
+    }
+
+    return static_cast<double>(line) / lineCount * (rect().height() - scrollbarArrowHeight() * 2);
+}
+
+int HighlightedScrollBar::scrollbarArrowHeight() const
+{
+    // NOTE: There is no offical way to get the height of the scrollbar arrow buttons, however for now we can
+    // assume that the buttons are square, meaning the height of them will be the same as the width of
+    // the scroll bar.
+    return rect().width();
 }

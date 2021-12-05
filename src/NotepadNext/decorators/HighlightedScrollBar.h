@@ -37,12 +37,6 @@ public:
     HighlightedScrollBarDecorator(ScintillaEdit *editor);
     ~HighlightedScrollBarDecorator() override;
 
-    struct Highlight {
-        int line;
-        Qt::GlobalColor color;
-    };
-    Highlight cursor;
-
 public slots:
     void notify(const Scintilla::NotificationData *pscn) override;
 
@@ -56,8 +50,8 @@ class HighlightedScrollBar : public QScrollBar
     Q_OBJECT
 
 public:
-    explicit HighlightedScrollBar(HighlightedScrollBarDecorator *decorator, Qt::Orientation orientation, QWidget *parent = nullptr)
-        : QScrollBar(orientation, parent), decorator(decorator) {}
+    explicit HighlightedScrollBar(ScintillaEdit *editor, Qt::Orientation orientation, QWidget *parent = nullptr)
+        : QScrollBar(orientation, parent), editor(editor) {}
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -65,8 +59,15 @@ protected:
 private:
     void drawMarker(QPainter &p, int marker);
     void drawIndicator(QPainter &p, int indicator);
+    void drawCursors(QPainter &p);
 
-    HighlightedScrollBarDecorator *decorator;
+    void drawTickMark(QPainter &p, int y, int height, QColor color);
+
+    int posToScrollBarY(int pos) const;
+    int lineToScrollBarY(int line) const;
+    int scrollbarArrowHeight() const;
+
+    ScintillaEdit *editor;
 };
 
 #endif // HIGHLIGHTEDSCROLLBAR_H

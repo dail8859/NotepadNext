@@ -40,7 +40,7 @@
      <x>0</x>
      <y>0</y>
      <width>855</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -122,8 +122,8 @@
      <addaction name="actionDuplicateCurrentLine"/>
      <addaction name="actionSplitLines"/>
      <addaction name="actionJoinLines"/>
-     <addaction name="actionMoveCurrentLineUp"/>
-     <addaction name="actionMoveCurrentLineDown"/>
+     <addaction name="actionMoveSelectedLinesUp"/>
+     <addaction name="actionMoveSelectedLinesDown"/>
     </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -152,6 +152,7 @@
     <addaction name="actionReplace"/>
     <addaction name="separator"/>
     <addaction name="actionQuickFind"/>
+    <addaction name="actionGoToLine"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -570,14 +571,20 @@
     <string>Join Lines</string>
    </property>
   </action>
-  <action name="actionMoveCurrentLineUp">
+  <action name="actionMoveSelectedLinesUp">
    <property name="text">
-    <string>Move Current Line Up</string>
+    <string>Move Selected Lines Up</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Up</string>
    </property>
   </action>
-  <action name="actionMoveCurrentLineDown">
+  <action name="actionMoveSelectedLinesDown">
    <property name="text">
-    <string>Move Current Line Down</string>
+    <string>Move Selected Lines Down</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Down</string>
    </property>
   </action>
   <action name="actionCloseAll">
@@ -892,6 +899,14 @@
   <action name="actionCheckForUpdates">
    <property name="text">
     <string>Check for Updates...</string>
+   </property>
+  </action>
+  <action name="actionGoToLine">
+   <property name="text">
+    <string>&amp;Go to Line...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
    </property>
   </action>
  </widget>
