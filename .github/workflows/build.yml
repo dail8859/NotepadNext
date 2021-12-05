@@ -26,7 +26,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          qmake ..\src\NotepadNext.pro "APP_VERSION=0.3.3"
+          qmake ..\src\NotepadNext.pro
       
       - name: Build
         run: |

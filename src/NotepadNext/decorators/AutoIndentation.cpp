@@ -34,14 +34,18 @@ void AutoIndentation::notify(const NotificationData *pscn)
         const int eolMode = editor->eOLMode();
 
         if (((eolMode == SC_EOL_CRLF || eolMode == SC_EOL_LF) && ch == '\n') || (eolMode == SC_EOL_CR && ch == '\r')) {
-            const int currentLine = editor->lineFromPosition(editor->currentPos());
-            const int previousLine = currentLine - 1;
-            const int previousIndentation = editor->lineIndentation(previousLine);
-
-            if (previousIndentation > 0) {
-                editor->setLineIndentation(currentLine, previousIndentation);
-                editor->gotoPos(editor->findColumn(currentLine, previousIndentation));
-            }
+            autoIndentLine(editor->lineFromPosition(editor->currentPos()));
         }
+    }
+}
+
+void AutoIndentation::autoIndentLine(int line) const
+{
+    const int previousLine = line - 1;
+    const int previousIndentation = editor->lineIndentation(previousLine);
+
+    if (previousIndentation > 0) {
+        editor->setLineIndentation(line, previousIndentation);
+        editor->gotoPos(editor->findColumn(line, previousIndentation));
     }
 }

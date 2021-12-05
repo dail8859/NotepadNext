@@ -83,5 +83,7 @@
         <file>languages/visualprolog.lua</file>
         <file>languages/xml.lua</file>
         <file>languages/yaml.lua</file>
+        <file>languages/go.lua</file>
+        <file>languages/markdown.lua</file>
     </qresource>
 </RCC>

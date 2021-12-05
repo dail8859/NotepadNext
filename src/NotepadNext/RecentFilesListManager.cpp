@@ -17,6 +17,7 @@
  */
 
 
+#include <QDir>
 #include <QMenu>
 
 #include "RecentFilesListManager.h"
@@ -82,7 +83,7 @@ void RecentFilesListManager::populateMenu(QMenu *menu)
     QList<QAction *> recentFileListActions;
     foreach (const QString &file, recentFiles) {
         ++i;
-        QAction *action = new QAction(QString("%1%2: %3").arg(i < 10 ? "&" : "").arg(i).arg(file), menu);
+        QAction *action = new QAction(QString("%1%2: %3").arg(i < 10 ? "&" : "").arg(i).arg(QDir::toNativeSeparators(file)), menu);
 
         action->setData(file);
         connect(action, &QAction::triggered, this, &RecentFilesListManager::recentFileActionTriggered);

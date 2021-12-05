@@ -112,6 +112,10 @@ Section "Notepad Next"
 	# Register the application (e.g. cmd> start notepadnext)
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
 
+	# Enable the auto updater
+	# TODO: later make this a selectable section by the user
+	WriteRegDWORD SHCTX "Software\NotepadNext\NotepadNext\" "AutoUpdate" 1
+
 	# Register 'Open With' menu suggestion. No real good documentation for this. https://stackoverflow.com/a/62783311
 	WriteRegStr SHCTX "Software\Classes\NotepadNext\shell" "" "open"
 	WriteRegStr SHCTX "Software\Classes\NotepadNext\shell\open\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
@@ -160,6 +164,9 @@ Section "Uninstall"
 
 	# Remove application registration
 	DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
+
+	# Custom configurations
+	DeleteRegKey SHCTX "Software\NotepadNext\"
 
 	# Remove 'Open With' menu suggestion
 	DeleteRegValue SHCTX "Software\Classes\.txt\OpenWithProgids" "NotepadNext"

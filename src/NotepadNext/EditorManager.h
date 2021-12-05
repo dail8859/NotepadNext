@@ -21,8 +21,9 @@
 #define EDITORMANAGER_H
 
 #include <QObject>
+#include <QPointer>
 
-class ScintillaBuffer;
+
 class ScintillaNext;
 
 class EditorManager : public QObject
