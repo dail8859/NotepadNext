@@ -55,6 +55,7 @@
 
 #include "LuaConsoleDock.h"
 #include "LanguageInspectorDock.h"
+#include "EditorInspectorDock.h"
 
 #include "FindReplaceDialog.h"
 #include "MacroRunDialog.h"
@@ -560,6 +561,13 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         languageInspectorDock->hide();
         addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
         ui->menuHelp->addAction(languageInspectorDock->toggleViewAction());
+    }
+
+    if (editorInspectorDock == Q_NULLPTR) {
+        editorInspectorDock = new EditorInspectorDock(this);
+        editorInspectorDock->hide();
+        addDockWidget(Qt::RightDockWidgetArea, editorInspectorDock);
+        ui->menuHelp->addAction(editorInspectorDock->toggleViewAction());
     }
 
 

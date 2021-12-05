@@ -37,6 +37,7 @@ class MainWindow;
 class NotepadNextApplication;
 class LuaConsoleDock;
 class LanguageInspectorDock;
+class EditorInspectorDock;
 class MacroRecorder;
 class Macro;
 class Settings;
@@ -154,6 +155,7 @@ private:
     // Docked widgets
     LuaConsoleDock *luaConsoleDock = Q_NULLPTR;
     LanguageInspectorDock *languageInspectorDock = Q_NULLPTR;
+    EditorInspectorDock *editorInspectorDock = Q_NULLPTR;
 };
 
 #endif // MAINWINDOW_H
