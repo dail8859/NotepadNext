@@ -21,6 +21,8 @@
 
 #include <QDockWidget>
 
+#include "ScintillaTypes.h"
+
 class MainWindow;
 class ScintillaNext;
 
@@ -38,6 +40,7 @@ public:
 
 private slots:
     void updateInformation(ScintillaNext *editor);
+    void updatePositionInfo(Scintilla::Update updated);
 
 private:
     Ui::LanguageInspectorDock *ui;

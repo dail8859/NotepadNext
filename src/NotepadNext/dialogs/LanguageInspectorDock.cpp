@@ -110,10 +110,21 @@ void LanguageInspectorDock::updateInformation(ScintillaNext *editor)
     // Don't update if the dock widget is not visible
     if (this->isHidden()) return;
 
+    // Make sure we are connected to this editor already (only once)
+    connect(editor, &ScintillaNext::updateUi, this, &LanguageInspectorDock::updatePositionInfo, Qt::UniqueConnection);
+
     this->updateLanguageName(editor);
     this->updatePropertyInfo(editor);
     this->updateKeywordInfo(editor);
     this->updateStyleInfo(editor);
+}
+
+void LanguageInspectorDock::updatePositionInfo(Scintilla::Update updated)
+{
+    if (FlagSet(updated, Scintilla::Update::Content) || FlagSet(updated, Scintilla::Update::Selection)) {
+        ScintillaNext *editor = qobject_cast<ScintillaNext*>(sender());
+        ui->lblInfo->setText(QString("Postion %1 Style %2").arg(editor->currentPos()).arg(editor->styleAt(editor->currentPos())));
+    }
 }
 
 void LanguageInspectorDock::updateLanguageName(ScintillaNext *editor)
