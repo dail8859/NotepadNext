@@ -1346,6 +1346,9 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
                     if style.fontStyle & 2 == 2 then
                         editor.StyleItalic[style.id] = true
                     end
+                    if style.fontStyle & 4 == 4 then
+                        editor.StyleUnderline[style.id] = true
+                    end
                 end
             end
         end
