@@ -24,7 +24,7 @@ void CharClassify::SetDefaultCharClasses(bool includeWordClass) {
 	for (int ch = 0; ch < maxChar; ch++) {
 		if (ch == '\r' || ch == '\n')
 			charClass[ch] = CharacterClass::newLine;
-		else if (ch < 0x20 || ch == ' ')
+		else if (IsControl(ch) || ch == ' ')
 			charClass[ch] = CharacterClass::space;
 		else if (includeWordClass && (ch >= 0x80 || IsAlphaNumeric(ch) || ch == '_'))
 			charClass[ch] = CharacterClass::word;

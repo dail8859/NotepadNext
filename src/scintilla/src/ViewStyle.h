@@ -28,16 +28,10 @@ public:
  */
 
 
-class FontRealised : public FontMeasurements {
+class FontRealised {
 public:
+	FontMeasurements measurements;
 	std::shared_ptr<Font> font;
-	FontRealised() noexcept;
-	// FontRealised objects can not be copied.
-	FontRealised(const FontRealised &) = delete;
-	FontRealised(FontRealised &&) = delete;
-	FontRealised &operator=(const FontRealised &) = delete;
-	FontRealised &operator=(FontRealised &&) = delete;
-	virtual ~FontRealised();
 	void Realise(Surface &surface, int zoomLevel, Scintilla::Technology technology, const FontSpecification &fs, const char *localeName);
 };
 
@@ -53,48 +47,47 @@ inline std::optional<ColourRGBA> OptionalColour(Scintilla::uptr_t wParam, Scinti
 
 struct SelectionAppearance {
 	// Whether to draw on base layer or over text
-	Scintilla::Layer layer;
+	Scintilla::Layer layer = Layer::Base;
 	// Draw selection past line end characters up to right border
-	bool eolFilled;
+	bool eolFilled = false;
 };
 
 struct CaretLineAppearance {
 	// Whether to draw on base layer or over text
-	Scintilla::Layer layer;
+	Scintilla::Layer layer = Layer::Base;
 	// Also show when non-focused
-	bool alwaysShow;
+	bool alwaysShow = false;
+	// highlight sub line instead of whole line
+	bool subLine = false;
 	// Non-0: draw a rectangle around line instead of filling line. Value is pixel width of frame
-	int frame;
+	int frame = 0;
 };
 
 struct CaretAppearance {
-	// Line, block, over-strike bar ... 
-	Scintilla::CaretStyle style;
+	// Line, block, over-strike bar ...
+	Scintilla::CaretStyle style = CaretStyle::Line;
 	// Width in pixels
-	int width;
+	int width = 1;
 };
 
 struct WrapAppearance {
 	// No wrapping, word, character, whitespace appearance
-	Scintilla::Wrap state;
+	Scintilla::Wrap state = Wrap::None;
 	// Show indication of wrap at line end, line start, or in margin
-	Scintilla::WrapVisualFlag visualFlags;
+	Scintilla::WrapVisualFlag visualFlags = WrapVisualFlag::None;
 	// Show indication near margin or near text
-	Scintilla::WrapVisualLocation visualFlagsLocation;
+	Scintilla::WrapVisualLocation visualFlagsLocation = WrapVisualLocation::Default;
 	// How much indentation to show wrapping
-	int visualStartIndent;
-	// WrapIndentMode::Fixed, _SAME, _INDENT, _DEEPINDENT
-	Scintilla::WrapIndentMode indentMode;
+	int visualStartIndent = 0;
+	// WrapIndentMode::Fixed, Same, Indent, DeepIndent
+	Scintilla::WrapIndentMode indentMode = WrapIndentMode::Fixed;
 };
 
 struct EdgeProperties {
 	int column = 0;
 	ColourRGBA colour;
-	EdgeProperties(int column_ = 0, ColourRGBA colour_ = ColourRGBA::FromRGB(0)) noexcept :
+	constexpr EdgeProperties(int column_ = 0, ColourRGBA colour_ = ColourRGBA::FromRGB(0)) noexcept :
 		column(column_), colour(colour_) {
-	}
-	EdgeProperties(Scintilla::uptr_t wParam, Scintilla::sptr_t lParam) noexcept :
-		column(static_cast<int>(wParam)), colour(ColourRGBA::FromIpRGB(lParam)) {
 	}
 };
 
@@ -126,8 +119,8 @@ public:
 	Scintilla::Technology technology;
 	int lineHeight;
 	int lineOverlap;
-	unsigned int maxAscent;
-	unsigned int maxDescent;
+	XYPOSITION maxAscent;
+	XYPOSITION maxDescent;
 	XYPOSITION aveCharWidth;
 	XYPOSITION spaceWidth;
 	XYPOSITION tabWidth;
@@ -144,10 +137,10 @@ public:
 	/// Margins are ordered: Line Numbers, Selection Margin, Spacing Margin
 	int leftMarginWidth;	///< Spacing margin on left of text
 	int rightMarginWidth;	///< Spacing margin on right of text
-	int maskInLine;	///< Mask for markers to be put into text because there is nowhere for them to go in margin
-	int maskDrawInText;	///< Mask for markers that always draw in text
+	int maskInLine = 0;	///< Mask for markers to be put into text because there is nowhere for them to go in margin
+	int maskDrawInText = 0;	///< Mask for markers that always draw in text
 	std::vector<MarginStyle> ms;
-	int fixedColumnWidth;	///< Total width of margins
+	int fixedColumnWidth = 0;	///< Total width of margins
 	bool marginInside;	///< true: margin included in text view, false: separate views
 	int textStart;	///< Starting x position of text within the view
 	int zoomLevel;
@@ -191,7 +184,7 @@ public:
 
 	std::string localeName;
 
-	ViewStyle();
+	ViewStyle(size_t stylesSize_=256);
 	ViewStyle(const ViewStyle &source);
 	ViewStyle(ViewStyle &&) = delete;
 	// Can only be copied through copy constructor which ensures font names initialised correctly
@@ -199,7 +192,6 @@ public:
 	ViewStyle &operator=(ViewStyle &&) = delete;
 	~ViewStyle();
 	void CalculateMarginWidthAndMask() noexcept;
-	void Init(size_t stylesSize_=256);
 	void Refresh(Surface &surface, int tabInChars);
 	void ReleaseAllExtendedStyles() noexcept;
 	int AllocateExtendedStyles(int numberStyles);
@@ -221,7 +213,7 @@ public:
 	bool WhitespaceBackgroundDrawn() const;
 	ColourRGBA WrapColour() const;
 
-	void AddMultiEdge(Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
+	void AddMultiEdge(int column, ColourRGBA colour);
 
 	std::optional<ColourRGBA> ElementColour(Scintilla::Element element) const;
 	bool ElementAllowsTranslucent(Scintilla::Element element) const;
@@ -243,15 +235,15 @@ public:
 
 	enum class CaretShape { invisible, line, block, bar };
 	bool IsBlockCaretStyle() const noexcept;
-	bool IsCaretVisible() const noexcept;
+	bool IsCaretVisible(bool isMainSelection) const noexcept;
 	bool DrawCaretInsideSelection(bool inOverstrike, bool imeCaretBlockOverride) const noexcept;
-	CaretShape CaretShapeForMode(bool inOverstrike) const noexcept;
+	CaretShape CaretShapeForMode(bool inOverstrike, bool isMainSelection) const noexcept;
 
 private:
 	void AllocStyles(size_t sizeNew);
 	void CreateAndAddFont(const FontSpecification &fs);
 	FontRealised *Find(const FontSpecification &fs);
-	void FindMaxAscentDescent();
+	void FindMaxAscentDescent() noexcept;
 };
 
 }

@@ -1,7 +1,7 @@
 # Created by DepGen.py. To recreate, run DepGen.py.
 $(DIR_O)/HanjaDic.obj: \
 	HanjaDic.cxx \
-	../src/UniConversion.h \
+	WinTypes.h \
 	HanjaDic.h
 $(DIR_O)/PlatWin.obj: \
 	PlatWin.cxx \
@@ -12,6 +12,7 @@ $(DIR_O)/PlatWin.obj: \
 	../src/XPM.h \
 	../src/UniConversion.h \
 	../src/DBCS.h \
+	WinTypes.h \
 	PlatWin.h
 $(DIR_O)/ScintillaDLL.obj: \
 	ScintillaDLL.cxx \
@@ -57,6 +58,7 @@ $(DIR_O)/ScintillaWin.obj: \
 	../src/ElapsedPeriod.h \
 	../src/AutoComplete.h \
 	../src/ScintillaBase.h \
+	WinTypes.h \
 	PlatWin.h \
 	HanjaDic.h \
 	ScintillaWin.h
@@ -336,6 +338,7 @@ $(DIR_O)/PositionCache.obj: \
 	../src/Debugging.h \
 	../src/Geometry.h \
 	../src/Platform.h \
+	../src/CharacterType.h \
 	../src/CharacterCategoryMap.h \
 	../src/Position.h \
 	../src/UniqueString.h \

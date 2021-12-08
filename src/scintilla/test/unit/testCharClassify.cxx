@@ -30,7 +30,7 @@ protected:
 		for (int ch = 0; ch < 256; ch++) {
 			if (ch == '\r' || ch == '\n')
 				charClass[ch] = CharacterClass::newLine;
-			else if (ch < 0x20 || ch == ' ')
+			else if (ch < 0x20 || ch == ' ' || ch == '\x7f')
 				charClass[ch] = CharacterClass::space;
 			else if (ch >= 0x80 || isalnum(ch) || ch == '_')
 				charClass[ch] = CharacterClass::word;

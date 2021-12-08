@@ -20,6 +20,7 @@ TESTEDSRC=\
  ../../src/ContractionState.cxx \
  ../../src/Decoration.cxx \
  ../../src/Document.cxx \
+ ../../src/Geometry.cxx \
  ../../src/PerLine.cxx \
  ../../src/RESearch.cxx \
  ../../src/RunStyles.cxx \

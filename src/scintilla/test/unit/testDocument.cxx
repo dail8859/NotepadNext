@@ -332,7 +332,7 @@ TEST_CASE("Document") {
 		REQUIRE(location == 2);
 		location = doc.document.FindText(0, 2, finding932.c_str(), FindOption::None, &lengthFinding);
 		REQUIRE(location == -1);
-		// Can not test case mapping of double byte text as folder available here does not implement this 
+		// Can not test case mapping of double byte text as folder available here does not implement this
 	}
 
 	SECTION("GetCharacterAndWidth DBCS") {
@@ -342,7 +342,7 @@ TEST_CASE("Document") {
 		const Sci::Position length = doc.InsertString(0, "H\x84\xff\x84H", 5);
 		// This text is invalid in code page 932.
 		// A reasonable interpretation is as 4 items: 2 characters and 2 character fragments
-		// The last item is a 2-byte CYRILLIC CAPITAL LETTER ZE character 
+		// The last item is a 2-byte CYRILLIC CAPITAL LETTER ZE character
 		// H [84] [FF] ZE
 		REQUIRE(5 == length);
 		REQUIRE(5 == doc.Length());
@@ -484,5 +484,122 @@ TEST_CASE("Words") {
 		const DocPlus docEndSpace(" a c ", 0);
 		REQUIRE(!docEndSpace.document.IsWordAt(0, 2));
 		REQUIRE(!docEndSpace.document.IsWordAt(3, 5));
+	}
+}
+
+TEST_CASE("SafeSegment") {
+	SECTION("Short") {
+		const DocPlus doc("", 0);
+		// all encoding: break before or after last space
+		const std::string_view text = "12 ";
+		size_t length = doc.document.SafeSegment(text);
+		REQUIRE(length <= text.length());
+		REQUIRE(text[length - 1] == '2');
+		REQUIRE(text[length] == ' ');
+	}
+
+	SECTION("ASCII") {
+		const DocPlus doc("", 0);
+		// all encoding: break before or after last space
+		std::string_view text = "12 3 \t45";
+		size_t length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == ' ');
+		REQUIRE(text[length] == '\t');
+
+		// UTF-8 and ASCII: word and punctuation boundary in middle of text
+		text = "(IsBreakSpace(text[j]))";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == 'j');
+		REQUIRE(text[length] == ']');
+
+		// UTF-8 and ASCII: word and punctuation boundary near start of text
+		text = "(IsBreakSpace";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == '(');
+		REQUIRE(text[length] == 'I');
+
+		// UTF-8 and ASCII: word and punctuation boundary near end of text
+		text = "IsBreakSpace)";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == 'e');
+		REQUIRE(text[length] == ')');
+
+		// break before last character
+		text = "JapaneseJa";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == 'J');
+		REQUIRE(text[length] == 'a');
+	}
+
+	SECTION("UTF-8") {
+		const DocPlus doc("", CpUtf8);
+		// break before last character: no trail byte
+		std::string_view text = "JapaneseJa";
+		size_t length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == 'J');
+		REQUIRE(text[length] == 'a');
+
+		// break before last character: 1 trail byte
+		text = "Japanese\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e\xc2\xa9";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == '\x9e');
+		REQUIRE(text[length] == '\xc2');
+
+		// break before last character: 2 trail bytes
+		text = "Japanese\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == '\xac');
+		REQUIRE(text[length] == '\xe8');
+
+		// break before last character: 3 trail bytes
+		text = "Japanese\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e\xf0\x9f\x98\x8a";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == '\x9e');
+		REQUIRE(text[length] == '\xf0');
+	}
+
+	SECTION("DBCS Shift-JIS") {
+		const DocPlus doc("", 932);
+		// word and punctuation boundary in middle of text: single byte
+		std::string_view text = "(IsBreakSpace(text[j]))";
+		size_t length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == 'j');
+		REQUIRE(text[length] == ']');
+
+		// word and punctuation boundary in middle of text: double byte
+		text = "(IsBreakSpace(text[\x8c\xea]))";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == '\xea');
+		REQUIRE(text[length] == ']');
+
+		// word and punctuation boundary near start of text
+		text = "(IsBreakSpace";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == '(');
+		REQUIRE(text[length] == 'I');
+
+		// word and punctuation boundary near end of text: single byte
+		text = "IsBreakSpace)";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == 'e');
+		REQUIRE(text[length] == ')');
+
+		// word and punctuation boundary near end of text: double byte
+		text = "IsBreakSpace\x8c\xea)";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == '\xea');
+		REQUIRE(text[length] == ')');
+
+		// break before last character: single byte
+		text = "JapaneseJa";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == 'J');
+		REQUIRE(text[length] == 'a');
+
+		// break before last character: double byte
+		text = "Japanese\x93\xfa\x96\x7b\x8c\xea";
+		length = doc.document.SafeSegment(text);
+		REQUIRE(text[length - 1] == '\x7b');
+		REQUIRE(text[length] == '\x8c');
 	}
 }

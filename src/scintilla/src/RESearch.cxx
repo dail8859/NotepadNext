@@ -260,10 +260,6 @@ RESearch::RESearch(CharClassify *charClassTable) {
 	Clear();
 }
 
-RESearch::~RESearch() {
-	Clear();
-}
-
 void RESearch::Clear() noexcept {
 	for (int i = 0; i < MAXTAG; i++) {
 		pat[i].clear();

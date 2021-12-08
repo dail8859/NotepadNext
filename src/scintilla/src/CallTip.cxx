@@ -313,7 +313,7 @@ PRectangle CallTip::CallTipStart(Sci::Position pos, Point pt, int textHeight, co
 	}
 }
 
-void CallTip::CallTipCancel() {
+void CallTip::CallTipCancel() noexcept {
 	inCallTipMode = false;
 	if (wCallTip.Created()) {
 		wCallTip.Destroy();
@@ -345,7 +345,7 @@ void CallTip::SetPosition(bool aboveText) noexcept {
 }
 
 bool CallTip::UseStyleCallTip() const noexcept {
-	return useStyleCallTip; 
+	return useStyleCallTip;
 }
 
 // It might be better to have two access functions for this and to use

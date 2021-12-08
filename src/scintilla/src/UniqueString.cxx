@@ -28,11 +28,9 @@ UniqueString UniqueStringCopy(const char *text) {
 
 // A set of strings that always returns the same pointer for each string.
 
-UniqueStringSet::UniqueStringSet() noexcept = default;
+UniqueStringSet::UniqueStringSet() = default;
 
-UniqueStringSet::~UniqueStringSet() {
-	strings.clear();
-}
+UniqueStringSet::~UniqueStringSet() noexcept = default;
 
 void UniqueStringSet::Clear() noexcept {
 	strings.clear();

@@ -7,6 +7,7 @@
 
 #include <cstddef>
 #include <cstdlib>
+#include <cstdint>
 #include <cassert>
 #include <cstring>
 
@@ -550,13 +551,8 @@ namespace Scintilla::Internal {
 class LexState : public LexInterface {
 public:
 	explicit LexState(Document *pdoc_) noexcept;
-	void SetInstance(ILexer5 *instance_);
-	// Deleted so LexState objects can not be copied.
-	LexState(const LexState &) = delete;
-	LexState(LexState &&) = delete;
-	LexState &operator=(const LexState &) = delete;
-	LexState &operator=(LexState &&) = delete;
-	~LexState() override;
+
+	// LexInterface deleted the standard operators and defined the virtual destructor so don't need to here.
 
 	const char *DescribeWordListSets();
 	void SetWordList(int n, const char *wl);
@@ -590,30 +586,6 @@ public:
 }
 
 LexState::LexState(Document *pdoc_) noexcept : LexInterface(pdoc_) {
-}
-
-LexState::~LexState() {
-	if (instance) {
-		try {
-			instance->Release();
-		} catch (...) {
-			// ILexer5::Release must not throw, ignore if it does.
-		}
-		instance = nullptr;
-	}
-}
-
-void LexState::SetInstance(ILexer5 *instance_) {
-	if (instance) {
-		try {
-			instance->Release();
-		} catch (...) {
-			// ILexer5::Release must not throw, ignore if it does.
-		}
-		instance = nullptr;
-	}
-	instance = instance_;
-	pdoc->LexerChanged();
 }
 
 LexState *ScintillaBase::DocumentLexState() {

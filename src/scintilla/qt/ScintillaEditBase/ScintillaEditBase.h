@@ -161,7 +161,7 @@ private:
 	static bool IsHangul(const QChar qchar);
 	void MoveImeCarets(int offset);
 	void DrawImeIndicator(int indicator, int len);
-	Scintilla::KeyMod ModifiersOfKeyboard() const;
+	static Scintilla::KeyMod ModifiersOfKeyboard();
 };
 
 #endif /* SCINTILLAEDITBASE_H */

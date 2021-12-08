@@ -102,7 +102,7 @@ void LineMarkers::Init() {
 
 void LineMarkers::InsertLine(Sci::Line line) {
 	if (markers.Length()) {
-		markers.Insert(line, 0);
+		markers.Insert(line, nullptr);
 	}
 }
 

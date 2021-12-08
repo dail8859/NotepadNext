@@ -55,6 +55,7 @@
 #include "UniConversion.h"
 #include "DBCS.h"
 
+#include "WinTypes.h"
 #include "PlatWin.h"
 
 #ifndef SPI_GETFONTSMOOTHINGCONTRAST
@@ -865,18 +866,6 @@ void DIBSection::SetSymmetric(LONG x, LONG y, DWORD value) noexcept {
 	SetPixel(xSymmetric, ySymmetric, value);
 }
 
-constexpr unsigned int Proportional(unsigned char a, unsigned char b, XYPOSITION t) noexcept {
-	return static_cast<unsigned int>(a + t * (b - a));
-}
-
-ColourRGBA Proportional(ColourRGBA a, ColourRGBA b, XYPOSITION t) noexcept {
-	return ColourRGBA(
-		Proportional(a.GetRed(), b.GetRed(), t),
-		Proportional(a.GetGreen(), b.GetGreen(), t),
-		Proportional(a.GetBlue(), b.GetBlue(), t),
-		Proportional(a.GetAlpha(), b.GetAlpha(), t));
-}
-
 ColourRGBA GradientValue(const std::vector<ColourStop> &stops, XYPOSITION proportion) noexcept {
 	for (size_t stop = 0; stop < stops.size() - 1; stop++) {
 		// Loop through each pair of stops
@@ -885,7 +874,7 @@ ColourRGBA GradientValue(const std::vector<ColourStop> &stops, XYPOSITION propor
 		if ((proportion >= positionStart) && (proportion <= positionEnd)) {
 			const XYPOSITION proportionInPair = (proportion - positionStart) /
 				(positionEnd - positionStart);
-			return Proportional(stops[stop].colour, stops[stop + 1].colour, proportionInPair);
+			return stops[stop].colour.MixedWith(stops[stop + 1].colour, proportionInPair);
 		}
 	}
 	// Loop should always find a value
@@ -1916,7 +1905,7 @@ void SurfaceD2D::Copy(PRectangle rc, Point from, Surface &surfaceSource) {
 	const HRESULT hr = surfOther.GetBitmap(&pBitmap);
 	if (SUCCEEDED(hr) && pBitmap) {
 		const D2D1_RECT_F rcDestination = RectangleFromPRectangle(rc);
-		D2D1_RECT_F rcSource = RectangleFromPRectangle(PRectangle(
+		const D2D1_RECT_F rcSource = RectangleFromPRectangle(PRectangle(
 			from.x, from.y, from.x + rc.Width(), from.y + rc.Height()));
 		pRenderTarget->DrawBitmap(pBitmap, rcDestination, 1.0f,
 			D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, rcSource);
@@ -2347,7 +2336,7 @@ void SurfaceD2D::DrawTextCommon(PRectangle rc, const Font *font_, XYPOSITION yba
 				static_cast<FLOAT>(rc.Height()),
 				&pTextLayout);
 		if (SUCCEEDED(hr)) {
-			D2D1_POINT_2F origin = DPointFromPoint(Point(rc.left, ybase-yAscent));
+			const D2D1_POINT_2F origin = DPointFromPoint(Point(rc.left, ybase-yAscent));
 			pRenderTarget->DrawTextLayout(origin, pTextLayout, pBrush, d2dDrawTextOptions);
 			ReleaseUnknown(pTextLayout);
 		}
@@ -2688,7 +2677,7 @@ void Window::SetPosition(PRectangle rc) {
 
 namespace {
 
-static RECT RectFromMonitor(HMONITOR hMonitor) noexcept {
+RECT RectFromMonitor(HMONITOR hMonitor) noexcept {
 	MONITORINFO mi = {};
 	mi.cbSize = sizeof(mi);
 	if (GetMonitorInfo(hMonitor, &mi)) {
@@ -3586,9 +3575,8 @@ LRESULT PASCAL ListBoxX::ControlWndProc(HWND hWnd, UINT iMessage, WPARAM wParam,
 				// We must take control of selection to prevent the ListBox activating
 				// the popup
 				const LRESULT lResult = ::SendMessage(hWnd, LB_ITEMFROMPOINT, 0, lParam);
-				const int item = LOWORD(lResult);
-				if (HIWORD(lResult) == 0 && item >= 0) {
-					ListBox_SetCurSel(hWnd, item);
+				if (HIWORD(lResult) == 0) {
+					ListBox_SetCurSel(hWnd, LOWORD(lResult));
 					if (lbx) {
 						lbx->OnSelChange();
 					}
@@ -3726,13 +3714,7 @@ LRESULT ListBoxX::WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam
 		wheelDelta -= GET_WHEEL_DELTA_WPARAM(wParam);
 		if (std::abs(wheelDelta) >= WHEEL_DELTA) {
 			const int nRows = GetVisibleRows();
-			int linesToScroll = 1;
-			if (nRows > 1) {
-				linesToScroll = nRows - 1;
-			}
-			if (linesToScroll > 3) {
-				linesToScroll = 3;
-			}
+			int linesToScroll = std::clamp(nRows - 1, 1, 3);
 			linesToScroll *= (wheelDelta / WHEEL_DELTA);
 			int top = ListBox_GetTopIndex(lb) + linesToScroll;
 			if (top < 0) {

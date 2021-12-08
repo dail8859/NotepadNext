@@ -188,6 +188,10 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	Window wMain;	///< The Scintilla parent window
 	Window wMargin;	///< May be separate when using a scroll view for wMain
 
+	// Optimization that avoids superfluous invalidations
+	bool redrawPendingText = false;
+	bool redrawPendingMargin = false;
+
 	/** Style resources may be expensive to allocate so are cached between uses.
 	 * When a style attribute is changed, this cache is flushed. */
 	bool stylesValid;
@@ -581,7 +585,6 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	bool PositionIsHotspot(Sci::Position position) const;
 	bool PointIsHotspot(Point pt);
 	void SetHotSpotRange(const Point *pt);
-	Range GetHotSpotRange() const noexcept override;
 	void SetHoverIndicatorPosition(Sci::Position position);
 	void SetHoverIndicatorPoint(Point pt);
 
@@ -637,7 +640,7 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 		return Point(static_cast<XYPOSITION>(wParam) - vs.ExternalMarginWidth(), static_cast<XYPOSITION>(lParam));
 	}
 
-	constexpr std::optional<FoldLevel> OptionalFoldLevel(Scintilla::sptr_t lParam) {
+	static constexpr std::optional<FoldLevel> OptionalFoldLevel(Scintilla::sptr_t lParam) {
 		if (lParam >= 0) {
 			return static_cast<FoldLevel>(lParam);
 		}
