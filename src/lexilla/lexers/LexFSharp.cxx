@@ -13,6 +13,7 @@
 #include <string>
 #include <string_view>
 #include <map>
+#include <functional>
 
 #include "ILexer.h"
 #include "Scintilla.h"
@@ -108,6 +109,9 @@ struct FSharpString {
 	}
 	constexpr bool HasLength() const {
 		return startPos > ZERO_LENGTH;
+	}
+	constexpr bool CanInterpolate() const {
+		return startChar == '$';
 	}
 };
 
@@ -229,12 +233,20 @@ inline bool MatchStringStart(const StyleContext &cxt) {
 	return (cxt.ch == '"' || cxt.Match('@', '"') || cxt.Match('$', '"') || cxt.Match('`', '`'));
 }
 
+inline bool FollowsEscapedBackslash(StyleContext &cxt) {
+	int count = 0;
+	for (Sci_Position offset = 1; cxt.GetRelative(-offset) == '\\'; offset++)
+		count++;
+	return count % 2 != 0;
+}
+
 inline bool MatchStringEnd(StyleContext &cxt, const FSharpString &fsStr) {
 	return (fsStr.HasLength() &&
 		// end of quoted identifier?
 		((cxt.ch == '`' && cxt.chPrev == '`') ||
-		// end of triple-quoted-string?
-		(fsStr.startChar == '"' && cxt.MatchIgnoreCase("\"\"\"")) ||
+		// end of literal or interpolated triple-quoted string?
+		 ((fsStr.startChar == '"' || (fsStr.CanInterpolate() && cxt.chPrev != '$')) &&
+		  cxt.MatchIgnoreCase("\"\"\"")) ||
 		// end of verbatim string?
 		(fsStr.startChar == '@' &&
 			// embedded quotes must be in pairs
@@ -245,7 +257,7 @@ inline bool MatchStringEnd(StyleContext &cxt, const FSharpString &fsStr) {
 				// pair of quotes at end of string?
 				(cxt.GetRelative(-2) == '"' && cxt.GetRelative(-3) != '@'))))))) ||
 		(!fsStr.HasLength() && cxt.ch == '"' &&
-			(cxt.chPrev != '\\' ||
+			((cxt.chPrev != '\\' || (cxt.GetRelative(-2) == '\\' && !FollowsEscapedBackslash(cxt))) ||
 			// treat backslashes as char literals in verbatim strings
 			(fsStr.startChar == '@' && cxt.chPrev == '\\')));
 }
@@ -256,10 +268,13 @@ inline bool MatchCharacterStart(StyleContext &cxt) {
 }
 
 inline bool CanEmbedQuotes(StyleContext &cxt) {
-	// allow unescaped double quotes inside verbatim and triple-quoted strings, and quoted identifiers:
+	// allow unescaped double quotes inside literal or interpolated triple-quoted strings, verbatim strings,
+	// and quoted identifiers:
 	// - https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/strings
+	// - https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/interpolated-strings#syntax
 	// - https://fsharp.org/specs/language-spec/4.1/FSharpSpec-4.1-latest.pdf#page=25&zoom=auto,-98,600
-	return cxt.MatchIgnoreCase("\"\"\"") || cxt.Match('@', '"') || cxt.Match('`', '`');
+	return cxt.MatchIgnoreCase("$\"\"\"") || cxt.MatchIgnoreCase("\"\"\"") || cxt.Match('@', '"') ||
+	       cxt.Match('`', '`');
 }
 
 inline bool IsNumber(StyleContext &cxt, const int base = 10) {
@@ -270,6 +285,11 @@ inline bool IsNumber(StyleContext &cxt, const int base = 10) {
 inline bool IsFloat(const StyleContext &cxt) {
 	return (cxt.ch == '.' && IsADigit(cxt.chPrev)) ||
 		((cxt.ch == '+' || cxt.ch == '-' ) && IsADigit(cxt.chNext));
+}
+
+inline bool IsLineEnd(StyleContext &cxt, const Sci_Position offset) {
+	const int ch = cxt.GetRelative(offset, '\n');
+	return (ch == '\r' || ch == '\n');
 }
 
 class LexerFSharp : public DefaultLexer {
@@ -488,9 +508,21 @@ void SCI_METHOD LexerFSharp::Lex(Sci_PositionU start, Sci_Position length, int i
 							break;
 						}
 					}
-				} else if (sc.ch == '%' && !(fsStr.startChar == '`' || fsStr.startChar == '$') &&
+				} else if (sc.ch == '%' &&
+					   !(fsStr.startChar == '`' || sc.MatchIgnoreCase("%  ") || sc.MatchIgnoreCase("% \"")) &&
 					   (setFormatSpecs.Contains(sc.chNext) || setFormatFlags.Contains(sc.chNext))) {
-					state = SCE_FSHARP_FORMAT_SPEC;
+					if (fsStr.CanInterpolate() && sc.chNext != '%') {
+						for (Sci_Position i = 2; i < length && !IsLineEnd(sc, i); i++) {
+							if (sc.GetRelative(i) == '{') {
+								state = setFormatSpecs.Contains(sc.GetRelative(i - 1))
+									    ? SCE_FSHARP_FORMAT_SPEC
+									    : state;
+								break;
+							}
+						}
+					} else {
+						state = SCE_FSHARP_FORMAT_SPEC;
+					}
 				}
 				break;
 			case SCE_FSHARP_IDENTIFIER:

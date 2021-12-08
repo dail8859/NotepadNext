@@ -14,6 +14,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <functional>
 
 #include "ILexer.h"
 #include "Scintilla.h"
@@ -70,7 +71,7 @@ bool IsPyComment(Accessor &styler, Sci_Position pos, Sci_Position len) {
 	return len > 0 && styler[pos] == '#';
 }
 
-bool IsPyStringTypeChar(int ch, literalsAllowed allowed) noexcept {
+constexpr bool IsPyStringTypeChar(int ch, literalsAllowed allowed) noexcept {
 	return
 		((allowed & litB) && (ch == 'b' || ch == 'B')) ||
 		((allowed & litU) && (ch == 'u' || ch == 'U')) ||
@@ -92,17 +93,17 @@ bool IsPyStringStart(int ch, int chNext, int chNext2, literalsAllowed allowed) n
 	return false;
 }
 
-bool IsPyFStringState(int st) noexcept {
+constexpr bool IsPyFStringState(int st) noexcept {
 	return ((st == SCE_P_FCHARACTER) || (st == SCE_P_FSTRING) ||
 		(st == SCE_P_FTRIPLE) || (st == SCE_P_FTRIPLEDOUBLE));
 }
 
-bool IsPySingleQuoteStringState(int st) noexcept {
+constexpr bool IsPySingleQuoteStringState(int st) noexcept {
 	return ((st == SCE_P_CHARACTER) || (st == SCE_P_STRING) ||
 		(st == SCE_P_FCHARACTER) || (st == SCE_P_FSTRING));
 }
 
-bool IsPyTripleQuoteStringState(int st) noexcept {
+constexpr bool IsPyTripleQuoteStringState(int st) noexcept {
 	return ((st == SCE_P_TRIPLE) || (st == SCE_P_TRIPLEDOUBLE) ||
 		(st == SCE_P_FTRIPLE) || (st == SCE_P_FTRIPLEDOUBLE));
 }
@@ -231,7 +232,7 @@ struct OptionsPython {
 	bool foldCompact;
 	bool unicodeIdentifiers;
 
-	OptionsPython() {
+	OptionsPython() noexcept {
 		whingeLevel = 0;
 		base2or8Literals = true;
 		stringsU = true;
@@ -435,6 +436,8 @@ Sci_Position SCI_METHOD LexerPython::WordListSet(int n, const char *wl) {
 	case 1:
 		wordListN = &keywords2;
 		break;
+	default:
+		break;
 	}
 	Sci_Position firstModification = -1;
 	if (wordListN) {
@@ -634,7 +637,7 @@ void SCI_METHOD LexerPython::Lex(Sci_PositionU startPos, Sci_Position length, in
 						style = SCE_P_WORD2;
 					}
 				} else {
-					int subStyle = classifierIdentifiers.ValueFor(s);
+					const int subStyle = classifierIdentifiers.ValueFor(s);
 					if (subStyle >= 0) {
 						style = subStyle;
 					}
@@ -894,8 +897,8 @@ void SCI_METHOD LexerPython::Fold(Sci_PositionU startPos, Sci_Position length, i
 			const int style = styler.StyleAt(lookAtPos) & 31;
 			quote = options.foldQuotes && IsPyTripleQuoteStringState(style);
 		}
-		const int quote_start = (quote && !prevQuote);
-		const int quote_continue = (quote && prevQuote);
+		const bool quote_start = (quote && !prevQuote);
+		const bool quote_continue = (quote && prevQuote);
 		if (!quote || !prevQuote)
 			indentCurrentLevel = indentCurrent & SC_FOLDLEVELNUMBERMASK;
 		if (quote)
@@ -920,8 +923,7 @@ void SCI_METHOD LexerPython::Fold(Sci_PositionU startPos, Sci_Position length, i
 		int minCommentLevel = indentCurrentLevel;
 		while (!quote &&
 				(lineNext < docLines) &&
-				((indentNext & SC_FOLDLEVELWHITEFLAG) ||
-				 (lineNext <= docLines && IsCommentLine(lineNext, styler)))) {
+				((indentNext & SC_FOLDLEVELWHITEFLAG) || (IsCommentLine(lineNext, styler)))) {
 
 			if (IsCommentLine(lineNext, styler) && indentNext < minCommentLevel) {
 				minCommentLevel = indentNext;

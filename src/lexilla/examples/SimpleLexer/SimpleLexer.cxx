@@ -17,7 +17,7 @@
 // Linux/g++
 // g++ -fPIC -shared --std=c++17 -I ../../../scintilla/include -I ../../include -I ../../lexlib SimpleLexer.cxx ../../lexlib/*.cxx -o SimpleLexer.so
 
-/* It can be demonstrated in SciTE like this, substituting the actual shared library location as lexilla.path: 
+/* It can be demonstrated in SciTE like this, substituting the actual shared library location as lexilla.path:
 lexilla.path=.;C:\u\hg\lexilla\examples\SimpleLexer\SimpleLexer.dll
 lexer.*.xx=simple
 style.simple.1=fore:#FF0000

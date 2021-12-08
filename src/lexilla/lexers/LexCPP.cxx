@@ -17,6 +17,7 @@
 #include <map>
 #include <algorithm>
 #include <iterator>
+#include <functional>
 
 #include "ILexer.h"
 #include "Scintilla.h"

@@ -565,9 +565,160 @@
 	<td>riQQ</td>
 	<td>YX Hao</td>
 	<td>Bertrand Lacoste</td>
+      </tr><tr>
+	<td>Ivan Ustûžanin</td>
+	<td>Rainer Kottenhoff</td>
+	<td>feitoi</td>
+	<td>vsl7</td>
+      </tr><tr>
+	<td>Michael Heath</td>
+	<td>Antonio Cebrián</td>
+	<td>David Yu Yang</td>
     </tr>
     </table>
     <h2>Releases</h2>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla514.zip">Release 5.1.4</a>
+    </h3>
+    <ul>
+	<li>
+	Released 7 December 2021.
+	</li>
+	<li>
+	Add AsciiDoc lexer.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/39">Pull request #39</a>.
+	</li>
+	<li>
+	Add GDScript lexer.
+	Some behaviour and lexical states may change before this lexer is stable.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/41">Pull request #41</a>.
+	</li>
+	<li>
+	Fix strings ending in escaped '\' in F#.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/38">Issue #38</a>,
+	</li>
+	<li>
+	Better handling of bad terminators and folding for X12.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1420/">Feature #1420</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla513.zip">Release 5.1.3</a>
+    </h3>
+    <ul>
+	<li>
+	Released 8 November 2021.
+	</li>
+	<li>
+	Fix parsing of 128-bit integer literals in Rust.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/33">Issue #33</a>.
+	</li>
+	<li>
+	Fix different styles between \r and \n at end of line comments for Rust.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/34">Issue #34</a>.
+	</li>
+	<li>
+	For Rust, don't go past end when file ends with unterminated block comment.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/35">Issue #35</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla512.zip">Release 5.1.2</a>
+    </h3>
+    <ul>
+	<li>
+	Released 23 September 2021.
+	</li>
+	<li>
+	Implement conditional group rules in CSS.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/25">Issue #25</a>,
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/28">Pull request #28</a>.
+	</li>
+	<li>
+	Allow F# triple-quoted strings to interpolate string literals.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/21">Issue #21</a>.
+	</li>
+	<li>
+	Highlight F# printf specifiers in type-checked interpolated strings.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/24">Issue #24</a>.
+	</li>
+	<li>
+	Fix styling for Inno Setup scripts handling unterminated strings,
+	message sections, and avoid terminating comments between CR and LF.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/29">Pull request #29</a>.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1415/">Feature #1415</a>.
+	</li>
+	<li>
+	Fix Markdown hang when document ends with "`", "*", "_",  or similar.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/23">Issue #23</a>.
+	</li>
+	<li>
+	Treat '.' as an operator instead of part of a word for PHP.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/22">Issue #22</a>.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2225/">Bug #2225</a>.
+	</li>
+	<li>
+	Check PHP numeric literals, showing invalid values with default style instead of numeric.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/20">Issue #20</a>.
+	</li>
+	<li>
+	For PHP, recognize start of comment after numeric literal.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/20">Issue #20</a>.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2143/">Bug #2143</a>.
+	</li>
+	<li>
+	For PHP, recognize PHP code within JavaScript strings.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/27">Pull request #27</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla511.zip">Release 5.1.1</a>
+    </h3>
+    <ul>
+	<li>
+	Released 26 July 2021.
+	</li>
+	<li>
+	On 32-bit Win32 using Visual C++ projects, stop exported functions ending with @n causing failures with GetProcAddress.
+	</li>
+	<li>
+	Fixed crash when calling TagsOfStyle on C++ lexer after allocating substyles.
+	</li>
+	<li>
+	Fixed folding for Julia which could be inconsistent depending on range folded.
+	Added SCE_JULIA_KEYWORD4 and SCE_JULIA_TYPEOPERATOR lexical styles and
+	changed keyword set 4 from "Raw string literals" to "Built in functions".
+	Property lexer.julia.string.interpolation removed.
+	Updated set of characters for identifiers.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/13">Pull request #13</a>.
+	</li>
+	<li>
+	Fixed Markdown emphasis spans to only be recognized when closed in same paragraph.
+	<a href="https://sourceforge.net/p/scintilla/bugs/1216/">Bug #1216</a>.
+	</li>
+	<li>
+	Fixed Markdown code block to terminate when end marker is indented.
+	Display all of end marker in code block style.
+	Only recognize inline code when closed in same paragraph.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2247/">Bug #2247</a>.
+	</li>
+	<li>
+	Fixed Matlab to not allow escape sequences in double-quoted strings.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/18">Issue #18</a>.
+	</li>
+	<li>
+	Support flexible heredoc and nowdoc syntax for PHP.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/19">Issue #19</a>.
+	</li>
+	<li>
+	Enabled '_' digit separator in numbers for PHP.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/19">Issue #19</a>.
+	</li>
+	<li>
+	Stop styling attributes as comments for PHP.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/19">Issue #19</a>.
+	</li>
+    </ul>
     <h3>
        <a href="https://www.scintilla.org/lexilla510.zip">Release 5.1.0</a>
     </h3>
