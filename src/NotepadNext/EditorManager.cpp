@@ -20,6 +20,7 @@
 #include "EditorManager.h"
 #include "ScintillaNext.h"
 #include "Scintilla.h"
+#include "ScintillaTypes.h"
 
 // Editor decorators
 #include "BraceMatch.h"
@@ -126,18 +127,31 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setTabWidth(4);
     editor->setBackSpaceUnIndents(true);
 
-    editor->assignCmdKey(SCK_RETURN, SCI_NEWLINE);
-
-    editor->setCaretLineBack(0xFFE8E8);
     editor->setCaretLineVisible(true);
     editor->setCaretLineVisibleAlways(true);
-    editor->setCaretFore(0xFF0080);
     editor->setCaretWidth(2);
-    editor->setSelBack(true, 0xC0C0C0);
 
     editor->setEdgeColour(0x80FFFF);
 
-    editor->setWhitespaceFore(true, 0x6AB5FF);
+    // https://www.scintilla.org/ScintillaDoc.html#ElementColours
+    // SC_ELEMENT_SELECTION_TEXT
+    // SC_ELEMENT_SELECTION_BACK
+    // SC_ELEMENT_SELECTION_ADDITIONAL_TEXT
+    // SC_ELEMENT_SELECTION_ADDITIONAL_BACK
+    // SC_ELEMENT_SELECTION_SECONDARY_TEXT
+    // SC_ELEMENT_SELECTION_SECONDARY_BACK
+    // SC_ELEMENT_SELECTION_INACTIVE_TEXT
+    // SC_ELEMENT_SELECTION_INACTIVE_BACK
+    // SC_ELEMENT_CARET
+    // SC_ELEMENT_CARET_ADDITIONAL
+    editor->setElementColour(SC_ELEMENT_CARET_LINE_BACK, 0xFFFFE8E8);
+    editor->setElementColour(SC_ELEMENT_WHITE_SPACE, 0xFF6AB5FF);
+    // SC_ELEMENT_WHITE_SPACE_BACK
+    // SC_ELEMENT_HOT_SPOT_ACTIVE
+    // SC_ELEMENT_HOT_SPOT_ACTIVE_BACK
+    // SC_ELEMENT_FOLD_LINE
+    // SC_ELEMENT_HIDDEN_LINE
+
     editor->setWhitespaceSize(2);
 
     editor->setFoldMarginColour(true, 0xFFFFFF);
@@ -148,36 +162,6 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setAutomaticFold(SC_AUTOMATICFOLD_SHOW | SC_AUTOMATICFOLD_CLICK | SC_AUTOMATICFOLD_CHANGE);
     editor->markerEnableHighlight(true);
 
-    // Indicators
-    // Find Mark Style
-    // editor->indicSetFore(31, 0x0000FF);
-    // Smart HighLighting
-    // editor->indicSetFore(29, 0x00FF00);
-    // Incremental highlight all
-    // editor->indicSetFore(28, 0xFF8000);
-    // Tags match highlighting
-    // editor->indicSetFore(27, 0xFF0080);
-    // Tags attribute
-    // editor->indicSetFore(26, 0x00FFFF);
-
-    /*
-    -- Mark Style 1
-    editor.IndicFore[25] = rgb(0x00FFFF)
-    -- Mark Style 2
-    editor.IndicFore[24] = rgb(0xFF8000)
-    -- Mark Style 3
-    editor.IndicFore[23] = rgb(0xFFFF00)
-    -- Mark Style 4
-    editor.IndicFore[22] = rgb(0x8000FF)
-    -- Mark Style 5
-    editor.IndicFore[21] = rgb(0x008000)
-
-    SetFolderMarkers("box")
-    */
-
-    // -- reset everything
-    editor->clearDocumentStyle();
-    editor->styleResetDefault();
 
     editor->styleSetFore(STYLE_DEFAULT, 0x000000);
     editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
