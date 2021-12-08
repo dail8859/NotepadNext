@@ -21,7 +21,7 @@
 {8}(* you need .NET 5.0 to compile this:
   https://docs.microsoft.com/en-us/dotnet/fsharp/whats-new/fsharp-50#string-interpolation
 *){0}
-{1}let{0} {6}interpolated{0} {12}={0} {15}$"I think {3.0 + 0.14} is close to {System.Math.PI}!"{0}
+{1}let{0} {6}interpolated{0} {12}={0} {15}$"""C:\{System.DateTime.Now.ToString("yyyy-MM-dd")}\"""{0} {12}+{0} {15}$"{System.Random().Next(System.Int32.MaxValue)}.log"{0}
 
 {1}let{0} {7}``a byte literal``{0} {12}={0} {14}'\209'B{0}
 
@@ -43,3 +43,11 @@
 {12}|{0} {3}Some{0} {6}num{0} {12}->{0} {2}sprintf{0} {15}"{19}%.2f{15} > {19}%u{15}"{0} {6}num{0} {7}``a byte literal``{0}
 {12}|{0} {3}None{0} {12}->{0} {2}sprintf{0} {15}"{19}%A{15}"{0} {15}"Have a byte string!"B{0}
 {12}|>{0} {2}printfn{0} {15}"{19}%s{15}"{0}
+
+{9}// GitHub Issue #38{0}
+{1}let{0} {6}unescapeWinPath{0} {12}({6}path{12}:{0} {3}string{12}){0} {12}={0}
+    {6}path{0}.{6}Replace{12}({15}"\\\\"{12},{0} {15}"\\"{12}){0}.{6}Replace{12}({15}"\""{12},{0} {15}""{12}){0}
+
+{6}unescapeWinPath{0} {15}"\\\"Program Files (x86)\\Windows NT\\Accessories\\\""{0}
+{12}|>{0} {3}System{0}.{3}IO{0}.{6}Directory{0}.{6}GetFiles{0}
+{12}|>{0} {2}printfn{0} {15}"{19}%A{15}"{0}

@@ -21,7 +21,7 @@
  2 400 401 + (* you need .NET 5.0 to compile this:
  0 401 401 |   https://docs.microsoft.com/en-us/dotnet/fsharp/whats-new/fsharp-50#string-interpolation
  0 401 400 | *)
- 0 400 400   let interpolated = $"I think {3.0 + 0.14} is close to {System.Math.PI}!"
+ 0 400 400   let interpolated = $"""C:\{System.DateTime.Now.ToString("yyyy-MM-dd")}\""" + $"{System.Random().Next(System.Int32.MaxValue)}.log"
  1 400 400   
  0 400 400   let ``a byte literal`` = '\209'B
  1 400 400   
@@ -43,4 +43,12 @@
  0 400 400   | Some num -> sprintf "%.2f > %u" num ``a byte literal``
  0 400 400   | None -> sprintf "%A" "Have a byte string!"B
  0 400 400   |> printfn "%s"
+ 1 400 400   
+ 0 400 400   // GitHub Issue #38
+ 0 400 400   let unescapeWinPath (path: string) =
+ 0 400 400       path.Replace("\\\\", "\\").Replace("\"", "")
+ 1 400 400   
+ 0 400 400   unescapeWinPath "\\\"Program Files (x86)\\Windows NT\\Accessories\\\""
+ 0 400 400   |> System.IO.Directory.GetFiles
+ 0 400 400   |> printfn "%A"
  1 400 400   

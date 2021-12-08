@@ -19,6 +19,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <functional>
 
 #include "ILexer.h"
 #include "Scintilla.h"

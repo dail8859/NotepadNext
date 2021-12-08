@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		283639BC268FD4EA009D58A1 /* LexAccessor.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 283639BB268FD4EA009D58A1 /* LexAccessor.cxx */; };
 		28BA72AB24E34D5B00272C2D /* LexerBase.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 28BA728F24E34D5A00272C2D /* LexerBase.cxx */; };
 		28BA72AC24E34D5B00272C2D /* LexAccessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 28BA729024E34D5A00272C2D /* LexAccessor.h */; };
 		28BA72AD24E34D5B00272C2D /* DefaultLexer.h in Headers */ = {isa = PBXBuildFile; fileRef = 28BA729124E34D5A00272C2D /* DefaultLexer.h */; };
@@ -151,12 +152,15 @@
 		28BA73AA24E34D9700272C2D /* LexRust.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 28BA733824E34D9700272C2D /* LexRust.cxx */; };
 		28BA73AD24E34DBC00272C2D /* Lexilla.h in Headers */ = {isa = PBXBuildFile; fileRef = 28BA73AB24E34DBC00272C2D /* Lexilla.h */; };
 		28BA73AE24E34DBC00272C2D /* Lexilla.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 28BA73AC24E34DBC00272C2D /* Lexilla.cxx */; };
-		B32D4A2A9CEC222A5140E99F /* LexFSharp.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F8E54626B22BD9493090F40B /* LexFSharp.cxx */; };
 		70BF497C8D265026B77C97DA /* LexJulia.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 315E4E969868C52C125686B2 /* LexJulia.cxx */; };
+		B32D4A2A9CEC222A5140E99F /* LexFSharp.cxx in Sources */ = {isa = PBXBuildFile; fileRef = F8E54626B22BD9493090F40B /* LexFSharp.cxx */; };
+		510D44AFB91EE873E86ABDD4 /* LexAsciidoc.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 3AF14420BFC43876F16C5995 /* LexAsciidoc.cxx */; };
+		00D544CC992062D2E3CD4BF6 /* LexGDScript.cxx in Sources */ = {isa = PBXBuildFile; fileRef = A383409E9A994F461550FEC1 /* LexGDScript.cxx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		280262A5246DF655000DF3B8 /* liblexilla.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = liblexilla.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		283639BB268FD4EA009D58A1 /* LexAccessor.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexAccessor.cxx; path = ../../lexlib/LexAccessor.cxx; sourceTree = "<group>"; };
 		28BA728F24E34D5A00272C2D /* LexerBase.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexerBase.cxx; path = ../../lexlib/LexerBase.cxx; sourceTree = "<group>"; };
 		28BA729024E34D5A00272C2D /* LexAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LexAccessor.h; path = ../../lexlib/LexAccessor.h; sourceTree = "<group>"; };
 		28BA729124E34D5A00272C2D /* DefaultLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DefaultLexer.h; path = ../../lexlib/DefaultLexer.h; sourceTree = "<group>"; };
@@ -299,11 +303,13 @@
 		28BA733624E34D9700272C2D /* LexNimrod.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexNimrod.cxx; path = ../../lexers/LexNimrod.cxx; sourceTree = "<group>"; };
 		28BA733724E34D9700272C2D /* LexPerl.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexPerl.cxx; path = ../../lexers/LexPerl.cxx; sourceTree = "<group>"; };
 		28BA733824E34D9700272C2D /* LexRust.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexRust.cxx; path = ../../lexers/LexRust.cxx; sourceTree = "<group>"; };
-		28BA73AB24E34DBC00272C2D /* Lexilla.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Lexilla.h; path = ../Lexilla.h; sourceTree = "<group>"; };
+		28BA73AB24E34DBC00272C2D /* Lexilla.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Lexilla.h; path = ../../include/Lexilla.h; sourceTree = "<group>"; };
 		28BA73AC24E34DBC00272C2D /* Lexilla.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Lexilla.cxx; path = ../Lexilla.cxx; sourceTree = "<group>"; };
 		28BA73B024E3510900272C2D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F8E54626B22BD9493090F40B /* LexFSharp.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexFSharp.cxx; path = ../../lexers/LexFSharp.cxx; sourceTree = SOURCE_ROOT; };
 		315E4E969868C52C125686B2 /* LexJulia.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexJulia.cxx; path = ../../lexers/LexJulia.cxx; sourceTree = SOURCE_ROOT; };
+		F8E54626B22BD9493090F40B /* LexFSharp.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexFSharp.cxx; path = ../../lexers/LexFSharp.cxx; sourceTree = SOURCE_ROOT; };
+		3AF14420BFC43876F16C5995 /* LexAsciidoc.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexAsciidoc.cxx; path = ../../lexers/LexAsciidoc.cxx; sourceTree = SOURCE_ROOT; };
+		A383409E9A994F461550FEC1 /* LexGDScript.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexGDScript.cxx; path = ../../lexers/LexGDScript.cxx; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +358,7 @@
 				28BA72EE24E34D9300272C2D /* LexAbaqus.cxx */,
 				28BA730024E34D9400272C2D /* LexAda.cxx */,
 				28BA72DF24E34D9200272C2D /* LexAPDL.cxx */,
+				3AF14420BFC43876F16C5995 /* LexAsciidoc.cxx */,
 				28BA72FF24E34D9400272C2D /* LexAsm.cxx */,
 				28BA72DB24E34D9200272C2D /* LexAsn1.cxx */,
 				28BA72D724E34D9200272C2D /* LexASY.cxx */,
@@ -391,6 +398,7 @@
 				28BA72FB24E34D9400272C2D /* LexFortran.cxx */,
 				F8E54626B22BD9493090F40B /* LexFSharp.cxx */,
 				28BA72F224E34D9300272C2D /* LexGAP.cxx */,
+				A383409E9A994F461550FEC1 /* LexGDScript.cxx */,
 				28BA72CF24E34D9100272C2D /* LexGui4Cli.cxx */,
 				28BA731B24E34D9500272C2D /* LexHaskell.cxx */,
 				28BA731924E34D9500272C2D /* LexHex.cxx */,
@@ -480,6 +488,7 @@
 				28BA72A124E34D5B00272C2D /* CharacterSet.h */,
 				28BA729C24E34D5A00272C2D /* DefaultLexer.cxx */,
 				28BA729124E34D5A00272C2D /* DefaultLexer.h */,
+				283639BB268FD4EA009D58A1 /* LexAccessor.cxx */,
 				28BA729024E34D5A00272C2D /* LexAccessor.h */,
 				28BA728F24E34D5A00272C2D /* LexerBase.cxx */,
 				28BA72A624E34D5B00272C2D /* LexerBase.h */,
@@ -594,6 +603,7 @@
 				28BA73A924E34D9700272C2D /* LexPerl.cxx in Sources */,
 				28BA733D24E34D9700272C2D /* LexForth.cxx in Sources */,
 				28BA736824E34D9700272C2D /* LexEScript.cxx in Sources */,
+				283639BC268FD4EA009D58A1 /* LexAccessor.cxx in Sources */,
 				28BA737124E34D9700272C2D /* LexAsm.cxx in Sources */,
 				28BA737B24E34D9700272C2D /* LexSpice.cxx in Sources */,
 				28BA737024E34D9700272C2D /* LexCmake.cxx in Sources */,
@@ -716,6 +726,8 @@
 				28BA737C24E34D9700272C2D /* LexX12.cxx in Sources */,
 				B32D4A2A9CEC222A5140E99F /* LexFSharp.cxx in Sources */,
 				70BF497C8D265026B77C97DA /* LexJulia.cxx in Sources */,
+				510D44AFB91EE873E86ABDD4 /* LexAsciidoc.cxx in Sources */,
+				00D544CC992062D2E3CD4BF6 /* LexGDScript.cxx in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -839,7 +851,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5.1.0;
+				CURRENT_PROJECT_VERSION = 5.1.4;
 				DEVELOPMENT_TEAM = 4F446KW87E;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -865,7 +877,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5.0.0;
+				CURRENT_PROJECT_VERSION = 5.1.4;
 				DEVELOPMENT_TEAM = 4F446KW87E;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

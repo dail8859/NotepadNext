@@ -18,6 +18,7 @@
 #include <string_view>
 #include <map>
 #include <algorithm>
+#include <functional>
 
 #include "ILexer.h"
 #include "Scintilla.h"

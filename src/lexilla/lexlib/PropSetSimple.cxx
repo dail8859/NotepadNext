@@ -13,6 +13,7 @@
 #include <string>
 #include <string_view>
 #include <map>
+#include <functional>
 
 #include "PropSetSimple.h"
 
@@ -20,7 +21,7 @@ using namespace Lexilla;
 
 namespace {
 
-typedef std::map<std::string, std::string> mapss;
+typedef std::map<std::string, std::string, std::less<>> mapss;
 
 mapss *PropsFromPointer(void *impl) noexcept {
 	return static_cast<mapss *>(impl);
@@ -39,17 +40,25 @@ PropSetSimple::~PropSetSimple() {
 	impl = nullptr;
 }
 
-void PropSetSimple::Set(std::string_view key, std::string_view val) {
+bool PropSetSimple::Set(std::string_view key, std::string_view val) {
 	mapss *props = PropsFromPointer(impl);
 	if (!props)
-		return;
-	(*props)[std::string(key)] = std::string(val);
+		return false;
+	mapss::iterator it = props->find(key);
+	if (it != props->end()) {
+		if (val == it->second)
+			return false;
+		it->second = val;
+	} else {
+		props->emplace(key, val);
+	}
+	return true;
 }
 
 const char *PropSetSimple::Get(std::string_view key) const {
 	mapss *props = PropsFromPointer(impl);
 	if (props) {
-		mapss::const_iterator keyPos = props->find(std::string(key));
+		mapss::const_iterator keyPos = props->find(key);
 		if (keyPos != props->end()) {
 			return keyPos->second.c_str();
 		}

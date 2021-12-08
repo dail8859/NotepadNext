@@ -20,6 +20,10 @@ GCC and Clang work on Windows and Linux.
 
 On macOS, only Apple Clang is available.
 
+Lexilla requires some headers from Scintilla to build and expects a directory named
+"scintilla" containing a copy of Scintilla 5+ to be a peer of the Lexilla top level
+directory conventionally called "lexilla".
+
 To use GCC, run lexilla/src/makefile:
 	make
 
@@ -34,9 +38,9 @@ To use MSVC, run lexilla/test/lexilla.mak:
 To build a debugging version of the library, add DEBUG=1 to the command:
 	make DEBUG=1
 	
-The built libraries are copied into scintilla/bin.
+The built libraries are copied into lexilla/bin.
 
-Lexilla relies on a list of lexers from the scintilla/lexers directory. If any changes are
+Lexilla relies on a list of lexers from the lexilla/lexers directory. If any changes are
 made to the set of lexers then source and build files can be regenerated with the
 lexilla/scripts/LexillaGen.py script which requires Python 3 and is tested with 3.7+.
 Unix:

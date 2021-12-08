@@ -67,6 +67,20 @@ using CharacterSet = CharacterSetArray<0x80>;
 
 // Functions for classifying characters
 
+template <typename T, typename... Args>
+constexpr bool AnyOf(T t, Args... args) noexcept {
+#if defined(__clang__)
+	static_assert(__is_integral(T));
+#endif
+	return ((t == args) || ...);
+}
+
+// prevent pointer without <type_traits>
+template <typename T, typename... Args>
+constexpr void AnyOf([[maybe_unused]] T *t, [[maybe_unused]] Args... args) noexcept {}
+template <typename T, typename... Args>
+constexpr void AnyOf([[maybe_unused]] const T *t, [[maybe_unused]] Args... args) noexcept {}
+
 constexpr bool IsASpace(int ch) noexcept {
     return (ch == ' ') || ((ch >= 0x09) && (ch <= 0x0d));
 }

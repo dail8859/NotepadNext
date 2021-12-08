@@ -188,7 +188,7 @@ static void ColouriseMatlabOctaveDoc(
  				}
 			}
 		} else if (sc.state == SCE_MATLAB_DOUBLEQUOTESTRING) {
-			if (sc.ch == '\\') {
+			if (sc.ch == '\\' && !ismatlab) {
 				if (sc.chNext == '\"' || sc.chNext == '\'' || sc.chNext == '\\') {
 					sc.Forward();
 				}

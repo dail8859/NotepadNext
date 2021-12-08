@@ -15,6 +15,10 @@ GCC and Clang work on Windows and Linux.
 
 On macOS, only Apple Clang is available.
 
+Lexilla requires some headers from Scintilla to build and expects a directory named
+"scintilla" containing a copy of Scintilla 5+ to be a peer of the Lexilla top level
+directory conventionally called "lexilla".
+
 To use GCC run lexilla/test/makefile:
 	make test
 

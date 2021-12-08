@@ -6,7 +6,7 @@
     test_fun(a::Int)
 For test only
 """{0}
-{3}function{0} {9}test_fun{8}({9}a{18}::{4}Int{7},{0} {9}b{18}::{9}T{8}){0} {3}where{0} {9}T{0} {18}<:{0} {4}Number{0}
+{3}function{0} {9}test_fun{8}({9}a{21}::{4}Int{7},{0} {9}b{21}::{9}T{8}){0} {3}where{0} {9}T{0} {21}<:{0} {4}Number{0}
     {9}println{8}({9}a{8}){0}
     {9}println{8}({10}"foo {13}$(bar){10}"{8}){0}
 {3}end{0}

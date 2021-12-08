@@ -142,7 +142,8 @@ def RegenerateAll(rootDirectory):
         "CFBundleShortVersionString", versionDotted)
 
     ReplaceREInFile(lexillaXcodeProject, "CURRENT_PROJECT_VERSION = [0-9.]+;",
-        f'CURRENT_PROJECT_VERSION = {versionDotted};')
+        f'CURRENT_PROJECT_VERSION = {versionDotted};',
+        0)
 
     RegenerateXcodeProject(lexillaXcodeProject, lex.lexFiles, lexerReferences)
 
