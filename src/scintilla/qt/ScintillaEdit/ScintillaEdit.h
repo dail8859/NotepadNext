@@ -175,6 +175,8 @@ public:
 	sptr_t styleWeight(sptr_t style) const;
 	void styleSetCharacterSet(sptr_t style, sptr_t characterSet);
 	void styleSetHotSpot(sptr_t style, bool hotspot);
+	void styleSetCheckMonospaced(sptr_t style, bool checkMonospaced);
+	bool styleCheckMonospaced(sptr_t style) const;
 	void setElementColour(sptr_t element, sptr_t colourElement);
 	sptr_t elementColour(sptr_t element) const;
 	void resetElementColour(sptr_t element);
@@ -191,6 +193,8 @@ public:
 	void setSelectionLayer(sptr_t layer);
 	sptr_t caretLineLayer() const;
 	void setCaretLineLayer(sptr_t layer);
+	bool caretLineHighlightSubLine() const;
+	void setCaretLineHighlightSubLine(bool subLine);
 	void setCaretFore(sptr_t fore);
 	void assignCmdKey(sptr_t keyDefinition, sptr_t sciCommand);
 	void clearCmdKey(sptr_t keyDefinition);

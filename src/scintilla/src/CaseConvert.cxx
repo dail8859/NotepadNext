@@ -607,9 +607,13 @@ class CaseConverter : public ICaseConverter {
 	std::vector<ConversionString> conversions;
 
 public:
-	CaseConverter() noexcept {
-	}
-	virtual ~CaseConverter() = default;
+	CaseConverter() = default;
+	// Deleted so CaseConverter objects can not be copied.
+	CaseConverter(const CaseConverter &) = delete;
+	CaseConverter(CaseConverter &&) = delete;
+	CaseConverter &operator=(const CaseConverter &) = delete;
+	CaseConverter &operator=(CaseConverter &&) = delete;
+	virtual ~CaseConverter() noexcept = default;
 	bool Initialised() const noexcept {
 		return !characters.empty();
 	}

@@ -161,9 +161,6 @@ PRectangle PixelAlignOutside(const PRectangle &rc, int pixelDivisions) noexcept;
 constexpr const float componentMaximum = 255.0f;
 class ColourRGBA {
 	int co;
-	constexpr static unsigned int Mixed(unsigned char a, unsigned char b, double proportion) noexcept {
-		return static_cast<unsigned int>(a + proportion * (b - a));
-	}
 public:
 	constexpr explicit ColourRGBA(int co_ = 0) noexcept : co(co_) {
 	}
@@ -236,21 +233,8 @@ public:
 		return GetAlpha() == 0xff;
 	}
 
-	constexpr ColourRGBA MixedWith(ColourRGBA other) const noexcept {
-		const unsigned int red = (GetRed() + other.GetRed()) / 2;
-		const unsigned int green = (GetGreen() + other.GetGreen()) / 2;
-		const unsigned int blue = (GetBlue() + other.GetBlue()) / 2;
-		const unsigned int alpha = (GetAlpha() + other.GetAlpha()) / 2;
-		return ColourRGBA(red, green, blue, alpha);
-	}
-
-	constexpr ColourRGBA MixedWith(ColourRGBA other, double proportion) const noexcept {
-		return ColourRGBA(
-			Mixed(GetRed(), other.GetRed(), proportion),
-			Mixed(GetGreen(), other.GetGreen(), proportion),
-			Mixed(GetBlue(), other.GetBlue(), proportion),
-			Mixed(GetAlpha(), other.GetAlpha(), proportion));
-	}
+	ColourRGBA MixedWith(ColourRGBA other) const noexcept;
+	ColourRGBA MixedWith(ColourRGBA other, double proportion) const noexcept;
 };
 
 /**
@@ -260,7 +244,7 @@ class Stroke {
 public:
 	ColourRGBA colour;
 	XYPOSITION width;
-	constexpr Stroke(ColourRGBA colour_, XYPOSITION width_=1.0) noexcept : 
+	constexpr Stroke(ColourRGBA colour_, XYPOSITION width_=1.0) noexcept :
 		colour(colour_), width(width_) {
 	}
 	constexpr float WidthF() const noexcept {
@@ -274,7 +258,7 @@ public:
 class Fill {
 public:
 	ColourRGBA colour;
-	constexpr Fill(ColourRGBA colour_) noexcept : 
+	constexpr Fill(ColourRGBA colour_) noexcept :
 		colour(colour_) {
 	}
 };
@@ -286,10 +270,10 @@ class FillStroke {
 public:
 	Fill fill;
 	Stroke stroke;
-	constexpr FillStroke(ColourRGBA colourFill_, ColourRGBA colourStroke_, XYPOSITION widthStroke_=1.0) noexcept : 
+	constexpr FillStroke(ColourRGBA colourFill_, ColourRGBA colourStroke_, XYPOSITION widthStroke_=1.0) noexcept :
 		fill(colourFill_), stroke(colourStroke_, widthStroke_) {
 	}
-	constexpr FillStroke(ColourRGBA colourBoth, XYPOSITION widthStroke_=1.0) noexcept : 
+	constexpr FillStroke(ColourRGBA colourBoth, XYPOSITION widthStroke_=1.0) noexcept :
 		fill(colourBoth), stroke(colourBoth, widthStroke_) {
 	}
 };

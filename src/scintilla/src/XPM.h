@@ -25,11 +25,6 @@ class XPM {
 public:
 	explicit XPM(const char *textForm);
 	explicit XPM(const char *const *linesForm);
-	XPM(const XPM &) = default;
-	XPM(XPM &&) noexcept = default;
-	XPM &operator=(const XPM &) = default;
-	XPM &operator=(XPM &&) noexcept = default;
-	~XPM();
 	void Init(const char *textForm);
 	void Init(const char *const *linesForm);
 	/// Decompose image into runs and use FillRectangle for each run
@@ -53,11 +48,6 @@ public:
 	static constexpr size_t bytesPerPixel = 4;
 	RGBAImage(int width_, int height_, float scale_, const unsigned char *pixels_);
 	explicit RGBAImage(const XPM &xpm);
-	RGBAImage(const RGBAImage &) = default;
-	RGBAImage(RGBAImage &&) noexcept = default;
-	RGBAImage &operator=(const RGBAImage &) = default;
-	RGBAImage &operator=(RGBAImage &&) noexcept = default;
-	virtual ~RGBAImage();
 	int GetHeight() const noexcept { return height; }
 	int GetWidth() const noexcept { return width; }
 	float GetScale() const noexcept { return scale; }
@@ -79,12 +69,6 @@ class RGBAImageSet {
 	mutable int width;	///< Memorize largest width of the set.
 public:
 	RGBAImageSet();
-	// Deleted so RGBAImageSet objects can not be copied.
-	RGBAImageSet(const RGBAImageSet &) = delete;
-	RGBAImageSet(RGBAImageSet &&) = delete;
-	RGBAImageSet &operator=(const RGBAImageSet &) = delete;
-	RGBAImageSet &operator=(RGBAImageSet &&) = delete;
-	~RGBAImageSet();
 	/// Remove all images.
 	void Clear() noexcept;
 	/// Add an image.
@@ -92,9 +76,9 @@ public:
 	/// Get image by id.
 	RGBAImage *Get(int ident);
 	/// Give the largest height of the set.
-	int GetHeight() const;
+	int GetHeight() const noexcept;
 	/// Give the largest width of the set.
-	int GetWidth() const;
+	int GetWidth() const noexcept;
 };
 
 }

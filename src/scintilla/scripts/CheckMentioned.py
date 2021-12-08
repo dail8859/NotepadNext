@@ -205,7 +205,7 @@ def checkDocumentation():
 				print(val, "<-", name, ";;", valOfName)
 		except KeyError:
 			print("***", val, "<-", name)
-			
+
 	for name in sccToValue.keys():
 		if name not in ["SCI_OPTIONAL_START", "SCI_LEXER_START"] and name not in docs:
 			print(f"Unknown {name}")

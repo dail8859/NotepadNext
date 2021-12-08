@@ -175,7 +175,7 @@ def UpdateLineInFile(path, linePrefix, lineReplace):
 def ReadFileAsList(path):
     """Read all the lnes in the file and return as a list of strings without line ends.
     """
-    with codecs.open(path, "rU", "utf-8") as f:
+    with codecs.open(path, "r", "utf-8") as f:
         return [l.rstrip('\n') for l in f]
 
 def UpdateFileFromLines(path, lines, lineEndToUse):

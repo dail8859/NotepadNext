@@ -149,7 +149,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     // SC_ELEMENT_WHITE_SPACE_BACK
     // SC_ELEMENT_HOT_SPOT_ACTIVE
     // SC_ELEMENT_HOT_SPOT_ACTIVE_BACK
-    // SC_ELEMENT_FOLD_LINE
+    editor->setElementColour(SC_ELEMENT_FOLD_LINE, 0xFFA0A0A0);
     // SC_ELEMENT_HIDDEN_LINE
 
     editor->setWhitespaceSize(2);

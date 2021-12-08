@@ -23,9 +23,6 @@ CaseFolderTable::CaseFolderTable() noexcept : mapping{}  {
 	}
 }
 
-CaseFolderTable::~CaseFolderTable() {
-}
-
 size_t CaseFolderTable::Fold(char *folded, size_t sizeFolded, const char *mixed, size_t lenMixed) {
 	if (lenMixed > sizeFolded) {
 		return 0;

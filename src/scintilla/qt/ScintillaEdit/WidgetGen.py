@@ -161,7 +161,7 @@ def printCPPFile(f, options):
 					if stringResult:
 						returns += "    " + returnStatement + "TextReturner(" + featureDefineName + ", "
 						if "*" in cppAlias(v["Param1Type"]):
-							returns += "(uptr_t)"
+							returns += "(sptr_t)"
 						if v["Param1Name"]:
 							returns += normalisedName(v["Param1Name"], options)
 						else:
@@ -170,7 +170,7 @@ def printCPPFile(f, options):
 					else:
 						returns += "    " + returnStatement + "send(" + featureDefineName + ", "
 						if "*" in cppAlias(v["Param1Type"]):
-							returns += "(uptr_t)"
+							returns += "(sptr_t)"
 						if v["Param1Name"]:
 							returns += normalisedName(v["Param1Name"], options)
 						else:

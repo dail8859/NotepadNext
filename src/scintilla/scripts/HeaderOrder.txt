@@ -41,6 +41,7 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <array>
 #include <map>
 #include <set>
 #include <forward_list>
@@ -150,6 +151,7 @@
 // Platform-specific headers
 
 // win32
+#include "WinTypes.h"
 #include "PlatWin.h"
 #include "HanjaDic.h"
 #include "ScintillaWin.h"

@@ -115,6 +115,11 @@ struct Sorter {
 
 	Sorter(AutoComplete *ac_, const char *list_) : ac(ac_), list(list_) {
 		int i = 0;
+		if (!list[i]) {
+			// Empty list has a single empty member
+			indices.push_back(i); // word start
+			indices.push_back(i); // word end
+		}
 		while (list[i]) {
 			indices.push_back(i); // word start
 			while (list[i] != ac->GetTypesep() && list[i] != ac->GetSeparator() && list[i])
@@ -211,7 +216,7 @@ void AutoComplete::Show(bool show) {
 		lb->Select(0);
 }
 
-void AutoComplete::Cancel() {
+void AutoComplete::Cancel() noexcept {
 	if (lb->Created()) {
 		lb->Clear();
 		lb->Destroy();
@@ -272,7 +277,7 @@ void AutoComplete::Select(const char *word) {
 			}
 		} else if (cond < 0) {
 			end = pivot - 1;
-		} else if (cond > 0) {
+		} else { // cond > 0
 			start = pivot + 1;
 		}
 	}

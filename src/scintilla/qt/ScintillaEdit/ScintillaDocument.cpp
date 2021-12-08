@@ -48,7 +48,6 @@ class WatcherHelper : public DocWatcher {
     ScintillaDocument *owner;
 public:
     explicit WatcherHelper(ScintillaDocument *owner_);
-    virtual ~WatcherHelper();
 
     void NotifyModifyAttempt(Document *doc, void *userData) override;
     void NotifySavePoint(Document *doc, void *userData, bool atSavePoint) override;
@@ -60,9 +59,6 @@ public:
 };
 
 WatcherHelper::WatcherHelper(ScintillaDocument *owner_) : owner(owner_) {
-}
-
-WatcherHelper::~WatcherHelper() {
 }
 
 void WatcherHelper::NotifyModifyAttempt(Document *, void *) {

@@ -21,12 +21,10 @@
 #include <QScrollBar>
 #include <QTextFormat>
 
-#define INDIC_INPUTMETHOD 24
-
-#define SC_INDICATOR_INPUT INDICATOR_IME
-#define SC_INDICATOR_TARGET INDICATOR_IME+1
-#define SC_INDICATOR_CONVERTED INDICATOR_IME+2
-#define SC_INDICATOR_UNKNOWN INDICATOR_IME_MAX
+constexpr int IndicatorInput = static_cast<int>(Scintilla::IndicatorNumbers::Ime);
+constexpr int IndicatorTarget = IndicatorInput + 1;
+constexpr int IndicatorConverted = IndicatorInput + 2;
+constexpr int IndicatorUnknown = IndicatorInput + 3;
 
 // Q_WS_MAC and Q_WS_X11 aren't defined in Qt5
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
@@ -43,10 +41,8 @@ using namespace Scintilla;
 using namespace Scintilla::Internal;
 
 ScintillaEditBase::ScintillaEditBase(QWidget *parent)
-: QAbstractScrollArea(parent), sqt(nullptr), preeditPos(-1), wheelDelta(0)
+: QAbstractScrollArea(parent), sqt(new ScintillaQt(this)), preeditPos(-1), wheelDelta(0)
 {
-	sqt = new ScintillaQt(this);
-
 	time.start();
 
 	// Set Qt defaults.
@@ -60,10 +56,10 @@ ScintillaEditBase::ScintillaEditBase(QWidget *parent)
 	setAttribute(Qt::WA_KeyCompression);
 	setAttribute(Qt::WA_InputMethodEnabled);
 
-	sqt->vs.indicators[SC_INDICATOR_UNKNOWN] = Indicator(IndicatorStyle::Hidden, ColourRGBA(0, 0, 0xff));
-	sqt->vs.indicators[SC_INDICATOR_INPUT] = Indicator(IndicatorStyle::Dots, ColourRGBA(0, 0, 0xff));
-	sqt->vs.indicators[SC_INDICATOR_CONVERTED] = Indicator(IndicatorStyle::CompositionThick, ColourRGBA(0, 0, 0xff));
-	sqt->vs.indicators[SC_INDICATOR_TARGET] = Indicator(IndicatorStyle::StraightBox, ColourRGBA(0, 0, 0xff));
+	sqt->vs.indicators[IndicatorUnknown] = Indicator(IndicatorStyle::Hidden, ColourRGBA(0, 0, 0xff));
+	sqt->vs.indicators[IndicatorInput] = Indicator(IndicatorStyle::Dots, ColourRGBA(0, 0, 0xff));
+	sqt->vs.indicators[IndicatorConverted] = Indicator(IndicatorStyle::CompositionThick, ColourRGBA(0, 0, 0xff));
+	sqt->vs.indicators[IndicatorTarget] = Indicator(IndicatorStyle::StraightBox, ColourRGBA(0, 0, 0xff));
 
 	connect(sqt, SIGNAL(notifyParent(Scintilla::NotificationData)),
 		this, SLOT(notifyParent(Scintilla::NotificationData)));
@@ -87,14 +83,14 @@ ScintillaEditBase::ScintillaEditBase(QWidget *parent)
 	connect(sqt, SIGNAL(notifyChange()),
 	        this, SIGNAL(notifyChange()));
 
-	connect(sqt, SIGNAL(command(Scintilla::uptr_t, Scintilla::sptr_t)),
-		this, SLOT(event_command(Scintilla::uptr_t, Scintilla::sptr_t)));
+	connect(sqt, SIGNAL(command(Scintilla::uptr_t,Scintilla::sptr_t)),
+		this, SLOT(event_command(Scintilla::uptr_t,Scintilla::sptr_t)));
 
-	connect(sqt, SIGNAL(aboutToCopy(QMimeData *)),
-	        this, SIGNAL(aboutToCopy(QMimeData *)));
+	connect(sqt, SIGNAL(aboutToCopy(QMimeData*)),
+		this, SIGNAL(aboutToCopy(QMimeData*)));
 }
 
-ScintillaEditBase::~ScintillaEditBase() {}
+ScintillaEditBase::~ScintillaEditBase() = default;
 
 sptr_t ScintillaEditBase::send(
 	unsigned int iMessage,
@@ -109,7 +105,7 @@ sptr_t ScintillaEditBase::sends(
     uptr_t wParam,
     const char *s) const
 {
-	return sqt->WndProc(static_cast<Message>(iMessage), wParam, (sptr_t)s);
+	return sqt->WndProc(static_cast<Message>(iMessage), wParam, reinterpret_cast<sptr_t>(s));
 }
 
 void ScintillaEditBase::scrollHorizontal(int value)
@@ -493,40 +489,40 @@ static int GetImeCaretPos(QInputMethodEvent *event)
 
 static std::vector<int> MapImeIndicators(QInputMethodEvent *event)
 {
-	std::vector<int> imeIndicator(event->preeditString().size(), SC_INDICATOR_UNKNOWN);
+	std::vector<int> imeIndicator(event->preeditString().size(), IndicatorUnknown);
 	foreach (QInputMethodEvent::Attribute attr, event->attributes()) {
 		if (attr.type == QInputMethodEvent::TextFormat) {
 			QTextFormat format = attr.value.value<QTextFormat>();
 			QTextCharFormat charFormat = format.toCharFormat();
 
-			int indicator = SC_INDICATOR_UNKNOWN;
+			int indicator = IndicatorUnknown;
 			switch (charFormat.underlineStyle()) {
 				case QTextCharFormat::NoUnderline: // win32, linux
-					indicator = SC_INDICATOR_TARGET;
+					indicator = IndicatorTarget;
 					break;
 				case QTextCharFormat::SingleUnderline: // osx
 				case QTextCharFormat::DashUnderline: // win32, linux
-					indicator = SC_INDICATOR_INPUT;
+					indicator = IndicatorInput;
 					break;
 				case QTextCharFormat::DotLine:
 				case QTextCharFormat::DashDotLine:
 				case QTextCharFormat::WaveUnderline:
 				case QTextCharFormat::SpellCheckUnderline:
-					indicator = SC_INDICATOR_CONVERTED;
+					indicator = IndicatorConverted;
 					break;
 
 				default:
-					indicator = SC_INDICATOR_UNKNOWN;
+					indicator = IndicatorUnknown;
 			}
 
 			if (format.hasProperty(QTextFormat::BackgroundBrush)) // win32, linux
-				indicator = SC_INDICATOR_TARGET;
+				indicator = IndicatorTarget;
 
 #ifdef Q_OS_OSX
 			if (charFormat.underlineStyle() == QTextCharFormat::SingleUnderline) {
 				QColor uc = charFormat.underlineColor();
 				if (uc.lightness() < 2) { // osx
-					indicator = SC_INDICATOR_TARGET;
+					indicator = IndicatorTarget;
 				}
 			}
 #endif
@@ -561,7 +557,7 @@ void ScintillaEditBase::inputMethodEvent(QInputMethodEvent *event)
 	sqt->view.imeCaretBlockOverride = false;
 
 	if (!event->commitString().isEmpty()) {
-		const QString commitStr = event->commitString();
+		const QString &commitStr = event->commitString();
 		const unsigned int commitStrLen = commitStr.length();
 
 		for (unsigned int i = 0; i < commitStrLen;) {
@@ -656,7 +652,7 @@ QVariant ScintillaEditBase::inputMethodQuery(Qt::InputMethodQuery query) const
 		{
 			char fontName[64];
 			int style = send(SCI_GETSTYLEAT, pos);
-			int len = send(SCI_STYLEGETFONT, style, (sptr_t)fontName);
+			int len = sends(SCI_STYLEGETFONT, style, fontName);
 			int size = send(SCI_STYLEGETSIZE, style);
 			bool italic = send(SCI_STYLEGETITALIC, style);
 			int weight = send(SCI_STYLEGETBOLD, style) ? QFont::Bold : -1;
@@ -675,15 +671,15 @@ QVariant ScintillaEditBase::inputMethodQuery(Qt::InputMethodQuery query) const
 			int paraEnd = sqt->pdoc->ParaDown(pos);
 			QVarLengthArray<char,1024> buffer(paraEnd - paraStart + 1);
 
-			Sci_CharacterRange charRange;
+			Sci_CharacterRange charRange{};
 			charRange.cpMin = paraStart;
 			charRange.cpMax = paraEnd;
 
-			Sci_TextRange textRange;
+			Sci_TextRange textRange{};
 			textRange.chrg = charRange;
 			textRange.lpstrText = buffer.data();
 
-			send(SCI_GETTEXTRANGE, 0, (sptr_t)&textRange);
+			send(SCI_GETTEXTRANGE, 0, reinterpret_cast<sptr_t>(&textRange));
 
 			return sqt->StringFromDocument(buffer.constData());
 		}
@@ -691,7 +687,7 @@ QVariant ScintillaEditBase::inputMethodQuery(Qt::InputMethodQuery query) const
 		case Qt::ImCurrentSelection:
 		{
 			QVarLengthArray<char,1024> buffer(send(SCI_GETSELTEXT));
-			send(SCI_GETSELTEXT, 0, (sptr_t)buffer.data());
+			sends(SCI_GETSELTEXT, 0, buffer.data());
 
 			return sqt->StringFromDocument(buffer.constData());
 		}
@@ -833,7 +829,7 @@ void ScintillaEditBase::event_command(uptr_t wParam, sptr_t lParam)
 	emit command(wParam, lParam);
 }
 
-KeyMod ScintillaEditBase::ModifiersOfKeyboard() const
+KeyMod ScintillaEditBase::ModifiersOfKeyboard()
 {
 	const bool shift = QApplication::keyboardModifiers() & Qt::ShiftModifier;
 	const bool ctrl  = QApplication::keyboardModifiers() & Qt::ControlModifier;

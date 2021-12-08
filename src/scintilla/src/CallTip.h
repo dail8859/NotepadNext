@@ -75,7 +75,7 @@ public:
 		Scintilla::CharacterSet characterSet, Scintilla::Technology technology, const char *localeName,
 		const Window &wParent);
 
-	void CallTipCancel();
+	void CallTipCancel() noexcept;
 
 	/// Set a range of characters to be displayed in a highlight style.
 	/// Commonly used to highlight the current parameter.

@@ -547,6 +547,14 @@ void ScintillaEdit::styleSetHotSpot(sptr_t style, bool hotspot) {
     send(SCI_STYLESETHOTSPOT, style, hotspot);
 }
 
+void ScintillaEdit::styleSetCheckMonospaced(sptr_t style, bool checkMonospaced) {
+    send(SCI_STYLESETCHECKMONOSPACED, style, checkMonospaced);
+}
+
+bool ScintillaEdit::styleCheckMonospaced(sptr_t style) const {
+    return send(SCI_STYLEGETCHECKMONOSPACED, style, 0);
+}
+
 void ScintillaEdit::setElementColour(sptr_t element, sptr_t colourElement) {
     send(SCI_SETELEMENTCOLOUR, element, colourElement);
 }
@@ -609,6 +617,14 @@ sptr_t ScintillaEdit::caretLineLayer() const {
 
 void ScintillaEdit::setCaretLineLayer(sptr_t layer) {
     send(SCI_SETCARETLINELAYER, layer, 0);
+}
+
+bool ScintillaEdit::caretLineHighlightSubLine() const {
+    return send(SCI_GETCARETLINEHIGHLIGHTSUBLINE, 0, 0);
+}
+
+void ScintillaEdit::setCaretLineHighlightSubLine(bool subLine) {
+    send(SCI_SETCARETLINEHIGHLIGHTSUBLINE, subLine, 0);
 }
 
 void ScintillaEdit::setCaretFore(sptr_t fore) {
@@ -2316,7 +2332,7 @@ void ScintillaEdit::setLengthForEncode(sptr_t bytes) {
 }
 
 QByteArray ScintillaEdit::encodedFromUTF8(const char * utf8) {
-    return TextReturner(SCI_ENCODEDFROMUTF8, (uptr_t)utf8);
+    return TextReturner(SCI_ENCODEDFROMUTF8, (sptr_t)utf8);
 }
 
 sptr_t ScintillaEdit::findColumn(sptr_t line, sptr_t column) {
@@ -2904,15 +2920,15 @@ sptr_t ScintillaEdit::lineEndTypesActive() const {
 }
 
 void ScintillaEdit::setRepresentation(const char * encodedCharacter, const char * representation) {
-    send(SCI_SETREPRESENTATION, (uptr_t)encodedCharacter, (sptr_t)representation);
+    send(SCI_SETREPRESENTATION, (sptr_t)encodedCharacter, (sptr_t)representation);
 }
 
 QByteArray ScintillaEdit::representation(const char * encodedCharacter) const {
-    return TextReturner(SCI_GETREPRESENTATION, (uptr_t)encodedCharacter);
+    return TextReturner(SCI_GETREPRESENTATION, (sptr_t)encodedCharacter);
 }
 
 void ScintillaEdit::clearRepresentation(const char * encodedCharacter) {
-    send(SCI_CLEARREPRESENTATION, (uptr_t)encodedCharacter, 0);
+    send(SCI_CLEARREPRESENTATION, (sptr_t)encodedCharacter, 0);
 }
 
 void ScintillaEdit::clearAllRepresentations() {
@@ -2920,19 +2936,19 @@ void ScintillaEdit::clearAllRepresentations() {
 }
 
 void ScintillaEdit::setRepresentationAppearance(const char * encodedCharacter, sptr_t appearance) {
-    send(SCI_SETREPRESENTATIONAPPEARANCE, (uptr_t)encodedCharacter, appearance);
+    send(SCI_SETREPRESENTATIONAPPEARANCE, (sptr_t)encodedCharacter, appearance);
 }
 
 sptr_t ScintillaEdit::representationAppearance(const char * encodedCharacter) const {
-    return send(SCI_GETREPRESENTATIONAPPEARANCE, (uptr_t)encodedCharacter, 0);
+    return send(SCI_GETREPRESENTATIONAPPEARANCE, (sptr_t)encodedCharacter, 0);
 }
 
 void ScintillaEdit::setRepresentationColour(const char * encodedCharacter, sptr_t colour) {
-    send(SCI_SETREPRESENTATIONCOLOUR, (uptr_t)encodedCharacter, colour);
+    send(SCI_SETREPRESENTATIONCOLOUR, (sptr_t)encodedCharacter, colour);
 }
 
 sptr_t ScintillaEdit::representationColour(const char * encodedCharacter) const {
-    return send(SCI_GETREPRESENTATIONCOLOUR, (uptr_t)encodedCharacter, 0);
+    return send(SCI_GETREPRESENTATIONCOLOUR, (sptr_t)encodedCharacter, 0);
 }
 
 void ScintillaEdit::eOLAnnotationSetText(sptr_t line, const char * text) {
@@ -3012,7 +3028,7 @@ void ScintillaEdit::colourise(sptr_t start, sptr_t end) {
 }
 
 void ScintillaEdit::setProperty(const char * key, const char * value) {
-    send(SCI_SETPROPERTY, (uptr_t)key, (sptr_t)value);
+    send(SCI_SETPROPERTY, (sptr_t)key, (sptr_t)value);
 }
 
 void ScintillaEdit::setKeyWords(sptr_t keyWordSet, const char * keyWords) {
@@ -3020,15 +3036,15 @@ void ScintillaEdit::setKeyWords(sptr_t keyWordSet, const char * keyWords) {
 }
 
 QByteArray ScintillaEdit::property(const char * key) const {
-    return TextReturner(SCI_GETPROPERTY, (uptr_t)key);
+    return TextReturner(SCI_GETPROPERTY, (sptr_t)key);
 }
 
 QByteArray ScintillaEdit::propertyExpanded(const char * key) const {
-    return TextReturner(SCI_GETPROPERTYEXPANDED, (uptr_t)key);
+    return TextReturner(SCI_GETPROPERTYEXPANDED, (sptr_t)key);
 }
 
 sptr_t ScintillaEdit::propertyInt(const char * key, sptr_t defaultValue) const {
-    return send(SCI_GETPROPERTYINT, (uptr_t)key, defaultValue);
+    return send(SCI_GETPROPERTYINT, (sptr_t)key, defaultValue);
 }
 
 QByteArray ScintillaEdit::lexerLanguage() const {
@@ -3044,11 +3060,11 @@ QByteArray ScintillaEdit::propertyNames() {
 }
 
 sptr_t ScintillaEdit::propertyType(const char * name) {
-    return send(SCI_PROPERTYTYPE, (uptr_t)name, 0);
+    return send(SCI_PROPERTYTYPE, (sptr_t)name, 0);
 }
 
 QByteArray ScintillaEdit::describeProperty(const char * name) {
-    return TextReturner(SCI_DESCRIBEPROPERTY, (uptr_t)name);
+    return TextReturner(SCI_DESCRIBEPROPERTY, (sptr_t)name);
 }
 
 QByteArray ScintillaEdit::describeKeyWordSets() {

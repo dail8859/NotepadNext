@@ -2385,8 +2385,8 @@ void Platform::Assert(const char *c, const char *file, int line) noexcept {
 	snprintf(buffer, sizeof(buffer), "Assertion [%s] failed at %s %d\r\n", c, file, line);
 	Platform::DebugDisplay(buffer);
 #ifdef DEBUG
-	// Jump into debugger in assert on Mac (CL269835)
-	::Debugger();
+	// Jump into debugger in assert on Mac
+	pthread_kill(pthread_self(), SIGTRAP);
 #endif
 }
 
