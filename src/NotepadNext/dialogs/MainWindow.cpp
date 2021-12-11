@@ -507,26 +507,27 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
+    ui->actionAboutQt->setIcon(QPixmap(QLatin1String(":/qt-project.org/qmessagebox/images/qtlogo-64.png")));
     connect(ui->actionAboutQt, &QAction::triggered, &QApplication::aboutQt);
+
+    ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
     connect(ui->actionAboutNotepadNext, &QAction::triggered, [=]() {
         QMessageBox::about(this, "About Notepad Next",
-                            QString("<h3>Notepad Next v%1</h3><p>This program does stuff.</p><p>%2</p>")
-                                .arg(APP_VERSION, APP_COPYRIGHT));
+                            QString("<h3>Notepad Next v%1</h3>"
+                                    "<p>%2</p>"
+                                    "<p>This program does stuff.</p>"
+                                    R"(<p>This program is free software: you can redistribute it and/or modify
+                                    it under the terms of the GNU General Public License as published by
+                                    the Free Software Foundation, either version 3 of the License, or
+                                    (at your option) any later version.</p>
+                                    <p>This program is distributed in the hope that it will be useful,
+                                    but WITHOUT ANY WARRANTY; without even the implied warranty of
+                                    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+                                    GNU General Public License for more details.</p>
+                                    <p>You should have received a copy of the GNU General Public License
+                                    along with this program. If not, see &lt;https://www.gnu.org/licenses/&gt;.</p>)")
+                                .arg(APP_VERSION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
-
-    // If the current file is saved update the window title incase the file was renamed
-    //connect(dockedEditor, &DockedEditor::editorAdded, this, &MainWindow::detectLanguageFromExtension);
-
-    // TODO: handle renamed files
-    //connect(app->getBufferManager(), &BufferManager::bufferRenamed, [=] (ScintillaBuffer *buffer) {
-    //    updateBufferFileStatusBasedUi(buffer);
-    //    //detectLanguageFromExtension(buffer);
-    //    updateBufferFileStatusBasedUi(buffer);
-    //});
-
-    ui->actionAboutQt->setIcon(QPixmap(QLatin1String(":/qt-project.org/qmessagebox/images/qtlogo-64.png")));
-    ui->actionAboutNotepadNext->setIcon(this->windowIcon());
-    ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
 
     if (luaConsoleDock == Q_NULLPTR) {
         luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
