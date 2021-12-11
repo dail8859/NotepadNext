@@ -145,7 +145,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     // SC_ELEMENT_CARET
     // SC_ELEMENT_CARET_ADDITIONAL
     editor->setElementColour(SC_ELEMENT_CARET_LINE_BACK, 0xFFFFE8E8);
-    editor->setElementColour(SC_ELEMENT_WHITE_SPACE, 0xFF6AB5FF);
+    editor->setElementColour(SC_ELEMENT_WHITE_SPACE, 0xFFD0D0D0);
     // SC_ELEMENT_WHITE_SPACE_BACK
     // SC_ELEMENT_HOT_SPOT_ACTIVE
     // SC_ELEMENT_HOT_SPOT_ACTIVE_BACK
