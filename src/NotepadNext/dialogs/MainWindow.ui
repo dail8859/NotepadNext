@@ -570,6 +570,9 @@
    <property name="text">
     <string>Join Lines</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+J</string>
+   </property>
   </action>
   <action name="actionMoveSelectedLinesUp">
    <property name="text">
