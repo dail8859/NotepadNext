@@ -663,6 +663,10 @@
    </property>
   </action>
   <action name="actionAboutNotepadNext">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/newfile.png</normaloff>:/icons/newfile.png</iconset>
+   </property>
    <property name="text">
     <string>About Notepad Next</string>
    </property>
