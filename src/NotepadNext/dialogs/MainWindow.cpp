@@ -1286,10 +1286,6 @@ void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
         return;
     }
 
-    // See if it already has a language
-    if (editor->lexerLanguage() != "")
-        return;
-
     const QString ext = editor->suffix();
 
     QString language_name = app->getLuaState()->executeAndReturn<QString>(QString(R"(

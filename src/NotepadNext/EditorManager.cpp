@@ -103,16 +103,20 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setVirtualSpaceOptions(SCVS_RECTANGULARSELECTION);
 
     editor->setMarginLeft(2);
+
     editor->setMarginWidthN(0, 30);
     editor->setMarginMaskN(1, (1<<MARK_BOOKMARK) | (1<<MARK_HIDELINESBEGIN) | (1<<MARK_HIDELINESEND) | (1<<MARK_HIDELINESUNDERLINE));
     editor->setMarginMaskN(2, SC_MASK_FOLDERS);
     editor->setMarginWidthN(2, 14);
 
     editor->markerSetAlpha(MARK_BOOKMARK, 70);
+    editor->markerDefine(MARK_BOOKMARK, SC_MARK_BOOKMARK);
+    editor->markerSetFore(MARK_BOOKMARK, 0xFF2020);
+    editor->markerSetBack(MARK_BOOKMARK, 0xFF2020);
+
     editor->markerDefine(MARK_HIDELINESUNDERLINE, SC_MARK_UNDERLINE);
     editor->markerSetBack(MARK_HIDELINESUNDERLINE, 0x77CC77);
 
-    editor->markerDefine(MARK_BOOKMARK, SC_MARK_BOOKMARK);
     editor->markerDefine(MARK_HIDELINESBEGIN, SC_MARK_ARROW);
     editor->markerDefine(MARK_HIDELINESEND, SC_MARK_ARROWDOWN);
 

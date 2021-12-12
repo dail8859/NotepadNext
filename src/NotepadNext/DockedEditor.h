@@ -23,7 +23,6 @@
 #include <QObject>
 
 #include "DockManager.h"
-#include "ScintillaBuffer.h"
 #include "ScintillaNext.h"
 
 class DockedEditor : public QObject
