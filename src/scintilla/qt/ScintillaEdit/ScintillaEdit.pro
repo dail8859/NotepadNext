@@ -6,6 +6,7 @@
 
 QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+equals(QT_MAJOR_VERSION, 6): QT += core5compat
 
 TARGET = ScintillaEdit
 TEMPLATE = lib
