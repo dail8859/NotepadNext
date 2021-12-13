@@ -28,6 +28,7 @@
 #include <QPaintDevice>
 #include <QPainter>
 #include <QHash>
+#include <QTextCodec>
 
 namespace Scintilla::Internal {
 

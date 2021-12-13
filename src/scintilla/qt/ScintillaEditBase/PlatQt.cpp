@@ -36,7 +36,6 @@
 #include <QListWidget>
 #include <QVarLengthArray>
 #include <QScrollBar>
-#include <QDesktopWidget>
 #include <QTextLayout>
 #include <QTextLine>
 #include <QLibrary>
@@ -620,7 +619,11 @@ XYPOSITION SurfaceImpl::WidthText(const Font *font, std::string_view text)
 	QFontMetricsF metrics(*FontPointer(font), device);
 	SetCodec(font);
 	QString su = UnicodeFromText(codec, text);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	return metrics.horizontalAdvance(su);
+#else
 	return metrics.width(su);
+#endif
 }
 
 void SurfaceImpl::DrawTextNoClipUTF8(PRectangle rc,
@@ -701,7 +704,11 @@ XYPOSITION SurfaceImpl::WidthTextUTF8(const Font *font, std::string_view text)
 {
 	QFontMetricsF metrics(*FontPointer(font), device);
 	QString su = QString::fromUtf8(text.data(), static_cast<int>(text.length()));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	return metrics.horizontalAdvance(su);
+#else
 	return metrics.width(su);
+#endif
 }
 
 XYPOSITION SurfaceImpl::Ascent(const Font *font)
@@ -922,7 +929,11 @@ public:
 protected:
 	void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) override;
 	void mouseDoubleClickEvent(QMouseEvent *event) override;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+	void initViewItemOption(QStyleOptionViewItem *option) const override;
+#else
 	QStyleOptionViewItem viewOptions() const override;
+#endif
 
 private:
 	IListBoxDelegate *delegate;
@@ -1242,12 +1253,20 @@ void ListWidget::mouseDoubleClickEvent(QMouseEvent * /* event */)
 	}
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+void ListWidget::initViewItemOption(QStyleOptionViewItem *option) const
+{
+	QListWidget::initViewItemOption(option);
+	option->state |= QStyle::State_Active;
+}
+#else
 QStyleOptionViewItem ListWidget::viewOptions() const
 {
 	QStyleOptionViewItem result = QListWidget::viewOptions();
 	result.state |= QStyle::State_Active;
 	return result;
 }
+#endif
 //----------------------------------------------------------------------
 Menu::Menu() noexcept : mid(nullptr) {}
 void Menu::CreatePopUp()
