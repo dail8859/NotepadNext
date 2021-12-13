@@ -24,8 +24,8 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          version: ${{ matrix.qt_version }}
-          modules: ${{ matrix.modules }}
+          version: ${{ matrix.config.qt_version }}
+          modules: ${{ matrix.config.modules }}
 
       - name: Setup VS tools
         uses: egor-tensin/vs-shell@v2
