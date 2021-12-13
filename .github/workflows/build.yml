@@ -4,6 +4,18 @@ on: [push, pull_request]
 
 jobs:
   build:
+    strategy:
+      matrix:
+        config:
+        - {
+            qt_version: "5.15.2",
+            modules: ""
+          }
+        - {
+            qt_version: "6.2.2",
+            modules: "qt5compat"
+          }
+
     runs-on: windows-latest
 
     steps:
@@ -13,6 +25,9 @@ jobs:
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ matrix.qt_version }}
+          modules: ${{ matrix.modules }}
 
       - name: Setup VS tools
         uses: egor-tensin/vs-shell@v2
