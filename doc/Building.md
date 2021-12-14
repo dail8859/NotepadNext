@@ -16,10 +16,11 @@ This document specifically describes how to build Notepad Next using Microsoft's
 1. Download the [Qt installer](https://www.qt.io/download-qt-installer)
 1. Run the installer.
 1. Select 'custom installation'
-1. Install (at a minimum):
-  * Qt 5.15.2 > MSVC 2019 64-bit
-  * Developer and Design Tools > Qt Creator CDB Debugger Support
-  * Developer and Design Tools > Debugging Tools for Windows
+1. Install any version of Qt >= 5.15:
+  * `MSVC 2019 64-bit` located under the desired version of Qt
+  * If Qt 6+ is being used, you must also install `Qt 5 Compatibility Module`
+  * `Developer and Design Tools` > `Qt Creator CDB Debugger Support`
+  * `Developer and Design Tools` > `Debugging Tools for Windows`
 
 # Cloning the Notepad Next Repository
 
