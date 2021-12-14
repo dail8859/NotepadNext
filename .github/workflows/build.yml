@@ -54,5 +54,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: NotepadNext
+          name: NotepadNext-Qt${{ matrix.config.qt_version }}
           path: ${{ github.workspace }}/build/package/
