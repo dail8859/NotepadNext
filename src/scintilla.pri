@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
 
+equals(QT_MAJOR_VERSION, 6): QT += core5compat
+
 SOURCES += \
     $$PWD/scintilla/qt/ScintillaEdit/ScintillaEdit.cpp \
     $$PWD/scintilla/qt/ScintillaEdit/ScintillaDocument.cpp \

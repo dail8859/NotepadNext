@@ -40,15 +40,15 @@ const int LANG_INDEX_TYPE3 = 4;
 const int LANG_INDEX_TYPE4 = 5;
 const int LANG_INDEX_TYPE5 = 6;
 
-static int keywordClassToIndex(const QStringRef &keywordClass)
+static int keywordClassToIndex(const QStringView keywordClass)
 {
-    if (keywordClass == "instre1") return LANG_INDEX_INSTR;
-    if (keywordClass == "instre2") return LANG_INDEX_INSTR2;
-    if (keywordClass == "type1") return LANG_INDEX_TYPE;
-    if (keywordClass == "type2") return LANG_INDEX_TYPE2;
-    if (keywordClass == "type3") return LANG_INDEX_TYPE3;
-    if (keywordClass == "type4") return LANG_INDEX_TYPE4;
-    if (keywordClass == "type5") return LANG_INDEX_TYPE5;
+    if (keywordClass == QStringLiteral("instre1")) return LANG_INDEX_INSTR;
+    if (keywordClass == QStringLiteral("instre2")) return LANG_INDEX_INSTR2;
+    if (keywordClass == QStringLiteral("type1")) return LANG_INDEX_TYPE;
+    if (keywordClass == QStringLiteral("type2")) return LANG_INDEX_TYPE2;
+    if (keywordClass == QStringLiteral("type3")) return LANG_INDEX_TYPE3;
+    if (keywordClass == QStringLiteral("type4")) return LANG_INDEX_TYPE4;
+    if (keywordClass == QStringLiteral("type5")) return LANG_INDEX_TYPE5;
     return -1; // TODO: not sure what is best
 }
 struct LanguageName {
@@ -200,7 +200,7 @@ void NppImporter::readLangsModel(const QString &filePath)
 
         xml.readNextStartElement();
         while (xml.readNextStartElement()) {
-            if (xml.name() == "Languages") {
+            if (xml.name() == QStringLiteral("Languages")) {
                 //qInfo(qUtf8Printable(xml.name().toString()));
 
                 while (xml.readNextStartElement()) {
@@ -212,7 +212,7 @@ void NppImporter::readLangsModel(const QString &filePath)
 
                     Language language;
                     language.name = attrs.value("name").toString();
-                    language.extensions = attrs.value("ext").toString().split(" ", QString::SkipEmptyParts);
+                    language.extensions = attrs.value("ext").toString().split(" ", Qt::SkipEmptyParts);
                     language.shortName = langNamesToLexer[language.name].shortName;
                     language.longDescription = langNamesToLexer[language.name].longName;
                     language.lexer_id = langNamesToLexer[language.name].lexer_id;
@@ -247,10 +247,10 @@ void NppImporter::readStylersModel(const QString &filePath)
 
         xml.readNextStartElement();
         while (xml.readNextStartElement()) {
-            if (xml.name() == "LexerStyles") {
+            if (xml.name() == QStringLiteral("LexerStyles")) {
                 readLexerStyles(xml);
             }
-            else if (xml.name() == "GlobalStyles") {
+            else if (xml.name() == QStringLiteral("GlobalStyles")) {
                 readGlobalStyles(xml);
             }
             else {
@@ -272,7 +272,7 @@ void NppImporter::readConfigModel(const QString &filePath)
 
         xml.readNextStartElement();
         while (xml.readNextStartElement()) {
-            if (xml.name() == "GUIConfigs") {
+            if (xml.name() == QStringLiteral("GUIConfigs")) {
                 readGUIConfigs(xml);
             }
             else {
@@ -356,30 +356,30 @@ void NppImporter::readGlobalStyles(QXmlStreamReader &xml)
         else if (styleID > 0) {
             editor->indicSetFore(styleID, color(attrs.value("bgColor").toInt(nullptr, 16)));
         }
-        else if (attrs.value("name") == "Current line background colour") {
+        else if (attrs.value("name") == QStringLiteral("Current line background colour")) {
             editor->setCaretLineBack(color(attrs.value("bgColor").toInt(nullptr, 16)));
         }
-        else if (attrs.value("name") == "Selected text colour") {
+        else if (attrs.value("name") == QStringLiteral("Selected text colour")) {
             editor->setSelBack(true, color(attrs.value("bgColor").toInt(nullptr, 16)));
         }
-        else if (attrs.value("name") == "Caret colour") {
+        else if (attrs.value("name") == QStringLiteral("Caret colour")) {
             editor->setCaretFore(color(attrs.value("fgColor").toInt(nullptr, 16)));
         }
-        else if (attrs.value("name") == "Edge colour") {
+        else if (attrs.value("name") == QStringLiteral("Edge colour")) {
             editor->setEdgeColour(color(attrs.value("fgColor").toInt(nullptr, 16)));
         }
-        else if (attrs.value("name") == "White space symbol") {
+        else if (attrs.value("name") == QStringLiteral("White space symbol")) {
             editor->setWhitespaceFore(true, color(attrs.value("fgColor").toInt(nullptr, 16)));
         }
-        else if (attrs.value("name") == "Fold") {
+        else if (attrs.value("name") == QStringLiteral("Fold")) {
             // NOTE: Yes this is a bug in Notepad++ swapping the fg and bg colors
             foldFgColor = color(attrs.value("bgColor").toInt(nullptr, 16));
             foldBgColor = color(attrs.value("fgColor").toInt(nullptr, 16));
         }
-        else if (attrs.value("name") == "Fold active") {
+        else if (attrs.value("name") == QStringLiteral("Fold active")) {
             activeFgColor = color(attrs.value("fgColor").toInt(nullptr, 16));
         }
-        else if (attrs.value("name") == "Fold margin") {
+        else if (attrs.value("name") == QStringLiteral("Fold margin")) {
             editor->setFoldMarginColour(true, color(attrs.value("fgColor").toInt(nullptr, 16)));
             editor->setFoldMarginHiColour(true, color(attrs.value("bgColor").toInt(nullptr, 16)));
         }
@@ -394,25 +394,25 @@ void NppImporter::readGUIConfigs(QXmlStreamReader &xml)
 {
     while (xml.readNextStartElement()) {
         auto attrs = xml.attributes();
-        if (attrs.value("name") == "ScintillaPrimaryView") {
-            if (attrs.value("indentGuideLine") == "show") {
+        if (attrs.value("name") == QStringLiteral("ScintillaPrimaryView")) {
+            if (attrs.value("indentGuideLine") == QStringLiteral("show")) {
                 editor->setIndentationGuides(SC_IV_LOOKBOTH);
             }
-            if (attrs.value("currentLineHilitingShow") == "show") {
+            if (attrs.value("currentLineHilitingShow") == QStringLiteral("show")) {
                 editor->setCaretLineVisible(true);
                 editor->setCaretLineVisibleAlways(true);
             }
-            if (attrs.value("Wrap") == "yes") {
+            if (attrs.value("Wrap") == QStringLiteral("yes")) {
                 editor->setWrapMode(SC_WRAP_WHITESPACE);
             }
-            if (attrs.value("edge") == "line") {
+            if (attrs.value("edge") == QStringLiteral("line")) {
                 editor->setEdgeMode(EDGE_LINE);
                 editor->setEdgeColumn(attrs.value("edgeNbColumn").toInt());
             }
-            if (attrs.value("whiteSpaceShow") == "show") {
+            if (attrs.value("whiteSpaceShow") == QStringLiteral("show")) {
                 editor->setViewWS(SCWS_VISIBLEALWAYS);
             }
-            if (attrs.value("eolShow") == "show") {
+            if (attrs.value("eolShow") == QStringLiteral("show")) {
                 editor->setViewEOL(true);
             }
             if (attrs.hasAttribute("folderMarkStyle")) {

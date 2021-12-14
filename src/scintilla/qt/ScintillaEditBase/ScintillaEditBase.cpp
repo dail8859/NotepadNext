@@ -56,10 +56,12 @@ ScintillaEditBase::ScintillaEditBase(QWidget *parent)
 	setAttribute(Qt::WA_KeyCompression);
 	setAttribute(Qt::WA_InputMethodEnabled);
 
-	sqt->vs.indicators[IndicatorUnknown] = Indicator(IndicatorStyle::Hidden, ColourRGBA(0, 0, 0xff));
-	sqt->vs.indicators[IndicatorInput] = Indicator(IndicatorStyle::Dots, ColourRGBA(0, 0, 0xff));
-	sqt->vs.indicators[IndicatorConverted] = Indicator(IndicatorStyle::CompositionThick, ColourRGBA(0, 0, 0xff));
-	sqt->vs.indicators[IndicatorTarget] = Indicator(IndicatorStyle::StraightBox, ColourRGBA(0, 0, 0xff));
+	// All IME indicators drawn in same colour, blue, with different patterns
+	const ColourRGBA colourIME(0, 0, UCHAR_MAX);
+	sqt->vs.indicators[IndicatorUnknown] = Indicator(IndicatorStyle::Hidden, colourIME);
+	sqt->vs.indicators[IndicatorInput] = Indicator(IndicatorStyle::Dots, colourIME);
+	sqt->vs.indicators[IndicatorConverted] = Indicator(IndicatorStyle::CompositionThick, colourIME);
+	sqt->vs.indicators[IndicatorTarget] = Indicator(IndicatorStyle::StraightBox, colourIME);
 
 	connect(sqt, SIGNAL(notifyParent(Scintilla::NotificationData)),
 		this, SLOT(notifyParent(Scintilla::NotificationData)));
@@ -339,12 +341,12 @@ void ScintillaEditBase::mousePressEvent(QMouseEvent *event)
 
 void ScintillaEditBase::mouseReleaseEvent(QMouseEvent *event)
 {
-	Point point = PointFromQPoint(event->pos());
+	const QPoint point = event->pos();
 	if (event->button() == Qt::LeftButton)
-		sqt->ButtonUpWithModifiers(point, time.elapsed(), ModifiersOfKeyboard());
+		sqt->ButtonUpWithModifiers(PointFromQPoint(point), time.elapsed(), ModifiersOfKeyboard());
 
-	int pos = send(SCI_POSITIONFROMPOINT, point.x, point.y);
-	sptr_t line = send(SCI_LINEFROMPOSITION, pos);
+	const sptr_t pos = send(SCI_POSITIONFROMPOINT, point.x(), point.y());
+	const sptr_t line = send(SCI_LINEFROMPOSITION, pos);
 	int modifiers = QApplication::keyboardModifiers();
 
 	emit textAreaClicked(line, modifiers);
@@ -440,7 +442,7 @@ void ScintillaEditBase::dropEvent(QDropEvent *event)
 
 bool ScintillaEditBase::IsHangul(const QChar qchar)
 {
-	int unicode = (int)qchar.unicode();
+	unsigned int unicode = qchar.unicode();
 	// Korean character ranges used for preedit chars.
 	// http://www.programminginkorean.com/programming/hangul-in-unicode/
 	const bool HangulJamo = (0x1100 <= unicode && unicode <= 0x11FF);
@@ -452,11 +454,11 @@ bool ScintillaEditBase::IsHangul(const QChar qchar)
 				HangulJamoExtendedA || HangulJamoExtendedB;
 }
 
-void ScintillaEditBase::MoveImeCarets(int offset)
+void ScintillaEditBase::MoveImeCarets(Scintilla::Position offset)
 {
 	// Move carets relatively by bytes
 	for (size_t r=0; r < sqt->sel.Count(); r++) {
-		int positionInsert = sqt->sel.Range(r).Start().Position();
+		const Sci::Position positionInsert = sqt->sel.Range(r).Start().Position();
 		sqt->sel.Range(r).caret.SetPosition(positionInsert + offset);
 		sqt->sel.Range(r).anchor.SetPosition(positionInsert + offset);
  	}
@@ -468,12 +470,12 @@ void ScintillaEditBase::DrawImeIndicator(int indicator, int len)
 	// Draw an indicator on the character before caret by the character bytes of len
 	// so it should be called after InsertCharacter().
 	// It does not affect caret positions.
-	if (indicator < 8 || indicator > INDICATOR_MAX) {
+	if (indicator < INDICATOR_CONTAINER || indicator > INDICATOR_MAX) {
 		return;
 	}
 	sqt->pdoc->DecorationSetCurrentIndicator(indicator);
 	for (size_t r=0; r< sqt-> sel.Count(); r++) {
-		int positionInsert = sqt->sel.Range(r).Start().Position();
+		const Sci::Position positionInsert = sqt->sel.Range(r).Start().Position();
 		sqt->pdoc->DecorationFillRange(positionInsert - len, 1, len);
 	}
 }
@@ -558,10 +560,10 @@ void ScintillaEditBase::inputMethodEvent(QInputMethodEvent *event)
 
 	if (!event->commitString().isEmpty()) {
 		const QString &commitStr = event->commitString();
-		const unsigned int commitStrLen = commitStr.length();
+		const int commitStrLen = commitStr.length();
 
-		for (unsigned int i = 0; i < commitStrLen;) {
-			const unsigned int ucWidth = commitStr.at(i).isHighSurrogate() ? 2 : 1;
+		for (int i = 0; i < commitStrLen;) {
+			const int ucWidth = commitStr.at(i).isHighSurrogate() ? 2 : 1;
 			const QString oneCharUTF16 = commitStr.mid(i, ucWidth);
 			const QByteArray oneChar = sqt->BytesForDocument(oneCharUTF16);
 
@@ -571,7 +573,7 @@ void ScintillaEditBase::inputMethodEvent(QInputMethodEvent *event)
 
 	} else if (!event->preeditString().isEmpty()) {
 		const QString preeditStr = event->preeditString();
-		const unsigned int preeditStrLen = preeditStr.length();
+		const int preeditStrLen = preeditStr.length();
 		if (preeditStrLen == 0) {
 			sqt->ShowCaretAtCurrentPosition();
 			return;
@@ -583,8 +585,8 @@ void ScintillaEditBase::inputMethodEvent(QInputMethodEvent *event)
 
 		std::vector<int> imeIndicator = MapImeIndicators(event);
 
-		for (unsigned int i = 0; i < preeditStrLen;) {
-			const unsigned int ucWidth = preeditStr.at(i).isHighSurrogate() ? 2 : 1;
+		for (int i = 0; i < preeditStrLen;) {
+			const int ucWidth = preeditStr.at(i).isHighSurrogate() ? 2 : 1;
 			const QString oneCharUTF16 = preeditStr.mid(i, ucWidth);
 			const QByteArray oneChar = sqt->BytesForDocument(oneCharUTF16);
 			const int oneCharLen = oneChar.length();
@@ -598,7 +600,7 @@ void ScintillaEditBase::inputMethodEvent(QInputMethodEvent *event)
 		// Move IME carets.
 		int imeCaretPos = GetImeCaretPos(event);
 		int imeEndToImeCaretU16 = imeCaretPos - preeditStrLen;
-		int imeCaretPosDoc = sqt->pdoc->GetRelativePositionUTF16(sqt->CurrentPosition(), imeEndToImeCaretU16);
+		const Sci::Position imeCaretPosDoc = sqt->pdoc->GetRelativePositionUTF16(sqt->CurrentPosition(), imeEndToImeCaretU16);
 
 		MoveImeCarets(- sqt->CurrentPosition() + imeCaretPosDoc);
 
@@ -622,8 +624,8 @@ void ScintillaEditBase::inputMethodEvent(QInputMethodEvent *event)
 
 QVariant ScintillaEditBase::inputMethodQuery(Qt::InputMethodQuery query) const
 {
-	int pos = send(SCI_GETCURRENTPOS);
-	int line = send(SCI_LINEFROMPOSITION, pos);
+	const Scintilla::Position pos = send(SCI_GETCURRENTPOS);
+	const Scintilla::Position line = send(SCI_LINEFROMPOSITION, pos);
 
 	switch (query) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
@@ -631,19 +633,19 @@ QVariant ScintillaEditBase::inputMethodQuery(Qt::InputMethodQuery query) const
 		// ImMicroFocus. Its the same value (2) and same description.
 		case Qt::ImCursorRectangle:
 		{
-			int startPos = (preeditPos >= 0) ? preeditPos : pos;
-			Point pt = sqt->LocationFromPosition(startPos);
-			int width = send(SCI_GETCARETWIDTH);
-			int height = send(SCI_TEXTHEIGHT, line);
-			return QRect(pt.x, pt.y, width, height);
+			const Scintilla::Position startPos = (preeditPos >= 0) ? preeditPos : pos;
+			const Point pt = sqt->LocationFromPosition(startPos);
+			const int width = static_cast<int>(send(SCI_GETCARETWIDTH));
+			const int height = static_cast<int>(send(SCI_TEXTHEIGHT, line));
+			return QRectF(pt.x, pt.y, width, height).toRect();
 		}
 #else
 		case Qt::ImMicroFocus:
 		{
-			int startPos = (preeditPos >= 0) ? preeditPos : pos;
-			Point pt = sqt->LocationFromPosition(startPos);
-			int width = send(SCI_GETCARETWIDTH);
-			int height = send(SCI_TEXTHEIGHT, line);
+			const Scintilla::Position startPos = (preeditPos >= 0) ? preeditPos : pos;
+			const Point pt = sqt->LocationFromPosition(startPos);
+			const int width = static_cast<int>(send(SCI_GETCARETWIDTH));
+			const int height = static_cast<int>(send(SCI_TEXTHEIGHT, line));
 			return QRect(pt.x, pt.y, width, height);
 		}
 #endif
@@ -651,37 +653,26 @@ QVariant ScintillaEditBase::inputMethodQuery(Qt::InputMethodQuery query) const
 		case Qt::ImFont:
 		{
 			char fontName[64];
-			int style = send(SCI_GETSTYLEAT, pos);
-			int len = sends(SCI_STYLEGETFONT, style, fontName);
-			int size = send(SCI_STYLEGETSIZE, style);
-			bool italic = send(SCI_STYLEGETITALIC, style);
-			int weight = send(SCI_STYLEGETBOLD, style) ? QFont::Bold : -1;
+			const sptr_t style = send(SCI_GETSTYLEAT, pos);
+			const int len = static_cast<int>(sends(SCI_STYLEGETFONT, style, fontName));
+			const int size = static_cast<int>(send(SCI_STYLEGETSIZE, style));
+			const bool italic = send(SCI_STYLEGETITALIC, style);
+			const int weight = send(SCI_STYLEGETBOLD, style) ? QFont::Bold : -1;
 			return QFont(QString::fromUtf8(fontName, len), size, weight, italic);
 		}
 
 		case Qt::ImCursorPosition:
 		{
-			int paraStart = sqt->pdoc->ParaUp(pos);
-			return pos - paraStart;
+			const Scintilla::Position paraStart = sqt->pdoc->ParaUp(pos);
+			return QVariant(static_cast<int>(pos - paraStart));
 		}
 
 		case Qt::ImSurroundingText:
 		{
-			int paraStart = sqt->pdoc->ParaUp(pos);
-			int paraEnd = sqt->pdoc->ParaDown(pos);
-			QVarLengthArray<char,1024> buffer(paraEnd - paraStart + 1);
-
-			Sci_CharacterRange charRange{};
-			charRange.cpMin = paraStart;
-			charRange.cpMax = paraEnd;
-
-			Sci_TextRange textRange{};
-			textRange.chrg = charRange;
-			textRange.lpstrText = buffer.data();
-
-			send(SCI_GETTEXTRANGE, 0, reinterpret_cast<sptr_t>(&textRange));
-
-			return sqt->StringFromDocument(buffer.constData());
+			const Scintilla::Position paraStart = sqt->pdoc->ParaUp(pos);
+			const Scintilla::Position paraEnd = sqt->pdoc->ParaDown(pos);
+			const std::string buffer = sqt->RangeText(paraStart, paraEnd);
+			return sqt->StringFromDocument(buffer.c_str());
 		}
 
 		case Qt::ImCurrentSelection:
@@ -738,7 +729,7 @@ void ScintillaEditBase::notifyParent(NotificationData scn)
 			const bool added = FlagSet(scn.modificationType, ModificationFlags::InsertText);
 			const bool deleted = FlagSet(scn.modificationType, ModificationFlags::DeleteText);
 
-			int length = send(SCI_GETTEXTLENGTH);
+			const Scintilla::Position length = send(SCI_GETTEXTLENGTH);
 			bool firstLineAdded = (added && length == 1) ||
 			                      (deleted && length == 0);
 
