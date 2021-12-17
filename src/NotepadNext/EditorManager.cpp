@@ -71,6 +71,19 @@ ScintillaNext *EditorManager::createEditorFromFile(const QString &filePath)
     return editor;
 }
 
+ScintillaNext *EditorManager::cloneEditor(ScintillaNext *editor)
+{
+    ScintillaNext *clonedEditor = new ScintillaNext(editor->getBuffer());
+    QPointer<ScintillaNext> pointer = QPointer<ScintillaNext>(clonedEditor);
+    editors.append(pointer);
+
+    setupEditor(clonedEditor);
+
+    emit editorCreated(clonedEditor);
+
+    return clonedEditor;
+}
+
 ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
 {
     QFileInfo newInfo(filePath);
