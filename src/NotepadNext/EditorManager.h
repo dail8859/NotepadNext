@@ -35,6 +35,7 @@ public:
 
     ScintillaNext *createEmptyEditor(const QString &name);
     ScintillaNext *createEditorFromFile(const QString &filePath);
+    ScintillaNext *cloneEditor(ScintillaNext *editor);
 
     ScintillaNext *getEditorByFilePath(const QString &filePath);
 
