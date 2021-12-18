@@ -39,7 +39,7 @@ const int MARK_HIDELINESUNDERLINE = 21;
 EditorManager::EditorManager(QObject *parent) : QObject(parent)
 {
     connect(this, &EditorManager::editorCreated, [=](ScintillaNext *editor) {
-        connect(editor, &ScintillaNext::destroyed, [=]() {
+        connect(editor, &ScintillaNext::closed, [=]() {
             emit editorClosed(editor);
         });
     });
@@ -47,7 +47,7 @@ EditorManager::EditorManager(QObject *parent) : QObject(parent)
 
 ScintillaNext *EditorManager::createEmptyEditor(const QString &name)
 {
-    ScintillaNext *editor = new ScintillaNext(new ScintillaBuffer(name));
+    ScintillaNext *editor = new ScintillaNext(name);
     QPointer<ScintillaNext> pointer = QPointer<ScintillaNext>(editor);
     editors.append(pointer);
 
@@ -60,7 +60,7 @@ ScintillaNext *EditorManager::createEmptyEditor(const QString &name)
 
 ScintillaNext *EditorManager::createEditorFromFile(const QString &filePath)
 {
-    ScintillaNext *editor = new ScintillaNext(ScintillaBuffer::fromFile(filePath));
+    ScintillaNext *editor = ScintillaNext::fromFile(filePath);
     QPointer<ScintillaNext> pointer = QPointer<ScintillaNext>(editor);
     editors.append(pointer);
 
@@ -73,7 +73,7 @@ ScintillaNext *EditorManager::createEditorFromFile(const QString &filePath)
 
 ScintillaNext *EditorManager::cloneEditor(ScintillaNext *editor)
 {
-    ScintillaNext *clonedEditor = new ScintillaNext(editor->getBuffer());
+    ScintillaNext *clonedEditor = new ScintillaNext("Clone");
     QPointer<ScintillaNext> pointer = QPointer<ScintillaNext>(clonedEditor);
     editors.append(pointer);
 
@@ -92,7 +92,7 @@ ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
     purgeOldEditorPointers();
 
     foreach (ScintillaNext *editor, editors) {
-        if (editor->isFile() && editor->fileInfo() == newInfo) {
+        if (editor->isFile() && editor->getFileInfo() == newInfo) {
             return editor;
         }
     }

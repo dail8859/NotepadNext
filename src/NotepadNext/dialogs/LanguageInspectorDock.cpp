@@ -30,6 +30,8 @@
 #include "ColorPickerDelegate.h"
 #include "ComboBoxDelegate.h"
 
+#include "ScintillaNext.h"
+
 static QSpinBox *FontSizeSpinBoxFactory()
 {
     QSpinBox *editor = new QSpinBox();
@@ -59,9 +61,9 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
 
     connect(dockedEditor, &DockedEditor::editorActivated, this, &LanguageInspectorDock::updateInformation);
     connect(dockedEditor, &DockedEditor::editorAdded, [=](ScintillaNext *editor) {
-        connect(editor->getBuffer(), &ScintillaBuffer::lexer_changed, [=](){
-            updateInformation(editor);
-        });
+        //connect(editor->getBuffer(), &ScintillaBuffer::lexer_changed, [=](){
+        //    updateInformation(editor);
+        //});
     });
     connect(this, &LanguageInspectorDock::visibilityChanged, [=](bool visible) {
         if (visible) {
