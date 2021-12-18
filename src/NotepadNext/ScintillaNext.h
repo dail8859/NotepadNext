@@ -21,7 +21,10 @@
 #define SCINTILLANEXT_H
 
 #include "ScintillaEdit.h"
-#include "ScintillaBuffer.h"
+
+#include <QDateTime>
+#include <QFile>
+#include <QFileInfo>
 
 
 class ScintillaNext : public ScintillaEdit
@@ -29,7 +32,8 @@ class ScintillaNext : public ScintillaEdit
     Q_OBJECT
 
 public:
-    explicit ScintillaNext(ScintillaBuffer *buffer = Q_NULLPTR, QWidget *parent = Q_NULLPTR);
+    explicit ScintillaNext(QString name, QWidget *parent = Q_NULLPTR);
+    static ScintillaNext *fromFile(const QString &filePath);
 
     template<typename Func>
     void forEachMatch(const QString &text, Func callback) { forEachMatch(text.toUtf8(), callback); }
@@ -37,20 +41,25 @@ public:
     template<typename Func>
     void forEachMatch(const QByteArray &byteArray, Func callback);
 
-    bool isSavedToDisk();
     bool isFile();
-    QFileInfo fileInfo();
-    QString getName();
+    bool isSavedToDisk();
     QString canonicalFilePath();
     QString suffix();
+    QFileInfo getFileInfo() const { return fileInfo; }
 
-    ScintillaBuffer *getBuffer() const { return buffer; }
+    QString getName() const { return name; }
 
     enum FileStateChange {
         NoChange,
         Modified,
         Deleted,
         Restored,
+    };
+
+    enum BufferType {
+        Temporary = 0, // A temporary buffer, e.g. "New 1"
+        File = 1, // Buffer tied to a file on the file system
+        FileMissing = 2, // Buffer with a missing file on the file system
     };
 
     QString languageName;
@@ -75,8 +84,19 @@ protected:
     void dropEvent(QDropEvent *event) override;
 
 private:
-    ScintillaBuffer *buffer = Q_NULLPTR;
+    QString name;
+    BufferType bufferType = BufferType::Temporary;
+    QFileInfo fileInfo;
+    QDateTime modifiedTime;
+
+    bool readFromDisk(QFile &file);
+    FileStateChange checkForBufferStateChange();
+    QDateTime fileTimestamp();
+    void updateTimestamp();
+    void setFileInfo(const QString &filePath);
 };
+
+
 
 // Stick this in the header file...because C++, that's why
 template<typename Func>
