@@ -685,7 +685,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
     bool wasInitialState = isInInitialState();
     const ScintillaNext *mostRecentEditor = Q_NULLPTR;
 
-    foreach (const QString &filePath , fileNames) {
+    for (const QString &filePath : fileNames) {
         qInfo(qUtf8Printable(filePath));
 
         // Search currently open editors to see if it is already open
@@ -738,7 +738,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
 
 bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
 {
-    foreach (ScintillaNext *editor, editors) {
+    for (ScintillaNext *editor : editors) {
         if (!editor->isSavedToDisk()) {
             // Switch to it
             dockedEditor->switchToEditor(editor);
@@ -892,7 +892,7 @@ void MainWindow::closeAllFiles(bool forceClose = false)
     }
 
     // Ask the manager to close the editors the dockedEditor knows about
-    foreach (ScintillaNext *editor, dockedEditor->editors()) {
+    for (ScintillaNext *editor : dockedEditor->editors()) {
         editor->close();
     }
 
@@ -908,7 +908,7 @@ void MainWindow::closeAllExceptActive()
     editors.removeOne(e);
 
     if (checkEditorsBeforeClose(editors)) {
-        foreach (ScintillaNext *editor, editors) {
+        for (ScintillaNext *editor : editors) {
             editor->close();
         }
     }
@@ -925,7 +925,7 @@ void MainWindow::closeAllToLeft()
     }
 
     if (checkEditorsBeforeClose(editors)) {
-        foreach (ScintillaNext *editor, editors) {
+        for (ScintillaNext *editor : editors) {
             editor->close();
         }
     }
@@ -943,7 +943,7 @@ void MainWindow::closeAllToRight()
     }
 
     if (checkEditorsBeforeClose(editors)) {
-        foreach (ScintillaNext *editor, editors) {
+        for (ScintillaNext *editor : editors) {
             editor->close();
         }
     }
@@ -1047,7 +1047,7 @@ void MainWindow::saveCopyAs(const QString &fileName)
 
 void MainWindow::saveAll()
 {
-    foreach (ScintillaNext *editor, dockedEditor->editors()) {
+    for (ScintillaNext *editor : dockedEditor->editors()) {
         saveFile(editor);
     }
 }
@@ -1105,7 +1105,7 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
 
 bool MainWindow::isAnyUnsaved()
 {
-    foreach (ScintillaNext *editor, dockedEditor->editors()) {
+    for (const ScintillaNext *editor : dockedEditor->editors()) {
         if (!editor->isSavedToDisk()) {
             return true;
         }
@@ -1183,7 +1183,7 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
 
     const QString language_name = editor->languageName;
 
-    foreach (QAction *action, languageActionGroup->actions()) {
+    for (QAction *action : languageActionGroup->actions()) {
         if (action->data().toString() == language_name) {
             action->setChecked(true);
             docType->setText(action->text());
@@ -1194,7 +1194,7 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
     }
 
     // The above loop did not set any action as checked, so make sure they are all unchecked now
-    foreach (QAction *action, languageActionGroup->actions()) {
+    for (QAction *action : languageActionGroup->actions()) {
         if (action->isChecked()) {
             action->setChecked(false);
         }
@@ -1588,7 +1588,7 @@ void MainWindow::dropEvent(QDropEvent *event)
         // Get the urls into a stringlist
         QStringList fileNames;
         auto urls = event->mimeData()->urls();
-        foreach(QUrl url, urls) {
+        for (const QUrl &url : urls) {
             if (url.isLocalFile()) {
                 fileNames.append(url.toLocalFile());
             }

@@ -81,7 +81,7 @@ void RecentFilesListManager::populateMenu(QMenu *menu)
     int i = 0;
 
     QList<QAction *> recentFileListActions;
-    foreach (const QString &file, recentFiles) {
+    for (const QString &file : recentFiles) {
         ++i;
         QAction *action = new QAction(QString("%1%2: %3").arg(i < 10 ? "&" : "").arg(i).arg(QDir::toNativeSeparators(file)), menu);
 

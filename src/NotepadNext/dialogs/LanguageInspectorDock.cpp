@@ -95,10 +95,10 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
 
     QList<ComboBoxItem> fontNames;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    foreach(const QString font, QFontDatabase::families()) {
+    for (const QString &font : QFontDatabase::families()) {
 #else
     QFontDatabase fontDatabase;
-    foreach(const QString font, fontDatabase.families()) {
+    for (const QString &font : fontDatabase.families()) {
 #endif
         fontNames.append(QPair<QString, QString>(font, font));
     }

@@ -113,7 +113,7 @@ void Macro::addMacroStep(Message message, uptr_t wParam, sptr_t lParam)
     }
 
 #ifdef QT_DEBUG
-    foreach (const MacroAction *ma, actions) {
+    for (const MacroAction *ma : actions) {
         qInfo("%s", qUtf8Printable(ma->toString()));
     }
 #endif
@@ -126,7 +126,7 @@ void Macro::replay(ScintillaNext *editor, int n) const
     editor->beginUndoAction();
 
     while (n > 0) {
-        foreach (const MacroAction *ma, actions) {
+        for (const MacroAction *ma : actions) {
             if (MessageHasString(ma->message)) {
                 editor->sends(static_cast<int>(ma->message), ma->wParam, ma->str->constBegin());
             }
