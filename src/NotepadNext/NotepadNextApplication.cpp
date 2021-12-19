@@ -57,15 +57,15 @@ NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     editorManager = new EditorManager(this);
     settings = new Settings(this);
 
-    connect(editorManager, &EditorManager::editorCreated, [=](ScintillaNext *editor) {
+    connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [=](ScintillaNext *editor) {
         if (editor->isFile()) {
-            recentFilesListManager->removeFile(editor->canonicalFilePath());
+            recentFilesListManager->removeFile(editor->getFilePath());
         }
     });
 
-    connect(editorManager, &EditorManager::editorClosed, [=](ScintillaNext *editor) {
+    connect(editorManager, &EditorManager::editorClosed, recentFilesListManager, [=](ScintillaNext *editor) {
         if (editor->isFile()) {
-            recentFilesListManager->addFile(editor->canonicalFilePath());
+            recentFilesListManager->addFile(editor->getFilePath());
         }
     });
 
@@ -74,7 +74,7 @@ NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
 
     recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
 
-    connect(this, &NotepadNextApplication::aboutToQuit, [=]() {
+    connect(this, &NotepadNextApplication::aboutToQuit, this, [=]() {
         QSettings qsettings;
         qsettings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
     });

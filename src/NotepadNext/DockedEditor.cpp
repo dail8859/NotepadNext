@@ -25,8 +25,6 @@
 
 #include "ScintillaNext.h"
 
-#include <QDir>
-
 
 class DockedEditorComponentsFactory : public ads::CDockComponentsFactory
 {
@@ -176,7 +174,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     // Set the tooltip based on the buffer
     if (editor->isFile()) {
-        dw->tabWidget()->setToolTip(QDir::toNativeSeparators(editor->canonicalFilePath()));
+        dw->tabWidget()->setToolTip(editor->getFilePath());
     }
     else {
         dw->tabWidget()->setToolTip(editor->getName());
@@ -221,7 +219,7 @@ void DockedEditor::renameEditor(ScintillaNext *editor)
             dockWidget->setWindowTitle(newName);
 
             if (editor->isFile()) {
-                dockWidget->tabWidget()->setToolTip(QDir::toNativeSeparators(editor->canonicalFilePath()));
+                dockWidget->tabWidget()->setToolTip(editor->getFilePath());
             }
             else {
                 dockWidget->tabWidget()->setToolTip(editor->getName());
