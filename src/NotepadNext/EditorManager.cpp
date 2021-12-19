@@ -91,7 +91,7 @@ ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
 
     purgeOldEditorPointers();
 
-    foreach (ScintillaNext *editor, editors) {
+    for (ScintillaNext *editor : editors) {
         if (editor->isFile() && editor->getFileInfo() == newInfo) {
             return editor;
         }

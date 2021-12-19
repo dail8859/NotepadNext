@@ -177,7 +177,7 @@ NppImporter::NppImporter(const QString &configPath, ScintillaEdit *_editor) :
 
     // Build a temporarly list of the key/value pairs
     QList<QPair<QString, const Language *>> sortedLanguages;
-    foreach (QString key, languages.keys()) {
+    for (const QString &key : languages.keys()) {
         sortedLanguages.append(qMakePair(key, &languages[key]));
     }
     // And sort it based on the values
@@ -186,7 +186,7 @@ NppImporter::NppImporter(const QString &configPath, ScintillaEdit *_editor) :
     });
 
     // Store the sorted keys
-    foreach (auto pair, sortedLanguages) {
+    for (const QPair<QString, const Language *> &pair : sortedLanguages) {
         sortedLanguageKeys.append(pair.first);
     }
 }

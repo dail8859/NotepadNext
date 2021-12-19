@@ -207,7 +207,7 @@ void NotepadNextApplication::applyArguments(const QStringList &args)
 
     parser.process(args);
 
-    foreach (const QString &file, parser.positionalArguments()) {
+    for (const QString &file : parser.positionalArguments()) {
         windows.first()->openFile(file);
     }
 }

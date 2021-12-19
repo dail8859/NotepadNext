@@ -35,7 +35,7 @@ QWidget *ComboBoxDelegate::createEditor(QWidget *parent, const QStyleOptionViewI
 
     QComboBox *comboBox = new QComboBox(parent);
 
-    foreach(const ComboBoxItem item, comboBoxItems) {
+    for(const ComboBoxItem &item : comboBoxItems) {
         comboBox->addItem(item.first, item.second);
     }
 
@@ -76,7 +76,7 @@ QSize ComboBoxDelegate::sizeHint(const QStyleOptionViewItem &option, const QMode
     int &width = maxStringSize.rwidth();
     int &height = maxStringSize.rheight();
 
-    foreach(const ComboBoxItem item, comboBoxItems) {
+    for(const ComboBoxItem &item : comboBoxItems) {
         QRect rect = fm.boundingRect(item.first);
 
         height = rect.height(); // Heights *should* all be the same

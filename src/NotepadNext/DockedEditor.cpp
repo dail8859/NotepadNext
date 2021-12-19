@@ -94,7 +94,7 @@ int DockedEditor::count() const
 QVector<ScintillaNext *> DockedEditor::editors() const
 {
     QVector<ScintillaNext *> editors;
-    foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
+    for (const ads::CDockWidget* dockWidget : m_DockManager->dockWidgetsMap()) {
         editors.append(qobject_cast<ScintillaNext *>(dockWidget->widget()));
     }
 
@@ -103,7 +103,7 @@ QVector<ScintillaNext *> DockedEditor::editors() const
 
 void DockedEditor::switchToEditor(const ScintillaNext *editor)
 {
-    foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
+    for (ads::CDockWidget* dockWidget : m_DockManager->dockWidgetsMap()) {
         auto dockedEditor = qobject_cast<ScintillaNext *>(dockWidget->widget());
 
         if (editor == dockedEditor) {
@@ -134,7 +134,7 @@ ads::CDockAreaWidget *DockedEditor::currentDockArea()
     }
 
     // Search the list for the one that has had the focus set
-    foreach (ads::CDockWidget* dockWidget, dockwidgets) {
+    for (ads::CDockWidget* dockWidget : dockwidgets) {
         if (dockWidget->property("focused").toBool()) {
             return dockWidget->dockAreaWidget();
         }
@@ -197,7 +197,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
 void DockedEditor::removeEditor(ScintillaNext *editor)
 {
-    foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
+    for (ads::CDockWidget* dockWidget : m_DockManager->dockWidgetsMap()) {
         ScintillaNext *editorToCheck = qobject_cast<ScintillaNext *>(dockWidget->widget());
 
         if (editor == editorToCheck) {
@@ -210,7 +210,7 @@ void DockedEditor::renameEditor(ScintillaNext *editor)
 {
     Q_ASSERT(editor != Q_NULLPTR);
 
-    foreach (ads::CDockWidget* dockWidget, m_DockManager->dockWidgetsMap()) {
+    for (ads::CDockWidget* dockWidget : m_DockManager->dockWidgetsMap()) {
         ScintillaNext *editorToCheck = qobject_cast<ScintillaNext *>(dockWidget->widget());
 
         if (editor == editorToCheck) {
