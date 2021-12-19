@@ -19,12 +19,13 @@
 #include "ScintillaNext.h"
 #include "uchardet.h"
 
+#include <QDir>
 #include <QMouseEvent>
 #include <QSaveFile>
 #include <QTextCodec>
 
 
-const int chunkSize = 1024 * 64; // Not sure what is best
+const int CHUNK_SIZE = 1024 * 64; // Not sure what is best
 
 
 static bool writeToDisk(const QByteArray &data, const QString &path)
@@ -57,31 +58,22 @@ ScintillaNext::ScintillaNext(QString name, QWidget *parent) :
 
 ScintillaNext *ScintillaNext::fromFile(const QString &filePath)
 {
-    QFile file(filePath);
     QFileInfo info(filePath);
 
-    // TODO: check permissions
+    // TODO: check file permissions
 
     if(!info.exists()) {
-        file.open(QIODevice::WriteOnly);
-        file.close();
+        return Q_NULLPTR;
     }
 
     ScintillaNext *editor = new ScintillaNext(info.fileName());
 
-    // TODO disable notifications
-    // modEventMask(SC_MOD_NONE)?
-
+    QFile file(filePath);
     bool readSuccessful = editor->readFromDisk(file);
 
     if (!readSuccessful) {
         delete editor;
         return Q_NULLPTR;
-    }
-
-    // Set readonly flag if it is not writable
-    if (!info.isWritable()) {
-        editor->setReadOnly(true);
     }
 
     editor->setFileInfo(filePath);
@@ -90,26 +82,28 @@ ScintillaNext *ScintillaNext::fromFile(const QString &filePath)
     return editor;
 }
 
-bool ScintillaNext::isSavedToDisk()
+bool ScintillaNext::isSavedToDisk() const
 {
     return bufferType != ScintillaNext::FileMissing && !modify();
 }
 
-bool ScintillaNext::isFile()
+bool ScintillaNext::isFile() const
 {
     return bufferType == ScintillaNext::File || bufferType == ScintillaNext::FileMissing;;
 }
 
-QString ScintillaNext::canonicalFilePath()
+QFileInfo ScintillaNext::getFileInfo() const
 {
     Q_ASSERT(isFile());
 
-    return fileInfo.canonicalFilePath();
+    return fileInfo;
 }
 
-QString ScintillaNext::suffix()
+QString ScintillaNext::getFilePath() const
 {
-    return fileInfo.suffix();
+    Q_ASSERT(isFile());
+
+    return QDir::toNativeSeparators(fileInfo.canonicalFilePath());
 }
 
 void ScintillaNext::close()
@@ -130,9 +124,6 @@ bool ScintillaNext::save()
     bool writeSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), fileInfo.filePath());
 
     if (writeSuccessful) {
-        // Make sure the read only flag is cleared
-        // this->set_read_only(false);
-
         setSavePoint();
         updateTimestamp();
     }
@@ -283,22 +274,28 @@ bool ScintillaNext::readFromDisk(QFile &file)
     // Turn off undo collection and block signals during loading
     setUndoCollection(false);
     blockSignals(true);
+    // TODO disable notifications
+    // modEventMask(SC_MOD_NONE)?
 
     QByteArray chunk;
     qint64 bytesRead;
-    int sciError = SC_STATUS_OK;
 
     QTextDecoder *decoder = nullptr;
     bool first_read = true;
     do {
         // Try to read as much as possible
-        chunk.resize(chunkSize);
-        bytesRead = file.read(chunk.data(), chunkSize);
+        chunk.resize(CHUNK_SIZE);
+        bytesRead = file.read(chunk.data(), CHUNK_SIZE);
 
         chunk.resize(bytesRead);
 
         qDebug("Read %d bytes", bytesRead);
 
+        // TODO: this needs moved out of here. Would make much more sense to have a class (or classes)
+        // responsible for handling low level situations like this to do things like:
+        // - determine encoding
+        // - determine space vs tabs
+        // - determine indentation size
         if (first_read) {
             first_read = false;
             bool hasByteOrderMark = QTextCodec::codecForUtfText(chunk, nullptr) != nullptr;
@@ -334,7 +331,9 @@ bool ScintillaNext::readFromDisk(QFile &file)
 
         QByteArray utf8_data = decoder->toUnicode(chunk).toUtf8();
         addText(utf8_data.size(), utf8_data.constData());
-    } while (!file.atEnd() && sciError == SC_STATUS_OK);
+
+
+    } while (!file.atEnd() && status() == SC_STATUS_OK);
 
     delete decoder;
 
@@ -343,9 +342,10 @@ bool ScintillaNext::readFromDisk(QFile &file)
     // Restore it back
     this->blockSignals(false);
     setUndoCollection(true);
+    // modEventMask(SC_MODEVENTMASKALL)?
 
-    if (sciError != SC_STATUS_OK) {
-        qWarning("something bad happend in document->add_data() %d", sciError);
+    if (status() != SC_STATUS_OK) {
+        qWarning("something bad happend in document->add_data() %d", status());
         return false;
     }
 

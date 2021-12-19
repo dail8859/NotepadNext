@@ -41,13 +41,12 @@ public:
     template<typename Func>
     void forEachMatch(const QByteArray &byteArray, Func callback);
 
-    bool isFile();
-    bool isSavedToDisk();
-    QString canonicalFilePath();
-    QString suffix();
-    QFileInfo getFileInfo() const { return fileInfo; }
+    bool isFile() const;
+    bool isSavedToDisk() const;
+    QFileInfo getFileInfo() const;
 
     QString getName() const { return name; }
+    QString getFilePath() const;
 
     enum FileStateChange {
         NoChange,
