@@ -34,23 +34,25 @@ int main(int argc, char *argv[])
     QApplication::setApplicationName("NotepadNext");
     QGuiApplication::setApplicationDisplayName("Notepad Next");
 
-    // Set some attributes
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
 
     // Default settings format
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
-    NotepadNextApplication app(argc, argv);
-
     // Log some debug info
     qInfo("=============================");
-    qInfo("%s (v%s)", qUtf8Printable(QApplication::applicationName()), qUtf8Printable(QApplication::applicationVersion()));
+    qInfo("%s v%s", qUtf8Printable(QApplication::applicationName()), qUtf8Printable(QApplication::applicationVersion()));
+    qInfo("Qt: %s", qVersion());
     qInfo("OS: %s", qUtf8Printable(QSysInfo::prettyProductName()));
     qInfo("CPU: %s", qUtf8Printable(QSysInfo::currentCpuArchitecture()));
     qInfo("File Path: %s", qUtf8Printable(QApplication::applicationFilePath()));
     qInfo("Arguments: %s", qUtf8Printable(QApplication::arguments().join(' ')));
     qInfo("=============================");
+
+    NotepadNextApplication app(argc, argv);
 
     if(app.isPrimary()) {
         app.initGui();
