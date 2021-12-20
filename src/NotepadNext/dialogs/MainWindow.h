@@ -143,7 +143,6 @@ private:
     QLabel *docPos;
     QLabel *unicodeType;
     QLabel *eolFormat;
-    QLabel *overType;
 
     //NppImporter *npp;
 
