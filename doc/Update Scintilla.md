@@ -2,4 +2,3 @@
 1. Copy new release of Scintilla into `src\scintilla`
 1. Run `python src\scintilla\qt\ScintillaEdit\WidgetGen.py`
 1. Update `src\scintilla.pri` as needed
-1. Diff `ScintillaDocument.cpp/h` and address any changes that need kept
