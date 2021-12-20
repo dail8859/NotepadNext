@@ -21,6 +21,7 @@
 #include "NotepadNextApplication.h"
 #include "RecentFilesListManager.h"
 #include "EditorManager.h"
+#include "LuaExtension.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
@@ -89,6 +90,7 @@ bool NotepadNextApplication::initGui()
 
     luaState = new LuaState();
     luaState->executeFile(":/scripts/init.lua");
+    LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
 
     // LuaBridge is not a long term solution
     // This is probably temporary, but it is quick and works
@@ -126,7 +128,7 @@ bool NotepadNextApplication::initGui()
 
     // If the application is activated (e.g. user switching to another program and them back) the focus
     // needs to be reset on whatever object previously had focus (e.g. the find dialog)
-    QObject::connect(this, &NotepadNextApplication::focusChanged, [&] (QWidget *old, QWidget *now) {
+    QObject::connect(this, &NotepadNextApplication::focusChanged, this, [&](QWidget *old, QWidget *now) {
         Q_UNUSED(old);
         if (now) {
             currentlyFocusedWidget = now;
@@ -190,8 +192,6 @@ QString NotepadNextApplication::getFileDialogFilter() const
 
     return filter;
 }
-
-
 
 void NotepadNextApplication::applyArguments(const QStringList &args)
 {

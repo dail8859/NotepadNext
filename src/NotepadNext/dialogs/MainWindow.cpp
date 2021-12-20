@@ -80,13 +80,9 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     // The windows editor manager that supports docking
     dockedEditor = new DockedEditor(this);
 
-    connect(dockedEditor, &DockedEditor::editorCloseRequested, [=](ScintillaNext *editor) {
-        closeFile(editor);
-    });
+    connect(dockedEditor, &DockedEditor::editorCloseRequested, this, [=](ScintillaNext *editor) { closeFile(editor); });
     connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::editorActivated);
 
-    // Set up the lua state and the extension. Need to intialize it after the first file was created
-    LuaExtension::Instance().Initialise(app->getLuaState()->L, Q_NULLPTR);
     connect(dockedEditor, &DockedEditor::editorActivated, [](ScintillaNext *editor) {
         LuaExtension::Instance().setEditor(editor);
     });
