@@ -60,12 +60,16 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
     DockedEditor *dockedEditor = parent->getDockedEditor();
 
     connect(dockedEditor, &DockedEditor::editorActivated, this, &LanguageInspectorDock::updateInformation);
-    connect(dockedEditor, &DockedEditor::editorAdded, [=](ScintillaNext *editor) {
-        //connect(editor->getBuffer(), &ScintillaBuffer::lexer_changed, [=](){
-        //    updateInformation(editor);
-        //});
+
+    connect(dockedEditor, &DockedEditor::editorAdded, this, [=](ScintillaNext *editor) {
+        ScintillaDocument *doc = editor->get_doc();
+
+        connect(doc, &ScintillaDocument::lexer_changed, editor, [=]() {
+            updateInformation(editor);
+        });
     });
-    connect(this, &LanguageInspectorDock::visibilityChanged, [=](bool visible) {
+
+    connect(this, &LanguageInspectorDock::visibilityChanged, this, [=](bool visible) {
         if (visible) {
             MainWindow *mw = qobject_cast<MainWindow *>(this->parent());
             updateInformation(mw->currentEditor());
