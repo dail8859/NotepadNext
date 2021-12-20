@@ -280,14 +280,3 @@ int ScintillaDocument::move_position_outside_char(int pos, int move_dir, bool ch
 int ScintillaDocument::get_character(int pos) {
     return (static_cast<Document *>(pdoc))->GetCharacterAndWidth(pos, nullptr);
 }
-
-QByteArray ScintillaDocument::get_character_pointer()
-{
-    Document *doc = static_cast<Document *>(pdoc);
-    return QByteArray::fromRawData(doc->BufferPointer(), doc->Length());
-}
-
-int ScintillaDocument::add_data(const char *s, int length)
-{
-    return (static_cast<Document *>(pdoc))->AddData(s, length);
-}
