@@ -104,6 +104,8 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
+    editor->clearCmdKey(SCK_INSERT);
+
     setFoldMarkers(editor, "box");
     editor->setIdleStyling(SC_IDLESTYLING_TOVISIBLE);
     editor->setEndAtLastLine(false);

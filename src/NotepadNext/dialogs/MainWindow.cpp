@@ -780,22 +780,10 @@ void MainWindow::setupStatusBar()
     ui->statusBar->addPermanentWidget(eolFormat, 0);
     unicodeType = new StatusLabel(125);
     ui->statusBar->addPermanentWidget(unicodeType, 0);
-    overType = new StatusLabel(25);
-    ui->statusBar->addPermanentWidget(overType, 0);
 
     docType->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(docType, &QLabel::customContextMenuRequested, [=](const QPoint &pos) {
         ui->menuLanguage->popup(docType->mapToGlobal(pos));
-    });
-
-    connect(qobject_cast<StatusLabel*>(overType), &StatusLabel::clicked, [=]() {
-        ScintillaNext *editor = dockedEditor->getCurrentEditor();
-        bool ot = editor->overtype();
-        if (ot)
-            overType->setText("INS");
-        else
-            overType->setText("OVR");
-        editor->setOvertype(!ot);
     });
 
     eolFormat->setContextMenuPolicy(Qt::CustomContextMenu);
