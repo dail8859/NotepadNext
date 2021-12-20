@@ -1307,9 +1307,9 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
     app->getLuaState()->execute(QString("languageName = \"%1\"").arg(QString(languageName)).toLatin1().constData());
     const QString lexer = app->getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
 
+    editor->languageName = languageName;
     auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
     editor->setILexer((sptr_t) lexerInstance);
-    editor->languageName = languageName;
 
     app->getLuaState()->execute(R"(
         local L = languages[languageName]
