@@ -52,8 +52,6 @@ struct luabridge::Stack <QString const&>
 NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     : SingleApplication(argc, argv, true, opts)
 {
-    qInfo(Q_FUNC_INFO);
-
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(this);
     settings = new Settings(this);
