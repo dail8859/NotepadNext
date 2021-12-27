@@ -555,13 +555,17 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         // A bit after startup, see if we need to automatically check for an update
         QTimer::singleShot(15000, this, [=]() {
             QSettings settings;
-            QDateTime dt = settings.value("App/LastUpdateCheck", false).toDateTime();
+            QDateTime dt = settings.value("App/LastUpdateCheck", QDateTime::currentDateTime()).toDateTime();
 
-            if (dt.addDays(7) < QDateTime::currentDateTime()) {
-                checkForUpdates(true);
+            if (dt.isValid()) {
+                qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
+
+                if (dt.addDays(7) < QDateTime::currentDateTime()) {
+                    checkForUpdates(true);
+                }
             }
             else {
-                qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
+                qWarning("Invalid datetime for App/LastUpdateCheck");
             }
         });
     }
