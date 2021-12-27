@@ -222,7 +222,41 @@ bool ScintillaNext::rename(const QString &newFilePath)
 
 ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
 {
-    return checkForBufferStateChange();
+    if (bufferType == BufferType::Temporary) {
+        return FileStateChange::NoChange;
+    }
+    else if (bufferType == BufferType::File) {
+        // Make sure it exists
+        fileInfo.refresh(); // refresh else exists() fails to notice missing file
+        if (!fileInfo.exists()) {
+            bufferType = BufferType::FileMissing;
+            emit savePointChanged(false);
+            return FileStateChange::Deleted;
+        }
+
+        // See if the timestamp changed
+        if (modifiedTime != fileTimestamp()) {
+            return FileStateChange::Modified;
+        }
+        else {
+            return FileStateChange::NoChange;
+        }
+    }
+    else if (bufferType == BufferType::FileMissing) {
+        // See if it reappeared
+        fileInfo.refresh();
+        if (fileInfo.exists()) {
+            bufferType = BufferType::File;
+            return FileStateChange::Restored;
+        }
+        else {
+            return FileStateChange::NoChange;
+        }
+    }
+
+    qInfo("type() = %d", bufferType);
+    Q_ASSERT(false);
+    return FileStateChange::NoChange;
 }
 
 bool ScintillaNext::moveToTrash()
@@ -298,7 +332,6 @@ bool ScintillaNext::readFromDisk(QFile &file)
         // - determine indentation size
         if (first_read) {
             first_read = false;
-            bool hasByteOrderMark = QTextCodec::codecForUtfText(chunk, nullptr) != nullptr;
 
             // Try uchardet library first
             uchardet_t ud = uchardet_new();
@@ -331,8 +364,6 @@ bool ScintillaNext::readFromDisk(QFile &file)
 
         QByteArray utf8_data = decoder->toUnicode(chunk).toUtf8();
         addText(utf8_data.size(), utf8_data.constData());
-
-
     } while (!file.atEnd() && status() == SC_STATUS_OK);
 
     delete decoder;
@@ -355,45 +386,6 @@ bool ScintillaNext::readFromDisk(QFile &file)
     }
 
     return true;
-}
-
-ScintillaNext::FileStateChange ScintillaNext::checkForBufferStateChange()
-{
-    if (bufferType == BufferType::Temporary) {
-        return FileStateChange::NoChange;
-    }
-    else if (bufferType == BufferType::File) {
-        // Make sure it exists
-        fileInfo.refresh(); // refresh else exists() fails to notice missing file
-        if (!fileInfo.exists()) {
-            bufferType = BufferType::FileMissing;
-            emit savePointChanged(false);
-            return FileStateChange::Deleted;
-        }
-
-        // See if the timestamp changed
-        if (modifiedTime != fileTimestamp()) {
-            return FileStateChange::Modified;
-        }
-        else {
-            return FileStateChange::NoChange;
-        }
-    }
-    else if (bufferType == BufferType::FileMissing) {
-        // See if it reappeared
-        fileInfo.refresh();
-        if (fileInfo.exists()) {
-            bufferType = BufferType::File;
-            return FileStateChange::Restored;
-        }
-        else {
-            return FileStateChange::NoChange;
-        }
-    }
-
-    qInfo("type() = %d", bufferType);
-    Q_ASSERT(false);
-    return FileStateChange::NoChange;
 }
 
 QDateTime ScintillaNext::fileTimestamp()

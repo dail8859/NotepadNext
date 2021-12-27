@@ -89,7 +89,6 @@ private:
     QDateTime modifiedTime;
 
     bool readFromDisk(QFile &file);
-    FileStateChange checkForBufferStateChange();
     QDateTime fileTimestamp();
     void updateTimestamp();
     void setFileInfo(const QString &filePath);

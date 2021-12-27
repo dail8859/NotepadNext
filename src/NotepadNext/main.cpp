@@ -42,6 +42,8 @@ int main(int argc, char *argv[])
     // Default settings format
     QSettings::setDefaultFormat(QSettings::IniFormat);
 
+    NotepadNextApplication app(argc, argv);
+
     // Log some debug info
     qInfo("=============================");
     qInfo("%s v%s", qUtf8Printable(QApplication::applicationName()), qUtf8Printable(QApplication::applicationVersion()));
@@ -51,8 +53,6 @@ int main(int argc, char *argv[])
     qInfo("File Path: %s", qUtf8Printable(QApplication::applicationFilePath()));
     qInfo("Arguments: %s", qUtf8Printable(QApplication::arguments().join(' ')));
     qInfo("=============================");
-
-    NotepadNextApplication app(argc, argv);
 
     if(app.isPrimary()) {
         app.initGui();
