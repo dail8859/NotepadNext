@@ -529,7 +529,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
         luaConsoleDock->hide();
         addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
-        ui->menuHelp->addSeparator()->setText("pickles");
         ui->menuHelp->addAction(luaConsoleDock->toggleViewAction());
     }
 
@@ -563,9 +562,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
                 if (dt.addDays(7) < QDateTime::currentDateTime()) {
                     checkForUpdates(true);
                 }
-            }
-            else {
-                qWarning("Invalid datetime for App/LastUpdateCheck");
             }
         });
     }
