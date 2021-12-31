@@ -77,7 +77,6 @@ SOURCES += \
     QuickFindWidget.cpp \
     RecentFilesListManager.cpp \
     SciIFaceTable.cpp \
-    ScintillaBuffer.cpp \
     ScintillaNext.cpp \
     Settings.cpp \
     SpinBoxDelegate.cpp \
@@ -123,7 +122,6 @@ HEADERS += \
     QuickFindWidget.h \
     RecentFilesListManager.h \
     SciIFaceTable.h \
-    ScintillaBuffer.h \
     ScintillaNext.h \
     Settings.h \
     SpinBoxDelegate.h \

@@ -13,9 +13,6 @@ useStlAlgorithm
 // Some non-explicit constructors are used for conversions or are private to lexers
 noExplicitConstructor
 
-// The styler parameter is not const as LexAccessor::operator[] is not const
-constParameter:lexilla/lexlib/StyleContext.cxx
-
 // The performance cost of by-value passing is often small and using a reference decreases
 // code legibility.
 passedByValue
@@ -30,25 +27,25 @@ unreadVariable:lexilla/lexers/LexBaan.cxx
 constParameter:lexilla/lexers/LexBash.cxx
 uninitMemberVar:lexilla/lexers/LexBash.cxx
 variableScope:lexilla/lexers/LexBash.cxx
-variableScope:lexilla/lexers/LexBatch.cxx
-knownConditionTrueFalse:lexilla/lexers/LexBatch.cxx
 variableScope:lexilla/lexers/LexCmake.cxx
 knownConditionTrueFalse:lexilla/lexers/LexCmake.cxx
 constParameter:lexilla/lexers/LexCLW.cxx
 constParameter:lexilla/lexers/LexCoffeeScript.cxx
+knownConditionTrueFalse:lexilla/lexers/LexCoffeeScript.cxx
 constParameter:lexilla/lexers/LexCPP.cxx
 variableScope:lexilla/lexers/LexCSS.cxx
 variableScope:lexilla/lexers/LexDataflex.cxx
 knownConditionTrueFalse:lexilla/lexers/LexECL.cxx
 variableScope:lexilla/lexers/LexErlang.cxx
-knownConditionTrueFalse:lexilla/lexers/LexErlang.cxx
 knownConditionTrueFalse:lexilla/lexers/LexEScript.cxx
 constParameter:lexilla/lexers/LexFortran.cxx
 redundantCondition:lexilla/lexers/LexFSharp.cxx
 knownConditionTrueFalse:lexilla/lexers/LexFSharp.cxx
+constParameter:lexilla/lexers/LexGDScript.cxx
 variableScope:lexilla/lexers/LexGui4Cli.cxx
 constParameter:lexilla/lexers/LexHaskell.cxx
 constParameter:lexilla/lexers/LexHex.cxx
+knownConditionTrueFalse:lexilla/lexers/LexHex.cxx
 constParameter:lexilla/lexers/LexHTML.cxx
 variableScope:lexilla/lexers/LexInno.cxx
 variableScope:lexilla/lexers/LexJulia.cxx
@@ -67,6 +64,7 @@ variableScope:lexilla/lexers/LexMSSQL.cxx
 shadowArgument:lexilla/lexers/LexMySQL.cxx
 constParameter:lexilla/lexers/LexNim.cxx
 constParameter:lexilla/lexers/LexNimrod.cxx
+knownConditionTrueFalse:lexilla/lexers/LexNimrod.cxx
 variableScope:lexilla/lexers/LexNimrod.cxx
 variableScope:lexilla/lexers/LexNsis.cxx
 knownConditionTrueFalse:lexilla/lexers/LexNsis.cxx
@@ -96,17 +94,19 @@ constParameter:lexilla/lexers/LexTeX.cxx
 variableScope:lexilla/lexers/LexTeX.cxx
 knownConditionTrueFalse:lexilla/lexers/LexTxt2tags.cxx
 constParameter:lexilla/lexers/LexVerilog.cxx
-knownConditionTrueFalse:lexilla/lexers/LexVerilog.cxx
 constParameter:lexilla/lexers/LexVHDL.cxx
 shadowVariable:lexilla/lexers/LexVHDL.cxx
 unreadVariable:lexilla/lexers/LexVHDL.cxx
 variableScope:lexilla/lexers/LexVHDL.cxx
 unreadVariable:lexilla/lexers/LexVisualProlog.cxx
+unreadVariable:lexilla/lexers/LexX12.cxx
 constParameter:lexilla/lexers/LexYAML.cxx
+knownConditionTrueFalse:lexilla/lexers/LexYAML.cxx
 
 // These are due to Accessor::IndentAmount not declaring the callback as taking a const.
 // Changing this could cause problems for downstream projects.
 constParameterCallback:lexilla/lexers/LexEiffel.cxx
+constParameterCallback:lexilla/lexers/LexGDScript.cxx
 constParameterCallback:lexilla/lexers/LexPython.cxx
 constParameterCallback:lexilla/lexers/LexScriptol.cxx
 constParameterCallback:lexilla/lexers/LexVB.cxx
@@ -130,6 +130,7 @@ constVariable:lexilla/lexers/LexPS.cxx
 constVariable:lexilla/lexers/LexPascal.cxx
 constVariable:lexilla/lexers/LexR.cxx
 constVariable:lexilla/lexers/LexRebol.cxx
+constVariable:lexilla/lexers/LexRuby.cxx
 constVariable:lexilla/lexers/LexSorcus.cxx
 constVariable:lexilla/lexers/LexStata.cxx
 constVariable:lexilla/lexers/LexTACL.cxx
@@ -139,8 +140,14 @@ constVariable:lexilla/lexers/LexTAL.cxx
 // bp.itBracket not actually redundant as needed by return statements
 redundantAssignment:lexilla/lexers/LexCPP.cxx
 
+// Suppress consting argv in main as non-const is standard
+constParameter:lexilla/examples/CheckLexilla/CheckLexilla.c
+
 // Suppress everything in test example files
 *:lexilla/test/examples/*
 
 // Suppress everything in catch.hpp as won't be changing
 *:lexilla/test/unit/catch.hpp
+// cppcheck gives up inside catch.hpp
+*:lexilla/test/unit/UnitTester.cxx
+*:lexilla/test/unit/unitTest.cxx

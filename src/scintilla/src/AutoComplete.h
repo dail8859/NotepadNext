@@ -43,6 +43,11 @@ public:
 	Scintilla::Ordering autoSort;
 
 	AutoComplete();
+	// Deleted so AutoComplete objects can not be copied.
+	AutoComplete(const AutoComplete &) = delete;
+	AutoComplete(AutoComplete &&) = delete;
+	AutoComplete &operator=(const AutoComplete &) = delete;
+	AutoComplete &operator=(AutoComplete &&) = delete;
 	~AutoComplete();
 
 	/// Is the auto completion list displayed?
@@ -79,7 +84,7 @@ public:
 	std::string GetValue(int item) const;
 
 	void Show(bool show);
-	void Cancel();
+	void Cancel() noexcept;
 
 	/// Move the current list element by delta, scrolling appropriately
 	void Move(int delta);

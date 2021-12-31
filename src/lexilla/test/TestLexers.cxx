@@ -122,6 +122,18 @@ public:
 			return prop->second;
 	}
 
+	std::optional<std::string> GetPropertyForFile(std::string_view keyPrefix, std::string_view fileName) const {
+		for (auto const &[key, val] : properties) {
+			if (key.starts_with(keyPrefix)) {
+				const std::string keySuffix = key.substr(keyPrefix.length());
+				if (fileName.ends_with(keySuffix)) {
+					return val;
+				}
+			}
+		}
+		return std::nullopt;
+	}
+
 	std::optional<int> GetPropertyValue(std::string_view key) const {
 		std::optional<std::string> value = GetProperty(key);
 		try {
@@ -149,18 +161,31 @@ int Substitute(std::string &s, const std::string &sFind, const std::string &sRep
 	return c;
 }
 
+int WindowsToUnix(std::string &s) {
+	return Substitute(s, "\r\n", "\n");
+}
+
+int UnixToWindows(std::string &s) {
+	return Substitute(s, "\n", "\r\n");
+}
+
 const std::string BOM = "\xEF\xBB\xBF";
 
 void TestCRLF(std::filesystem::path path, const std::string s, Scintilla::ILexer5 *plex) {
 	// Convert all line ends to \r\n to check if styles change between \r and \n which makes
 	// it difficult to test on different platforms when files may have line ends changed.
 	std::string text = s;
-	Substitute(text, "\r\n", "\n");
-	Substitute(text, "\n", "\r\n");
+	WindowsToUnix(text);
+	std::string textUnix = text;
+	UnixToWindows(text);
 	TestDocument doc;
 	doc.Set(text);
 	Scintilla::IDocument *pdoc = &doc;
 	plex->Lex(0, pdoc->Length(), 0, pdoc);
+	plex->Fold(0, pdoc->Length(), 0, pdoc);
+	const std::string styledText = MarkedDocument(pdoc);
+	const std::string foldedText = FoldedDocument(pdoc);
+
 	int prevStyle = -1;
 	Sci_Position line = 1;
 	for (Sci_Position pos = 0; pos < pdoc->Length(); pos++) {
@@ -177,44 +202,152 @@ void TestCRLF(std::filesystem::path path, const std::string s, Scintilla::ILexer
 		}
 		prevStyle = styleNow;
 	}
+
+	// Lex and fold with \n line ends then check result is same
+
+	TestDocument docUnix;
+	docUnix.Set(textUnix);
+	Scintilla::IDocument *pdocUnix = &docUnix;
+	plex->Lex(0, pdocUnix->Length(), 0, pdocUnix);
+	plex->Fold(0, pdocUnix->Length(), 0, pdocUnix);
+	std::string styledTextUnix = MarkedDocument(pdocUnix);
+	std::string foldedTextUnix = FoldedDocument(pdocUnix);
+
+	// Convert results from \n to \r\n run
+	UnixToWindows(styledTextUnix);
+	UnixToWindows(foldedTextUnix);
+
+	if (styledText != styledTextUnix) {
+		std::cout << "\n" << path.string() << ":1: has different styles with \\n versus \\r\\n line ends\n\n";
+	}
+	if (foldedText != foldedTextUnix) {
+		std::cout << "\n" << path.string() << ":1: has different folds with \\n versus \\r\\n line ends\n\n";
+	}
+
 	plex->Release();
 }
 
-bool TestFile(const std::filesystem::path &path, const PropertyMap &propertyMap) {
-	// Find and create correct lexer
-	std::string language;
-	Scintilla::ILexer5 *plex = nullptr;
-	for (auto const &[key, val] : propertyMap.properties) {
-		if (key.starts_with("lexer.*")) {
-			language = val;
-			plex = Lexilla::MakeLexer(language);
-			break;
+void TestILexer(Scintilla::ILexer5 *plex) {
+	// Test each method of the ILexer interface.
+	// Mostly ensures there are no crashes when calling methods.
+	// Some methods are tested later (Release, Lex, Fold).
+	// PrivateCall performs arbitrary actions so is not safe to call.
+
+	[[maybe_unused]] const int version = plex->Version();
+	assert(version == Scintilla::lvRelease5);
+
+	[[maybe_unused]] const char *language = plex->GetName();
+	assert(language);
+
+	[[maybe_unused]] const int ident = plex->GetIdentifier();
+	assert(ident >= 0);
+
+	[[maybe_unused]] const char *propertyNames = plex->PropertyNames();
+	assert(propertyNames);
+
+	[[maybe_unused]] const int propertyType = plex->PropertyType("unknown");
+	assert(propertyType >= 0 && propertyType <= 2);
+
+	[[maybe_unused]] const char *propertyDescription = plex->DescribeProperty("unknown");
+	assert(propertyDescription);
+
+	[[maybe_unused]] const Sci_Position invalidation = plex->PropertySet("unknown", "unknown");
+	assert(invalidation == 0 || invalidation == -1);
+
+	[[maybe_unused]] const char *wordListDescription = plex->DescribeWordListSets();
+	assert(wordListDescription);
+
+	[[maybe_unused]] const Sci_Position invalidationWordList = plex->WordListSet(9, "unknown");
+	assert(invalidationWordList == 0 || invalidationWordList == -1);
+
+	[[maybe_unused]] const int lineEndTypes = plex->LineEndTypesSupported();
+	assert(lineEndTypes == 0 || lineEndTypes == 1);
+
+	if (const char *bases = plex->GetSubStyleBases()) {
+		// Allocate a substyle for each possible style
+		while (*bases) {
+			constexpr int newStyles = 3;
+			const int base = *bases;
+			const int baseStyle = plex->AllocateSubStyles(base, newStyles);
+			[[maybe_unused]] const int styleBack = plex->StyleFromSubStyle(baseStyle);
+			assert(styleBack == base);
+			plex->SetIdentifiers(baseStyle, "int nullptr");
+			[[maybe_unused]] const int start = plex->SubStylesStart(base);
+			assert(start == baseStyle);
+			[[maybe_unused]] const int len = plex->SubStylesLength(base);
+			assert(len == newStyles);
+			bases++;
 		}
+		plex->FreeSubStyles();
 	}
-	if (!plex) {
-		std::cout << "\n" << path.string() << ":1: has no lexer\n\n";
-		return false;
+
+	[[maybe_unused]] const int primary = plex->PrimaryStyleFromStyle(2);
+	assert(primary == 2);
+
+	[[maybe_unused]] const int distance = plex->DistanceToSecondaryStyles();
+	assert(distance >= 0);
+
+	// Just see if crashes - nullptr is valid return to indicate not present.
+	[[maybe_unused]] const char *propertyUnknownValue = plex->PropertyGet("unknown");
+
+	const int styles = plex->NamedStyles();
+	for (int style = 0; style < styles; style++) {
+		[[maybe_unused]] const char *name = plex->NameOfStyle(style);
+		assert(name);
+		[[maybe_unused]] const char *tags = plex->TagsOfStyle(style);
+		assert(tags);
+		[[maybe_unused]] const char *description = plex->DescriptionOfStyle(style);
+		assert(description);
+	}
+}
+
+void SetProperties(Scintilla::ILexer5 *plex, const PropertyMap &propertyMap, std::string_view fileName) {
+	// Set keywords, keywords2, ... keywords9, for this file
+	for (int kw = 0; kw < 10; kw++) {
+		std::string kwChoice("keywords");
+		if (kw > 0) {
+			kwChoice.push_back('1' + kw);
+		}
+		kwChoice.append(".*");
+		std::optional<std::string> keywordN = propertyMap.GetPropertyForFile(kwChoice, fileName);
+		if (keywordN) {
+			plex->WordListSet(kw, keywordN->c_str());
+		}
 	}
 
 	// Set parameters of lexer
-	const std::string keywords = "keywords";
 	for (auto const &[key, val] : propertyMap.properties) {
 		if (key.starts_with("#")) {
 			// Ignore comments
 		} else if (key.starts_with("lexer.*")) {
-			// Ignore
+			// Ignore as processed earlier
 		} else if (key.starts_with("keywords")) {
-			// Get character after keywords
-			std::string afterKeywords = key.substr(keywords.length(), 1);
-			char characterAfterKeywords = afterKeywords.empty() ? '1' : afterKeywords[0];
-			if (characterAfterKeywords < '1' || characterAfterKeywords > '9')
-				characterAfterKeywords = '1';
-			const int wordSet = characterAfterKeywords - '1';
-			plex->WordListSet(wordSet, val.c_str());
+			// Ignore as processed earlier
 		} else {
 			plex->PropertySet(key.c_str(), val.c_str());
 		}
 	}
+}
+
+const char *lexerPrefix = "lexer.*";
+
+bool TestFile(const std::filesystem::path &path, const PropertyMap &propertyMap) {
+	// Find and create correct lexer
+	std::optional<std::string> language = propertyMap.GetPropertyForFile(lexerPrefix, path.filename().string());
+	if (!language) {
+		std::cout << "\n" << path.string() << ":1: has no language\n\n";
+		return false;
+	}
+	Scintilla::ILexer5 *plex = Lexilla::MakeLexer(*language);
+	if (!plex) {
+		std::cout << "\n" << path.string() << ":1: has no lexer for " << *language << "\n\n";
+		return false;
+	}
+
+	SetProperties(plex, propertyMap, path.filename().string());
+
+	TestILexer(plex);
+
 	std::string text = ReadFile(path);
 	if (text.starts_with(BOM)) {
 		text.erase(0, BOM.length());
@@ -304,7 +437,9 @@ bool TestFile(const std::filesystem::path &path, const PropertyMap &propertyMap)
 
 	plex->Release();
 
-	TestCRLF(path, text, Lexilla::MakeLexer(language));
+	Scintilla::ILexer5 *plexCRLF = Lexilla::MakeLexer(*language);
+	SetProperties(plexCRLF, propertyMap, path.filename().string());
+	TestCRLF(path, text, plexCRLF);
 
 	return success;
 }
@@ -348,7 +483,7 @@ bool AccessLexilla(std::filesystem::path basePath) {
 }
 
 std::filesystem::path FindLexillaDirectory(std::filesystem::path startDirectory) {
-	// Search up from startDirectory for a directory named "lexilla" or containing a "bin" subdirectory 
+	// Search up from startDirectory for a directory named "lexilla" or containing a "bin" subdirectory
 	std::filesystem::path directory = startDirectory;
 	while (!directory.empty()) {
 		//std::cout << "Searching " << directory.string() << "\n";

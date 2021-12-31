@@ -21,6 +21,7 @@
 #include "NotepadNextApplication.h"
 #include "RecentFilesListManager.h"
 #include "EditorManager.h"
+#include "LuaExtension.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
@@ -51,21 +52,19 @@ struct luabridge::Stack <QString const&>
 NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     : SingleApplication(argc, argv, true, opts)
 {
-    qInfo(Q_FUNC_INFO);
-
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(this);
     settings = new Settings(this);
 
-    connect(editorManager, &EditorManager::editorCreated, [=](ScintillaNext *editor) {
+    connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [=](ScintillaNext *editor) {
         if (editor->isFile()) {
-            recentFilesListManager->removeFile(editor->canonicalFilePath());
+            recentFilesListManager->removeFile(editor->getFilePath());
         }
     });
 
-    connect(editorManager, &EditorManager::editorClosed, [=](ScintillaNext *editor) {
+    connect(editorManager, &EditorManager::editorClosed, recentFilesListManager, [=](ScintillaNext *editor) {
         if (editor->isFile()) {
-            recentFilesListManager->addFile(editor->canonicalFilePath());
+            recentFilesListManager->addFile(editor->getFilePath());
         }
     });
 
@@ -74,7 +73,7 @@ NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
 
     recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
 
-    connect(this, &NotepadNextApplication::aboutToQuit, [=]() {
+    connect(this, &NotepadNextApplication::aboutToQuit, this, [=]() {
         QSettings qsettings;
         qsettings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
     });
@@ -89,6 +88,7 @@ bool NotepadNextApplication::initGui()
 
     luaState = new LuaState();
     luaState->executeFile(":/scripts/init.lua");
+    LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
 
     // LuaBridge is not a long term solution
     // This is probably temporary, but it is quick and works
@@ -126,7 +126,7 @@ bool NotepadNextApplication::initGui()
 
     // If the application is activated (e.g. user switching to another program and them back) the focus
     // needs to be reset on whatever object previously had focus (e.g. the find dialog)
-    QObject::connect(this, &NotepadNextApplication::focusChanged, [&] (QWidget *old, QWidget *now) {
+    QObject::connect(this, &NotepadNextApplication::focusChanged, this, [&](QWidget *old, QWidget *now) {
         Q_UNUSED(old);
         if (now) {
             currentlyFocusedWidget = now;
@@ -191,8 +191,6 @@ QString NotepadNextApplication::getFileDialogFilter() const
     return filter;
 }
 
-
-
 void NotepadNextApplication::applyArguments(const QStringList &args)
 {
     qInfo(Q_FUNC_INFO);
@@ -207,7 +205,7 @@ void NotepadNextApplication::applyArguments(const QStringList &args)
 
     parser.process(args);
 
-    foreach (const QString &file, parser.positionalArguments()) {
+    for (const QString &file : parser.positionalArguments()) {
         windows.first()->openFile(file);
     }
 }

@@ -20,6 +20,7 @@
 #include "EditorManager.h"
 #include "ScintillaNext.h"
 #include "Scintilla.h"
+#include "ScintillaTypes.h"
 
 // Editor decorators
 #include "BraceMatch.h"
@@ -38,7 +39,7 @@ const int MARK_HIDELINESUNDERLINE = 21;
 EditorManager::EditorManager(QObject *parent) : QObject(parent)
 {
     connect(this, &EditorManager::editorCreated, [=](ScintillaNext *editor) {
-        connect(editor, &ScintillaNext::destroyed, [=]() {
+        connect(editor, &ScintillaNext::closed, [=]() {
             emit editorClosed(editor);
         });
     });
@@ -46,7 +47,7 @@ EditorManager::EditorManager(QObject *parent) : QObject(parent)
 
 ScintillaNext *EditorManager::createEmptyEditor(const QString &name)
 {
-    ScintillaNext *editor = new ScintillaNext(new ScintillaBuffer(name));
+    ScintillaNext *editor = new ScintillaNext(name);
     QPointer<ScintillaNext> pointer = QPointer<ScintillaNext>(editor);
     editors.append(pointer);
 
@@ -59,7 +60,7 @@ ScintillaNext *EditorManager::createEmptyEditor(const QString &name)
 
 ScintillaNext *EditorManager::createEditorFromFile(const QString &filePath)
 {
-    ScintillaNext *editor = new ScintillaNext(ScintillaBuffer::fromFile(filePath));
+    ScintillaNext *editor = ScintillaNext::fromFile(filePath);
     QPointer<ScintillaNext> pointer = QPointer<ScintillaNext>(editor);
     editors.append(pointer);
 
@@ -70,6 +71,19 @@ ScintillaNext *EditorManager::createEditorFromFile(const QString &filePath)
     return editor;
 }
 
+ScintillaNext *EditorManager::cloneEditor(ScintillaNext *editor)
+{
+    ScintillaNext *clonedEditor = new ScintillaNext("Clone");
+    QPointer<ScintillaNext> pointer = QPointer<ScintillaNext>(clonedEditor);
+    editors.append(pointer);
+
+    setupEditor(clonedEditor);
+
+    emit editorCreated(clonedEditor);
+
+    return clonedEditor;
+}
+
 ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
 {
     QFileInfo newInfo(filePath);
@@ -77,8 +91,8 @@ ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
 
     purgeOldEditorPointers();
 
-    foreach (ScintillaNext *editor, editors) {
-        if (editor->isFile() && editor->fileInfo() == newInfo) {
+    for (ScintillaNext *editor : editors) {
+        if (editor->isFile() && editor->getFileInfo() == newInfo) {
             return editor;
         }
     }
@@ -89,6 +103,8 @@ ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
 void EditorManager::setupEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
+
+    editor->clearCmdKey(SCK_INSERT);
 
     setFoldMarkers(editor, "box");
     editor->setIdleStyling(SC_IDLESTYLING_TOVISIBLE);
@@ -102,16 +118,20 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setVirtualSpaceOptions(SCVS_RECTANGULARSELECTION);
 
     editor->setMarginLeft(2);
+
     editor->setMarginWidthN(0, 30);
     editor->setMarginMaskN(1, (1<<MARK_BOOKMARK) | (1<<MARK_HIDELINESBEGIN) | (1<<MARK_HIDELINESEND) | (1<<MARK_HIDELINESUNDERLINE));
     editor->setMarginMaskN(2, SC_MASK_FOLDERS);
     editor->setMarginWidthN(2, 14);
 
     editor->markerSetAlpha(MARK_BOOKMARK, 70);
+    editor->markerDefine(MARK_BOOKMARK, SC_MARK_BOOKMARK);
+    editor->markerSetFore(MARK_BOOKMARK, 0xFF2020);
+    editor->markerSetBack(MARK_BOOKMARK, 0xFF2020);
+
     editor->markerDefine(MARK_HIDELINESUNDERLINE, SC_MARK_UNDERLINE);
     editor->markerSetBack(MARK_HIDELINESUNDERLINE, 0x77CC77);
 
-    editor->markerDefine(MARK_BOOKMARK, SC_MARK_BOOKMARK);
     editor->markerDefine(MARK_HIDELINESBEGIN, SC_MARK_ARROW);
     editor->markerDefine(MARK_HIDELINESEND, SC_MARK_ARROWDOWN);
 
@@ -126,18 +146,31 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setTabWidth(4);
     editor->setBackSpaceUnIndents(true);
 
-    editor->assignCmdKey(SCK_RETURN, SCI_NEWLINE);
-
-    editor->setCaretLineBack(0xFFE8E8);
     editor->setCaretLineVisible(true);
     editor->setCaretLineVisibleAlways(true);
-    editor->setCaretFore(0xFF0080);
     editor->setCaretWidth(2);
-    editor->setSelBack(true, 0xC0C0C0);
 
     editor->setEdgeColour(0x80FFFF);
 
-    editor->setWhitespaceFore(true, 0x6AB5FF);
+    // https://www.scintilla.org/ScintillaDoc.html#ElementColours
+    // SC_ELEMENT_SELECTION_TEXT
+    // SC_ELEMENT_SELECTION_BACK
+    // SC_ELEMENT_SELECTION_ADDITIONAL_TEXT
+    // SC_ELEMENT_SELECTION_ADDITIONAL_BACK
+    // SC_ELEMENT_SELECTION_SECONDARY_TEXT
+    // SC_ELEMENT_SELECTION_SECONDARY_BACK
+    // SC_ELEMENT_SELECTION_INACTIVE_TEXT
+    editor->setElementColour(SC_ELEMENT_SELECTION_INACTIVE_BACK, 0xFFE0E0E0);
+    // SC_ELEMENT_CARET
+    // SC_ELEMENT_CARET_ADDITIONAL
+    editor->setElementColour(SC_ELEMENT_CARET_LINE_BACK, 0xFFFFE8E8);
+    editor->setElementColour(SC_ELEMENT_WHITE_SPACE, 0xFFD0D0D0);
+    // SC_ELEMENT_WHITE_SPACE_BACK
+    // SC_ELEMENT_HOT_SPOT_ACTIVE
+    // SC_ELEMENT_HOT_SPOT_ACTIVE_BACK
+    editor->setElementColour(SC_ELEMENT_FOLD_LINE, 0xFFA0A0A0);
+    // SC_ELEMENT_HIDDEN_LINE
+
     editor->setWhitespaceSize(2);
 
     editor->setFoldMarginColour(true, 0xFFFFFF);
@@ -148,36 +181,6 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setAutomaticFold(SC_AUTOMATICFOLD_SHOW | SC_AUTOMATICFOLD_CLICK | SC_AUTOMATICFOLD_CHANGE);
     editor->markerEnableHighlight(true);
 
-    // Indicators
-    // Find Mark Style
-    // editor->indicSetFore(31, 0x0000FF);
-    // Smart HighLighting
-    // editor->indicSetFore(29, 0x00FF00);
-    // Incremental highlight all
-    // editor->indicSetFore(28, 0xFF8000);
-    // Tags match highlighting
-    // editor->indicSetFore(27, 0xFF0080);
-    // Tags attribute
-    // editor->indicSetFore(26, 0x00FFFF);
-
-    /*
-    -- Mark Style 1
-    editor.IndicFore[25] = rgb(0x00FFFF)
-    -- Mark Style 2
-    editor.IndicFore[24] = rgb(0xFF8000)
-    -- Mark Style 3
-    editor.IndicFore[23] = rgb(0xFFFF00)
-    -- Mark Style 4
-    editor.IndicFore[22] = rgb(0x8000FF)
-    -- Mark Style 5
-    editor.IndicFore[21] = rgb(0x008000)
-
-    SetFolderMarkers("box")
-    */
-
-    // -- reset everything
-    editor->clearDocumentStyle();
-    editor->styleResetDefault();
 
     editor->styleSetFore(STYLE_DEFAULT, 0x000000);
     editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);

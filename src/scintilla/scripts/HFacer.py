@@ -49,7 +49,7 @@ def RegenerateAll(root, showMaxID):
 			#~ except ValueError:
 				#~ pass
 		#~ for v in valuesUnused:
-			#~ prev = valueToName.get(v-1, "") 
+			#~ prev = valueToName.get(v-1, "")
 			#~ print(v, prev)
 
 if __name__ == "__main__":

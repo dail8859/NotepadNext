@@ -36,36 +36,10 @@ bool StyleContext::MatchIgnoreCase(const char *s) {
 	return true;
 }
 
-static void getRange(Sci_PositionU start,
-		Sci_PositionU end,
-		LexAccessor &styler,
-		char *s,
-		Sci_PositionU len) {
-	Sci_PositionU i = 0;
-	while ((i < end - start + 1) && (i < len-1)) {
-		s[i] = styler[start + i];
-		i++;
-	}
-	s[i] = '\0';
-}
-
 void StyleContext::GetCurrent(char *s, Sci_PositionU len) {
-	getRange(styler.GetStartSegment(), currentPos - 1, styler, s, len);
-}
-
-static void getRangeLowered(Sci_PositionU start,
-		Sci_PositionU end,
-		LexAccessor &styler,
-		char *s,
-		Sci_PositionU len) {
-	Sci_PositionU i = 0;
-	while ((i < end - start + 1) && (i < len-1)) {
-		s[i] = MakeLowerCase(styler[start + i]);
-		i++;
-	}
-	s[i] = '\0';
+	styler.GetRange(styler.GetStartSegment(), currentPos, s, len);
 }
 
 void StyleContext::GetCurrentLowered(char *s, Sci_PositionU len) {
-	getRangeLowered(styler.GetStartSegment(), currentPos - 1, styler, s, len);
+	styler.GetRangeLowered(styler.GetStartSegment(), currentPos, s, len);
 }

@@ -27,7 +27,8 @@ using namespace Scintilla::Internal;
 
 ScintillaQt::ScintillaQt(QAbstractScrollArea *parent)
 : QObject(parent), scrollArea(parent), vMax(0),  hMax(0), vPage(0), hPage(0),
- haveMouseCapture(false), dragWasDropped(false)
+ haveMouseCapture(false), dragWasDropped(false),
+ rectangularSelectionModifier(SCMOD_ALT)
 {
 
 	wMain = scrollArea->viewport();
@@ -171,7 +172,7 @@ static QString StringFromSelectedText(const SelectionText &selectedText)
 	}
 }
 
-static void AddRectangularToMime(QMimeData *mimeData, [[maybe_unused]] QString su)
+static void AddRectangularToMime(QMimeData *mimeData, [[maybe_unused]] const QString &su)
 {
 #if defined(Q_OS_WIN)
 	// Add an empty marker
@@ -490,12 +491,11 @@ void ScintillaQt::onIdle()
 
 bool ScintillaQt::ChangeIdle(bool on)
 {
-	QTimer *qIdle;
 	if (on) {
 		// Start idler, if it's not running.
 		if (!idler.state) {
 			idler.state = true;
-			qIdle = new QTimer;
+			QTimer *qIdle = new QTimer;
 			connect(qIdle, SIGNAL(timeout()), this, SLOT(onIdle()));
 			qIdle->start(0);
 			idler.idlerID = qIdle;
@@ -504,7 +504,7 @@ bool ScintillaQt::ChangeIdle(bool on)
 		// Stop idler, if it's running
 		if (idler.state) {
 			idler.state = false;
-			qIdle = static_cast<QTimer *>(idler.idlerID);
+			QTimer *qIdle = static_cast<QTimer *>(idler.idlerID);
 			qIdle->stop();
 			disconnect(qIdle, SIGNAL(timeout()), nullptr, nullptr);
 			delete qIdle;
@@ -613,7 +613,7 @@ std::unique_ptr<CaseFolder> ScintillaQt::CaseFolderForEncoding()
 
 std::string ScintillaQt::CaseMapString(const std::string &s, CaseMapping caseMapping)
 {
-	if ((s.size() == 0) || (caseMapping == CaseMapping::same))
+	if (s.empty() || (caseMapping == CaseMapping::same))
 		return s;
 
 	if (IsUnicodeMode()) {
@@ -665,7 +665,7 @@ void ScintillaQt::StartDrag()
 		QDrag *dragon = new QDrag(scrollArea);
 		dragon->setMimeData(mimeData);
 
-		Qt::DropAction dropAction = dragon->exec(Qt::CopyAction|Qt::MoveAction);
+		Qt::DropAction dropAction = dragon->exec(static_cast<Qt::DropActions>(Qt::CopyAction|Qt::MoveAction));
 		if ((dropAction == Qt::MoveAction) && dropWentOutside) {
 			// Remove dragged out text
 			ClearSelection();
@@ -677,7 +677,7 @@ void ScintillaQt::StartDrag()
 
 class CallTipImpl : public QWidget {
 public:
-	CallTipImpl(CallTip *pct_)
+	explicit CallTipImpl(CallTip *pct_)
 		: QWidget(nullptr, Qt::ToolTip),
 		  pct(pct_)
 	{
@@ -728,8 +728,8 @@ void ScintillaQt::AddToPopUp(const char *label,
 
 	// Make sure the menu's signal is connected only once.
 	menu->disconnect();
-	connect(menu, SIGNAL(triggered(QAction *)),
-	        this, SLOT(execCommand(QAction *)));
+	connect(menu, SIGNAL(triggered(QAction*)),
+		this, SLOT(execCommand(QAction*)));
 }
 
 sptr_t ScintillaQt::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam)

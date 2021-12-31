@@ -34,6 +34,7 @@ class ScintillaGTK : public ScintillaBase {
 	int horizontalScrollBarHeight;
 
 	SelectionText primary;
+	SelectionPosition posPrimary;
 
 	GdkEvent *evbtn;
 	guint buttonMouse;
@@ -62,6 +63,9 @@ class ScintillaGTK : public ScintillaBase {
 	GtkIMContext *im_context;
 	GUnicodeScript lastNonCommonScript;
 
+	GtkSettings *settings;
+	gulong settingsHandlerId;
+
 	// Wheel mouse support
 	unsigned int linesPerScroll;
 	gint64 lastWheelMouseTime;
@@ -89,7 +93,7 @@ public:
 	ScintillaGTK(ScintillaGTK &&) = delete;
 	ScintillaGTK &operator=(const ScintillaGTK &) = delete;
 	ScintillaGTK &operator=(ScintillaGTK &&) = delete;
-	virtual ~ScintillaGTK();
+	~ScintillaGTK() override;
 	static ScintillaGTK *FromWidget(GtkWidget *widget) noexcept;
 	static void ClassInit(OBJECT_CLASS *object_class, GtkWidgetClass *widget_class, GtkContainerClass *container_class);
 private:

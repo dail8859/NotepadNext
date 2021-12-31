@@ -128,7 +128,7 @@
 
     <h1>Scintilla Documentation</h1>
 
-    <p>Last edited 17 July 2021 NH</p>
+    <p>Last edited 12 November 2021 NH</p>
 
     <p style="background:#90F0C0">Scintilla 5 has moved the lexers from Scintilla into a new
     <a href="Lexilla.html">Lexilla</a> project.<br />
@@ -313,7 +313,7 @@
     As the protocol only supports object lexers, an additional function <code>CreateLexer(const char *name)</code>
     is exposed which will create a lexer object (ILexer5 *) for any object lexer or function lexer.
     </p>
-   
+
     <p>Lexer libraries that provide the same functions as Lexilla may provide lexers for use by Scintilla,
     augmenting or replacing those provided by Lexilla.</p>
 
@@ -551,12 +551,12 @@
     </code>
 
     <p><b id="SCI_GETTEXT">SCI_GETTEXT(position length, char *text NUL-terminated) &rarr; position</b><br />
-     This returns at most <code class="parameter">length</code>-1 characters of text from the start of the document plus one
-    terminating 0 character. When <code class="parameter">length</code>-1 is beyond document length, it returns document length.
+     This returns at most <code class="parameter">length</code> characters of text from the start of the document plus one
+    terminating 0 character. When <code class="parameter">length</code> is beyond document length, it returns document length.
     To collect all the text in a document, use <code>SCI_GETLENGTH</code>
     to get the number of characters in the document (<code>nLen</code>), allocate a character
-    buffer of length <code>nLen+1</code> bytes, then call <code>SCI_GETTEXT(nLen+1, char
-    *text)</code>. If the text argument is 0 then the length that should be allocated to store the
+    buffer of length <code>nLen+1</code> bytes, then call <code>SCI_GETTEXT(nLen, char
+    *text)</code>. If the text argument is NULL(0) then the length that should be allocated to store the
     entire document is returned.
     If you then save the text, you should use <code>SCI_SETSAVEPOINT</code> to mark
     the text as unmodified.</p>
@@ -586,7 +586,7 @@
 
     <p><b id="SCI_GETLINE">SCI_GETLINE(line line, char *text) &rarr; position</b><br />
      This fills the buffer defined by text with the contents of the nominated line (lines start at
-    0). The buffer is not terminated by a 0 character. It is up to you to make sure that the buffer
+    0). The buffer is not terminated by a NUL(0) character. It is up to you to make sure that the buffer
     is long enough for the text, use <a class="message"
     href="#SCI_LINELENGTH"><code>SCI_LINELENGTH(line line)</code></a>. The returned value is the
     number of characters copied to the buffer. The returned text includes any end of line
@@ -1499,9 +1499,9 @@ struct Sci_TextToFind {
     href="#SCI_POSITIONFROMLINE"><code>SCI_POSITIONFROMLINE(line)</code></a>.</p>
 
     <p><b id="SCI_GETSELTEXT">SCI_GETSELTEXT(&lt;unused&gt;, char *text NUL-terminated) &rarr; position</b><br />
-     This copies the currently selected text and a terminating 0 byte to the <code class="parameter">text</code>
-    buffer. The buffer size should be determined by calling with a NULL pointer for the <code class="parameter">text</code> argument
-    <code>SCI_GETSELTEXT(0,0)</code>.
+     This copies the currently selected text and a terminating NUL(0) byte to the <code class="parameter">text</code>
+    buffer. The buffer size should be determined by calling with a NULL pointer for the <code class="parameter">text</code> argument:
+    <code>1 + SCI_GETSELTEXT(0, NULL)</code>.
     This allows for rectangular and discontiguous selections as well as simple selections.
     See <a class="toc" href="#MultipleSelectionAndVirtualSpace">Multiple Selection</a> for information on
     how multiple and rectangular selections and virtual space are copied.</p>
@@ -1516,10 +1516,10 @@ struct Sci_TextToFind {
     <p><b id="SCI_GETCURLINE">SCI_GETCURLINE(position length, char *text NUL-terminated) &rarr; position</b><br />
      This retrieves the text of the line containing the caret and returns the position within the
     line of the caret. Pass in <code>char* text</code> pointing at a buffer large enough to hold
-    the text you wish to retrieve and a terminating 0 character.
+    the text you wish to retrieve and a terminating NUL(0) character.
     Set <code class="parameter">length</code> to the
-    length of the buffer which must be at least 1 to hold the terminating 0 character.
-    If the text argument is 0 then the length that should be allocated
+    length of the buffer not including the terminating NUL character.
+    If the text argument is NULL(0) then the length that should be allocated
     to store the entire current line is returned.</p>
 
     <p>See also: <code><a class="seealso" href="#SCI_GETSELTEXT">SCI_GETSELTEXT</a>, <a
@@ -2395,8 +2395,8 @@ struct Sci_TextToFind {
      <b id="SCI_SETWHITESPACEBACK">SCI_SETWHITESPACEBACK(bool useSetting, <a class="jump" href="#colour">colour</a> back)</b><br />
      By default, the colour of visible white space is determined by the lexer in use. The
     foreground and/or background colour of all visible white space can be set globally, overriding
-    the lexer's colours with <a href="#SCI_SETELEMENTCOLOUR"><code>SC_ELEMENT_WHITE_SPACE</code></a>
-    and <a href="#SCI_SETELEMENTCOLOUR"><code>SC_ELEMENT_WHITE_SPACE_BACK</code></a>.
+    the lexer's colours with <a class="element" href="#SCI_SETELEMENTCOLOUR"><code>SC_ELEMENT_WHITE_SPACE</code></a>
+    and <a class="element" href="#SCI_SETELEMENTCOLOUR"><code>SC_ELEMENT_WHITE_SPACE_BACK</code></a>.
     .<br />
     <code>SCI_SETWHITESPACEFORE</code> and <code>SCI_SETWHITESPACEBACK</code> also
     change the white space colours but the element APIs are preferred with <code>SC_ELEMENT_WHITE_SPACE</code>
@@ -2447,6 +2447,10 @@ struct Sci_TextToFind {
      Space may be added to the maximum ascent (<code>SCI_SETEXTRAASCENT</code>) and the
      maximum descent (<code>SCI_SETEXTRADESCENT</code>) to allow for more space between lines.
      This may done to make the text easier to read or to accommodate underlines or highlights.
+    </p>
+    <p>
+    The extra ascent and descent values can be negative but that should be done with care as it
+    may lead to unexpected interference when lines share space.
     </p>
 
     <h2 id="Cursor">Cursor</h2>
@@ -3021,6 +3025,9 @@ struct Sci_TextToFind {
      <a class="message" href="#SCI_STYLESETHOTSPOT">SCI_STYLESETHOTSPOT(int style, bool
     hotspot)</a><br />
     <a class="message" href="#SCI_STYLEGETHOTSPOT">SCI_STYLEGETHOTSPOT(int style) &rarr; bool</a><br />
+     <a class="message" href="#SCI_STYLESETCHECKMONOSPACED">SCI_STYLESETCHECKMONOSPACED(int style, bool
+    checkMonospaced)</a><br />
+    <a class="message" href="#SCI_STYLEGETCHECKMONOSPACED">SCI_STYLEGETCHECKMONOSPACED(int style) &rarr; bool</a><br />
     <a class="message" href="#SCI_SETFONTLOCALE">SCI_SETFONTLOCALE(&lt;unused&gt;, const char *localeName)</a><br />
     <a class="message" href="#SCI_GETFONTLOCALE">SCI_GETFONTLOCALE(&lt;unused&gt;, char *localeName) &rarr; int</a><br />
     </code>
@@ -3265,6 +3272,28 @@ struct Sci_TextToFind {
     may change and an underline appear to indicate that these areas are sensitive to clicking.
     This may be used to allow hyperlinks to other documents.</p>
 
+    <p><b id="SCI_STYLESETCHECKMONOSPACED">SCI_STYLESETCHECKMONOSPACED(int style, bool
+    checkMonospaced)</b><br />
+    <b id="SCI_STYLEGETCHECKMONOSPACED">SCI_STYLEGETCHECKMONOSPACED(int style) &rarr; bool</b><br />
+    This attribute indicates that the font may be monospaced over the ASCII graphics characters (' ' &hellip; '~',
+    including letters ('a'&hellip;'z', 'A'&hellip;'Z') and numbers ('0'&hellip;'9')).
+    This allows optimizing speed and memory use for some common scenarios where documents are mostly composed from ASCII
+    characters.</p>
+    <p>
+    Fonts are rarely monospaced over all possible characters.
+    Emoji '&#x1F603;', Arabic characters '&#x0634;' and Chinese ideographs '&#x6F22;' are often different widths to Roman letters.
+    Even when a font is designed as monospaced, not all characters may be present
+    and platforms may substitute other fonts for any missing characters with the substitute characters taking more or less space.
+    However, fonts are often reliably monospaced over ASCII text (disregarding control characters) and many documents contain
+    mostly ASCII characters.
+    This setting allows simplified position calculations for text runs that are purely ASCII graphics characters.
+    </p>
+    <p>
+    Before treating the font as monospaced, it is first checked over the ' ' &hellip; '~' range and for some known combinations of characters
+    that may have different spacings because of kerning or ligatures.
+    Applications may apply the 'check monospaced' attribute just to fonts known to be monospaced or on all fonts, leaving it to Scintilla to
+    reject fonts that are proportional.</p>
+
     <p><b id="SCI_SETFONTLOCALE">SCI_SETFONTLOCALE(&lt;unused&gt;, const char *localeName)</b><br />
     <b id="SCI_GETFONTLOCALE">SCI_GETFONTLOCALE(&lt;unused&gt;, char *localeName NUL-terminated) &rarr; int</b><br />
      These messages set the locale used for font selection with language-dependent glyphs.
@@ -3312,14 +3341,14 @@ struct Sci_TextToFind {
     <b id="SCI_GETELEMENTALLOWSTRANSLUCENT">SCI_GETELEMENTALLOWSTRANSLUCENT(int element) &rarr; bool</b><br />
      Returns true when the element currently allows translucent drawing when an alpha component is included.
      This may change based on circumstances - different platforms or graphics technologies may implement translucency
-     and newer versions of Scintilla may implement translucency for elements that did not previously support it. 
+     and newer versions of Scintilla may implement translucency for elements that did not previously support it.
      </p>
-     
+
     <p>
     <b id="SCI_GETELEMENTBASECOLOUR">SCI_GETELEMENTBASECOLOUR(int element) &rarr; colouralpha</b><br />
      Returns the default colour of an element.
      This may be a value defined by Scintilla or it may be derived from the operating system or platform.
-     Which values are set from the operating system may differ between operating systems and operating system versions. 
+     Which values are set from the operating system may differ between operating systems and operating system versions.
      When undefined the return value is 0 which is equivalent to completely transparent black.
      These colours may be useful when defining styles with similarities such as synthesizing dark
      mode styles that use the same colours as the system</p>
@@ -3496,6 +3525,22 @@ struct Sci_TextToFind {
            <td></td>
            <td>Background colour of active hot spot</td>
          </tr>
+         <tr class="section">
+           <th align="left"><code>SC_ELEMENT_FOLD_LINE</code></th>
+           <td>80</td>
+           <td>Translucent</td>
+           <td>All</td>
+           <td></td>
+           <td>Colour of fold lines</td>
+         </tr>
+         <tr>
+           <th align="left"><code>SC_ELEMENT_HIDDEN_LINE</code></th>
+           <td>81</td>
+           <td>Translucent</td>
+           <td>All</td>
+           <td></td>
+           <td>Colour of line drawn to show there are lines hidden at that point</td>
+         </tr>
        </tbody>
      </table>
 
@@ -3545,6 +3590,8 @@ struct Sci_TextToFind {
     <a class="message" href="#SCI_GETCARETLINEFRAME">SCI_GETCARETLINEFRAME &rarr; int</a><br />
     <a class="message" href="#SCI_SETCARETLINEVISIBLEALWAYS">SCI_SETCARETLINEVISIBLEALWAYS(bool alwaysVisible)</a><br />
     <a class="message" href="#SCI_GETCARETLINEVISIBLEALWAYS">SCI_GETCARETLINEVISIBLEALWAYS &rarr; bool</a><br />
+    <a class="message" href="#SCI_SETCARETLINEHIGHLIGHTSUBLINE">SCI_SETCARETLINEHIGHLIGHTSUBLINE(bool subLine)</a><br />
+    <a class="message" href="#SCI_GETCARETLINEHIGHLIGHTSUBLINE">SCI_GETCARETLINEHIGHLIGHTSUBLINE &rarr; bool</a><br />
     <br />
     <a class="message" href="#SCI_SETCARETPERIOD">SCI_SETCARETPERIOD(int periodMilliseconds)</a><br />
     <a class="message" href="#SCI_GETCARETPERIOD">SCI_GETCARETPERIOD &rarr; int</a><br />
@@ -3621,7 +3668,7 @@ struct Sci_TextToFind {
 
      <p><b id="SCI_SETSELALPHA">SCI_SETSELALPHA(<a class="jump" href="#alpha">alpha</a> alpha)</b><br />
      <b id="SCI_GETSELALPHA">SCI_GETSELALPHA &rarr; int</b><br />
-     These APIs are now discouraged and should be replaced with 
+     These APIs are now discouraged and should be replaced with
      a combination of setting the layer with SCI_SETSELECTIONLAYER and
      setting translucency through the SC_ELEMENT_SELECTION_BACK element.</p>
 
@@ -3734,6 +3781,12 @@ struct Sci_TextToFind {
      Default behaviour <code>SCI_SETCARETLINEVISIBLEALWAYS(false)</code> the caret line is only visible when the window is in focus.
           </p>
 
+    <p><b id="SCI_SETCARETLINEHIGHLIGHTSUBLINE">SCI_SETCARETLINEHIGHLIGHTSUBLINE(bool subLine)</b><br />
+     <b id="SCI_GETCARETLINEHIGHLIGHTSUBLINE">SCI_GETCARETLINEHIGHLIGHTSUBLINE &rarr; bool</b><br />
+     Choose to highlight only the subline containing the caret instead of the whole line.
+     Default behaviour <code>SCI_SETCARETLINEHIGHLIGHTSUBLINE(false)</code> the whole caret line is highlighted.
+          </p>
+
     <p><b id="SCI_SETCARETPERIOD">SCI_SETCARETPERIOD(int periodMilliseconds)</b><br />
      <b id="SCI_GETCARETPERIOD">SCI_GETCARETPERIOD &rarr; int</b><br />
      The rate at which the caret blinks can be set with <code>SCI_SETCARETPERIOD</code> which
@@ -3744,8 +3797,8 @@ struct Sci_TextToFind {
     <p><b id="SCI_SETCARETSTYLE">SCI_SETCARETSTYLE(int caretStyle)</b><br />
      <b id="SCI_GETCARETSTYLE">SCI_GETCARETSTYLE &rarr; int</b><br />
      The style of the caret can be set with <code>SCI_SETCARETSTYLE</code>.
-     There are separate styles for insert mode (lower 4-bits, <code>CARETSTYLE_INS_MASK</code>) and
-     overtype mode (bit 4).
+     There are separate styles for insert mode (lower 4-bits, <code>CARETSTYLE_INS_MASK</code>),
+     overtype mode (bit 4), and curses mode (bit 5).
 
      <table class="standard" summary="Caret Styles">
        <tbody valign="top">
@@ -3773,6 +3826,13 @@ struct Sci_TextToFind {
            <th align="left"><code>CARETSTYLE_OVERSTRIKE_BLOCK</code></th>
            <td>16</td>
            <td>Draws an overstrike caret as a block. This should be ored with one of the first three styles.</td>
+         </tr>
+         <tr>
+           <th align="left"><code>CARETSTYLE_CURSES</code></th>
+           <td>32</td>
+           <td>Draws carets that cannot be drawn in a curses (terminal) environment (such as additional carets),
+           and draws them as blocks. The main caret is left to be drawn by the terminal itself. This setting is
+           typically a standalone setting.</td>
          </tr>
          <tr>
            <th align="left"><code>CARETSTYLE_BLOCK_AFTER</code></th>
@@ -3888,6 +3948,8 @@ struct Sci_TextToFind {
 
     <p>The NUL (0) character is a special case since the <code class="parameter">encodedCharacter</code> parameter is NUL terminated, the NUL
     character is specified as an empty string.</p>
+
+    <p>For UTF-8 and DBCS code pages, clear representation for single byte &ge; 128 may cause unexpected behaviour.</p>
 
     <p><b id="SCI_CLEARALLREPRESENTATIONS">SCI_CLEARALLREPRESENTATIONS</b><br />
     Reset representations to defaults with <code>SCI_CLEARALLREPRESENTATIONS</code>.</p>
@@ -5565,7 +5627,7 @@ struct Sci_TextToFind {
      <code>INDIC_STRIKE</code>, <code>INDIC_BOX</code>, <code>INDIC_ROUNDBOX</code>, <code>INDIC_STRAIGHTBOX</code>,
      <code>INDIC_FULLBOX</code>, <code>INDIC_DASH</code>, <code>INDIC_DOTS</code>, <code>INDIC_SQUIGGLELOW</code>.
      </p>
-     <p>Fractional pixel widths are possible such as 50 for half a pixel wide. 
+     <p>Fractional pixel widths are possible such as 50 for half a pixel wide.
      On many systems a half pixel value will appear as a fainter line but it allows drawing very thin lines on systems with multiple physical pixels
      per logical pixel.
      Half (logical) pixel lines are available on macOS with 'retina' displays,
@@ -7000,6 +7062,7 @@ sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
      <a class="message" href="#SCI_DOCLINEFROMVISIBLE">SCI_DOCLINEFROMVISIBLE(line displayLine) &rarr; line</a><br />
      <a class="message" href="#SCI_SHOWLINES">SCI_SHOWLINES(line lineStart, line lineEnd)</a><br />
      <a class="message" href="#SCI_HIDELINES">SCI_HIDELINES(line lineStart, line lineEnd)</a><br />
+     <a class="element" href="#SC_ELEMENT_HIDDEN_LINE">SC_ELEMENT_HIDDEN_LINE : colouralpha</a><br />
      <a class="message" href="#SCI_GETLINEVISIBLE">SCI_GETLINEVISIBLE(line line) &rarr; bool</a><br />
      <a class="message" href="#SCI_GETALLLINESVISIBLE">SCI_GETALLLINESVISIBLE &rarr; bool</a><br />
      <a class="message" href="#SCI_SETFOLDLEVEL">SCI_SETFOLDLEVEL(line line, int level)</a><br />
@@ -7007,6 +7070,7 @@ sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
      <a class="message" href="#SCI_SETAUTOMATICFOLD">SCI_SETAUTOMATICFOLD(int automaticFold)</a><br />
      <a class="message" href="#SCI_GETAUTOMATICFOLD">SCI_GETAUTOMATICFOLD &rarr; int</a><br />
      <a class="message" href="#SCI_SETFOLDFLAGS">SCI_SETFOLDFLAGS(int flags)</a><br />
+     <a class="element" href="#SC_ELEMENT_FOLD_LINE">SC_ELEMENT_FOLD_LINE : colouralpha</a><br />
      <a class="message" href="#SCI_GETLASTCHILD">SCI_GETLASTCHILD(line line, int level) &rarr; line</a><br />
      <a class="message" href="#SCI_GETFOLDPARENT">SCI_GETFOLDPARENT(line line) &rarr; line</a><br />
      <a class="message" href="#SCI_SETFOLDEXPANDED">SCI_SETFOLDEXPANDED(line line, bool
@@ -7050,16 +7114,19 @@ sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
 
     <p><b id="SCI_SHOWLINES">SCI_SHOWLINES(line lineStart, line lineEnd)</b><br />
      <b id="SCI_HIDELINES">SCI_HIDELINES(line lineStart, line lineEnd)</b><br />
+     <b id="SC_ELEMENT_HIDDEN_LINE">SC_ELEMENT_HIDDEN_LINE : colouralpha</b><br />
      <b id="SCI_GETLINEVISIBLE">SCI_GETLINEVISIBLE(line line) &rarr; bool</b><br />
      <b id="SCI_GETALLLINESVISIBLE">SCI_GETALLLINESVISIBLE &rarr; bool</b><br />
      The first two messages mark a range of lines as visible or invisible and then redraw the
     display.
+    If <a class="element" href="#SCI_SETELEMENTCOLOUR"><code>SC_ELEMENT_HIDDEN_LINE</code></a>
+    is set then a horizontal line is drawn in that colour to indicate that there are hidden lines.
+    A fold line drawn in that position overrides the hidden line indicator.
     <code>SCI_GETLINEVISIBLE</code> reports on the visible state of a line and returns 1 if it is
     visible and 0 if it is not visible.
     <code>SCI_GETALLLINESVISIBLE</code> returns 1 if all lines are visible and 0
     if some lines are hidden.
-    These messages have no effect on fold levels or fold
-    flags. The first line can not be hidden.</p>
+    These messages have no effect on fold levels or fold flags.</p>
 
     <p><b id="SCI_SETFOLDLEVEL">SCI_SETFOLDLEVEL(line line, int level)</b><br />
      <b id="SCI_GETFOLDLEVEL">SCI_GETFOLDLEVEL(line line) &rarr; int</b><br />
@@ -7086,9 +7153,14 @@ sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
     update to match your changes.
 
     <p><b id="SCI_SETFOLDFLAGS">SCI_SETFOLDFLAGS(int flags)</b><br />
+     <b id="SC_ELEMENT_FOLD_LINE">SC_ELEMENT_FOLD_LINE : colouralpha</b><br />
      In addition to showing markers in the folding margin, you can indicate folds to the user by
-    drawing lines in the text area. The lines are drawn in the foreground colour set for <a
-    class="message" href="#StyleDefinition"><code>STYLE_DEFAULT</code></a>. Bits set in
+    drawing lines in the text area.
+    The lines are drawn in the <a class="element" href="#SCI_SETELEMENTCOLOUR"><code>SC_ELEMENT_FOLD_LINE</code></a>
+    colour if set.
+    If it is not set then the foreground colour set for <a
+    class="message" href="#StyleDefinition"><code>STYLE_DEFAULT</code></a> is used.
+    Bits set in
     <code class="parameter">flags</code> determine where folding lines are drawn:<br />
     </p>
 
@@ -7842,7 +7914,7 @@ sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
     in <code>SciLexer.h</code>. Some lexers may not have a lexer ID, just a lexer name in which case 0 is returned.</p>
 
     <p><b id="SCI_GETLEXERLANGUAGE">SCI_GETLEXERLANGUAGE(&lt;unused&gt;, char *language NUL-terminated) &rarr; int</b><br />
-     <code>SCI_GETLEXERLANGUAGE</code>returns the name of the current lexer which must be set with <code>SCI_SETILEXER</code>.
+     <code>SCI_GETLEXERLANGUAGE</code> returns the name of the current lexer which must be set with <code>SCI_SETILEXER</code>.
     To locate the name for a lexer, open the relevant
     <code>lexilla/lexers/Lex*.cxx</code> file and search for <code>LexerModule</code>. The third argument in the
     <code>LexerModule</code> constructor is the name to use.</p>
@@ -7889,10 +7961,10 @@ sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
     without modification; extra spaces at the beginning or end of <code class="parameter">key</code> are
     significant.</p>
 
-    <p>The <code class="parameter">value</code> string can refer to other keywords. For example,
-    <code>SCI_SETPROPERTY("foldTimes10", "$(fold)0")</code> stores the string
-    <code>"$(fold)0"</code>, but when this is accessed, the <code>$(fold)</code> is replaced by the
-    value of the <code>"fold"</code> keyword (or by nothing if this keyword does not exist).</p>
+    <p>The <code class="parameter">value</code> string can no longer refer to other keywords
+    as was possible in older releases of Scintilla.</p>
+
+    <p>Lexers may only store values for keywords they support.</p>
 
     <p>Currently the "fold" property is defined for most of the lexers to set the fold structure if
     set to "1". <code>SCLEX_PYTHON</code> understands <code>"tab.timmy.whinge.level"</code> as a
@@ -7905,8 +7977,9 @@ sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
     lexer or start with "lexer." or "fold." if they apply to multiple lexers.</p>
 
     <p>Applications may discover the set of properties used by searching the source code of lexers for lines that contain
-    <code>GetProperty</code> and a double quoted string and extract the value of the double quoted string as the property name.
-    The <code>scintilla/scripts/LexGen.py</code> script does this and can be used as an example.
+    <code>GetProperty</code> or <code>DefineProperty</code> and a double quoted string and extract the value of
+    the double quoted string as the property name.
+    The <code>lexilla/scripts/LexillaData.py</code> script does this and can be used as an example.
     Documentation for the property may be located above the call as a multi-line comment starting with
     <br/><code>// property &lt;property-name&gt;</code></p>
 
@@ -7915,30 +7988,24 @@ sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
     buffer and return the length (not including the terminating 0).  If not found, copy an empty string
     to the buffer and return 0.</p>
 
-    <p>Note that  "keyword replacement" as described in <a class="message" href="#SCI_SETPROPERTY">
-    <code>SCI_SETPROPERTY</code></a> will not be performed.</p>
-
     <p>If the value argument is 0 then the length that should be allocated to store the value is returned;
     again, the terminating 0 is not included.</p>
 
     <p><b id="SCI_GETPROPERTYEXPANDED">SCI_GETPROPERTYEXPANDED(const char *key, char *value) &rarr; int</b><br />
-    Lookup a keyword:value pair using the specified key; if found, copy the value to the user-supplied
+    This is now the same as <a class="message" href="#SCI_GETPROPERTY"><code>SCI_GETPROPERTY</code></a>
+    - no expansion is performed.</p>
+
+    <p>Lookup a keyword:value pair using the specified key; if found, copy the value to the user-supplied
     buffer and return the length (not including the terminating 0).  If not found, copy an empty string
     to the buffer and return 0.</p>
 
-    <p>Note that  "keyword replacement" as described in <a class="message" href="#SCI_SETPROPERTY">
-    <code>SCI_SETPROPERTY</code></a> will be performed.</p>
-
-    <p>If the value argument is 0 then the length that should be allocated to store the value (including any indicated keyword replacement)
-    is returned; again, the terminating 0 is not included.</p>
+    <p>If the value argument is 0 then the length that should be allocated to store the value is returned;
+    again, the terminating 0 is not included.</p>
 
     <p><b id="SCI_GETPROPERTYINT">SCI_GETPROPERTYINT(const char *key, int defaultValue) &rarr; int</b><br />
     Lookup a keyword:value pair using the specified key; if found, interpret the value as an integer and return it.
     If not found (or the value is an empty string) then return the supplied default.  If the keyword:value pair is found but is not
     a number, then return 0.</p>
-
-    <p>Note that  "keyword replacement" as described in <a class="message" href="#SCI_SETPROPERTY">
-    <code>SCI_SETPROPERTY</code></a> will be performed before any numeric interpretation.</p>
 
     <p><b id="SCI_SETKEYWORDS">SCI_SETKEYWORDS(int keyWordSet, const char *keyWords)</b><br />
      You can set up to 9 lists of keywords for use by the current lexer.
@@ -9462,7 +9529,7 @@ EM_FORMATRANGE
      Any use of these symbols should be removed and replaced with <a href="#Indicators">standard indicators</a>.
     <code>SCI_GETSTYLEBITS</code> and <code>SCI_GETSTYLEBITSNEEDED</code> always return 8,
     indicating that 8 bits are used for styling and there are 256 styles.</p>
-    
+
     <p>Discouraged APIs are a step before deprecation. A new preferred API has been implemented that new code should use
     but the old API is unlikely to be removed.
     Discouraged APIs are marked with a <span class="discouraged">orange strikethrough</span> and their documentation mentions the preferred API.

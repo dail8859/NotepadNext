@@ -10,7 +10,7 @@
 #define LEXILLAACCESS_H
 
 namespace Lexilla {
- 
+
 // Directory to load default Lexilla from, commonly the directory of the application.
 void SetDefaultDirectory(std::string_view directory);
 

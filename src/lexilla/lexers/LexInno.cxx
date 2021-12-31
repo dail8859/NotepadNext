@@ -3,6 +3,7 @@
  ** Lexer for Inno Setup scripts.
  **/
 // Written by Friedrich Vedder <fvedd@t-online.de>, using code from LexOthers.cxx.
+// Modified by Michael Heath.
 // The License.txt file describes the conditions under which this software may be distributed.
 
 #include <stdlib.h>
@@ -28,6 +29,27 @@
 
 using namespace Lexilla;
 
+static bool innoIsBlank(int ch) {
+	return (ch == ' ') || (ch == '\t');
+}
+
+static bool innoNextNotBlankIs(Sci_Position i, Accessor &styler, char needle) {
+	char ch;
+
+	while (i < styler.Length()) {
+		ch = styler.SafeGetCharAt(i);
+
+		if (ch == needle)
+			return true;
+
+		if (!innoIsBlank(ch))
+			return false;
+
+		i++;
+	}
+	return false;
+}
+
 static void ColouriseInnoDoc(Sci_PositionU startPos, Sci_Position length, int, WordList *keywordLists[], Accessor &styler) {
 	int state = SCE_INNO_DEFAULT;
 	char chPrev;
@@ -38,6 +60,7 @@ static void ColouriseInnoDoc(Sci_PositionU startPos, Sci_Position length, int, W
 	Sci_Position bufferCount = 0;
 	bool isBOL, isEOL, isWS, isBOLWS = 0;
 	bool isCStyleComment = false;
+	enum section{None, Code, Messages};
 
 	WordList &sectionKeywords = *keywordLists[0];
 	WordList &standardKeywords = *keywordLists[1];
@@ -48,7 +71,8 @@ static void ColouriseInnoDoc(Sci_PositionU startPos, Sci_Position length, int, W
 
 	Sci_Position curLine = styler.GetLine(startPos);
 	int curLineState = curLine > 0 ? styler.GetLineState(curLine - 1) : 0;
-	bool isCode = (curLineState == 1);
+	bool isCode = (curLineState == section::Code);
+	bool isMessages = (curLineState == section::Messages);
 
 	// Go through all provided text segment
 	// using the hand-written state machine shown below
@@ -73,7 +97,14 @@ static void ColouriseInnoDoc(Sci_PositionU startPos, Sci_Position length, int, W
 		if ((ch == '\r' && chNext != '\n') || (ch == '\n')) {
 			// Remember the line state for future incremental lexing
 			curLine = styler.GetLine(i);
-			styler.SetLineState(curLine, (isCode ? 1 : 0));
+
+			if (isCode) {
+				styler.SetLineState(curLine, section::Code);
+			} else if (isMessages) {
+				styler.SetLineState(curLine, section::Messages);
+			} else {
+				styler.SetLineState(curLine, section::None);
+			}
 		}
 
 		switch(state) {
@@ -99,13 +130,13 @@ static void ColouriseInnoDoc(Sci_PositionU startPos, Sci_Position length, int, W
 					// Apparently, C-style comments are legal, too
 					state = SCE_INNO_COMMENT_PASCAL;
 					isCStyleComment = true;
-				} else if (ch == '"') {
+				} else if (!isMessages && ch == '"') {
 					// Start of a double-quote string
 					state = SCE_INNO_STRING_DOUBLE;
-				} else if (ch == '\'') {
+				} else if (!isMessages && ch == '\'') {
 					// Start of a single-quote string
 					state = SCE_INNO_STRING_SINGLE;
-				} else if (IsASCII(ch) && (isalpha(ch) || (ch == '_'))) {
+				} else if (!isMessages && IsASCII(ch) && (isalpha(ch) || (ch == '_'))) {
 					// Start of an identifier
 					bufferCount = 0;
 					buffer[bufferCount++] = static_cast<char>(tolower(ch));
@@ -119,7 +150,11 @@ static void ColouriseInnoDoc(Sci_PositionU startPos, Sci_Position length, int, W
 			case SCE_INNO_COMMENT:
 				if (isEOL) {
 					state = SCE_INNO_DEFAULT;
-					styler.ColourTo(i,SCE_INNO_COMMENT);
+					styler.ColourTo(i-1,SCE_INNO_COMMENT);
+
+					// Push back the faulty character
+					chNext = styler[i--];
+					ch = chPrev;
 				}
 				break;
 
@@ -131,9 +166,9 @@ static void ColouriseInnoDoc(Sci_PositionU startPos, Sci_Position length, int, W
 					buffer[bufferCount] = '\0';
 
 					// Check if the buffer contains a keyword
-					if (!isCode && standardKeywords.InList(buffer)) {
+					if (!isCode && standardKeywords.InList(buffer) && innoNextNotBlankIs(i, styler, '=')) {
 						styler.ColourTo(i-1,SCE_INNO_KEYWORD);
-					} else if (!isCode && parameterKeywords.InList(buffer)) {
+					} else if (!isCode && parameterKeywords.InList(buffer) && innoNextNotBlankIs(i, styler, ':')) {
 						styler.ColourTo(i-1,SCE_INNO_PARAMETER);
 					} else if (isCode && pascalKeywords.InList(buffer)) {
 						styler.ColourTo(i-1,SCE_INNO_KEYWORD_PASCAL);
@@ -158,6 +193,10 @@ static void ColouriseInnoDoc(Sci_PositionU startPos, Sci_Position length, int, W
 					if (sectionKeywords.InList(buffer)) {
 						styler.ColourTo(i,SCE_INNO_SECTION);
 						isCode = !CompareCaseInsensitive(buffer, "code");
+
+						isMessages = isCode ? false : (
+									!CompareCaseInsensitive(buffer, "custommessages")
+									|| !CompareCaseInsensitive(buffer, "messages"));
 					} else {
 						styler.ColourTo(i,SCE_INNO_DEFAULT);
 					}
@@ -194,16 +233,30 @@ static void ColouriseInnoDoc(Sci_PositionU startPos, Sci_Position length, int, W
 				break;
 
 			case SCE_INNO_STRING_DOUBLE:
-				if (ch == '"' || isEOL) {
+				if (ch == '"') {
 					state = SCE_INNO_DEFAULT;
 					styler.ColourTo(i,SCE_INNO_STRING_DOUBLE);
+				} else if (isEOL) {
+					state = SCE_INNO_DEFAULT;
+					styler.ColourTo(i-1,SCE_INNO_STRING_DOUBLE);
+
+					// Push back the faulty character
+					chNext = styler[i--];
+					ch = chPrev;
 				}
 				break;
 
 			case SCE_INNO_STRING_SINGLE:
-				if (ch == '\'' || isEOL) {
+				if (ch == '\'') {
 					state = SCE_INNO_DEFAULT;
 					styler.ColourTo(i,SCE_INNO_STRING_SINGLE);
+				} else if (isEOL) {
+					state = SCE_INNO_DEFAULT;
+					styler.ColourTo(i-1,SCE_INNO_STRING_SINGLE);
+
+					// Push back the faulty character
+					chNext = styler[i--];
+					ch = chPrev;
 				}
 				break;
 
@@ -221,7 +274,11 @@ static void ColouriseInnoDoc(Sci_PositionU startPos, Sci_Position length, int, W
 				if (isCStyleComment) {
 					if (isEOL) {
 						state = SCE_INNO_DEFAULT;
-						styler.ColourTo(i,SCE_INNO_COMMENT_PASCAL);
+						styler.ColourTo(i-1,SCE_INNO_COMMENT_PASCAL);
+
+						// Push back the faulty character
+						chNext = styler[i--];
+						ch = chPrev;
 					}
 				} else {
 					if (ch == '}' || (ch == ')' && chPrev == '*')) {

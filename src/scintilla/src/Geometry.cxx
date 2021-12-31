@@ -12,6 +12,14 @@
 
 #include "Geometry.h"
 
+namespace {
+
+constexpr unsigned int Mixed(unsigned char a, unsigned char b, double proportion) noexcept {
+	return static_cast<unsigned int>(a + proportion * (b - a));
+}
+
+}
+
 namespace Scintilla::Internal {
 
 PRectangle Clamp(PRectangle rc, Edge edge, XYPOSITION position) noexcept {
@@ -93,6 +101,22 @@ PRectangle PixelAlignOutside(const PRectangle &rc, int pixelDivisions) noexcept 
 		std::floor(rc.top * pixelDivisions) / pixelDivisions,
 		std::ceil(rc.right * pixelDivisions) / pixelDivisions,
 		std::floor(rc.bottom * pixelDivisions) / pixelDivisions);
+}
+
+ColourRGBA ColourRGBA::MixedWith(ColourRGBA other) const noexcept {
+	const unsigned int red = (GetRed() + other.GetRed()) / 2;
+	const unsigned int green = (GetGreen() + other.GetGreen()) / 2;
+	const unsigned int blue = (GetBlue() + other.GetBlue()) / 2;
+	const unsigned int alpha = (GetAlpha() + other.GetAlpha()) / 2;
+	return ColourRGBA(red, green, blue, alpha);
+}
+
+ColourRGBA ColourRGBA::MixedWith(ColourRGBA other, double proportion) const noexcept {
+	return ColourRGBA(
+		Mixed(GetRed(), other.GetRed(), proportion),
+		Mixed(GetGreen(), other.GetGreen(), proportion),
+		Mixed(GetBlue(), other.GetBlue(), proportion),
+		Mixed(GetAlpha(), other.GetAlpha(), proportion));
 }
 
 }

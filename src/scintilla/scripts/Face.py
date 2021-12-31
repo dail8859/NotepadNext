@@ -144,4 +144,4 @@ class Face:
 						name, value = featureVal.split("=", 1)
 						self.aliases[name] = value
 						currentComment = []
-
+		file.close()

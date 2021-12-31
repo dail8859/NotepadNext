@@ -13,6 +13,7 @@
 
 #include <cstddef>
 #include <cstdlib>
+#include <cstdint>
 #include <cassert>
 #include <cstring>
 #include <cctype>
@@ -127,7 +128,7 @@ private:
 	void NotifyFocus(bool focus) override;
 	void NotifyParent(Scintilla::NotificationData scn) override;
 	void NotifyURIDropped(const char *uri);
-	int timers[static_cast<size_t>(TickReason::dwell)+1];
+	int timers[static_cast<size_t>(TickReason::dwell)+1]{};
 	bool FineTickerRunning(TickReason reason) override;
 	void FineTickerStart(TickReason reason, int millis, int tolerance) override;
 	void CancelTimers();
@@ -145,7 +146,7 @@ private:
 	std::string CaseMapString(const std::string &s, CaseMapping caseMapping) override;
 
 	void CreateCallTipWindow(PRectangle rc) override;
-	void AddToPopUp(const char *label, int cmd = 0, bool enabled = true) override;
+	void AddToPopUp(const char *label, int cmd, bool enabled) override;
 	sptr_t WndProc(Scintilla::Message iMessage, uptr_t wParam, sptr_t lParam) override;
 	sptr_t DefWndProc(Scintilla::Message iMessage, uptr_t wParam, sptr_t lParam) override;
 

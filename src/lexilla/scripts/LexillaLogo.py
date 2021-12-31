@@ -1,4 +1,4 @@
-﻿# LexillaLogo.py 
+﻿# LexillaLogo.py
 # Requires Python 3.6.
 # Requires Pillow https://python-pillow.org/, tested with 7.2.0 on Windows 10
 

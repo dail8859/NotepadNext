@@ -47,7 +47,7 @@ void Indicator::Draw(Surface *surface, const PRectangle &rc, const PRectangle &r
 
 	const XYPOSITION ymid = PixelAlign(rc.Centre().y, pixelDivisions);
 
-	// This is a reasonable clip for indicators beneath text like underlines 
+	// This is a reasonable clip for indicators beneath text like underlines
 	PRectangle rcClip = rcAligned;
 	rcClip.bottom = rcFullHeightAligned.bottom;
 
@@ -242,7 +242,7 @@ void Indicator::Draw(Surface *surface, const PRectangle &rc, const PRectangle &r
 			const XYPOSITION widthDot = std::round(strokeWidth);
 			XYPOSITION x = std::floor(rc.left);
 			while (x < rc.right) {
-				const PRectangle rcDot = PRectangle(x, ymid, 
+				const PRectangle rcDot = PRectangle(x, ymid,
 					x + widthDot, ymid + widthDot);
 				surface->FillRectangle(rcDot, sacDraw.fore);
 				x += widthDot * 2;

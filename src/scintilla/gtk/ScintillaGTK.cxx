@@ -5,6 +5,7 @@
 
 #include <cstddef>
 #include <cstdlib>
+#include <cstdint>
 #include <cassert>
 #include <cstring>
 #include <cstdio>
@@ -179,6 +180,18 @@ GdkAtom SelectionOfGSD(GtkSelectionData *sd) noexcept {
 	return gtk_selection_data_get_selection(sd);
 }
 
+bool SettingGet(GtkSettings *settings, const gchar *name, gpointer value) noexcept {
+	if (!settings) {
+		return false;
+	}
+	if (!g_object_class_find_property(G_OBJECT_GET_CLASS(
+		G_OBJECT(settings)), name)) {
+		return false;
+	}
+	g_object_get(G_OBJECT(settings), name, value, nullptr);
+	return true;
+}
+
 }
 
 FontOptions::FontOptions(GtkWidget *widget) noexcept {
@@ -218,6 +231,8 @@ ScintillaGTK::ScintillaGTK(_ScintillaObject *sci_) :
 	preeditInitialized(false),
 	im_context(nullptr),
 	lastNonCommonScript(G_UNICODE_SCRIPT_INVALID_CODE),
+	settings(nullptr),
+	settingsHandlerId(0),
 	lastWheelMouseTime(0),
 	lastWheelMouseDirection(0),
 	wheelMouseIntensity(0),
@@ -264,6 +279,9 @@ ScintillaGTK::~ScintillaGTK() {
 	}
 	ClearPrimarySelection();
 	wPreedit.Destroy();
+	if (settingsHandlerId) {
+		g_signal_handler_disconnect(settings, settingsHandlerId);
+	}
 }
 
 void ScintillaGTK::RealizeThis(GtkWidget *widget) {
@@ -341,6 +359,15 @@ void ScintillaGTK::RealizeThis(GtkWidget *widget) {
 	cursor = gdk_cursor_new_for_display(pdisplay, GDK_LEFT_PTR);
 	gdk_window_set_cursor(PWindow(scrollbarh), cursor);
 	UnRefCursor(cursor);
+
+	using NotifyLambda = void (*)(GObject *, GParamSpec *, ScintillaGTK *);
+	if (settings) {
+		settingsHandlerId = g_signal_connect(settings, "notify::gtk-xft-dpi",
+			G_CALLBACK(static_cast<NotifyLambda>([](GObject *, GParamSpec *, ScintillaGTK *sciThis) {
+				sciThis->InvalidateStyleRedraw();
+			})),
+			this);
+	}
 }
 
 void ScintillaGTK::Realize(GtkWidget *widget) {
@@ -669,20 +696,16 @@ void ScintillaGTK::Init() {
 	gtk_container_add(GTK_CONTAINER(PWidget(wPreedit)), predrw);
 	gtk_widget_show(predrw);
 
+	settings = gtk_settings_get_default();
+
 	// Set caret period based on GTK settings
 	gboolean blinkOn = false;
-	if (g_object_class_find_property(G_OBJECT_GET_CLASS(
-			G_OBJECT(gtk_settings_get_default())), "gtk-cursor-blink")) {
-		g_object_get(G_OBJECT(
-				     gtk_settings_get_default()), "gtk-cursor-blink", &blinkOn, nullptr);
-	}
-	if (blinkOn &&
-			g_object_class_find_property(G_OBJECT_GET_CLASS(
-						G_OBJECT(gtk_settings_get_default())), "gtk-cursor-blink-time")) {
-		gint value;
-		g_object_get(G_OBJECT(
-				     gtk_settings_get_default()), "gtk-cursor-blink-time", &value, nullptr);
-		caret.period = static_cast<int>(value / 1.75);
+	SettingGet(settings, "gtk-cursor-blink", &blinkOn);
+	if (blinkOn) {
+		gint value = 500;
+		if (SettingGet(settings, "gtk-cursor-blink-time", &value)) {
+			caret.period = static_cast<int>(value / 1.75);
+		}
 	} else {
 		caret.period = 0;
 	}
@@ -1277,7 +1300,7 @@ struct CaseMapper {
 }
 
 std::string ScintillaGTK::CaseMapString(const std::string &s, CaseMapping caseMapping) {
-	if ((s.size() == 0) || (caseMapping == CaseMapping::same))
+	if (s.empty() || (caseMapping == CaseMapping::same))
 		return s;
 
 	if (IsUnicodeMode()) {
@@ -1540,8 +1563,8 @@ void ScintillaGTK::GetGtkSelectionText(GtkSelectionData *selectionData, Selectio
 
 void ScintillaGTK::InsertSelection(GtkClipboard *clipBoard, GtkSelectionData *selectionData) {
 	const gint length = gtk_selection_data_get_length(selectionData);
+	const GdkAtom selection = gtk_selection_data_get_selection(selectionData);
 	if (length >= 0) {
-		GdkAtom selection = gtk_selection_data_get_selection(selectionData);
 		SelectionText selText;
 		GetGtkSelectionText(selectionData, selText);
 
@@ -1549,11 +1572,17 @@ void ScintillaGTK::InsertSelection(GtkClipboard *clipBoard, GtkSelectionData *se
 		if (selection == GDK_SELECTION_CLIPBOARD) {
 			ClearSelection(multiPasteMode == MultiPaste::Each);
 		}
+		if (selection == GDK_SELECTION_PRIMARY) {
+			SetSelection(posPrimary, posPrimary);
+		}
 
 		InsertPasteShape(selText.Data(), selText.Length(),
 				 selText.rectangular ? PasteShape::rectangular : PasteShape::stream);
 		EnsureCaretVisible();
 	} else {
+		if (selection == GDK_SELECTION_PRIMARY) {
+			SetSelection(posPrimary, posPrimary);
+		}
 		GdkAtom target = gtk_selection_data_get_target(selectionData);
 		if (target == atomUTF8) {
 			// In case data is actually only stored as text/plain;charset=utf-8 not UTF8_STRING
@@ -1627,7 +1656,7 @@ void ScintillaGTK::GetSelection(GtkSelectionData *selection_data, guint info, Se
 	std::unique_ptr<SelectionText> newline_normalized;
 	{
 		std::string tmpstr = Document::TransformLineEnds(text->Data(), text->Length(), EndOfLine::Lf);
-		newline_normalized.reset(new SelectionText());
+		newline_normalized = std::make_unique<SelectionText>();
 		newline_normalized->Copy(tmpstr, CpUtf8, CharacterSet::Ansi, text->rectangular, false);
 		text = newline_normalized.get();
 	}
@@ -1854,12 +1883,11 @@ gint ScintillaGTK::PressThis(GdkEventButton *event) {
 			ButtonDownWithModifiers(pt, event->time, ModifierFlags(shift, ctrl, alt, meta));
 		} else if (event->button == 2) {
 			// Grab the primary selection if it exists
-			const SelectionPosition pos = SPositionFromLocation(pt, false, false, UserVirtualSpace());
+			posPrimary = SPositionFromLocation(pt, false, false, UserVirtualSpace());
 			if (OwnPrimarySelection() && primary.Empty())
 				CopySelectionRange(&primary);
 
 			sel.Clear();
-			SetSelection(pos, pos);
 			RequestSelection(GDK_SELECTION_PRIMARY);
 		} else if (event->button == 3) {
 			if (!PointInSelection(pt))
@@ -2423,7 +2451,7 @@ std::vector<int> MapImeIndicators(PangoAttrList *attrs, const char *u8Str) {
 void ScintillaGTK::SetCandidateWindowPos() {
 	// Composition box accompanies candidate box.
 	const Point pt = PointMainCaret();
-	GdkRectangle imeBox = {0}; // No need to set width
+	GdkRectangle imeBox {};
 	imeBox.x = static_cast<gint>(pt.x);
 	imeBox.y = static_cast<gint>(pt.y + std::max(4, vs.lineHeight/4));
 	// prevent overlapping with current line
@@ -2985,7 +3013,7 @@ gboolean ScintillaGTK::IdleCallback(gpointer pSci) {
 	// Idler will be automatically stopped, if there is nothing
 	// to do while idle.
 	const bool ret = sciThis->Idle();
-	if (ret == false) {
+	if (!ret) {
 		// FIXME: This will remove the idler from GTK, we don't want to
 		// remove it as it is removed automatically when this function
 		// returns false (although, it should be harmless).
@@ -3021,9 +3049,7 @@ void ScintillaGTK::SetDocPointer(Document *document) {
 		sciAccessible = ScintillaGTKAccessible::FromAccessible(accessible);
 		if (sciAccessible && pdoc) {
 			oldDoc = pdoc;
-			if (oldDoc) {
-				oldDoc->AddRef();
-			}
+			oldDoc->AddRef();
 		}
 	}
 

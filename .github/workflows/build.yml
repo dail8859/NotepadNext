@@ -4,6 +4,16 @@ on: [push, pull_request]
 
 jobs:
   build:
+    strategy:
+      matrix:
+        config:
+        - 
+          qt_version: "5.15.2"
+          modules: ""
+        - 
+          qt_version: "6.2.2"
+          modules: "qt5compat"
+
     runs-on: windows-latest
 
     steps:
@@ -13,6 +23,9 @@ jobs:
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ matrix.config.qt_version }}
+          modules: ${{ matrix.config.modules }}
 
       - name: Setup VS tools
         uses: egor-tensin/vs-shell@v2
@@ -41,5 +54,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: NotepadNext
+          name: NotepadNext-Qt${{ matrix.config.qt_version }}
           path: ${{ github.workspace }}/build/package/

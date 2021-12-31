@@ -52,7 +52,6 @@ class KeyMap {
 
 public:
 	KeyMap();
-	~KeyMap();
 	void Clear() noexcept;
 	void AssignCmdKey(Scintilla::Keys key, Scintilla::KeyMod modifiers, Scintilla::Message msg);
 	Scintilla::Message Find(Scintilla::Keys key, Scintilla::KeyMod modifiers) const;	// 0 returned on failure

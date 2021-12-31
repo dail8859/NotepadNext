@@ -48,7 +48,6 @@ class WatcherHelper : public DocWatcher {
     ScintillaDocument *owner;
 public:
     explicit WatcherHelper(ScintillaDocument *owner_);
-    virtual ~WatcherHelper();
 
     void NotifyModifyAttempt(Document *doc, void *userData) override;
     void NotifySavePoint(Document *doc, void *userData, bool atSavePoint) override;
@@ -60,9 +59,6 @@ public:
 };
 
 WatcherHelper::WatcherHelper(ScintillaDocument *owner_) : owner(owner_) {
-}
-
-WatcherHelper::~WatcherHelper() {
 }
 
 void WatcherHelper::NotifyModifyAttempt(Document *, void *) {
@@ -283,15 +279,4 @@ int ScintillaDocument::move_position_outside_char(int pos, int move_dir, bool ch
 
 int ScintillaDocument::get_character(int pos) {
     return (static_cast<Document *>(pdoc))->GetCharacterAndWidth(pos, nullptr);
-}
-
-QByteArray ScintillaDocument::get_character_pointer()
-{
-    Document *doc = static_cast<Document *>(pdoc);
-    return QByteArray::fromRawData(doc->BufferPointer(), doc->Length());
-}
-
-int ScintillaDocument::add_data(const char *s, int length)
-{
-    return (static_cast<Document *>(pdoc))->AddData(s, length);
 }

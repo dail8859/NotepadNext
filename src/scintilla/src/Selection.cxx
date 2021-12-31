@@ -194,9 +194,6 @@ Selection::Selection() : mainRange(0), moveExtends(false), tentativeMain(false),
 	AddSelection(SelectionRange(SelectionPosition(0)));
 }
 
-Selection::~Selection() {
-}
-
 bool Selection::IsRectangular() const noexcept {
 	return (selType == SelTypes::rectangle) || (selType == SelTypes::thin);
 }

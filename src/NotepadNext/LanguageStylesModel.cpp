@@ -36,7 +36,7 @@ QList<ComboBoxItem> caseItems{
 };
 
 QString val_to_case_str(int val) {
-    foreach(const ComboBoxItem &item, caseItems) {
+    for (const ComboBoxItem &item : caseItems) {
         if (item.second == val) {
             return item.first;
         }

@@ -23,6 +23,9 @@
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+#if defined(GDK_WINDOWING_WAYLAND)
+#include <gdk/gdkwayland.h>
+#endif
 
 #include "ScintillaTypes.h"
 #include "ScintillaMessages.h"
@@ -114,7 +117,7 @@ public:
 	FontHandle(FontHandle &&) = delete;
 	FontHandle &operator=(const FontHandle &) = delete;
 	FontHandle &operator=(FontHandle &&) = delete;
-	~FontHandle() {
+	~FontHandle() override {
 		if (pfd)
 			pango_font_description_free(pfd);
 		pfd = nullptr;
@@ -1073,7 +1076,7 @@ XYPOSITION SurfaceImpl::Ascent(const Font *font_) {
 	if (PFont(font_)->pfd) {
 		PangoFontMetrics *metrics = pango_context_get_metrics(pcontext,
 					    PFont(font_)->pfd, pango_context_get_language(pcontext));
-		ascent = std::round(floatFromPangoUnits(
+		ascent = std::ceil(floatFromPangoUnits(
 					    pango_font_metrics_get_ascent(metrics)));
 		pango_font_metrics_unref(metrics);
 	}
@@ -1087,7 +1090,7 @@ XYPOSITION SurfaceImpl::Descent(const Font *font_) {
 	if (PFont(font_)->pfd) {
 		PangoFontMetrics *metrics = pango_context_get_metrics(pcontext,
 					    PFont(font_)->pfd, pango_context_get_language(pcontext));
-		const XYPOSITION descent = std::round(floatFromPangoUnits(
+		const XYPOSITION descent = std::ceil(floatFromPangoUnits(
 				pango_font_metrics_get_descent(metrics)));
 		pango_font_metrics_unref(metrics);
 		return descent;
@@ -1181,6 +1184,14 @@ GdkRectangle MonitorRectangleForWidget(GtkWidget *wid) noexcept {
 	GdkDisplay *pdisplay = gtk_widget_get_display(wid);
 	GdkMonitor *monitor = gdk_display_get_monitor_at_window(pdisplay, wnd);
 	gdk_monitor_get_geometry(monitor, &rcScreen);
+#if defined(GDK_WINDOWING_WAYLAND)
+	if (GDK_IS_WAYLAND_DISPLAY(pdisplay)) {
+		// The GDK behavior on Wayland is not self-consistent, we must correct the display coordinates to match
+		// the coordinate space used in gtk_window_move. See also https://sourceforge.net/p/scintilla/bugs/2296/
+		rcScreen.x = 0;
+		rcScreen.y = 0;
+	}
+#endif
 #else
 	GdkScreen *screen = gtk_widget_get_screen(wid);
 	const gint monitor_num = gdk_screen_get_monitor_at_window(screen, wnd);

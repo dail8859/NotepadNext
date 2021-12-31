@@ -90,7 +90,7 @@ public:
  */
 class RegexSearchBase {
 public:
-	virtual ~RegexSearchBase() {}
+	virtual ~RegexSearchBase() = default;
 
 	virtual Sci::Position FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s,
                         bool caseSensitive, bool word, bool wordStart, Scintilla::FindOption flags, Sci::Position *length) = 0;
@@ -164,21 +164,41 @@ public:
 	bool isEnabled;
 };
 
+struct LexerReleaser {
+	// Called by unique_ptr to destroy/free the Resource
+	void operator()(Scintilla::ILexer5 *pLexer) noexcept {
+		if (pLexer) {
+			try {
+				pLexer->Release();
+			} catch (...) {
+				// ILexer5::Release must not throw, ignore if it does.
+			}
+		}
+	}
+};
+
+using LexerInstance = std::unique_ptr<Scintilla::ILexer5, LexerReleaser>;
+
+// LexInterface defines the interface to ILexer used in Document.
+// The LexState subclass is actually created and that is used within ScintillaBase
+// to provide more methods that are exposed through Scintilla's external API.
 class LexInterface {
 protected:
 	Document *pdoc;
-	Scintilla::ILexer5 *instance;
+	LexerInstance instance;
 	bool performingStyle;	///< Prevent reentrance
 public:
-	explicit LexInterface(Document *pdoc_) noexcept : pdoc(pdoc_), instance(nullptr), performingStyle(false) {
-	}
-	virtual ~LexInterface() {
-	}
+	explicit LexInterface(Document *pdoc_) noexcept;
+	// Deleted so LexInterface objects can not be copied.
+	LexInterface(const LexInterface &) = delete;
+	LexInterface(LexInterface &&) = delete;
+	LexInterface &operator=(const LexInterface &) = delete;
+	LexInterface &operator=(LexInterface &&) = delete;
+	virtual ~LexInterface() noexcept;
+	void SetInstance(ILexer5 *instance_);
 	void Colourise(Sci::Position start, Sci::Position end);
 	virtual Scintilla::LineEndType LineEndTypesSupported();
-	bool UseContainerLexing() const noexcept {
-		return instance == nullptr;
-	}
+	bool UseContainerLexing() const noexcept;
 };
 
 struct RegexError : public std::runtime_error {
@@ -332,7 +352,7 @@ public:
 	bool IsDBCSTrailByteNoExcept(char ch) const noexcept;
 	int DBCSDrawBytes(std::string_view text) const noexcept;
 	bool IsDBCSDualByteAt(Sci::Position pos) const noexcept;
-	int SafeSegment(const char *text, int length, int lengthSegment) const noexcept;
+	size_t SafeSegment(std::string_view text) const noexcept;
 	EncodingFamily CodePageFamily() const noexcept;
 
 	// Gateways to modifying document

@@ -3,7 +3,7 @@
 # Released to the public domain.
 
 # Update Scintilla files.
-# Update version numbers and modification dates in documentation and header files. 
+# Update version numbers and modification dates in documentation and header files.
 # Update make dependencies.
 # Requires Python 3.6 or later
 
@@ -58,7 +58,7 @@ def UpdateVersionNumbers(sci, root):
         0)
 
 def RegenerateAll(rootDirectory):
-    
+
     root = pathlib.Path(rootDirectory)
 
     scintillaBase = root.resolve()
