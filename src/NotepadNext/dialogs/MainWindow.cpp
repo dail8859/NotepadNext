@@ -61,6 +61,8 @@
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
 
+#include "QuickFindWidget.h"
+
 
 MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     QMainWindow(parent),
@@ -217,10 +219,15 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     connect(ui->actionFind, &QAction::triggered, [=]() {
         ScintillaNext *editor = dockedEditor->getCurrentEditor();
+        FindReplaceDialog *frd = nullptr;
 
         // Create it if it doesn't exist
-        if (frd == Q_NULLPTR) {
+        if (!dialogs.contains("FindReplaceDialog")) {
             frd = new FindReplaceDialog(this);
+            dialogs["FindReplaceDialog"] = frd;
+        }
+        else {
+            frd = qobject_cast<FindReplaceDialog *>(dialogs["FindReplaceDialog"]);
         }
 
         frd->setEditor(editor);
@@ -256,8 +263,8 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     });
 
     connect(ui->actionFindNext, &QAction::triggered, [=]() {
-        if (frd != Q_NULLPTR) {
-            frd->performLastSearch();
+        if (dialogs.contains("FindReplaceDialog")) {
+            qobject_cast<FindReplaceDialog *>(dialogs["FindReplaceDialog"])->performLastSearch();
         }
     });
 
@@ -397,16 +404,24 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
-    connect(ui->actionZoomIn, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->zoomIn();});
-    connect(ui->actionZoomOut, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->zoomOut();});
+    connect(ui->actionZoomIn, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->zoomIn(); });
+    connect(ui->actionZoomOut, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->zoomOut(); });
     connect(ui->actionZoomReset, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->setZoom(0); });
 
     languageActionGroup = new QActionGroup(this);
     languageActionGroup->setExclusive(true);
 
     connect(ui->actionPreferences, &QAction::triggered, [=] {
-        if (pd == Q_NULLPTR)
+        PreferencesDialog *pd = nullptr;
+
+        if (!dialogs.contains("PreferencesDialog")) {
             pd = new PreferencesDialog(app->getSettings(), this);
+            dialogs["PreferencesDialog"] = pd;
+        }
+        else {
+            pd = qobject_cast<PreferencesDialog *>(dialogs["PreferencesDialog"]);
+        }
+
         pd->show();
         pd->raise();
         pd->activateWindow();
@@ -459,14 +474,21 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, [=](bool b) {
         Q_UNUSED(b);
 
-        if (mrd == Q_NULLPTR) {
+        MacroRunDialog *mrd = nullptr;
+
+        if (!dialogs.contains("MacroRunDialog")) {
             mrd = new MacroRunDialog(this);
-            connect(mrd, &MacroRunDialog::execute, [=](Macro *macro, int times) {
+            dialogs["MacroRunDialog"] = mrd;
+
+            connect(mrd, &MacroRunDialog::execute, dockedEditor, [=](Macro *macro, int times) {
                 if (times > 0)
                     macro->replay(dockedEditor->getCurrentEditor(), times);
                 else if (times == -1)
                     macro->replayTillEndOfFile(dockedEditor->getCurrentEditor());
             });
+        }
+        else {
+            mrd = qobject_cast<MacroRunDialog *>(dialogs["MacroRunDialog"]);
         }
 
         if (!macros.contains(currentMacro))

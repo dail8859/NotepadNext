@@ -29,21 +29,18 @@
 #include "ScintillaNext.h"
 #include "StatusLabel.h"
 #include "NppImporter.h"
-#include "QuickFindWidget.h"
 
 namespace Ui {
 class MainWindow;
 }
 
 class NotepadNextApplication;
-class FindReplaceDialog;
 class LuaConsoleDock;
 class LanguageInspectorDock;
 class MacroRecorder;
-class MacroRunDialog;
 class Macro;
 class Settings;
-class PreferencesDialog;
+class QuickFindWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -146,10 +143,9 @@ private:
 
     //NppImporter *npp;
 
-    // Dialogs
-    FindReplaceDialog *frd = Q_NULLPTR;
-    MacroRunDialog *mrd = Q_NULLPTR;
-    PreferencesDialog *pd = Q_NULLPTR;
+    // Persistant dialogs
+    QMap<QString, QDialog *> dialogs;
+
     QuickFindWidget *quickFind = Q_NULLPTR;
 
     QVector<Macro *> macros;
