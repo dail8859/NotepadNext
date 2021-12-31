@@ -1473,8 +1473,9 @@ void MainWindow::addEditor(ScintillaNext *editor)
     detectLanguageFromExtension(editor);
 
     // These should only ever occur for the focused editor??
-    connect(editor, &ScintillaNext::savePointChanged, [=]() { updateSaveStatusBasedUi(editor); });
-    connect(editor, &ScintillaNext::renamed, [=]() { updateFileStatusBasedUi(editor); });
+    connect(editor, &ScintillaNext::savePointChanged, this, [=]() { updateSaveStatusBasedUi(editor); });
+    connect(editor, &ScintillaNext::renamed, this, [=]() { detectLanguageFromExtension(editor); });
+    connect(editor, &ScintillaNext::renamed, this, [=]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
     connect(editor, &ScintillaNext::marginClicked, [editor](Scintilla::Position position, Scintilla::KeyMod modifiers, int margin) {
         Q_UNUSED(modifiers);
