@@ -30,6 +30,8 @@
 #include "ColorPickerDelegate.h"
 #include "ComboBoxDelegate.h"
 
+#include "ScintillaNext.h"
+
 static QSpinBox *FontSizeSpinBoxFactory()
 {
     QSpinBox *editor = new QSpinBox();
@@ -58,12 +60,16 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
     DockedEditor *dockedEditor = parent->getDockedEditor();
 
     connect(dockedEditor, &DockedEditor::editorActivated, this, &LanguageInspectorDock::updateInformation);
-    connect(dockedEditor, &DockedEditor::editorAdded, [=](ScintillaNext *editor) {
-        connect(editor->getBuffer(), &ScintillaBuffer::lexer_changed, [=](){
+
+    connect(dockedEditor, &DockedEditor::editorAdded, this, [=](ScintillaNext *editor) {
+        ScintillaDocument *doc = editor->get_doc();
+
+        connect(doc, &ScintillaDocument::lexer_changed, editor, [=]() {
             updateInformation(editor);
         });
     });
-    connect(this, &LanguageInspectorDock::visibilityChanged, [=](bool visible) {
+
+    connect(this, &LanguageInspectorDock::visibilityChanged, this, [=](bool visible) {
         if (visible) {
             MainWindow *mw = qobject_cast<MainWindow *>(this->parent());
             updateInformation(mw->currentEditor());
@@ -91,10 +97,14 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
     ComboBoxDelegate *caseComoboDelegate = new ComboBoxDelegate(caseItems, this);
     ui->tblStyles->setItemDelegateForColumn(15, caseComoboDelegate);
 
-    QFontDatabase fontDatabase;
     QList<ComboBoxItem> fontNames;
-    foreach(const QString font, fontDatabase.families()) {
-        fontNames.append(QPair(font, font));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    for (const QString &font : QFontDatabase::families()) {
+#else
+    QFontDatabase fontDatabase;
+    for (const QString &font : fontDatabase.families()) {
+#endif
+        fontNames.append(QPair<QString, QString>(font, font));
     }
     ComboBoxDelegate *fontComboDelegate = new ComboBoxDelegate(fontNames, this);
     ui->tblStyles->setItemDelegateForColumn(4, fontComboDelegate);

@@ -677,6 +677,12 @@ set void StyleSetCharacterSet=2066(int style, CharacterSet characterSet)
 # Set a style to be a hotspot or not.
 set void StyleSetHotSpot=2409(int style, bool hotspot)
 
+# Indicate that a style may be monospaced over ASCII graphics characters which enables optimizations.
+set void StyleSetCheckMonospaced=2254(int style, bool checkMonospaced)
+
+# Get whether a style may be monospaced.
+get bool StyleGetCheckMonospaced=2255(int style,)
+
 enu Element=SC_ELEMENT_
 val SC_ELEMENT_LIST=0
 val SC_ELEMENT_LIST_BACK=1
@@ -697,6 +703,8 @@ val SC_ELEMENT_WHITE_SPACE=60
 val SC_ELEMENT_WHITE_SPACE_BACK=61
 val SC_ELEMENT_HOT_SPOT_ACTIVE=70
 val SC_ELEMENT_HOT_SPOT_ACTIVE_BACK=71
+val SC_ELEMENT_FOLD_LINE=80
+val SC_ELEMENT_HIDDEN_LINE=81
 
 # Set the colour of an element. Translucency (alpha) may or may not be significant
 # and this may depend on the platform. The alpha byte should commonly be 0xff for opaque.
@@ -752,6 +760,12 @@ get Layer GetCaretLineLayer=2764(,)
 
 # Set the layer of the background of the line containing the caret.
 set void SetCaretLineLayer=2765(Layer layer,)
+
+# Get only highlighting subline instead of whole line.
+get bool GetCaretLineHighlightSubLine=2773(,)
+
+# Set only highlighting subline instead of whole line.
+set void SetCaretLineHighlightSubLine=2774(bool subLine,)
 
 # Set the foreground colour of the caret.
 set void SetCaretFore=2069(colour fore,)
@@ -2475,6 +2489,7 @@ val CARETSTYLE_LINE=1
 val CARETSTYLE_BLOCK=2
 val CARETSTYLE_OVERSTRIKE_BAR=0
 val CARETSTYLE_OVERSTRIKE_BLOCK=0x10
+val CARETSTYLE_CURSES=0x20
 val CARETSTYLE_INS_MASK=0xF
 val CARETSTYLE_BLOCK_AFTER=0x100
 
@@ -3113,7 +3128,7 @@ fun int DescribeKeyWordSets=4017(, stringresult descriptions)
 
 # Bit set of LineEndType enumertion for which line ends beyond the standard
 # LF, CR, and CRLF are supported by the lexer.
-get int GetLineEndTypesSupported=4018(,)
+get LineEndType GetLineEndTypesSupported=4018(,)
 
 # Allocate a set of sub styles for a particular base style, returning start of range
 fun int AllocateSubStyles=4020(int styleBase, int numberStyles)

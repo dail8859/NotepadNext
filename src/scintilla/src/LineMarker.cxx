@@ -326,7 +326,7 @@ void LineMarker::DrawFoldingMark(Surface *surface, const PRectangle &rcWhole, Fo
 void LineMarker::AlignedPolygon(Surface *surface, const Point *pts, size_t npts) const {
 	const XYPOSITION move = strokeWidth / 2.0;
 	std::vector<Point> points;
-	std::transform(pts, pts + npts, std::back_inserter(points), [=](Point pt)->Point {
+	std::transform(pts, pts + npts, std::back_inserter(points), [=](Point pt) noexcept ->Point {
 		return Point(pt.x + move, pt.y + move);
 	});
 	surface->Polygon(points.data(), std::size(points), FillStroke(back, fore, strokeWidth));

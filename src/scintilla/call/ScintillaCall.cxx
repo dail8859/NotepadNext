@@ -624,6 +624,14 @@ void ScintillaCall::StyleSetHotSpot(int style, bool hotspot) {
 	Call(Message::StyleSetHotSpot, style, hotspot);
 }
 
+void ScintillaCall::StyleSetCheckMonospaced(int style, bool checkMonospaced) {
+	Call(Message::StyleSetCheckMonospaced, style, checkMonospaced);
+}
+
+bool ScintillaCall::StyleGetCheckMonospaced(int style) {
+	return Call(Message::StyleGetCheckMonospaced, style);
+}
+
 void ScintillaCall::SetElementColour(Scintilla::Element element, ColourAlpha colourElement) {
 	Call(Message::SetElementColour, static_cast<uintptr_t>(element), colourElement);
 }
@@ -686,6 +694,14 @@ Layer ScintillaCall::CaretLineLayer() {
 
 void ScintillaCall::SetCaretLineLayer(Scintilla::Layer layer) {
 	Call(Message::SetCaretLineLayer, static_cast<uintptr_t>(layer));
+}
+
+bool ScintillaCall::CaretLineHighlightSubLine() {
+	return Call(Message::GetCaretLineHighlightSubLine);
+}
+
+void ScintillaCall::SetCaretLineHighlightSubLine(bool subLine) {
+	Call(Message::SetCaretLineHighlightSubLine, subLine);
 }
 
 void ScintillaCall::SetCaretFore(Colour fore) {
@@ -3240,8 +3256,8 @@ std::string ScintillaCall::DescribeKeyWordSets() {
 	return CallReturnString(Message::DescribeKeyWordSets, 0);
 }
 
-int ScintillaCall::LineEndTypesSupported() {
-	return static_cast<int>(Call(Message::GetLineEndTypesSupported));
+LineEndType ScintillaCall::LineEndTypesSupported() {
+	return static_cast<Scintilla::LineEndType>(Call(Message::GetLineEndTypesSupported));
 }
 
 int ScintillaCall::AllocateSubStyles(int styleBase, int numberStyles) {

@@ -107,12 +107,27 @@ TEST_CASE("ContractionState") {
 		REQUIRE(true == pcs->GetVisible(0));
 		REQUIRE(false == pcs->GetVisible(1));
 		REQUIRE(true == pcs->HiddenLines());
+		REQUIRE(1 == pcs->LinesDisplayed());
 
 		pcs->SetVisible(1, 1, true);
 		for (int l=0;l<2;l++) {
 			REQUIRE(true == pcs->GetVisible(0));
 		}
 		REQUIRE(false == pcs->HiddenLines());
+	}
+
+	SECTION("Hide All") {
+		pcs->InsertLines(0,1);
+		for (int l=0;l<2;l++) {
+			REQUIRE(true == pcs->GetVisible(0));
+		}
+		REQUIRE(false == pcs->HiddenLines());
+
+		pcs->SetVisible(0, 1, false);
+		REQUIRE(false == pcs->GetVisible(0));
+		REQUIRE(false == pcs->GetVisible(1));
+		REQUIRE(true == pcs->HiddenLines());
+		REQUIRE(0 == pcs->LinesDisplayed());
 	}
 
 	SECTION("Contracting") {

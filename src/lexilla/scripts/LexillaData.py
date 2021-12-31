@@ -41,7 +41,7 @@ sys.path.append(str(thisPath.parent.parent.parent / "scintilla" / "scripts"))
 
 import FileGenerator
 
-neutralEncoding = "latin_1"
+neutralEncoding = "cp437"	# Each byte value is valid in cp437
 
 def FindModules(lexFile):
     modules = []

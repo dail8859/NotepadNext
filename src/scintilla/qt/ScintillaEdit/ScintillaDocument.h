@@ -75,8 +75,6 @@ public:
     int move_position_outside_char(int pos, int move_dir, bool check_line_end);
 
     int get_character(int pos); // Calls GetCharacterAndWidth(pos, NULL)
-    QByteArray get_character_pointer();
-    int add_data(const char *s, int length);
 
 signals:
     void modify_attempt();

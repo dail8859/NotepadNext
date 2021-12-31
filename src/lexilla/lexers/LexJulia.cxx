@@ -10,23 +10,22 @@
 // Copyright 1998-2001 by Neil Hodgson <neilh@scintilla.org>
 // The License.txt file describes the conditions under which this software may be distributed.
 
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <assert.h>
-#include <ctype.h>
+#include <cstdlib>
+#include <cassert>
+#include <cstring>
 
 #include <string>
 #include <string_view>
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <functional>
 
 #include "ILexer.h"
 #include "Scintilla.h"
 #include "SciLexer.h"
 
+#include "StringCopy.h"
 #include "PropSetSimple.h"
 #include "WordList.h"
 #include "LexAccessor.h"
@@ -41,7 +40,6 @@
 using namespace Scintilla;
 using namespace Lexilla;
 
-static const int NUM_JULIA_KEYWORD_LISTS = 4;
 static const int MAX_JULIA_IDENT_CHARS = 1023;
 
 // Options used for LexerJulia
@@ -53,7 +51,6 @@ struct OptionsJulia {
     bool foldSyntaxBased;
     bool highlightTypeannotation;
     bool highlightLexerror;
-    bool stringInterpolation;
 	OptionsJulia() {
         fold = true;
         foldComment = true;
@@ -62,15 +59,14 @@ struct OptionsJulia {
         foldSyntaxBased = true;
         highlightTypeannotation = false;
         highlightLexerror = false;
-        stringInterpolation = true;
 	}
 };
 
-static const char * const juliaWordLists[NUM_JULIA_KEYWORD_LISTS + 1] = {
+const char * const juliaWordLists[] = {
     "Primary keywords and identifiers",
     "Built in types",
     "Other keywords",
-    "Raw string literals",
+    "Built in functions",
     0,
 };
 
@@ -83,30 +79,57 @@ struct OptionSetJulia : public OptionSet<OptionsJulia> {
 		DefineProperty("fold.comment", &OptionsJulia::foldComment);
 
 		DefineProperty("fold.julia.docstring", &OptionsJulia::foldDocstring,
-            "Fold multiline triple-doublequote strings, usually used to document a function or type above the definition.");
+			"Fold multiline triple-doublequote strings, usually used to document a function or type above the definition.");
 
 		DefineProperty("fold.julia.syntax.based", &OptionsJulia::foldSyntaxBased,
 			"Set this property to 0 to disable syntax based folding.");
 
 		DefineProperty("lexer.julia.highlight.typeannotation", &OptionsJulia::highlightTypeannotation,
-			"This option enables highlighting of type after :: as type annotation instead of parsing from the keyword lists.");
+			"This option enables highlighting of the type identifier after `::`.");
 
 		DefineProperty("lexer.julia.highlight.lexerror", &OptionsJulia::highlightLexerror,
 			"This option enables highlighting of syntax error int character or number definition.");
-
-		DefineProperty("lexer.julia.string.interpolation", &OptionsJulia::stringInterpolation,
-			"Set to 0 to not recognize string interpolation at all");
 
 		DefineWordListSets(juliaWordLists);
 	}
 };
 
+LexicalClass juliaLexicalClasses[] = {
+	// Lexer Julia SCLEX_JULIA SCE_JULIA_:
+	0,  "SCE_JULIA_DEFAULT", "default", "White space",
+	1,  "SCE_JULIA_COMMENT", "comment", "Comment",
+	2,  "SCE_JULIA_NUMBER", "literal numeric", "Number",
+	3,  "SCE_JULIA_KEYWORD1", "keyword", "Reserved keywords",
+	4,  "SCE_JULIA_KEYWORD2", "identifier", "Builtin type names",
+	5,  "SCE_JULIA_KEYWORD3", "identifier", "Constants",
+	6,  "SCE_JULIA_CHAR", "literal string character", "Single quoted string",
+	7,  "SCE_JULIA_OPERATOR", "operator", "Operator",
+	8,  "SCE_JULIA_BRACKET", "bracket operator", "Bracket operator",
+	9,  "SCE_JULIA_IDENTIFIER", "identifier", "Identifier",
+	10, "SCE_JULIA_STRING", "literal string", "Double quoted String",
+	11, "SCE_JULIA_SYMBOL", "literal string symbol", "Symbol",
+	12, "SCE_JULIA_MACRO", "macro preprocessor", "Macro",
+	13, "SCE_JULIA_STRINGINTERP", "literal string interpolated", "String interpolation",
+	14, "SCE_JULIA_DOCSTRING", "literal string documentation", "Docstring",
+	15, "SCE_JULIA_STRINGLITERAL", "literal string", "String literal prefix",
+	16, "SCE_JULIA_COMMAND", "literal string command", "Command",
+	17, "SCE_JULIA_COMMANDLITERAL", "literal string command", "Command literal prefix",
+	18, "SCE_JULIA_TYPEANNOT", "identifier type", "Type annotation identifier",
+	19, "SCE_JULIA_LEXERROR", "lexer error", "Lexing error",
+	20, "SCE_JULIA_KEYWORD4", "identifier", "Builtin function names",
+	21, "SCE_JULIA_TYPEOPERATOR", "operator type", "Type annotation operator",
+};
+
 class LexerJulia : public DefaultLexer {
-	WordList keywords[NUM_JULIA_KEYWORD_LISTS];
+	WordList keywords;
+	WordList identifiers2;
+	WordList identifiers3;
+	WordList identifiers4;
 	OptionsJulia options;
 	OptionSetJulia osJulia;
 public:
-	LexerJulia() : DefaultLexer("julia", SCLEX_JULIA) {
+	explicit LexerJulia() :
+		DefaultLexer("julia", SCLEX_JULIA, juliaLexicalClasses, ELEMENTS(juliaLexicalClasses)) {
 	}
 	virtual ~LexerJulia() {
 	}
@@ -126,9 +149,9 @@ public:
 		return osJulia.DescribeProperty(name);
 	}
 	Sci_Position SCI_METHOD PropertySet(const char *key, const char *val) override;
-        const char * SCI_METHOD PropertyGet(const char *key) override {
-                return osJulia.PropertyGet(key);
-        }
+	const char * SCI_METHOD PropertyGet(const char *key) override {
+		return osJulia.PropertyGet(key);
+	}
 	const char * SCI_METHOD DescribeWordListSets() override {
 		return osJulia.DescribeWordListSets();
 	}
@@ -138,6 +161,7 @@ public:
 	void * SCI_METHOD PrivateCall(int, void *) override {
 		return 0;
 	}
+
 	static ILexer5 *LexerFactoryJulia() {
 		return new LexerJulia();
 	}
@@ -151,9 +175,23 @@ Sci_Position SCI_METHOD LexerJulia::PropertySet(const char *key, const char *val
 }
 
 Sci_Position SCI_METHOD LexerJulia::WordListSet(int n, const char *wl) {
+	WordList *wordListN = nullptr;
+	switch (n) {
+	case 0:
+		wordListN = &keywords;
+		break;
+	case 1:
+		wordListN = &identifiers2;
+		break;
+	case 2:
+		wordListN = &identifiers3;
+		break;
+	case 3:
+		wordListN = &identifiers4;
+		break;
+	}
 	Sci_Position firstModification = -1;
-	if (n < NUM_JULIA_KEYWORD_LISTS) {
-		WordList *wordListN = &keywords[n];
+	if (wordListN) {
 		WordList wlNew;
 		wlNew.Set(wl);
 		if (*wordListN != wlNew) {
@@ -204,7 +242,9 @@ static int is_wc_cat_id_start(uint32_t wc) {
             cat == ccSc ||  // allow currency symbols
             // other symbols, but not arrows or replacement characters
             (cat == ccSo && !(wc >= 0x2190 && wc <= 0x21FF) &&
-             wc != 0xfffc && wc != 0xfffd) ||
+             wc != 0xfffc && wc != 0xfffd &&
+             wc != 0x233f &&  // notslash
+             wc != 0x00a6) || // broken bar
 
             // math symbol (category Sm) whitelist
             (wc >= 0x2140 && wc <= 0x2a1c &&
@@ -513,18 +553,6 @@ static int CheckKeywordFoldPoint(char *str) {
     return 0;
 }
 
-
-static bool IsTripleStringState(LexAccessor &styler, Sci_Position i) {
-    char ch = styler.SafeGetCharAt(i, 0);
-    char chNext = styler.SafeGetCharAt(i + 1, 0);
-    char chNextNext = styler.SafeGetCharAt(i + 2, 0);
-
-    if (ch == '\"' && chNext == '\"' && chNextNext == '\"') {
-        return true;
-    }
-    return false;
-}
-
 static bool IsNumberExpon(int ch, int base) {
     if ((base == 10 && (ch == 'e' || ch == 'E' || ch == 'f')) ||
         (base == 16 && (ch == 'p' || ch == 'P'))) {
@@ -683,6 +711,32 @@ static void ScanParenInterpolation(StyleContext &sc) {
         }
     }
 }
+/*
+ * Start parsing a number, parse the base.
+ */
+static void initNumber (StyleContext &sc, int &base, bool &with_dot) {
+    base = 10;
+    with_dot = false;
+    sc.SetState(SCE_JULIA_NUMBER);
+    if (sc.ch == '0') {
+        if (sc.chNext == 'x') {
+            sc.Forward();
+            base = 16;
+            if (sc.chNext == '.') {
+                sc.Forward();
+                with_dot = true;
+            }
+        } else if (sc.chNext == 'o') {
+            sc.Forward();
+            base = 8;
+        } else if (sc.chNext == 'b') {
+            sc.Forward();
+            base = 2;
+        }
+    } else if (sc.ch == '.') {
+        with_dot = true;
+    }
+}
 
 /*
  * Resume parsing a String or Command, bounded by the `quote` character (\" or \`)
@@ -807,50 +861,32 @@ static void resumeOperator (StyleContext &sc) {
 void SCI_METHOD LexerJulia::Lex(Sci_PositionU startPos, Sci_Position length, int initStyle, IDocument *pAccess) {
 	PropSetSimple props;
 	Accessor styler(pAccess, &props);
-	Sci_Position pos = startPos;
 
+	Sci_Position pos = startPos;
 	styler.StartAt(pos);
 	styler.StartSegment(pos);
 
-    // boolean for when the ' is allowed to be transpose vs the start/end
-    // of a string
-    bool transpose = false;
+    // use the line state of each line to store block/multiline states
+    Sci_Position curLine = styler.GetLine(startPos);
+    // Default is false for everything and 0 counters.
+	int lineState = (curLine > 0) ? styler.GetLineState(curLine-1) : 0;
 
-    // boolean for when the docstring has triple quotes
-    bool istripledocstring = false;
-
-    // boolean for if the string is a raw string, no interpolation
-    bool israwstring = false;
-
-    // count of brackets as boolean for when end could be an operator not a keyword
-    int indexing_level = 0;
-
-    // level of nested list comprehension
-    int list_comprehension = 0;
-
-    // boolean for triple backtick
-    bool triple_backtick = false;
+    bool transpose = (lineState >> 0) & 0x01;                // 1 bit to know if ' is allowed to mean transpose
+    bool istripledocstring = (lineState >> 1) & 0x01;        // 1 bit to know if we are in a triple doublequotes string
+	bool triple_backtick = (lineState >> 2) & 0x01;          // 1 bit to know if we are in a triple backtick command
+	bool israwstring = (lineState >> 3) & 0x01;              // 1 bit to know if we are in a raw string
+    int indexing_level = (int)((lineState >> 4) & 0x0F);     // 4 bits of bracket nesting counter
+    int list_comprehension = (int)((lineState >> 8) & 0x0F); // 4 bits of parenthesis nesting counter
+    int commentDepth = (int)((lineState >> 12) & 0x0F);      // 4 bits of nested comment counter
 
     // base for parsing number
     int base = 10;
-
     // number has a float dot ?
     bool with_dot = false;
-
-    // use the line state of each line to store the block comment depth
-    Sci_Position curLine = styler.GetLine(startPos);
-    int commentDepth = curLine > 0 ? styler.GetLineState(curLine-1) : 0;
-
 
     StyleContext sc(startPos, length, initStyle, styler);
 
     for (; sc.More(); sc.Forward()) {
-
-        if (sc.atLineStart) {
-            // set the line state to the current commentDepth
-            curLine = styler.GetLine(sc.currentPos);
-            styler.SetLineState(curLine, commentDepth);
-        }
 
         //// check for end of states
         switch (sc.state) {
@@ -860,35 +896,25 @@ void SCI_METHOD LexerJulia::Lex(Sci_PositionU startPos, Sci_Position length, int
             case SCE_JULIA_OPERATOR:
                 resumeOperator(sc);
                 break;
+            case SCE_JULIA_TYPEOPERATOR:
+                sc.SetState(SCE_JULIA_DEFAULT);
+                break;
             case SCE_JULIA_TYPEANNOT:
-                // Highlight the next identifier, if option is set
-                if (options.highlightTypeannotation) {
-                    if (! IsIdentifierCharacter(sc.ch)) {
-                        sc.SetState(SCE_JULIA_DEFAULT);
-                    }
-                } else {
+                if (! IsIdentifierCharacter(sc.ch)) {
                     sc.SetState(SCE_JULIA_DEFAULT);
                 }
                 break;
             case SCE_JULIA_IDENTIFIER:
                 // String literal
                 if (sc.ch == '\"') {
-                    // Check if it is a raw string literal
-                    char s[MAX_JULIA_IDENT_CHARS + 1];
-                    sc.GetCurrent(s, sizeof(s));
-
-                    // Check if the string is in the Raw String Literals list
-                    if (keywords[NUM_JULIA_KEYWORD_LISTS - 1].InList(s)) {
-                    //if (IsRawStringLiteral(s)) {
-                        israwstring = true;
-                    } else {
-                        israwstring = false;
-                    }
-
+                    // If the string literal has a prefix, interpolation is disabled
+                    israwstring = true;
                     sc.ChangeState(SCE_JULIA_STRINGLITERAL);
                     sc.SetState(SCE_JULIA_DEFAULT);
 
                 } else if (sc.ch == '`') {
+                    // If the string literal has a prefix, interpolation is disabled
+                    israwstring = true;
                     sc.ChangeState(SCE_JULIA_COMMANDLITERAL);
                     sc.SetState(SCE_JULIA_DEFAULT);
 
@@ -904,14 +930,20 @@ void SCI_METHOD LexerJulia::Lex(Sci_PositionU startPos, Sci_Position length, int
                         transpose = false;
 
                     } else {
-                        // Ignore the last index of NUM_JULIA_KEYWORD_LISTS that is
-                        // used for Raw string literals.
-                        for (int ii = 0; ii < NUM_JULIA_KEYWORD_LISTS - 1; ii++) {
-                            if (keywords[ii].InList(s)) {
-                                sc.ChangeState(SCE_JULIA_KEYWORD1 + ii);
-                                transpose = false;
-                                break;
-                            }
+                        if (keywords.InList(s)) {
+                            sc.ChangeState(SCE_JULIA_KEYWORD1);
+                            transpose = false;
+                        } else if (identifiers2.InList(s)) {
+                            sc.ChangeState(SCE_JULIA_KEYWORD2);
+                            transpose = false;
+                        } else if (identifiers3.InList(s)) {
+                            sc.ChangeState(SCE_JULIA_KEYWORD3);
+                            transpose = false;
+                        } else if (identifiers4.InList(s)) {
+                            sc.ChangeState(SCE_JULIA_KEYWORD4);
+                            // These identifiers can be used for variable names also,
+                            // so transpose is not forbidden.
+                            //transpose = false;
                         }
                     }
                     sc.SetState(SCE_JULIA_DEFAULT);
@@ -929,19 +961,19 @@ void SCI_METHOD LexerJulia::Lex(Sci_PositionU startPos, Sci_Position length, int
                 resumeCharacter(sc, options.highlightLexerror);
                 break;
             case SCE_JULIA_DOCSTRING:
-                resumeString(sc, true, options.stringInterpolation && !israwstring);
+                resumeString(sc, true, !israwstring);
                 if (sc.state == SCE_JULIA_DEFAULT && israwstring) {
                     israwstring = false;
                 }
                 break;
             case SCE_JULIA_STRING:
-                resumeString(sc, false, options.stringInterpolation && !israwstring);
+                resumeString(sc, false, !israwstring);
                 if (sc.state == SCE_JULIA_DEFAULT && israwstring) {
                     israwstring = false;
                 }
                 break;
             case SCE_JULIA_COMMAND:
-                resumeCommand(sc, triple_backtick, options.stringInterpolation);
+                resumeCommand(sc, triple_backtick, !israwstring);
                 break;
             case SCE_JULIA_MACRO:
                 if (IsASpace(sc.ch) || ! IsIdentifierCharacter(sc.ch)) {
@@ -958,8 +990,6 @@ void SCI_METHOD LexerJulia::Lex(Sci_PositionU startPos, Sci_Position length, int
                     // end or start of a nested a block comment
                     if ( sc.ch == '=' && sc.chNext == '#') {
                         commentDepth --;
-                        curLine = styler.GetLine(sc.currentPos);
-                        styler.SetLineState(curLine, commentDepth);
                         sc.Forward();
 
                         if (commentDepth == 0) {
@@ -967,8 +997,6 @@ void SCI_METHOD LexerJulia::Lex(Sci_PositionU startPos, Sci_Position length, int
                         }
                     } else if( sc.ch == '#' && sc.chNext == '=') {
                         commentDepth ++;
-                        curLine = styler.GetLine(sc.currentPos);
-                        styler.SetLineState(curLine, commentDepth);
                         sc.Forward();
                     }
                 } else {
@@ -990,8 +1018,6 @@ void SCI_METHOD LexerJulia::Lex(Sci_PositionU startPos, Sci_Position length, int
                     commentDepth ++;
                     sc.Forward();
                 }
-                curLine = styler.GetLine(sc.currentPos);
-                styler.SetLineState(curLine, commentDepth);
             } else if (sc.ch == '!') {
                 sc.SetState(SCE_JULIA_OPERATOR);
             } else if (sc.ch == '\'') {
@@ -1023,28 +1049,7 @@ void SCI_METHOD LexerJulia::Lex(Sci_PositionU startPos, Sci_Position length, int
                     }
                 }
             } else if (IsADigit(sc.ch) || (sc.ch == '.' && IsADigit(sc.chNext))) {
-                base = 10;
-                with_dot = false;
-                transpose = true;
-                sc.SetState(SCE_JULIA_NUMBER);
-                if (sc.ch == '0') {
-                    if (sc.chNext == 'x') {
-                        sc.Forward();
-                        base = 16;
-                        if (sc.chNext == '.') {
-                            sc.Forward();
-                            with_dot = true;
-                        }
-                    } else if (sc.chNext == 'o') {
-                        sc.Forward();
-                        base = 8;
-                    } else if (sc.chNext == 'b') {
-                        sc.Forward();
-                        base = 2;
-                    }
-                } else if (sc.ch == '.') {
-                    with_dot = true;
-                }
+                initNumber(sc, base, with_dot);
             } else if (IsIdentifierFirstCharacter(sc.ch)) {
                 sc.SetState(SCE_JULIA_IDENTIFIER);
                 transpose = true;
@@ -1054,13 +1059,12 @@ void SCI_METHOD LexerJulia::Lex(Sci_PositionU startPos, Sci_Position length, int
 
             // Several parsing of operators, should keep the order of `if` blocks
             } else if ((sc.ch == ':' || sc.ch == '<' || sc.ch == '>') && sc.chNext == ':') {
-                sc.SetState(SCE_JULIA_TYPEANNOT);
+                sc.SetState(SCE_JULIA_TYPEOPERATOR);
                 sc.Forward();
                 // Highlight the next identifier, if option is set
-                if (options.highlightTypeannotation) {
-                    if (IsIdentifierFirstCharacter(sc.chNext)) {
-                        sc.Forward();
-                    }
+                if (options.highlightTypeannotation &&
+                    IsIdentifierFirstCharacter(sc.chNext)) {
+                    sc.ForwardSetState(SCE_JULIA_TYPEANNOT);
                 }
             } else if (sc.ch == ':') {
                 // TODO: improve detection of range
@@ -1099,6 +1103,21 @@ void SCI_METHOD LexerJulia::Lex(Sci_PositionU startPos, Sci_Position length, int
                 transpose = false;
             }
         }
+
+        // update the line information (used for line-by-line lexing and folding)
+        if (sc.atLineEnd) {
+            // set the line state to the current state
+            curLine = styler.GetLine(sc.currentPos);
+
+            lineState = ((transpose ? 1 : 0) << 0) |
+                        ((istripledocstring ? 1 : 0) << 1) |
+                        ((triple_backtick ? 1 : 0) << 2) |
+                        ((israwstring ? 1 : 0) << 3) |
+                        ((indexing_level & 0x0F) << 4) |
+                        ((list_comprehension & 0x0F) << 8) |
+                        ((commentDepth & 0x0F) << 12);
+            styler.SetLineState(curLine, lineState);
+        }
     }
     sc.Complete();
 }
@@ -1110,22 +1129,26 @@ void SCI_METHOD LexerJulia::Fold(Sci_PositionU startPos, Sci_Position length, in
 
 	LexAccessor styler(pAccess);
 
-    // level of nested brackets
-    int indexing_level = 0;
-    // level of nested parenthesis or brackets
-    int list_comprehension = 0;
-    // isdocstring
-    bool isdocstring = false;
-
 	Sci_PositionU endPos = startPos + length;
 	int visibleChars = 0;
 	Sci_Position lineCurrent = styler.GetLine(startPos);
 	int levelCurrent = SC_FOLDLEVELBASE;
-	if (lineCurrent > 0)
+    int lineState = 0;
+	if (lineCurrent > 0) {
 		levelCurrent = styler.LevelAt(lineCurrent-1) >> 16;
+        lineState = styler.GetLineState(lineCurrent-1);
+    }
+
+    // level of nested brackets
+    int indexing_level = (int)((lineState >> 4) & 0x0F);     // 4 bits of bracket nesting counter
+    // level of nested parenthesis or brackets
+    int list_comprehension = (int)((lineState >> 8) & 0x0F); // 4 bits of parenthesis nesting counter
+    //int commentDepth = (int)((lineState >> 12) & 0x0F);      // 4 bits of nested comment counter
+    
 	Sci_PositionU lineStartNext = styler.LineStart(lineCurrent+1);
 	int levelNext = levelCurrent;
 	char chNext = styler[startPos];
+	int stylePrev = styler.StyleAt(startPos - 1);
 	int styleNext = styler.StyleAt(startPos);
 	int style = initStyle;
     char word[100];
@@ -1184,7 +1207,7 @@ void SCI_METHOD LexerJulia::Fold(Sci_PositionU startPos, Sci_Position length, in
                     word[0] = '\0';
                     wordlen = 1;
                 }
-                if (styleNext !=  SCE_JULIA_KEYWORD1) {
+                if (styleNext != SCE_JULIA_KEYWORD1) {
                     word[wordlen] = '\0';
                     wordlen = 0;
                     if (list_comprehension <= 0 && indexing_level <= 0) {
@@ -1195,12 +1218,10 @@ void SCI_METHOD LexerJulia::Fold(Sci_PositionU startPos, Sci_Position length, in
         }
 
         // Docstring
-        if (options.foldDocstring && style == SCE_JULIA_DOCSTRING) {
-            if (visibleChars==0 && IsTripleStringState(styler, i) && styler.StyleAt(i + 3) == SCE_JULIA_DOCSTRING ) {
+        if (options.foldDocstring) {
+            if (stylePrev != SCE_JULIA_DOCSTRING && style == SCE_JULIA_DOCSTRING) {
                 levelNext ++;
-                isdocstring = true;
-            } else if (isdocstring && styleNext != SCE_JULIA_DOCSTRING && levelNext > 0) {
-                isdocstring = false;
+            } else if (style == SCE_JULIA_DOCSTRING && styleNext != SCE_JULIA_DOCSTRING) {
                 levelNext --;
             }
         }
@@ -1210,20 +1231,25 @@ void SCI_METHOD LexerJulia::Fold(Sci_PositionU startPos, Sci_Position length, in
             levelNext = 0;
         }
 
-        if (!IsASpace(ch))
+        if (!IsASpace(ch)) {
             visibleChars++;
+        }
+        stylePrev = style;
+
         if (atEOL || (i == endPos-1)) {
             int levelUse = levelCurrent;
             int lev = levelUse | levelNext << 16;
-            if (visibleChars == 0 && options.foldCompact)
+            if (visibleChars == 0 && options.foldCompact) {
                 lev |= SC_FOLDLEVELWHITEFLAG;
-            if (levelUse < levelNext)
+            }
+            if (levelUse < levelNext) {
                 lev |= SC_FOLDLEVELHEADERFLAG;
+            }
             if (lev != styler.LevelAt(lineCurrent)) {
                 styler.SetLevel(lineCurrent, lev);
             }
             lineCurrent++;
-			lineStartNext = styler.LineStart(lineCurrent+1);
+            lineStartNext = styler.LineStart(lineCurrent+1);
             levelCurrent = levelNext;
             if (atEOL && (i == static_cast<Sci_PositionU>(styler.Length() - 1))) {
                 // There is an empty line at end of file so give it same level and empty

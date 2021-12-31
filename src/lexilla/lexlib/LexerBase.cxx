@@ -31,15 +31,15 @@ LexerBase::LexerBase(const LexicalClass *lexClasses_, size_t nClasses_) :
 	lexClasses(lexClasses_), nClasses(nClasses_) {
 	for (int wl = 0; wl < numWordLists; wl++)
 		keyWordLists[wl] = new WordList;
-	keyWordLists[numWordLists] = 0;
+	keyWordLists[numWordLists] = nullptr;
 }
 
 LexerBase::~LexerBase() {
 	for (int wl = 0; wl < numWordLists; wl++) {
 		delete keyWordLists[wl];
-		keyWordLists[wl] = 0;
+		keyWordLists[wl] = nullptr;
 	}
-	keyWordLists[numWordLists] = 0;
+	keyWordLists[numWordLists] = nullptr;
 }
 
 void SCI_METHOD LexerBase::Release() {
@@ -63,9 +63,7 @@ const char * SCI_METHOD LexerBase::DescribeProperty(const char *) {
 }
 
 Sci_Position SCI_METHOD LexerBase::PropertySet(const char *key, const char *val) {
-	const char *valOld = props.Get(key);
-	if (strcmp(val, valOld) != 0) {
-		props.Set(key, val);
+	if (props.Set(key, val)) {
 		return 0;
 	} else {
 		return -1;

@@ -80,13 +80,9 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     // The windows editor manager that supports docking
     dockedEditor = new DockedEditor(this);
 
-    connect(dockedEditor, &DockedEditor::editorCloseRequested, [=](ScintillaNext *editor) {
-        closeFile(editor);
-    });
+    connect(dockedEditor, &DockedEditor::editorCloseRequested, this, [=](ScintillaNext *editor) { closeFile(editor); });
     connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::editorActivated);
 
-    // Set up the lua state and the extension. Need to intialize it after the first file was created
-    LuaExtension::Instance().Initialise(app->getLuaState()->L, Q_NULLPTR);
     connect(dockedEditor, &DockedEditor::editorActivated, [](ScintillaNext *editor) {
         LuaExtension::Instance().setEditor(editor);
     });
@@ -117,7 +113,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     connect(ui->actionMoveToTrash, &QAction::triggered, [=]() {
         ScintillaNext *editor = dockedEditor->getCurrentEditor();
-        const QString filePath = QDir::toNativeSeparators(editor->canonicalFilePath());
+        const QString filePath = editor->getFilePath();
         auto reply = QMessageBox::question(this, "Delete File", QString("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));;
 
         if (reply == QMessageBox::Yes) {
@@ -125,7 +121,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
                 closeCurrentFile();
 
                 // Since the file no longer exists, specifically remove it from the recent files list
-                app->getRecentFilesListManager()->removeFile(editor->canonicalFilePath());
+                app->getRecentFilesListManager()->removeFile(editor->getFilePath());
             }
             else {
                 QMessageBox::warning(this, "Error Deleting File",  QString("Something went wrong deleting <b>%1</b>?").arg(filePath));
@@ -204,7 +200,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionCopyFullPath, &QAction::triggered, [=]() {
         auto editor = dockedEditor->getCurrentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(QDir::toNativeSeparators(editor->canonicalFilePath()));
+            QApplication::clipboard()->setText(editor->getFilePath());
         }
     });
     connect(ui->actionCopyFileName, &QAction::triggered, [=]() {
@@ -213,7 +209,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionCopyFileDirectory, &QAction::triggered, [=]() {
         auto editor = dockedEditor->getCurrentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(QDir::toNativeSeparators(editor->canonicalFilePath()));
+            QApplication::clipboard()->setText(editor->getFilePath());
         }
     });
     connect(ui->actionIncrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->tab();});
@@ -507,32 +503,32 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
+    ui->actionAboutQt->setIcon(QPixmap(QLatin1String(":/qt-project.org/qmessagebox/images/qtlogo-64.png")));
     connect(ui->actionAboutQt, &QAction::triggered, &QApplication::aboutQt);
+
+    ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
     connect(ui->actionAboutNotepadNext, &QAction::triggered, [=]() {
         QMessageBox::about(this, "About Notepad Next",
-                            QString("<h3>Notepad Next v%1</h3><p>This program does stuff.</p><p>%2</p>")
-                                .arg(APP_VERSION, APP_COPYRIGHT));
+                            QString("<h3>Notepad Next v%1</h3>"
+                                    "<p>%2</p>"
+                                    "<p>This program does stuff.</p>"
+                                    R"(<p>This program is free software: you can redistribute it and/or modify
+                                    it under the terms of the GNU General Public License as published by
+                                    the Free Software Foundation, either version 3 of the License, or
+                                    (at your option) any later version.</p>
+                                    <p>This program is distributed in the hope that it will be useful,
+                                    but WITHOUT ANY WARRANTY; without even the implied warranty of
+                                    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+                                    GNU General Public License for more details.</p>
+                                    <p>You should have received a copy of the GNU General Public License
+                                    along with this program. If not, see &lt;https://www.gnu.org/licenses/&gt;.</p>)")
+                                .arg(APP_VERSION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
-
-    // If the current file is saved update the window title incase the file was renamed
-    //connect(dockedEditor, &DockedEditor::editorAdded, this, &MainWindow::detectLanguageFromExtension);
-
-    // TODO: handle renamed files
-    //connect(app->getBufferManager(), &BufferManager::bufferRenamed, [=] (ScintillaBuffer *buffer) {
-    //    updateBufferFileStatusBasedUi(buffer);
-    //    //detectLanguageFromExtension(buffer);
-    //    updateBufferFileStatusBasedUi(buffer);
-    //});
-
-    ui->actionAboutQt->setIcon(QPixmap(QLatin1String(":/qt-project.org/qmessagebox/images/qtlogo-64.png")));
-    ui->actionAboutNotepadNext->setIcon(this->windowIcon());
-    ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
 
     if (luaConsoleDock == Q_NULLPTR) {
         luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
         luaConsoleDock->hide();
         addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
-        ui->menuHelp->addSeparator()->setText("pickles");
         ui->menuHelp->addAction(luaConsoleDock->toggleViewAction());
     }
 
@@ -558,13 +554,14 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         // A bit after startup, see if we need to automatically check for an update
         QTimer::singleShot(15000, this, [=]() {
             QSettings settings;
-            QDateTime dt = settings.value("App/LastUpdateCheck", false).toDateTime();
+            QDateTime dt = settings.value("App/LastUpdateCheck", QDateTime::currentDateTime()).toDateTime();
 
-            if (dt.addDays(7) < QDateTime::currentDateTime()) {
-                checkForUpdates(true);
-            }
-            else {
+            if (dt.isValid()) {
                 qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
+
+                if (dt.addDays(7) < QDateTime::currentDateTime()) {
+                    checkForUpdates(true);
+                }
             }
         });
     }
@@ -684,7 +681,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
     bool wasInitialState = isInInitialState();
     const ScintillaNext *mostRecentEditor = Q_NULLPTR;
 
-    foreach (const QString &filePath , fileNames) {
+    for (const QString &filePath : fileNames) {
         qInfo(qUtf8Printable(filePath));
 
         // Search currently open editors to see if it is already open
@@ -737,7 +734,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
 
 bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
 {
-    foreach (ScintillaNext *editor, editors) {
+    for (ScintillaNext *editor : editors) {
         if (!editor->isSavedToDisk()) {
             // Switch to it
             dockedEditor->switchToEditor(editor);
@@ -779,22 +776,10 @@ void MainWindow::setupStatusBar()
     ui->statusBar->addPermanentWidget(eolFormat, 0);
     unicodeType = new StatusLabel(125);
     ui->statusBar->addPermanentWidget(unicodeType, 0);
-    overType = new StatusLabel(25);
-    ui->statusBar->addPermanentWidget(overType, 0);
 
     docType->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(docType, &QLabel::customContextMenuRequested, [=](const QPoint &pos) {
         ui->menuLanguage->popup(docType->mapToGlobal(pos));
-    });
-
-    connect(qobject_cast<StatusLabel*>(overType), &StatusLabel::clicked, [=]() {
-        ScintillaNext *editor = dockedEditor->getCurrentEditor();
-        bool ot = editor->overtype();
-        if (ot)
-            overType->setText("INS");
-        else
-            overType->setText("OVR");
-        editor->setOvertype(!ot);
     });
 
     eolFormat->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -831,7 +816,7 @@ void MainWindow::reloadFile()
         return;
     }
 
-    const QString filePath = QDir::toNativeSeparators(editor->canonicalFilePath());
+    const QString filePath = editor->getFilePath();
     auto reply = QMessageBox::question(this, "Reload File", QString("Are you sure you want to reload <b>%1</b>? Any unsaved changes will be lost.").arg(filePath));
 
     if (reply == QMessageBox::Yes) {
@@ -891,7 +876,7 @@ void MainWindow::closeAllFiles(bool forceClose = false)
     }
 
     // Ask the manager to close the editors the dockedEditor knows about
-    foreach (ScintillaNext *editor, dockedEditor->editors()) {
+    for (ScintillaNext *editor : dockedEditor->editors()) {
         editor->close();
     }
 
@@ -907,7 +892,7 @@ void MainWindow::closeAllExceptActive()
     editors.removeOne(e);
 
     if (checkEditorsBeforeClose(editors)) {
-        foreach (ScintillaNext *editor, editors) {
+        for (ScintillaNext *editor : editors) {
             editor->close();
         }
     }
@@ -924,7 +909,7 @@ void MainWindow::closeAllToLeft()
     }
 
     if (checkEditorsBeforeClose(editors)) {
-        foreach (ScintillaNext *editor, editors) {
+        for (ScintillaNext *editor : editors) {
             editor->close();
         }
     }
@@ -942,7 +927,7 @@ void MainWindow::closeAllToRight()
     }
 
     if (checkEditorsBeforeClose(editors)) {
-        foreach (ScintillaNext *editor, editors) {
+        for (ScintillaNext *editor : editors) {
             editor->close();
         }
     }
@@ -981,7 +966,7 @@ bool MainWindow::saveCurrentFileAsDialog()
 
     // Use the file path if possible
     if (editor->isFile()) {
-        dialogDir = editor->canonicalFilePath();
+        dialogDir = editor->getFilePath();
     }
 
     QString fileName = QFileDialog::getSaveFileName(
@@ -1024,7 +1009,7 @@ void MainWindow::saveCopyAsDialog()
 
     // Use the file path if possible
     if (editor->isFile()) {
-        dialogDir = editor->canonicalFilePath();
+        dialogDir = editor->getFilePath();
     }
 
     QString fileName = QFileDialog::getSaveFileName(
@@ -1046,7 +1031,7 @@ void MainWindow::saveCopyAs(const QString &fileName)
 
 void MainWindow::saveAll()
 {
-    foreach (ScintillaNext *editor, dockedEditor->editors()) {
+    for (ScintillaNext *editor : dockedEditor->editors()) {
         saveFile(editor);
     }
 }
@@ -1057,7 +1042,7 @@ void MainWindow::renameFile()
 
     Q_ASSERT(editor->isFile());
 
-    QString fileName = QFileDialog::getSaveFileName(this, "", editor->canonicalFilePath());
+    QString fileName = QFileDialog::getSaveFileName(this, "", editor->getFilePath());
 
     if (fileName.size() == 0) {
         return;
@@ -1087,7 +1072,7 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
     QString fileName;
 
     if (isFile) {
-        fileName = QDir::toNativeSeparators(editor->canonicalFilePath());
+        fileName = editor->getFilePath();
     }
     else {
         fileName = editor->getName();
@@ -1104,7 +1089,7 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
 
 bool MainWindow::isAnyUnsaved()
 {
-    foreach (ScintillaNext *editor, dockedEditor->editors()) {
+    for (const ScintillaNext *editor : dockedEditor->editors()) {
         if (!editor->isSavedToDisk()) {
             return true;
         }
@@ -1182,7 +1167,7 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
 
     const QString language_name = editor->languageName;
 
-    foreach (QAction *action, languageActionGroup->actions()) {
+    for (QAction *action : languageActionGroup->actions()) {
         if (action->data().toString() == language_name) {
             action->setChecked(true);
             docType->setText(action->text());
@@ -1193,7 +1178,7 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
     }
 
     // The above loop did not set any action as checked, so make sure they are all unchecked now
-    foreach (QAction *action, languageActionGroup->actions()) {
+    for (QAction *action : languageActionGroup->actions()) {
         if (action->isChecked()) {
             action->setChecked(false);
         }
@@ -1285,11 +1270,7 @@ void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
         return;
     }
 
-    // See if it already has a language
-    if (editor->lexerLanguage() != "")
-        return;
-
-    const QString ext = editor->suffix();
+    const QString ext = editor->getFileInfo().suffix();
 
     QString language_name = app->getLuaState()->executeAndReturn<QString>(QString(R"(
 local ext = "%1"
@@ -1326,9 +1307,9 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
     app->getLuaState()->execute(QString("languageName = \"%1\"").arg(QString(languageName)).toLatin1().constData());
     const QString lexer = app->getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
 
+    editor->languageName = languageName;
     auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
     editor->setILexer((sptr_t) lexerInstance);
-    editor->languageName = languageName;
 
     app->getLuaState()->execute(R"(
         local L = languages[languageName]
@@ -1488,8 +1469,9 @@ void MainWindow::addEditor(ScintillaNext *editor)
     detectLanguageFromExtension(editor);
 
     // These should only ever occur for the focused editor??
-    connect(editor, &ScintillaNext::savePointChanged, [=]() { updateSaveStatusBasedUi(editor); });
-    connect(editor, &ScintillaNext::renamed, [=]() { updateFileStatusBasedUi(editor); });
+    connect(editor, &ScintillaNext::savePointChanged, this, [=]() { updateSaveStatusBasedUi(editor); });
+    connect(editor, &ScintillaNext::renamed, this, [=]() { detectLanguageFromExtension(editor); });
+    connect(editor, &ScintillaNext::renamed, this, [=]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
     connect(editor, &ScintillaNext::marginClicked, [editor](Scintilla::Position position, Scintilla::KeyMod modifiers, int margin) {
         Q_UNUSED(modifiers);
@@ -1591,7 +1573,7 @@ void MainWindow::dropEvent(QDropEvent *event)
         // Get the urls into a stringlist
         QStringList fileNames;
         auto urls = event->mimeData()->urls();
-        foreach(QUrl url, urls) {
+        for (const QUrl &url : urls) {
             if (url.isLocalFile()) {
                 fileNames.append(url.toLocalFile());
             }

@@ -51,6 +51,16 @@
 using namespace Scintilla;
 using namespace Scintilla::Internal;
 
+LexInterface::LexInterface(Document *pdoc_) noexcept : pdoc(pdoc_), performingStyle(false) {
+}
+
+LexInterface::~LexInterface() noexcept = default;
+
+void LexInterface::SetInstance(ILexer5 *instance_) {
+	instance.reset(instance_);
+	pdoc->LexerChanged();
+}
+
 void LexInterface::Colourise(Sci::Position start, Sci::Position end) {
 	if (pdoc && instance && !performingStyle) {
 		// Protect against reentrance, which may occur, for example, when
@@ -84,6 +94,10 @@ LineEndType LexInterface::LineEndTypesSupported() {
 		return static_cast<LineEndType>(instance->LineEndTypesSupported());
 	}
 	return LineEndType::Default;
+}
+
+bool LexInterface::UseContainerLexing() const noexcept {
+	return !instance;
 }
 
 ActionDuration::ActionDuration(double duration_, double minDuration_, double maxDuration_) noexcept :
@@ -1113,53 +1127,74 @@ bool Document::IsDBCSDualByteAt(Sci::Position pos) const noexcept {
 		&& IsDBCSTrailByteNoExcept(cb.CharAt(pos + 1));
 }
 
-static constexpr bool IsSpaceOrTab(int ch) noexcept {
-	return ch == ' ' || ch == '\t';
-}
-
-// Need to break text into segments near lengthSegment but taking into
-// account the encoding to not break inside a UTF-8 or DBCS character
-// and also trying to avoid breaking inside a pair of combining characters.
+// Need to break text into segments near end but taking into account the
+// encoding to not break inside a UTF-8 or DBCS character and also trying
+// to avoid breaking inside a pair of combining characters, or inside
+// ligatures.
+// TODO: implement grapheme cluster boundaries,
+// see https://www.unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries.
+//
 // The segment length must always be long enough (more than 4 bytes)
 // so that there will be at least one whole character to make a segment.
 // For UTF-8, text must consist only of valid whole characters.
 // In preference order from best to worst:
-//   1) Break after space
-//   2) Break before punctuation
-//   3) Break after whole character
+//   1) Break before or after spaces or controls
+//   2) Break at word and punctuation boundary for better kerning and ligature support
+//   3) Break after whole character, this may break combining characters
 
-int Document::SafeSegment(const char *text, int length, int lengthSegment) const noexcept {
-	if (length <= lengthSegment)
-		return length;
-	int lastSpaceBreak = -1;
-	int lastPunctuationBreak = -1;
-	int lastEncodingAllowedBreak = 0;
-	for (int j=0; j < lengthSegment;) {
-		const unsigned char ch = text[j];
-		if (j > 0) {
-			if (IsSpaceOrTab(text[j - 1]) && !IsSpaceOrTab(text[j])) {
-				lastSpaceBreak = j;
-			}
-			if (ch < 'A') {
-				lastPunctuationBreak = j;
-			}
-		}
-		lastEncodingAllowedBreak = j;
-
-		if (dbcsCodePage == CpUtf8) {
-			j += UTF8BytesOfLead[ch];
-		} else if (dbcsCodePage) {
-			j += IsDBCSLeadByteNoExcept(ch) ? 2 : 1;
-		} else {
-			j++;
+size_t Document::SafeSegment(std::string_view text) const noexcept {
+	// check space first as most written language use spaces.
+	for (std::string_view::iterator it = text.end() - 1; it != text.begin(); --it) {
+		if (IsBreakSpace(*it)) {
+			return it - text.begin();
 		}
 	}
-	if (lastSpaceBreak >= 0) {
-		return lastSpaceBreak;
-	} else if (lastPunctuationBreak >= 0) {
-		return lastPunctuationBreak;
+
+	if (!dbcsCodePage || dbcsCodePage == CpUtf8) {
+		// backward iterate for UTF-8 and single byte encoding to find word and punctuation boundary.
+		std::string_view::iterator it = text.end() - 1;
+		const bool punctuation = IsPunctuation(*it);
+		do {
+			--it;
+			if (punctuation != IsPunctuation(*it)) {
+				return it - text.begin() + 1;
+			}
+		} while (it != text.begin());
+
+		it = text.end() - 1;
+		if (dbcsCodePage) {
+			// for UTF-8 go back to the start of last character.
+			for (int trail = 0; trail < UTF8MaxBytes - 1 && UTF8IsTrailByte(*it); trail++) {
+				--it;
+			}
+		}
+		return it - text.begin();
 	}
-	return lastEncodingAllowedBreak;
+
+	{
+		// forward iterate for DBCS to find word and punctuation boundary.
+		size_t lastPunctuationBreak = 0;
+		size_t lastEncodingAllowedBreak = 0;
+		CharacterClass ccPrev = CharacterClass::space;
+		for (size_t j = 0; j < text.length();) {
+			const unsigned char ch = text[j];
+			lastEncodingAllowedBreak = j++;
+
+			CharacterClass cc = CharacterClass::word;
+			if (UTF8IsAscii(ch)) {
+				if (IsPunctuation(ch)) {
+					cc = CharacterClass::punctuation;
+				}
+			} else {
+				j += IsDBCSLeadByteNoExcept(ch);
+			}
+			if (cc != ccPrev) {
+				ccPrev = cc;
+				lastPunctuationBreak = lastEncodingAllowedBreak;
+			}
+		}
+		return lastPunctuationBreak ? lastPunctuationBreak : lastEncodingAllowedBreak;
+	}
 }
 
 EncodingFamily Document::CodePageFamily() const noexcept {
@@ -1204,7 +1239,7 @@ bool Document::DeleteChars(Sci::Position pos, Sci::Position len) {
 			    DocModification(
 			        ModificationFlags::BeforeDelete | ModificationFlags::User,
 			        pos, len,
-			        0, 0));
+				0, nullptr));
 			const Sci::Line prevLinesTotal = LinesTotal();
 			const bool startSavePoint = cb.IsSavePoint();
 			bool startSequence = false;
@@ -2067,7 +2102,7 @@ Sci::Position Document::FindText(Sci::Position minPos, Sci::Position maxPos, con
 			const unsigned char charStartSearch =  search[0];
 			if (forward && ((0 == dbcsCodePage) || (CpUtf8 == dbcsCodePage && !UTF8IsTrailByte(charStartSearch)))) {
 				// This is a fast case where there is no need to test byte values to iterate
-				// so becomes the equivalent of a memchr+memcmp loop. 
+				// so becomes the equivalent of a memchr+memcmp loop.
 				// UTF-8 search will not be self-synchronizing when starts with trail byte
 				const std::string_view suffix(search + 1, lengthFind - 1);
 				while (pos < endSearch) {
@@ -2405,7 +2440,7 @@ Sci::Line Document::GetMaxLineState() const noexcept {
 
 void SCI_METHOD Document::ChangeLexerState(Sci_Position start, Sci_Position end) {
 	const DocModification mh(ModificationFlags::LexerState, start,
-		end-start, 0, 0, 0);
+		end-start, 0, nullptr, 0);
 	NotifyModified(mh);
 }
 
@@ -2418,20 +2453,20 @@ StyledText Document::MarginStyledText(Sci::Line line) const noexcept {
 void Document::MarginSetText(Sci::Line line, const char *text) {
 	Margins()->SetText(line, text);
 	const DocModification mh(ModificationFlags::ChangeMargin, LineStart(line),
-		0, 0, 0, line);
+		0, 0, nullptr, line);
 	NotifyModified(mh);
 }
 
 void Document::MarginSetStyle(Sci::Line line, int style) {
 	Margins()->SetStyle(line, style);
 	NotifyModified(DocModification(ModificationFlags::ChangeMargin, LineStart(line),
-		0, 0, 0, line));
+		0, 0, nullptr, line));
 }
 
 void Document::MarginSetStyles(Sci::Line line, const unsigned char *styles) {
 	Margins()->SetStyles(line, styles);
 	NotifyModified(DocModification(ModificationFlags::ChangeMargin, LineStart(line),
-		0, 0, 0, line));
+		0, 0, nullptr, line));
 }
 
 void Document::MarginClearAll() {
@@ -2454,7 +2489,7 @@ void Document::AnnotationSetText(Sci::Line line, const char *text) {
 		Annotations()->SetText(line, text);
 		const int linesAfter = AnnotationLines(line);
 		DocModification mh(ModificationFlags::ChangeAnnotation, LineStart(line),
-			0, 0, 0, line);
+			0, 0, nullptr, line);
 		mh.annotationLinesAdded = linesAfter - linesBefore;
 		NotifyModified(mh);
 	}
@@ -2464,7 +2499,7 @@ void Document::AnnotationSetStyle(Sci::Line line, int style) {
 	if (line >= 0 && line < LinesTotal()) {
 		Annotations()->SetStyle(line, style);
 		const DocModification mh(ModificationFlags::ChangeAnnotation, LineStart(line),
-			0, 0, 0, line);
+			0, 0, nullptr, line);
 		NotifyModified(mh);
 	}
 }
@@ -2497,7 +2532,7 @@ void Document::EOLAnnotationSetText(Sci::Line line, const char *text) {
 	if (line >= 0 && line < LinesTotal()) {
 		EOLAnnotations()->SetText(line, text);
 		const DocModification mh(ModificationFlags::ChangeEOLAnnotation, LineStart(line),
-			0, 0, 0, line);
+			0, 0, nullptr, line);
 		NotifyModified(mh);
 	}
 }
@@ -2506,7 +2541,7 @@ void Document::EOLAnnotationSetStyle(Sci::Line line, int style) {
 	if (line >= 0 && line < LinesTotal()) {
 		EOLAnnotations()->SetStyle(line, style);
 		const DocModification mh(ModificationFlags::ChangeEOLAnnotation, LineStart(line),
-			0, 0, 0, line);
+			0, 0, nullptr, line);
 		NotifyModified(mh);
 	}
 }
@@ -2586,49 +2621,8 @@ void Document::NotifyModified(DocModification mh) {
 	}
 }
 
-// Used for word part navigation.
-static bool IsASCIIPunctuationCharacter(unsigned int ch) noexcept {
-	switch (ch) {
-	case '!':
-	case '"':
-	case '#':
-	case '$':
-	case '%':
-	case '&':
-	case '\'':
-	case '(':
-	case ')':
-	case '*':
-	case '+':
-	case ',':
-	case '-':
-	case '.':
-	case '/':
-	case ':':
-	case ';':
-	case '<':
-	case '=':
-	case '>':
-	case '?':
-	case '@':
-	case '[':
-	case '\\':
-	case ']':
-	case '^':
-	case '_':
-	case '`':
-	case '{':
-	case '|':
-	case '}':
-	case '~':
-		return true;
-	default:
-		return false;
-	}
-}
-
 bool Document::IsWordPartSeparator(unsigned int ch) const {
-	return (WordCharacterClass(ch) == CharacterClass::word) && IsASCIIPunctuationCharacter(ch);
+	return (WordCharacterClass(ch) == CharacterClass::word) && IsPunctuation(ch);
 }
 
 Sci::Position Document::WordPartLeft(Sci::Position pos) const {
@@ -2658,15 +2652,15 @@ Sci::Position Document::WordPartLeft(Sci::Position pos) const {
 					pos -= CharacterBefore(pos).widthBytes;
 				if (!IsADigit(CharacterAfter(pos).character))
 					pos += CharacterAfter(pos).widthBytes;
-			} else if (IsASCIIPunctuationCharacter(ceStart.character)) {
-				while (pos > 0 && IsASCIIPunctuationCharacter(CharacterAfter(pos).character))
+			} else if (IsPunctuation(ceStart.character)) {
+				while (pos > 0 && IsPunctuation(CharacterAfter(pos).character))
 					pos -= CharacterBefore(pos).widthBytes;
-				if (!IsASCIIPunctuationCharacter(CharacterAfter(pos).character))
+				if (!IsPunctuation(CharacterAfter(pos).character))
 					pos += CharacterAfter(pos).widthBytes;
-			} else if (isspacechar(ceStart.character)) {
-				while (pos > 0 && isspacechar(CharacterAfter(pos).character))
+			} else if (IsASpace(ceStart.character)) {
+				while (pos > 0 && IsASpace(CharacterAfter(pos).character))
 					pos -= CharacterBefore(pos).widthBytes;
-				if (!isspacechar(CharacterAfter(pos).character))
+				if (!IsASpace(CharacterAfter(pos).character))
 					pos += CharacterAfter(pos).widthBytes;
 			} else if (!IsASCII(ceStart.character)) {
 				while (pos > 0 && !IsASCII(CharacterAfter(pos).character))
@@ -2709,11 +2703,11 @@ Sci::Position Document::WordPartRight(Sci::Position pos) const {
 	} else if (IsADigit(ceStart.character)) {
 		while (pos < length && IsADigit(CharacterAfter(pos).character))
 			pos += CharacterAfter(pos).widthBytes;
-	} else if (IsASCIIPunctuationCharacter(ceStart.character)) {
-		while (pos < length && IsASCIIPunctuationCharacter(CharacterAfter(pos).character))
+	} else if (IsPunctuation(ceStart.character)) {
+		while (pos < length && IsPunctuation(CharacterAfter(pos).character))
 			pos += CharacterAfter(pos).widthBytes;
-	} else if (isspacechar(ceStart.character)) {
-		while (pos < length && isspacechar(CharacterAfter(pos).character))
+	} else if (IsASpace(ceStart.character)) {
+		while (pos < length && IsASpace(CharacterAfter(pos).character))
 			pos += CharacterAfter(pos).widthBytes;
 	} else {
 		pos += CharacterAfter(pos).widthBytes;
@@ -2721,18 +2715,14 @@ Sci::Position Document::WordPartRight(Sci::Position pos) const {
 	return pos;
 }
 
-static constexpr bool IsLineEndChar(char c) noexcept {
-	return (c == '\n' || c == '\r');
-}
-
 Sci::Position Document::ExtendStyleRange(Sci::Position pos, int delta, bool singleLine) noexcept {
-	const int sStart = cb.StyleAt(pos);
+	const char sStart = cb.StyleAt(pos);
 	if (delta < 0) {
-		while (pos > 0 && (cb.StyleAt(pos) == sStart) && (!singleLine || !IsLineEndChar(cb.CharAt(pos))))
+		while (pos > 0 && (cb.StyleAt(pos) == sStart) && (!singleLine || !IsEOLCharacter(cb.CharAt(pos))))
 			pos--;
 		pos++;
 	} else {
-		while (pos < (LengthNoExcept()) && (cb.StyleAt(pos) == sStart) && (!singleLine || !IsLineEndChar(cb.CharAt(pos))))
+		while (pos < (LengthNoExcept()) && (cb.StyleAt(pos) == sStart) && (!singleLine || !IsEOLCharacter(cb.CharAt(pos))))
 			pos++;
 	}
 	return pos;
@@ -2798,11 +2788,6 @@ Sci::Position Document::BraceMatch(Sci::Position position, Sci::Position /*maxRe
 class BuiltinRegex : public RegexSearchBase {
 public:
 	explicit BuiltinRegex(CharClassify *charClassTable) : search(charClassTable) {}
-	BuiltinRegex(const BuiltinRegex &) = delete;
-	BuiltinRegex(BuiltinRegex &&) = delete;
-	BuiltinRegex &operator=(const BuiltinRegex &) = delete;
-	BuiltinRegex &operator=(BuiltinRegex &&) = delete;
-	~BuiltinRegex() override = default;
 
 	Sci::Position FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s,
                         bool caseSensitive, bool word, bool wordStart, FindOption flags,
@@ -2886,35 +2871,18 @@ public:
 
 class ByteIterator {
 public:
-	typedef std::bidirectional_iterator_tag iterator_category;
-	typedef char value_type;
-	typedef ptrdiff_t difference_type;
-	typedef char* pointer;
-	typedef char& reference;
+	using iterator_category = std::bidirectional_iterator_tag;
+	using value_type = char;
+	using difference_type = ptrdiff_t;
+	using pointer = char*;
+	using reference = char&;
 
 	const Document *doc;
 	Sci::Position position;
 
-	ByteIterator(const Document *doc_=nullptr, Sci::Position position_=0) noexcept :
+	explicit ByteIterator(const Document *doc_=nullptr, Sci::Position position_=0) noexcept :
 		doc(doc_), position(position_) {
 	}
-	ByteIterator(const ByteIterator &other) noexcept {
-		doc = other.doc;
-		position = other.position;
-	}
-	ByteIterator(ByteIterator &&other) noexcept {
-		doc = other.doc;
-		position = other.position;
-	}
-	ByteIterator &operator=(const ByteIterator &other) noexcept {
-		if (this != &other) {
-			doc = other.doc;
-			position = other.position;
-		}
-		return *this;
-	}
-	ByteIterator &operator=(ByteIterator &&) noexcept = default;
-	~ByteIterator() = default;
 	char operator*() const noexcept {
 		return doc->CharAt(position);
 	}
@@ -2971,13 +2939,13 @@ class UTF8Iterator {
 	size_t lenCharacters;
 	wchar_t buffered[2];
 public:
-	typedef std::bidirectional_iterator_tag iterator_category;
-	typedef wchar_t value_type;
-	typedef ptrdiff_t difference_type;
-	typedef wchar_t* pointer;
-	typedef wchar_t& reference;
+	using iterator_category = std::bidirectional_iterator_tag;
+	using value_type = wchar_t;
+	using difference_type = ptrdiff_t;
+	using pointer = wchar_t*;
+	using reference = wchar_t&;
 
-	UTF8Iterator(const Document *doc_=nullptr, Sci::Position position_=0) noexcept :
+	explicit UTF8Iterator(const Document *doc_=nullptr, Sci::Position position_=0) noexcept :
 		doc(doc_), position(position_), characterIndex(0), lenBytes(0), lenCharacters(0), buffered{} {
 		buffered[0] = 0;
 		buffered[1] = 0;
@@ -2985,30 +2953,6 @@ public:
 			ReadCharacter();
 		}
 	}
-	UTF8Iterator(const UTF8Iterator &other) noexcept : buffered{} {
-		doc = other.doc;
-		position = other.position;
-		characterIndex = other.characterIndex;
-		lenBytes = other.lenBytes;
-		lenCharacters = other.lenCharacters;
-		buffered[0] = other.buffered[0];
-		buffered[1] = other.buffered[1];
-	}
-	UTF8Iterator(UTF8Iterator &&other) noexcept = default;
-	UTF8Iterator &operator=(const UTF8Iterator &other) noexcept {
-		if (this != &other) {
-			doc = other.doc;
-			position = other.position;
-			characterIndex = other.characterIndex;
-			lenBytes = other.lenBytes;
-			lenCharacters = other.lenCharacters;
-			buffered[0] = other.buffered[0];
-			buffered[1] = other.buffered[1];
-		}
-		return *this;
-	}
-	UTF8Iterator &operator=(UTF8Iterator &&) noexcept = default;
-	~UTF8Iterator() = default;
 	wchar_t operator*() const noexcept {
 		assert(lenCharacters != 0);
 		return buffered[characterIndex];
@@ -3086,29 +3030,15 @@ class UTF8Iterator {
 	const Document *doc;
 	Sci::Position position;
 public:
-	typedef std::bidirectional_iterator_tag iterator_category;
-	typedef wchar_t value_type;
-	typedef ptrdiff_t difference_type;
-	typedef wchar_t* pointer;
-	typedef wchar_t& reference;
+	using iterator_category = std::bidirectional_iterator_tag;
+	using value_type = wchar_t;
+	using difference_type = ptrdiff_t;
+	using pointer = wchar_t*;
+	using reference = wchar_t&;
 
-	UTF8Iterator(const Document *doc_=nullptr, Sci::Position position_=0) noexcept :
+	explicit UTF8Iterator(const Document *doc_=nullptr, Sci::Position position_=0) noexcept :
 		doc(doc_), position(position_) {
 	}
-	UTF8Iterator(const UTF8Iterator &other) noexcept {
-		doc = other.doc;
-		position = other.position;
-	}
-	UTF8Iterator(UTF8Iterator &&other) noexcept = default;
-	UTF8Iterator &operator=(const UTF8Iterator &other) noexcept {
-		if (this != &other) {
-			doc = other.doc;
-			position = other.position;
-		}
-		return *this;
-	}
-	UTF8Iterator &operator=(UTF8Iterator &&) noexcept = default;
-	~UTF8Iterator() = default;
 	wchar_t operator*() const noexcept {
 		const Document::CharacterExtracted charExtracted = doc->ExtractCharacter(position);
 		return charExtracted.character;
@@ -3199,7 +3129,7 @@ bool MatchOnLines(const Document *doc, const Regex &regexp, const RESearchRange 
 	}
 #endif
 	if (matched) {
-		for (size_t co = 0; co < match.size(); co++) {
+		for (size_t co = 0; co < match.size() && co < RESearch::MAXTAG; co++) {
 			search.bopat[co] = match[co].first.Pos();
 			search.eopat[co] = match[co].second.PosRoundUp();
 			const Sci::Position lenMatch = search.eopat[co] - search.bopat[co];

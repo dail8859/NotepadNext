@@ -101,15 +101,15 @@
     <h2>From C++: LexillaAccess</h2>
 
     <p>The easiest technique is to implement in C++ using LexillaAccess and load a Lexilla shared library.</p>
-    
+
     <p>LexillaAccess simplifies use of Lexilla, hides operating system differences, and allows loading
     multiple libraries that support the Lexilla protocol.
     It is defined in lexilla/access/LexillaAccess.h and the source code is in lexilla/access/LexillaAccess.cxx.
     Add these to the build dependencies of the project or build file.</p>
-    
+
     <p>Both SciTE and TestLexers (used to test Lexilla) in lexilla/test use LexillaAccess.
     TestLexers is much simpler than SciTE so can be a good example to examine.</p>
-    
+
     <h3>Building</h3>
 
     <p>Header files for lexers and for using Lexilla will be included so build files will need to reference these new locations.
@@ -169,7 +169,7 @@
     for a sufficiently motivated developer to call methods on the lexer from C.</p>
 
     <p>There is an example for using Lexilla from C in examples/CheckLexilla.</p>
-   
+
     <h3>Steps in code</h3>
 
     <p>Include the system header for loading shared objects.

@@ -158,6 +158,7 @@
     <ClCompile Include="..\..\src\ContractionState.cxx" />
     <ClCompile Include="..\..\src\Decoration.cxx" />
     <ClCompile Include="..\..\src\Document.cxx" />
+    <ClCompile Include="..\..\src\Geometry.cxx" />
     <ClCompile Include="..\..\src\PerLine.cxx" />
     <ClCompile Include="..\..\src\RESearch.cxx" />
     <ClCompile Include="..\..\src\RunStyles.cxx" />

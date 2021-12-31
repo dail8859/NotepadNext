@@ -54,7 +54,7 @@ void MacroRunDialog::setMacros(QVector<Macro *> macros)
 
     ui->comboBox->clear();
 
-    foreach (const Macro *macro, macros) {
+    for (const Macro *macro : macros) {
         ui->comboBox->addItem(macro->getName());
     }
 }

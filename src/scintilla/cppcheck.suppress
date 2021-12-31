@@ -13,15 +13,6 @@ useStlAlgorithm
 // Written with variable for consistency
 knownArgument:scintilla/src/SparseVector.h
 
-// This is an internal error in cppcheck
-internalAstError:scintilla\src\PerLine.cxx
-
-// Treats boolean access as narrowing value: if (x) { if (x != ']')
-knownConditionTrueFalse:scintilla\src\RESearch.cxx
-
-// cppcheck appears to be confused about bool versus pointer
-identicalInnerCondition:scintilla\gtk\ScintillaGTKAccessible.cxx
-
 // Some non-explicit constructors are used for conversions or are private to lexers
 noExplicitConstructor
 
@@ -31,8 +22,8 @@ shiftTooManyBitsSigned:scintilla/src/MarginView.cxx
 // DLL entry points are unused inside Scintilla
 unusedFunction:scintilla\win32\ScintillaDLL.cxx
 
-// Doesn't see change: int x = 1; if (b) { x = y; } if (x > 3) {
-knownConditionTrueFalse:scintilla\win32\PlatWin.cxx
+// DLLMain is defined exactly as specified by Win32
+constParameter:scintilla\win32\ScintillaDLL.cxx
 
 // The styler parameter is not const as LexAccessor::operator[] is not const
 constParameter:scintilla/lexlib/StyleContext.cxx

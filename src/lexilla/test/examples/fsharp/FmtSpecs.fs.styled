@@ -4,17 +4,23 @@
 
 {9}// expect "147.00"{0}
 {2}printfn{0} {15}"Speed: {19}%.2f{15} m/s"{0} {6}x{0}
+{2}printfn{0} {15}$"Speed: {19}%.2f{15}{x} m/s"{0}
 
 {9}// expect " 147%"{0}
 {2}printfn{0} {15}"""{19}%%{15} increase:{19}% .0F%%{15} over last year"""{0} {6}x{0}
+{2}printfn{0} {15}$"""{19}%%{15} increase:{19}% .0F{15}{x}{19}%%{15} over last year"""{0}
 
 {9}// expect "1.5E+002"{0}
 {9}// NB: units should look like text even without a space{0}
 {2}printfn{0} {16}@"Time: {19}%-0.1E{16}secs"{0} {6}x{0}
+{2}printfn{0} {15}$"Time: {19}%-0.1E{15}{x}secs"{0}
 
 {9}// expect "\"         +147\""{0}
 {2}printfn{0} {16}@"""Temp: {19}%+12.3g{16} K"""{0} {6}x{0}
+{2}printfn{0} {15}$"""{'"'}Temp: {19}%+12.3g{15}{x} K{'"'}"""{0}
 
 {9}// These don't work{0}
 {2}printfn{0} {7}``%.2f``{0} {6}x{0}
 {2}printfn{0} {15}$"%.2f"{0} {6}x{0}
+{2}printfn{0} {15}$"%.2f {x}"{0}
+{2}printfn{0} {15}$"""%.2f {x}"""{0}

@@ -274,7 +274,7 @@ TEST_CASE("CharacterIndex") {
 		REQUIRE(cb.IndexLineStart(4, LineCharacterIndexType::Utf32) == 7);
 		REQUIRE(cb.IndexLineStart(5, LineCharacterIndexType::Utf32) == 7);
 
-		// Insert a valid 3-byte UTF-8 character at start -> 
+		// Insert a valid 3-byte UTF-8 character at start ->
 		// "\xE2\x82\xACa\n\xF0\x90\x8D\x88\nz\n\n" 5 lines
 
 		const char *euro = "\xE2\x82\xAC";
@@ -294,7 +294,7 @@ TEST_CASE("CharacterIndex") {
 		REQUIRE(cb.IndexLineStart(4, LineCharacterIndexType::Utf32) == 8);
 		REQUIRE(cb.IndexLineStart(5, LineCharacterIndexType::Utf32) == 8);
 
-		// Insert a lone lead byte implying a 3 byte character at start of line 2 -> 
+		// Insert a lone lead byte implying a 3 byte character at start of line 2 ->
 		// "\xE2\x82\xACa\n\EF\xF0\x90\x8D\x88\nz\n\n" 5 lines
 		// Should be treated as a single byte character
 

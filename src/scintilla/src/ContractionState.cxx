@@ -95,9 +95,7 @@ ContractionState<LINE>::ContractionState() noexcept : linesInDocument(1) {
 }
 
 template <typename LINE>
-ContractionState<LINE>::~ContractionState() {
-	Clear();
-}
+ContractionState<LINE>::~ContractionState() = default;
 
 template <typename LINE>
 void ContractionState<LINE>::EnsureData() {
@@ -197,7 +195,7 @@ Sci::Line ContractionState<LINE>::DocFromDisplay(Sci::Line lineDisplay) const no
 	if (OneToOne()) {
 		return lineDisplay;
 	} else {
-		if (lineDisplay <= 0) {
+		if (lineDisplay < 0) {
 			return 0;
 		}
 		if (lineDisplay > LinesDisplayed()) {

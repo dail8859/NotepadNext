@@ -28,7 +28,8 @@ bool FontSpecification::operator==(const FontSpecification &other) const noexcep
 	       italic == other.italic &&
 	       size == other.size &&
 	       characterSet == other.characterSet &&
-	       extraFontFlag == other.extraFontFlag;
+	       extraFontFlag == other.extraFontFlag &&
+	       checkMonospaced == other.checkMonospaced;
 }
 
 bool FontSpecification::operator<(const FontSpecification &other) const noexcept {
@@ -44,107 +45,34 @@ bool FontSpecification::operator<(const FontSpecification &other) const noexcept
 		return characterSet < other.characterSet;
 	if (extraFontFlag != other.extraFontFlag)
 		return extraFontFlag < other.extraFontFlag;
+	if (checkMonospaced != other.checkMonospaced)
+		return checkMonospaced < other.checkMonospaced;
 	return false;
 }
 
-FontMeasurements::FontMeasurements() noexcept {
-	ClearMeasurements();
+namespace {
+
+// noexcept Platform::DefaultFontSize
+int DefaultFontSize() noexcept {
+	try {
+		return Platform::DefaultFontSize();
+	} catch (...) {
+		return 10;
+	}
 }
 
-void FontMeasurements::ClearMeasurements() noexcept {
-	ascent = 1;
-	descent = 1;
-	capitalHeight = 1;
-	aveCharWidth = 1;
-	spaceWidth = 1;
-	sizeZoomed = 2;
 }
 
-Style::Style() : FontSpecification() {
-	Clear(ColourRGBA(0, 0, 0), ColourRGBA(0xff, 0xff, 0xff),
-	      Platform::DefaultFontSize() * FontSizeMultiplier, nullptr, CharacterSet::Default,
-	      FontWeight::Normal, false, false, false, CaseForce::mixed, true, true, false);
-}
-
-Style::Style(const Style &source) noexcept : FontSpecification(), FontMeasurements() {
-	Clear(ColourRGBA(0, 0, 0), ColourRGBA(0xff, 0xff, 0xff),
-	      0, nullptr, CharacterSet::Ansi,
-	      FontWeight::Normal, false, false, false, CaseForce::mixed, true, true, false);
-	fore = source.fore;
-	back = source.back;
-	characterSet = source.characterSet;
-	weight = source.weight;
-	italic = source.italic;
-	size = source.size;
-	fontName = source.fontName;
-	eolFilled = source.eolFilled;
-	underline = source.underline;
-	caseForce = source.caseForce;
-	visible = source.visible;
-	changeable = source.changeable;
-	hotspot = source.hotspot;
-}
-
-Style::~Style() = default;
-
-Style &Style::operator=(const Style &source) noexcept {
-	if (this == &source)
-		return * this;
-	Clear(ColourRGBA(0, 0, 0), ColourRGBA(0xff, 0xff, 0xff),
-	      0, nullptr, CharacterSet::Default,
-	      FontWeight::Normal, false, false, false, CaseForce::mixed, true, true, false);
-	fore = source.fore;
-	back = source.back;
-	characterSet = source.characterSet;
-	weight = source.weight;
-	italic = source.italic;
-	size = source.size;
-	fontName = source.fontName;
-	eolFilled = source.eolFilled;
-	underline = source.underline;
-	caseForce = source.caseForce;
-	visible = source.visible;
-	changeable = source.changeable;
-	return *this;
-}
-
-void Style::Clear(ColourRGBA fore_, ColourRGBA back_, int size_,
-        const char *fontName_, CharacterSet characterSet_,
-        FontWeight weight_, bool italic_, bool eolFilled_,
-        bool underline_, CaseForce caseForce_,
-        bool visible_, bool changeable_, bool hotspot_) noexcept {
-	fore = fore_;
-	back = back_;
-	characterSet = characterSet_;
-	weight = weight_;
-	italic = italic_;
-	size = size_;
-	fontName = fontName_;
-	eolFilled = eolFilled_;
-	underline = underline_;
-	caseForce = caseForce_;
-	visible = visible_;
-	changeable = changeable_;
-	hotspot = hotspot_;
-	font.reset();
-	FontMeasurements::ClearMeasurements();
-}
-
-void Style::ClearTo(const Style &source) noexcept {
-	Clear(
-	    source.fore,
-	    source.back,
-	    source.size,
-	    source.fontName,
-	    source.characterSet,
-	    source.weight,
-	    source.italic,
-	    source.eolFilled,
-	    source.underline,
-	    source.caseForce,
-	    source.visible,
-	    source.changeable,
-	    source.hotspot);
+Style::Style(const char *fontName_) noexcept :
+	FontSpecification(fontName_, DefaultFontSize() * FontSizeMultiplier),
+	fore(0,0,0),
+	back(0xff, 0xff, 0xff),
+	eolFilled(false),
+	underline(false),
+	caseForce(CaseForce::mixed),
+	visible(true),
+	changeable(true),
+	hotspot(false) {
 }
 
 void Style::Copy(std::shared_ptr<Font> font_, const FontMeasurements &fm_) noexcept {

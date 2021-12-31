@@ -11,33 +11,31 @@
 namespace Scintilla::Internal {
 
 struct FontSpecification {
+	// fontName is allocated by a ViewStyle container object and may be null
 	const char *fontName;
-	Scintilla::FontWeight weight;
-	bool italic;
 	int size;
-	Scintilla::CharacterSet characterSet;
-	Scintilla::FontQuality extraFontFlag;
-	FontSpecification() noexcept :
-		fontName(nullptr),
-		weight(Scintilla::FontWeight::Normal),
-		italic(false),
-		size(10 * Scintilla::FontSizeMultiplier),
-		characterSet(Scintilla::CharacterSet::Ansi),
-		extraFontFlag(Scintilla::FontQuality::QualityDefault) {
+	Scintilla::FontWeight weight = Scintilla::FontWeight::Normal;
+	bool italic = false;
+	Scintilla::CharacterSet characterSet = Scintilla::CharacterSet::Default;
+	Scintilla::FontQuality extraFontFlag = Scintilla::FontQuality::QualityDefault;
+	bool checkMonospaced = false;
+
+	constexpr FontSpecification(const char *fontName_=nullptr, int size_=10*Scintilla::FontSizeMultiplier) noexcept :
+		fontName(fontName_), size(size_) {
 	}
 	bool operator==(const FontSpecification &other) const noexcept;
 	bool operator<(const FontSpecification &other) const noexcept;
 };
 
 struct FontMeasurements {
-	unsigned int ascent;
-	unsigned int descent;
-	XYPOSITION capitalHeight;	// Top of capital letter to baseline: ascent - internal leading
-	XYPOSITION aveCharWidth;
-	XYPOSITION spaceWidth;
-	int sizeZoomed;
-	FontMeasurements() noexcept;
-	void ClearMeasurements() noexcept;
+	XYPOSITION ascent = 1;
+	XYPOSITION descent = 1;
+	XYPOSITION capitalHeight = 1;	// Top of capital letter to baseline: ascent - internal leading
+	XYPOSITION aveCharWidth = 1;
+	XYPOSITION monospaceCharacterWidth = 1;
+	XYPOSITION spaceWidth = 1;
+	bool monospaceASCII = false;
+	int sizeZoomed = 2;
 };
 
 /**
@@ -56,19 +54,7 @@ public:
 
 	std::shared_ptr<Font> font;
 
-	Style();
-	Style(const Style &source) noexcept;
-	Style(Style &&) noexcept = default;
-	~Style();
-	Style &operator=(const Style &source) noexcept;
-	Style &operator=(Style &&) = delete;
-	void Clear(ColourRGBA fore_, ColourRGBA back_,
-	           int size_,
-	           const char *fontName_, Scintilla::CharacterSet characterSet_,
-	           Scintilla::FontWeight weight_, bool italic_, bool eolFilled_,
-	           bool underline_, CaseForce caseForce_,
-	           bool visible_, bool changeable_, bool hotspot_) noexcept;
-	void ClearTo(const Style &source) noexcept;
+	Style(const char *fontName_=nullptr) noexcept;
 	void Copy(std::shared_ptr<Font> font_, const FontMeasurements &fm_) noexcept;
 	bool IsProtected() const noexcept { return !(changeable && visible);}
 };

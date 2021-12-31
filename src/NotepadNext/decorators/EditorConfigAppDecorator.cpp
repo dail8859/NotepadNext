@@ -59,9 +59,9 @@ void EditorConfigAppDecorator::doEditorConfig(ScintillaNext *editor)
 {
     if (this->isEnabled()) {
         if (editor->isFile()) {
-            EditorConfigSettings settings = EditorConfig::getFileSettings(editor->canonicalFilePath());
+            EditorConfigSettings settings = EditorConfig::getFileSettings(editor->getFilePath());
 
-            qDebug() << "EditorConfig settings for:" << editor->canonicalFilePath();
+            qDebug() << "EditorConfig settings for:" << editor->getFilePath();
             for(auto &setting : settings.toStdMap()) {
                 qDebug() << setting.first << "=" << setting.second;
             }

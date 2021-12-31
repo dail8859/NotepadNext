@@ -6,13 +6,14 @@
 
 QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+equals(QT_MAJOR_VERSION, 6): QT += core5compat
 
 TARGET = ScintillaEdit
 TEMPLATE = lib
 CONFIG += lib_bundle
 CONFIG += c++1z
 
-VERSION = 5.1.1
+VERSION = 5.1.5
 
 SOURCES += \
     ScintillaEdit.cpp \
