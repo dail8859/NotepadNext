@@ -529,6 +529,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
         luaConsoleDock->hide();
         addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
+        ui->menuHelp->addSeparator();
         ui->menuHelp->addAction(luaConsoleDock->toggleViewAction());
     }
 
