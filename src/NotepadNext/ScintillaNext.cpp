@@ -363,7 +363,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
         }
 
         QByteArray utf8_data = decoder->toUnicode(chunk).toUtf8();
-        addText(utf8_data.size(), utf8_data.constData());
+        appendText(utf8_data.size(), utf8_data.constData());
     } while (!file.atEnd() && status() == SC_STATUS_OK);
 
     delete decoder;
