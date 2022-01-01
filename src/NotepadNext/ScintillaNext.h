@@ -61,6 +61,8 @@ public:
         FileMissing = 2, // Buffer with a missing file on the file system
     };
 
+    void setFoldMarkers(const QString &type);
+
     QString languageName;
 
 public slots:
