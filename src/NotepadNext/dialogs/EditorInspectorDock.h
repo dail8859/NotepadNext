@@ -16,6 +16,7 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+
 #ifndef EDITORINSPECTORDOCK_H
 #define EDITORINSPECTORDOCK_H
 
@@ -24,8 +25,11 @@
 
 #include "ScintillaTypes.h"
 
+
 class MainWindow;
 class ScintillaNext;
+
+typedef std::function<QString(ScintillaNext *)> EditorFunction;
 
 namespace Ui {
 class EditorInspectorDock;
@@ -45,12 +49,12 @@ private slots:
     void updateEditorInfo(ScintillaNext *editor);
 
 private:
-    QMap<QString, QPair<QTreeWidgetItem *, std::function<QString(ScintillaNext *)>>> items;
-
-    void newItem(QTreeWidgetItem *parent, const QString &label, std::function<QString(ScintillaNext *)> func);
+    void newItem(QTreeWidgetItem *parent, const QString &label, EditorFunction func);
 
     Ui::EditorInspectorDock *ui;
+    QTreeWidgetItem *selectionsInfo;
     QMetaObject::Connection editorConnection;
+    QMap<QString, QPair<QTreeWidgetItem *, EditorFunction>> items;
 };
 
 #endif // EDITORINSPECTORDOCK_H
