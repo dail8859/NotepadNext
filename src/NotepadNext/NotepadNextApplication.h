@@ -31,6 +31,7 @@ class MainWindow;
 class LuaState;
 class EditorManager;
 class RecentFilesListManager;
+class ScintillaNext;
 
 class NotepadNextApplication : public SingleApplication
 {
@@ -47,6 +48,10 @@ public:
     LuaState *getLuaState() const { return luaState; }
     QString getFileDialogFilter() const;
     Settings *getSettings() const { return settings; }
+
+    QStringList getLanguages() const;
+    void setEditorLanguage(ScintillaNext *editor, const QString &languageName) const;
+    QString detectLanguageFromExtension(const QString &extension) const;
 
 private:
     EditorManager *editorManager;

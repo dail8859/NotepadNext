@@ -49,8 +49,6 @@
 #include "RecentFilesListManager.h"
 #include "EditorManager.h"
 
-#include "LuaExtension.h"
-#include "LuaState.h"
 #include "MacroRecorder.h"
 
 #include "LuaConsoleDock.h"
@@ -84,11 +82,8 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     dockedEditor = new DockedEditor(this);
 
     connect(dockedEditor, &DockedEditor::editorCloseRequested, this, [=](ScintillaNext *editor) { closeFile(editor); });
-    connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::editorActivated);
 
-    connect(dockedEditor, &DockedEditor::editorActivated, [](ScintillaNext *editor) {
-        LuaExtension::Instance().setEditor(editor);
-    });
+    connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::editorActivated);
 
     connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
 
@@ -630,13 +625,7 @@ void MainWindow::setupLanguageMenu()
 {
     qInfo(Q_FUNC_INFO);
 
-    QStringList language_names = app->getLuaState()->executeAndReturn<QStringList>(
-                R"(
-                local names = {}
-                for k in pairs(languages) do table.insert(names, k) end
-                table.sort(names, function (a, b) return string.lower(a) < string.lower(b) end)
-                return names
-                )");
+    QStringList language_names = app->getLanguages();
 
     int i = 0;
     while (i < language_names.size()) {
@@ -1302,18 +1291,7 @@ void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
     }
 
     const QString ext = editor->getFileInfo().suffix();
-
-    QString language_name = app->getLuaState()->executeAndReturn<QString>(QString(R"(
-local ext = "%1"
-for name, L in pairs(languages) do
-    for _, v in ipairs(L.extensions) do
-        if v == ext then
-            return name
-        end
-    end
-end
-return "null"
-)").arg(ext).toLatin1().constData());
+    const QString language_name = app->detectLanguageFromExtension(ext);
 
     setLanguage(editor, language_name);
 
@@ -1333,54 +1311,7 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
     qInfo(Q_FUNC_INFO);
     qInfo(qUtf8Printable("Language Name: " + languageName));
 
-    LuaExtension::Instance().setEditor(editor);
-
-    app->getLuaState()->execute(QString("languageName = \"%1\"").arg(QString(languageName)).toLatin1().constData());
-    const QString lexer = app->getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
-
-    editor->languageName = languageName;
-    auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
-    editor->setILexer((sptr_t) lexerInstance);
-
-    app->getLuaState()->execute(R"(
-        local L = languages[languageName]
-
-        editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
-        editor.TabWidth = L.tabSize or 4
-        if L.styles then
-            for name, style in pairs(L.styles) do
-                editor.StyleFore[style.id] = style.fgColor
-                editor.StyleBack[style.id] = style.bgColor
-                if style.fontStyle then
-                    if style.fontStyle & 1 == 1 then
-                        editor.StyleBold[style.id] = true
-                    end
-                    if style.fontStyle & 2 == 2 then
-                        editor.StyleItalic[style.id] = true
-                    end
-                    if style.fontStyle & 4 == 4 then
-                        editor.StyleUnderline[style.id] = true
-                    end
-                end
-            end
-        end
-        if L.keywords then
-            for id, kw in pairs(L.keywords) do
-                editor.KeyWords[id] = kw
-            end
-        end
-        if L.properties then
-            for p,v in pairs(L.properties) do
-                editor.Property[p] = v
-            end
-        end
-        editor.Property["fold"] = "1"
-        editor.Property["fold.compact"] = "0"
-
-        -- The document needs redone, but don't force it to do the whole thing
-        -- since SC_IDLESTYLING_TOVISIBLE is used
-        editor:Colourise(0, 1);
-        )");
+    app->setEditorLanguage(editor, languageName);
 
     updateLanguageBasedUi(editor);
 }
