@@ -160,7 +160,7 @@ bool NotepadNextApplication::initGui()
         }
     });
 
-    // Keep Lua's editor reference up to date as the docked editor changes thea ctive one
+    // Keep Lua's editor reference up to date
     connect(windows.first(), &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
         LuaExtension::Instance().setEditor(editor);
     });
@@ -169,7 +169,7 @@ bool NotepadNextApplication::initGui()
 
     // If the window does not have any editors (meaning the applyArguments() did not
     // have any files to open) then create a new empty file
-    if (windows.first()->getDockedEditor()->count() == 0) {
+    if (windows.first()->editorCount() == 0) {
         windows.first()->newFile();
     }
 

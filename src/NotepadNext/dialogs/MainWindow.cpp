@@ -661,14 +661,14 @@ void MainWindow::setupLanguageMenu()
     }
 }
 
-ScintillaNext *MainWindow::currentEditor()
+ScintillaNext *MainWindow::currentEditor() const
 {
     return dockedEditor->getCurrentEditor();
 }
 
-DockedEditor *MainWindow::getDockedEditor()
+int MainWindow::editorCount() const
 {
-    return dockedEditor;
+    return dockedEditor->count();
 }
 
 void MainWindow::newFile()
@@ -1107,7 +1107,7 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
     ui->actionCopyFileDirectory->setEnabled(isFile);
 }
 
-bool MainWindow::isAnyUnsaved()
+bool MainWindow::isAnyUnsaved() const
 {
     for (const ScintillaNext *editor : dockedEditor->editors()) {
         if (!editor->isSavedToDisk()) {

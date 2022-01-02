@@ -51,11 +51,11 @@ public:
     explicit MainWindow(NotepadNextApplication *app, QWidget *parent = nullptr);
     ~MainWindow() override;
 
-    bool isAnyUnsaved();
+    bool isAnyUnsaved() const;
 
     void setupLanguageMenu();
-    ScintillaNext *currentEditor();
-    DockedEditor *getDockedEditor();
+    ScintillaNext *currentEditor() const;
+    int editorCount() const;
 
 public slots:
     void newFile();
