@@ -150,12 +150,12 @@ void EditorInspectorDock::updateEditorInfo(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    for (const QPair<QTreeWidgetItem *, EditorFunction> &item : qAsConst(items)) {
-        QTreeWidgetItem *widget = item.first;
+    for (const QPair<QTreeWidgetItem *, EditorFunction> &pair : qAsConst(items)) {
+        QTreeWidgetItem *item = pair.first;
 
-        if (widget->parent()->isExpanded()) {
-            EditorFunction func = item.second;
-            widget->setText(1, func(editor));
+        if (item->parent()->isExpanded()) {
+            EditorFunction func = pair.second;
+            item->setText(1, func(editor));
         }
     }
 
@@ -190,5 +190,5 @@ void EditorInspectorDock::newItem(QTreeWidgetItem *parent, const QString &label,
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(parent);
     item->setText(0, label);
-    items[label] = QPair<QTreeWidgetItem *, EditorFunction>(item, func);
+    items.append(qMakePair(item, func));
 }

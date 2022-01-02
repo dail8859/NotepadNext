@@ -54,7 +54,7 @@ private:
     Ui::EditorInspectorDock *ui;
     QTreeWidgetItem *selectionsInfo;
     QMetaObject::Connection editorConnection;
-    QMap<QString, QPair<QTreeWidgetItem *, EditorFunction>> items;
+    QVector<QPair<QTreeWidgetItem *, EditorFunction>> items;
 };
 
 #endif // EDITORINSPECTORDOCK_H
