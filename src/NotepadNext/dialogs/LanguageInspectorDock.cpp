@@ -111,13 +111,10 @@ void LanguageInspectorDock::connectToEditor(ScintillaNext *editor)
 {
     disconnectFromEditor();
 
-    // Make sure we are connected to this editor
     editorConnection = connect(editor, &ScintillaNext::updateUi, this, &LanguageInspectorDock::updatePositionInfo);
+    documentConnection = connect(editor->get_doc(), &ScintillaDocument::lexer_changed, this, [=]() { updateLexerInfo(editor); });
 
-    this->updateLanguageName(editor);
-    this->updatePropertyInfo(editor);
-    this->updateKeywordInfo(editor);
-    this->updateStyleInfo(editor);
+    updateLexerInfo(editor);
 }
 
 void LanguageInspectorDock::disconnectFromEditor()
@@ -125,14 +122,28 @@ void LanguageInspectorDock::disconnectFromEditor()
     if (editorConnection) {
         disconnect(editorConnection);
     }
+
+    if (documentConnection) {
+        disconnect(documentConnection);
+    }
 }
 
 void LanguageInspectorDock::updatePositionInfo(Scintilla::Update updated)
 {
+    qInfo(Q_FUNC_INFO);
+
     if (FlagSet(updated, Scintilla::Update::Content) || FlagSet(updated, Scintilla::Update::Selection)) {
         ScintillaNext *editor = qobject_cast<ScintillaNext*>(sender());
         ui->lblInfo->setText(QString("Postion %1 Style %2").arg(editor->currentPos()).arg(editor->styleAt(editor->currentPos())));
     }
+}
+
+void LanguageInspectorDock::updateLexerInfo(ScintillaNext *editor)
+{
+    updateLanguageName(editor);
+    updatePropertyInfo(editor);
+    updateKeywordInfo(editor);
+    updateStyleInfo(editor);
 }
 
 void LanguageInspectorDock::updateLanguageName(ScintillaNext *editor)
