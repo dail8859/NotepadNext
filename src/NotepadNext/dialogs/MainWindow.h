@@ -98,7 +98,7 @@ public slots:
     void updateGui(ScintillaNext *editor);
 
     void detectLanguageFromExtension(ScintillaNext *editor);
-    void editorActivated(ScintillaNext *editor);
+    void activateEditor(ScintillaNext *editor);
 
     void setLanguage(ScintillaNext *editor, const QString &languageName);
 
@@ -108,6 +108,9 @@ public slots:
     void addEditor(ScintillaNext *editor);
 
     void checkForUpdates(bool silent = false);
+
+signals:
+    void editorActivated(ScintillaNext *editor);
 
 protected:
     void closeEvent(QCloseEvent *event) override;

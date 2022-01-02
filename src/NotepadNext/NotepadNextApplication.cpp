@@ -161,7 +161,7 @@ bool NotepadNextApplication::initGui()
     });
 
     // Keep Lua's editor reference up to date as the docked editor changes thea ctive one
-    connect(windows.first()->getDockedEditor(), &DockedEditor::editorActivated, this, [](ScintillaNext *editor) {
+    connect(windows.first(), &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
         LuaExtension::Instance().setEditor(editor);
     });
 

@@ -39,12 +39,15 @@ public:
     ~LanguageInspectorDock();
 
 private slots:
-    void updateInformation(ScintillaNext *editor);
+    void connectToEditor(ScintillaNext *editor);
     void updatePositionInfo(Scintilla::Update updated);
 
 private:
     Ui::LanguageInspectorDock *ui;
 
+    QMetaObject::Connection editorConnection;
+
+    void disconnectFromEditor();
     void updateLanguageName(ScintillaNext *editor);
     void updatePropertyInfo(ScintillaNext *editor);
     void updateKeywordInfo(ScintillaNext *editor);
