@@ -105,11 +105,15 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     newItem(foldInfo, "Last Child", [](ScintillaNext *editor) { return QString::number(editor->lastChild(editor->lineFromPosition(editor->currentPos()), -1) + 1); });
     newItem(foldInfo, "Contracted Fold Next", [](ScintillaNext *editor) { return QString::number(editor->contractedFoldNext(editor->lineFromPosition(editor->currentPos())) + 1); });
 
-
-    connect(parent->getDockedEditor(), &DockedEditor::editorActivated, this, &EditorInspectorDock::attachToEditor);
-    connect(this, &EditorInspectorDock::visibilityChanged, this, [=]() {
-        MainWindow *mw = qobject_cast<MainWindow *>(this->parent());
-        attachToEditor(mw->currentEditor());
+    connect(this, &EditorInspectorDock::visibilityChanged, this, [=](bool visible) {
+        if (visible) {
+            connectToEditor(parent->currentEditor());
+            connect(parent->getDockedEditor(), &DockedEditor::editorActivated, this, &EditorInspectorDock::connectToEditor);
+        }
+        else {
+            disconnectFromEditor();
+            disconnect(parent->getDockedEditor(), &DockedEditor::editorActivated, this, &EditorInspectorDock::connectToEditor);
+        }
     });
 }
 
@@ -118,20 +122,21 @@ EditorInspectorDock::~EditorInspectorDock()
     delete ui;
 }
 
-void EditorInspectorDock::attachToEditor(ScintillaNext *editor)
+void EditorInspectorDock::connectToEditor(ScintillaNext *editor)
 {
-    // If we were attached to another editor, disconnect that
+    disconnectFromEditor();
+
+    editorConnection = connect(editor, &ScintillaNext::updateUi, this, &EditorInspectorDock::editorUIUpdated);
+
+    updateEditorInfo(editor);
+}
+
+
+void EditorInspectorDock::disconnectFromEditor()
+{
     if (editorConnection) {
         disconnect(editorConnection);
     }
-
-    // Don't update if the dock widget is not visible
-    if (this->isHidden()) return;
-
-    // Make sure we are connected to this editor already (only once)
-    editorConnection = connect(editor, &ScintillaNext::updateUi, this, &EditorInspectorDock::editorUIUpdated, Qt::UniqueConnection);
-
-    updateEditorInfo(editor);
 }
 
 void EditorInspectorDock::editorUIUpdated(Scintilla::Update updated)

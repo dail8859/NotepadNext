@@ -44,12 +44,13 @@ public:
     ~EditorInspectorDock();
 
 private slots:
-    void attachToEditor(ScintillaNext *editor);
+    void connectToEditor(ScintillaNext *editor);
     void editorUIUpdated(Scintilla::Update updated);
     void updateEditorInfo(ScintillaNext *editor);
 
 private:
     void newItem(QTreeWidgetItem *parent, const QString &label, EditorFunction func);
+    void disconnectFromEditor();
 
     Ui::EditorInspectorDock *ui;
     QTreeWidgetItem *selectionsInfo;
