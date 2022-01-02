@@ -57,25 +57,6 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
 {
     ui->setupUi(this);
 
-    DockedEditor *dockedEditor = parent->getDockedEditor();
-
-    connect(dockedEditor, &DockedEditor::editorActivated, this, &LanguageInspectorDock::updateInformation);
-
-    connect(dockedEditor, &DockedEditor::editorAdded, this, [=](ScintillaNext *editor) {
-        ScintillaDocument *doc = editor->get_doc();
-
-        connect(doc, &ScintillaDocument::lexer_changed, editor, [=]() {
-            updateInformation(editor);
-        });
-    });
-
-    connect(this, &LanguageInspectorDock::visibilityChanged, this, [=](bool visible) {
-        if (visible) {
-            MainWindow *mw = qobject_cast<MainWindow *>(this->parent());
-            updateInformation(mw->currentEditor());
-        }
-    });
-
     SpinBoxDelegate *fontSizeDelegate = new SpinBoxDelegate(FontSizeSpinBoxFactory, this);
     ui->tblStyles->setItemDelegateForColumn(5, fontSizeDelegate);
 
@@ -108,6 +89,17 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
     }
     ComboBoxDelegate *fontComboDelegate = new ComboBoxDelegate(fontNames, this);
     ui->tblStyles->setItemDelegateForColumn(4, fontComboDelegate);
+
+    connect(this, &QDockWidget::visibilityChanged, this, [=](bool visible) {
+        if (visible) {
+            connectToEditor(parent->currentEditor());
+            connect(parent, &MainWindow::editorActivated, this, &LanguageInspectorDock::connectToEditor);
+        }
+        else {
+            disconnectFromEditor();
+            disconnect(parent, &MainWindow::editorActivated, this, &LanguageInspectorDock::connectToEditor);
+        }
+    });
 }
 
 LanguageInspectorDock::~LanguageInspectorDock()
@@ -115,18 +107,24 @@ LanguageInspectorDock::~LanguageInspectorDock()
     delete ui;
 }
 
-void LanguageInspectorDock::updateInformation(ScintillaNext *editor)
+void LanguageInspectorDock::connectToEditor(ScintillaNext *editor)
 {
-    // Don't update if the dock widget is not visible
-    if (this->isHidden()) return;
+    disconnectFromEditor();
 
-    // Make sure we are connected to this editor already (only once)
-    connect(editor, &ScintillaNext::updateUi, this, &LanguageInspectorDock::updatePositionInfo, Qt::UniqueConnection);
+    // Make sure we are connected to this editor
+    editorConnection = connect(editor, &ScintillaNext::updateUi, this, &LanguageInspectorDock::updatePositionInfo);
 
     this->updateLanguageName(editor);
     this->updatePropertyInfo(editor);
     this->updateKeywordInfo(editor);
     this->updateStyleInfo(editor);
+}
+
+void LanguageInspectorDock::disconnectFromEditor()
+{
+    if (editorConnection) {
+        disconnect(editorConnection);
+    }
 }
 
 void LanguageInspectorDock::updatePositionInfo(Scintilla::Update updated)
@@ -139,6 +137,8 @@ void LanguageInspectorDock::updatePositionInfo(Scintilla::Update updated)
 
 void LanguageInspectorDock::updateLanguageName(ScintillaNext *editor)
 {
+    qInfo(Q_FUNC_INFO);
+
     ui->editLanguage->setText(editor->languageName);
     ui->editLexer->setText(editor->lexerLanguage());
 }

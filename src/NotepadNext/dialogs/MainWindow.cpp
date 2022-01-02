@@ -83,7 +83,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     connect(dockedEditor, &DockedEditor::editorCloseRequested, this, [=](ScintillaNext *editor) { closeFile(editor); });
 
-    connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::editorActivated);
+    connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
 
     connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
 
@@ -1298,12 +1298,14 @@ void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
     return;
 }
 
-void MainWindow::editorActivated(ScintillaNext *editor)
+void MainWindow::activateEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
     checkFileForModification(editor);
     updateGui(editor);
+
+    emit editorActivated(editor);
 }
 
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
@@ -1496,7 +1498,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 
     // While tabs are being closed, turn off UI updates so the main window doesn't continuously refresh.
-    disconnect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::editorActivated);
+    disconnect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
 
     closeAllFiles(true);
 
