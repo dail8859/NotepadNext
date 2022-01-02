@@ -26,10 +26,7 @@
       <property name="alternatingRowColors">
        <bool>true</bool>
       </property>
-      <property name="rootIsDecorated">
-       <bool>true</bool>
-      </property>
-      <property name="uniformRowHeights">
+      <property name="animated">
        <bool>true</bool>
       </property>
       <property name="headerHidden">
