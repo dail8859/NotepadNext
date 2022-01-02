@@ -1427,12 +1427,11 @@ void MainWindow::focusIn()
 
 void MainWindow::addEditor(ScintillaNext *editor)
 {
-    dockedEditor->addEditor(editor);
-
-    // TODO: This needs to be in the app, not the window
     detectLanguageFromExtension(editor);
 
     // These should only ever occur for the focused editor??
+    // TODO: look at editor inspector as an example to ensure updates are only coming from one editor.
+    // Can save the connection objects and disconnected from them and only connect to the editor as it is activated.
     connect(editor, &ScintillaNext::savePointChanged, this, [=]() { updateSaveStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::renamed, this, [=]() { detectLanguageFromExtension(editor); });
     connect(editor, &ScintillaNext::renamed, this, [=]() { updateFileStatusBasedUi(editor); });
@@ -1463,6 +1462,9 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setViewWS(ui->actionShowWhitespace->isChecked() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
     editor->setViewEOL(ui->actionShowEndofLine->isChecked());
     editor->setWrapVisualFlags(ui->actionShowWrapSymbol->isChecked() ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+
+    // The editor has been entirely configured at this point, so add it to the docked editor
+    dockedEditor->addEditor(editor);
 }
 
 void MainWindow::checkForUpdates(bool silent)
