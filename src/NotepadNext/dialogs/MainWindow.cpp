@@ -543,27 +543,21 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
                                 .arg(APP_VERSION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
 
-    if (luaConsoleDock == Q_NULLPTR) {
-        luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
-        luaConsoleDock->hide();
-        addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
-        ui->menuHelp->addSeparator();
-        ui->menuHelp->addAction(luaConsoleDock->toggleViewAction());
-    }
+    LuaConsoleDock *luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
+    luaConsoleDock->hide();
+    addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
+    ui->menuHelp->addSeparator();
+    ui->menuHelp->addAction(luaConsoleDock->toggleViewAction());
 
-    if (languageInspectorDock == Q_NULLPTR) {
-        languageInspectorDock = new LanguageInspectorDock(this);
-        languageInspectorDock->hide();
-        addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
-        ui->menuHelp->addAction(languageInspectorDock->toggleViewAction());
-    }
+    LanguageInspectorDock *languageInspectorDock = new LanguageInspectorDock(this);
+    languageInspectorDock->hide();
+    addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
+    ui->menuHelp->addAction(languageInspectorDock->toggleViewAction());
 
-    if (editorInspectorDock == Q_NULLPTR) {
-        editorInspectorDock = new EditorInspectorDock(this);
-        editorInspectorDock->hide();
-        addDockWidget(Qt::RightDockWidgetArea, editorInspectorDock);
-        ui->menuHelp->addAction(editorInspectorDock->toggleViewAction());
-    }
+    EditorInspectorDock *editorInspectorDock = new EditorInspectorDock(this);
+    editorInspectorDock->hide();
+    addDockWidget(Qt::RightDockWidgetArea, editorInspectorDock);
+    ui->menuHelp->addAction(editorInspectorDock->toggleViewAction());
 
 
 #ifdef QT_DEBUG

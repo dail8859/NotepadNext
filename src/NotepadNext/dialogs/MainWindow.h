@@ -35,9 +35,6 @@ class MainWindow;
 }
 
 class NotepadNextApplication;
-class LuaConsoleDock;
-class LanguageInspectorDock;
-class EditorInspectorDock;
 class MacroRecorder;
 class Macro;
 class Settings;
@@ -154,11 +151,6 @@ private:
 
     QVector<Macro *> macros;
     Macro *currentMacro = Q_NULLPTR;
-
-    // Docked widgets
-    LuaConsoleDock *luaConsoleDock = Q_NULLPTR;
-    LanguageInspectorDock *languageInspectorDock = Q_NULLPTR;
-    EditorInspectorDock *editorInspectorDock = Q_NULLPTR;
 };
 
 #endif // MAINWINDOW_H
