@@ -27,7 +27,6 @@
 #include "DockedEditor.h"
 
 #include "ScintillaNext.h"
-#include "StatusLabel.h"
 #include "NppImporter.h"
 
 namespace Ui {
@@ -85,7 +84,6 @@ public slots:
 
     void updateFileStatusBasedUi(ScintillaNext *editor);
     void updateEOLBasedUi(ScintillaNext *editor);
-    void updateEncodingBasedUi(ScintillaNext *editor);
     void updateDocumentBasedUi(Scintilla::Update updated);
     void updateSelectionBasedUi(ScintillaNext *editor);
     void updateContentBasedUi(ScintillaNext *editor);
@@ -128,19 +126,12 @@ private:
     bool isInInitialState();
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
-    void setupStatusBar();
     bool checkFileForModification(ScintillaNext *editor);
 
     void saveSettings() const;
     void restoreSettings();
 
     QActionGroup *languageActionGroup;
-
-    QLabel *docType;
-    QLabel *docSize;
-    QLabel *docPos;
-    QLabel *unicodeType;
-    QLabel *eolFormat;
 
     //NppImporter *npp;
 
