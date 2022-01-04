@@ -92,7 +92,7 @@ public slots:
     void updateLanguageBasedUi(ScintillaNext *editor);
     void updateGui(ScintillaNext *editor);
 
-    void detectLanguageFromExtension(ScintillaNext *editor);
+    void detectLanguage(ScintillaNext *editor);
     void activateEditor(ScintillaNext *editor);
 
     void setLanguage(ScintillaNext *editor, const QString &languageName);
