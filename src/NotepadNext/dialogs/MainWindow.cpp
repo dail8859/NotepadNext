@@ -42,9 +42,6 @@
 #include "Settings.h"
 
 #include "ScintillaNext.h"
-#include "ILexer.h"
-#include "Lexilla.h"
-#include "SciLexer.h"
 
 #include "RecentFilesListManager.h"
 #include "EditorManager.h"
@@ -635,8 +632,6 @@ void MainWindow::setupLanguageMenu()
             languageActionGroup->addAction(action);
             actions.append(action);
 
-            //if (key == "normal")
-            //    action->setChecked(true);
             ++j;
         }
 
@@ -1094,6 +1089,8 @@ bool MainWindow::isAnyUnsaved() const
 
 void MainWindow::updateEOLBasedUi(ScintillaNext *editor)
 {
+    qInfo(Q_FUNC_INFO);
+
     switch(editor->eOLMode()) {
     case SC_EOL_CR:
         ui->actionMacintosh->setChecked(true);
@@ -1109,6 +1106,8 @@ void MainWindow::updateEOLBasedUi(ScintillaNext *editor)
 
 void MainWindow::updateSaveStatusBasedUi(ScintillaNext *editor)
 {
+    qInfo(Q_FUNC_INFO);
+
     bool isDirty = !editor->isSavedToDisk();
 
     setWindowModified(isDirty);
@@ -1239,8 +1238,6 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
     qInfo(qUtf8Printable("Language Name: " + languageName));
 
     app->setEditorLanguage(editor, languageName);
-
-    updateLanguageBasedUi(editor);
 }
 
 void MainWindow::bringWindowToForeground()
@@ -1352,6 +1349,8 @@ void MainWindow::focusIn()
 
 void MainWindow::addEditor(ScintillaNext *editor)
 {
+    qInfo(Q_FUNC_INFO);
+
     detectLanguage(editor);
 
     // These should only ever occur for the focused editor??
@@ -1463,8 +1462,7 @@ void MainWindow::dropEvent(QDropEvent *event)
     if (event->mimeData()->hasUrls()) {
         // Get the urls into a stringlist
         QStringList fileNames;
-        auto urls = event->mimeData()->urls();
-        for (const QUrl &url : urls) {
+        for (const QUrl &url : event->mimeData()->urls()) {
             if (url.isLocalFile()) {
                 fileNames.append(url.toLocalFile());
             }
