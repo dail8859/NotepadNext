@@ -1204,20 +1204,21 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
     ui->actionUpperCase->setEnabled(hasAnySelections);
 }
 
-void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
+void MainWindow::detectLanguage(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    // Only real files have extensions
     if (!editor->isFile()) {
-        editor->setILexer(reinterpret_cast<sptr_t>(CreateLexer("null")));
+        setLanguage(editor, "Text");
         return;
     }
+    else {
+        // Only real files have extensions
+        const QString ext = editor->getFileInfo().suffix();
+        const QString language_name = app->detectLanguageFromExtension(ext);
 
-    const QString ext = editor->getFileInfo().suffix();
-    const QString language_name = app->detectLanguageFromExtension(ext);
-
-    setLanguage(editor, language_name);
+        setLanguage(editor, language_name);
+    }
 
     return;
 }
@@ -1351,13 +1352,13 @@ void MainWindow::focusIn()
 
 void MainWindow::addEditor(ScintillaNext *editor)
 {
-    detectLanguageFromExtension(editor);
+    detectLanguage(editor);
 
     // These should only ever occur for the focused editor??
     // TODO: look at editor inspector as an example to ensure updates are only coming from one editor.
     // Can save the connection objects and disconnected from them and only connect to the editor as it is activated.
     connect(editor, &ScintillaNext::savePointChanged, this, [=]() { updateSaveStatusBasedUi(editor); });
-    connect(editor, &ScintillaNext::renamed, this, [=]() { detectLanguageFromExtension(editor); });
+    connect(editor, &ScintillaNext::renamed, this, [=]() { detectLanguage(editor); });
     connect(editor, &ScintillaNext::renamed, this, [=]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
     connect(editor, &ScintillaNext::marginClicked, [editor](Scintilla::Position position, Scintilla::KeyMod modifiers, int margin) {
