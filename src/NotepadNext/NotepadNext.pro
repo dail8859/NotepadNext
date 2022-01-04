@@ -99,6 +99,7 @@ SOURCES += \
     decorators/HighlightedScrollBar.cpp \
     decorators/LineNumbers.cpp \
     decorators/SmartHighlighter.cpp \
+    widgets/EditorInfoStatusBar.cpp \
     widgets/StatusLabel.cpp
 
 HEADERS += \
@@ -144,6 +145,7 @@ HEADERS += \
     decorators/HighlightedScrollBar.h \
     decorators/LineNumbers.h \
     decorators/SmartHighlighter.h \
+    widgets/EditorInfoStatusBar.h \
     widgets/StatusLabel.h
 
 FORMS += \

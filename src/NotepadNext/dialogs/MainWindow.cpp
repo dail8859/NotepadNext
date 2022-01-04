@@ -76,8 +76,6 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     qInfo("setupUi Completed");
 
-    setupStatusBar();
-
     // The windows editor manager that supports docking
     dockedEditor = new DockedEditor(this);
 
@@ -777,31 +775,6 @@ bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors
     return true;
 }
 
-void MainWindow::setupStatusBar()
-{
-    // Set up the status bar
-    docType = new StatusLabel();
-    ui->statusBar->addWidget(docType, 1);
-    docSize = new StatusLabel(200);
-    ui->statusBar->addPermanentWidget(docSize, 0);
-    docPos = new StatusLabel(250);
-    ui->statusBar->addPermanentWidget(docPos, 0);
-    eolFormat = new StatusLabel(100);
-    ui->statusBar->addPermanentWidget(eolFormat, 0);
-    unicodeType = new StatusLabel(125);
-    ui->statusBar->addPermanentWidget(unicodeType, 0);
-
-    docType->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(docType, &QLabel::customContextMenuRequested, [=](const QPoint &pos) {
-        ui->menuLanguage->popup(docType->mapToGlobal(pos));
-    });
-
-    eolFormat->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(eolFormat, &QLabel::customContextMenuRequested, [=](const QPoint &pos) {
-        ui->menuEOLConversion->popup(eolFormat->mapToGlobal(pos));
-    });
-}
-
 void MainWindow::openFileDialog()
 {
     QString filter = app->getFileDialogFilter();
@@ -1073,9 +1046,16 @@ void MainWindow::renameFile()
 void MainWindow::convertEOLs(int eolMode)
 {
     ScintillaNext *editor = dockedEditor->getCurrentEditor();
+
+    // TODO: does convertEOLs trigger SCN_MODIFIED notifications? If so can these be turned off to increase performance?
     editor->convertEOLs(eolMode);
     editor->setEOLMode(eolMode);
+
     updateEOLBasedUi(editor);
+
+    // There's no simple Scintilla notification that the EOL mode has changed
+    // So tell the status bar to refresh its info
+    ui->statusBar->refresh(editor);
 }
 
 void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
@@ -1116,31 +1096,13 @@ void MainWindow::updateEOLBasedUi(ScintillaNext *editor)
 {
     switch(editor->eOLMode()) {
     case SC_EOL_CR:
-        eolFormat->setText(ui->actionMacintosh->text());
         ui->actionMacintosh->setChecked(true);
         break;
     case SC_EOL_CRLF:
-        eolFormat->setText(ui->actionWindows->text());
         ui->actionWindows->setChecked(true);
         break;
     case SC_EOL_LF:
-        eolFormat->setText(ui->actionUnix->text());
         ui->actionUnix->setChecked(true);
-        break;
-    }
-}
-
-void MainWindow::updateEncodingBasedUi(ScintillaNext *editor)
-{
-    switch(editor->codePage()) {
-    case 0:
-        unicodeType->setText("ANSI");
-        break;
-    case SC_CP_UTF8:
-        unicodeType->setText("UTF-8");
-        break;
-    default:
-        unicodeType->setText(QString::number(editor->codePage()));
         break;
     }
 }
@@ -1184,7 +1146,6 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
     for (QAction *action : languageActionGroup->actions()) {
         if (action->data().toString() == language_name) {
             action->setChecked(true);
-            docType->setText(action->text());
 
             // Found one, so we are completely done
             return;
@@ -1197,8 +1158,6 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
             action->setChecked(false);
         }
     }
-
-    docType->setText("");
 }
 
 void MainWindow::updateGui(ScintillaNext *editor)
@@ -1208,7 +1167,6 @@ void MainWindow::updateGui(ScintillaNext *editor)
     updateFileStatusBasedUi(editor);
     updateSaveStatusBasedUi(editor);
     updateEOLBasedUi(editor);
-    updateEncodingBasedUi(editor);
     updateEditorPositionBasedUi();
     updateSelectionBasedUi(editor);
     updateContentBasedUi(editor);
@@ -1234,11 +1192,6 @@ void MainWindow::updateSelectionBasedUi(ScintillaNext *editor)
 {
     ui->actionUndo->setEnabled(editor->canUndo());
     ui->actionRedo->setEnabled(editor->canRedo());
-
-    QString sizeText = QString("Length: %1    Lines: %2").arg(
-            QLocale::system().toString(editor->length()),
-            QLocale::system().toString(editor->lineCount()));
-    docSize->setText(sizeText);
 }
 
 void MainWindow::updateContentBasedUi(ScintillaNext *editor)
@@ -1249,29 +1202,6 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
 
     ui->actionLowerCase->setEnabled(hasAnySelections);
     ui->actionUpperCase->setEnabled(hasAnySelections);
-
-    QString selectionText;
-    if (editor->selections() > 1) {
-        selectionText = "Sel: N/A";
-    }
-    else {
-        int start = editor->selectionStart();
-        int end = editor->selectionEnd();
-        int lines = editor->lineFromPosition(end) - editor->lineFromPosition(start);
-
-        if (end > start)
-            lines++;
-
-        selectionText = QString("Sel: %1 | %2").arg(
-                QLocale::system().toString(editor->countCharacters(start, end)),
-                QLocale::system().toString(lines));
-    }
-
-    const int pos = editor->currentPos();
-    QString positionText = QString("Ln: %1    Col: %2    ").arg(
-            QLocale::system().toString(editor->lineFromPosition(pos) + 1),
-            QLocale::system().toString(editor->column(pos) + 1));
-    docPos->setText(positionText + selectionText);
 }
 
 void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)

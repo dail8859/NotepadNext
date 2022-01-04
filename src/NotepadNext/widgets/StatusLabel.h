@@ -23,7 +23,9 @@
 #include <QLabel>
 #include <QMouseEvent>
 
-class ClickableLabel : public QLabel {
+
+class ClickableLabel : public QLabel
+{
     Q_OBJECT
 
 public:
@@ -37,6 +39,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override { Q_UNUSED(event); emit clicked(); }
     void mouseDoubleClickEvent(QMouseEvent *event) override { emit customContextMenuRequested(event->pos()); }
 };
+
 
 class StatusLabel : public ClickableLabel
 {
