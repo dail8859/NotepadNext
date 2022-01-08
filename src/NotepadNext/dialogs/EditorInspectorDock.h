@@ -16,44 +16,46 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef LANGUAGEINSPECTORDOCK_H
-#define LANGUAGEINSPECTORDOCK_H
+
+#ifndef EDITORINSPECTORDOCK_H
+#define EDITORINSPECTORDOCK_H
 
 #include <QDockWidget>
+#include <QTreeWidgetItem>
 
 #include "ScintillaTypes.h"
+
 
 class MainWindow;
 class ScintillaNext;
 
+typedef std::function<QString(ScintillaNext *)> EditorFunction;
+
 namespace Ui {
-class LanguageInspectorDock;
+class EditorInspectorDock;
 }
 
-class LanguageInspectorDock : public QDockWidget
+class EditorInspectorDock : public QDockWidget
 {
     Q_OBJECT
 
 public:
-    explicit LanguageInspectorDock(MainWindow *parent);
-    ~LanguageInspectorDock();
+    explicit EditorInspectorDock(MainWindow *parent);
+    ~EditorInspectorDock();
 
 private slots:
     void connectToEditor(ScintillaNext *editor);
-    void updatePositionInfo(Scintilla::Update updated);
-    void updateLexerInfo(ScintillaNext *editor);
+    void editorUIUpdated(Scintilla::Update updated);
+    void updateEditorInfo(ScintillaNext *editor);
 
 private:
-    Ui::LanguageInspectorDock *ui;
-
-    QMetaObject::Connection editorConnection;
-    QMetaObject::Connection documentConnection;
-
+    void newItem(QTreeWidgetItem *parent, const QString &label, EditorFunction func);
     void disconnectFromEditor();
-    void updateLanguageName(ScintillaNext *editor);
-    void updatePropertyInfo(ScintillaNext *editor);
-    void updateKeywordInfo(ScintillaNext *editor);
-    void updateStyleInfo(ScintillaNext *editor);
+
+    Ui::EditorInspectorDock *ui;
+    QTreeWidgetItem *selectionsInfo;
+    QMetaObject::Connection editorConnection;
+    QVector<QPair<QTreeWidgetItem *, EditorFunction>> items;
 };
 
-#endif // LANGUAGEINSPECTORDOCK_H
+#endif // EDITORINSPECTORDOCK_H

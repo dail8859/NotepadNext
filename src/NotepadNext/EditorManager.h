@@ -44,8 +44,8 @@ signals:
     void editorClosed(ScintillaNext *editor);
 
 private:
+    void manageEditor(ScintillaNext *editor);
     void setupEditor(ScintillaNext *editor);
-    void setFoldMarkers(ScintillaNext *editor, const QString &type);
     void purgeOldEditorPointers();
 
     QList<QPointer<ScintillaNext>> editors;

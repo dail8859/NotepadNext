@@ -29,6 +29,10 @@
 
 #include "EditorConfigAppDecorator.h"
 
+#include "ILexer.h"
+#include "Lexilla.h"
+#include "SciLexer.h"
+
 #include <QCommandLineParser>
 #include <QSettings>
 
@@ -156,15 +160,21 @@ bool NotepadNextApplication::initGui()
         }
     });
 
-    applyArguments(SingleApplication::arguments());
+    // Keep Lua's editor reference up to date
+    connect(windows.first(), &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
+        LuaExtension::Instance().setEditor(editor);
+    });
 
-    // Everything should be ready at this point
+    applyArguments(SingleApplication::arguments());
 
     // If the window does not have any editors (meaning the applyArguments() did not
     // have any files to open) then create a new empty file
-    if (windows.first()->getDockedEditor()->count() == 0) {
+    if (windows.first()->editorCount() == 0) {
         windows.first()->newFile();
     }
+
+    // Everything should be ready at this point
+
     windows.first()->show();
     windows.first()->bringWindowToForeground();
 
@@ -188,7 +198,85 @@ QString NotepadNextApplication::getFileDialogFilter() const
                 return table.concat(filter, ";;")
                 )=");
 
-    return filter;
+        return filter;
+}
+
+QStringList NotepadNextApplication::getLanguages() const
+{
+    return getLuaState()->executeAndReturn<QStringList>(
+                R"(
+                local names = {}
+                for k in pairs(languages) do table.insert(names, k) end
+                table.sort(names, function (a, b) return string.lower(a) < string.lower(b) end)
+                return names
+                )");
+}
+
+void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QString &languageName) const
+{
+    LuaExtension::Instance().setEditor(editor);
+
+    getLuaState()->execute(QString("languageName = \"%1\"").arg(QString(languageName)).toLatin1().constData());
+    const QString lexer = getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
+
+    editor->languageName = languageName;
+    auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
+    editor->setILexer((sptr_t) lexerInstance);
+
+    getLuaState()->execute(R"(
+        local L = languages[languageName]
+
+        editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
+        editor.TabWidth = L.tabSize or 4
+        if L.styles then
+            for name, style in pairs(L.styles) do
+                editor.StyleFore[style.id] = style.fgColor
+                editor.StyleBack[style.id] = style.bgColor
+                if style.fontStyle then
+                    if style.fontStyle & 1 == 1 then
+                        editor.StyleBold[style.id] = true
+                    end
+                    if style.fontStyle & 2 == 2 then
+                        editor.StyleItalic[style.id] = true
+                    end
+                    if style.fontStyle & 4 == 4 then
+                        editor.StyleUnderline[style.id] = true
+                    end
+                end
+            end
+        end
+        if L.keywords then
+            for id, kw in pairs(L.keywords) do
+                editor.KeyWords[id] = kw
+            end
+        end
+        if L.properties then
+            for p,v in pairs(L.properties) do
+                editor.Property[p] = v
+            end
+        end
+        editor.Property["fold"] = "1"
+        editor.Property["fold.compact"] = "0"
+
+        -- The document needs redone, but don't force it to do the whole thing
+        -- since SC_IDLESTYLING_TOVISIBLE is used
+        editor:Colourise(0, 1);
+    )");
+}
+
+QString NotepadNextApplication::detectLanguageFromExtension(const QString &extension) const
+{
+    return getLuaState()->executeAndReturn<QString>(QString(R"(
+    local ext = "%1"
+    for name, L in pairs(languages) do
+        for _, v in ipairs(L.extensions) do
+            if v == ext then
+                return name
+            end
+        end
+    end
+    return "null"
+    )").arg(extension).toLatin1().constData());
 }
 
 void NotepadNextApplication::applyArguments(const QStringList &args)

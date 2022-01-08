@@ -20,7 +20,6 @@
 #include "EditorManager.h"
 #include "ScintillaNext.h"
 #include "Scintilla.h"
-#include "ScintillaTypes.h"
 
 // Editor decorators
 #include "BraceMatch.h"
@@ -31,15 +30,17 @@
 #include "BetterMultiSelection.h"
 #include "AutoIndentation.h"
 
+
 const int MARK_BOOKMARK = 24;
 const int MARK_HIDELINESBEGIN = 23;
 const int MARK_HIDELINESEND = 22;
 const int MARK_HIDELINESUNDERLINE = 21;
 
+
 EditorManager::EditorManager(QObject *parent) : QObject(parent)
 {
-    connect(this, &EditorManager::editorCreated, [=](ScintillaNext *editor) {
-        connect(editor, &ScintillaNext::closed, [=]() {
+    connect(this, &EditorManager::editorCreated, this, [=](ScintillaNext *editor) {
+        connect(editor, &ScintillaNext::closed, this, [=]() {
             emit editorClosed(editor);
         });
     });
@@ -48,8 +49,8 @@ EditorManager::EditorManager(QObject *parent) : QObject(parent)
 ScintillaNext *EditorManager::createEmptyEditor(const QString &name)
 {
     ScintillaNext *editor = new ScintillaNext(name);
-    QPointer<ScintillaNext> pointer = QPointer<ScintillaNext>(editor);
-    editors.append(pointer);
+
+    manageEditor(editor);
 
     setupEditor(editor);
 
@@ -61,8 +62,8 @@ ScintillaNext *EditorManager::createEmptyEditor(const QString &name)
 ScintillaNext *EditorManager::createEditorFromFile(const QString &filePath)
 {
     ScintillaNext *editor = ScintillaNext::fromFile(filePath);
-    QPointer<ScintillaNext> pointer = QPointer<ScintillaNext>(editor);
-    editors.append(pointer);
+
+    manageEditor(editor);
 
     setupEditor(editor);
 
@@ -74,8 +75,8 @@ ScintillaNext *EditorManager::createEditorFromFile(const QString &filePath)
 ScintillaNext *EditorManager::cloneEditor(ScintillaNext *editor)
 {
     ScintillaNext *clonedEditor = new ScintillaNext("Clone");
-    QPointer<ScintillaNext> pointer = QPointer<ScintillaNext>(clonedEditor);
-    editors.append(pointer);
+
+    manageEditor(editor);
 
     setupEditor(clonedEditor);
 
@@ -100,13 +101,24 @@ ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
     return Q_NULLPTR;
 }
 
+void EditorManager::manageEditor(ScintillaNext *editor)
+{
+    editors.append(QPointer<ScintillaNext>(editor));
+}
+
 void EditorManager::setupEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
     editor->clearCmdKey(SCK_INSERT);
 
-    setFoldMarkers(editor, "box");
+    editor->setFoldMarkers(QStringLiteral("box"));
+    for (int i = SC_MARKNUM_FOLDEREND; i <= SC_MARKNUM_FOLDEROPEN; ++i) {
+        editor->markerSetFore(i, 0xF3F3F3);
+        editor->markerSetBack(i, 0x808080);
+        editor->markerSetBackSelected(i, 0x0000FF);
+    }
+
     editor->setIdleStyling(SC_IDLESTYLING_TOVISIBLE);
     editor->setEndAtLastLine(false);
 
@@ -227,35 +239,6 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     AutoIndentation *ai = new AutoIndentation(editor);
     ai->setEnabled(true);
-}
-
-// TODO: Move this into the editor eventually?
-void EditorManager::setFoldMarkers(ScintillaNext *editor, const QString &type)
-{
-    QMap<QString, QList<int>> map{
-        {"simple", {SC_MARK_MINUS, SC_MARK_PLUS, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY}},
-        {"arrow",  {SC_MARK_ARROWDOWN, SC_MARK_ARROW, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY}},
-        {"circle", {SC_MARK_CIRCLEMINUS, SC_MARK_CIRCLEPLUS, SC_MARK_VLINE, SC_MARK_LCORNERCURVE, SC_MARK_CIRCLEPLUSCONNECTED, SC_MARK_CIRCLEMINUSCONNECTED, SC_MARK_TCORNERCURVE }},
-        {"box",    {SC_MARK_BOXMINUS, SC_MARK_BOXPLUS, SC_MARK_VLINE, SC_MARK_LCORNER, SC_MARK_BOXPLUSCONNECTED, SC_MARK_BOXMINUSCONNECTED, SC_MARK_TCORNER }},
-    };
-
-    if (!map.contains(type))
-        return;
-
-    const auto types = map[type];
-    editor->markerDefine(SC_MARKNUM_FOLDEROPEN, types[0]);
-    editor->markerDefine(SC_MARKNUM_FOLDER, types[1]);
-    editor->markerDefine(SC_MARKNUM_FOLDERSUB, types[2]);
-    editor->markerDefine(SC_MARKNUM_FOLDERTAIL, types[3]);
-    editor->markerDefine(SC_MARKNUM_FOLDEREND, types[4]);
-    editor->markerDefine(SC_MARKNUM_FOLDEROPENMID, types[5]);
-    editor->markerDefine(SC_MARKNUM_FOLDERMIDTAIL, types[6]);
-
-    for (int i = SC_MARKNUM_FOLDEREND; i <= SC_MARKNUM_FOLDEROPEN; ++i) {
-        editor->markerSetFore(i, 0xF3F3F3);
-        editor->markerSetBack(i, 0x808080);
-        editor->markerSetBackSelected(i, 0x0000FF);
-    }
 }
 
 void EditorManager::purgeOldEditorPointers()

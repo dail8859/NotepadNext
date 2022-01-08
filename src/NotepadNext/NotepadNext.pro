@@ -85,6 +85,7 @@ SOURCES += \
     decorators/BetterMultiSelection.cpp \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
+    dialogs/EditorInspectorDock.cpp \
     dialogs/FindReplaceDialog.cpp \
     dialogs/LanguageInspectorDock.cpp \
     dialogs/LuaConsoleDock.cpp \
@@ -98,6 +99,7 @@ SOURCES += \
     decorators/HighlightedScrollBar.cpp \
     decorators/LineNumbers.cpp \
     decorators/SmartHighlighter.cpp \
+    widgets/EditorInfoStatusBar.cpp \
     widgets/StatusLabel.cpp
 
 HEADERS += \
@@ -130,6 +132,7 @@ HEADERS += \
     decorators/BetterMultiSelection.h \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
+    dialogs/EditorInspectorDock.h \
     dialogs/FindReplaceDialog.h \
     dialogs/LanguageInspectorDock.h \
     dialogs/LuaConsoleDock.h \
@@ -142,10 +145,12 @@ HEADERS += \
     decorators/HighlightedScrollBar.h \
     decorators/LineNumbers.h \
     decorators/SmartHighlighter.h \
+    widgets/EditorInfoStatusBar.h \
     widgets/StatusLabel.h
 
 FORMS += \
     QuickFindWidget.ui \
+    dialogs/EditorInspectorDock.ui \
     dialogs/LanguageInspectorDock.ui \
     dialogs/MainWindow.ui \
     dialogs/FindReplaceDialog.ui \
