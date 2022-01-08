@@ -27,23 +27,17 @@
 #include "DockedEditor.h"
 
 #include "ScintillaNext.h"
-#include "StatusLabel.h"
 #include "NppImporter.h"
-#include "QuickFindWidget.h"
 
 namespace Ui {
 class MainWindow;
 }
 
 class NotepadNextApplication;
-class FindReplaceDialog;
-class LuaConsoleDock;
-class LanguageInspectorDock;
 class MacroRecorder;
-class MacroRunDialog;
 class Macro;
 class Settings;
-class PreferencesDialog;
+class QuickFindWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -53,11 +47,11 @@ public:
     explicit MainWindow(NotepadNextApplication *app, QWidget *parent = nullptr);
     ~MainWindow() override;
 
-    bool isAnyUnsaved();
+    bool isAnyUnsaved() const;
 
     void setupLanguageMenu();
-    ScintillaNext *currentEditor();
-    DockedEditor *getDockedEditor();
+    ScintillaNext *currentEditor() const;
+    int editorCount() const;
 
 public slots:
     void newFile();
@@ -90,7 +84,6 @@ public slots:
 
     void updateFileStatusBasedUi(ScintillaNext *editor);
     void updateEOLBasedUi(ScintillaNext *editor);
-    void updateEncodingBasedUi(ScintillaNext *editor);
     void updateDocumentBasedUi(Scintilla::Update updated);
     void updateSelectionBasedUi(ScintillaNext *editor);
     void updateContentBasedUi(ScintillaNext *editor);
@@ -99,8 +92,8 @@ public slots:
     void updateLanguageBasedUi(ScintillaNext *editor);
     void updateGui(ScintillaNext *editor);
 
-    void detectLanguageFromExtension(ScintillaNext *editor);
-    void editorActivated(ScintillaNext *editor);
+    void detectLanguage(ScintillaNext *editor);
+    void activateEditor(ScintillaNext *editor);
 
     void setLanguage(ScintillaNext *editor, const QString &languageName);
 
@@ -110,6 +103,9 @@ public slots:
     void addEditor(ScintillaNext *editor);
 
     void checkForUpdates(bool silent = false);
+
+signals:
+    void editorActivated(ScintillaNext *editor);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -130,7 +126,6 @@ private:
     bool isInInitialState();
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
-    void setupStatusBar();
     bool checkFileForModification(ScintillaNext *editor);
 
     void saveSettings() const;
@@ -138,26 +133,15 @@ private:
 
     QActionGroup *languageActionGroup;
 
-    QLabel *docType;
-    QLabel *docSize;
-    QLabel *docPos;
-    QLabel *unicodeType;
-    QLabel *eolFormat;
-
     //NppImporter *npp;
 
-    // Dialogs
-    FindReplaceDialog *frd = Q_NULLPTR;
-    MacroRunDialog *mrd = Q_NULLPTR;
-    PreferencesDialog *pd = Q_NULLPTR;
+    // Persistant dialogs
+    QMap<QString, QDialog *> dialogs;
+
     QuickFindWidget *quickFind = Q_NULLPTR;
 
     QVector<Macro *> macros;
     Macro *currentMacro = Q_NULLPTR;
-
-    // Docked widgets
-    LuaConsoleDock *luaConsoleDock = Q_NULLPTR;
-    LanguageInspectorDock *languageInspectorDock = Q_NULLPTR;
 };
 
 #endif // MAINWINDOW_H

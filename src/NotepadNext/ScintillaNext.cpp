@@ -35,18 +35,14 @@ static bool writeToDisk(const QByteArray &data, const QString &path)
     QSaveFile file(path);
     file.setDirectWriteFallback(true);
 
-    bool writeSuccessful = false;
-
     if (file.open(QIODevice::WriteOnly)) {
         file.write(data);
-        writeSuccessful = file.commit();
+        return file.commit();
     }
     else {
         qWarning("writeToDisk() failure: %s", qPrintable(file.errorString()));
-        writeSuccessful = false;
+        return false;
     }
-
-    return writeSuccessful;
 }
 
 
@@ -104,6 +100,28 @@ QString ScintillaNext::getFilePath() const
     Q_ASSERT(isFile());
 
     return QDir::toNativeSeparators(fileInfo.canonicalFilePath());
+}
+
+void ScintillaNext::setFoldMarkers(const QString &type)
+{
+    QMap<QString, QList<int>> map{
+        {"simple", {SC_MARK_MINUS, SC_MARK_PLUS, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY}},
+        {"arrow",  {SC_MARK_ARROWDOWN, SC_MARK_ARROW, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY}},
+        {"circle", {SC_MARK_CIRCLEMINUS, SC_MARK_CIRCLEPLUS, SC_MARK_VLINE, SC_MARK_LCORNERCURVE, SC_MARK_CIRCLEPLUSCONNECTED, SC_MARK_CIRCLEMINUSCONNECTED, SC_MARK_TCORNERCURVE }},
+        {"box",    {SC_MARK_BOXMINUS, SC_MARK_BOXPLUS, SC_MARK_VLINE, SC_MARK_LCORNER, SC_MARK_BOXPLUSCONNECTED, SC_MARK_BOXMINUSCONNECTED, SC_MARK_TCORNER }},
+    };
+
+    if (!map.contains(type))
+        return;
+
+    const auto types = map[type];
+    markerDefine(SC_MARKNUM_FOLDEROPEN, types[0]);
+    markerDefine(SC_MARKNUM_FOLDER, types[1]);
+    markerDefine(SC_MARKNUM_FOLDERSUB, types[2]);
+    markerDefine(SC_MARKNUM_FOLDERTAIL, types[3]);
+    markerDefine(SC_MARKNUM_FOLDEREND, types[4]);
+    markerDefine(SC_MARKNUM_FOLDEROPENMID, types[5]);
+    markerDefine(SC_MARKNUM_FOLDERMIDTAIL, types[6]);
 }
 
 void ScintillaNext::close()
@@ -363,7 +381,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
         }
 
         QByteArray utf8_data = decoder->toUnicode(chunk).toUtf8();
-        addText(utf8_data.size(), utf8_data.constData());
+        appendText(utf8_data.size(), utf8_data.constData());
     } while (!file.atEnd() && status() == SC_STATUS_OK);
 
     delete decoder;

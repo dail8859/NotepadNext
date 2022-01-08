@@ -42,24 +42,22 @@
 #include "Settings.h"
 
 #include "ScintillaNext.h"
-#include "ILexer.h"
-#include "Lexilla.h"
-#include "SciLexer.h"
 
 #include "RecentFilesListManager.h"
 #include "EditorManager.h"
 
-#include "LuaExtension.h"
-#include "LuaState.h"
 #include "MacroRecorder.h"
 
 #include "LuaConsoleDock.h"
 #include "LanguageInspectorDock.h"
+#include "EditorInspectorDock.h"
 
 #include "FindReplaceDialog.h"
 #include "MacroRunDialog.h"
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
+
+#include "QuickFindWidget.h"
 
 
 MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
@@ -75,17 +73,12 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     qInfo("setupUi Completed");
 
-    setupStatusBar();
-
     // The windows editor manager that supports docking
     dockedEditor = new DockedEditor(this);
 
     connect(dockedEditor, &DockedEditor::editorCloseRequested, this, [=](ScintillaNext *editor) { closeFile(editor); });
-    connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::editorActivated);
 
-    connect(dockedEditor, &DockedEditor::editorActivated, [](ScintillaNext *editor) {
-        LuaExtension::Instance().setEditor(editor);
-    });
+    connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
 
     connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
 
@@ -217,10 +210,15 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     connect(ui->actionFind, &QAction::triggered, [=]() {
         ScintillaNext *editor = dockedEditor->getCurrentEditor();
+        FindReplaceDialog *frd = nullptr;
 
         // Create it if it doesn't exist
-        if (frd == Q_NULLPTR) {
+        if (!dialogs.contains("FindReplaceDialog")) {
             frd = new FindReplaceDialog(this);
+            dialogs["FindReplaceDialog"] = frd;
+        }
+        else {
+            frd = qobject_cast<FindReplaceDialog *>(dialogs["FindReplaceDialog"]);
         }
 
         frd->setEditor(editor);
@@ -256,8 +254,8 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     });
 
     connect(ui->actionFindNext, &QAction::triggered, [=]() {
-        if (frd != Q_NULLPTR) {
-            frd->performLastSearch();
+        if (dialogs.contains("FindReplaceDialog")) {
+            qobject_cast<FindReplaceDialog *>(dialogs["FindReplaceDialog"])->performLastSearch();
         }
     });
 
@@ -397,16 +395,24 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
-    connect(ui->actionZoomIn, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->zoomIn();});
-    connect(ui->actionZoomOut, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->zoomOut();});
+    connect(ui->actionZoomIn, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->zoomIn(); });
+    connect(ui->actionZoomOut, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->zoomOut(); });
     connect(ui->actionZoomReset, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->setZoom(0); });
 
     languageActionGroup = new QActionGroup(this);
     languageActionGroup->setExclusive(true);
 
     connect(ui->actionPreferences, &QAction::triggered, [=] {
-        if (pd == Q_NULLPTR)
+        PreferencesDialog *pd = nullptr;
+
+        if (!dialogs.contains("PreferencesDialog")) {
             pd = new PreferencesDialog(app->getSettings(), this);
+            dialogs["PreferencesDialog"] = pd;
+        }
+        else {
+            pd = qobject_cast<PreferencesDialog *>(dialogs["PreferencesDialog"]);
+        }
+
         pd->show();
         pd->raise();
         pd->activateWindow();
@@ -459,14 +465,21 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, [=](bool b) {
         Q_UNUSED(b);
 
-        if (mrd == Q_NULLPTR) {
+        MacroRunDialog *mrd = nullptr;
+
+        if (!dialogs.contains("MacroRunDialog")) {
             mrd = new MacroRunDialog(this);
-            connect(mrd, &MacroRunDialog::execute, [=](Macro *macro, int times) {
+            dialogs["MacroRunDialog"] = mrd;
+
+            connect(mrd, &MacroRunDialog::execute, dockedEditor, [=](Macro *macro, int times) {
                 if (times > 0)
                     macro->replay(dockedEditor->getCurrentEditor(), times);
                 else if (times == -1)
                     macro->replayTillEndOfFile(dockedEditor->getCurrentEditor());
             });
+        }
+        else {
+            mrd = qobject_cast<MacroRunDialog *>(dialogs["MacroRunDialog"]);
         }
 
         if (!macros.contains(currentMacro))
@@ -525,19 +538,21 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
                                 .arg(APP_VERSION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
 
-    if (luaConsoleDock == Q_NULLPTR) {
-        luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
-        luaConsoleDock->hide();
-        addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
-        ui->menuHelp->addAction(luaConsoleDock->toggleViewAction());
-    }
+    LuaConsoleDock *luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
+    luaConsoleDock->hide();
+    addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
+    ui->menuHelp->addSeparator();
+    ui->menuHelp->addAction(luaConsoleDock->toggleViewAction());
 
-    if (languageInspectorDock == Q_NULLPTR) {
-        languageInspectorDock = new LanguageInspectorDock(this);
-        languageInspectorDock->hide();
-        addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
-        ui->menuHelp->addAction(languageInspectorDock->toggleViewAction());
-    }
+    LanguageInspectorDock *languageInspectorDock = new LanguageInspectorDock(this);
+    languageInspectorDock->hide();
+    addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
+    ui->menuHelp->addAction(languageInspectorDock->toggleViewAction());
+
+    EditorInspectorDock *editorInspectorDock = new EditorInspectorDock(this);
+    editorInspectorDock->hide();
+    addDockWidget(Qt::RightDockWidgetArea, editorInspectorDock);
+    ui->menuHelp->addAction(editorInspectorDock->toggleViewAction());
 
 
 #ifdef QT_DEBUG
@@ -599,13 +614,7 @@ void MainWindow::setupLanguageMenu()
 {
     qInfo(Q_FUNC_INFO);
 
-    QStringList language_names = app->getLuaState()->executeAndReturn<QStringList>(
-                R"(
-                local names = {}
-                for k in pairs(languages) do table.insert(names, k) end
-                table.sort(names, function (a, b) return string.lower(a) < string.lower(b) end)
-                return names
-                )");
+    QStringList language_names = app->getLanguages();
 
     int i = 0;
     while (i < language_names.size()) {
@@ -623,8 +632,6 @@ void MainWindow::setupLanguageMenu()
             languageActionGroup->addAction(action);
             actions.append(action);
 
-            //if (key == "normal")
-            //    action->setChecked(true);
             ++j;
         }
 
@@ -641,14 +648,14 @@ void MainWindow::setupLanguageMenu()
     }
 }
 
-ScintillaNext *MainWindow::currentEditor()
+ScintillaNext *MainWindow::currentEditor() const
 {
     return dockedEditor->getCurrentEditor();
 }
 
-DockedEditor *MainWindow::getDockedEditor()
+int MainWindow::editorCount() const
 {
-    return dockedEditor;
+    return dockedEditor->count();
 }
 
 void MainWindow::newFile()
@@ -761,31 +768,6 @@ bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors
 
     // Everything is fine
     return true;
-}
-
-void MainWindow::setupStatusBar()
-{
-    // Set up the status bar
-    docType = new StatusLabel();
-    ui->statusBar->addWidget(docType, 1);
-    docSize = new StatusLabel(200);
-    ui->statusBar->addPermanentWidget(docSize, 0);
-    docPos = new StatusLabel(250);
-    ui->statusBar->addPermanentWidget(docPos, 0);
-    eolFormat = new StatusLabel(100);
-    ui->statusBar->addPermanentWidget(eolFormat, 0);
-    unicodeType = new StatusLabel(125);
-    ui->statusBar->addPermanentWidget(unicodeType, 0);
-
-    docType->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(docType, &QLabel::customContextMenuRequested, [=](const QPoint &pos) {
-        ui->menuLanguage->popup(docType->mapToGlobal(pos));
-    });
-
-    eolFormat->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(eolFormat, &QLabel::customContextMenuRequested, [=](const QPoint &pos) {
-        ui->menuEOLConversion->popup(eolFormat->mapToGlobal(pos));
-    });
 }
 
 void MainWindow::openFileDialog()
@@ -1059,9 +1041,16 @@ void MainWindow::renameFile()
 void MainWindow::convertEOLs(int eolMode)
 {
     ScintillaNext *editor = dockedEditor->getCurrentEditor();
+
+    // TODO: does convertEOLs trigger SCN_MODIFIED notifications? If so can these be turned off to increase performance?
     editor->convertEOLs(eolMode);
     editor->setEOLMode(eolMode);
+
     updateEOLBasedUi(editor);
+
+    // There's no simple Scintilla notification that the EOL mode has changed
+    // So tell the status bar to refresh its info
+    ui->statusBar->refresh(editor);
 }
 
 void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
@@ -1087,7 +1076,7 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
     ui->actionCopyFileDirectory->setEnabled(isFile);
 }
 
-bool MainWindow::isAnyUnsaved()
+bool MainWindow::isAnyUnsaved() const
 {
     for (const ScintillaNext *editor : dockedEditor->editors()) {
         if (!editor->isSavedToDisk()) {
@@ -1100,39 +1089,25 @@ bool MainWindow::isAnyUnsaved()
 
 void MainWindow::updateEOLBasedUi(ScintillaNext *editor)
 {
+    qInfo(Q_FUNC_INFO);
+
     switch(editor->eOLMode()) {
     case SC_EOL_CR:
-        eolFormat->setText(ui->actionMacintosh->text());
         ui->actionMacintosh->setChecked(true);
         break;
     case SC_EOL_CRLF:
-        eolFormat->setText(ui->actionWindows->text());
         ui->actionWindows->setChecked(true);
         break;
     case SC_EOL_LF:
-        eolFormat->setText(ui->actionUnix->text());
         ui->actionUnix->setChecked(true);
-        break;
-    }
-}
-
-void MainWindow::updateEncodingBasedUi(ScintillaNext *editor)
-{
-    switch(editor->codePage()) {
-    case 0:
-        unicodeType->setText("ANSI");
-        break;
-    case SC_CP_UTF8:
-        unicodeType->setText("UTF-8");
-        break;
-    default:
-        unicodeType->setText(QString::number(editor->codePage()));
         break;
     }
 }
 
 void MainWindow::updateSaveStatusBasedUi(ScintillaNext *editor)
 {
+    qInfo(Q_FUNC_INFO);
+
     bool isDirty = !editor->isSavedToDisk();
 
     setWindowModified(isDirty);
@@ -1170,7 +1145,6 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
     for (QAction *action : languageActionGroup->actions()) {
         if (action->data().toString() == language_name) {
             action->setChecked(true);
-            docType->setText(action->text());
 
             // Found one, so we are completely done
             return;
@@ -1183,8 +1157,6 @@ void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
             action->setChecked(false);
         }
     }
-
-    docType->setText("");
 }
 
 void MainWindow::updateGui(ScintillaNext *editor)
@@ -1194,7 +1166,6 @@ void MainWindow::updateGui(ScintillaNext *editor)
     updateFileStatusBasedUi(editor);
     updateSaveStatusBasedUi(editor);
     updateEOLBasedUi(editor);
-    updateEncodingBasedUi(editor);
     updateEditorPositionBasedUi();
     updateSelectionBasedUi(editor);
     updateContentBasedUi(editor);
@@ -1220,11 +1191,6 @@ void MainWindow::updateSelectionBasedUi(ScintillaNext *editor)
 {
     ui->actionUndo->setEnabled(editor->canUndo());
     ui->actionRedo->setEnabled(editor->canRedo());
-
-    QString sizeText = QString("Length: %1    Lines: %2").arg(
-            QLocale::system().toString(editor->length()),
-            QLocale::system().toString(editor->lineCount()));
-    docSize->setText(sizeText);
 }
 
 void MainWindow::updateContentBasedUi(ScintillaNext *editor)
@@ -1235,66 +1201,35 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
 
     ui->actionLowerCase->setEnabled(hasAnySelections);
     ui->actionUpperCase->setEnabled(hasAnySelections);
-
-    QString selectionText;
-    if (editor->selections() > 1) {
-        selectionText = "Sel: N/A";
-    }
-    else {
-        int start = editor->selectionStart();
-        int end = editor->selectionEnd();
-        int lines = editor->lineFromPosition(end) - editor->lineFromPosition(start);
-
-        if (end > start)
-            lines++;
-
-        selectionText = QString("Sel: %1 | %2").arg(
-                QLocale::system().toString(editor->countCharacters(start, end)),
-                QLocale::system().toString(lines));
-    }
-
-    const int pos = editor->currentPos();
-    QString positionText = QString("Ln: %1    Col: %2    ").arg(
-            QLocale::system().toString(editor->lineFromPosition(pos) + 1),
-            QLocale::system().toString(editor->column(pos) + 1));
-    docPos->setText(positionText + selectionText);
 }
 
-void MainWindow::detectLanguageFromExtension(ScintillaNext *editor)
+void MainWindow::detectLanguage(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    // Only real files have extensions
     if (!editor->isFile()) {
-        editor->setILexer(reinterpret_cast<sptr_t>(CreateLexer("null")));
+        setLanguage(editor, "Text");
         return;
     }
+    else {
+        // Only real files have extensions
+        const QString ext = editor->getFileInfo().suffix();
+        const QString language_name = app->detectLanguageFromExtension(ext);
 
-    const QString ext = editor->getFileInfo().suffix();
-
-    QString language_name = app->getLuaState()->executeAndReturn<QString>(QString(R"(
-local ext = "%1"
-for name, L in pairs(languages) do
-    for _, v in ipairs(L.extensions) do
-        if v == ext then
-            return name
-        end
-    end
-end
-return "null"
-)").arg(ext).toLatin1().constData());
-
-    setLanguage(editor, language_name);
+        setLanguage(editor, language_name);
+    }
 
     return;
 }
 
-void MainWindow::editorActivated(ScintillaNext *editor)
+void MainWindow::activateEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
     checkFileForModification(editor);
     updateGui(editor);
+
+    emit editorActivated(editor);
 }
 
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
@@ -1302,56 +1237,7 @@ void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
     qInfo(Q_FUNC_INFO);
     qInfo(qUtf8Printable("Language Name: " + languageName));
 
-    LuaExtension::Instance().setEditor(editor);
-
-    app->getLuaState()->execute(QString("languageName = \"%1\"").arg(QString(languageName)).toLatin1().constData());
-    const QString lexer = app->getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
-
-    editor->languageName = languageName;
-    auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
-    editor->setILexer((sptr_t) lexerInstance);
-
-    app->getLuaState()->execute(R"(
-        local L = languages[languageName]
-
-        editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
-        editor.TabWidth = L.tabSize or 4
-        if L.styles then
-            for name, style in pairs(L.styles) do
-                editor.StyleFore[style.id] = style.fgColor
-                editor.StyleBack[style.id] = style.bgColor
-                if style.fontStyle then
-                    if style.fontStyle & 1 == 1 then
-                        editor.StyleBold[style.id] = true
-                    end
-                    if style.fontStyle & 2 == 2 then
-                        editor.StyleItalic[style.id] = true
-                    end
-                    if style.fontStyle & 4 == 4 then
-                        editor.StyleUnderline[style.id] = true
-                    end
-                end
-            end
-        end
-        if L.keywords then
-            for id, kw in pairs(L.keywords) do
-                editor.KeyWords[id] = kw
-            end
-        end
-        if L.properties then
-            for p,v in pairs(L.properties) do
-                editor.Property[p] = v
-            end
-        end
-        editor.Property["fold"] = "1"
-        editor.Property["fold.compact"] = "0"
-
-        -- The document needs redone, but don't force it to do the whole thing
-        -- since SC_IDLESTYLING_TOVISIBLE is used
-        editor:Colourise(0, 1);
-        )");
-
-    updateLanguageBasedUi(editor);
+    app->setEditorLanguage(editor, languageName);
 }
 
 void MainWindow::bringWindowToForeground()
@@ -1463,14 +1349,15 @@ void MainWindow::focusIn()
 
 void MainWindow::addEditor(ScintillaNext *editor)
 {
-    dockedEditor->addEditor(editor);
+    qInfo(Q_FUNC_INFO);
 
-    // TODO: This needs to be in the app, not the window
-    detectLanguageFromExtension(editor);
+    detectLanguage(editor);
 
     // These should only ever occur for the focused editor??
+    // TODO: look at editor inspector as an example to ensure updates are only coming from one editor.
+    // Can save the connection objects and disconnected from them and only connect to the editor as it is activated.
     connect(editor, &ScintillaNext::savePointChanged, this, [=]() { updateSaveStatusBasedUi(editor); });
-    connect(editor, &ScintillaNext::renamed, this, [=]() { detectLanguageFromExtension(editor); });
+    connect(editor, &ScintillaNext::renamed, this, [=]() { detectLanguage(editor); });
     connect(editor, &ScintillaNext::renamed, this, [=]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
     connect(editor, &ScintillaNext::marginClicked, [editor](Scintilla::Position position, Scintilla::KeyMod modifiers, int margin) {
@@ -1499,6 +1386,9 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setViewWS(ui->actionShowWhitespace->isChecked() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
     editor->setViewEOL(ui->actionShowEndofLine->isChecked());
     editor->setWrapVisualFlags(ui->actionShowWrapSymbol->isChecked() ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+
+    // The editor has been entirely configured at this point, so add it to the docked editor
+    dockedEditor->addEditor(editor);
 }
 
 void MainWindow::checkForUpdates(bool silent)
@@ -1534,7 +1424,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 
     // While tabs are being closed, turn off UI updates so the main window doesn't continuously refresh.
-    disconnect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::editorActivated);
+    disconnect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
 
     closeAllFiles(true);
 
@@ -1572,8 +1462,7 @@ void MainWindow::dropEvent(QDropEvent *event)
     if (event->mimeData()->hasUrls()) {
         // Get the urls into a stringlist
         QStringList fileNames;
-        auto urls = event->mimeData()->urls();
-        for (const QUrl &url : urls) {
+        for (const QUrl &url : event->mimeData()->urls()) {
             if (url.isLocalFile()) {
                 fileNames.append(url.toLocalFile());
             }

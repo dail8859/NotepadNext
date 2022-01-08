@@ -42,7 +42,7 @@ win32 {
 
     zip.target = zip
     zip.depends = package
-    zip.commands = 7z a -tzip $$quote(NotepadNext-v$${APP_VERSION}.zip) $$shell_path(./package/*)
+    zip.commands = 7z a -tzip $$quote(NotepadNext-v$${APP_VERSION}.zip) $$shell_path(./package/*) -x!libssl-1_1-x64.dll -x!libcrypto-1_1-x64.dll
 
     installer.target = installer
     installer.depends = package

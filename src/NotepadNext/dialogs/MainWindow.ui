@@ -288,7 +288,7 @@
    <addaction name="actionRunMacroMultipleTimes"/>
    <addaction name="actionSaveCurrentRecordedMacro"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="EditorInfoStatusBar" name="statusBar"/>
   <action name="actionNew">
    <property name="icon">
     <iconset>
@@ -918,6 +918,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>EditorInfoStatusBar</class>
+   <extends>QStatusBar</extends>
+   <header>EditorInfoStatusBar.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../resources.qrc"/>
  </resources>

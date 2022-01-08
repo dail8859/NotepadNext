@@ -105,16 +105,12 @@ Section "Notepad Next"
 	SectionIn RO
 	SetOutPath $INSTDIR
 
-	File /r ..\build\package\*
+	File /r /x libcrypto-1_1-x64.dll /x libssl-1_1-x64.dll ..\build\package\*
 
 	SetRegView 64
 
 	# Register the application (e.g. cmd> start notepadnext)
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
-
-	# Enable the auto updater
-	# TODO: later make this a selectable section by the user
-	WriteRegDWORD SHCTX "Software\NotepadNext\NotepadNext\" "AutoUpdate" 1
 
 	# Register 'Open With' menu suggestion. No real good documentation for this. https://stackoverflow.com/a/62783311
 	WriteRegStr SHCTX "Software\Classes\NotepadNext\shell" "" "open"
@@ -145,6 +141,15 @@ Section /o "Context Menu"
 	WriteRegStr SHCTX "Software\Classes\*\shell\NotepadNext" "" "Edit with Notepad Next"
 	WriteRegStr SHCTX "Software\Classes\*\shell\NotepadNext" "icon" "$INSTDIR\NotepadNext.exe"
 	WriteRegStr SHCTX "Software\Classes\*\shell\NotepadNext\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
+SectionEnd
+
+Section /o "Auto Updater"
+	SetRegView 64
+	SetOutPath $INSTDIR
+
+	File ..\build\package\libcrypto-1_1-x64.dll ..\build\package\libssl-1_1-x64.dll
+
+	WriteRegDWORD SHCTX "Software\NotepadNext\NotepadNext\" "AutoUpdate" 1
 SectionEnd
 
 
