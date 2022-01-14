@@ -77,6 +77,7 @@ public slots:
 
 signals:
     void aboutToSave();
+    void saved();
     void closed();
     void renamed();
 
