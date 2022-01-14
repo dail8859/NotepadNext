@@ -142,8 +142,10 @@ bool ScintillaNext::save()
     bool writeSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), fileInfo.filePath());
 
     if (writeSuccessful) {
-        setSavePoint();
         updateTimestamp();
+        setSavePoint();
+
+        emit saved();
     }
 
     return writeSuccessful;
@@ -155,7 +157,7 @@ void ScintillaNext::reload()
 
     // Ensure the file still exists.
     if (!QFile::exists(fileInfo.canonicalFilePath())) {
-        return; // TODO: fasle
+        return;
     }
 
     // Remove all the text
@@ -173,39 +175,34 @@ void ScintillaNext::reload()
     bool readSuccessful = readFromDisk(f);
 
     if (readSuccessful) {
-        // TODO: emit bufferReloaded?
+        updateTimestamp();
+        setSavePoint();
     }
 
-    setSavePoint();
-    updateTimestamp();
-
-    return; // TODO: true
+    return;
 }
 
 bool ScintillaNext::saveAs(const QString &newFilePath)
 {
-    // Store the type of the buffer before it gets saved (which can change the type)
-    const ScintillaNext::BufferType origType = bufferType;
+    bool isRenamed = bufferType == ScintillaNext::Temporary || fileInfo.canonicalFilePath() != newFilePath;
 
     emit aboutToSave();
-
-    bool isRenamed = !isFile() || fileInfo.canonicalFilePath() != newFilePath;
 
     bool saveSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), newFilePath);
 
     if (saveSuccessful) {
-        this->setFileInfo(newFilePath);
-        setSavePoint();
+        setFileInfo(newFilePath);
         updateTimestamp();
+        setSavePoint();
+
+        emit saved();
+
+        if (isRenamed) {
+            emit renamed();
+        }
     }
 
-    if (isRenamed && saveSuccessful && origType == ScintillaNext::Temporary) {
-        emit renamed();
-
-        return true;
-    }
-
-    return false;
+    return saveSuccessful;
 }
 
 bool ScintillaNext::saveCopyAs(const QString &filePath)
@@ -215,8 +212,6 @@ bool ScintillaNext::saveCopyAs(const QString &filePath)
 
 bool ScintillaNext::rename(const QString &newFilePath)
 {
-    // TODO: check if newFilePath is already opened as another editor?
-
     emit aboutToSave();
 
     // Write out the buffer to the new path
@@ -227,8 +222,10 @@ bool ScintillaNext::rename(const QString &newFilePath)
 
         // Everything worked fine, so update the buffer's info
         setFileInfo(newFilePath);
-        setSavePoint();
         updateTimestamp();
+        setSavePoint();
+
+        emit saved();
 
         emit renamed();
 
@@ -244,11 +241,14 @@ ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
         return FileStateChange::NoChange;
     }
     else if (bufferType == BufferType::File) {
-        // Make sure it exists
-        fileInfo.refresh(); // refresh else exists() fails to notice missing file
+        // refresh else exists() fails to notice missing file
+        fileInfo.refresh();
+
         if (!fileInfo.exists()) {
             bufferType = BufferType::FileMissing;
+
             emit savePointChanged(false);
+
             return FileStateChange::Deleted;
         }
 
@@ -263,8 +263,10 @@ ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
     else if (bufferType == BufferType::FileMissing) {
         // See if it reappeared
         fileInfo.refresh();
+
         if (fileInfo.exists()) {
             bufferType = BufferType::File;
+
             return FileStateChange::Restored;
         }
         else {
@@ -274,6 +276,7 @@ ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
 
     qInfo("type() = %d", bufferType);
     Q_ASSERT(false);
+
     return FileStateChange::NoChange;
 }
 
