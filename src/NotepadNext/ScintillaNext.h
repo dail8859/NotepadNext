@@ -46,6 +46,7 @@ public:
     QFileInfo getFileInfo() const;
 
     QString getName() const { return name; }
+    QString getPath() const;
     QString getFilePath() const;
 
     enum FileStateChange {

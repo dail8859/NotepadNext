@@ -95,6 +95,13 @@ QFileInfo ScintillaNext::getFileInfo() const
     return fileInfo;
 }
 
+QString ScintillaNext::getPath() const
+{
+    Q_ASSERT(isFile());
+
+    return QDir::toNativeSeparators(fileInfo.canonicalPath());
+}
+
 QString ScintillaNext::getFilePath() const
 {
     Q_ASSERT(isFile());

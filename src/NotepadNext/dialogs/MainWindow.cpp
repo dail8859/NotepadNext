@@ -772,12 +772,19 @@ bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors
 
 void MainWindow::openFileDialog()
 {
-    QString filter = app->getFileDialogFilter();
+    QString dialogDir;
+    const QString filter = app->getFileDialogFilter();
+    const ScintillaNext *editor = dockedEditor->getCurrentEditor();
+
+    // Use the path if possible
+    if (editor->isFile()) {
+        dialogDir = editor->getPath();
+    }
 
     QStringList fileNames = QFileDialog::getOpenFileNames(
         this, // parent
-        Q_NULLPTR, // caption
-        Q_NULLPTR, // dir
+        QString(), // caption
+        dialogDir, // dir
         filter, // filter
         Q_NULLPTR // selected filter
         );
@@ -942,9 +949,9 @@ bool MainWindow::saveFile(ScintillaNext *editor)
 
 bool MainWindow::saveCurrentFileAsDialog()
 {
-    QString dialogDir = QString();
-    QString filter = app->getFileDialogFilter();
-    auto editor = dockedEditor->getCurrentEditor();
+    QString dialogDir;
+    const QString filter = app->getFileDialogFilter();
+    ScintillaNext *editor = dockedEditor->getCurrentEditor();
 
     // Use the file path if possible
     if (editor->isFile()) {
@@ -953,7 +960,7 @@ bool MainWindow::saveCurrentFileAsDialog()
 
     QString fileName = QFileDialog::getSaveFileName(
         this, // parent
-        Q_NULLPTR, // caption
+        QString(), // caption
         dialogDir, // dir
         filter, // filter
         Q_NULLPTR // selected filter
@@ -985,9 +992,9 @@ bool MainWindow::saveFileAs(ScintillaNext *editor, const QString &fileName)
 
 void MainWindow::saveCopyAsDialog()
 {
-    QString dialogDir = QString();
-    QString filter = app->getFileDialogFilter();
-    auto editor = dockedEditor->getCurrentEditor();
+    QString dialogDir;
+    const QString filter = app->getFileDialogFilter();
+    const ScintillaNext* editor = dockedEditor->getCurrentEditor();
 
     // Use the file path if possible
     if (editor->isFile()) {
@@ -996,7 +1003,7 @@ void MainWindow::saveCopyAsDialog()
 
     QString fileName = QFileDialog::getSaveFileName(
         this, // parent
-        Q_NULLPTR, // caption
+        "Save a Copy As", // caption
         dialogDir, // dir
         filter, // filter
         Q_NULLPTR // selected filter
@@ -1020,11 +1027,11 @@ void MainWindow::saveAll()
 
 void MainWindow::renameFile()
 {
-    auto editor = dockedEditor->getCurrentEditor();
+    ScintillaNext *editor = dockedEditor->getCurrentEditor();
 
     Q_ASSERT(editor->isFile());
 
-    QString fileName = QFileDialog::getSaveFileName(this, "", editor->getFilePath());
+    QString fileName = QFileDialog::getSaveFileName(this, "Rename", editor->getFilePath());
 
     if (fileName.size() == 0) {
         return;
