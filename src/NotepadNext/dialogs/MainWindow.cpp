@@ -193,7 +193,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionCopyFullPath, &QAction::triggered, [=]() {
         auto editor = dockedEditor->getCurrentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(editor->getFilePath());
+            QApplication::clipboard()->setText(editor->getPath());
         }
     });
     connect(ui->actionCopyFileName, &QAction::triggered, [=]() {
