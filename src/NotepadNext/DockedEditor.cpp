@@ -25,6 +25,8 @@
 
 #include "ScintillaNext.h"
 
+#include <QUuid>
+
 
 class DockedEditorComponentsFactory : public ads::CDockComponentsFactory
 {
@@ -160,6 +162,10 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     // Create the dock widget for the editor
     ads::CDockWidget* dw = new ads::CDockWidget(editor->getName());
+
+    // We need a unique object name. Can't use the name or file path so use a uuid
+    dw->setObjectName(QUuid::createUuid().toString());
+
     dw->setWidget(editor);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetDeleteOnClose, true);
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::CustomCloseHandling, true);
