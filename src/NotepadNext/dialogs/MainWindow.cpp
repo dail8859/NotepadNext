@@ -104,23 +104,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
 
-    connect(ui->actionMoveToTrash, &QAction::triggered, [=]() {
-        ScintillaNext *editor = dockedEditor->getCurrentEditor();
-        const QString filePath = editor->getFilePath();
-        auto reply = QMessageBox::question(this, "Delete File", QString("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));;
-
-        if (reply == QMessageBox::Yes) {
-            if (editor->moveToTrash()) {
-                closeCurrentFile();
-
-                // Since the file no longer exists, specifically remove it from the recent files list
-                app->getRecentFilesListManager()->removeFile(editor->getFilePath());
-            }
-            else {
-                QMessageBox::warning(this, "Error Deleting File",  QString("Something went wrong deleting <b>%1</b>?").arg(filePath));
-            }
-        }
-    });
+    connect(ui->actionMoveToTrash, &QAction::triggered, this, &MainWindow::moveCurrentFileToTrash);
 
     connect(ui->menuRecentFiles, &QMenu::aboutToShow, [=]() {
         // NOTE: its unfortunate that this has to be hard coded, but there's no way
@@ -1043,6 +1027,33 @@ void MainWindow::renameFile()
 
     bool renameSuccessful = editor->rename(fileName);
     Q_UNUSED(renameSuccessful)
+}
+
+void MainWindow::moveCurrentFileToTrash()
+{
+    ScintillaNext *editor = dockedEditor->getCurrentEditor();
+
+    moveFileToTrash(editor);
+}
+
+void MainWindow::moveFileToTrash(ScintillaNext *editor)
+{
+    Q_ASSERT(editor->isFile());
+
+    const QString filePath = editor->getFilePath();
+    auto reply = QMessageBox::question(this, "Delete File", QString("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));;
+
+    if (reply == QMessageBox::Yes) {
+        if (editor->moveToTrash()) {
+            closeCurrentFile();
+
+            // Since the file no longer exists, specifically remove it from the recent files list
+            app->getRecentFilesListManager()->removeFile(editor->getFilePath());
+        }
+        else {
+            QMessageBox::warning(this, "Error Deleting File",  QString("Something went wrong deleting <b>%1</b>?").arg(filePath));
+        }
+    }
 }
 
 void MainWindow::convertEOLs(int eolMode)
