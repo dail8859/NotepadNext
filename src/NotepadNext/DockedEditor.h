@@ -37,7 +37,7 @@ public:
     explicit DockedEditor(QWidget *parent);
 
     ScintillaNext *getCurrentEditor() const;
-    ads::CDockAreaWidget *currentDockArea();
+    ads::CDockAreaWidget *currentDockArea() const;
 
     QVector<ScintillaNext *> editors() const;
 
@@ -45,13 +45,12 @@ public:
 
     int count() const;
 
-private slots:
-    void dockWidgetCloseRequested();
-
 public slots:
     void addEditor(ScintillaNext *editor);
-    void removeEditor(ScintillaNext *editor);
-    void renameEditor(ScintillaNext *editor);
+
+private slots:
+    void dockWidgetCloseRequested();
+    void editorRenamed(ScintillaNext *editor);
 
 signals:
     void editorAdded(ScintillaNext *editor);
