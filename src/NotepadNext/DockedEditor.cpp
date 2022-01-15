@@ -61,7 +61,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     m_DockManager = new ads::CDockManager(parent);
     m_DockManager->setStyleSheet("");
 
-    connect(m_DockManager, &ads::CDockManager::focusedDockWidgetChanged, [=] (ads::CDockWidget* old, ads::CDockWidget* now) {
+    connect(m_DockManager, &ads::CDockManager::focusedDockWidgetChanged, this, [=](ads::CDockWidget* old, ads::CDockWidget* now) {
         Q_UNUSED(old)
 
         ScintillaNext *editor = qobject_cast<ScintillaNext *>(now->widget());
@@ -71,7 +71,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
         emit editorActivated(editor);
     });
 
-    connect(m_DockManager, &ads::CDockManager::dockAreaCreated, [=](ads::CDockAreaWidget* DockArea) {
+    connect(m_DockManager, &ads::CDockManager::dockAreaCreated, this, [=](ads::CDockAreaWidget* DockArea) {
         DockedEditorTitleBar *titleBar = qobject_cast<DockedEditorTitleBar *>(DockArea->titleBar());
         connect(titleBar, &DockedEditorTitleBar::doubleClicked, this, &DockedEditor::titleBarDoubleClicked);
     });
@@ -96,6 +96,7 @@ int DockedEditor::count() const
 QVector<ScintillaNext *> DockedEditor::editors() const
 {
     QVector<ScintillaNext *> editors;
+
     for (const ads::CDockWidget* dockWidget : m_DockManager->dockWidgetsMap()) {
         editors.append(qobject_cast<ScintillaNext *>(dockWidget->widget()));
     }
@@ -106,7 +107,7 @@ QVector<ScintillaNext *> DockedEditor::editors() const
 void DockedEditor::switchToEditor(const ScintillaNext *editor)
 {
     for (ads::CDockWidget* dockWidget : m_DockManager->dockWidgetsMap()) {
-        auto dockedEditor = qobject_cast<ScintillaNext *>(dockWidget->widget());
+        ScintillaNext *dockedEditor = qobject_cast<ScintillaNext *>(dockWidget->widget());
 
         if (editor == dockedEditor) {
             dockWidget->raise();
@@ -117,13 +118,13 @@ void DockedEditor::switchToEditor(const ScintillaNext *editor)
 
 void DockedEditor::dockWidgetCloseRequested()
 {
-    auto dockWidget = qobject_cast<ads::CDockWidget *>(sender());
-    auto editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
+    ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(sender());
+    ScintillaNext *editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
 
     emit editorCloseRequested(editor);
 }
 
-ads::CDockAreaWidget *DockedEditor::currentDockArea()
+ads::CDockAreaWidget *DockedEditor::currentDockArea() const
 {
     QMap<QString, ads::CDockWidget*> dockwidgets = m_DockManager->dockWidgetsMap();
 
@@ -152,8 +153,6 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     Q_ASSERT(editor != Q_NULLPTR);
 
-    editor->setParent(m_DockManager);
-
     if (currentEditor == Q_NULLPTR) {
         currentEditor = editor;
     }
@@ -161,7 +160,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     emit editorAdded(editor);
 
     // Create the dock widget for the editor
-    ads::CDockWidget* dw = new ads::CDockWidget(editor->getName());
+    ads::CDockWidget *dw = new ads::CDockWidget(editor->getName());
 
     // We need a unique object name. Can't use the name or file path so use a uuid
     dw->setObjectName(QUuid::createUuid().toString());
@@ -172,7 +171,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     dw->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetFloatable, false);
 
     dw->tabWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(dw->tabWidget(), &QWidget::customContextMenuRequested, [=](const QPoint &pos) {
+    connect(dw->tabWidget(), &QWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
         Q_UNUSED(pos)
 
         emit contextMenuRequestedForEditor(editor);
@@ -188,48 +187,32 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     // Set the icon
     dw->tabWidget()->setIcon(QIcon(":/icons/saved.png"));
-    connect(editor, &ScintillaNext::savePointChanged, [=](bool dirty) {
+    connect(editor, &ScintillaNext::savePointChanged, dw, [=](bool dirty) {
         const QString iconPath = dirty ? ":/icons/unsaved.png" : ":/icons/saved.png";
         dw->tabWidget()->setIcon(QIcon(iconPath));
     });
 
-    connect(editor, &ScintillaNext::closed, [=]() { removeEditor(editor); });
-    connect(editor, &ScintillaNext::renamed, [=]() { renameEditor(editor); });
+    connect(editor, &ScintillaNext::closed, dw, &ads::CDockWidget::closeDockWidget);
+    connect(editor, &ScintillaNext::renamed, this, [=]() { editorRenamed(editor); });
 
     connect(dw, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
 
     m_DockManager->addDockWidget(ads::CenterDockWidgetArea, dw, currentDockArea());
 }
 
-void DockedEditor::removeEditor(ScintillaNext *editor)
-{
-    for (ads::CDockWidget* dockWidget : m_DockManager->dockWidgetsMap()) {
-        ScintillaNext *editorToCheck = qobject_cast<ScintillaNext *>(dockWidget->widget());
-
-        if (editor == editorToCheck) {
-            dockWidget->closeDockWidget();
-        }
-    }
-}
-
-void DockedEditor::renameEditor(ScintillaNext *editor)
+void DockedEditor::editorRenamed(ScintillaNext *editor)
 {
     Q_ASSERT(editor != Q_NULLPTR);
 
-    for (ads::CDockWidget* dockWidget : m_DockManager->dockWidgetsMap()) {
-        ScintillaNext *editorToCheck = qobject_cast<ScintillaNext *>(dockWidget->widget());
+    ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+    const QString newName = editor->getName();
 
-        if (editor == editorToCheck) {
-            QString newName = editor->getName();
-            qDebug("Renamed to %s", qUtf8Printable(newName));
-            dockWidget->setWindowTitle(newName);
+    dockWidget->setWindowTitle(newName);
 
-            if (editor->isFile()) {
-                dockWidget->tabWidget()->setToolTip(editor->getFilePath());
-            }
-            else {
-                dockWidget->tabWidget()->setToolTip(editor->getName());
-            }
-        }
+    if (editor->isFile()) {
+        dockWidget->tabWidget()->setToolTip(editor->getFilePath());
+    }
+    else {
+        dockWidget->tabWidget()->setToolTip(editor->getName());
     }
 }
