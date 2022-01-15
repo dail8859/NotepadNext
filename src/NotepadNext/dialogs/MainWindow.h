@@ -80,6 +80,10 @@ public slots:
     void saveAll();
 
     void renameFile();
+
+    void moveCurrentFileToTrash();
+    void moveFileToTrash(ScintillaNext *editor);
+
     void convertEOLs(int eolMode);
 
     void updateFileStatusBasedUi(ScintillaNext *editor);
