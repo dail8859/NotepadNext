@@ -160,18 +160,18 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     emit editorAdded(editor);
 
     // Create the dock widget for the editor
-    ads::CDockWidget *dw = new ads::CDockWidget(editor->getName());
+    ads::CDockWidget *dockWidget = new ads::CDockWidget(editor->getName());
 
     // We need a unique object name. Can't use the name or file path so use a uuid
-    dw->setObjectName(QUuid::createUuid().toString());
+    dockWidget->setObjectName(QUuid::createUuid().toString());
 
-    dw->setWidget(editor);
-    dw->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetDeleteOnClose, true);
-    dw->setFeature(ads::CDockWidget::DockWidgetFeature::CustomCloseHandling, true);
-    dw->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetFloatable, false);
+    dockWidget->setWidget(editor);
+    dockWidget->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetDeleteOnClose, true);
+    dockWidget->setFeature(ads::CDockWidget::DockWidgetFeature::CustomCloseHandling, true);
+    dockWidget->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetFloatable, false);
 
-    dw->tabWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(dw->tabWidget(), &QWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
+    dockWidget->tabWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(dockWidget->tabWidget(), &QWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
         Q_UNUSED(pos)
 
         emit contextMenuRequestedForEditor(editor);
@@ -179,25 +179,25 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     // Set the tooltip based on the buffer
     if (editor->isFile()) {
-        dw->tabWidget()->setToolTip(editor->getFilePath());
+        dockWidget->tabWidget()->setToolTip(editor->getFilePath());
     }
     else {
-        dw->tabWidget()->setToolTip(editor->getName());
+        dockWidget->tabWidget()->setToolTip(editor->getName());
     }
 
     // Set the icon
-    dw->tabWidget()->setIcon(QIcon(":/icons/saved.png"));
-    connect(editor, &ScintillaNext::savePointChanged, dw, [=](bool dirty) {
+    dockWidget->tabWidget()->setIcon(QIcon(":/icons/saved.png"));
+    connect(editor, &ScintillaNext::savePointChanged, dockWidget, [=](bool dirty) {
         const QString iconPath = dirty ? ":/icons/unsaved.png" : ":/icons/saved.png";
-        dw->tabWidget()->setIcon(QIcon(iconPath));
+        dockWidget->tabWidget()->setIcon(QIcon(iconPath));
     });
 
-    connect(editor, &ScintillaNext::closed, dw, &ads::CDockWidget::closeDockWidget);
+    connect(editor, &ScintillaNext::closed, dockWidget, &ads::CDockWidget::closeDockWidget);
     connect(editor, &ScintillaNext::renamed, this, [=]() { editorRenamed(editor); });
 
-    connect(dw, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
+    connect(dockWidget, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
 
-    m_DockManager->addDockWidget(ads::CenterDockWidgetArea, dw, currentDockArea());
+    m_DockManager->addDockWidget(ads::CenterDockWidgetArea, dockWidget, currentDockArea());
 }
 
 void DockedEditor::editorRenamed(ScintillaNext *editor)
@@ -205,9 +205,6 @@ void DockedEditor::editorRenamed(ScintillaNext *editor)
     Q_ASSERT(editor != Q_NULLPTR);
 
     ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
-    const QString newName = editor->getName();
-
-    dockWidget->setWindowTitle(newName);
 
     if (editor->isFile()) {
         dockWidget->tabWidget()->setToolTip(editor->getFilePath());
