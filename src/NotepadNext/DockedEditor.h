@@ -30,7 +30,7 @@ class DockedEditor : public QObject
     Q_OBJECT
 
 private:
-    ads::CDockManager* m_DockManager = Q_NULLPTR;
+    ads::CDockManager* dockManager = Q_NULLPTR;
     ScintillaNext *currentEditor = Q_NULLPTR;
 
 public:
