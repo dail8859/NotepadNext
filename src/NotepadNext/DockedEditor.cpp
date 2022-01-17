@@ -58,10 +58,10 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     ads::CDockManager::setConfigFlag(ads::CDockManager::EqualSplitOnInsertion, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::MiddleMouseButtonClosesTab, true);
 
-    m_DockManager = new ads::CDockManager(parent);
-    m_DockManager->setStyleSheet("");
+    dockManager = new ads::CDockManager(parent);
+    dockManager->setStyleSheet("");
 
-    connect(m_DockManager, &ads::CDockManager::focusedDockWidgetChanged, this, [=](ads::CDockWidget* old, ads::CDockWidget* now) {
+    connect(dockManager, &ads::CDockManager::focusedDockWidgetChanged, this, [=](ads::CDockWidget* old, ads::CDockWidget* now) {
         Q_UNUSED(old)
 
         ScintillaNext *editor = qobject_cast<ScintillaNext *>(now->widget());
@@ -71,7 +71,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
         emit editorActivated(editor);
     });
 
-    connect(m_DockManager, &ads::CDockManager::dockAreaCreated, this, [=](ads::CDockAreaWidget* DockArea) {
+    connect(dockManager, &ads::CDockManager::dockAreaCreated, this, [=](ads::CDockAreaWidget* DockArea) {
         DockedEditorTitleBar *titleBar = qobject_cast<DockedEditorTitleBar *>(DockArea->titleBar());
         connect(titleBar, &DockedEditorTitleBar::doubleClicked, this, &DockedEditor::titleBarDoubleClicked);
     });
@@ -87,8 +87,8 @@ int DockedEditor::count() const
 {
     int total = 0;
 
-    for (int i = 0; i < m_DockManager->dockAreaCount(); ++i)
-        total += m_DockManager->dockArea(i)->dockWidgetsCount();
+    for (int i = 0; i < dockManager->dockAreaCount(); ++i)
+        total += dockManager->dockArea(i)->dockWidgetsCount();
 
     return total;
 }
@@ -97,7 +97,7 @@ QVector<ScintillaNext *> DockedEditor::editors() const
 {
     QVector<ScintillaNext *> editors;
 
-    for (const ads::CDockWidget* dockWidget : m_DockManager->dockWidgetsMap()) {
+    for (const ads::CDockWidget* dockWidget : dockManager->dockWidgetsMap()) {
         editors.append(qobject_cast<ScintillaNext *>(dockWidget->widget()));
     }
 
@@ -126,25 +126,14 @@ void DockedEditor::dockWidgetCloseRequested()
 
 ads::CDockAreaWidget *DockedEditor::currentDockArea() const
 {
-    QMap<QString, ads::CDockWidget*> dockwidgets = m_DockManager->dockWidgetsMap();
+    const ads::CDockWidget *dockWidget = dockManager->focusedDockWidget();
 
-    if (dockwidgets.size() == 0) {
+    if (dockWidget) {
+        return dockWidget->dockAreaWidget();
+    }
+    else {
         return Q_NULLPTR;
     }
-    else if (dockwidgets.size() == 1) {
-        // If no dockwidget has had the focus set yet, just return the only one
-        return dockwidgets.first()->dockAreaWidget();
-    }
-
-    // Search the list for the one that has had the focus set
-    for (ads::CDockWidget* dockWidget : dockwidgets) {
-        if (dockWidget->property("focused").toBool()) {
-            return dockWidget->dockAreaWidget();
-        }
-    }
-
-    // There was no area that had the focus
-    return Q_NULLPTR;
 }
 
 void DockedEditor::addEditor(ScintillaNext *editor)
@@ -197,7 +186,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     connect(dockWidget, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
 
-    m_DockManager->addDockWidget(ads::CenterDockWidgetArea, dockWidget, currentDockArea());
+    dockManager->addDockWidget(ads::CenterDockWidgetArea, dockWidget, currentDockArea());
 }
 
 void DockedEditor::editorRenamed(ScintillaNext *editor)
