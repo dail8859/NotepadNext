@@ -811,11 +811,6 @@ void MainWindow::closeFile(ScintillaNext *editor)
 
     if(editor->isSavedToDisk()) {
         editor->close();
-
-        // If the last document was closed, start with a new one
-        if (dockedEditor->count() == 0) {
-            newFile();
-        }
     }
     else {
         // The user needs be asked what to do about this file, so switch to it
@@ -837,6 +832,11 @@ void MainWindow::closeFile(ScintillaNext *editor)
         }
 
         editor->close();
+    }
+
+    // If the last document was closed, start with a new one
+    if (dockedEditor->count() == 0) {
+        newFile();
     }
 }
 
