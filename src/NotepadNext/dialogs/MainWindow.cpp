@@ -60,8 +60,7 @@
 #include "QuickFindWidget.h"
 
 
-MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
-    QMainWindow(parent),
+MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
     app(app)
 {
@@ -440,15 +439,11 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
-    connect(ui->actionPlayback, &QAction::triggered, [=](bool b) {
-        Q_UNUSED(b);
-
+    connect(ui->actionPlayback, &QAction::triggered, [=]() {
         currentMacro->replay(dockedEditor->getCurrentEditor());
     });
 
-    connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, [=](bool b) {
-        Q_UNUSED(b);
-
+    connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, [=]() {
         MacroRunDialog *mrd = nullptr;
 
         if (!dialogs.contains("MacroRunDialog")) {
@@ -476,9 +471,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         mrd->activateWindow();
     });
 
-    connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, [=](bool b) {
-        Q_UNUSED(b);
-
+    connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, [=]() {
         MacroSaveDialog msd;
 
         msd.show();
