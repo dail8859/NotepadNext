@@ -44,7 +44,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(NotepadNextApplication *app, QWidget *parent = nullptr);
+    explicit MainWindow(NotepadNextApplication *app);
     ~MainWindow() override;
 
     bool isAnyUnsaved() const;
