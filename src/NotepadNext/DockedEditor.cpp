@@ -195,6 +195,8 @@ void DockedEditor::editorRenamed(ScintillaNext *editor)
 
     ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
 
+    dockWidget->setWindowTitle(editor->getName());
+
     if (editor->isFile()) {
         dockWidget->tabWidget()->setToolTip(editor->getFilePath());
     }
