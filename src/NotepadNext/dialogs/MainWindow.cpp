@@ -60,8 +60,7 @@
 #include "QuickFindWidget.h"
 
 
-MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
-    QMainWindow(parent),
+MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
     app(app)
 {
@@ -104,23 +103,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
 
-    connect(ui->actionMoveToTrash, &QAction::triggered, [=]() {
-        ScintillaNext *editor = dockedEditor->getCurrentEditor();
-        const QString filePath = editor->getFilePath();
-        auto reply = QMessageBox::question(this, "Delete File", QString("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));;
-
-        if (reply == QMessageBox::Yes) {
-            if (editor->moveToTrash()) {
-                closeCurrentFile();
-
-                // Since the file no longer exists, specifically remove it from the recent files list
-                app->getRecentFilesListManager()->removeFile(editor->getFilePath());
-            }
-            else {
-                QMessageBox::warning(this, "Error Deleting File",  QString("Something went wrong deleting <b>%1</b>?").arg(filePath));
-            }
-        }
-    });
+    connect(ui->actionMoveToTrash, &QAction::triggered, this, &MainWindow::moveCurrentFileToTrash);
 
     connect(ui->menuRecentFiles, &QMenu::aboutToShow, [=]() {
         // NOTE: its unfortunate that this has to be hard coded, but there's no way
@@ -193,7 +176,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
     connect(ui->actionCopyFullPath, &QAction::triggered, [=]() {
         auto editor = dockedEditor->getCurrentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(editor->getFilePath());
+            QApplication::clipboard()->setText(editor->getPath());
         }
     });
     connect(ui->actionCopyFileName, &QAction::triggered, [=]() {
@@ -456,15 +439,11 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         }
     });
 
-    connect(ui->actionPlayback, &QAction::triggered, [=](bool b) {
-        Q_UNUSED(b);
-
+    connect(ui->actionPlayback, &QAction::triggered, [=]() {
         currentMacro->replay(dockedEditor->getCurrentEditor());
     });
 
-    connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, [=](bool b) {
-        Q_UNUSED(b);
-
+    connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, [=]() {
         MacroRunDialog *mrd = nullptr;
 
         if (!dialogs.contains("MacroRunDialog")) {
@@ -492,9 +471,7 @@ MainWindow::MainWindow(NotepadNextApplication *app, QWidget *parent) :
         mrd->activateWindow();
     });
 
-    connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, [=](bool b) {
-        Q_UNUSED(b);
-
+    connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, [=]() {
         MacroSaveDialog msd;
 
         msd.show();
@@ -772,12 +749,19 @@ bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors
 
 void MainWindow::openFileDialog()
 {
-    QString filter = app->getFileDialogFilter();
+    QString dialogDir;
+    const QString filter = app->getFileDialogFilter();
+    const ScintillaNext *editor = dockedEditor->getCurrentEditor();
+
+    // Use the path if possible
+    if (editor->isFile()) {
+        dialogDir = editor->getPath();
+    }
 
     QStringList fileNames = QFileDialog::getOpenFileNames(
         this, // parent
-        Q_NULLPTR, // caption
-        Q_NULLPTR, // dir
+        QString(), // caption
+        dialogDir, // dir
         filter, // filter
         Q_NULLPTR // selected filter
         );
@@ -820,11 +804,6 @@ void MainWindow::closeFile(ScintillaNext *editor)
 
     if(editor->isSavedToDisk()) {
         editor->close();
-
-        // If the last document was closed, start with a new one
-        if (dockedEditor->count() == 0) {
-            newFile();
-        }
     }
     else {
         // The user needs be asked what to do about this file, so switch to it
@@ -846,6 +825,11 @@ void MainWindow::closeFile(ScintillaNext *editor)
         }
 
         editor->close();
+    }
+
+    // If the last document was closed, start with a new one
+    if (dockedEditor->count() == 0) {
+        newFile();
     }
 }
 
@@ -942,9 +926,9 @@ bool MainWindow::saveFile(ScintillaNext *editor)
 
 bool MainWindow::saveCurrentFileAsDialog()
 {
-    QString dialogDir = QString();
-    QString filter = app->getFileDialogFilter();
-    auto editor = dockedEditor->getCurrentEditor();
+    QString dialogDir;
+    const QString filter = app->getFileDialogFilter();
+    ScintillaNext *editor = dockedEditor->getCurrentEditor();
 
     // Use the file path if possible
     if (editor->isFile()) {
@@ -953,7 +937,7 @@ bool MainWindow::saveCurrentFileAsDialog()
 
     QString fileName = QFileDialog::getSaveFileName(
         this, // parent
-        Q_NULLPTR, // caption
+        QString(), // caption
         dialogDir, // dir
         filter, // filter
         Q_NULLPTR // selected filter
@@ -985,9 +969,9 @@ bool MainWindow::saveFileAs(ScintillaNext *editor, const QString &fileName)
 
 void MainWindow::saveCopyAsDialog()
 {
-    QString dialogDir = QString();
-    QString filter = app->getFileDialogFilter();
-    auto editor = dockedEditor->getCurrentEditor();
+    QString dialogDir;
+    const QString filter = app->getFileDialogFilter();
+    const ScintillaNext* editor = dockedEditor->getCurrentEditor();
 
     // Use the file path if possible
     if (editor->isFile()) {
@@ -996,7 +980,7 @@ void MainWindow::saveCopyAsDialog()
 
     QString fileName = QFileDialog::getSaveFileName(
         this, // parent
-        Q_NULLPTR, // caption
+        "Save a Copy As", // caption
         dialogDir, // dir
         filter, // filter
         Q_NULLPTR // selected filter
@@ -1020,11 +1004,11 @@ void MainWindow::saveAll()
 
 void MainWindow::renameFile()
 {
-    auto editor = dockedEditor->getCurrentEditor();
+    ScintillaNext *editor = dockedEditor->getCurrentEditor();
 
     Q_ASSERT(editor->isFile());
 
-    QString fileName = QFileDialog::getSaveFileName(this, "", editor->getFilePath());
+    QString fileName = QFileDialog::getSaveFileName(this, "Rename", editor->getFilePath());
 
     if (fileName.size() == 0) {
         return;
@@ -1036,6 +1020,33 @@ void MainWindow::renameFile()
 
     bool renameSuccessful = editor->rename(fileName);
     Q_UNUSED(renameSuccessful)
+}
+
+void MainWindow::moveCurrentFileToTrash()
+{
+    ScintillaNext *editor = dockedEditor->getCurrentEditor();
+
+    moveFileToTrash(editor);
+}
+
+void MainWindow::moveFileToTrash(ScintillaNext *editor)
+{
+    Q_ASSERT(editor->isFile());
+
+    const QString filePath = editor->getFilePath();
+    auto reply = QMessageBox::question(this, "Delete File", QString("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));;
+
+    if (reply == QMessageBox::Yes) {
+        if (editor->moveToTrash()) {
+            closeCurrentFile();
+
+            // Since the file no longer exists, specifically remove it from the recent files list
+            app->getRecentFilesListManager()->removeFile(editor->getFilePath());
+        }
+        else {
+            QMessageBox::warning(this, "Error Deleting File",  QString("Something went wrong deleting <b>%1</b>?").arg(filePath));
+        }
+    }
 }
 
 void MainWindow::convertEOLs(int eolMode)

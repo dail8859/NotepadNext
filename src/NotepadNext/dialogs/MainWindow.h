@@ -44,7 +44,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(NotepadNextApplication *app, QWidget *parent = nullptr);
+    explicit MainWindow(NotepadNextApplication *app);
     ~MainWindow() override;
 
     bool isAnyUnsaved() const;
@@ -80,6 +80,10 @@ public slots:
     void saveAll();
 
     void renameFile();
+
+    void moveCurrentFileToTrash();
+    void moveFileToTrash(ScintillaNext *editor);
+
     void convertEOLs(int eolMode);
 
     void updateFileStatusBasedUi(ScintillaNext *editor);
