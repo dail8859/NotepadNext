@@ -46,6 +46,7 @@ public:
     QFileInfo getFileInfo() const;
 
     QString getName() const { return name; }
+    QString getPath() const;
     QString getFilePath() const;
 
     enum FileStateChange {
@@ -77,6 +78,7 @@ public slots:
 
 signals:
     void aboutToSave();
+    void saved();
     void closed();
     void renamed();
 
