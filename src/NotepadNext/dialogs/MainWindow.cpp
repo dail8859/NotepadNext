@@ -72,15 +72,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     qInfo("setupUi Completed");
 
-    // The windows editor manager that supports docking
+    // Createa and set up the connections to the docked editor
     dockedEditor = new DockedEditor(this);
-
     connect(dockedEditor, &DockedEditor::editorCloseRequested, this, [=](ScintillaNext *editor) { closeFile(editor); });
-
     connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
-
     connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
-
     connect(dockedEditor, &DockedEditor::titleBarDoubleClicked, this, &MainWindow::newFile);
 
     // Set up the menus
@@ -243,7 +239,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionQuickFind, &QAction::triggered, [=]() {
-        ScintillaNext *editor = this->dockedEditor->getCurrentEditor();
+        ScintillaNext *editor = dockedEditor->getCurrentEditor();
 
         if (quickFind == Q_NULLPTR) {
             quickFind = new QuickFindWidget(this);
@@ -255,7 +251,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionGoToLine, &QAction::triggered, this, [=]() {
-        ScintillaNext *editor = this->dockedEditor->getCurrentEditor();
+        ScintillaNext *editor = dockedEditor->getCurrentEditor();
         const int currentLine = editor->lineFromPosition(editor->currentPos()) + 1;
         const int maxLine = editor->lineCount();
         bool ok;
@@ -315,7 +311,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             ui->menuBar->setMaximumHeight(0);
             ui->mainToolBar->setMaximumHeight(0);
 
-            this->showFullScreen();
+            showFullScreen();
             ui->pushExitFullScreen->setGeometry(width() - 20, 0, 20, 20);
             ui->pushExitFullScreen->show();
             ui->pushExitFullScreen->raise();
@@ -323,7 +319,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         else {
             ui->menuBar->setMaximumHeight(QWIDGETSIZE_MAX);
             ui->mainToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
-            this->showNormal();
+            showNormal();
 
             ui->pushExitFullScreen->hide();
         }
@@ -758,13 +754,7 @@ void MainWindow::openFileDialog()
         dialogDir = editor->getPath();
     }
 
-    QStringList fileNames = QFileDialog::getOpenFileNames(
-        this, // parent
-        QString(), // caption
-        dialogDir, // dir
-        filter, // filter
-        Q_NULLPTR // selected filter
-        );
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, QString(), dialogDir, filter, Q_NULLPTR);
 
     openFileList(fileNames);
 }
@@ -935,13 +925,7 @@ bool MainWindow::saveCurrentFileAsDialog()
         dialogDir = editor->getFilePath();
     }
 
-    QString fileName = QFileDialog::getSaveFileName(
-        this, // parent
-        QString(), // caption
-        dialogDir, // dir
-        filter, // filter
-        Q_NULLPTR // selected filter
-        );
+    QString fileName = QFileDialog::getSaveFileName(this, QString(), dialogDir, filter, Q_NULLPTR);
 
     if (fileName.size() == 0) {
         return false;
@@ -978,13 +962,7 @@ void MainWindow::saveCopyAsDialog()
         dialogDir = editor->getFilePath();
     }
 
-    QString fileName = QFileDialog::getSaveFileName(
-        this, // parent
-        "Save a Copy As", // caption
-        dialogDir, // dir
-        filter, // filter
-        Q_NULLPTR // selected filter
-        );
+    QString fileName = QFileDialog::getSaveFileName(this, "Save a Copy As", dialogDir, filter, Q_NULLPTR);
 
     saveCopyAs(fileName);
 }
