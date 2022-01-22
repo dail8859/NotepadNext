@@ -187,7 +187,7 @@ QString NotepadNextApplication::getFileDialogFilter() const
 
     QString filter = getLuaState()->executeAndReturn<QString>(
                 R"=(
-                local filter = {"All files (*)"}
+                local filter = {}
                 for name, L in pairs(languages) do
                     local extensions = {}
                     for _, ext in ipairs(L.extensions) do
@@ -195,6 +195,8 @@ QString NotepadNextApplication::getFileDialogFilter() const
                     end
                     filter[#filter + 1] = name .. " Files (" .. table.concat(extensions, " ") .. ")"
                 end
+                table.sort(filter, function (a, b) return a:lower() < b:lower() end)
+                table.insert(filter, 1, "All files (*)")
                 return table.concat(filter, ";;")
                 )=");
 
