@@ -88,6 +88,7 @@ SOURCES += \
     decorators/SurroundSelection.cpp \
     docks/EditorInspectorDock.cpp \
     dialogs/FindReplaceDialog.cpp \
+    docks/FolderAsWorkspaceDock.cpp \
     docks/LanguageInspectorDock.cpp \
     docks/LuaConsoleDock.cpp \
     dialogs/MacroRunDialog.cpp \
@@ -136,6 +137,7 @@ HEADERS += \
     decorators/SurroundSelection.h \
     docks/EditorInspectorDock.h \
     dialogs/FindReplaceDialog.h \
+    docks/FolderAsWorkspaceDock.h \
     docks/LanguageInspectorDock.h \
     docks/LuaConsoleDock.h \
     dialogs/MacroRunDialog.h \
@@ -153,6 +155,7 @@ HEADERS += \
 FORMS += \
     QuickFindWidget.ui \
     docks/EditorInspectorDock.ui \
+    docks/FolderAsWorkspaceDock.ui \
     docks/LanguageInspectorDock.ui \
     dialogs/MainWindow.ui \
     dialogs/FindReplaceDialog.ui \

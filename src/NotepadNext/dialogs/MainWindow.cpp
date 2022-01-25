@@ -54,6 +54,7 @@
 #include "LuaConsoleDock.h"
 #include "LanguageInspectorDock.h"
 #include "EditorInspectorDock.h"
+#include "FolderAsWorkspaceDock.h"
 
 #include "FindReplaceDialog.h"
 #include "MacroRunDialog.h"
@@ -533,6 +534,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     editorInspectorDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, editorInspectorDock);
     ui->menuHelp->addAction(editorInspectorDock->toggleViewAction());
+
+    FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
+    addDockWidget(Qt::RightDockWidgetArea, fawDock);
+    ui->menuHelp->addAction(fawDock->toggleViewAction());
 
 
 #ifdef QT_DEBUG
