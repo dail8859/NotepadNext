@@ -56,6 +56,14 @@ struct luabridge::Stack <QString const&>
 NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     : SingleApplication(argc, argv, true, opts)
 {
+}
+
+bool NotepadNextApplication::init()
+{
+    qInfo(Q_FUNC_INFO);
+
+    luaState = new LuaState();
+
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(this);
     settings = new Settings(this);
@@ -84,13 +92,7 @@ NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
 
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
     ecad->setEnabled(true);
-}
 
-bool NotepadNextApplication::initGui()
-{
-    qInfo(Q_FUNC_INFO);
-
-    luaState = new LuaState();
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
 
@@ -137,7 +139,7 @@ bool NotepadNextApplication::initGui()
         }
     });
 
-    QObject::connect(this, &SingleApplication::instanceStarted, this->windows.first(), &MainWindow::bringWindowToForeground);
+    QObject::connect(this, &SingleApplication::instanceStarted, windows.first(), &MainWindow::bringWindowToForeground);
 
     QObject::connect(this, &SingleApplication::receivedMessage, [&] (quint32 instanceId, QByteArray message) {
         Q_UNUSED(instanceId)
@@ -176,7 +178,6 @@ bool NotepadNextApplication::initGui()
     // Everything should be ready at this point
 
     windows.first()->show();
-    windows.first()->bringWindowToForeground();
 
     return true;
 }

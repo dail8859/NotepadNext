@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     qInfo("=============================");
 
     if(app.isPrimary()) {
-        app.initGui();
+        app.init();
 
         return app.exec();
     }
@@ -67,13 +67,11 @@ int main(int argc, char *argv[])
 
         stream << app.arguments();
 
-        qDebug() << "App already running...";
-        qDebug() << "Primary instance PID: " << app.primaryPid();
-        qDebug() << "Sending:" << buffer;
+        qInfo() << "Primary instance already running. PID:" << app.primaryPid();
 
         app.sendMessage(buffer);
 
-        qInfo("Secondary instance closing...");
+        qInfo() <<"Secondary instance closing...";
 
         app.exit(0);
         return 0;
