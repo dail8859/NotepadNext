@@ -25,7 +25,7 @@
 #include <QTextCodec>
 
 
-const int CHUNK_SIZE = 1024 * 64; // Not sure what is best
+const int CHUNK_SIZE = 1024 * 1024 * 4; // Not sure what is best
 
 
 static bool writeToDisk(const QByteArray &data, const QString &path)
