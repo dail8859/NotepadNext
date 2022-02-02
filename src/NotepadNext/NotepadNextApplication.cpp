@@ -269,16 +269,20 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
 QString NotepadNextApplication::detectLanguageFromExtension(const QString &extension) const
 {
+    qInfo(Q_FUNC_INFO);
+
     return getLuaState()->executeAndReturn<QString>(QString(R"(
     local ext = "%1"
     for name, L in pairs(languages) do
-        for _, v in ipairs(L.extensions) do
-            if v == ext then
-                return name
+        if L.extensions then
+            for _, v in ipairs(L.extensions) do
+                if v == ext then
+                    return name
+                end
             end
         end
     end
-    return "null"
+    return "Text"
     )").arg(extension).toLatin1().constData());
 }
 
