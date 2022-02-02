@@ -59,6 +59,8 @@ public slots:
     void openFileDialog();
     void openFile(const QString &filePath);
 
+    void openFolderAsWorkspaceDialog();
+
     void reloadFile();
 
     void closeCurrentFile();

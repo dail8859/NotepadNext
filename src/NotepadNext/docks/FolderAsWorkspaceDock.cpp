@@ -29,17 +29,23 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    model->setRootPath(QDir::currentPath());
-
     ui->treeView->setModel(model);
-    ui->treeView->setRootIndex(model->index(QDir::currentPath()));
     ui->treeView->header()->hideSection(1);
     ui->treeView->header()->hideSection(2);
     ui->treeView->header()->hideSection(3);
-    ui->treeView->header()->hide();
+
+    connect(ui->treeView, &QTreeView::doubleClicked, this, [=](const QModelIndex &index) {
+        emit fileDoubleClicked(model->filePath(index));
+    });
 }
 
 FolderAsWorkspaceDock::~FolderAsWorkspaceDock()
 {
     delete ui;
+}
+
+void FolderAsWorkspaceDock::setRootPath(const QString dir)
+{
+    model->setRootPath(dir);
+    ui->treeView->setRootIndex(model->index(dir));
 }
