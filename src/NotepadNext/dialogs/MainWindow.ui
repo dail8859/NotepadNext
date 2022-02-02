@@ -66,6 +66,7 @@
     </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
+    <addaction name="actionOpenFolderasWorkspace"/>
     <addaction name="actionReload"/>
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
@@ -928,6 +929,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionOpenFolderasWorkspace">
+   <property name="text">
+    <string>Open Folder as Workspace...</string>
    </property>
   </action>
  </widget>

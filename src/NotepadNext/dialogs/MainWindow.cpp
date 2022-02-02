@@ -93,6 +93,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionCloseAll, &QAction::triggered, this, &MainWindow::closeAllFiles);
     connect(ui->actionExit, &QAction::triggered, this, &MainWindow::close);
 
+    connect(ui->actionOpenFolderasWorkspace, &QAction::triggered, this, &MainWindow::openFolderAsWorkspaceDialog);
+
     connect(ui->actionCloseAllExceptActive, &QAction::triggered, this, &MainWindow::closeAllExceptActive);
     connect(ui->actionCloseAllToLeft, &QAction::triggered, this, &MainWindow::closeAllToLeft);
     connect(ui->actionCloseAllToRight, &QAction::triggered, this, &MainWindow::closeAllToRight);
@@ -537,7 +539,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
     addDockWidget(Qt::RightDockWidgetArea, fawDock);
-    ui->menuHelp->addAction(fawDock->toggleViewAction());
+    ui->menuView->addSeparator();
+    ui->menuView->addAction(fawDock->toggleViewAction());
+    connect(fawDock, &FolderAsWorkspaceDock::fileDoubleClicked, this, &MainWindow::openFile);
 
 
 #ifdef QT_DEBUG
@@ -774,6 +778,24 @@ void MainWindow::openFileDialog()
 void MainWindow::openFile(const QString &filePath)
 {
     openFileList(QStringList() << filePath);
+}
+
+void MainWindow::openFolderAsWorkspaceDialog()
+{
+    QString dialogDir;
+    const QString filter = app->getFileDialogFilter();
+    const ScintillaNext *editor = dockedEditor->getCurrentEditor();
+
+    // Use the path if possible
+    if (editor->isFile()) {
+        dialogDir = editor->getPath();
+    }
+
+    QString dir = QFileDialog::getExistingDirectory(this, "Open Folder as Workspace", dialogDir, QFileDialog::ShowDirsOnly);
+
+    FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
+    fawDock->setRootPath(dir);
+    fawDock->setVisible(true);
 }
 
 void MainWindow::reloadFile()

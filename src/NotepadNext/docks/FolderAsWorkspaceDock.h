@@ -36,6 +36,11 @@ public:
     explicit FolderAsWorkspaceDock(QWidget *parent = nullptr);
     ~FolderAsWorkspaceDock();
 
+    void setRootPath(const QString dir);
+
+signals:
+    void fileDoubleClicked(const QString &filePath);
+
 private:
     Ui::FolderAsWorkspaceDock *ui;
 
