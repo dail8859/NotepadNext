@@ -2,10 +2,6 @@ local L = {}
 
 L.lexer = "gui4cli"
 
-L.extensions = {
-	"",
-}
-
 L.keywords = {
 	[0] = "None",
 	[1] = "None",
