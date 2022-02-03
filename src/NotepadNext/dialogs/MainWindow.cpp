@@ -60,6 +60,14 @@
 #include "QuickFindWidget.h"
 
 
+
+#include <QPrintPreviewDialog>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QDebug>
+#include <QPainter>
+
+
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
     app(app)
@@ -96,6 +104,61 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionSaveCopyAs, &QAction::triggered, this, &MainWindow::saveCopyAsDialog);
     connect(ui->actionSaveAll, &QAction::triggered, this, &MainWindow::saveAll);
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
+
+    connect(ui->actionPrint, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = dockedEditor->getCurrentEditor();
+
+        QPrintPreviewDialog preview(this, Qt::Window);
+        preview.printer()->setPageMargins(QMarginsF(.5, .5, .5, .5), QPageLayout::Inch);
+
+        //preview.printer()->setPageLayout( /* todo */ );
+
+        connect(&preview, &QPrintPreviewDialog::paintRequested, this, [=](QPrinter *printer) {
+            QRectF printableArea(QPointF(0, 0), printer->pageRect(QPrinter::DevicePixel).size());
+
+            qInfo() << "Print from page" << printer->fromPage() << "to" << printer->toPage();
+            qInfo() << "Paper:" << printer->paperRect(QPrinter::DevicePixel);
+            qInfo() << "Page:" << printer->pageRect(QPrinter::DevicePixel);
+            qInfo() << "Printable Area:" << printableArea;
+
+            const int fromPage = printer->fromPage();
+            const int toPage = printer->toPage();
+
+            // The printer starts with a valid page initially
+            bool needsNewPage = false;
+
+            int startPos = 0;
+            int pageNum = 1;
+
+            QPainter painter(printer);
+
+            do {
+                bool needsToDraw = (fromPage == 0 && toPage == 0) || (fromPage <= pageNum && pageNum <= toPage);
+
+                if (needsToDraw) {
+                    if (needsNewPage) {
+                        printer->newPage();
+                    }
+                    else {
+                        needsNewPage = true;
+                    }
+                }
+
+                startPos = editor->formatRange(needsToDraw, printer, printer,
+                                            printableArea.toRect(), printer->pageRect(QPrinter::DevicePixel).toRect(),
+                                            startPos, editor->length());
+
+                pageNum++;
+            } while (startPos < editor->length());
+        });
+
+        // TODO: save the page layout that was used and reload it next time
+        //connect(&preview, &QPrintPreviewDialog::accepted, this, [&]() {
+        //    qInfo() << preview.printer()->pageLayout();
+        //});
+
+        preview.exec();
+    });
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
 
