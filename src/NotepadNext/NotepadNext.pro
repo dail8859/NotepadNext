@@ -62,6 +62,7 @@ SOURCES += \
     ComboBoxDelegate.cpp \
     DockedEditor.cpp \
     EditorManager.cpp \
+    EditorPrintPreviewRenderer.cpp \
     Finder.cpp \
     IFaceTable.cpp \
     IFaceTableMixer.cpp \
@@ -108,6 +109,7 @@ HEADERS += \
     DockedEditor.h \
     DockedEditorTitleBar.h \
     EditorManager.h \
+    EditorPrintPreviewRenderer.h \
     Finder.h \
     FocusWatcher.h \
     IFaceTable.h \
