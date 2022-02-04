@@ -84,6 +84,8 @@ public slots:
     void moveCurrentFileToTrash();
     void moveFileToTrash(ScintillaNext *editor);
 
+    void print();
+
     void convertEOLs(int eolMode);
 
     void updateFileStatusBasedUi(ScintillaNext *editor);

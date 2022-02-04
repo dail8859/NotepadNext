@@ -31,6 +31,9 @@
 #include <QSimpleUpdater.h>
 #include <QTimer>
 #include <QInputDialog>
+#include <QPrintPreviewDialog>
+#include <QPrinter>
+
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -58,6 +61,8 @@
 #include "PreferencesDialog.h"
 
 #include "QuickFindWidget.h"
+
+#include "EditorPrintPreviewRenderer.h"
 
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
@@ -96,6 +101,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionSaveCopyAs, &QAction::triggered, this, &MainWindow::saveCopyAsDialog);
     connect(ui->actionSaveAll, &QAction::triggered, this, &MainWindow::saveAll);
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
+
+    connect(ui->actionPrint, &QAction::triggered, this, &MainWindow::print);
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
 
@@ -993,7 +1000,7 @@ void MainWindow::renameFile()
     }
 
     // TODO
-    // The new fileName might be to one of the existing editos.
+    // The new fileName might be to one of the existing editors.
     //auto otherEditor = app->getEditorByFilePath(fileName);
 
     bool renameSuccessful = editor->rename(fileName);
@@ -1025,6 +1032,25 @@ void MainWindow::moveFileToTrash(ScintillaNext *editor)
             QMessageBox::warning(this, "Error Deleting File",  QString("Something went wrong deleting <b>%1</b>?").arg(filePath));
         }
     }
+}
+
+void MainWindow::print()
+{
+    QPrintPreviewDialog printDialog(this, Qt::Window);
+    EditorPrintPreviewRenderer renderer(dockedEditor->getCurrentEditor());
+
+    connect(&printDialog, &QPrintPreviewDialog::paintRequested, &renderer, &EditorPrintPreviewRenderer::render);
+
+    // TODO: load/save the page layout that was used and reload it next time
+    //preview.printer()->setPageLayout( /* todo */ );
+
+    printDialog.printer()->setPageMargins(QMarginsF(.5, .5, .5, .5), QPageLayout::Inch);
+
+    connect(&printDialog, &QPrintPreviewDialog::accepted, this, [&]() {
+        qInfo() << printDialog.printer()->pageLayout();
+    });
+
+    printDialog.exec();
 }
 
 void MainWindow::convertEOLs(int eolMode)
