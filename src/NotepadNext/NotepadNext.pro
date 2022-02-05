@@ -62,6 +62,7 @@ SOURCES += \
     ComboBoxDelegate.cpp \
     DockedEditor.cpp \
     EditorManager.cpp \
+    EditorPrintPreviewRenderer.cpp \
     Finder.cpp \
     IFaceTable.cpp \
     IFaceTableMixer.cpp \
@@ -85,10 +86,11 @@ SOURCES += \
     decorators/BetterMultiSelection.cpp \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
-    dialogs/EditorInspectorDock.cpp \
+    docks/EditorInspectorDock.cpp \
     dialogs/FindReplaceDialog.cpp \
-    dialogs/LanguageInspectorDock.cpp \
-    dialogs/LuaConsoleDock.cpp \
+    docks/FolderAsWorkspaceDock.cpp \
+    docks/LanguageInspectorDock.cpp \
+    docks/LuaConsoleDock.cpp \
     dialogs/MacroRunDialog.cpp \
     dialogs/MacroSaveDialog.cpp \
     dialogs/MainWindow.cpp \
@@ -108,6 +110,7 @@ HEADERS += \
     DockedEditor.h \
     DockedEditorTitleBar.h \
     EditorManager.h \
+    EditorPrintPreviewRenderer.h \
     Finder.h \
     FocusWatcher.h \
     IFaceTable.h \
@@ -132,10 +135,11 @@ HEADERS += \
     decorators/BetterMultiSelection.h \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
-    dialogs/EditorInspectorDock.h \
+    docks/EditorInspectorDock.h \
     dialogs/FindReplaceDialog.h \
-    dialogs/LanguageInspectorDock.h \
-    dialogs/LuaConsoleDock.h \
+    docks/FolderAsWorkspaceDock.h \
+    docks/LanguageInspectorDock.h \
+    docks/LuaConsoleDock.h \
     dialogs/MacroRunDialog.h \
     dialogs/MacroSaveDialog.h \
     dialogs/MainWindow.h \
@@ -150,11 +154,12 @@ HEADERS += \
 
 FORMS += \
     QuickFindWidget.ui \
-    dialogs/EditorInspectorDock.ui \
-    dialogs/LanguageInspectorDock.ui \
+    docks/EditorInspectorDock.ui \
+    docks/FolderAsWorkspaceDock.ui \
+    docks/LanguageInspectorDock.ui \
     dialogs/MainWindow.ui \
     dialogs/FindReplaceDialog.ui \
-    dialogs/LuaConsoleDock.ui \
+    docks/LuaConsoleDock.ui \
     dialogs/MacroRunDialog.ui \
     dialogs/MacroSaveDialog.ui \
     dialogs/PreferencesDialog.ui
@@ -165,6 +170,7 @@ RESOURCES += \
 
 INCLUDEPATH += $$PWD/decorators
 INCLUDEPATH += $$PWD/dialogs
+INCLUDEPATH += $$PWD/docks
 INCLUDEPATH += $$PWD/widgets
 
 

@@ -40,7 +40,7 @@ class NotepadNextApplication : public SingleApplication
 public:
     NotepadNextApplication(int &argc, char **argv);
 
-    bool initGui();
+    bool init();
 
     RecentFilesListManager *getRecentFilesListManager() const { return recentFilesListManager; }
     EditorManager *getEditorManager() const { return editorManager; }

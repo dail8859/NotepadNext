@@ -30,5 +30,6 @@
         <file>icons/text_indent_remove.png</file>
         <file>icons/arrow_refresh.png</file>
         <file>icons/bin_closed.png</file>
+        <file>icons/printer.png</file>
     </qresource>
 </RCC>

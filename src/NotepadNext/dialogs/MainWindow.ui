@@ -66,6 +66,7 @@
     </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
+    <addaction name="actionOpenFolderasWorkspace"/>
     <addaction name="actionReload"/>
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
@@ -76,6 +77,8 @@
     <addaction name="actionCloseAll"/>
     <addaction name="menuClose_More"/>
     <addaction name="actionMoveToTrash"/>
+    <addaction name="separator"/>
+    <addaction name="actionPrint"/>
     <addaction name="separator"/>
     <addaction name="menuRecentFiles"/>
     <addaction name="separator"/>
@@ -914,6 +917,23 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="actionPrint">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/printer.png</normaloff>:/icons/printer.png</iconset>
+   </property>
+   <property name="text">
+    <string>Print...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionOpenFolderasWorkspace">
+   <property name="text">
+    <string>Open Folder as Workspace...</string>
    </property>
   </action>
  </widget>

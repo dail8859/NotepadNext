@@ -2,10 +2,6 @@ local L = {}
 
 L.lexer = "javascript"
 
-L.extensions = {
-	"",
-}
-
 L.keywords = {
 	[0] = "abstract async await boolean break byte case catch char class const continue debugger default delete do double else enum export extends final finally float for function goto if implements import in instanceof int interface let long native new null of package private protected public return short static super switch synchronized this throw throws transient try typeof var void volatile while with true false prototype yield",
 }

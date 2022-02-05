@@ -56,6 +56,14 @@ struct luabridge::Stack <QString const&>
 NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     : SingleApplication(argc, argv, true, opts)
 {
+}
+
+bool NotepadNextApplication::init()
+{
+    qInfo(Q_FUNC_INFO);
+
+    luaState = new LuaState();
+
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(this);
     settings = new Settings(this);
@@ -84,13 +92,7 @@ NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
 
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
     ecad->setEnabled(true);
-}
 
-bool NotepadNextApplication::initGui()
-{
-    qInfo(Q_FUNC_INFO);
-
-    luaState = new LuaState();
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
 
@@ -137,7 +139,7 @@ bool NotepadNextApplication::initGui()
         }
     });
 
-    QObject::connect(this, &SingleApplication::instanceStarted, this->windows.first(), &MainWindow::bringWindowToForeground);
+    QObject::connect(this, &SingleApplication::instanceStarted, windows.first(), &MainWindow::bringWindowToForeground);
 
     QObject::connect(this, &SingleApplication::receivedMessage, [&] (quint32 instanceId, QByteArray message) {
         Q_UNUSED(instanceId)
@@ -176,7 +178,6 @@ bool NotepadNextApplication::initGui()
     // Everything should be ready at this point
 
     windows.first()->show();
-    windows.first()->bringWindowToForeground();
 
     return true;
 }
@@ -187,7 +188,7 @@ QString NotepadNextApplication::getFileDialogFilter() const
 
     QString filter = getLuaState()->executeAndReturn<QString>(
                 R"=(
-                local filter = {"All files (*)"}
+                local filter = {}
                 for name, L in pairs(languages) do
                     local extensions = {}
                     for _, ext in ipairs(L.extensions) do
@@ -195,6 +196,8 @@ QString NotepadNextApplication::getFileDialogFilter() const
                     end
                     filter[#filter + 1] = name .. " Files (" .. table.concat(extensions, " ") .. ")"
                 end
+                table.sort(filter, function (a, b) return a:lower() < b:lower() end)
+                table.insert(filter, 1, "All files (*)")
                 return table.concat(filter, ";;")
                 )=");
 
@@ -266,16 +269,20 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
 QString NotepadNextApplication::detectLanguageFromExtension(const QString &extension) const
 {
+    qInfo(Q_FUNC_INFO);
+
     return getLuaState()->executeAndReturn<QString>(QString(R"(
     local ext = "%1"
     for name, L in pairs(languages) do
-        for _, v in ipairs(L.extensions) do
-            if v == ext then
-                return name
+        if L.extensions then
+            for _, v in ipairs(L.extensions) do
+                if v == ext then
+                    return name
+                end
             end
         end
     end
-    return "null"
+    return "Text"
     )").arg(extension).toLatin1().constData());
 }
 

@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "php"
+L.lexer = "phpscript"
 
 L.extensions = {
 	"php",
