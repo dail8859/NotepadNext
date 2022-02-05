@@ -31,6 +31,9 @@
 #include <QSimpleUpdater.h>
 #include <QTimer>
 #include <QInputDialog>
+#include <QPrintPreviewDialog>
+#include <QPrinter>
+
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -51,6 +54,7 @@
 #include "LuaConsoleDock.h"
 #include "LanguageInspectorDock.h"
 #include "EditorInspectorDock.h"
+#include "FolderAsWorkspaceDock.h"
 
 #include "FindReplaceDialog.h"
 #include "MacroRunDialog.h"
@@ -58,6 +62,8 @@
 #include "PreferencesDialog.h"
 
 #include "QuickFindWidget.h"
+
+#include "EditorPrintPreviewRenderer.h"
 
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
@@ -72,15 +78,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     qInfo("setupUi Completed");
 
-    // The windows editor manager that supports docking
+    // Createa and set up the connections to the docked editor
     dockedEditor = new DockedEditor(this);
-
     connect(dockedEditor, &DockedEditor::editorCloseRequested, this, [=](ScintillaNext *editor) { closeFile(editor); });
-
     connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
-
     connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
-
     connect(dockedEditor, &DockedEditor::titleBarDoubleClicked, this, &MainWindow::newFile);
 
     // Set up the menus
@@ -91,6 +93,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionCloseAll, &QAction::triggered, this, &MainWindow::closeAllFiles);
     connect(ui->actionExit, &QAction::triggered, this, &MainWindow::close);
 
+    connect(ui->actionOpenFolderasWorkspace, &QAction::triggered, this, &MainWindow::openFolderAsWorkspaceDialog);
+
     connect(ui->actionCloseAllExceptActive, &QAction::triggered, this, &MainWindow::closeAllExceptActive);
     connect(ui->actionCloseAllToLeft, &QAction::triggered, this, &MainWindow::closeAllToLeft);
     connect(ui->actionCloseAllToRight, &QAction::triggered, this, &MainWindow::closeAllToRight);
@@ -100,6 +104,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionSaveCopyAs, &QAction::triggered, this, &MainWindow::saveCopyAsDialog);
     connect(ui->actionSaveAll, &QAction::triggered, this, &MainWindow::saveAll);
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
+
+    connect(ui->actionPrint, &QAction::triggered, this, &MainWindow::print);
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
 
@@ -243,7 +249,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionQuickFind, &QAction::triggered, [=]() {
-        ScintillaNext *editor = this->dockedEditor->getCurrentEditor();
+        ScintillaNext *editor = dockedEditor->getCurrentEditor();
 
         if (quickFind == Q_NULLPTR) {
             quickFind = new QuickFindWidget(this);
@@ -255,7 +261,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionGoToLine, &QAction::triggered, this, [=]() {
-        ScintillaNext *editor = this->dockedEditor->getCurrentEditor();
+        ScintillaNext *editor = dockedEditor->getCurrentEditor();
         const int currentLine = editor->lineFromPosition(editor->currentPos()) + 1;
         const int maxLine = editor->lineCount();
         bool ok;
@@ -315,7 +321,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             ui->menuBar->setMaximumHeight(0);
             ui->mainToolBar->setMaximumHeight(0);
 
-            this->showFullScreen();
+            showFullScreen();
             ui->pushExitFullScreen->setGeometry(width() - 20, 0, 20, 20);
             ui->pushExitFullScreen->show();
             ui->pushExitFullScreen->raise();
@@ -323,7 +329,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         else {
             ui->menuBar->setMaximumHeight(QWIDGETSIZE_MAX);
             ui->mainToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
-            this->showNormal();
+            showNormal();
 
             ui->pushExitFullScreen->hide();
         }
@@ -530,6 +536,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     editorInspectorDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, editorInspectorDock);
     ui->menuHelp->addAction(editorInspectorDock->toggleViewAction());
+
+    FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
+    addDockWidget(Qt::RightDockWidgetArea, fawDock);
+    ui->menuView->addSeparator();
+    ui->menuView->addAction(fawDock->toggleViewAction());
+    connect(fawDock, &FolderAsWorkspaceDock::fileDoubleClicked, this, &MainWindow::openFile);
 
 
 #ifdef QT_DEBUG
@@ -758,13 +770,7 @@ void MainWindow::openFileDialog()
         dialogDir = editor->getPath();
     }
 
-    QStringList fileNames = QFileDialog::getOpenFileNames(
-        this, // parent
-        QString(), // caption
-        dialogDir, // dir
-        filter, // filter
-        Q_NULLPTR // selected filter
-        );
+    QStringList fileNames = QFileDialog::getOpenFileNames(this, QString(), dialogDir, filter, Q_NULLPTR);
 
     openFileList(fileNames);
 }
@@ -772,6 +778,24 @@ void MainWindow::openFileDialog()
 void MainWindow::openFile(const QString &filePath)
 {
     openFileList(QStringList() << filePath);
+}
+
+void MainWindow::openFolderAsWorkspaceDialog()
+{
+    QString dialogDir;
+    const QString filter = app->getFileDialogFilter();
+    const ScintillaNext *editor = dockedEditor->getCurrentEditor();
+
+    // Use the path if possible
+    if (editor->isFile()) {
+        dialogDir = editor->getPath();
+    }
+
+    QString dir = QFileDialog::getExistingDirectory(this, "Open Folder as Workspace", dialogDir, QFileDialog::ShowDirsOnly);
+
+    FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
+    fawDock->setRootPath(dir);
+    fawDock->setVisible(true);
 }
 
 void MainWindow::reloadFile()
@@ -935,13 +959,7 @@ bool MainWindow::saveCurrentFileAsDialog()
         dialogDir = editor->getFilePath();
     }
 
-    QString fileName = QFileDialog::getSaveFileName(
-        this, // parent
-        QString(), // caption
-        dialogDir, // dir
-        filter, // filter
-        Q_NULLPTR // selected filter
-        );
+    QString fileName = QFileDialog::getSaveFileName(this, QString(), dialogDir, filter, Q_NULLPTR);
 
     if (fileName.size() == 0) {
         return false;
@@ -978,13 +996,7 @@ void MainWindow::saveCopyAsDialog()
         dialogDir = editor->getFilePath();
     }
 
-    QString fileName = QFileDialog::getSaveFileName(
-        this, // parent
-        "Save a Copy As", // caption
-        dialogDir, // dir
-        filter, // filter
-        Q_NULLPTR // selected filter
-        );
+    QString fileName = QFileDialog::getSaveFileName(this, "Save a Copy As", dialogDir, filter, Q_NULLPTR);
 
     saveCopyAs(fileName);
 }
@@ -1015,7 +1027,7 @@ void MainWindow::renameFile()
     }
 
     // TODO
-    // The new fileName might be to one of the existing editos.
+    // The new fileName might be to one of the existing editors.
     //auto otherEditor = app->getEditorByFilePath(fileName);
 
     bool renameSuccessful = editor->rename(fileName);
@@ -1047,6 +1059,25 @@ void MainWindow::moveFileToTrash(ScintillaNext *editor)
             QMessageBox::warning(this, "Error Deleting File",  QString("Something went wrong deleting <b>%1</b>?").arg(filePath));
         }
     }
+}
+
+void MainWindow::print()
+{
+    QPrintPreviewDialog printDialog(this, Qt::Window);
+    EditorPrintPreviewRenderer renderer(dockedEditor->getCurrentEditor());
+
+    connect(&printDialog, &QPrintPreviewDialog::paintRequested, &renderer, &EditorPrintPreviewRenderer::render);
+
+    // TODO: load/save the page layout that was used and reload it next time
+    //preview.printer()->setPageLayout( /* todo */ );
+
+    printDialog.printer()->setPageMargins(QMarginsF(.5, .5, .5, .5), QPageLayout::Inch);
+
+    connect(&printDialog, &QPrintPreviewDialog::accepted, this, [&]() {
+        qInfo() << printDialog.printer()->pageLayout();
+    });
+
+    printDialog.exec();
 }
 
 void MainWindow::convertEOLs(int eolMode)
