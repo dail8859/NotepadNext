@@ -20,6 +20,10 @@ HEADERS += \
     $$PWD/lexilla/include/Lexilla.h \
     $$files($$PWD/lexilla/lexlib/*.h, false)
 
+unix {
+ LIBS += -ldl
+}
+
 SOURCES += \
     $$PWD/lexilla/src/Lexilla.cxx \
     $$PWD/lexilla/access/LexillaAccess.cxx \
