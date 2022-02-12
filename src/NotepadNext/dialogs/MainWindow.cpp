@@ -538,7 +538,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->menuHelp->addAction(editorInspectorDock->toggleViewAction());
 
     FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
-    addDockWidget(Qt::RightDockWidgetArea, fawDock);
+    fawDock->hide();
+    addDockWidget(Qt::LeftDockWidgetArea, fawDock);
     ui->menuView->addSeparator();
     ui->menuView->addAction(fawDock->toggleViewAction());
     connect(fawDock, &FolderAsWorkspaceDock::fileDoubleClicked, this, &MainWindow::openFile);
