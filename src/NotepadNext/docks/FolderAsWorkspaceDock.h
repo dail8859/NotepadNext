@@ -37,6 +37,7 @@ public:
     ~FolderAsWorkspaceDock();
 
     void setRootPath(const QString dir);
+    QString rootPath() const;
 
 signals:
     void fileDoubleClicked(const QString &filePath);
