@@ -35,7 +35,9 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
     ui->treeView->header()->hideSection(3);
 
     connect(ui->treeView, &QTreeView::doubleClicked, this, [=](const QModelIndex &index) {
-        emit fileDoubleClicked(model->filePath(index));
+        if (!model->isDir(index)) {
+            emit fileDoubleClicked(model->filePath(index));
+        }
     });
 }
 
