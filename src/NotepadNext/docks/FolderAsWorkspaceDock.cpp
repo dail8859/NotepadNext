@@ -51,3 +51,8 @@ void FolderAsWorkspaceDock::setRootPath(const QString dir)
     model->setRootPath(dir);
     ui->treeView->setRootIndex(model->index(dir));
 }
+
+QString FolderAsWorkspaceDock::rootPath() const
+{
+    return model->rootPath();
+}
