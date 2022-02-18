@@ -15,7 +15,7 @@ class SelectionPosition {
 	Sci::Position virtualSpace;
 public:
 	explicit SelectionPosition(Sci::Position position_= Sci::invalidPosition, Sci::Position virtualSpace_=0) noexcept : position(position_), virtualSpace(virtualSpace_) {
-		PLATFORM_ASSERT(virtualSpace < 800000);
+		PLATFORM_ASSERT(virtualSpace < 800000000);
 		if (virtualSpace < 0)
 			virtualSpace = 0;
 	}
@@ -42,7 +42,7 @@ public:
 		return virtualSpace;
 	}
 	void SetVirtualSpace(Sci::Position virtualSpace_) noexcept {
-		PLATFORM_ASSERT(virtualSpace_ < 800000);
+		PLATFORM_ASSERT(virtualSpace_ < 800000000);
 		if (virtualSpace_ >= 0)
 			virtualSpace = virtualSpace_;
 	}

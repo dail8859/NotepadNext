@@ -19,41 +19,18 @@
 class QuartzTextLayout {
 public:
 	/** Create a text layout for drawing. */
-	QuartzTextLayout() : mString(NULL), mLine(NULL), stringLength(0) {
-	}
-
-	~QuartzTextLayout() {
-		if (mString) {
-			CFRelease(mString);
-			mString = NULL;
-		}
-		if (mLine) {
-			CFRelease(mLine);
-			mLine = NULL;
-		}
-	}
-
-	CFStringEncoding setText(std::string_view sv, CFStringEncoding encoding, const QuartzTextStyle *r) {
-		// First clear current values in case of failure.
-		if (mString) {
-			CFRelease(mString);
-			mString = NULL;
-		}
-		if (mLine) {
-			CFRelease(mLine);
-			mLine = NULL;
-		}
-
+	QuartzTextLayout(std::string_view sv, CFStringEncoding encoding, const QuartzTextStyle *r) {
+		encodingUsed = encoding;
 		const UInt8 *puiBuffer = reinterpret_cast<const UInt8 *>(sv.data());
-		CFStringRef str = CFStringCreateWithBytes(NULL, puiBuffer, sv.length(), encoding, false);
+		CFStringRef str = CFStringCreateWithBytes(NULL, puiBuffer, sv.length(), encodingUsed, false);
 		if (!str) {
 			// Failed to decode bytes into string with given encoding so try
 			// MacRoman which should accept any byte.
-			encoding = kCFStringEncodingMacRoman;
-			str = CFStringCreateWithBytes(NULL, puiBuffer, sv.length(), encoding, false);
+			encodingUsed = kCFStringEncodingMacRoman;
+			str = CFStringCreateWithBytes(NULL, puiBuffer, sv.length(), encodingUsed, false);
 		}
 		if (!str) {
-			return encoding;
+			return;
 		}
 
 		stringLength = CFStringGetLength(str);
@@ -65,7 +42,17 @@ public:
 		mLine = ::CTLineCreateWithAttributedString(mString);
 
 		CFRelease(str);
-		return encoding;
+	}
+
+	~QuartzTextLayout() {
+		if (mString) {
+			CFRelease(mString);
+			mString = NULL;
+		}
+		if (mLine) {
+			CFRelease(mLine);
+			mLine = NULL;
+		}
 	}
 
 	/** Draw the text layout into a CGContext at the specified position.
@@ -100,10 +87,15 @@ public:
 		return stringLength;
 	}
 
+	CFStringEncoding getEncoding() {
+		return encodingUsed;
+	}
+
 private:
-	CFAttributedStringRef mString;
-	CTLineRef mLine;
-	CFIndex stringLength;
+	CFAttributedStringRef mString = NULL;
+	CTLineRef mLine = NULL;
+	CFIndex stringLength = 0;
+	CFStringEncoding encodingUsed = kCFStringEncodingMacRoman;
 };
 
 #endif

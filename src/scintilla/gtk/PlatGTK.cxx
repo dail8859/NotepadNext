@@ -39,6 +39,7 @@
 #include "XPM.h"
 #include "UniConversion.h"
 
+#include "Wrappers.h"
 #include "Converter.h"
 
 #ifdef _MSC_VER
@@ -55,17 +56,6 @@ constexpr double kPi = 3.14159265358979323846;
 
 constexpr double degrees = kPi / 180.0;
 
-// The Pango version guard for pango_units_from_double and pango_units_to_double
-// is more complex than simply implementing these here.
-
-constexpr int pangoUnitsFromDouble(double d) noexcept {
-	return static_cast<int>(d * PANGO_SCALE + 0.5);
-}
-
-constexpr float floatFromPangoUnits(int pu) noexcept {
-	return static_cast<float>(pu) / PANGO_SCALE;
-}
-
 struct IntegerRectangle {
 	int left;
 	int top;
@@ -80,12 +70,18 @@ struct IntegerRectangle {
 	int Height() const noexcept { return bottom - top; }
 };
 
-GdkWindow *WindowFromWidget(GtkWidget *w) noexcept {
-	return gtk_widget_get_window(w);
-}
-
 GtkWidget *PWidget(WindowID wid) noexcept {
 	return static_cast<GtkWidget *>(wid);
+}
+
+void SetFractionalPositions([[maybe_unused]] PangoContext *pcontext) noexcept {
+#if PANGO_VERSION_CHECK(1,44,3)
+	pango_context_set_round_glyph_positions(pcontext, FALSE);
+#endif
+}
+
+void LayoutSetText(PangoLayout *layout, std::string_view text) noexcept {
+	pango_layout_set_text(layout, text.data(), static_cast<int>(text.length()));
 }
 
 enum class EncodingType { singleByte, utf8, dbcs };
@@ -93,35 +89,19 @@ enum class EncodingType { singleByte, utf8, dbcs };
 // Holds a PangoFontDescription*.
 class FontHandle : public Font {
 public:
-	PangoFontDescription *pfd = nullptr;
+	UniquePangoFontDescription fd;
 	CharacterSet characterSet;
-	FontHandle() noexcept : pfd(nullptr), characterSet(CharacterSet::Ansi) {
-	}
-	FontHandle(PangoFontDescription *pfd_, CharacterSet characterSet_) noexcept {
-		pfd = pfd_;
-		characterSet = characterSet_;
-	}
-	FontHandle(const FontParameters &fp) {
-		pfd = pango_font_description_new();
-		if (pfd) {
-			pango_font_description_set_family(pfd,
+	explicit FontHandle(const FontParameters &fp) :
+		fd(pango_font_description_new()), characterSet(fp.characterSet) {
+		if (fd) {
+			pango_font_description_set_family(fd.get(),
 				(fp.faceName[0] == '!') ? fp.faceName + 1 : fp.faceName);
-			pango_font_description_set_size(pfd, pangoUnitsFromDouble(fp.size));
-			pango_font_description_set_weight(pfd, static_cast<PangoWeight>(fp.weight));
-			pango_font_description_set_style(pfd, fp.italic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
+			pango_font_description_set_size(fd.get(), pango_units_from_double(fp.size));
+			pango_font_description_set_weight(fd.get(), static_cast<PangoWeight>(fp.weight));
+			pango_font_description_set_style(fd.get(), fp.italic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
 		}
-		characterSet = fp.characterSet;
 	}
-	// Deleted so FontHandle objects can not be copied.
-	FontHandle(const FontHandle &) = delete;
-	FontHandle(FontHandle &&) = delete;
-	FontHandle &operator=(const FontHandle &) = delete;
-	FontHandle &operator=(FontHandle &&) = delete;
-	~FontHandle() override {
-		if (pfd)
-			pango_font_description_free(pfd);
-		pfd = nullptr;
-	}
+	~FontHandle() override = default;
 };
 
 // X has a 16 bit coordinate space, so stop drawing here to avoid wrapping
@@ -146,13 +126,18 @@ class SurfaceImpl : public Surface {
 	EncodingType et= EncodingType::singleByte;
 	WindowID widSave = nullptr;
 	cairo_t *context = nullptr;
-	cairo_surface_t *psurf = nullptr;
+	UniqueCairo pixmapContext;
+	UniqueCairoSurface surf;
 	bool inited = false;
-	bool createdGC = false;
-	PangoContext *pcontext = nullptr;
-	PangoLayout *layout = nullptr;
+	UniquePangoContext pcontext;
+	double resolution = 1.0;
+	PangoDirection direction = PANGO_DIRECTION_LTR;
+	const cairo_font_options_t *fontOptions = nullptr;
+	PangoLanguage *language = nullptr;
+	UniquePangoLayout layout;
 	Converter conv;
 	CharacterSet characterSet = static_cast<CharacterSet>(-1);
+
 	void PenColourAlpha(ColourRGBA fore) noexcept;
 	void SetConverter(CharacterSet characterSet_);
 	void CairoRectangle(PRectangle rc) noexcept;
@@ -164,7 +149,10 @@ public:
 	SurfaceImpl(SurfaceImpl&&) = delete;
 	SurfaceImpl&operator=(const SurfaceImpl&) = delete;
 	SurfaceImpl&operator=(SurfaceImpl&&) = delete;
-	~SurfaceImpl() override;
+	~SurfaceImpl() override = default;
+
+	void GetContextState() noexcept;
+	UniquePangoContext MeasuringContext();
 
 	void Init(WindowID wid) override;
 	void Init(SurfaceID sid, WindowID wid) override;
@@ -172,7 +160,6 @@ public:
 
 	void SetMode(SurfaceMode mode_) override;
 
-	void Clear() noexcept;
 	void Release() noexcept override;
 	int SupportsFeature(Supports feature) noexcept override;
 	bool Initialised() override;
@@ -228,6 +215,10 @@ const Supports SupportsGTK[] = {
 	Supports::FractionalStrokeWidth,
 	Supports::TranslucentStroke,
 	Supports::PixelModification,
+#if !defined(PLAT_GTK_WIN32) && !defined(PLAT_GTK_MACOSX)
+	// Pango is not thread-safe on Win32 or macOS
+	Supports::ThreadSafeMeasureWidths,
+#endif
 };
 
 }
@@ -310,52 +301,39 @@ SurfaceImpl::SurfaceImpl() noexcept {
 SurfaceImpl::SurfaceImpl(cairo_t *context_, int width, int height, SurfaceMode mode_, WindowID wid) noexcept {
 	if (height > 0 && width > 0) {
 		cairo_surface_t *psurfContext = cairo_get_target(context_);
-		psurf = cairo_surface_create_similar(
+		surf.reset(cairo_surface_create_similar(
 			psurfContext,
-			CAIRO_CONTENT_COLOR_ALPHA, width, height);
-		context = cairo_create(psurf);
-		pcontext = gtk_widget_create_pango_context(PWidget(wid));
+			CAIRO_CONTENT_COLOR_ALPHA, width, height));
+		pixmapContext.reset(cairo_create(surf.get()));
+		context = pixmapContext.get();
+		pcontext.reset(gtk_widget_create_pango_context(PWidget(wid)));
 		PLATFORM_ASSERT(pcontext);
-		layout = pango_layout_new(pcontext);
+		SetFractionalPositions(pcontext.get());
+		GetContextState();
+		layout.reset(pango_layout_new(pcontext.get()));
 		PLATFORM_ASSERT(layout);
 		cairo_rectangle(context, 0, 0, width, height);
 		cairo_set_source_rgb(context, 1.0, 0, 0);
 		cairo_fill(context);
 		cairo_set_line_width(context, 1);
-		createdGC = true;
 		inited = true;
 		mode = mode_;
 	}
 }
 
-SurfaceImpl::~SurfaceImpl() {
-	Clear();
-}
-
-void SurfaceImpl::Clear() noexcept {
+void SurfaceImpl::Release() noexcept {
 	et = EncodingType::singleByte;
-	if (createdGC) {
-		createdGC = false;
-		cairo_destroy(context);
-	}
+	pixmapContext.reset();
 	context = nullptr;
-	if (psurf)
-		cairo_surface_destroy(psurf);
-	psurf = nullptr;
-	if (layout)
-		g_object_unref(layout);
-	layout = nullptr;
-	if (pcontext)
-		g_object_unref(pcontext);
-	pcontext = nullptr;
+	surf.reset();
+	layout.reset();
+	// fontOptions and language are owned by original context and don't need to be freed
+	fontOptions = nullptr;
+	language = nullptr;
+	pcontext.reset();
 	conv.Close();
 	characterSet = static_cast<CharacterSet>(-1);
 	inited = false;
-	createdGC = false;
-}
-
-void SurfaceImpl::Release() noexcept {
-	Clear();
 }
 
 bool SurfaceImpl::Initialised() {
@@ -378,17 +356,39 @@ bool SurfaceImpl::Initialised() {
 	return inited;
 }
 
+void SurfaceImpl::GetContextState() noexcept {
+	resolution = pango_cairo_context_get_resolution(pcontext.get());
+	direction = pango_context_get_base_dir(pcontext.get());
+	fontOptions = pango_cairo_context_get_font_options(pcontext.get());
+	language = pango_context_get_language(pcontext.get());
+}
+
+UniquePangoContext SurfaceImpl::MeasuringContext() {
+	UniquePangoFontMap fmMeasure(pango_cairo_font_map_get_default());
+	PLATFORM_ASSERT(fmMeasure);
+	UniquePangoContext contextMeasure(pango_font_map_create_context(fmMeasure.release()));
+	PLATFORM_ASSERT(contextMeasure);
+	SetFractionalPositions(contextMeasure.get());
+
+	pango_cairo_context_set_resolution(contextMeasure.get(), resolution);
+	pango_context_set_base_dir(contextMeasure.get(), direction);
+	pango_cairo_context_set_font_options(contextMeasure.get(), fontOptions);
+	pango_context_set_language(contextMeasure.get(), language);
+	
+	return contextMeasure;
+}
+
 void SurfaceImpl::Init(WindowID wid) {
 	widSave = wid;
 	Release();
 	PLATFORM_ASSERT(wid);
 	// if we are only created from a window ID, we can't perform drawing
-	psurf = nullptr;
 	context = nullptr;
-	createdGC = false;
-	pcontext = gtk_widget_create_pango_context(PWidget(wid));
+	pcontext.reset(gtk_widget_create_pango_context(PWidget(wid)));
 	PLATFORM_ASSERT(pcontext);
-	layout = pango_layout_new(pcontext);
+	SetFractionalPositions(pcontext.get());
+	GetContextState();
+	layout.reset(pango_layout_new(pcontext.get()));
 	PLATFORM_ASSERT(layout);
 	inited = true;
 }
@@ -399,12 +399,13 @@ void SurfaceImpl::Init(SurfaceID sid, WindowID wid) {
 	Release();
 	PLATFORM_ASSERT(wid);
 	context = cairo_reference(static_cast<cairo_t *>(sid));
-	pcontext = gtk_widget_create_pango_context(PWidget(wid));
+	pcontext.reset(gtk_widget_create_pango_context(PWidget(wid)));
+	SetFractionalPositions(pcontext.get());
 	// update the Pango context in case sid isn't the widget's surface
-	pango_cairo_update_context(context, pcontext);
-	layout = pango_layout_new(pcontext);
+	pango_cairo_update_context(context, pcontext.get());
+	GetContextState();
+	layout.reset(pango_layout_new(pcontext.get()));
 	cairo_set_line_width(context, 1);
-	createdGC = true;
 	inited = true;
 }
 
@@ -519,9 +520,9 @@ void SurfaceImpl::FillRectangleAligned(PRectangle rc, Fill fill) {
 
 void SurfaceImpl::FillRectangle(PRectangle rc, Surface &surfacePattern) {
 	SurfaceImpl &surfi = dynamic_cast<SurfaceImpl &>(surfacePattern);
-	if (context && surfi.psurf) {
+	if (context && surfi.surf) {
 		// Tile pattern over rectangle
-		cairo_set_source_surface(context, surfi.psurf, rc.left, rc.top);
+		cairo_set_source_surface(context, surfi.surf.get(), rc.left, rc.top);
 		cairo_pattern_set_extend(cairo_get_source(context), CAIRO_EXTEND_REPEAT);
 		cairo_rectangle(context, rc.left, rc.top, rc.Width(), rc.Height());
 		cairo_fill(context);
@@ -558,8 +559,8 @@ static void PathRoundRectangle(cairo_t *context, double left, double top, double
 
 void SurfaceImpl::AlphaRectangle(PRectangle rc, XYPOSITION cornerSize, FillStroke fillStroke) {
 	if (context && rc.Width() > 0) {
-		const float halfStroke = fillStroke.stroke.width / 2.0f;
-		const float doubleStroke = fillStroke.stroke.width * 2.0f;
+		const XYPOSITION halfStroke = fillStroke.stroke.width / 2.0;
+		const XYPOSITION doubleStroke = fillStroke.stroke.width * 2.0;
 		PenColourAlpha(fillStroke.fill.colour);
 		if (cornerSize > 0)
 			PathRoundRectangle(context, rc.left + fillStroke.stroke.width, rc.top + fillStroke.stroke.width,
@@ -625,12 +626,10 @@ void SurfaceImpl::DrawRGBAImage(PRectangle rc, int width, int height, const unsi
 		pixelsImage += RGBAImage::bytesPerPixel * width;
 	}
 
-	cairo_surface_t *psurfImage = cairo_image_surface_create_for_data(&image[0], CAIRO_FORMAT_ARGB32, width, height, stride);
-	cairo_set_source_surface(context, psurfImage, rc.left, rc.top);
+	UniqueCairoSurface surfImage(cairo_image_surface_create_for_data(&image[0], CAIRO_FORMAT_ARGB32, width, height, stride));
+	cairo_set_source_surface(context, surfImage.get(), rc.left, rc.top);
 	cairo_rectangle(context, rc.left, rc.top, rc.Width(), rc.Height());
 	cairo_fill(context);
-
-	cairo_surface_destroy(psurfImage);
 }
 
 void SurfaceImpl::Ellipse(PRectangle rc, FillStroke fillStroke) {
@@ -704,10 +703,10 @@ void SurfaceImpl::Stadium(PRectangle rc, FillStroke fillStroke, Ends ends) {
 
 void SurfaceImpl::Copy(PRectangle rc, Point from, Surface &surfaceSource) {
 	SurfaceImpl &surfi = static_cast<SurfaceImpl &>(surfaceSource);
-	const bool canDraw = surfi.psurf != nullptr;
+	const bool canDraw = surfi.surf != nullptr;
 	if (canDraw) {
 		PLATFORM_ASSERT(context);
-		cairo_set_source_surface(context, surfi.psurf,
+		cairo_set_source_surface(context, surfi.surf.get(),
 					 rc.left - from.x, rc.top - from.y);
 		cairo_rectangle(context, rc.left, rc.top, rc.Width(), rc.Height());
 		cairo_fill(context);
@@ -778,21 +777,21 @@ void SurfaceImpl::DrawTextBase(PRectangle rc, const Font *font_, XYPOSITION ybas
 	if (context) {
 		PenColourAlpha(fore);
 		const XYPOSITION xText = rc.left;
-		if (PFont(font_)->pfd) {
+		if (PFont(font_)->fd) {
 			std::string utfForm;
 			if (et == EncodingType::utf8) {
-				pango_layout_set_text(layout, text.data(), text.length());
+				LayoutSetText(layout.get(), text);
 			} else {
 				SetConverter(PFont(font_)->characterSet);
 				utfForm = UTF8FromIconv(conv, text);
 				if (utfForm.empty()) {	// iconv failed so treat as Latin1
 					utfForm = UTF8FromLatin1(text);
 				}
-				pango_layout_set_text(layout, utfForm.c_str(), utfForm.length());
+				LayoutSetText(layout.get(), utfForm);
 			}
-			pango_layout_set_font_description(layout, PFont(font_)->pfd);
-			pango_cairo_update_layout(context, layout);
-			PangoLayoutLine *pll = pango_layout_get_line_readonly(layout, 0);
+			pango_layout_set_font_description(layout.get(), PFont(font_)->fd.get());
+			pango_cairo_update_layout(context, layout.get());
+			PangoLayoutLine *pll = pango_layout_get_line_readonly(layout.get(), 0);
 			cairo_move_to(context, xText, ybase);
 			pango_cairo_show_layout_line(context, pll);
 		}
@@ -824,39 +823,31 @@ void SurfaceImpl::DrawTextTransparent(PRectangle rc, const Font *font_, XYPOSITI
 }
 
 class ClusterIterator {
-	PangoLayoutIter *iter;
-	PangoRectangle pos;
-	size_t lenPositions;
+	UniquePangoLayoutIter iter;
+	PangoRectangle pos {};
+	int lenPositions;
 public:
-	bool finished;
-	XYPOSITION positionStart;
-	XYPOSITION position;
-	XYPOSITION distance;
-	int curIndex;
-	ClusterIterator(PangoLayout *layout, size_t len) noexcept : lenPositions(len), finished(false),
-		positionStart(0), position(0), distance(0), curIndex(0) {
-		iter = pango_layout_get_iter(layout);
-		pango_layout_iter_get_cluster_extents(iter, nullptr, &pos);
-	}
-	// Deleted so ClusterIterator objects can not be copied.
-	ClusterIterator(const ClusterIterator&) = delete;
-	ClusterIterator(ClusterIterator&&) = delete;
-	ClusterIterator&operator=(const ClusterIterator&) = delete;
-	ClusterIterator&operator=(ClusterIterator&&) = delete;
-
-	~ClusterIterator() {
-		pango_layout_iter_free(iter);
+	bool finished = false;
+	XYPOSITION positionStart = 0.0;
+	XYPOSITION position = 0.0;
+	XYPOSITION distance = 0.0;
+	int curIndex = 0;
+	ClusterIterator(PangoLayout *layout, std::string_view text) noexcept :
+		lenPositions(static_cast<int>(text.length())) {
+		LayoutSetText(layout, text);
+		iter.reset(pango_layout_get_iter(layout));
+		pango_layout_iter_get_cluster_extents(iter.get(), nullptr, &pos);
 	}
 
 	void Next() noexcept {
 		positionStart = position;
-		if (pango_layout_iter_next_cluster(iter)) {
-			pango_layout_iter_get_cluster_extents(iter, nullptr, &pos);
-			position = floatFromPangoUnits(pos.x);
-			curIndex = pango_layout_iter_get_index(iter);
+		if (pango_layout_iter_next_cluster(iter.get())) {
+			pango_layout_iter_get_cluster_extents(iter.get(), nullptr, &pos);
+			position = pango_units_to_double(pos.x);
+			curIndex = pango_layout_iter_get_index(iter.get());
 		} else {
 			finished = true;
-			position = floatFromPangoUnits(pos.x + pos.width);
+			position = pango_units_to_double(pos.x + pos.width);
 			curIndex = lenPositions;
 		}
 		distance = position - positionStart;
@@ -864,13 +855,16 @@ public:
 };
 
 void SurfaceImpl::MeasureWidths(const Font *font_, std::string_view text, XYPOSITION *positions) {
-	if (PFont(font_)->pfd) {
-		pango_layout_set_font_description(layout, PFont(font_)->pfd);
+	if (PFont(font_)->fd) {
+		UniquePangoContext contextMeasure = MeasuringContext();
+		UniquePangoLayout layoutMeasure(pango_layout_new(contextMeasure.get()));
+		PLATFORM_ASSERT(layoutMeasure);
+
+		pango_layout_set_font_description(layoutMeasure.get(), PFont(font_)->fd.get());
 		if (et == EncodingType::utf8) {
 			// Simple and direct as UTF-8 is native Pango encoding
 			int i = 0;
-			pango_layout_set_text(layout, text.data(), text.length());
-			ClusterIterator iti(layout, text.length());
+			ClusterIterator iti(layoutMeasure.get(), text);
 			while (!iti.finished) {
 				iti.Next();
 				const int places = iti.curIndex - i;
@@ -894,10 +888,9 @@ void SurfaceImpl::MeasureWidths(const Font *font_, std::string_view text, XYPOSI
 					// Loop through UTF-8 and DBCS forms, taking account of different
 					// character byte lengths.
 					Converter convMeasure("UCS-2", CharacterSetID(characterSet), false);
-					pango_layout_set_text(layout, utfForm.c_str(), strlen(utfForm.c_str()));
 					int i = 0;
 					int clusterStart = 0;
-					ClusterIterator iti(layout, strlen(utfForm.c_str()));
+					ClusterIterator iti(layoutMeasure.get(), utfForm);
 					while (!iti.finished) {
 						iti.Next();
 						const int clusterEnd = iti.curIndex;
@@ -926,12 +919,11 @@ void SurfaceImpl::MeasureWidths(const Font *font_, std::string_view text, XYPOSI
 				if (utfForm.empty()) {
 					utfForm = UTF8FromLatin1(text);
 				}
-				pango_layout_set_text(layout, utfForm.c_str(), utfForm.length());
 				size_t i = 0;
 				int clusterStart = 0;
 				// Each 8-bit input character may take 1 or 2 bytes in UTF-8
 				// and groups of up to 3 may be represented as ligatures.
-				ClusterIterator iti(layout, utfForm.length());
+				ClusterIterator iti(layoutMeasure.get(), utfForm);
 				while (!iti.finished) {
 					iti.Next();
 					const int clusterEnd = iti.curIndex;
@@ -939,8 +931,8 @@ void SurfaceImpl::MeasureWidths(const Font *font_, std::string_view text, XYPOSI
 					if (rtlCheck && ((clusterEnd <= clusterStart) || (ligatureLength == 0) || (ligatureLength > 3))) {
 						// Something has gone wrong: exit quickly but pretend all the characters are equally spaced:
 						int widthLayout = 0;
-						pango_layout_get_size(layout, &widthLayout, nullptr);
-						const XYPOSITION widthTotal = floatFromPangoUnits(widthLayout);
+						pango_layout_get_size(layoutMeasure.get(), &widthLayout, nullptr);
+						const XYPOSITION widthTotal = pango_units_to_double(widthLayout);
 						for (size_t bytePos=0; bytePos<lenPositions; bytePos++) {
 							positions[bytePos] = widthTotal / lenPositions * (bytePos + 1);
 						}
@@ -962,29 +954,29 @@ void SurfaceImpl::MeasureWidths(const Font *font_, std::string_view text, XYPOSI
 	} else {
 		// No font so return an ascending range of values
 		for (size_t i = 0; i < text.length(); i++) {
-			positions[i] = i + 1;
+			positions[i] = i + 1.0;
 		}
 	}
 }
 
 XYPOSITION SurfaceImpl::WidthText(const Font *font_, std::string_view text) {
-	if (PFont(font_)->pfd) {
+	if (PFont(font_)->fd) {
 		std::string utfForm;
-		pango_layout_set_font_description(layout, PFont(font_)->pfd);
+		pango_layout_set_font_description(layout.get(), PFont(font_)->fd.get());
 		if (et == EncodingType::utf8) {
-			pango_layout_set_text(layout, text.data(), text.length());
+			LayoutSetText(layout.get(), text);
 		} else {
 			SetConverter(PFont(font_)->characterSet);
 			utfForm = UTF8FromIconv(conv, text);
 			if (utfForm.empty()) {	// iconv failed so treat as Latin1
 				utfForm = UTF8FromLatin1(text);
 			}
-			pango_layout_set_text(layout, utfForm.c_str(), utfForm.length());
+			LayoutSetText(layout.get(), utfForm);
 		}
-		PangoLayoutLine *pangoLine = pango_layout_get_line_readonly(layout, 0);
+		PangoLayoutLine *pangoLine = pango_layout_get_line_readonly(layout.get(), 0);
 		PangoRectangle pos {};
 		pango_layout_line_get_extents(pangoLine, nullptr, &pos);
-		return floatFromPangoUnits(pos.width);
+		return pango_units_to_double(pos.width);
 	}
 	return 1;
 }
@@ -994,11 +986,11 @@ void SurfaceImpl::DrawTextBaseUTF8(PRectangle rc, const Font *font_, XYPOSITION 
 	if (context) {
 		PenColourAlpha(fore);
 		const XYPOSITION xText = rc.left;
-		if (PFont(font_)->pfd) {
-			pango_layout_set_text(layout, text.data(), text.length());
-			pango_layout_set_font_description(layout, PFont(font_)->pfd);
-			pango_cairo_update_layout(context, layout);
-			PangoLayoutLine *pll = pango_layout_get_line_readonly(layout, 0);
+		if (PFont(font_)->fd) {
+			LayoutSetText(layout.get(), text);
+			pango_layout_set_font_description(layout.get(), PFont(font_)->fd.get());
+			pango_cairo_update_layout(context, layout.get());
+			PangoLayoutLine *pll = pango_layout_get_line_readonly(layout.get(), 0);
 			cairo_move_to(context, xText, ybase);
 			pango_cairo_show_layout_line(context, pll);
 		}
@@ -1030,12 +1022,15 @@ void SurfaceImpl::DrawTextTransparentUTF8(PRectangle rc, const Font *font_, XYPO
 }
 
 void SurfaceImpl::MeasureWidthsUTF8(const Font *font_, std::string_view text, XYPOSITION *positions) {
-	if (PFont(font_)->pfd) {
-		pango_layout_set_font_description(layout, PFont(font_)->pfd);
+	if (PFont(font_)->fd) {
+		UniquePangoContext contextMeasure = MeasuringContext();
+		UniquePangoLayout layoutMeasure(pango_layout_new(contextMeasure.get()));
+		PLATFORM_ASSERT(layoutMeasure);
+
+		pango_layout_set_font_description(layoutMeasure.get(), PFont(font_)->fd.get());
 		// Simple and direct as UTF-8 is native Pango encoding
 		int i = 0;
-		pango_layout_set_text(layout, text.data(), text.length());
-		ClusterIterator iti(layout, text.length());
+		ClusterIterator iti(layoutMeasure.get(), text);
 		while (!iti.finished) {
 			iti.Next();
 			const int places = iti.curIndex - i;
@@ -1052,19 +1047,19 @@ void SurfaceImpl::MeasureWidthsUTF8(const Font *font_, std::string_view text, XY
 	} else {
 		// No font so return an ascending range of values
 		for (size_t i = 0; i < text.length(); i++) {
-			positions[i] = i + 1;
+			positions[i] = i + 1.0;
 		}
 	}
 }
 
 XYPOSITION SurfaceImpl::WidthTextUTF8(const Font *font_, std::string_view text) {
-	if (PFont(font_)->pfd) {
-		pango_layout_set_font_description(layout, PFont(font_)->pfd);
-		pango_layout_set_text(layout, text.data(), text.length());
-		PangoLayoutLine *pangoLine = pango_layout_get_line_readonly(layout, 0);
+	if (PFont(font_)->fd) {
+		pango_layout_set_font_description(layout.get(), PFont(font_)->fd.get());
+		LayoutSetText(layout.get(), text);
+		PangoLayoutLine *pangoLine = pango_layout_get_line_readonly(layout.get(), 0);
 		PangoRectangle pos{};
 		pango_layout_line_get_extents(pangoLine, nullptr, &pos);
-		return floatFromPangoUnits(pos.width);
+		return pango_units_to_double(pos.width);
 	}
 	return 1;
 }
@@ -1072,30 +1067,22 @@ XYPOSITION SurfaceImpl::WidthTextUTF8(const Font *font_, std::string_view text) 
 // Ascent and descent determined by Pango font metrics.
 
 XYPOSITION SurfaceImpl::Ascent(const Font *font_) {
-	XYPOSITION ascent = 0;
-	if (PFont(font_)->pfd) {
-		PangoFontMetrics *metrics = pango_context_get_metrics(pcontext,
-					    PFont(font_)->pfd, pango_context_get_language(pcontext));
-		ascent = std::ceil(floatFromPangoUnits(
-					    pango_font_metrics_get_ascent(metrics)));
-		pango_font_metrics_unref(metrics);
+	if (!PFont(font_)->fd) {
+		return 1.0;
 	}
-	if (ascent == 0) {
-		ascent = 1;
-	}
-	return ascent;
+	UniquePangoFontMetrics metrics(pango_context_get_metrics(pcontext.get(),
+				    PFont(font_)->fd.get(), language));
+	return std::max(1.0, std::ceil(pango_units_to_double(
+				    pango_font_metrics_get_ascent(metrics.get()))));
 }
 
 XYPOSITION SurfaceImpl::Descent(const Font *font_) {
-	if (PFont(font_)->pfd) {
-		PangoFontMetrics *metrics = pango_context_get_metrics(pcontext,
-					    PFont(font_)->pfd, pango_context_get_language(pcontext));
-		const XYPOSITION descent = std::ceil(floatFromPangoUnits(
-				pango_font_metrics_get_descent(metrics)));
-		pango_font_metrics_unref(metrics);
-		return descent;
+	if (!PFont(font_)->fd) {
+		return 0.0;
 	}
-	return 0;
+	UniquePangoFontMetrics metrics(pango_context_get_metrics(pcontext.get(),
+				    PFont(font_)->fd.get(), language));
+	return std::ceil(pango_units_to_double(pango_font_metrics_get_descent(metrics.get())));
 }
 
 XYPOSITION SurfaceImpl::InternalLeading(const Font *) {
@@ -1292,11 +1279,7 @@ void Window::SetCursor(Cursor curs) {
 
 	if (WindowFromWidget(PWidget(wid)))
 		gdk_window_set_cursor(WindowFromWidget(PWidget(wid)), gdkCurs);
-#if GTK_CHECK_VERSION(3,0,0)
-	g_object_unref(gdkCurs);
-#else
-	gdk_cursor_unref(gdkCurs);
-#endif
+	UnRefCursor(gdkCurs);
 }
 
 /* Returns rectangle of monitor pt is on, both rect and pt are in Window's
@@ -1316,7 +1299,7 @@ PRectangle Window::GetMonitorRect(Point pt) {
 #else
 	GdkScreen *screen = gtk_widget_get_screen(PWidget(wid));
 	const gint monitor_num = gdk_screen_get_monitor_at_point(screen,
-				 pt.x + x_offset, pt.y + y_offset);
+				 static_cast<gint>(pt.x) + x_offset, static_cast<gint>(pt.y) + y_offset);
 	gdk_screen_get_monitor_geometry(screen, monitor_num, &rect);
 #endif
 	rect.x -= x_offset;
@@ -1363,7 +1346,7 @@ class ListBoxX : public ListBox {
 	unsigned int maxItemCharacters;
 	unsigned int aveCharWidth;
 #if GTK_CHECK_VERSION(3,0,0)
-	GtkCssProvider *cssProvider;
+	std::unique_ptr<GtkCssProvider, GObjectReleaser> cssProvider;
 #endif
 public:
 	IListBoxDelegate *delegate;
@@ -1373,9 +1356,6 @@ public:
 		renderer(nullptr),
 		desiredVisibleRows(5), maxItemCharacters(0),
 		aveCharWidth(1),
-#if GTK_CHECK_VERSION(3,0,0)
-		cssProvider(nullptr),
-#endif
 		delegate(nullptr) {
 	}
 	// Deleted so ListBoxX objects can not be copied.
@@ -1392,12 +1372,6 @@ public:
 			gtk_widget_destroy(GTK_WIDGET(widCached));
 			wid = widCached = nullptr;
 		}
-#if GTK_CHECK_VERSION(3,0,0)
-		if (cssProvider) {
-			g_object_unref(cssProvider);
-			cssProvider = nullptr;
-		}
-#endif
 	}
 	void SetFont(const Font *font) override;
 	void Create(Window &parent, int ctrlID, Point location_, int lineHeight_, bool unicodeMode_, Technology technology_) override;
@@ -1506,7 +1480,7 @@ static void small_scroller_class_init(SmallScrollerClass *klass) {
 
 static void small_scroller_init(SmallScroller *) {}
 
-static gboolean ButtonPress(GtkWidget *, GdkEventButton *ev, gpointer p) {
+static gboolean ButtonPress(GtkWidget *, const GdkEventButton *ev, gpointer p) {
 	try {
 		ListBoxX *lb = static_cast<ListBoxX *>(p);
 		if (ev->type == GDK_2BUTTON_PRESS && lb->delegate) {
@@ -1521,7 +1495,7 @@ static gboolean ButtonPress(GtkWidget *, GdkEventButton *ev, gpointer p) {
 	return FALSE;
 }
 
-static gboolean ButtonRelease(GtkWidget *, GdkEventButton *ev, gpointer p) {
+static gboolean ButtonRelease(GtkWidget *, const GdkEventButton *ev, gpointer p) {
 	try {
 		ListBoxX *lb = static_cast<ListBoxX *>(p);
 		if (ev->type != GDK_2BUTTON_PRESS && lb->delegate) {
@@ -1593,7 +1567,7 @@ void ListBoxX::Create(Window &parent, int, Point, int, bool, Technology) {
 
 #if GTK_CHECK_VERSION(3,0,0)
 	if (!cssProvider) {
-		cssProvider = gtk_css_provider_new();
+		cssProvider.reset(gtk_css_provider_new());
 	}
 #endif
 
@@ -1622,7 +1596,7 @@ void ListBoxX::Create(Window &parent, int, Point, int, bool, Technology) {
 #if GTK_CHECK_VERSION(3,0,0)
 	GtkStyleContext *styleContext = gtk_widget_get_style_context(GTK_WIDGET(list));
 	if (styleContext) {
-		gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(cssProvider),
+		gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(cssProvider.get()),
 					       GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 	}
 #endif
@@ -1669,11 +1643,11 @@ void ListBoxX::Create(Window &parent, int, Point, int, bool, Technology) {
 
 void ListBoxX::SetFont(const Font *font) {
 	// Only do for Pango font as there have been crashes for GDK fonts
-	if (Created() && PFont(font)->pfd) {
+	if (Created() && PFont(font)->fd) {
 		// Current font is Pango font
 #if GTK_CHECK_VERSION(3,0,0)
 		if (cssProvider) {
-			PangoFontDescription *pfd = PFont(font)->pfd;
+			PangoFontDescription *pfd = PFont(font)->fd.get();
 			std::ostringstream ssFontSetting;
 			ssFontSetting << "GtkTreeView, treeview { ";
 			ssFontSetting << "font-family: " << pango_font_description_get_family(pfd) <<  "; ";
@@ -1690,11 +1664,11 @@ void ListBoxX::SetFont(const Font *font) {
 			}
 			ssFontSetting << "font-weight:"<< pango_font_description_get_weight(pfd) << "; ";
 			ssFontSetting << "}";
-			gtk_css_provider_load_from_data(GTK_CSS_PROVIDER(cssProvider),
+			gtk_css_provider_load_from_data(GTK_CSS_PROVIDER(cssProvider.get()),
 							ssFontSetting.str().c_str(), -1, nullptr);
 		}
 #else
-		gtk_widget_modify_font(PWidget(list), PFont(font)->pfd);
+		gtk_widget_modify_font(PWidget(list), PFont(font)->fd.get());
 #endif
 		gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT(renderer), -1);
 		gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT(renderer), 1);
@@ -1778,9 +1752,7 @@ PRectangle ListBoxX::GetDesiredRect() {
 #endif
 		rc.bottom = height;
 
-		int width = maxItemCharacters;
-		if (width < 12)
-			width = 12;
+		const unsigned int width = std::max(maxItemCharacters, 12U);
 		rc.right = width * (aveCharWidth + aveCharWidth / 3);
 		// Add horizontal padding and borders
 		int horizontal_separator=0;
@@ -1877,7 +1849,7 @@ void ListBoxX::Append(char *s, int type) {
 		gtk_list_store_set(GTK_LIST_STORE(store), &iter,
 				   TEXT_COLUMN, s, -1);
 	}
-	const size_t len = strlen(s);
+	const unsigned int len = static_cast<unsigned int>(strlen(s));
 	if (maxItemCharacters < len)
 		maxItemCharacters = len;
 }
@@ -1913,7 +1885,7 @@ void ListBoxX::Select(int n) {
 		GtkAdjustment *adj =
 			gtk_tree_view_get_vadjustment(GTK_TREE_VIEW(list));
 #endif
-		gfloat value = (static_cast<gfloat>(n) / total) * (gtk_adjustment_get_upper(adj) - gtk_adjustment_get_lower(adj))
+		gdouble value = (static_cast<gdouble>(n) / total) * (gtk_adjustment_get_upper(adj) - gtk_adjustment_get_lower(adj))
 			       + gtk_adjustment_get_lower(adj) - gtk_adjustment_get_page_size(adj) / 2;
 		// Get cell height
 		const int row_height = GetRowHeight();
@@ -2087,7 +2059,7 @@ void Menu::Destroy() noexcept {
 
 #if !GTK_CHECK_VERSION(3,22,0)
 static void MenuPositionFunc(GtkMenu *, gint *x, gint *y, gboolean *, gpointer userData) noexcept {
-	sptr_t intFromPointer = GPOINTER_TO_INT(userData);
+	const gint intFromPointer = GPOINTER_TO_INT(userData);
 	*x = intFromPointer & 0xffff;
 	*y = intFromPointer >> 16;
 }
