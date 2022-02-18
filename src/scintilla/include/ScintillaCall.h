@@ -682,6 +682,8 @@ public:
 	Position IndicatorEnd(int indicator, Position pos);
 	void SetPositionCache(int size);
 	int PositionCache();
+	void SetLayoutThreads(int threads);
+	int LayoutThreads();
 	void CopyAllowLine();
 	void *CharacterPointer();
 	void *RangePointer(Position start, Position lengthRange);

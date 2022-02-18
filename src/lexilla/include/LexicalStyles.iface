@@ -171,6 +171,7 @@ val SCE_P_FSTRING=16
 val SCE_P_FCHARACTER=17
 val SCE_P_FTRIPLE=18
 val SCE_P_FTRIPLEDOUBLE=19
+val SCE_P_ATTRIBUTE=20
 # Lexical states for SCLEX_CPP
 # Lexical states for SCLEX_BULLANT
 # Lexical states for SCLEX_COBOL

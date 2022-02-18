@@ -194,9 +194,12 @@ void ColouriseBatchDoc(
 				Sci_PositionU wbo = 0;		// Word Buffer Offset - also Special Keyword Buffer Length
 
 				// Check for Comment - return if found
-				if ((CompareCaseInsensitive(wordBuffer, "rem") == 0) && continueProcessing) {
-					styler.ColourTo(endPos, SCE_BAT_COMMENT);
-					break;
+				if (continueProcessing) {
+					if ((CompareCaseInsensitive(wordBuffer, "rem") == 0) || (wordBuffer[0] == ':' && wordBuffer[1] == ':')) {
+						styler.ColourTo(startLine + offset - strlen(wordBuffer) - 1, SCE_BAT_DEFAULT);
+						styler.ColourTo(endPos, SCE_BAT_COMMENT);
+						break;
+					}
 				}
 				// Check for Separator
 				if (IsBSeparator(wordBuffer[0])) {

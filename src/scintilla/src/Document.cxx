@@ -1576,6 +1576,9 @@ Sci::Position Document::GetColumn(Sci::Position pos) {
 				return column;
 			} else if (i >= Length()) {
 				return column;
+			} else if (UTF8IsAscii(ch)) {
+				column++;
+				i++;
 			} else {
 				column++;
 				i = NextPosition(i, 1);

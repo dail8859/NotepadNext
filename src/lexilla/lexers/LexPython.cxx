@@ -231,6 +231,8 @@ struct OptionsPython {
 	bool foldQuotes;
 	bool foldCompact;
 	bool unicodeIdentifiers;
+	int identifierAttributes;
+	int decoratorAttributes;
 
 	OptionsPython() noexcept {
 		whingeLevel = 0;
@@ -244,6 +246,8 @@ struct OptionsPython {
 		foldQuotes = false;
 		foldCompact = false;
 		unicodeIdentifiers = true;
+		identifierAttributes = 0;
+		decoratorAttributes = 0;
 	}
 
 	literalsAllowed AllowedLiterals() const noexcept {
@@ -302,6 +306,12 @@ struct OptionSetPython : public OptionSet<OptionsPython> {
 		DefineProperty("lexer.python.unicode.identifiers", &OptionsPython::unicodeIdentifiers,
 			       "Set to 0 to not recognise Python 3 Unicode identifiers.");
 
+		DefineProperty("lexer.python.identifier.attributes", &OptionsPython::identifierAttributes,
+			       "Set to 1 to recognise Python identifier attributes.");
+
+		DefineProperty("lexer.python.decorator.attributes", &OptionsPython::decoratorAttributes,
+			       "Set to 1 to recognise Python decorator attributes.");
+
 		DefineWordListSets(pythonWordListDesc);
 	}
 };
@@ -330,6 +340,7 @@ LexicalClass lexicalClasses[] = {
 	17, "SCE_P_FCHARACTER", "literal string interpolated", "Single quoted f-string",
 	18, "SCE_P_FTRIPLE", "literal string interpolated", "Triple quoted f-string",
 	19, "SCE_P_FTRIPLEDOUBLE", "literal string interpolated", "Triple double quoted f-string",
+	20, "SCE_P_ATTRIBUTE", "identifier", "Attribute of identifier",
 };
 
 }
@@ -640,6 +651,43 @@ void SCI_METHOD LexerPython::Lex(Sci_PositionU startPos, Sci_Position length, in
 					const int subStyle = classifierIdentifiers.ValueFor(s);
 					if (subStyle >= 0) {
 						style = subStyle;
+					}
+					if (options.identifierAttributes > 0 || options.decoratorAttributes > 0) {
+						// Does the user even want attributes styled?
+						Sci_Position pos = styler.GetStartSegment() - 1;
+						unsigned char ch = styler.SafeGetCharAt(pos, '\0');
+						while (ch != '\0' && (ch == '.' || ch == ' ' || ch == '\\' || ch == '\t' || ch == '\n' || ch == '\r')) {
+							// Backwards search for a . while only allowing certain valid characters
+							if (IsAWordChar(ch, options.unicodeIdentifiers)) {
+								break;
+							}
+							pos--;
+							ch = styler.SafeGetCharAt(pos, '\0');
+						}
+						if (pos < 0 || ch == '.') {
+							// Is this an attribute we could style? if it is, do as asked
+							bool isComment = false;
+							bool isDecoratorAttribute = false;
+							const Sci_Position attrLine = styler.GetLine(pos);
+							for (Sci_Position i = styler.LineStart(attrLine); i < pos; i++) {
+								const char attrCh = styler[i];
+								if (attrCh == '@')
+									isDecoratorAttribute = true;
+								if (attrCh == '#')
+									isComment = true;
+								// Detect if this attribute belongs to a decorator
+								if (!(ch == ' ' || ch == '\t'))
+									break;
+							}
+							if (((isDecoratorAttribute) && (!isComment)) && (((options.decoratorAttributes == 1)  && (style == SCE_P_IDENTIFIER)) || (options.decoratorAttributes == 2))){
+								// Style decorator attributes as decorators but respect already styled identifiers (unless requested to ignore already styled identifiers)
+								style = SCE_P_DECORATOR;
+							}
+							if (((!isDecoratorAttribute) && (!isComment)) && (((options.identifierAttributes == 1) && (style == SCE_P_IDENTIFIER)) || (options.identifierAttributes == 2))){
+								// Style attributes and ignore decorator attributes but respect already styled identifiers (unless requested to ignore already styled identifiers)
+								style = SCE_P_ATTRIBUTE;
+							}
+						}
 					}
 				}
 				sc.ChangeState(style);

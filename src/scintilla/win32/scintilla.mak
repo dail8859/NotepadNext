@@ -138,7 +138,7 @@ $(LIBSCI): $(COMPONENT_OBJS)
 
 !IF EXISTS(nmdeps.mak)
 
-# Protect with !IF EXISTS to handle accidental deletion - just 'nmake -f scintilla.mak deps'
+# Protect with !IF EXISTS to handle accidental deletion - just 'nmake -f scintilla.mak depend'
 
 !INCLUDE nmdeps.mak
 

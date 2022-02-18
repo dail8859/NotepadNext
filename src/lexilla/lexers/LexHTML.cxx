@@ -99,15 +99,13 @@ script_type segIsScriptingIndicator(Accessor &styler, Sci_PositionU start, Sci_P
 	char s[100];
 	GetTextSegment(styler, start, end, s, sizeof(s));
 	//Platform::DebugPrintf("Scripting indicator [%s]\n", s);
-	if (strstr(s, "src"))	// External script
-		return eScriptNone;
 	if (strstr(s, "vbs"))
 		return eScriptVBS;
 	if (strstr(s, "pyth"))
 		return eScriptPython;
-	if (strstr(s, "javas"))
-		return eScriptJS;
-	if (strstr(s, "jscr"))
+	// https://html.spec.whatwg.org/multipage/scripting.html#attr-script-type
+	// https://mimesniff.spec.whatwg.org/#javascript-mime-type
+	if (strstr(s, "javas") || strstr(s, "ecmas") || strstr(s, "module") || strstr(s, "jscr"))
 		return eScriptJS;
 	if (strstr(s, "php"))
 		return eScriptPHP;
@@ -183,9 +181,8 @@ int stateForPrintState(int StateToPrint) {
 	return state;
 }
 
-inline bool IsNumber(Sci_PositionU start, Accessor &styler) {
-	return IsADigit(styler[start]) || (styler[start] == '.') ||
-	       (styler[start] == '-') || (styler[start] == '#');
+constexpr bool IsNumberChar(char ch) noexcept {
+	return IsADigit(ch) || ch == '.' || ch == '-' || ch == '#';
 }
 
 inline bool isStringState(int state) {
@@ -254,20 +251,27 @@ inline bool isCommentASPState(int state) {
 	return bResult;
 }
 
-void classifyAttribHTML(Sci_PositionU start, Sci_PositionU end, const WordList &keywords, Accessor &styler) {
-	const bool wordIsNumber = IsNumber(start, styler);
+bool classifyAttribHTML(script_mode inScriptType, Sci_PositionU start, Sci_PositionU end, const WordList &keywords, Accessor &styler) {
 	char chAttr = SCE_H_ATTRIBUTEUNKNOWN;
-	if (wordIsNumber) {
+	bool isLanguageType = false;
+	if (IsNumberChar(styler[start])) {
 		chAttr = SCE_H_NUMBER;
 	} else {
-		std::string s = GetStringSegment(styler, start, end);
+		const std::string s = GetStringSegment(styler, start, end);
 		if (keywords.InList(s.c_str()))
 			chAttr = SCE_H_ATTRIBUTE;
+		if (inScriptType == eNonHtmlScript) {
+			// see https://html.spec.whatwg.org/multipage/scripting.html#script-processing-model
+			if (s == "type" || s == "language") {
+				isLanguageType = true;
+			}
+		}
 	}
 	if ((chAttr == SCE_H_ATTRIBUTEUNKNOWN) && !keywords)
 		// No keywords -> all are known
 		chAttr = SCE_H_ATTRIBUTE;
 	styler.ColourTo(end, chAttr);
+	return isLanguageType;
 }
 
 // https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements-core-concepts
@@ -1129,6 +1133,7 @@ void SCI_METHOD LexerHTML::Lex(Sci_PositionU startPos, Sci_Position length, int 
 	script_type aspScript = static_cast<script_type>((lineState >> 4) & 0x0F); // 4 bits of script name
 	script_type clientScript = static_cast<script_type>((lineState >> 8) & 0x0F); // 4 bits of script name
 	int beforePreProc = (lineState >> 12) & 0xFF; // 8 bits of state
+	bool isLanguageType = (lineState >> 20) & 1; // type or language attribute for script tag
 
 	script_type scriptLanguage = ScriptOfState(state);
 	// If eNonHtmlScript coincides with SCE_H_COMMENT, assume eScriptComment
@@ -1210,7 +1215,9 @@ void SCI_METHOD LexerHTML::Lex(Sci_PositionU startPos, Sci_Position length, int 
 			case eScriptPHP:
 				//not currently supported				case eScriptVBS:
 
-				if ((state != SCE_HPHP_COMMENT) && (state != SCE_HPHP_COMMENTLINE) && (state != SCE_HJ_COMMENT) && (state != SCE_HJ_COMMENTLINE) && (state != SCE_HJ_COMMENTDOC) && (!isStringState(state))) {
+				if (!(state == SCE_HPHP_COMMENT || state == SCE_HPHP_COMMENTLINE) &&
+				    !(state == SCE_HJ_REGEX || state == SCE_HJ_COMMENT || state == SCE_HJ_COMMENTLINE || state == SCE_HJ_COMMENTDOC) &&
+				    !isStringState(state)) {
 				//Platform::DebugPrintf("state=%d, StateToPrint=%d, initStyle=%d\n", state, StateToPrint, initStyle);
 				//if ((state == SCE_HPHP_OPERATOR) || (state == SCE_HPHP_DEFAULT) || (state == SCE_HJ_SYMBOLS) || (state == SCE_HJ_START) || (state == SCE_HJ_DEFAULT)) {
 					if (ch == '#') {
@@ -1282,7 +1289,8 @@ void SCI_METHOD LexerHTML::Lex(Sci_PositionU startPos, Sci_Position length, int 
 			                    ((tagClosing ? 1 : 0) << 3) |
 			                    ((aspScript & 0x0F) << 4) |
 			                    ((clientScript & 0x0F) << 8) |
-			                    ((beforePreProc & 0xFF) << 12));
+			                    ((beforePreProc & 0xFF) << 12) |
+			                    ((isLanguageType ? 1 : 0) << 20));
 			lineCurrent++;
 			lineStartVisibleChars = 0;
 		}
@@ -1355,6 +1363,7 @@ void SCI_METHOD LexerHTML::Lex(Sci_PositionU startPos, Sci_Position length, int 
 				inScriptType = eHtml;
 				scriptLanguage = eScriptNone;
 				clientScript = eScriptJS;
+				isLanguageType = false;
 				i += 2;
 				visibleChars += 2;
 				tagClosing = true;
@@ -1880,6 +1889,7 @@ void SCI_METHOD LexerHTML::Lex(Sci_PositionU startPos, Sci_Position length, int 
 					} else {
 						scriptLanguage = eScriptNone;
 					}
+					isLanguageType = false;
 					eClass = SCE_H_TAG;
 				}
 				if (ch == '>') {
@@ -1925,14 +1935,7 @@ void SCI_METHOD LexerHTML::Lex(Sci_PositionU startPos, Sci_Position length, int 
 			break;
 		case SCE_H_ATTRIBUTE:
 			if (!setAttributeContinue.Contains(ch)) {
-				if (inScriptType == eNonHtmlScript) {
-					const int scriptLanguagePrev = scriptLanguage;
-					clientScript = segIsScriptingIndicator(styler, styler.GetStartSegment(), i - 1, scriptLanguage);
-					scriptLanguage = clientScript;
-					if ((scriptLanguagePrev != scriptLanguage) && (scriptLanguage == eScriptNone))
-						inScriptType = eHtml;
-				}
-				classifyAttribHTML(styler.GetStartSegment(), i - 1, keywords, styler);
+				isLanguageType = classifyAttribHTML(inScriptType, styler.GetStartSegment(), i - 1, keywords, styler);
 				if (ch == '>') {
 					styler.ColourTo(i, SCE_H_TAG);
 					if (inScriptType == eNonHtmlScript) {
@@ -2007,8 +2010,10 @@ void SCI_METHOD LexerHTML::Lex(Sci_PositionU startPos, Sci_Position length, int 
 			break;
 		case SCE_H_DOUBLESTRING:
 			if (ch == '\"') {
-				if (inScriptType == eNonHtmlScript) {
+				if (isLanguageType) {
 					scriptLanguage = segIsScriptingIndicator(styler, styler.GetStartSegment(), i, scriptLanguage);
+					clientScript = scriptLanguage;
+					isLanguageType = false;
 				}
 				styler.ColourTo(i, SCE_H_DOUBLESTRING);
 				state = SCE_H_OTHER;
@@ -2016,8 +2021,10 @@ void SCI_METHOD LexerHTML::Lex(Sci_PositionU startPos, Sci_Position length, int 
 			break;
 		case SCE_H_SINGLESTRING:
 			if (ch == '\'') {
-				if (inScriptType == eNonHtmlScript) {
+				if (isLanguageType) {
 					scriptLanguage = segIsScriptingIndicator(styler, styler.GetStartSegment(), i, scriptLanguage);
+					clientScript = scriptLanguage;
+					isLanguageType = false;
 				}
 				styler.ColourTo(i, SCE_H_SINGLESTRING);
 				state = SCE_H_OTHER;
@@ -2031,7 +2038,7 @@ void SCI_METHOD LexerHTML::Lex(Sci_PositionU startPos, Sci_Position length, int 
 				} else if (ch == '\'' && chPrev == '=') {
 					state = SCE_H_SINGLESTRING;
 				} else {
-					if (IsNumber(styler.GetStartSegment(), styler)) {
+					if (IsNumberChar(styler[styler.GetStartSegment()])) {
 						styler.ColourTo(i - 1, SCE_H_NUMBER);
 					} else {
 						styler.ColourTo(i - 1, StateToPrint);

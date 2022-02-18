@@ -607,6 +607,8 @@ enum class Message {
 	IndicatorEnd = 2509,
 	SetPositionCache = 2514,
 	GetPositionCache = 2515,
+	SetLayoutThreads = 2775,
+	GetLayoutThreads = 2776,
 	CopyAllowLine = 2519,
 	GetCharacterPointer = 2520,
 	GetRangePointer = 2643,

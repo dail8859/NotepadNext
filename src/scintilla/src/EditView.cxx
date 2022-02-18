@@ -25,6 +25,9 @@
 #include <iterator>
 #include <memory>
 #include <chrono>
+#include <atomic>
+#include <thread>
+#include <future>
 
 #include "ScintillaTypes.h"
 #include "ScintillaMessages.h"
@@ -191,7 +194,9 @@ EditView::EditView() {
 	additionalCaretsVisible = true;
 	imeCaretBlockOverride = false;
 	llc.SetLevel(LineCache::Caret);
-	posCache.SetSize(0x400);
+	posCache = CreatePositionCache();
+	posCache->SetSize(0x400);
+	maxLayoutThreads = 1;
 	tabArrowHeight = 4;
 	customDrawTabArrow = nullptr;
 	customDrawWrapMarker = nullptr;
@@ -215,6 +220,14 @@ bool EditView::SetPhasesDraw(int phases) noexcept {
 
 bool EditView::LinesOverlap() const noexcept {
 	return phasesDraw == PhasesDraw::Multiple;
+}
+
+void EditView::SetLayoutThreads(unsigned int threads) noexcept {
+	maxLayoutThreads = std::clamp(threads, 1U, std::thread::hardware_concurrency());
+}
+
+unsigned int EditView::GetLayoutThreads() const noexcept {
+	return maxLayoutThreads;
 }
 
 void EditView::ClearAllTabstops() noexcept {
@@ -372,6 +385,61 @@ bool ViewIsASCII(std::string_view text) {
 	return std::all_of(text.cbegin(), text.cend(), IsASCII);
 }
 
+void LayoutSegments(IPositionCache *pCache,
+	Surface *surface,
+	const ViewStyle &vstyle,
+	LineLayout *ll, 
+	const std::vector<TextSegment> &segments,
+	std::atomic<uint32_t> &nextIndex,
+	const bool textUnicode,
+	const bool multiThreaded) {
+	while (true) {
+		const uint32_t i = nextIndex.fetch_add(1, std::memory_order_acq_rel);
+		if (i >= segments.size()) {
+			break;
+		}
+		const TextSegment &ts = segments[i];
+		if (vstyle.styles[ll->styles[ts.start]].visible) {
+			if (ts.representation) {
+				XYPOSITION representationWidth = vstyle.controlCharWidth;
+				if (ll->chars[ts.start] == '\t') {
+					// Tab is a special case of representation, taking a variable amount of space
+					// which will be filled in later.
+					representationWidth = 0;
+				} else {
+					if (representationWidth <= 0.0) {
+						assert(ts.representation->stringRep.length() <= Representation::maxLength);
+						XYPOSITION positionsRepr[Representation::maxLength + 1];
+						// ts.representation->stringRep is UTF-8 which only matches cache if document is UTF-8
+						// or it only contains ASCII which is a subset of all currently supported encodings.
+						if (textUnicode || ViewIsASCII(ts.representation->stringRep)) {
+							pCache->MeasureWidths(surface, vstyle, StyleControlChar, ts.representation->stringRep,
+								positionsRepr, multiThreaded);
+						} else {
+							surface->MeasureWidthsUTF8(vstyle.styles[StyleControlChar].font.get(), ts.representation->stringRep, positionsRepr);
+						}
+						representationWidth = positionsRepr[ts.representation->stringRep.length() - 1];
+						if (FlagSet(ts.representation->appearance, RepresentationAppearance::Blob)) {
+							representationWidth += vstyle.ctrlCharPadding;
+						}
+					}
+				}
+				for (int ii = 0; ii < ts.length; ii++) {
+					ll->positions[ts.start + 1 + ii] = representationWidth;
+				}
+			} else {
+				if ((ts.length == 1) && (' ' == ll->chars[ts.start])) {
+					// Over half the segments are single characters and of these about half are space characters.
+					ll->positions[ts.start + 1] = vstyle.styles[ll->styles[ts.start]].spaceWidth;
+				} else {
+					pCache->MeasureWidths(surface, vstyle, ll->styles[ts.start],
+						std::string_view(&ll->chars[ts.start], ts.length), &ll->positions[ts.start + 1], multiThreaded);
+				}
+			}
+		}
+	}
+}
+
 }
 
 /**
@@ -382,7 +450,6 @@ bool ViewIsASCII(std::string_view text) {
 void EditView::LayoutLine(const EditModel &model, Surface *surface, const ViewStyle &vstyle, LineLayout *ll, int width) {
 	if (!ll)
 		return;
-
 	const Sci::Line line = ll->LineNumber();
 	PLATFORM_ASSERT(line < model.pdoc->LinesTotal());
 	PLATFORM_ASSERT(ll->chars);
@@ -464,54 +531,69 @@ void EditView::LayoutLine(const EditModel &model, Surface *surface, const ViewSt
 		ll->positions[0] = 0;
 		bool lastSegItalics = false;
 
+		std::vector<TextSegment> segments;
 		BreakFinder bfLayout(ll, nullptr, Range(0, numCharsInLine), posLineStart, 0, BreakFinder::BreakFor::Text, model.pdoc, &model.reprs, nullptr);
 		while (bfLayout.More()) {
+			segments.push_back(bfLayout.Next());
+		}
 
-			const TextSegment ts = bfLayout.Next();
+		std::fill(&ll->positions[0], &ll->positions[numCharsInLine], 0.0f);
 
-			std::fill(&ll->positions[ts.start + 1], &ll->positions[ts.end() + 1], 0.0f);
-			if (vstyle.styles[ll->styles[ts.start]].visible) {
-				if (ts.representation) {
-					XYPOSITION representationWidth = vstyle.controlCharWidth;
-					if (ll->chars[ts.start] == '\t') {
-						// Tab is a special case of representation, taking a variable amount of space
-						const XYPOSITION x = ll->positions[ts.start];
-						representationWidth = NextTabstopPos(line, x, vstyle.tabWidth) - ll->positions[ts.start];
-					} else {
-						if (representationWidth <= 0.0) {
-							assert(ts.representation->stringRep.length() <= Representation::maxLength);
-							XYPOSITION positionsRepr[Representation::maxLength+1];
-							// ts.representation->stringRep is UTF-8 which only matches cache if document is UTF-8
-							// or it only contains ASCII which is a subset of all currently supported encodings.
-							if ((CpUtf8 == model.pdoc->dbcsCodePage) || ViewIsASCII(ts.representation->stringRep)) {
-								posCache.MeasureWidths(surface, vstyle, StyleControlChar, ts.representation->stringRep,
-									positionsRepr);
-							} else {
-								surface->MeasureWidthsUTF8(vstyle.styles[StyleControlChar].font.get(), ts.representation->stringRep, positionsRepr);
-							}
-							representationWidth = positionsRepr[ts.representation->stringRep.length() - 1];
-							if (FlagSet(ts.representation->appearance, RepresentationAppearance::Blob)) {
-								representationWidth += vstyle.ctrlCharPadding;
-							}
-						}
-					}
-					for (int ii = 0; ii < ts.length; ii++)
-						ll->positions[ts.start + 1 + ii] = representationWidth;
-				} else {
-					if ((ts.length == 1) && (' ' == ll->chars[ts.start])) {
-						// Over half the segments are single characters and of these about half are space characters.
-						ll->positions[ts.start + 1] = vstyle.styles[ll->styles[ts.start]].spaceWidth;
-					} else {
-						posCache.MeasureWidths(surface, vstyle, ll->styles[ts.start],
-							std::string_view(&ll->chars[ts.start], ts.length), &ll->positions[ts.start + 1]);
-					}
-				}
-				lastSegItalics = (!ts.representation) && ((ll->chars[ts.end() - 1] != ' ') && vstyle.styles[ll->styles[ts.start]].italic);
+		if (!segments.empty()) {
+
+			const size_t threadsForLength = std::max(1, numCharsInLine / bytesPerLayoutThread);
+			size_t threads = std::min<size_t>({ segments.size(), threadsForLength, maxLayoutThreads });
+			if (!surface->SupportsFeature(Supports::ThreadSafeMeasureWidths)) {
+				threads = 1;
 			}
 
-			for (Sci::Position posToIncrease = ts.start + 1; posToIncrease <= ts.end(); posToIncrease++) {
-				ll->positions[posToIncrease] += ll->positions[ts.start];
+			std::atomic<uint32_t> nextIndex = 0;
+
+			const bool textUnicode = CpUtf8 == model.pdoc->dbcsCodePage;
+			const bool multiThreaded = threads > 1;
+			IPositionCache *pCache = posCache.get();
+
+			// If only 1 thread needed then use the main thread, else spin up multiple
+			const std::launch policy = (multiThreaded) ? std::launch::async : std::launch::deferred;
+
+			std::vector<std::future<void>> futures;
+			for (size_t th = 0; th < threads; th++) {
+				// Find relative positions of everything except for tabs
+				std::future<void> fut = std::async(policy,
+					[pCache, surface, &vstyle, &ll, &segments, &nextIndex, textUnicode, multiThreaded]() {
+					LayoutSegments(pCache, surface, vstyle, ll, segments, nextIndex, textUnicode, multiThreaded);
+				});
+				futures.push_back(std::move(fut));
 			}
+			for (const std::future<void> &f : futures) {
+				f.wait();
+			}
+		}
+
+		// Accumulate absolute positions from relative positions within segments and expand tabs
+		XYPOSITION xPosition = 0.0;
+		size_t iByte = 0;
+		ll->positions[iByte++] = xPosition;
+		for (const TextSegment &ts : segments) {
+			if (vstyle.styles[ll->styles[ts.start]].visible &&
+				ts.representation &&
+				(ll->chars[ts.start] == '\t')) {
+				// Simple visible tab, go to next tab stop
+				const XYPOSITION startTab = ll->positions[ts.start];
+				const XYPOSITION nextTab = NextTabstopPos(line, startTab, vstyle.tabWidth);
+				xPosition += nextTab - startTab;
+			}
+			const XYPOSITION xBeginSegment = xPosition;
+			for (int i = 0; i < ts.length; i++) {
+				xPosition = ll->positions[iByte] + xBeginSegment;
+				ll->positions[iByte++] = xPosition;
+			}
+		}
+
+		if (!segments.empty()) {
+			// Not quite the same as before which would effectively ignore trailing invisible segments
+			const TextSegment &ts = segments.back();
+			lastSegItalics = (!ts.representation) && ((ll->chars[ts.end() - 1] != ' ') && vstyle.styles[ll->styles[ts.start]].italic);
 		}
 
 		// Small hack to make lines that end with italics not cut off the edge of the last character
@@ -2587,7 +2669,7 @@ static ColourRGBA InvertedLight(ColourRGBA orig) noexcept {
 Sci::Position EditView::FormatRange(bool draw, const RangeToFormat *pfr, Surface *surface, Surface *surfaceMeasure,
 	const EditModel &model, const ViewStyle &vs) {
 	// Can't use measurements cached for screen
-	posCache.Clear();
+	posCache->Clear();
 
 	ViewStyle vsPrint(vs);
 	vsPrint.technology = Technology::Default;
@@ -2756,7 +2838,7 @@ Sci::Position EditView::FormatRange(bool draw, const RangeToFormat *pfr, Surface
 	}
 
 	// Clear cache so measurements are not used for screen
-	posCache.Clear();
+	posCache->Clear();
 
 	return nPrintPos;
 }
