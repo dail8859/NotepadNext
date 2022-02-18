@@ -184,24 +184,7 @@ bool NotepadNextApplication::init()
 
 QString NotepadNextApplication::getFileDialogFilter() const
 {
-    // TODO: cache the result?
-
-    QString filter = getLuaState()->executeAndReturn<QString>(
-                R"=(
-                local filter = {}
-                for name, L in pairs(languages) do
-                    local extensions = {}
-                    for _, ext in ipairs(L.extensions) do
-                        extensions[#extensions + 1] = "*." .. ext
-                    end
-                    filter[#filter + 1] = name .. " Files (" .. table.concat(extensions, " ") .. ")"
-                end
-                table.sort(filter, function (a, b) return a:lower() < b:lower() end)
-                table.insert(filter, 1, "All files (*)")
-                return table.concat(filter, ";;")
-                )=");
-
-        return filter;
+    return getLuaState()->executeAndReturn<QString>("return DialogFilters()");
 }
 
 QStringList NotepadNextApplication::getLanguages() const

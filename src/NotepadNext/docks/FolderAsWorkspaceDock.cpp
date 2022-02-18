@@ -35,7 +35,9 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
     ui->treeView->header()->hideSection(3);
 
     connect(ui->treeView, &QTreeView::doubleClicked, this, [=](const QModelIndex &index) {
-        emit fileDoubleClicked(model->filePath(index));
+        if (!model->isDir(index)) {
+            emit fileDoubleClicked(model->filePath(index));
+        }
     });
 }
 
@@ -48,4 +50,9 @@ void FolderAsWorkspaceDock::setRootPath(const QString dir)
 {
     model->setRootPath(dir);
     ui->treeView->setRootIndex(model->index(dir));
+}
+
+QString FolderAsWorkspaceDock::rootPath() const
+{
+    return model->rootPath();
 }

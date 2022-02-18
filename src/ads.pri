@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
 
-QT += core gui widgets
+QT += core gui widgets gui-private
 
 windows {
 	# MinGW
