@@ -19,6 +19,9 @@ def Generate():
 	# Create the dependencies file for g++
 	deps = Dependencies.FindDependencies(["../win32/*.cxx"] + sources,  ["../win32"] + includes, ".o", "../win32/")
 
+	# Place the objects in $(DIR_O)
+	deps = [["$(DIR_O)/"+obj, headers] for obj, headers in deps]
+
 	Dependencies.UpdateDependencies("../win32/deps.mak", deps, topComment)
 
 	# Create the dependencies file for MSVC

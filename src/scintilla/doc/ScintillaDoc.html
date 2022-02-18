@@ -50,6 +50,7 @@
 	table.standard tr:nth-child(even) {background: #F0F0F0}
 	table.standard td {
 		padding: 1px 5px 1px 5px;
+		vertical-align:top;
 	}
 	tr.section {
 		border-top:1px solid #808080;
@@ -128,7 +129,7 @@
 
     <h1>Scintilla Documentation</h1>
 
-    <p>Last edited 12 November 2021 NH</p>
+    <p>Last edited 2 February 2021 NH</p>
 
     <p style="background:#90F0C0">Scintilla 5 has moved the lexers from Scintilla into a new
     <a href="Lexilla.html">Lexilla</a> project.<br />
@@ -4691,13 +4692,15 @@ struct Sci_TextToFind {
         <tr>
           <td><code>SC_SUPPORTS_LINE_DRAWS_FINAL</code></td>
           <td>0</td>
-          <td>Whether drawing a line draws its final position. Only false on Win32 GDI.</td>
+          <td>Whether drawing a line draws its final position.<br />
+          Only false on Win32 GDI.</div></td>
         </tr>
 
         <tr>
           <td><code>SC_SUPPORTS_PIXEL_DIVISIONS</code></td>
           <td>1</td>
-          <td>Are logical pixels larger than physical pixels? Currently only true for macOS Cocoa with 'retina' displays.
+          <td>Are logical pixels larger than physical pixels?<br />
+          Currently only true for macOS Cocoa with 'retina' displays.<br />
           When true, creating pixmaps at twice the resolution can produce clearer output with less blur.</td>
         </tr>
 
@@ -4717,6 +4720,14 @@ struct Sci_TextToFind {
           <td><code>SC_SUPPORTS_PIXEL_MODIFICATION</code></td>
           <td>4</td>
           <td>Can individual pixels be modified? This is false for character cell platforms like curses.</td>
+        </tr>
+
+        <tr>
+          <td><code>SC_SUPPORTS_THREAD_SAFE_MEASURE_WIDTHS</code></td>
+          <td>5</td>
+          <td>Can text measurement be safely performed concurrently on multiple threads?<br />
+          Currently only true for macOS Cocoa, DirectWrite on Win32, and GTK on X or Wayland.
+          </td>
         </tr>
 
       </tbody>
@@ -7438,6 +7449,8 @@ sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
      <a class="message" href="#SCI_GETLAYOUTCACHE">SCI_GETLAYOUTCACHE &rarr; int</a><br />
      <a class="message" href="#SCI_SETPOSITIONCACHE">SCI_SETPOSITIONCACHE(int size)</a><br />
      <a class="message" href="#SCI_GETPOSITIONCACHE">SCI_GETPOSITIONCACHE &rarr; int</a><br />
+     <a class="message" href="#SCI_SETLAYOUTTHREADS">SCI_SETLAYOUTTHREADS(int threads)</a><br />
+     <a class="message" href="#SCI_GETLAYOUTTHREADS">SCI_GETLAYOUTTHREADS &rarr; int</a><br />
      <a class="message" href="#SCI_LINESSPLIT">SCI_LINESSPLIT(int pixelWidth)</a><br />
      <a class="message" href="#SCI_LINESJOIN">SCI_LINESJOIN</a><br />
      <a class="message" href="#SCI_WRAPCOUNT">SCI_WRAPCOUNT(line docLine) &rarr; line</a><br />
@@ -7675,6 +7688,21 @@ sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
      The position cache stores position information for short runs of text
      so that their layout can be determined more quickly if the run recurs.
      The size in entries of this cache can be set with <code>SCI_SETPOSITIONCACHE</code>.</p>
+
+    <p><b id="SCI_SETLAYOUTTHREADS">SCI_SETLAYOUTTHREADS(int threads)</b><br />
+     <b id="SCI_GETLAYOUTTHREADS">SCI_GETLAYOUTTHREADS &rarr; int</b><br />
+     The time taken to measure text runs on wide lines can be improved by performing the task
+     concurrently on multiple threads when
+     <a class="seealso" href="#SCI_SUPPORTSFEATURE">SC_SUPPORTS_THREAD_SAFE_MEASURE_WIDTHS</a>
+     is available.
+     This can be a dramatic improvement - a 4 core processor is often able to reduce text layout time to just over one
+     quarter of the single-threaded time.</p>
+     <p>The default is to use just the main thread but applications may call <code>SCI_SETLAYOUTTHREADS</code>
+     to specify the maximum number of threads to use.
+     The number of threads is limited to the hardware concurrency of the system -
+     for a 4 core processor with hyper-threading that would be 8.
+     If an application just wants maximum concurrency then call with a large number
+     <code>SCI_SETLAYOUTTHREADS(1000)</code> and that will be reduced to a reasonable value.</p>
 
     <p><b id="SCI_LINESSPLIT">SCI_LINESSPLIT(int pixelWidth)</b><br />
      Split a range of lines indicated by the target into lines that are at most pixelWidth wide.

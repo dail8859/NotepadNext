@@ -36,7 +36,7 @@ class ScintillaGTK : public ScintillaBase {
 	SelectionText primary;
 	SelectionPosition posPrimary;
 
-	GdkEvent *evbtn;
+	UniqueGdkEvent evbtn;
 	guint buttonMouse;
 	bool capturedMouse;
 	bool dragWasDropped;
@@ -60,7 +60,7 @@ class ScintillaGTK : public ScintillaBase {
 	bool preeditInitialized;
 	Window wPreedit;
 	Window wPreeditDraw;
-	GtkIMContext *im_context;
+	UniqueIMContext im_context;
 	GUnicodeScript lastNonCommonScript;
 
 	GtkSettings *settings;

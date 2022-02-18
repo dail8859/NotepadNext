@@ -2568,6 +2568,14 @@ int ScintillaCall::PositionCache() {
 	return static_cast<int>(Call(Message::GetPositionCache));
 }
 
+void ScintillaCall::SetLayoutThreads(int threads) {
+	Call(Message::SetLayoutThreads, threads);
+}
+
+int ScintillaCall::LayoutThreads() {
+	return static_cast<int>(Call(Message::GetLayoutThreads));
+}
+
 void ScintillaCall::CopyAllowLine() {
 	Call(Message::CopyAllowLine);
 }

@@ -131,6 +131,7 @@
 #include "AutoComplete.h"
 #include "ScintillaBase.h"
 
+#include "Wrappers.h"
 #include "ScintillaGTK.h"
 #include "ScintillaGTKAccessible.h"
 

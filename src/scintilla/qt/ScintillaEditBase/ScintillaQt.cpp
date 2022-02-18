@@ -551,6 +551,7 @@ QByteArray ScintillaQt::BytesForDocument(const QString &text) const
 	}
 }
 
+namespace {
 
 class CaseFolderDBCS : public CaseFolderTable {
 	QTextCodec *codec;
@@ -577,6 +578,8 @@ public:
 		return 1;
 	}
 };
+
+}
 
 std::unique_ptr<CaseFolder> ScintillaQt::CaseFolderForEncoding()
 {

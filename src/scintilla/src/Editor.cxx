@@ -269,7 +269,7 @@ void Editor::InvalidateStyleData() {
 	vs.technology = technology;
 	DropGraphics();
 	view.llc.Invalidate(LineLayout::ValidLevel::invalid);
-	view.posCache.Clear();
+	view.posCache->Clear();
 }
 
 void Editor::InvalidateStyleRedraw() {
@@ -1500,8 +1500,10 @@ bool Editor::WrapOneLine(Surface *surface, Sci::Line lineToWrap) {
 		view.LayoutLine(*this, surface, vs, ll.get(), wrapWidth);
 		linesWrapped = ll->lines;
 	}
-	return pcs->SetHeight(lineToWrap, linesWrapped +
-		((vs.annotationVisible != AnnotationVisible::Hidden) ? pdoc->AnnotationLines(lineToWrap) : 0));
+	if (vs.annotationVisible != AnnotationVisible::Hidden) {
+		linesWrapped += pdoc->AnnotationLines(lineToWrap);
+	}
+	return pcs->SetHeight(lineToWrap, linesWrapped);
 }
 
 // Perform  wrapping for a subset of the lines needing wrapping.
@@ -1516,8 +1518,11 @@ bool Editor::WrapLines(WrapScope ws) {
 		if (wrapWidth != LineLayout::wrapWidthInfinite) {
 			wrapWidth = LineLayout::wrapWidthInfinite;
 			for (Sci::Line lineDoc = 0; lineDoc < pdoc->LinesTotal(); lineDoc++) {
-				pcs->SetHeight(lineDoc, 1 +
-					((vs.annotationVisible != AnnotationVisible::Hidden) ? pdoc->AnnotationLines(lineDoc) : 0));
+				int linesWrapped = 1;
+				if (vs.annotationVisible != AnnotationVisible::Hidden) {
+					linesWrapped += pdoc->AnnotationLines(lineDoc);
+				}
+				pcs->SetHeight(lineDoc, linesWrapped);
 			}
 			wrapOccurred = true;
 		}
@@ -1934,6 +1939,7 @@ void Editor::InsertCharacter(std::string_view sv, CharacterSource charSource) {
 		return;
 	}
 	FilterSelections();
+	bool wrapOccurred = false;
 	{
 		UndoGroup ug(pdoc, (sel.Count() > 1) || !sel.Empty() || inOverstrike);
 
@@ -1981,17 +1987,17 @@ void Editor::InsertCharacter(std::string_view sv, CharacterSource charSource) {
 					AutoSurface surface(this);
 					if (surface) {
 						if (WrapOneLine(surface, pdoc->SciLineFromPosition(positionInsert))) {
-							SetScrollBars();
-							SetVerticalScrollPos();
-							Redraw();
+							wrapOccurred = true;
 						}
 					}
 				}
 			}
 		}
 	}
-	if (Wrapping()) {
+	if (wrapOccurred) {
 		SetScrollBars();
+		SetVerticalScrollPos();
+		Redraw();
 	}
 	ThinRectangularRange();
 	// If in wrap mode rewrap current line so EnsureCaretVisible has accurate information
@@ -2944,8 +2950,8 @@ void Editor::PageMove(int direction, Selection::SelTypes selt, bool stuttered) {
 	if (topLineNew != topLine) {
 		SetTopLine(topLineNew);
 		MovePositionTo(newPos, selt);
-		Redraw();
 		SetVerticalScrollPos();
+		Redraw();
 	} else {
 		MovePositionTo(newPos, selt);
 	}
@@ -5290,6 +5296,8 @@ void Editor::SetAnnotationHeights(Sci::Line start, Sci::Line end) {
 				changedHeight = true;
 		}
 		if (changedHeight) {
+			SetScrollBars();
+			SetVerticalScrollPos();
 			Redraw();
 		}
 	}
@@ -6799,11 +6807,18 @@ sptr_t Editor::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) {
 		return static_cast<sptr_t>(view.llc.GetLevel());
 
 	case Message::SetPositionCache:
-		view.posCache.SetSize(wParam);
+		view.posCache->SetSize(wParam);
 		break;
 
 	case Message::GetPositionCache:
-		return view.posCache.GetSize();
+		return view.posCache->GetSize();
+
+	case Message::SetLayoutThreads:
+		view.SetLayoutThreads(static_cast<unsigned int>(wParam));
+		break;
+
+	case Message::GetLayoutThreads:
+		return view.GetLayoutThreads();
 
 	case Message::SetScrollWidth:
 		PLATFORM_ASSERT(wParam > 0);

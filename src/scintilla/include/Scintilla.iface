@@ -2535,6 +2535,12 @@ set void SetPositionCache=2514(int size,)
 # How many entries are allocated to the position cache?
 get int GetPositionCache=2515(,)
 
+# Set maximum number of threads used for layout
+set void SetLayoutThreads=2775(int threads,)
+
+# Get maximum number of threads used for layout
+get int GetLayoutThreads=2776(,)
+
 # Copy the selection, if selection empty copy the line with the caret
 fun void CopyAllowLine=2519(,)
 
@@ -3040,6 +3046,7 @@ val SC_SUPPORTS_PIXEL_DIVISIONS=1
 val SC_SUPPORTS_FRACTIONAL_STROKE_WIDTH=2
 val SC_SUPPORTS_TRANSLUCENT_STROKE=3
 val SC_SUPPORTS_PIXEL_MODIFICATION=4
+val SC_SUPPORTS_THREAD_SAFE_MEASURE_WIDTHS=5
 
 # Get whether a feature is supported
 get bool SupportsFeature=2750(Supports feature,)
