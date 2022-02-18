@@ -2,6 +2,27 @@ function rgb(x)
     return ((x & 0xFF) << 16) | (x & 0xFF00) | ((x & 0xFF0000) >> 16)
 end
 
+function DialogFilters()
+    local filter = {}
+
+    for name, L in pairs(languages) do
+        local extensions = {}
+
+        if L.extensions then
+            for _, ext in ipairs(L.extensions) do
+                extensions[#extensions + 1] = "*." .. ext
+            end
+
+            filter[#filter + 1] = name .. " Files (" .. table.concat(extensions, " ") .. ")"
+        end
+    end
+
+    table.sort(filter, function (a, b) return a:lower() < b:lower() end)
+    table.insert(filter, 1, "All files (*)")
+
+    return table.concat(filter, ";;")
+end
+
 languages = {}
 languages["ActionScript"] = require("actionscript")
 languages["ADA"] = require("ada")

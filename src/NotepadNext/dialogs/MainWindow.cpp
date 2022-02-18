@@ -538,7 +538,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->menuHelp->addAction(editorInspectorDock->toggleViewAction());
 
     FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
-    addDockWidget(Qt::RightDockWidgetArea, fawDock);
+    fawDock->hide();
+    addDockWidget(Qt::LeftDockWidgetArea, fawDock);
     ui->menuView->addSeparator();
     ui->menuView->addAction(fawDock->toggleViewAction());
     connect(fawDock, &FolderAsWorkspaceDock::fileDoubleClicked, this, &MainWindow::openFile);
@@ -1357,6 +1358,9 @@ void MainWindow::saveSettings() const
 
     settings.setValue("Editor/WordWrap", ui->actionWordWrap->isChecked());
     settings.setValue("Editor/IndentGuide", ui->actionShowIndentGuide->isChecked());
+
+    FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
+    settings.setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
 }
 
 void MainWindow::restoreSettings()
@@ -1378,6 +1382,9 @@ void MainWindow::restoreSettings()
 
     ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
     ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
+
+    FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
+    fawDock->setRootPath(settings.value("FolderAsWorkspace/RootPath").toString());
 }
 
 void MainWindow::focusIn()
