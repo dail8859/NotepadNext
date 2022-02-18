@@ -646,6 +646,8 @@ public:
 	sptr_t indicatorEnd(sptr_t indicator, sptr_t pos);
 	void setPositionCache(sptr_t size);
 	sptr_t positionCache() const;
+	void setLayoutThreads(sptr_t threads);
+	sptr_t layoutThreads() const;
 	void copyAllowLine();
 	sptr_t characterPointer() const;
 	sptr_t rangePointer(sptr_t start, sptr_t lengthRange) const;

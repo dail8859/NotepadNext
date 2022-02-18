@@ -2432,6 +2432,14 @@ sptr_t ScintillaEdit::positionCache() const {
     return send(SCI_GETPOSITIONCACHE, 0, 0);
 }
 
+void ScintillaEdit::setLayoutThreads(sptr_t threads) {
+    send(SCI_SETLAYOUTTHREADS, threads, 0);
+}
+
+sptr_t ScintillaEdit::layoutThreads() const {
+    return send(SCI_GETLAYOUTTHREADS, 0, 0);
+}
+
 void ScintillaEdit::copyAllowLine() {
     send(SCI_COPYALLOWLINE, 0, 0);
 }

@@ -566,9 +566,43 @@
 	<td>Arne Scheffler</td>
 	<td>Jan Dolinár</td>
 	<td>Rowan Daniell</td>
+      </tr><tr>
+	<td>Arkadiusz Michalski</td>
+	<td>Christian Schmitz</td>
     </tr>
     </table>
     <h2>Releases</h2>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla520.zip">Release 5.2.0</a>
+    </h3>
+    <ul>
+	<li>
+	Released 9 February 2022.
+	</li>
+	<li>
+	Add multithreaded layout to significantly improve performance for very wide lines.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1427/">Feature #1427</a>.
+	</li>
+	<li>
+	Made compatible with Qt 6.
+	</li>
+	<li>
+	Fix potential issue with length of buffer for string returning APIs in ScintillaEdit on Qt.
+	</li>
+	<li>
+	Fix inaccurate scroll bar when there are annotations and wrapping of inserted or deleted text changes
+	number of screen lines.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1422/">Feature #1422</a>.
+	</li>
+	<li>
+	Allow choice of object file directory with makefile by setting DIR_O.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2306/">Bug #2306</a>.
+	</li>
+	<li>
+	On macOS allow Scintilla to run if built without cursor images.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1425/">Feature #1425</a>.
+	</li>
+    </ul>
     <h3>
        <a href="https://www.scintilla.org/scintilla515.zip">Release 5.1.5</a>
     </h3>

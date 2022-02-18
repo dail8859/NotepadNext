@@ -609,7 +609,7 @@ void SCI_METHOD LexerBash::Lex(Sci_PositionU startPos, Sci_Position length, int 
 				sc.SetState(SCE_SH_DEFAULT);
 				break;
 			case SCE_SH_COMMENTLINE:
-				if (sc.atLineEnd && sc.chPrev != '\\') {
+				if (sc.MatchLineEnd() && sc.chPrev != '\\') {
 					sc.SetState(SCE_SH_DEFAULT);
 				}
 				break;
@@ -678,13 +678,13 @@ void SCI_METHOD LexerBash::Lex(Sci_PositionU startPos, Sci_Position length, int 
 				if (sc.atLineStart) {
 					sc.SetState(SCE_SH_HERE_Q);
 					int prefixws = 0;
-					while (sc.ch == '\t' && !sc.atLineEnd) {	// tabulation prefix
+					while (sc.ch == '\t' && !sc.MatchLineEnd()) {	// tabulation prefix
 						sc.Forward();
 						prefixws++;
 					}
 					if (prefixws > 0)
 						sc.SetState(SCE_SH_HERE_Q);
-					while (!sc.atLineEnd) {
+					while (!sc.MatchLineEnd()) {
 						sc.Forward();
 					}
 					char s[HERE_DELIM_MAX];
@@ -794,7 +794,7 @@ void SCI_METHOD LexerBash::Lex(Sci_PositionU startPos, Sci_Position length, int 
 		}
 
 		// Must check end of HereDoc state 1 before default state is handled
-		if (HereDoc.State == 1 && sc.atLineEnd) {
+		if (HereDoc.State == 1 && sc.MatchLineEnd()) {
 			// Begin of here-doc (the line after the here-doc delimiter):
 			// Lexically, the here-doc starts from the next line after the >>, but the
 			// first line of here-doc seem to follow the style of the last EOL sequence
