@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "ini"
+L.lexer = "props"
 
 L.extensions = {
 	"ini",
