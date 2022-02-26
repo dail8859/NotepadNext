@@ -127,15 +127,29 @@ Section "Notepad Next"
 	WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "EstimatedSize" "$0"
 SectionEnd
 
-Section /o "Desktop Shortcut"
+# -----------------------------------------------
+
+Section /o "Desktop Shortcut" SEC_DESKTOP_SHORTCUT
 	CreateShortCut "$DESKTOP\Notepad Next.lnk" "$INSTDIR\NotepadNext.exe"
 SectionEnd
 
-Section /o "Start Menu Shortcut"
+Section "-Remove Desktop Shortcut" SEC_REMOVE_DESKTOP_SHORTCUT
+	Delete "$DESKTOP\Notepad Next.lnk"
+SectionEnd
+
+# -----------------------------------------------
+
+Section /o "Start Menu Shortcut" SEC_START_MENU_SHORTCUT
 	CreateShortCut "$SMPROGRAMS\Notepad Next.lnk" "$INSTDIR\NotepadNext.exe"
 SectionEnd
 
-Section /o "Context Menu"
+Section "-Start Menu Shortcut" SEC_REMOVE_START_MENU_SHORTCUT
+	Delete "$SMPROGRAMS\Notepad Next.lnk"
+SectionEnd
+
+# -----------------------------------------------
+
+Section /o "Context Menu" SEC_CONTEXT_MENU
 	SetRegView 64
 
 	WriteRegStr SHCTX "Software\Classes\*\shell\NotepadNext" "" "Edit with Notepad Next"
@@ -143,7 +157,15 @@ Section /o "Context Menu"
 	WriteRegStr SHCTX "Software\Classes\*\shell\NotepadNext\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
 SectionEnd
 
-Section /o "Auto Updater"
+Section "-Context Menu" SEC_REMOVE_CONTEXT_MENU
+	SetRegView 64
+
+	DeleteRegKey SHCTX "Software\Classes\*\shell\NotepadNext"
+SectionEnd
+
+# -----------------------------------------------
+
+Section /o "Auto Updater" SEC_AUTO_UPDATER
 	SetRegView 64
 	SetOutPath $INSTDIR
 
@@ -151,6 +173,41 @@ Section /o "Auto Updater"
 
 	WriteRegDWORD SHCTX "Software\NotepadNext\NotepadNext\" "AutoUpdate" 1
 SectionEnd
+
+Section "-Auto Updater" SEC_REMOVE_AUTO_UPDATER
+	SetRegView 64
+
+	# Disable the auto update, if there was an existing install the DLLs may hang around but that's fine for now
+	WriteRegDWORD SHCTX "Software\NotepadNext\NotepadNext\" "AutoUpdate" 0
+SectionEnd
+
+# -----------------------------------------------
+
+Function .onSelChange
+${If} ${SectionIsSelected} ${SEC_DESKTOP_SHORTCUT}
+	!insertmacro UnselectSection ${SEC_REMOVE_DESKTOP_SHORTCUT}
+${Else}
+	!insertmacro SelectSection ${SEC_REMOVE_DESKTOP_SHORTCUT}
+${EndIf}
+
+${If} ${SectionIsSelected} ${SEC_START_MENU_SHORTCUT}
+	!insertmacro UnselectSection ${SEC_REMOVE_START_MENU_SHORTCUT}
+${Else}
+	!insertmacro SelectSection ${SEC_REMOVE_START_MENU_SHORTCUT}
+${EndIf}
+
+${If} ${SectionIsSelected} ${SEC_CONTEXT_MENU}
+	!insertmacro UnselectSection ${SEC_REMOVE_CONTEXT_MENU}
+${Else}
+	!insertmacro SelectSection ${SEC_REMOVE_CONTEXT_MENU}
+${EndIf}
+
+${If} ${SectionIsSelected} ${SEC_AUTO_UPDATER}
+	!insertmacro UnselectSection ${SEC_REMOVE_AUTO_UPDATER}
+${Else}
+	!insertmacro SelectSection ${SEC_REMOVE_AUTO_UPDATER}
+${EndIf}
+FunctionEnd
 
 
 Section "Uninstall"
