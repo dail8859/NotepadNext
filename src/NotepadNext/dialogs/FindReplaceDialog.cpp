@@ -101,15 +101,13 @@ FindReplaceDialog::FindReplaceDialog(QWidget *parent) :
 
     loadSettings();
 
+    connect(qApp, &QApplication::aboutToQuit, this, &FindReplaceDialog::saveSettings);
+
     changeTab(tabBar->currentIndex());
 }
 
 FindReplaceDialog::~FindReplaceDialog()
 {
-    qInfo(Q_FUNC_INFO);
-
-    saveSettings();
-
     delete ui;
 }
 
