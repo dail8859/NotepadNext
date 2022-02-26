@@ -3,7 +3,34 @@ name: Build Notepad Next
 on: [push, pull_request]
 
 jobs:
-  build:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: "5.15.2"
+
+      - name: Compile
+        run: |
+          rm -rf build-linux
+          mkdir build-linux 
+          cd build-linux
+          qmake ../src/NotepadNext.pro
+          make
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: NotepadNext-Linux
+          path: ${{ github.workspace }}/build-linux/NotepadNext/NotepadNext
+
+  build-windows:
     strategy:
       matrix:
         config:
@@ -54,5 +81,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: NotepadNext-Qt${{ matrix.config.qt_version }}
+          name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}
           path: ${{ github.workspace }}/build/package/
