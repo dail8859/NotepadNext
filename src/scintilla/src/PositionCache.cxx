@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <iterator>
 #include <memory>
+#include <mutex>
 
 #include "ScintillaTypes.h"
 #include "ScintillaMessages.h"
@@ -661,11 +662,10 @@ void BreakFinder::Insert(Sci::Position val) {
 	}
 }
 
-BreakFinder::BreakFinder(const LineLayout *ll_, const Selection *psel, Range lineRange_, Sci::Position posLineStart_,
+BreakFinder::BreakFinder(const LineLayout *ll_, const Selection *psel, Range lineRange_, Sci::Position posLineStart,
 	XYPOSITION xStart, BreakFor breakFor, const Document *pdoc_, const SpecialRepresentations *preprs_, const ViewStyle *pvsDraw) :
 	ll(ll_),
 	lineRange(lineRange_),
-	posLineStart(posLineStart_),
 	nextBreak(static_cast<int>(lineRange_.start)),
 	saeCurrentPos(0),
 	saeNext(0),
@@ -799,6 +799,49 @@ bool BreakFinder::More() const noexcept {
 	return (subBreak >= 0) || (nextBreak < lineRange.end);
 }
 
+class PositionCacheEntry {
+	uint16_t styleNumber;
+	uint16_t len;
+	uint16_t clock;
+	std::unique_ptr<XYPOSITION[]> positions;
+public:
+	PositionCacheEntry() noexcept;
+	// Copy constructor not currently used, but needed for being element in std::vector.
+	PositionCacheEntry(const PositionCacheEntry &);
+	PositionCacheEntry(PositionCacheEntry &&) noexcept = default;
+	// Deleted so PositionCacheEntry objects can not be assigned.
+	void operator=(const PositionCacheEntry &) = delete;
+	void operator=(PositionCacheEntry &&) = delete;
+	~PositionCacheEntry();
+	void Set(unsigned int styleNumber_, std::string_view sv, const XYPOSITION *positions_, uint16_t clock_);
+	void Clear() noexcept;
+	bool Retrieve(unsigned int styleNumber_, std::string_view sv, XYPOSITION *positions_) const noexcept;
+	static size_t Hash(unsigned int styleNumber_, std::string_view sv) noexcept;
+	bool NewerThan(const PositionCacheEntry &other) const noexcept;
+	void ResetClock() noexcept;
+};
+
+class PositionCache : public IPositionCache {
+	std::vector<PositionCacheEntry> pces;
+	std::mutex mutex;
+	uint16_t clock;
+	bool allClear;
+public:
+	PositionCache();
+	// Deleted so LineAnnotation objects can not be copied.
+	PositionCache(const PositionCache &) = delete;
+	PositionCache(PositionCache &&) = delete;
+	void operator=(const PositionCache &) = delete;
+	void operator=(PositionCache &&) = delete;
+	~PositionCache() override = default;
+
+	void Clear() noexcept override;
+	void SetSize(size_t size_) override;
+	size_t GetSize() const noexcept override;
+	void MeasureWidths(Surface *surface, const ViewStyle &vstyle, unsigned int styleNumber,
+		std::string_view sv, XYPOSITION *positions, bool needsLocking) override;
+};
+
 PositionCacheEntry::PositionCacheEntry() noexcept :
 	styleNumber(0), len(0), clock(0) {
 }
@@ -893,7 +936,7 @@ size_t PositionCache::GetSize() const noexcept {
 }
 
 void PositionCache::MeasureWidths(Surface *surface, const ViewStyle &vstyle, unsigned int styleNumber,
-	std::string_view sv, XYPOSITION *positions) {
+	std::string_view sv, XYPOSITION *positions, bool needsLocking) {
 	const Style &style = vstyle.styles[styleNumber];
 	if (style.monospaceASCII) {
 		if (AllGraphicASCII(sv)) {
@@ -913,6 +956,10 @@ void PositionCache::MeasureWidths(Surface *surface, const ViewStyle &vstyle, uns
 		// Two way associative: try two probe positions.
 		const size_t hashValue = PositionCacheEntry::Hash(styleNumber, sv);
 		probe = hashValue % pces.size();
+		std::unique_lock<std::mutex> guard(mutex, std::defer_lock);
+		if (needsLocking) {
+			guard.lock();
+		}
 		if (pces[probe].Retrieve(styleNumber, sv, positions)) {
 			return;
 		}
@@ -930,6 +977,10 @@ void PositionCache::MeasureWidths(Surface *surface, const ViewStyle &vstyle, uns
 	surface->MeasureWidths(fontStyle, sv, positions);
 	if (probe < pces.size()) {
 		// Store into cache
+		std::unique_lock<std::mutex> guard(mutex, std::defer_lock);
+		if (needsLocking) {
+			guard.lock();
+		}
 		clock++;
 		if (clock > 60000) {
 			// Since there are only 16 bits for the clock, wrap it round and
@@ -942,4 +993,8 @@ void PositionCache::MeasureWidths(Surface *surface, const ViewStyle &vstyle, uns
 		allClear = false;
 		pces[probe].Set(styleNumber, sv, positions, clock);
 	}
+}
+
+std::unique_ptr<IPositionCache> Scintilla::Internal::CreatePositionCache() {
+	return std::make_unique<PositionCache>();
 }

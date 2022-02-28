@@ -38,8 +38,13 @@ SetCompressor /SOLID lzma
 !include "NsisMultiUser.nsh"
 !include "NsisMultiUserLang.nsh"
 !include "MUI2.nsh"
+!include "Memento.nsh"
 !include "FileFunc.nsh"
 !include "utils.nsh"
+
+# Configure Memento
+!define MEMENTO_REGISTRY_ROOT SHCTX
+!define MEMENTO_REGISTRY_KEY Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext
 
 
 # Install pages
@@ -94,6 +99,11 @@ Function .onInit
 	${endif}
 
 	!insertmacro MULTIUSER_INIT
+	${MementoSectionRestore}
+FunctionEnd
+
+Function .onInstSuccess
+	${MementoSectionSave}
 FunctionEnd
 
 Function un.onInit
@@ -127,30 +137,91 @@ Section "Notepad Next"
 	WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "EstimatedSize" "$0"
 SectionEnd
 
-Section /o "Desktop Shortcut"
+# -----------------------------------------------
+
+${MementoUnselectedSection} "Desktop Shortcut" SEC_DESKTOP_SHORTCUT
 	CreateShortCut "$DESKTOP\Notepad Next.lnk" "$INSTDIR\NotepadNext.exe"
+${MementoSectionEnd}
+
+Section "-Remove Desktop Shortcut" SEC_REMOVE_DESKTOP_SHORTCUT
+	Delete "$DESKTOP\Notepad Next.lnk"
 SectionEnd
 
-Section /o "Start Menu Shortcut"
+# -----------------------------------------------
+
+${MementoUnselectedSection} "Start Menu Shortcut" SEC_START_MENU_SHORTCUT
 	CreateShortCut "$SMPROGRAMS\Notepad Next.lnk" "$INSTDIR\NotepadNext.exe"
+${MementoSectionEnd}
+
+Section "-Start Menu Shortcut" SEC_REMOVE_START_MENU_SHORTCUT
+	Delete "$SMPROGRAMS\Notepad Next.lnk"
 SectionEnd
 
-Section /o "Context Menu"
+# -----------------------------------------------
+
+${MementoUnselectedSection} "Context Menu" SEC_CONTEXT_MENU
 	SetRegView 64
 
 	WriteRegStr SHCTX "Software\Classes\*\shell\NotepadNext" "" "Edit with Notepad Next"
 	WriteRegStr SHCTX "Software\Classes\*\shell\NotepadNext" "icon" "$INSTDIR\NotepadNext.exe"
 	WriteRegStr SHCTX "Software\Classes\*\shell\NotepadNext\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
+${MementoSectionEnd}
+
+Section "-Context Menu" SEC_REMOVE_CONTEXT_MENU
+	SetRegView 64
+
+	DeleteRegKey SHCTX "Software\Classes\*\shell\NotepadNext"
 SectionEnd
 
-Section /o "Auto Updater"
+# -----------------------------------------------
+
+${MementoUnselectedSection} "Auto Updater" SEC_AUTO_UPDATER
 	SetRegView 64
 	SetOutPath $INSTDIR
 
 	File ..\build\package\libcrypto-1_1-x64.dll ..\build\package\libssl-1_1-x64.dll
 
 	WriteRegDWORD SHCTX "Software\NotepadNext\NotepadNext\" "AutoUpdate" 1
+${MementoSectionEnd}
+
+Section "-Auto Updater" SEC_REMOVE_AUTO_UPDATER
+	SetRegView 64
+
+	# Disable the auto update, if there was an existing install the DLLs may hang around but that's fine for now
+	WriteRegDWORD SHCTX "Software\NotepadNext\NotepadNext\" "AutoUpdate" 0
 SectionEnd
+
+# -----------------------------------------------
+
+
+${MementoSectionDone}
+
+
+Function .onSelChange
+${If} ${SectionIsSelected} ${SEC_DESKTOP_SHORTCUT}
+	!insertmacro UnselectSection ${SEC_REMOVE_DESKTOP_SHORTCUT}
+${Else}
+	!insertmacro SelectSection ${SEC_REMOVE_DESKTOP_SHORTCUT}
+${EndIf}
+
+${If} ${SectionIsSelected} ${SEC_START_MENU_SHORTCUT}
+	!insertmacro UnselectSection ${SEC_REMOVE_START_MENU_SHORTCUT}
+${Else}
+	!insertmacro SelectSection ${SEC_REMOVE_START_MENU_SHORTCUT}
+${EndIf}
+
+${If} ${SectionIsSelected} ${SEC_CONTEXT_MENU}
+	!insertmacro UnselectSection ${SEC_REMOVE_CONTEXT_MENU}
+${Else}
+	!insertmacro SelectSection ${SEC_REMOVE_CONTEXT_MENU}
+${EndIf}
+
+${If} ${SectionIsSelected} ${SEC_AUTO_UPDATER}
+	!insertmacro UnselectSection ${SEC_REMOVE_AUTO_UPDATER}
+${Else}
+	!insertmacro SelectSection ${SEC_REMOVE_AUTO_UPDATER}
+${EndIf}
+FunctionEnd
 
 
 Section "Uninstall"

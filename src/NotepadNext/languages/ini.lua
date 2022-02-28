@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "ini"
+L.lexer = "props"
 
 L.extensions = {
 	"ini",
@@ -27,7 +27,7 @@ L.styles = {
 		id = 2,
 		fgColor = rgb(0x8000FF),
 		bgColor = rgb(0xF2F4FF),
-		fontStyle = 1,
+		fontStyle = 9,
 	},
 	["ASSIGNMENT"] = {
 		id = 3,

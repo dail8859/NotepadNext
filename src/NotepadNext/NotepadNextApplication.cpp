@@ -228,6 +228,9 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
                     if style.fontStyle & 4 == 4 then
                         editor.StyleUnderline[style.id] = true
                     end
+                    if style.fontStyle & 8 == 8 then
+                        editor.StyleEOLFilled[style.id] = true
+                    end
                 end
             end
         end
