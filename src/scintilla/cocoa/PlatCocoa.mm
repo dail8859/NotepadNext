@@ -28,9 +28,6 @@
 #include <memory>
 #include <numeric>
 
-#include <dlfcn.h>
-#include <sys/time.h>
-
 #import <Foundation/NSGeometry.h>
 
 #import "ScintillaTypes.h"
@@ -351,6 +348,7 @@ const Supports SupportsCocoa[] = {
 	Supports::FractionalStrokeWidth,
 	Supports::TranslucentStroke,
 	Supports::PixelModification,
+	Supports::ThreadSafeMeasureWidths,
 };
 
 }
@@ -360,9 +358,6 @@ const Supports SupportsCocoa[] = {
 SurfaceImpl::SurfaceImpl() {
 	gc = NULL;
 
-	textLayout.reset(new QuartzTextLayout());
-	verticalDeviceResolution = 0;
-
 	bitmapData.reset(); // Release will try and delete bitmapData if != nullptr
 	bitmapWidth = 0;
 	bitmapHeight = 0;
@@ -371,8 +366,6 @@ SurfaceImpl::SurfaceImpl() {
 }
 
 SurfaceImpl::SurfaceImpl(const SurfaceImpl *surface, int width, int height) {
-
-	textLayout.reset(new QuartzTextLayout());
 
 	// Create a new bitmap context, along with the RAM for the bitmap itself
 	bitmapWidth = width;
@@ -1273,8 +1266,8 @@ void SurfaceImpl::DrawTextTransparent(PRectangle rc, const Font *font_, XYPOSITI
 
 	CGColorRelease(color);
 
-	textLayout->setText(text, encoding, style);
-	textLayout->draw(gc, rc.left, ybase);
+	QuartzTextLayout layoutDraw(text, encoding, style);
+	layoutDraw.draw(gc, rc.left, ybase);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -1285,10 +1278,10 @@ void SurfaceImpl::MeasureWidths(const Font *font_, std::string_view text, XYPOSI
 		return;
 	}
 	CFStringEncoding encoding = EncodingFromCharacterSet(UnicodeMode(), style->getCharacterSet());
-	const CFStringEncoding encodingUsed =
-		textLayout->setText(text, encoding, style);
+	QuartzTextLayout layoutMeasure(text, encoding, style);
+	const CFStringEncoding encodingUsed = layoutMeasure.getEncoding();
 
-	CTLineRef mLine = textLayout->getCTLine();
+	CTLineRef mLine = layoutMeasure.getCTLine();
 	assert(mLine);
 
 	if (encodingUsed != encoding) {
@@ -1302,7 +1295,7 @@ void SurfaceImpl::MeasureWidths(const Font *font_, std::string_view text, XYPOSI
 
 	if (UnicodeMode()) {
 		// Map the widths given for UTF-16 characters back onto the UTF-8 input string
-		CFIndex fit = textLayout->getStringLength();
+		CFIndex fit = layoutMeasure.getStringLength();
 		int ui=0;
 		int i=0;
 		std::vector<CGFloat> linePositions(fit);
@@ -1348,9 +1341,9 @@ XYPOSITION SurfaceImpl::WidthText(const Font *font_, std::string_view text) {
 		return 1;
 	}
 	CFStringEncoding encoding = EncodingFromCharacterSet(UnicodeMode(), style->getCharacterSet());
-	textLayout->setText(text, encoding, style);
+	QuartzTextLayout layoutMeasure(text, encoding, style);
 
-	return static_cast<XYPOSITION>(textLayout->MeasureStringWidth());
+	return static_cast<XYPOSITION>(layoutMeasure.MeasureStringWidth());
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -1390,8 +1383,8 @@ void SurfaceImpl::DrawTextTransparentUTF8(PRectangle rc, const Font *font_, XYPO
 
 	CGColorRelease(color);
 
-	textLayout->setText(text, encoding, style);
-	textLayout->draw(gc, rc.left, ybase);
+	QuartzTextLayout layoutDraw(text, encoding, style);
+	layoutDraw.draw(gc, rc.left, ybase);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -1401,11 +1394,11 @@ void SurfaceImpl::MeasureWidthsUTF8(const Font *font_, std::string_view text, XY
 	if (!style) {
 		return;
 	}
-	const CFStringEncoding encoding = kCFStringEncodingUTF8;
-	const CFStringEncoding encodingUsed =
-		textLayout->setText(text, encoding, style);
+	constexpr CFStringEncoding encoding = kCFStringEncodingUTF8;
+	QuartzTextLayout layoutMeasure(text, encoding, style);
+	const CFStringEncoding encodingUsed = layoutMeasure.getEncoding();
 
-	CTLineRef mLine = textLayout->getCTLine();
+	CTLineRef mLine = layoutMeasure.getCTLine();
 	assert(mLine);
 
 	if (encodingUsed != encoding) {
@@ -1418,7 +1411,7 @@ void SurfaceImpl::MeasureWidthsUTF8(const Font *font_, std::string_view text, XY
 	}
 
 	// Map the widths given for UTF-16 characters back onto the UTF-8 input string
-	CFIndex fit = textLayout->getStringLength();
+	CFIndex fit = layoutMeasure.getStringLength();
 	int ui=0;
 	int i=0;
 	std::vector<CGFloat> linePositions(fit);
@@ -1446,9 +1439,8 @@ XYPOSITION SurfaceImpl::WidthTextUTF8(const Font *font_, std::string_view text) 
 	if (!style) {
 		return 1;
 	}
-	textLayout->setText(text, kCFStringEncodingUTF8, style);
-
-	return static_cast<XYPOSITION>(textLayout->MeasureStringWidth());
+	QuartzTextLayout layoutMeasure(text, kCFStringEncodingUTF8, style);
+	return static_cast<XYPOSITION>(layoutMeasure.MeasureStringWidth());
 }
 
 //--------------------------------------------------------------------------------------------------

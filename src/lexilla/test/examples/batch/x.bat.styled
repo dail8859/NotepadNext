@@ -54,4 +54,9 @@ rem 'echo' is word=2, 'a' is default=0
 {2}echo{0} %%{6}%0{0}
 {2}echo{0} %%{6}%%~-abcd{0}
 
+{1}:: Bug 2304: "::" comments not recognised when second command on line
+{2}Set{0} /A xxx{7}={6}%xxx%{7}+{0}1 {7}&{0} {1}:: Increment
+{2}Set{0} /A xxx{7}={6}%xxx%{7}+{0}1 {7}&{0} {1}::Increment
+{2}Set{0} /A xxx{7}={6}%xxx%{7}+{0}1 {7}&{0} {1}rem Increment
+{0}
 {3}:END

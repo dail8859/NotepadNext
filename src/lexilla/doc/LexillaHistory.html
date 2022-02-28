@@ -574,9 +574,54 @@
 	<td>Michael Heath</td>
 	<td>Antonio Cebrián</td>
 	<td>David Yu Yang</td>
+	<td>Arkadiusz Michalski</td>
+      </tr><tr>
+	<td>Red_M</td>
     </tr>
     </table>
     <h2>Releases</h2>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla515.zip">Release 5.1.5</a>
+    </h3>
+    <ul>
+	<li>
+	Released 9 February 2022.
+	</li>
+	<li>
+	Bash: Treat \r\n line ends the same as \n. This makes testing easier.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/57">Issue #57</a>.
+	</li>
+	<li>
+	Batch: Recognise "::" comments when second command on line.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2304/">Bug #2304</a>.
+	</li>
+	<li>
+	F#: Recognise format specifiers in interpolated strings and %B for binary.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/46">Issue #46</a>.
+	</li>
+	<li>
+	F#: More accurate line-based folding.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/56">Issue #56</a>.
+	</li>
+	<li>
+	HTML: Fix folding inside script blocks.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/47">Issue #47</a>,
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/53">Issue #53</a>.
+	</li>
+	<li>
+	Inno Setup: Fix multiline comments in code.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/44">Issue #44</a>.
+	</li>
+	<li>
+	Python: Add attribute style with properties lexer.python.identifier.attributes and
+	lexer.python.decorator.attributes.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/49">Pull request #49</a>.
+	</li>
+	<li>
+	Allow choice of object file directory with makefile by setting DIR_O.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/50">Issue #50</a>.
+	</li>
+    </ul>
     <h3>
        <a href="https://www.scintilla.org/lexilla514.zip">Release 5.1.4</a>
     </h3>
@@ -595,7 +640,7 @@
 	</li>
 	<li>
 	Fix strings ending in escaped '\' in F#.
-	<a href="https://github.com/ScintillaOrg/lexilla/issues/38">Issue #38</a>,
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/38">Issue #38</a>.
 	</li>
 	<li>
 	Better handling of bad terminators and folding for X12.

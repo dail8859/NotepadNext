@@ -101,15 +101,13 @@ FindReplaceDialog::FindReplaceDialog(QWidget *parent) :
 
     loadSettings();
 
+    connect(qApp, &QApplication::aboutToQuit, this, &FindReplaceDialog::saveSettings);
+
     changeTab(tabBar->currentIndex());
 }
 
 FindReplaceDialog::~FindReplaceDialog()
 {
-    qInfo(Q_FUNC_INFO);
-
-    saveSettings();
-
     delete ui;
 }
 
@@ -425,7 +423,7 @@ void FindReplaceDialog::loadSettings()
     ui->checkBoxBackwardsDirection->setChecked(settings.value("Backwards").toBool());
     ui->checkBoxMatchWholeWord->setChecked(settings.value("WholeWord").toBool());
     ui->checkBoxMatchCase->setChecked(settings.value("MatchCase").toBool());
-    ui->checkBoxWrapAround->setChecked(settings.value("WrapAround").toBool());
+    ui->checkBoxWrapAround->setChecked(settings.value("WrapAround", true).toBool());
 
     if (settings.contains("SearchMode")) {
         const QString searchMode = settings.value("SearchMode").toString();
