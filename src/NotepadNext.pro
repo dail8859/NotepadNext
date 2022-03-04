@@ -17,11 +17,7 @@
 
 include(Version.pri)
 
-lessThan(QT_MAJOR_VERSION, 5) {
-    lessThan(QT_MINOR_VERSION, 13) {
-        error(Qt v5.13.x is required)
-    }
-}
+!versionAtLeast(QT_VERSION, 5.15):error("Qt v5.15 or greater is required")
 
 TEMPLATE = subdirs
 
