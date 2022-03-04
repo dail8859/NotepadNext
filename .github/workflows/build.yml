@@ -4,6 +4,16 @@ on: [push, pull_request]
 
 jobs:
   build-linux:
+    strategy:
+      matrix:
+        config:
+        - 
+          qt_version: "5.15.2"
+          modules: ""
+        - 
+          qt_version: "6.2.2"
+          modules: "qt5compat"
+
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +37,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: NotepadNext-Linux
+          name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}
           path: ${{ github.workspace }}/build-linux/NotepadNext/NotepadNext
 
   build-windows:
