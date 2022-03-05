@@ -11,7 +11,7 @@ jobs:
           qt_version: "5.15.2"
           modules: ""
         - 
-          qt_version: "6.2.2"
+          qt_version: "6.2.3"
           modules: "qt5compat"
 
     runs-on: ubuntu-latest
@@ -24,7 +24,8 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          version: "5.15.2"
+          version: ${{ matrix.config.qt_version }}
+          modules: ${{ matrix.config.modules }}
 
       - name: Compile
         run: |
@@ -48,7 +49,7 @@ jobs:
           qt_version: "5.15.2"
           modules: ""
         - 
-          qt_version: "6.2.2"
+          qt_version: "6.2.3"
           modules: "qt5compat"
 
     runs-on: windows-latest
