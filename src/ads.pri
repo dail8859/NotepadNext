@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
 
-QT += core gui widgets gui-private
+QT += core gui widgets
 
 windows {
 	# MinGW
@@ -73,9 +73,9 @@ SOURCES += \
 unix:!macx {
 	HEADERS += $$PWD/ads/src/linux/FloatingWidgetTitleBar.h
 	SOURCES += $$PWD/ads/src/linux/FloatingWidgetTitleBar.cpp
-	INCLUDEPATH += $$PWD/ads/src/linux
-	QT += x11extras
 	LIBS += -lxcb
+	QT += gui-private
 }
+
 
 INCLUDEPATH += $$PWD/ads/src/
