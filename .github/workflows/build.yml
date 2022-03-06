@@ -26,6 +26,9 @@ jobs:
         with:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
+      
+      - name: Setup
+        run: sudo apt-get install libxkbcommon-dev
 
       - name: Compile
         run: |
