@@ -36,7 +36,7 @@ jobs:
           mkdir build-linux 
           cd build-linux
           qmake ../src/NotepadNext.pro
-          make
+          make -j$(nproc)
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
