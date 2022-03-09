@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=NotepadNext
+Type=Application
+Icon=NotepadNext
+Name="Notepad Next"
+Categories=Qt;TextEditor;Development
