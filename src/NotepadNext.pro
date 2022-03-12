@@ -23,7 +23,9 @@ TEMPLATE = subdirs
 
 SUBDIRS = NotepadNext
 
+# Extra Windows targets
 win32 {
+    # Package up the EXE with all the other needed files
     package.target = package
     package.commands = \
         xcopy $$shell_path($${OUT_PWD}/NotepadNext/NotepadNext.exe) $$shell_path($${OUT_PWD}/package/) /Y && \
@@ -36,10 +38,12 @@ win32 {
         package.commands += windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-angle --no-opengl-sw $$shell_path($${OUT_PWD}/package/NotepadNext.exe)
     }
 
+    # Zip it up
     zip.target = zip
     zip.depends = package
     zip.commands = 7z a -tzip $$quote(NotepadNext-v$${APP_VERSION}.zip) $$shell_path(./package/*) -x!libssl-1_1-x64.dll -x!libcrypto-1_1-x64.dll
 
+    # Build the Installer
     installer.target = installer
     installer.depends = package
     installer.commands = makensis /V4 $$shell_path($${OUT_PWD}/../installer/installer.nsi)
