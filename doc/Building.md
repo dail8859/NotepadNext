@@ -50,5 +50,5 @@ cd NotepadNext
 mkdir build
 cd build
 qmake ../src/NotepadNext.pro
-make -j$(nprocs)
+make -j$(nproc)
 ```
