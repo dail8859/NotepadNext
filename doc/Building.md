@@ -39,7 +39,7 @@ This section specifically describes how to build Notepad Next using Microsoft's 
 1. Press `Ctrl+R`
 1. Qt Creator will build and run the project.
 
-# Linxu
+# Linux
 
 Using a fresh Ubuntu 21.10 setup, the following script will install the needed dependencies and build the executable:
 
