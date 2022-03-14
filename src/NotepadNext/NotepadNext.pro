@@ -187,3 +187,17 @@ OBJECTS_DIR = build/obj
 MOC_DIR = build/moc
 RCC_DIR = build/qrc
 UI_DIR = build/ui
+
+unix {
+    target.path = /usr/bin
+    INSTALLS += target
+
+    desktopfile.path = /usr/share/applications/
+    desktopfile.files += ../../deploy/linux/NotepadNext.desktop
+    INSTALLS += desktopfile
+
+    iconscalable.path = /usr/share/icons/hicolor/scalable/mimetypes/
+    iconscalable.files = ../../icon/NotepadNext.svg
+    INSTALLS += iconscalable
+}
+
