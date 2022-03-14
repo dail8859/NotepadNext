@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=NotepadNext
+Comment=A cross-platform, reimplementation of Notepad++
+Type=Application
+Icon=NotepadNext
+Name=Notepad Next
+StartupNotify=true
+Terminal=false
+Categories=Qt;TextEditor;Utility;
