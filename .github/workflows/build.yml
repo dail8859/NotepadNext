@@ -4,6 +4,16 @@ on: [push, pull_request]
 
 jobs:
   build-linux:
+    strategy:
+      matrix:
+        config:
+        - 
+          qt_version: "5.15.2"
+          modules: ""
+        - 
+          qt_version: "6.2.3"
+          modules: "qt5compat"
+
     runs-on: ubuntu-latest
 
     steps:
@@ -14,7 +24,11 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          version: "5.15.2"
+          version: ${{ matrix.config.qt_version }}
+          modules: ${{ matrix.config.modules }}
+      
+      - name: Setup
+        run: sudo apt-get install libxkbcommon-dev
 
       - name: Compile
         run: |
@@ -22,13 +36,24 @@ jobs:
           mkdir build-linux 
           cd build-linux
           qmake ../src/NotepadNext.pro
-          make
+          make -j$(nproc)
+
+      - name: Build AppImage
+        run: |
+          cd build-linux
+          make install INSTALL_ROOT=AppDir
+          cd NotepadNext
+          wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
+          wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
+          chmod +x linuxdeploy*.AppImage
+          export OUTPUT=NotepadNext-x86_64.AppImage
+          ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: NotepadNext-Linux
-          path: ${{ github.workspace }}/build-linux/NotepadNext/NotepadNext
+          name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}-AppImage
+          path: ${{ github.workspace }}/build-linux/NotepadNext/NotepadNext-x86_64.AppImage
 
   build-windows:
     strategy:
@@ -38,7 +63,7 @@ jobs:
           qt_version: "5.15.2"
           modules: ""
         - 
-          qt_version: "6.2.2"
+          qt_version: "6.2.3"
           modules: "qt5compat"
 
     runs-on: windows-latest

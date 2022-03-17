@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "markdown"
 
+L.disableFoldMargin = true
+
 L.extensions = {
     "md",
     "markdown",

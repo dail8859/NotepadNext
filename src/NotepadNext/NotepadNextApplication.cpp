@@ -214,6 +214,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
         editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
         editor.TabWidth = L.tabSize or 4
+        editor.MarginWidthN[2] = L.disableFoldMargin and 0 or 16
         if L.styles then
             for name, style in pairs(L.styles) do
                 editor.StyleFore[style.id] = style.fgColor
