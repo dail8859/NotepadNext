@@ -99,7 +99,11 @@ Function .onInit
 	${endif}
 
 	!insertmacro MULTIUSER_INIT
+
 	${MementoSectionRestore}
+
+	# Trigger the selection change manually so that the hidden sections get set appropriately
+	Call .onSelChange
 FunctionEnd
 
 Function .onInstSuccess

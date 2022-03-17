@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "c"
+L.lexer = "cpp"
 
 L.extensions = {
 	"c",
