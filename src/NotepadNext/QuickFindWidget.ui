@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>294</width>
-    <height>60</height>
+    <height>64</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -35,9 +35,12 @@
    <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QToolButton" name="buttonRegexp">
+      <widget class="QToolButton" name="buttonMatchCase">
+       <property name="toolTip">
+        <string>Match case</string>
+       </property>
        <property name="text">
-        <string>.*</string>
+        <string>Aa</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -45,9 +48,28 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="buttonMatchCase">
+      <widget class="QToolButton" name="buttonWholeWord">
+       <property name="toolTip">
+        <string>Match whole word</string>
+       </property>
        <property name="text">
-        <string>Aa</string>
+        <string>|A|</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="buttonRegexp">
+       <property name="toolTip">
+        <string>Use regular expression</string>
+       </property>
+       <property name="text">
+        <string>. *</string>
+       </property>
+       <property name="shortcut">
+        <string>Alt+E</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -71,11 +93,6 @@
    </item>
    <item row="0" column="0">
     <widget class="QLineEdit" name="lineEdit">
-     <property name="font">
-      <font>
-       <family>Courier New</family>
-      </font>
-     </property>
      <property name="placeholderText">
       <string>Find...</string>
      </property>

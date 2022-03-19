@@ -5,7 +5,8 @@
 - Merge into `master`
 - Tag merged commit with new version number
 - Follow procedures below
-- Attach exe and zip to the Github release
+- Once Github action finishes download AppImage
+- Attach AppImage, exe, and zip to the Github release
 
 ## Build Release
 Example bat script to build release
