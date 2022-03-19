@@ -33,23 +33,23 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Move the focus to the line edit widget
     this->setFocusProxy(ui->lineEdit);
 
-    auto fw = new FocusWatcher(ui->lineEdit);
     ui->lineEdit->installEventFilter(this);
 
-    connect(fw, &FocusWatcher::focusOut, [=]() {
+    FocusWatcher *fw = new FocusWatcher(ui->lineEdit);
+    connect(fw, &FocusWatcher::focusOut, this, [=]() {
         clearHighlights();
         hide();
     });
 
-    connect(fw, &FocusWatcher::focusIn, [=]() {
+    connect(fw, &FocusWatcher::focusIn, this, [=]() {
         ui->lineEdit->selectAll();
         highlightAndNavigateToNextMatch();
     });
 
-    connect(ui->lineEdit, &QLineEdit::textChanged, [=](const QString &) { this->highlightAndNavigateToNextMatch(); });
-    connect(ui->lineEdit, &QLineEdit::returnPressed, [=]() {
+    connect(ui->lineEdit, &QLineEdit::returnPressed, this, [=]() {
         if (QGuiApplication::keyboardModifiers() & Qt::ShiftModifier) {
             navigateToPrevMatch();
         }
@@ -57,8 +57,12 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
             navigateToNextMatch(true);
         }
     });
-    connect(ui->buttonRegexp, &QToolButton::toggled, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
+
+    // Any changes need to trigger a new search
+    connect(ui->lineEdit, &QLineEdit::textChanged, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
     connect(ui->buttonMatchCase, &QToolButton::toggled, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
+    connect(ui->buttonWholeWord, &QToolButton::toggled, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
+    connect(ui->buttonRegexp, &QToolButton::toggled, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
 }
 
 QuickFindWidget::~QuickFindWidget()
@@ -70,6 +74,7 @@ void QuickFindWidget::setEditor(ScintillaNext *editor)
 {
     if (this->editor != Q_NULLPTR)
         disconnect(editor, &ScintillaNext::resized, this, &QuickFindWidget::positionWidget);
+
     connect(editor, &ScintillaNext::resized, this, &QuickFindWidget::positionWidget);
 
     this->editor = editor;
@@ -108,7 +113,7 @@ void QuickFindWidget::highlightMatches()
     const QString text = ui->lineEdit->text();
 
     if (text.isEmpty()) {
-        ui->lineEdit->setStyleSheet("border: 1px solid blue; padding: 2px;");
+        setSearchContextColor("blue");
         return;
     }
 
@@ -129,10 +134,10 @@ void QuickFindWidget::highlightMatches()
     });
 
     if (foundOne == false) {
-        ui->lineEdit->setStyleSheet("border: 1px solid red; padding: 2px;");
+        setSearchContextColor("red");
     }
     else {
-        ui->lineEdit->setStyleSheet("border: 1px solid blue; padding: 2px;");
+        setSearchContextColor("blue");
     }
 }
 
@@ -196,19 +201,28 @@ void QuickFindWidget::highlightAndNavigateToNextMatch()
     navigateToNextMatch(false);
 }
 
-int QuickFindWidget::computeSearchFlags()
+int QuickFindWidget::computeSearchFlags() const
 {
     int searchFlags = 0;
-
-    if (ui->buttonRegexp->isChecked()) {
-        searchFlags |= SCFIND_REGEXP;
-    }
 
     if (ui->buttonMatchCase->isChecked()) {
         searchFlags |= SCFIND_MATCHCASE;
     }
 
+    if (ui->buttonWholeWord->isChecked()) {
+        searchFlags |= SCFIND_WHOLEWORD;
+    }
+
+    if (ui->buttonRegexp->isChecked()) {
+        searchFlags |= SCFIND_REGEXP;
+    }
+
     return searchFlags;
+}
+
+void QuickFindWidget::setSearchContextColor(QString color)
+{
+    ui->lineEdit->setStyleSheet(QStringLiteral("border: 1px solid %1; padding: 2px;").arg(color));
 }
 
 void QuickFindWidget::positionWidget()

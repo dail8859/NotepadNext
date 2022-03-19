@@ -58,7 +58,8 @@ private slots:
 
 private:
     void clearHighlights();
-    int computeSearchFlags();
+    int computeSearchFlags() const;
+    void setSearchContextColor(QString color);
 
     Ui::QuickFindWidget *ui;
     ScintillaNext *editor = Q_NULLPTR;
