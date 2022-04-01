@@ -29,7 +29,7 @@ const int DEFAULT_TICK_PADDING = 3;
 const QColor CURSOR_SELECTION_COLOR = QColor(0, 0, 0, 25);
 const QColor CURSOR_CARET_COLOR = QColor(0, 0, 0, 100);
 
-HighlightedScrollBarDecorator::HighlightedScrollBarDecorator(ScintillaEdit *editor)
+HighlightedScrollBarDecorator::HighlightedScrollBarDecorator(ScintillaNext *editor)
     : EditorDecorator(editor), scrollBar(new HighlightedScrollBar(editor, Qt::Vertical, editor))
 {
     connect(scrollBar, &QScrollBar::valueChanged, editor, &ScintillaEdit::scrollVertical);

@@ -36,7 +36,7 @@ static inline int countDigits(quint32 x)
            10)))))))));
 }
 
-LineNumbers::LineNumbers(ScintillaEdit *editor) :
+LineNumbers::LineNumbers(ScintillaNext *editor) :
     EditorDecorator(editor)
 {
     editor->setMarginWidthN(0, 0);

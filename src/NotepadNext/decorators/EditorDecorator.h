@@ -22,7 +22,7 @@
 
 #include <QObject>
 
-#include "ScintillaEdit.h"
+#include "ScintillaNext.h"
 
 class EditorDecorator : public QObject
 {
@@ -30,11 +30,11 @@ class EditorDecorator : public QObject
     Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY stateChanged)
 
 public:
-    explicit EditorDecorator(ScintillaEdit *editor) : QObject(editor), editor(editor) {}
+    explicit EditorDecorator(ScintillaNext *editor) : QObject(editor), editor(editor) {}
     virtual ~EditorDecorator() {}
 
     bool isEnabled() const { return enabled; }
-    ScintillaEdit *getEditor() const { return editor; }
+    ScintillaNext *getEditor() const { return editor; }
 
 public slots:
     void setEnabled(bool b);
@@ -44,7 +44,7 @@ signals:
     void stateChanged(bool b);
 
 protected:
-    ScintillaEdit *editor;
+    ScintillaNext *editor;
     bool enabled = false;
 };
 

@@ -67,7 +67,7 @@ It uniquify(It begin, It const end)
     return begin;
 }
 
-BetterMultiSelection::BetterMultiSelection(ScintillaEdit *editor) :
+BetterMultiSelection::BetterMultiSelection(ScintillaNext *editor) :
     EditorDecorator(editor)
 {
     setObjectName("BetterMultiSelection");

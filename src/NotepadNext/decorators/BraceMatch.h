@@ -28,7 +28,7 @@ class BraceMatch : public EditorDecorator
     Q_OBJECT
 
 public:
-    BraceMatch(ScintillaEdit *editor);
+    BraceMatch(ScintillaNext *editor);
 
 private:
     void doHighlighting();

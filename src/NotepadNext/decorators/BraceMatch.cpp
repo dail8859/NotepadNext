@@ -24,7 +24,7 @@
 using namespace Scintilla;
 
 
-BraceMatch::BraceMatch(ScintillaEdit *editor) :
+BraceMatch::BraceMatch(ScintillaNext *editor) :
     EditorDecorator(editor)
 {
     setObjectName("BraceMatch");

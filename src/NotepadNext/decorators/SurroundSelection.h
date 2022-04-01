@@ -23,7 +23,6 @@
 #include <QObject>
 #include <QWidget>
 
-#include "ScintillaEdit.h"
 #include "EditorDecorator.h"
 
 
@@ -32,7 +31,7 @@ class SurroundSelection : public EditorDecorator
     Q_OBJECT
 
 public:
-    SurroundSelection(ScintillaEdit *editor);
+    SurroundSelection(ScintillaNext *editor);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

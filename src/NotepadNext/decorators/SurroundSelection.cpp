@@ -23,7 +23,7 @@
 #include <QKeyEvent>
 
 
-SurroundSelection::SurroundSelection(ScintillaEdit *editor) :
+SurroundSelection::SurroundSelection(ScintillaNext *editor) :
     EditorDecorator(editor)
 {
     setObjectName("SurroundSelection");

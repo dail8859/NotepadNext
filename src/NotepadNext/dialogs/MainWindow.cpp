@@ -784,7 +784,6 @@ void MainWindow::openFile(const QString &filePath)
 void MainWindow::openFolderAsWorkspaceDialog()
 {
     QString dialogDir;
-    const QString filter = app->getFileDialogFilter();
     const ScintillaNext *editor = dockedEditor->getCurrentEditor();
 
     // Use the path if possible
