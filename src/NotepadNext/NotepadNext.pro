@@ -82,6 +82,7 @@ SOURCES += \
     Settings.cpp \
     SpinBoxDelegate.cpp \
     decorators/ApplicationDecorator.cpp \
+    decorators/AutoCompletion.cpp \
     decorators/AutoIndentation.cpp \
     decorators/BetterMultiSelection.cpp \
     decorators/EditorConfigAppDecorator.cpp \
@@ -131,6 +132,7 @@ HEADERS += \
     Settings.h \
     SpinBoxDelegate.h \
     decorators/ApplicationDecorator.h \
+    decorators/AutoCompletion.h \
     decorators/AutoIndentation.h \
     decorators/BetterMultiSelection.h \
     decorators/EditorConfigAppDecorator.h \

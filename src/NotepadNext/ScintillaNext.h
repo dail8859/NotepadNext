@@ -39,7 +39,10 @@ public:
     void forEachMatch(const QString &text, Func callback) { forEachMatch(text.toUtf8(), callback); }
 
     template<typename Func>
-    void forEachMatch(const QByteArray &byteArray, Func callback);
+    void forEachMatch(const QByteArray &byteArray, Func callback) { forEachMatchInRange(byteArray, callback, {0, (Sci_PositionCR)length()}); }
+
+    template<typename Func>
+    void forEachMatchInRange(const QByteArray &byteArray, Func callback, Sci_CharacterRange range);
 
     bool isFile() const;
     bool isSavedToDisk() const;
@@ -102,9 +105,9 @@ private:
 
 // Stick this in the header file...because C++, that's why
 template<typename Func>
-void ScintillaNext::forEachMatch(const QByteArray &text, Func callback)
+void ScintillaNext::forEachMatchInRange(const QByteArray &text, Func callback, Sci_CharacterRange range)
 {
-    Sci_TextToFind ttf {{0, (Sci_PositionCR)length()}, text.constData(), {-1, -1}};
+    Sci_TextToFind ttf {range, text.constData(), {-1, -1}};
     int flags = searchFlags();
 
     while (send(SCI_FINDTEXT, flags, reinterpret_cast<sptr_t>(&ttf)) != -1) {

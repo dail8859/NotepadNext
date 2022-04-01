@@ -29,6 +29,7 @@
 #include "LineNumbers.h"
 #include "BetterMultiSelection.h"
 #include "AutoIndentation.h"
+#include "AutoCompletion.h"
 
 
 const int MARK_BOOKMARK = 24;
@@ -239,6 +240,9 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     AutoIndentation *ai = new AutoIndentation(editor);
     ai->setEnabled(true);
+
+    AutoCompletion *ac = new AutoCompletion(editor);
+    ac->setEnabled(true);
 }
 
 void EditorManager::purgeOldEditorPointers()
