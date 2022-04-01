@@ -18,12 +18,11 @@
 
 
 #include "SmartHighlighter.h"
-#include "ScintillaNext.h"
 
 using namespace Scintilla;
 
 
-SmartHighlighter::SmartHighlighter(ScintillaEdit *editor) :
+SmartHighlighter::SmartHighlighter(ScintillaNext *editor) :
     EditorDecorator(editor)
 {
     setObjectName("SmartHighlighter");

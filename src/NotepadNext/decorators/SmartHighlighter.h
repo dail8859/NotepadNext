@@ -28,7 +28,7 @@ class SmartHighlighter : public EditorDecorator
     Q_OBJECT
 
 public:
-    SmartHighlighter(ScintillaEdit *editor);
+    SmartHighlighter(ScintillaNext *editor);
 
 private:
     void highlightCurrentView();

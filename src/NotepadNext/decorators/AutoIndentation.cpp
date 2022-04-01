@@ -22,7 +22,7 @@
 
 using namespace Scintilla;
 
-AutoIndentation::AutoIndentation(ScintillaEdit *editor) :
+AutoIndentation::AutoIndentation(ScintillaNext *editor) :
     EditorDecorator(editor)
 {
 }

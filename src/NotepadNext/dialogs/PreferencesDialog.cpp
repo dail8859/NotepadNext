@@ -24,8 +24,8 @@
 
 PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
     QDialog(parent, Qt::Tool),
-    settings(settings),
-    ui(new Ui::PreferencesDialog)
+    ui(new Ui::PreferencesDialog),
+    settings(settings)
 {
     ui->setupUi(this);
 

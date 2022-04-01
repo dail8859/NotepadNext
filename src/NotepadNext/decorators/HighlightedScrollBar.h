@@ -23,7 +23,6 @@
 #include <QScrollBar>
 #include <QPointer>
 
-#include "ScintillaEdit.h"
 #include "EditorDecorator.h"
 
 
@@ -34,7 +33,7 @@ class HighlightedScrollBarDecorator : public EditorDecorator
     Q_OBJECT
 
 public:
-    HighlightedScrollBarDecorator(ScintillaEdit *editor);
+    HighlightedScrollBarDecorator(ScintillaNext *editor);
     ~HighlightedScrollBarDecorator() override;
 
 public slots:
@@ -50,7 +49,7 @@ class HighlightedScrollBar : public QScrollBar
     Q_OBJECT
 
 public:
-    explicit HighlightedScrollBar(ScintillaEdit *editor, Qt::Orientation orientation, QWidget *parent = nullptr)
+    explicit HighlightedScrollBar(ScintillaNext *editor, Qt::Orientation orientation, QWidget *parent = nullptr)
         : QScrollBar(orientation, parent), editor(editor) {}
 
 protected:
@@ -67,7 +66,7 @@ private:
     int lineToScrollBarY(int line) const;
     int scrollbarArrowHeight() const;
 
-    ScintillaEdit *editor;
+    ScintillaNext *editor;
 };
 
 #endif // HIGHLIGHTEDSCROLLBAR_H
