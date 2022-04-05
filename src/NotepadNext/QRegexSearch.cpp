@@ -42,14 +42,14 @@ QRegexSearch::QRegexSearch()
 
 Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, bool caseSensitive, bool word, bool wordStart, Scintilla::FindOption flags, Sci::Position *length)
 {
-    qInfo(Q_FUNC_INFO);
-    qInfo("\tminPos %d", minPos);
-    qInfo("\tmaxPos %d", maxPos);
-    qInfo("\ts %s", s);
-    qInfo("\tcaseSensitive %s", caseSensitive ? "true" : "false");
-    qInfo("\tword %s", word ? "true" : "false");
-    qInfo("\twordStart %s", wordStart ? "true" : "false");
-    qInfo("\tflags %d", flags);
+    //qInfo(Q_FUNC_INFO);
+    //qInfo("\tminPos %d", minPos);
+    //qInfo("\tmaxPos %d", maxPos);
+    //qInfo("\ts %s", s);
+    //qInfo("\tcaseSensitive %s", caseSensitive ? "true" : "false");
+    //qInfo("\tword %s", word ? "true" : "false");
+    //qInfo("\twordStart %s", wordStart ? "true" : "false");
+    //qInfo("\tflags %d", flags);
     //qInfo("length %d", length);
 
     // No need to search an empty range
@@ -58,7 +58,7 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
 
     auto options = QRegularExpression::MultilineOption | QRegularExpression::UseUnicodePropertiesOption;
 
-    if (FlagSet(flags, FindOption::MatchCase))
+    if (!FlagSet(flags, FindOption::MatchCase))
         options |= QRegularExpression::CaseInsensitiveOption;
 
     // TODO: does (*ANYCRLF) need prepended to the search string?
