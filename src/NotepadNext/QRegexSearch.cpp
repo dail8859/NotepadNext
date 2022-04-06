@@ -66,8 +66,11 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
     if (!re.isValid())
         return -1; // Invalid regular expression
 
-    // use a local variable incase it fails
-    QRegularExpressionMatch m = re.match(doc->BufferPointer(), minPos, QRegularExpression::NormalMatch, QRegularExpression::NoMatchOption);
+    // Only need the first maxPos characters
+    QByteArray view = QByteArray::fromRawData(doc->BufferPointer(), maxPos);
+
+    // Start at minPos, this keeps the position match inline with Scintilla since it thinks it starts at the beginning
+    QRegularExpressionMatch m = re.match(view, minPos, QRegularExpression::NormalMatch, QRegularExpression::NoMatchOption);
 
     if (!m.hasMatch())
         return -1; // No match
