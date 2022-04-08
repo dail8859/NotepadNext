@@ -203,3 +203,9 @@ unix {
     INSTALLS += iconscalable
 }
 
+macx: {
+    exists( $$PWD/../../icon/NotepadNext.icns ) {
+        message( "Including App icon" )
+        ICON = ../../icon/NotepadNext.icns
+    }
+}
