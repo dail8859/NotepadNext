@@ -14,7 +14,7 @@ jobs:
           qt_version: "6.2.3"
           modules: "qt5compat"
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
       - uses: actions/checkout@v2
