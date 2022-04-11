@@ -23,6 +23,9 @@ TEMPLATE = subdirs
 
 SUBDIRS = NotepadNext
 
+TRANSLATIONS = \
+    i18n/language.zh_CN.ts
+
 # Extra Windows targets
 win32 {
     # Package up the EXE with all the other needed files
