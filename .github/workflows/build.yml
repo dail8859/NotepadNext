@@ -63,7 +63,7 @@ jobs:
           qt_version: "5.15.2"
           modules: ""
         -
-          qt_version: "6.2.3"
+          qt_version: "6.2.4"
           modules: "qt5compat"
 
     runs-on: macos-latest
