@@ -204,8 +204,5 @@ unix {
 }
 
 macx: {
-    exists( $$PWD/../../icon/NotepadNext.icns ) {
-        message( "Including App icon" )
-        ICON = ../../icon/NotepadNext.icns
-    }
+    ICON = ../../icon/NotepadNext.icns
 }

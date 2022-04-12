@@ -79,14 +79,6 @@ jobs:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
 
-      - name: Generate .icns file
-        run: |
-          cd icon
-          brew install --cask inkscape
-          npm install png2icons
-          inkscape --export-type=png --export-dpi=200 --export-background-opacity=0 NotepadNext.svg
-          "$(npm bin --no-update-notifier)/"png2icons NotepadNext.png NotepadNext -icns
-
       - name: Compile
         run: |
           rm -rf build-mac
