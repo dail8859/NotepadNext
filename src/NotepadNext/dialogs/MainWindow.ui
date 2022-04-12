@@ -195,6 +195,7 @@
     <addaction name="menuShowSymbol"/>
     <addaction name="menuZoom"/>
     <addaction name="actionWordWrap"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuLanguage">
     <property name="title">

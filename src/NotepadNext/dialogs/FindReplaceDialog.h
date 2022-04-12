@@ -27,6 +27,7 @@
 #include <QTabBar>
 
 #include "Finder.h"
+#include "SearchResultsDock.h"
 
 class ScintillaNext;
 
@@ -48,7 +49,7 @@ public:
         MARK_TAB = 3
     };
 
-    explicit FindReplaceDialog(QWidget *parent = nullptr);
+    explicit FindReplaceDialog(SearchResultsDock *searchResults, QWidget *parent = nullptr);
     ~FindReplaceDialog() override;
 
     void setFindText(const QString &string);
@@ -67,6 +68,7 @@ public slots:
     void performLastSearch();
 
     void find();
+    void findAllInCurrentDocument();
     void count();
     void replace();
     void replaceAll();
@@ -104,6 +106,7 @@ private:
     QStatusBar *statusBar;
     QTabBar *tabBar;
 
+    SearchResultsDock *searchResults;
     Finder *finder = Q_NULLPTR;
 };
 

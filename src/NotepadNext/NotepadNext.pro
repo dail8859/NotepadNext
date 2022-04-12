@@ -99,6 +99,7 @@ SOURCES += \
     dialogs/MacroSaveDialog.cpp \
     dialogs/MainWindow.cpp \
     dialogs/PreferencesDialog.cpp \
+    docks/SearchResultsDock.cpp \
     main.cpp \
     decorators/BraceMatch.cpp \
     decorators/EditorDecorator.cpp \
@@ -157,6 +158,7 @@ HEADERS += \
     decorators/HighlightedScrollBar.h \
     decorators/LineNumbers.h \
     decorators/SmartHighlighter.h \
+    docks/SearchResultsDock.h \
     widgets/EditorInfoStatusBar.h \
     widgets/StatusLabel.h
 
@@ -170,7 +172,8 @@ FORMS += \
     docks/LuaConsoleDock.ui \
     dialogs/MacroRunDialog.ui \
     dialogs/MacroSaveDialog.ui \
-    dialogs/PreferencesDialog.ui
+    dialogs/PreferencesDialog.ui \
+    docks/SearchResultsDock.ui
 
 RESOURCES += \
     resources.qrc \

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of Notepad Next.
  * Copyright 2019 Justin Dailey
  *
@@ -58,6 +58,7 @@
 #include "LanguageInspectorDock.h"
 #include "EditorInspectorDock.h"
 #include "FolderAsWorkspaceDock.h"
+#include "SearchResultsDock.h"
 
 #include "FindReplaceDialog.h"
 #include "MacroRunDialog.h"
@@ -204,13 +205,19 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionIncrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->tab();});
     connect(ui->actionDecrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->backTab();});
 
+    SearchResultsDock *srDock = new SearchResultsDock(this);
+    srDock->hide();
+    addDockWidget(Qt::BottomDockWidgetArea, srDock);
+    srDock->toggleViewAction()->setShortcut(Qt::Key_F7);
+    ui->menuView->addAction(srDock->toggleViewAction());
+
     connect(ui->actionFind, &QAction::triggered, [=]() {
         ScintillaNext *editor = dockedEditor->getCurrentEditor();
         FindReplaceDialog *frd = nullptr;
 
         // Create it if it doesn't exist
         if (!dialogs.contains("FindReplaceDialog")) {
-            frd = new FindReplaceDialog(this);
+            frd = new FindReplaceDialog(srDock, this);
             dialogs["FindReplaceDialog"] = frd;
         }
         else {
@@ -545,7 +552,6 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
     fawDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, fawDock);
-    ui->menuView->addSeparator();
     ui->menuView->addAction(fawDock->toggleViewAction());
     connect(fawDock, &FolderAsWorkspaceDock::fileDoubleClicked, this, &MainWindow::openFile);
 
@@ -1364,8 +1370,13 @@ void MainWindow::restoreWindowState()
     restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
     restoreState(settings.value("MainWindow/windowState").toByteArray());
 
+    // Restore the path if it has one
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     fawDock->setRootPath(settings.value("FolderAsWorkspace/RootPath").toString());
+
+    // Always hide the dock no matter how the application was closed
+    SearchResultsDock *srDock = findChild<SearchResultsDock *>();
+    srDock->hide();
 }
 
 void MainWindow::focusIn()
