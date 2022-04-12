@@ -42,9 +42,10 @@ static void convertToExtended(QString &str)
     // TODO: more
 }
 
-FindReplaceDialog::FindReplaceDialog(QWidget *parent) :
+FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, QWidget *parent) :
     QDialog(parent, Qt::Dialog),
-    ui(new Ui::FindReplaceDialog)
+    ui(new Ui::FindReplaceDialog),
+    searchResults(searchResults)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -95,6 +96,7 @@ FindReplaceDialog::FindReplaceDialog(QWidget *parent) :
 
     connect(ui->buttonFind, &QPushButton::clicked, this, &FindReplaceDialog::find);
     connect(ui->buttonCount, &QPushButton::clicked, this, &FindReplaceDialog::count);
+    connect(ui->buttonFindAllInCurrent, &QPushButton::clicked, this, &FindReplaceDialog::findAllInCurrentDocument);
     connect(ui->buttonReplace, &QPushButton::clicked, this, &FindReplaceDialog::replace);
     connect(ui->buttonReplaceAll, &QPushButton::clicked, this, &FindReplaceDialog::replaceAll);
     connect(ui->buttonClose, &QPushButton::clicked, this, &FindReplaceDialog::close);
@@ -203,6 +205,36 @@ void FindReplaceDialog::find()
     else {
         showMessage(tr("No matches found."), "red");
     }
+}
+
+void FindReplaceDialog::findAllInCurrentDocument()
+{
+    QString text = ui->comboFind->currentText();
+
+    saveSearchTerm(text);
+
+    updateFindList(text);
+
+    statusBar->clearMessage();
+
+    searchResults->show();
+    searchResults->newSearch(text);
+    searchResults->newFileEntry(editor->getName());
+
+    editor->forEachMatch(text, [&](int start, int end) {
+        int line = editor->lineFromPosition(start);
+        int lineStartPosition = editor->positionFromLine(line);
+        int lineEndPosition = editor->lineEndPosition(line);
+        QString lineText = editor->get_text_range(lineStartPosition, lineEndPosition);
+
+        searchResults->newResultsEntry(lineText);
+
+        return end;
+    });
+
+    searchResults->completeSearch();
+
+    close();
 }
 
 void FindReplaceDialog::replace()
