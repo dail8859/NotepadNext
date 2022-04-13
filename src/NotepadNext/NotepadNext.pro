@@ -203,3 +203,6 @@ unix {
     INSTALLS += iconscalable
 }
 
+macx: {
+    ICON = ../../icon/NotepadNext.icns
+}
