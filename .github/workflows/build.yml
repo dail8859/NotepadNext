@@ -55,6 +55,46 @@ jobs:
           name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}-AppImage
           path: ${{ github.workspace }}/build-linux/NotepadNext/NotepadNext-x86_64.AppImage
 
+  build-mac:
+    strategy:
+      matrix:
+        config:
+        -
+          qt_version: "5.15.2"
+          modules: ""
+        -
+          qt_version: "6.2.4"
+          modules: "qt5compat"
+
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ matrix.config.qt_version }}
+          modules: ${{ matrix.config.modules }}
+
+      - name: Compile
+        run: |
+          rm -rf build-mac
+          mkdir build-mac
+          cd build-mac
+          qmake ../src/NotepadNext.pro
+          make -j$(sysctl -n hw.ncpu)
+          cd NotepadNext
+          macdeployqt NotepadNext.app -dmg
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: NotepadNext-macOS-Qt${{ matrix.config.qt_version }}
+          path: ${{ github.workspace }}/build-mac/NotepadNext/NotepadNext.dmg
+
   build-windows:
     strategy:
       matrix:
