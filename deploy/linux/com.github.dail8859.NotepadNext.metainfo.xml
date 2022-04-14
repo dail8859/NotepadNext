@@ -7,22 +7,15 @@
     <project_license>GPL-3.0</project_license>
     <content_rating type="oars-1.1" />
 
-    <name>NotepadNext</name>
-    <developer_name>dail8859</developer_name>
+    <name>Notepad Next</name>
     
     <summary>A cross-platform, reimplementation of Notepad++</summary>
     <description>
-        <p>some absolutely crazy description to describe the application</p>
-        <ul>
-            <li>a bullet point</li>
-            <li>another bullet point</li>
-        </ul>
+        <p>Notepad Next is yet another text and source code editor.</p>
     </description>
 
     <url type="homepage">https://github.com/dail8859/NotepadNext</url>
     <url type="bugtracker">https://github.com/dail8859/NotepadNext/issues</url>
-    <url type="donation"></url><!-- can also be removed -->
-    <url type="contact"></url><!-- can also be removed -->
     
     <screenshots>
         <screenshot type="default">
