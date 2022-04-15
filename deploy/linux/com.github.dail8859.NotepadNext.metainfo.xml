@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2022 dail8859 -->
+<!-- https://www.freedesktop.org/software/appstream/docs/chap-Metadata.html -->
+<component type="desktop-application">
+    <id>com.github.dail8859.NotepadNext</id>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>GPL-3.0</project_license>
+    <content_rating type="oars-1.1" />
+
+    <name>Notepad Next</name>
+    
+    <summary>A cross-platform, reimplementation of Notepad++</summary>
+    <description>
+        <p>Notepad Next is yet another text and source code editor.</p>
+    </description>
+
+    <url type="homepage">https://github.com/dail8859/NotepadNext</url>
+    <url type="bugtracker">https://github.com/dail8859/NotepadNext/issues</url>
+    
+    <screenshots>
+        <screenshot type="default">
+            <image type="source">https://raw.githubusercontent.com/dail8859/NotepadNext/master/doc/screenshot_linux.png</image>
+        </screenshot>
+    </screenshots>
+
+    <launchable type="desktop-id">com.github.dail8859.NotepadNext.desktop</launchable>
+    <releases>
+        <release version="v0.4.9" date="2022-03-18" />
+    </releases>
+</component>
