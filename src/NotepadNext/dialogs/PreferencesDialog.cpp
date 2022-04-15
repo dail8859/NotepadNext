@@ -37,17 +37,9 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
     connect(settings, &Settings::showToolBarChanged, ui->checkBoxToolBar, &QCheckBox::setChecked);
     connect(ui->checkBoxToolBar, &QCheckBox::clicked, settings, &Settings::setShowToolBar);
 
-    ui->groupTabBar->setChecked(settings->showTabBar());
-    connect(settings, &Settings::showTabBarChanged, ui->groupTabBar, &QGroupBox::setChecked);
-    connect(ui->groupTabBar, &QGroupBox::clicked, settings, &Settings::setShowTabBar);
-
     ui->checkBoxStatusBar->setChecked(settings->showStatusBar());
     connect(settings, &Settings::showStatusBarChanged, ui->checkBoxStatusBar, &QCheckBox::setChecked);
     connect(ui->checkBoxStatusBar, &QCheckBox::clicked, settings, &Settings::setShowStatusBar);
-
-    ui->checkBoxTabsClosable->setChecked(settings->tabsClosable());
-    connect(settings, &Settings::tabsClosableChanged, ui->checkBoxTabsClosable, &QCheckBox::setChecked);
-    connect(ui->checkBoxTabsClosable, &QCheckBox::clicked, settings, &Settings::setTabsClosable);
 }
 
 PreferencesDialog::~PreferencesDialog()
