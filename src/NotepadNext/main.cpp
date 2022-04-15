@@ -33,6 +33,10 @@ int main(int argc, char *argv[])
     QApplication::setOrganizationName("NotepadNext");
     QApplication::setApplicationName("NotepadNext");
     QGuiApplication::setApplicationDisplayName("Notepad Next");
+#ifdef Q_OS_UNIX
+    // Unix doesn't provide an application version by default
+    QGuiApplication::setApplicationVersion(APP_VERSION);
+#endif
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
