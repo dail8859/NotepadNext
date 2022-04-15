@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of Notepad Next.
  * Copyright 2019 Justin Dailey
  *
@@ -521,21 +521,22 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                                 .arg(APP_VERSION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
 
-    LuaConsoleDock *luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
-    luaConsoleDock->hide();
-    addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
-    ui->menuHelp->addSeparator();
-    ui->menuHelp->addAction(luaConsoleDock->toggleViewAction());
-
-    LanguageInspectorDock *languageInspectorDock = new LanguageInspectorDock(this);
-    languageInspectorDock->hide();
-    addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
-    ui->menuHelp->addAction(languageInspectorDock->toggleViewAction());
+    QAction *separator = ui->menuHelp->insertSeparator(ui->actionCheckForUpdates);
 
     EditorInspectorDock *editorInspectorDock = new EditorInspectorDock(this);
     editorInspectorDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, editorInspectorDock);
-    ui->menuHelp->addAction(editorInspectorDock->toggleViewAction());
+    ui->menuHelp->insertAction(separator, editorInspectorDock->toggleViewAction());
+
+    LanguageInspectorDock *languageInspectorDock = new LanguageInspectorDock(this);
+    languageInspectorDock->hide();
+    addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
+    ui->menuHelp->insertAction(editorInspectorDock->toggleViewAction(), languageInspectorDock->toggleViewAction());
+
+    LuaConsoleDock *luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
+    luaConsoleDock->hide();
+    addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
+    ui->menuHelp->insertAction(languageInspectorDock->toggleViewAction(), luaConsoleDock->toggleViewAction());
 
     FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
     fawDock->hide();
