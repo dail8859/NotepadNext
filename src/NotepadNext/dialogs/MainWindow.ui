@@ -40,7 +40,7 @@
      <x>0</x>
      <y>0</y>
      <width>855</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -211,10 +211,10 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionCheckForUpdates"/>
+    <addaction name="separator"/>
     <addaction name="actionAboutQt"/>
     <addaction name="actionAboutNotepadNext"/>
-    <addaction name="separator"/>
-    <addaction name="actionCheckForUpdates"/>
    </widget>
    <widget class="QMenu" name="menuEncodings">
     <property name="title">
