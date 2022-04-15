@@ -1,0 +1,20 @@
+Source: notepadnext
+Section: editors
+Priority: optional
+Maintainer: B. Stack <bgstack15@gmail.com>
+Build-Depends: debhelper-compat (= 12),
+	libqt6core5compat6-dev,
+	libqt6core6,
+	qmake6,
+	qt6-base-private-dev,
+	qtbase5-private-dev
+Standards-Version: 4.5.0
+Homepage: https://github.com/dail8859/NotepadNext
+
+Package: notepadnext
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: A cross-platform, reimplementation of Notepad++
+ Powerful QT-based text editor for graphical environments,
+ but based on scintilla like the original Notepad++.

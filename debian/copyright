@@ -1,0 +1,2280 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: notepadnext
+Upstream-Contact: <preferred name and address to reach the upstream project>
+Source: <url://example.com>
+#
+# Please double check copyright with the licensecheck(1) command.
+
+Files:     .github/workflows/build.yml
+           .gitignore
+           .gitmodules
+           README.md
+           deploy/linux/NotepadNext.desktop
+           deploy/windows/libssl-1_1-x64.dll
+           doc/Building.md
+           doc/Create Release.md
+           doc/Update Scintilla.md
+           doc/screenshot.png
+           icon/NotepadNext.icns
+           icon/nn.ico
+           icon/svg_to_ico.bat
+           installer/NsisMultiUser/Include/NsisMultiUserLang.nsh
+           installer/NsisMultiUser/Include/UAC.nsh
+           installer/installer.nsi
+           installer/utils.nsh
+           src/LuaBridge/detail/Security.h
+           src/NotepadNext/icons/arrow_refresh.png
+           src/NotepadNext/icons/bin.png
+           src/NotepadNext/icons/bin_closed.png
+           src/NotepadNext/icons/closeAll.png
+           src/NotepadNext/icons/closeFile.png
+           src/NotepadNext/icons/copy.png
+           src/NotepadNext/icons/cut.png
+           src/NotepadNext/icons/find.png
+           src/NotepadNext/icons/findReplace.png
+           src/NotepadNext/icons/indentGuide.png
+           src/NotepadNext/icons/invisibleChar.png
+           src/NotepadNext/icons/newfile.png
+           src/NotepadNext/icons/openFile.png
+           src/NotepadNext/icons/paste.png
+           src/NotepadNext/icons/playRecord.png
+           src/NotepadNext/icons/playRecord_m.png
+           src/NotepadNext/icons/printer.png
+           src/NotepadNext/icons/readonly.png
+           src/NotepadNext/icons/redo.png
+           src/NotepadNext/icons/saveAll.png
+           src/NotepadNext/icons/saveRecord.png
+           src/NotepadNext/icons/saved.png
+           src/NotepadNext/icons/startRecord.png
+           src/NotepadNext/icons/stopRecord.png
+           src/NotepadNext/icons/text_indent.png
+           src/NotepadNext/icons/text_indent_remove.png
+           src/NotepadNext/icons/undo.png
+           src/NotepadNext/icons/unsaved.png
+           src/NotepadNext/icons/wrap.png
+           src/NotepadNext/icons/zoomIn.png
+           src/NotepadNext/icons/zoomOut.png
+           src/NotepadNext/languages/actionscript.lua
+           src/NotepadNext/languages/ada.lua
+           src/NotepadNext/languages/asm.lua
+           src/NotepadNext/languages/asn1.lua
+           src/NotepadNext/languages/asp.lua
+           src/NotepadNext/languages/autoit.lua
+           src/NotepadNext/languages/avs.lua
+           src/NotepadNext/languages/baanc.lua
+           src/NotepadNext/languages/bash.lua
+           src/NotepadNext/languages/batch.lua
+           src/NotepadNext/languages/blitzbasic.lua
+           src/NotepadNext/languages/c.lua
+           src/NotepadNext/languages/caml.lua
+           src/NotepadNext/languages/cmake.lua
+           src/NotepadNext/languages/cobol.lua
+           src/NotepadNext/languages/coffeescript.lua
+           src/NotepadNext/languages/cpp.lua
+           src/NotepadNext/languages/cs.lua
+           src/NotepadNext/languages/csound.lua
+           src/NotepadNext/languages/css.lua
+           src/NotepadNext/languages/d.lua
+           src/NotepadNext/languages/diff.lua
+           src/NotepadNext/languages/erlang.lua
+           src/NotepadNext/languages/escript.lua
+           src/NotepadNext/languages/forth.lua
+           src/NotepadNext/languages/fortran.lua
+           src/NotepadNext/languages/fortran77.lua
+           src/NotepadNext/languages/freebasic.lua
+           src/NotepadNext/languages/go.lua
+           src/NotepadNext/languages/gui4cli.lua
+           src/NotepadNext/languages/haskell.lua
+           src/NotepadNext/languages/html.lua
+           src/NotepadNext/languages/ihex.lua
+           src/NotepadNext/languages/ini.lua
+           src/NotepadNext/languages/inno.lua
+           src/NotepadNext/languages/java.lua
+           src/NotepadNext/languages/javascript.js.lua
+           src/NotepadNext/languages/javascript.lua
+           src/NotepadNext/languages/json.lua
+           src/NotepadNext/languages/kix.lua
+           src/NotepadNext/languages/latex.lua
+           src/NotepadNext/languages/lisp.lua
+           src/NotepadNext/languages/lua.lua
+           src/NotepadNext/languages/makefile.lua
+           src/NotepadNext/languages/markdown.lua
+           src/NotepadNext/languages/matlab.lua
+           src/NotepadNext/languages/mmixal.lua
+           src/NotepadNext/languages/nfo.lua
+           src/NotepadNext/languages/nimrod.lua
+           src/NotepadNext/languages/nncrontab.lua
+           src/NotepadNext/languages/nsis.lua
+           src/NotepadNext/languages/objc.lua
+           src/NotepadNext/languages/oscript.lua
+           src/NotepadNext/languages/pascal.lua
+           src/NotepadNext/languages/perl.lua
+           src/NotepadNext/languages/php.lua
+           src/NotepadNext/languages/postscript.lua
+           src/NotepadNext/languages/powershell.lua
+           src/NotepadNext/languages/props.lua
+           src/NotepadNext/languages/purebasic.lua
+           src/NotepadNext/languages/python.lua
+           src/NotepadNext/languages/r.lua
+           src/NotepadNext/languages/rc.lua
+           src/NotepadNext/languages/rebol.lua
+           src/NotepadNext/languages/registry.lua
+           src/NotepadNext/languages/ruby.lua
+           src/NotepadNext/languages/rust.lua
+           src/NotepadNext/languages/scheme.lua
+           src/NotepadNext/languages/smalltalk.lua
+           src/NotepadNext/languages/spice.lua
+           src/NotepadNext/languages/sql.lua
+           src/NotepadNext/languages/srec.lua
+           src/NotepadNext/languages/swift.lua
+           src/NotepadNext/languages/tcl.lua
+           src/NotepadNext/languages/tehex.lua
+           src/NotepadNext/languages/tex.lua
+           src/NotepadNext/languages/text.lua
+           src/NotepadNext/languages/txt2tags.lua
+           src/NotepadNext/languages/vb.lua
+           src/NotepadNext/languages/verilog.lua
+           src/NotepadNext/languages/vhdl.lua
+           src/NotepadNext/languages/visualprolog.lua
+           src/NotepadNext/languages/xml.lua
+           src/NotepadNext/languages/yaml.lua
+           src/NotepadNext/scripts/init.lua
+           src/NotepadNext/stylesheets/npp.css
+           src/lexilla/.gitattributes
+           src/lexilla/.gitignore
+           src/lexilla/.travis.yml
+           src/lexilla/CONTRIBUTING
+           src/lexilla/README
+           src/lexilla/access/README
+           src/lexilla/bin/empty.txt
+           src/lexilla/cppcheck.suppress
+           src/lexilla/delbin.bat
+           src/lexilla/doc/LexillaLogo.png
+           src/lexilla/doc/LexillaLogo2x.png
+           src/lexilla/lexers/LexASY.cxx
+           src/lexilla/lexers/LexAbaqus.cxx
+           src/lexilla/lexers/LexAsciidoc.cxx
+           src/lexilla/lexers/LexBullant.cxx
+           src/lexilla/lexers/LexCOBOL.cxx
+           src/lexilla/lexers/LexDataflex.cxx
+           src/lexilla/lexers/LexEDIFACT.cxx
+           src/lexilla/lexers/LexErlang.cxx
+           src/lexilla/lexers/LexHaskell.cxx
+           src/lexilla/lexers/LexHollywood.cxx
+           src/lexilla/lexers/LexIndent.cxx
+           src/lexilla/lexers/LexInno.cxx
+           src/lexilla/lexers/LexJSON.cxx
+           src/lexilla/lexers/LexLua.cxx
+           src/lexilla/lexers/LexMSSQL.cxx
+           src/lexilla/lexers/LexMarkdown.cxx
+           src/lexilla/lexers/LexModula.cxx
+           src/lexilla/lexers/LexOScript.cxx
+           src/lexilla/lexers/LexOpal.cxx
+           src/lexilla/lexers/LexPS.cxx
+           src/lexilla/lexers/LexPascal.cxx
+           src/lexilla/lexers/LexRegistry.cxx
+           src/lexilla/lexers/LexSTTXT.cxx
+           src/lexilla/lexers/LexScriptol.cxx
+           src/lexilla/lexers/LexSorcus.cxx
+           src/lexilla/lexers/LexTACL.cxx
+           src/lexilla/lexers/LexTAL.cxx
+           src/lexilla/lexers/LexTCMD.cxx
+           src/lexilla/lexers/LexTxt2tags.cxx
+           src/lexilla/lexers/LexX12.cxx
+           src/lexilla/scripts/HeaderOrder.txt
+           src/lexilla/scripts/LexFacer.py
+           src/lexilla/scripts/LexillaData.py
+           src/lexilla/scripts/LexillaGen.py
+           src/lexilla/scripts/LexillaLogo.py
+           src/lexilla/scripts/RunTest.bat
+           src/lexilla/scripts/RunTest.sh
+           src/lexilla/src/Lexilla.def
+           src/lexilla/src/Lexilla.pro
+           src/lexilla/src/Lexilla.vcxproj
+           src/lexilla/src/Lexilla/Lexilla.xcodeproj/project.pbxproj
+           src/lexilla/src/deps.mak
+           src/lexilla/src/nmdeps.mak
+           src/lexilla/test/README
+           src/lexilla/test/examples/asciidoc/AllStyles.adoc
+           src/lexilla/test/examples/asciidoc/AllStyles.adoc.folded
+           src/lexilla/test/examples/asciidoc/AllStyles.adoc.styled
+           src/lexilla/test/examples/asciidoc/SciTE.properties
+           src/lexilla/test/examples/bash/SciTE.properties
+           src/lexilla/test/examples/bash/x.bsh
+           src/lexilla/test/examples/bash/x.bsh.folded
+           src/lexilla/test/examples/bash/x.bsh.styled
+           src/lexilla/test/examples/batch/SciTE.properties
+           src/lexilla/test/examples/batch/x.bat
+           src/lexilla/test/examples/batch/x.bat.folded
+           src/lexilla/test/examples/batch/x.bat.styled
+           src/lexilla/test/examples/caml/AllStyles.ml
+           src/lexilla/test/examples/caml/AllStyles.ml.folded
+           src/lexilla/test/examples/caml/AllStyles.ml.styled
+           src/lexilla/test/examples/caml/SciTE.properties
+           src/lexilla/test/examples/cpp/Bug2245.cxx
+           src/lexilla/test/examples/cpp/Bug2245.cxx.folded
+           src/lexilla/test/examples/cpp/Bug2245.cxx.styled
+           src/lexilla/test/examples/cpp/SciTE.properties
+           src/lexilla/test/examples/cpp/x.cxx
+           src/lexilla/test/examples/cpp/x.cxx.folded
+           src/lexilla/test/examples/cpp/x.cxx.styled
+           src/lexilla/test/examples/css/AllStyles.css
+           src/lexilla/test/examples/css/AllStyles.css.folded
+           src/lexilla/test/examples/css/AllStyles.css.styled
+           src/lexilla/test/examples/css/SciTE.properties
+           src/lexilla/test/examples/d/SciTE.properties
+           src/lexilla/test/examples/d/x.d
+           src/lexilla/test/examples/d/x.d.folded
+           src/lexilla/test/examples/d/x.d.styled
+           src/lexilla/test/examples/erlang/AllStyles.erl
+           src/lexilla/test/examples/erlang/AllStyles.erl.folded
+           src/lexilla/test/examples/erlang/AllStyles.erl.styled
+           src/lexilla/test/examples/erlang/SciTE.properties
+           src/lexilla/test/examples/errorlist/AllStyles.err
+           src/lexilla/test/examples/errorlist/AllStyles.err.folded
+           src/lexilla/test/examples/errorlist/AllStyles.err.styled
+           src/lexilla/test/examples/errorlist/SciTE.properties
+           src/lexilla/test/examples/fsharp/FmtSpecs.fs
+           src/lexilla/test/examples/fsharp/FmtSpecs.fs.folded
+           src/lexilla/test/examples/fsharp/FmtSpecs.fs.styled
+           src/lexilla/test/examples/fsharp/Issue56.fs
+           src/lexilla/test/examples/fsharp/Issue56.fs.folded
+           src/lexilla/test/examples/fsharp/Issue56.fs.styled
+           src/lexilla/test/examples/fsharp/SciTE.properties
+           src/lexilla/test/examples/fsharp/x.fs
+           src/lexilla/test/examples/fsharp/x.fs.folded
+           src/lexilla/test/examples/fsharp/x.fs.styled
+           src/lexilla/test/examples/gdscript/AllStyles.gd
+           src/lexilla/test/examples/gdscript/AllStyles.gd.folded
+           src/lexilla/test/examples/gdscript/AllStyles.gd.styled
+           src/lexilla/test/examples/gdscript/SciTE.properties
+           src/lexilla/test/examples/hypertext/Bug2207.html.folded
+           src/lexilla/test/examples/hypertext/Bug2207.html.styled
+           src/lexilla/test/examples/hypertext/Issue19.php.folded
+           src/lexilla/test/examples/hypertext/Issue19.php.styled
+           src/lexilla/test/examples/hypertext/Issue20Numbers.php.folded
+           src/lexilla/test/examples/hypertext/Issue20Numbers.php.styled
+           src/lexilla/test/examples/hypertext/Issue47.html.folded
+           src/lexilla/test/examples/hypertext/Issue47.html.styled
+           src/lexilla/test/examples/hypertext/Issue53.html.folded
+           src/lexilla/test/examples/hypertext/Issue53.html.styled
+           src/lexilla/test/examples/hypertext/SciTE.properties
+           src/lexilla/test/examples/hypertext/apostophe.php.folded
+           src/lexilla/test/examples/hypertext/apostophe.php.styled
+           src/lexilla/test/examples/hypertext/x.asp.folded
+           src/lexilla/test/examples/hypertext/x.asp.styled
+           src/lexilla/test/examples/hypertext/x.html.folded
+           src/lexilla/test/examples/hypertext/x.html.styled
+           src/lexilla/test/examples/hypertext/x.php.folded
+           src/lexilla/test/examples/hypertext/x.php.styled
+           src/lexilla/test/examples/inno/SciTE.properties
+           src/lexilla/test/examples/inno/x.iss
+           src/lexilla/test/examples/inno/x.iss.folded
+           src/lexilla/test/examples/inno/x.iss.styled
+           src/lexilla/test/examples/julia/SciTE.properties
+           src/lexilla/test/examples/julia/x.jl
+           src/lexilla/test/examples/julia/x.jl.folded
+           src/lexilla/test/examples/julia/x.jl.styled
+           src/lexilla/test/examples/latex/AllStyles.tex
+           src/lexilla/test/examples/latex/AllStyles.tex.folded
+           src/lexilla/test/examples/latex/AllStyles.tex.styled
+           src/lexilla/test/examples/latex/Feature1358.tex
+           src/lexilla/test/examples/latex/Feature1358.tex.folded
+           src/lexilla/test/examples/latex/Feature1358.tex.styled
+           src/lexilla/test/examples/latex/SciTE.properties
+           src/lexilla/test/examples/lua/Bug2205.lua
+           src/lexilla/test/examples/lua/Bug2205.lua.folded
+           src/lexilla/test/examples/lua/Bug2205.lua.styled
+           src/lexilla/test/examples/lua/SciTE.properties
+           src/lexilla/test/examples/lua/x.lua
+           src/lexilla/test/examples/lua/x.lua.folded
+           src/lexilla/test/examples/lua/x.lua.styled
+           src/lexilla/test/examples/markdown/AllStyles.md
+           src/lexilla/test/examples/markdown/AllStyles.md.folded
+           src/lexilla/test/examples/markdown/AllStyles.md.styled
+           src/lexilla/test/examples/markdown/Bug1216.md
+           src/lexilla/test/examples/markdown/Bug1216.md.folded
+           src/lexilla/test/examples/markdown/Bug1216.md.styled
+           src/lexilla/test/examples/markdown/Bug2235.md
+           src/lexilla/test/examples/markdown/Bug2235.md.folded
+           src/lexilla/test/examples/markdown/Bug2235.md.styled
+           src/lexilla/test/examples/markdown/Bug2247.md
+           src/lexilla/test/examples/markdown/Bug2247.md.folded
+           src/lexilla/test/examples/markdown/Bug2247.md.styled
+           src/lexilla/test/examples/markdown/SciTE.properties
+           src/lexilla/test/examples/matlab/AllStyles.m.matlab
+           src/lexilla/test/examples/matlab/AllStyles.m.matlab.folded
+           src/lexilla/test/examples/matlab/AllStyles.m.matlab.styled
+           src/lexilla/test/examples/matlab/AllStyles.m.octave
+           src/lexilla/test/examples/matlab/AllStyles.m.octave.folded
+           src/lexilla/test/examples/matlab/AllStyles.m.octave.styled
+           src/lexilla/test/examples/matlab/Issue18_EscapeSequence.m.matlab
+           src/lexilla/test/examples/matlab/Issue18_EscapeSequence.m.matlab.folded
+           src/lexilla/test/examples/matlab/Issue18_EscapeSequence.m.matlab.styled
+           src/lexilla/test/examples/matlab/Issue18_EscapeSequence.m.octave
+           src/lexilla/test/examples/matlab/Issue18_EscapeSequence.m.octave.folded
+           src/lexilla/test/examples/matlab/Issue18_EscapeSequence.m.octave.styled
+           src/lexilla/test/examples/matlab/SciTE.properties
+           src/lexilla/test/examples/mmixal/AllStyles.mms
+           src/lexilla/test/examples/mmixal/AllStyles.mms.folded
+           src/lexilla/test/examples/mmixal/AllStyles.mms.styled
+           src/lexilla/test/examples/mmixal/SciTE.properties
+           src/lexilla/test/examples/mmixal/references.mms
+           src/lexilla/test/examples/mmixal/references.mms.folded
+           src/lexilla/test/examples/mmixal/references.mms.styled
+           src/lexilla/test/examples/mmixal/x.mms
+           src/lexilla/test/examples/mmixal/x.mms.folded
+           src/lexilla/test/examples/mmixal/x.mms.styled
+           src/lexilla/test/examples/nim/SciTE.properties
+           src/lexilla/test/examples/nim/x.nim
+           src/lexilla/test/examples/nim/x.nim.folded
+           src/lexilla/test/examples/nim/x.nim.styled
+           src/lexilla/test/examples/perl/SciTE.properties
+           src/lexilla/test/examples/perl/perl-test-5220delta.pl
+           src/lexilla/test/examples/perl/perl-test-5220delta.pl.folded
+           src/lexilla/test/examples/perl/perl-test-5220delta.pl.styled
+           src/lexilla/test/examples/perl/perl-test-sub-prototypes.pl
+           src/lexilla/test/examples/perl/perl-test-sub-prototypes.pl.folded
+           src/lexilla/test/examples/perl/perl-test-sub-prototypes.pl.styled
+           src/lexilla/test/examples/perl/x.pl
+           src/lexilla/test/examples/perl/x.pl.folded
+           src/lexilla/test/examples/perl/x.pl.styled
+           src/lexilla/test/examples/python/AllStyles.py
+           src/lexilla/test/examples/python/AllStyles.py.folded
+           src/lexilla/test/examples/python/AllStyles.py.styled
+           src/lexilla/test/examples/python/SciTE.properties
+           src/lexilla/test/examples/python/attributes/SciTE.properties
+           src/lexilla/test/examples/python/attributes/attributes.py
+           src/lexilla/test/examples/python/attributes/attributes.py.folded
+           src/lexilla/test/examples/python/attributes/attributes.py.styled
+           src/lexilla/test/examples/python/x.py
+           src/lexilla/test/examples/python/x.py.folded
+           src/lexilla/test/examples/python/x.py.styled
+           src/lexilla/test/examples/raku/SciTE.properties
+           src/lexilla/test/examples/raku/x.p6
+           src/lexilla/test/examples/raku/x.p6.folded
+           src/lexilla/test/examples/raku/x.p6.styled
+           src/lexilla/test/examples/ruby/SciTE.properties
+           src/lexilla/test/examples/ruby/x.rb
+           src/lexilla/test/examples/ruby/x.rb.folded
+           src/lexilla/test/examples/ruby/x.rb.styled
+           src/lexilla/test/examples/rust/Issue33.rs
+           src/lexilla/test/examples/rust/Issue33.rs.folded
+           src/lexilla/test/examples/rust/Issue33.rs.styled
+           src/lexilla/test/examples/rust/Issue34.rs
+           src/lexilla/test/examples/rust/Issue34.rs.folded
+           src/lexilla/test/examples/rust/Issue34.rs.styled
+           src/lexilla/test/examples/rust/Issue35.rs
+           src/lexilla/test/examples/rust/Issue35.rs.folded
+           src/lexilla/test/examples/rust/Issue35.rs.styled
+           src/lexilla/test/examples/rust/SciTE.properties
+           src/lexilla/test/examples/tcl/SciTE.properties
+           src/lexilla/test/examples/tcl/x.tcl
+           src/lexilla/test/examples/tcl/x.tcl.folded
+           src/lexilla/test/examples/tcl/x.tcl.styled
+           src/lexilla/test/examples/vb/SciTE.properties
+           src/lexilla/test/examples/vb/x.vb
+           src/lexilla/test/examples/vb/x.vb.folded
+           src/lexilla/test/examples/vb/x.vb.styled
+           src/lexilla/test/examples/x12/SciTE.properties
+           src/lexilla/test/examples/x12/x.x12
+           src/lexilla/test/examples/x12/x.x12.folded
+           src/lexilla/test/examples/x12/x.x12.styled
+           src/lexilla/test/examples/yaml/SciTE.properties
+           src/lexilla/test/examples/yaml/x.yaml
+           src/lexilla/test/examples/yaml/x.yaml.folded
+           src/lexilla/test/examples/yaml/x.yaml.styled
+           src/lexilla/test/testlexers.mak
+           src/lexilla/test/unit/README
+           src/lexilla/test/unit/SciTE.properties
+           src/lexilla/test/unit/UnitTester.cxx
+           src/lexilla/test/unit/UnitTester.vcxproj
+           src/lexilla/test/unit/test.mak
+           src/lexilla/test/unit/testCharacterSet.cxx
+           src/lexilla/test/unit/testLexerSimple.cxx
+           src/lexilla/test/unit/testPropSetSimple.cxx
+           src/lexilla/test/unit/testSparseState.cxx
+           src/lexilla/test/unit/testWordList.cxx
+           src/lexilla/test/unit/unitTest.cxx
+           src/lexilla/tgzsrc
+           src/lexilla/version.txt
+           src/lexilla/zipsrc.bat
+           src/lua/README
+           src/lua/src/lapi.c
+           src/lua/src/lapi.h
+           src/lua/src/lauxlib.c
+           src/lua/src/lauxlib.h
+           src/lua/src/lbaselib.c
+           src/lua/src/lbitlib.c
+           src/lua/src/lcode.c
+           src/lua/src/lcode.h
+           src/lua/src/lcorolib.c
+           src/lua/src/lctype.c
+           src/lua/src/lctype.h
+           src/lua/src/ldblib.c
+           src/lua/src/ldebug.c
+           src/lua/src/ldebug.h
+           src/lua/src/ldo.c
+           src/lua/src/ldo.h
+           src/lua/src/ldump.c
+           src/lua/src/lfunc.c
+           src/lua/src/lfunc.h
+           src/lua/src/lgc.c
+           src/lua/src/lgc.h
+           src/lua/src/linit.c
+           src/lua/src/liolib.c
+           src/lua/src/llex.c
+           src/lua/src/llex.h
+           src/lua/src/llimits.h
+           src/lua/src/lmathlib.c
+           src/lua/src/lmem.c
+           src/lua/src/lmem.h
+           src/lua/src/loadlib.c
+           src/lua/src/lobject.c
+           src/lua/src/lobject.h
+           src/lua/src/lopcodes.c
+           src/lua/src/lopcodes.h
+           src/lua/src/loslib.c
+           src/lua/src/lparser.c
+           src/lua/src/lparser.h
+           src/lua/src/lprefix.h
+           src/lua/src/lstate.c
+           src/lua/src/lstate.h
+           src/lua/src/lstring.c
+           src/lua/src/lstring.h
+           src/lua/src/lstrlib.c
+           src/lua/src/ltable.c
+           src/lua/src/ltable.h
+           src/lua/src/ltablib.c
+           src/lua/src/ltm.c
+           src/lua/src/ltm.h
+           src/lua/src/lua.hpp
+           src/lua/src/luaconf.h
+           src/lua/src/lualib.h
+           src/lua/src/lundump.c
+           src/lua/src/lundump.h
+           src/lua/src/lutf8lib.c
+           src/lua/src/lvm.c
+           src/lua/src/lvm.h
+           src/lua/src/lzio.c
+           src/lua/src/lzio.h
+           src/scintilla/.hg_archival.txt
+           src/scintilla/.hgeol
+           src/scintilla/.hgignore
+           src/scintilla/.hgtags
+           src/scintilla/CONTRIBUTING
+           src/scintilla/README
+           src/scintilla/bin/__init__.py
+           src/scintilla/bin/empty.txt
+           src/scintilla/cocoa/QuartzTextLayout.h
+           src/scintilla/cocoa/QuartzTextStyle.h
+           src/scintilla/cocoa/QuartzTextStyleAttribute.h
+           src/scintilla/cocoa/Scintilla/Scintilla.xcodeproj/project.pbxproj
+           src/scintilla/cocoa/Scintilla/module.modulemap
+           src/scintilla/cocoa/ScintillaTest/ScintillaTest.xcodeproj/project.pbxproj
+           src/scintilla/cocoa/ScintillaTest/ScintillaTest_Prefix.pch
+           src/scintilla/cocoa/ScintillaTest/TestData.sql
+           src/scintilla/cocoa/ScintillaTest/en.lproj/InfoPlist.strings
+           src/scintilla/cocoa/checkbuildosx.sh
+           src/scintilla/cocoa/res/info_bar_bg.png
+           src/scintilla/cocoa/res/info_bar_bg@2x.png
+           src/scintilla/cocoa/res/mac_cursor_busy.png
+           src/scintilla/cocoa/res/mac_cursor_busy@2x.png
+           src/scintilla/cocoa/res/mac_cursor_flipped.png
+           src/scintilla/cocoa/res/mac_cursor_flipped@2x.png
+           src/scintilla/cppcheck.suppress
+           src/scintilla/delbin.bat
+           src/scintilla/doc/AddSource.txt
+           src/scintilla/doc/Indicators.png
+           src/scintilla/doc/Lexer.txt
+           src/scintilla/doc/Markers.png
+           src/scintilla/doc/SciBreak.jpg
+           src/scintilla/doc/SciRest.jpg
+           src/scintilla/doc/SciTEIco.png
+           src/scintilla/doc/SciWord.jpg
+           src/scintilla/doc/StadiumVariants.png
+           src/scintilla/doc/annotations.png
+           src/scintilla/doc/eolannotation.png
+           src/scintilla/doc/styledmargin.png
+           src/scintilla/gtk/deps.mak
+           src/scintilla/gtk/scintilla-marshal.c
+           src/scintilla/gtk/scintilla-marshal.h
+           src/scintilla/gtk/scintilla-marshal.list
+           src/scintilla/qt/README
+           src/scintilla/qt/ScintillaEdit/ScintillaEdit.pro
+           src/scintilla/qt/ScintillaEdit/WidgetGen.py
+           src/scintilla/qt/ScintillaEditBase/Notes.txt
+           src/scintilla/qt/ScintillaEditBase/ScintillaEditBase.pro
+           src/scintilla/scripts/CheckMentioned.py
+           src/scintilla/scripts/Face.py
+           src/scintilla/scripts/FileGenerator.py
+           src/scintilla/scripts/GenerateCaseConvert.py
+           src/scintilla/scripts/GenerateCharacterCategory.py
+           src/scintilla/scripts/HFacer.py
+           src/scintilla/scripts/HeaderCheck.py
+           src/scintilla/scripts/HeaderOrder.txt
+           src/scintilla/scripts/LexGen.py
+           src/scintilla/scripts/ScintillaAPIFacer.py
+           src/scintilla/scripts/ScintillaData.py
+           src/scintilla/scripts/__init__.py
+           src/scintilla/scripts/archive.sh
+           src/scintilla/src/RESearch.cxx
+           src/scintilla/src/RESearch.h
+           src/scintilla/src/SciTE.properties
+           src/scintilla/test/MessageNumbers.py
+           src/scintilla/test/README
+           src/scintilla/test/ScintillaCallable.py
+           src/scintilla/test/XiteMenu.py
+           src/scintilla/test/XiteWin.py
+           src/scintilla/test/gi/filter-scintilla-h.py
+           src/scintilla/test/gi/gi-test.py
+           src/scintilla/test/performanceTests.py
+           src/scintilla/test/simpleTests.py
+           src/scintilla/test/unit/README
+           src/scintilla/test/unit/SciTE.properties
+           src/scintilla/test/unit/UnitTester.cxx
+           src/scintilla/test/unit/UnitTester.vcxproj
+           src/scintilla/test/unit/test.mak
+           src/scintilla/test/unit/testCellBuffer.cxx
+           src/scintilla/test/unit/testCharClassify.cxx
+           src/scintilla/test/unit/testCharacterCategoryMap.cxx
+           src/scintilla/test/unit/testContractionState.cxx
+           src/scintilla/test/unit/testDecoration.cxx
+           src/scintilla/test/unit/testDocument.cxx
+           src/scintilla/test/unit/testGeometry.cxx
+           src/scintilla/test/unit/testPartitioning.cxx
+           src/scintilla/test/unit/testPerLine.cxx
+           src/scintilla/test/unit/testRESearch.cxx
+           src/scintilla/test/unit/testRunStyles.cxx
+           src/scintilla/test/unit/testSparseVector.cxx
+           src/scintilla/test/unit/testSplitVector.cxx
+           src/scintilla/test/unit/testUniConversion.cxx
+           src/scintilla/test/unit/unitTest.cxx
+           src/scintilla/test/win32Tests.py
+           src/scintilla/test/xite.py
+           src/scintilla/tgzsrc
+           src/scintilla/version.txt
+           src/scintilla/win32/SciTE.properties
+           src/scintilla/win32/Scintilla.def
+           src/scintilla/win32/Scintilla.vcxproj
+           src/scintilla/win32/deps.mak
+           src/scintilla/win32/nmdeps.mak
+           src/scintilla/zipsrc.bat
+           src/tests/untitled/tst_testapp.cpp
+           src/tests/untitled/untitled.pro
+           updates.json
+Copyright: __NO_COPYRIGHT_NOR_LICENSE__
+License:   __NO_COPYRIGHT_NOR_LICENSE__
+
+Files:     installer/NsisMultiUser/Include/NsisMultiUser.nsh
+           src/LuaBridge/List.h
+           src/LuaBridge/Map.h
+           src/LuaBridge/UnorderedMap.h
+           src/LuaBridge/Vector.h
+           src/LuaBridge/detail/Config.h
+           src/lexilla/access/LexillaAccess.cxx
+           src/lexilla/access/LexillaAccess.h
+           src/lexilla/include/Lexilla.h
+           src/lexilla/lexers/LexA68k.cxx
+           src/lexilla/lexers/LexAPDL.cxx
+           src/lexilla/lexers/LexAU3.cxx
+           src/lexilla/lexers/LexAVE.cxx
+           src/lexilla/lexers/LexAVS.cxx
+           src/lexilla/lexers/LexAda.cxx
+           src/lexilla/lexers/LexAsm.cxx
+           src/lexilla/lexers/LexAsn1.cxx
+           src/lexilla/lexers/LexBash.cxx
+           src/lexilla/lexers/LexBatch.cxx
+           src/lexilla/lexers/LexCIL.cxx
+           src/lexilla/lexers/LexCLW.cxx
+           src/lexilla/lexers/LexCPP.cxx
+           src/lexilla/lexers/LexCaml.cxx
+           src/lexilla/lexers/LexCmake.cxx
+           src/lexilla/lexers/LexCoffeeScript.cxx
+           src/lexilla/lexers/LexConf.cxx
+           src/lexilla/lexers/LexCrontab.cxx
+           src/lexilla/lexers/LexCsound.cxx
+           src/lexilla/lexers/LexD.cxx
+           src/lexilla/lexers/LexDMAP.cxx
+           src/lexilla/lexers/LexDMIS.cxx
+           src/lexilla/lexers/LexDiff.cxx
+           src/lexilla/lexers/LexECL.cxx
+           src/lexilla/lexers/LexEScript.cxx
+           src/lexilla/lexers/LexEiffel.cxx
+           src/lexilla/lexers/LexErrorList.cxx
+           src/lexilla/lexers/LexFlagship.cxx
+           src/lexilla/lexers/LexForth.cxx
+           src/lexilla/lexers/LexFortran.cxx
+           src/lexilla/lexers/LexGAP.cxx
+           src/lexilla/lexers/LexGDScript.cxx
+           src/lexilla/lexers/LexHTML.cxx
+           src/lexilla/lexers/LexJulia.cxx
+           src/lexilla/lexers/LexKix.cxx
+           src/lexilla/lexers/LexLisp.cxx
+           src/lexilla/lexers/LexLout.cxx
+           src/lexilla/lexers/LexMMIXAL.cxx
+           src/lexilla/lexers/LexMPT.cxx
+           src/lexilla/lexers/LexMagik.cxx
+           src/lexilla/lexers/LexMake.cxx
+           src/lexilla/lexers/LexMatlab.cxx
+           src/lexilla/lexers/LexMaxima.cxx
+           src/lexilla/lexers/LexMySQL.cxx
+           src/lexilla/lexers/LexNim.cxx
+           src/lexilla/lexers/LexNimrod.cxx
+           src/lexilla/lexers/LexNsis.cxx
+           src/lexilla/lexers/LexNull.cxx
+           src/lexilla/lexers/LexPB.cxx
+           src/lexilla/lexers/LexPLM.cxx
+           src/lexilla/lexers/LexPerl.cxx
+           src/lexilla/lexers/LexPowerPro.cxx
+           src/lexilla/lexers/LexPowerShell.cxx
+           src/lexilla/lexers/LexProps.cxx
+           src/lexilla/lexers/LexPython.cxx
+           src/lexilla/lexers/LexR.cxx
+           src/lexilla/lexers/LexRebol.cxx
+           src/lexilla/lexers/LexRuby.cxx
+           src/lexilla/lexers/LexRust.cxx
+           src/lexilla/lexers/LexSML.cxx
+           src/lexilla/lexers/LexSQL.cxx
+           src/lexilla/lexers/LexSmalltalk.cxx
+           src/lexilla/lexers/LexSpecman.cxx
+           src/lexilla/lexers/LexSpice.cxx
+           src/lexilla/lexers/LexTCL.cxx
+           src/lexilla/lexers/LexVB.cxx
+           src/lexilla/lexers/LexVHDL.cxx
+           src/lexilla/lexers/LexVerilog.cxx
+           src/lexilla/lexers/LexYAML.cxx
+           src/lexilla/lexlib/Accessor.cxx
+           src/lexilla/lexlib/Accessor.h
+           src/lexilla/lexlib/CatalogueModules.h
+           src/lexilla/lexlib/CharacterCategory.cxx
+           src/lexilla/lexlib/CharacterCategory.h
+           src/lexilla/lexlib/CharacterSet.cxx
+           src/lexilla/lexlib/CharacterSet.h
+           src/lexilla/lexlib/DefaultLexer.cxx
+           src/lexilla/lexlib/DefaultLexer.h
+           src/lexilla/lexlib/LexAccessor.cxx
+           src/lexilla/lexlib/LexAccessor.h
+           src/lexilla/lexlib/LexerBase.cxx
+           src/lexilla/lexlib/LexerBase.h
+           src/lexilla/lexlib/LexerModule.cxx
+           src/lexilla/lexlib/LexerModule.h
+           src/lexilla/lexlib/LexerNoExceptions.cxx
+           src/lexilla/lexlib/LexerNoExceptions.h
+           src/lexilla/lexlib/LexerSimple.cxx
+           src/lexilla/lexlib/LexerSimple.h
+           src/lexilla/lexlib/OptionSet.h
+           src/lexilla/lexlib/PropSetSimple.h
+           src/lexilla/lexlib/SparseState.h
+           src/lexilla/lexlib/StringCopy.h
+           src/lexilla/lexlib/SubStyles.h
+           src/lexilla/lexlib/WordList.cxx
+           src/lexilla/lexlib/WordList.h
+           src/lexilla/src/DepGen.py
+           src/lexilla/src/Lexilla.cxx
+           src/lexilla/src/LexillaVersion.rc
+           src/lexilla/test/TestDocument.cxx
+           src/lexilla/test/TestDocument.h
+           src/lexilla/test/TestLexers.cxx
+           src/scintilla/gtk/Converter.h
+           src/scintilla/gtk/DepGen.py
+           src/scintilla/gtk/PlatGTK.cxx
+           src/scintilla/gtk/ScintillaGTK.cxx
+           src/scintilla/gtk/ScintillaGTK.h
+           src/scintilla/gtk/ScintillaGTKAccessible.h
+           src/scintilla/gtk/Wrappers.h
+           src/scintilla/include/ILexer.h
+           src/scintilla/include/ILoader.h
+           src/scintilla/include/Sci_Position.h
+           src/scintilla/include/ScintillaStructures.h
+           src/scintilla/include/ScintillaWidget.h
+           src/scintilla/qt/ScintillaEdit/ScintillaDocument.cpp
+           src/scintilla/qt/ScintillaEdit/ScintillaDocument.h
+           src/scintilla/qt/ScintillaEdit/ScintillaEdit.cpp
+           src/scintilla/qt/ScintillaEdit/ScintillaEdit.cpp.template
+           src/scintilla/qt/ScintillaEdit/ScintillaEdit.h
+           src/scintilla/qt/ScintillaEdit/ScintillaEdit.h.template
+           src/scintilla/scripts/Dependencies.py
+           src/scintilla/src/AutoComplete.cxx
+           src/scintilla/src/AutoComplete.h
+           src/scintilla/src/CallTip.cxx
+           src/scintilla/src/CallTip.h
+           src/scintilla/src/CaseConvert.cxx
+           src/scintilla/src/CaseConvert.h
+           src/scintilla/src/CaseFolder.cxx
+           src/scintilla/src/CaseFolder.h
+           src/scintilla/src/CellBuffer.cxx
+           src/scintilla/src/CellBuffer.h
+           src/scintilla/src/CharClassify.cxx
+           src/scintilla/src/CharClassify.h
+           src/scintilla/src/CharacterCategoryMap.cxx
+           src/scintilla/src/CharacterCategoryMap.h
+           src/scintilla/src/CharacterType.cxx
+           src/scintilla/src/CharacterType.h
+           src/scintilla/src/ContractionState.cxx
+           src/scintilla/src/ContractionState.h
+           src/scintilla/src/DBCS.cxx
+           src/scintilla/src/DBCS.h
+           src/scintilla/src/Debugging.h
+           src/scintilla/src/Decoration.cxx
+           src/scintilla/src/Decoration.h
+           src/scintilla/src/Document.cxx
+           src/scintilla/src/Document.h
+           src/scintilla/src/EditModel.cxx
+           src/scintilla/src/EditModel.h
+           src/scintilla/src/EditView.cxx
+           src/scintilla/src/EditView.h
+           src/scintilla/src/Editor.cxx
+           src/scintilla/src/Editor.h
+           src/scintilla/src/ElapsedPeriod.h
+           src/scintilla/src/Geometry.cxx
+           src/scintilla/src/Geometry.h
+           src/scintilla/src/Indicator.cxx
+           src/scintilla/src/Indicator.h
+           src/scintilla/src/KeyMap.cxx
+           src/scintilla/src/KeyMap.h
+           src/scintilla/src/LineMarker.cxx
+           src/scintilla/src/LineMarker.h
+           src/scintilla/src/MarginView.cxx
+           src/scintilla/src/MarginView.h
+           src/scintilla/src/Partitioning.h
+           src/scintilla/src/PerLine.cxx
+           src/scintilla/src/PerLine.h
+           src/scintilla/src/Platform.h
+           src/scintilla/src/Position.h
+           src/scintilla/src/PositionCache.cxx
+           src/scintilla/src/PositionCache.h
+           src/scintilla/src/RunStyles.cxx
+           src/scintilla/src/ScintillaBase.cxx
+           src/scintilla/src/ScintillaBase.h
+           src/scintilla/src/Selection.cxx
+           src/scintilla/src/Selection.h
+           src/scintilla/src/SparseVector.h
+           src/scintilla/src/SplitVector.h
+           src/scintilla/src/Style.cxx
+           src/scintilla/src/Style.h
+           src/scintilla/src/UniConversion.cxx
+           src/scintilla/src/UniConversion.h
+           src/scintilla/src/UniqueString.cxx
+           src/scintilla/src/UniqueString.h
+           src/scintilla/src/ViewStyle.cxx
+           src/scintilla/src/ViewStyle.h
+           src/scintilla/src/XPM.cxx
+           src/scintilla/src/XPM.h
+           src/scintilla/win32/DepGen.py
+           src/scintilla/win32/HanjaDic.cxx
+           src/scintilla/win32/HanjaDic.h
+           src/scintilla/win32/PlatWin.cxx
+           src/scintilla/win32/PlatWin.h
+           src/scintilla/win32/ScintRes.rc
+           src/scintilla/win32/ScintillaDLL.cxx
+           src/scintilla/win32/ScintillaWin.cxx
+           src/scintilla/win32/ScintillaWin.h
+           src/scintilla/win32/WinTypes.h
+Copyright: 1990-2007 Scientific Toolworks, Inc. @file LexPLM.cxx
+           1998-2001 Andre Arpin <arpin@kingston.net> The License.txt file describes the conditions under which this software may be distributed.
+           1998-2002 Neil Hodgson <neilh@scintilla.org> Heavily modified later for GDScript The License.txt file describes the conditions under which this software may be distributed.
+           1998-2005 Neil Hodgson <neilh@scintilla.org>
+           1998-2008 Neil Hodgson <neilh@scintilla.org> Lexical analysis fixes  Kein-Hong Man <mkh@pl.jaring.my> The License.txt file describes the conditions under which this software may be distributed.
+           1998-2011 Neil Hodgson <neilh@scintilla.org> Based on the Scintilla C++ Lexer  Eric Promislow <ericp@activestate.com> in 2011 for the Komodo IDE The License.txt file describes the conditions under which this software may be distributed.
+           1998-2022 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+           2001 Clemens Wyss <wys@helbling.ch> The License.txt file describes the conditions under which this software may be distributed.
+           2002 Sergey Koshcheyev <sergey.k@seznam.cz> The License.txt file describes the conditions under which this software may be distributed.
+           2003 Kein-Hong Man <mkh@pl.jaring.my> The License.txt file describes the conditions under which this software may be distributed.
+           2003 Marius Gheorghe <mgheorghe@cabletest.com> The License.txt file describes the conditions under which this software may be distributed.
+           2003 Patrizio Bekerle (patrizio@bekerle.com)
+           2003 Sean O'Dell <sean@celsoft.com> The License.txt file describes the conditions under which this software may be distributed.
+           2003-2004 Ron Schofield <ron@schofieldcomputer.com> The License.txt file describes the conditions under which this software may be distributed.
+           2003-2005 Angelo Mandato <angelo [at] spaceblue [dot] com> Last Updated: 03/13/2005 The License.txt file describes the conditions under which this software may be distributed.
+           2004 Herr Pfarrer rpfarrer <at> yahoo <dot> de Last Updated: 20/07/2004 The License.txt file describes the conditions under which this software may be distributed.
+           2004 Manfred Becker <manfred@becker-trdf.de> The License.txt file describes the conditions under which this software may be distributed. Edited  Lee Wilmott (24-Jun-2014) added support for block comments
+           2004-2012 Neil Hodgson <neilh@scintilla.org> Adapted from LexPerl  Kein-Hong Man 2004 The License.txt file describes the conditions under which this software may be distributed.
+           2005 Pascal Hurni <pascal_hurni@fastmail.fm> The License.txt file describes the conditions under which this software may be distributed.
+           2005 Randy Butler
+           2005-2009 Robert Roessler <robertr@rftp.com> The License.txt file describes the conditions under which this software may be distributed. Release History
+           2006 Fabien Proriol The License.txt file describes the conditions under which this software may be distributed.
+           2006 Waldemar Augustyn <waldemar@wdmsys.com> Converted to lexer object and added further folding features/properties  "Udo Lechner" <dlchnr(at)gmx(dot)net>
+           2007 Cristian Adam <cristian [dot] adam [at] gmx [dot] net> based on the NSIS lexer The License.txt file describes the conditions under which this software may be distributed.
+           2007 Istvan Szollosi ( szteven <at> gmail <dot> com ) The License.txt file describes the conditions under which this software may be distributed.
+           2008 Tim Gerundt <tim@gerundt.de> The License.txt file describes the conditions under which this software may be distributed.
+           2009 Andreas Rumpf @file LexNimrod.cxx Lexer for Nimrod.
+           2009 James Moffatt and Yuzhou Xin Modified from LexCaml.cxx  Robert Roessler <robertr@rftp.com> Copyright 2005 The License.txt file describes the conditions under which this software may be distributed.
+           2010 Martial Demolins <mdemolins(a)gmail.com> The License.txt file describes the conditions under which this software may be distributed.
+           2010 Xavi <jarabal/at/gmail.com> (Harbour)
+           2011 Archaeopteryx Software, Inc. d/b/a Wingware
+           2012 Bruno Barbieri <brunorex@gmail.com> Heavily based on LexPOV  Neil Hodgson The License.txt file describes the conditions under which this software may be distributed.
+           2013 SiegeLord <slabode@aim.com> Converted to lexer object and added further folding features/properties  "Udo Lechner" <dlchnr(at)gmx(dot)net>
+           2013-2014 Andreas Tscharner <andy@vis.ethz.ch> The License.txt file describes the conditions under which this software may be distributed.
+           2016 Colomban Wendling <colomban@geany.org> The License.txt file describes the conditions under which this software may be distributed.
+           2016-2018 Ricardo Drizin, Alex Mitev
+           2018 Gunter Königsmann <wxMaxima@physikbuch.de> The License.txt file describes the conditions under which this software may be distributed.
+           2018-2019 Dmitry Tarakanov SPDX-License-Identifier: MIT
+           2019 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed. Requires Python 2.7 or later
+           2019 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed. Requires Python 3.6 or later
+           for Scintilla: 1998-2001  Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+           for Scintilla: 1998-2001  Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed. Scintilla source code edit control
+           9999-20050204 Initial release.
+           9999-20050205 Quick compiler standards/"cleanliness" adjustment.
+           9999-20050206 Added cast for IsLeadte().
+           9999-20050209 Changes to "external" build support.
+           9999-20050306 Fix for 1st-char-in-doc "corner" case.
+           9999-20050502 Fix for [harmless] one-past-the-end coloring.
+           9999-20050515 Refined numeric token recognition logic.
+           9999-20051125 Added 2nd "optional" keywords class.
+           9999-20051129 Support "magic" (read-only) comments for RCaml.
+           9999-20051204 Swtich to using StyleContext infrastructure.
+           9999-20090629 Add full Standard ML '97 support.
+License:   __NO_LICENSE__
+
+Files:     src/Config.pri
+           src/NotepadNext.pro
+           src/NotepadNext/ColorPickerDelegate.cpp
+           src/NotepadNext/ColorPickerDelegate.h
+           src/NotepadNext/ComboBoxDelegate.cpp
+           src/NotepadNext/ComboBoxDelegate.h
+           src/NotepadNext/DockedEditor.cpp
+           src/NotepadNext/DockedEditor.h
+           src/NotepadNext/DockedEditorTitleBar.h
+           src/NotepadNext/EditorManager.cpp
+           src/NotepadNext/EditorManager.h
+           src/NotepadNext/EditorPrintPreviewRenderer.cpp
+           src/NotepadNext/EditorPrintPreviewRenderer.h
+           src/NotepadNext/Finder.cpp
+           src/NotepadNext/Finder.h
+           src/NotepadNext/FocusWatcher.h
+           src/NotepadNext/IFaceTable.cpp
+           src/NotepadNext/IFaceTable.h
+           src/NotepadNext/IFaceTableMixer.cpp
+           src/NotepadNext/IFaceTableMixer.h
+           src/NotepadNext/LanguageKeywordsModel.cpp
+           src/NotepadNext/LanguageKeywordsModel.h
+           src/NotepadNext/LanguagePropertiesModel.cpp
+           src/NotepadNext/LanguagePropertiesModel.h
+           src/NotepadNext/LanguageStylesModel.cpp
+           src/NotepadNext/LanguageStylesModel.h
+           src/NotepadNext/LuaExtension.cpp
+           src/NotepadNext/LuaExtension.h
+           src/NotepadNext/LuaState.cpp
+           src/NotepadNext/LuaState.h
+           src/NotepadNext/MacroRecorder.cpp
+           src/NotepadNext/MacroRecorder.h
+           src/NotepadNext/NotepadNext.pro
+           src/NotepadNext/NotepadNextApplication.cpp
+           src/NotepadNext/NotepadNextApplication.h
+           src/NotepadNext/NppImporter.cpp
+           src/NotepadNext/NppImporter.h
+           src/NotepadNext/QRegexSearch.cpp
+           src/NotepadNext/QRegexSearch.h
+           src/NotepadNext/QuickFindWidget.cpp
+           src/NotepadNext/QuickFindWidget.h
+           src/NotepadNext/RecentFilesListManager.cpp
+           src/NotepadNext/RecentFilesListManager.h
+           src/NotepadNext/SciIFaceTable.cpp
+           src/NotepadNext/SciIFaceTable.h
+           src/NotepadNext/ScintillaNext.cpp
+           src/NotepadNext/ScintillaNext.h
+           src/NotepadNext/Settings.cpp
+           src/NotepadNext/Settings.h
+           src/NotepadNext/SpinBoxDelegate.cpp
+           src/NotepadNext/SpinBoxDelegate.h
+           src/NotepadNext/decorators/ApplicationDecorator.cpp
+           src/NotepadNext/decorators/ApplicationDecorator.h
+           src/NotepadNext/decorators/AutoCompletion.cpp
+           src/NotepadNext/decorators/AutoCompletion.h
+           src/NotepadNext/decorators/AutoIndentation.cpp
+           src/NotepadNext/decorators/AutoIndentation.h
+           src/NotepadNext/decorators/BetterMultiSelection.cpp
+           src/NotepadNext/decorators/BetterMultiSelection.h
+           src/NotepadNext/decorators/BraceMatch.cpp
+           src/NotepadNext/decorators/BraceMatch.h
+           src/NotepadNext/decorators/EditorConfigAppDecorator.cpp
+           src/NotepadNext/decorators/EditorConfigAppDecorator.h
+           src/NotepadNext/decorators/EditorDecorator.cpp
+           src/NotepadNext/decorators/EditorDecorator.h
+           src/NotepadNext/decorators/HighlightedScrollBar.cpp
+           src/NotepadNext/decorators/HighlightedScrollBar.h
+           src/NotepadNext/decorators/LineNumbers.cpp
+           src/NotepadNext/decorators/LineNumbers.h
+           src/NotepadNext/decorators/SmartHighlighter.cpp
+           src/NotepadNext/decorators/SmartHighlighter.h
+           src/NotepadNext/decorators/SurroundSelection.cpp
+           src/NotepadNext/decorators/SurroundSelection.h
+           src/NotepadNext/dialogs/FindReplaceDialog.cpp
+           src/NotepadNext/dialogs/FindReplaceDialog.h
+           src/NotepadNext/dialogs/MacroRunDialog.cpp
+           src/NotepadNext/dialogs/MacroRunDialog.h
+           src/NotepadNext/dialogs/MacroSaveDialog.cpp
+           src/NotepadNext/dialogs/MacroSaveDialog.h
+           src/NotepadNext/dialogs/MainWindow.cpp
+           src/NotepadNext/dialogs/MainWindow.h
+           src/NotepadNext/dialogs/PreferencesDialog.cpp
+           src/NotepadNext/dialogs/PreferencesDialog.h
+           src/NotepadNext/docks/EditorInspectorDock.cpp
+           src/NotepadNext/docks/EditorInspectorDock.h
+           src/NotepadNext/docks/FolderAsWorkspaceDock.cpp
+           src/NotepadNext/docks/FolderAsWorkspaceDock.h
+           src/NotepadNext/docks/LanguageInspectorDock.cpp
+           src/NotepadNext/docks/LanguageInspectorDock.h
+           src/NotepadNext/docks/LuaConsoleDock.cpp
+           src/NotepadNext/docks/LuaConsoleDock.h
+           src/NotepadNext/main.cpp
+           src/NotepadNext/widgets/EditorInfoStatusBar.cpp
+           src/NotepadNext/widgets/EditorInfoStatusBar.h
+           src/NotepadNext/widgets/StatusLabel.cpp
+           src/NotepadNext/widgets/StatusLabel.h
+           src/Version.pri
+           src/ads.pri
+           src/lexilla.pri
+           src/scintilla.pri
+           src/uchardet.pri
+Copyright: 2019-2022 Justin Dailey
+License:   GPL-3.0+
+ Notepad Next is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ .
+ Notepad Next is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General Public License
+ Version 3 can be found in `/usr/share/common-licenses/GPL-3'.
+
+Files:     src/LuaBridge/LuaBridge.h
+           src/LuaBridge/RefCountedPtr.h
+           src/LuaBridge/detail/CFunctions.h
+           src/LuaBridge/detail/ClassInfo.h
+           src/LuaBridge/detail/Constructor.h
+           src/LuaBridge/detail/FuncTraits.h
+           src/LuaBridge/detail/Iterator.h
+           src/LuaBridge/detail/LuaException.h
+           src/LuaBridge/detail/LuaHelpers.h
+           src/LuaBridge/detail/LuaRef.h
+           src/LuaBridge/detail/Namespace.h
+           src/LuaBridge/detail/Stack.h
+           src/LuaBridge/detail/TypeTraits.h
+           src/LuaBridge/detail/Userdata.h
+           src/LuaBridge/detail/dump.h
+Copyright: 2007 Nathan Reed
+           2008 Nigel Atkinson <suprapilot+LuaCode@gmail.com>
+           2012 Vinnie Falco <vinnie.falco@gmail.com>
+           2018-2020 Dmitry Tarakanov
+License:   Expat
+ License: The MIT License (http://www.opensource.org/licenses/mit-license.php)
+ .
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+Files:     src/scintilla/cocoa/InfoBar.h
+           src/scintilla/cocoa/InfoBar.mm
+           src/scintilla/cocoa/InfoBarCommunicator.h
+           src/scintilla/cocoa/PlatCocoa.h
+           src/scintilla/cocoa/PlatCocoa.mm
+           src/scintilla/cocoa/ScintillaCocoa.h
+           src/scintilla/cocoa/ScintillaCocoa.mm
+           src/scintilla/cocoa/ScintillaTest/AppController.h
+           src/scintilla/cocoa/ScintillaTest/AppController.mm
+           src/scintilla/cocoa/ScintillaTest/main.m
+           src/scintilla/cocoa/ScintillaView.h
+           src/scintilla/cocoa/ScintillaView.mm
+Copyright: 2003 Evan Jones <ejones@uwaterloo.ca> Based on ScintillaGTK.cxx Copyright 1998-2002  Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+           2009 Sun Microsystems, Inc
+           2009-2011 Sun Microsystems, Inc.
+           2011-2013 Oracle and/or its affiliates.
+License:   __UNKNOWN__ *** dual license ***
+ This file is dual licensed under LGPL v2.1 and the Scintilla license (http://www.scintilla.org/License.txt).
+
+Files:     src/scintilla/qt/ScintillaEditBase/ScintillaEditBase.cpp
+           src/scintilla/qt/ScintillaEditBase/ScintillaEditBase.h
+           src/scintilla/qt/ScintillaEditBase/ScintillaQt.cpp
+           src/scintilla/qt/ScintillaEditBase/ScintillaQt.h
+Copyright: 1990-2011 Scientific Toolworks, Inc.
+License:   __UNKNOWN__
+ The License.txt file describes the conditions under which this software may be distributed.
+ .
+ Additions Copyright (c) 2011 Archaeopteryx Software, Inc. d/b/a Wingware
+
+Files:     src/lexilla/License.txt
+           src/scintilla/License.txt
+Copyright: 1998-2021 Neil Hodgson <neilh@scintilla.org>
+License:   ISC
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose and without fee is hereby granted,
+ provided that the above copyright notice appear in all copies and that
+ both that copyright notice and this permission notice appear in
+ supporting documentation.
+ .
+ NEIL HODGSON DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS
+ SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+ AND FITNESS, IN NO EVENT SHALL NEIL HODGSON BE LIABLE FOR ANY
+ SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+ WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+ TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE
+ OR PERFORMANCE OF THIS SOFTWARE.
+
+Files:     src/lexilla/test/unit/catch.hpp
+           src/scintilla/test/unit/catch.hpp
+Copyright: 2021 Two Blue Cubes Ltd.
+License:   BSL-1.0
+ Distributed under the Boost Software License, Version 1.0. (See accompanying
+
+Files:     src/lexilla/include/SciLexer.h
+           src/scintilla/include/Scintilla.h
+Copyright: 1998-2003 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ Most of this file is automatically generated from the Scintilla.iface interface definition
+ file which contains any comments about the definitions. HFacer.py does the generation.
+
+Files:     src/scintilla/qt/ScintillaEditBase/PlatQt.cpp
+           src/scintilla/qt/ScintillaEditBase/PlatQt.h
+Copyright: 1990-2011 Scientific Toolworks, Inc.
+License:   __UNKNOWN__
+ The License.txt file describes the conditions under which this software may be distributed.
+ .
+ Additions Copyright (c) 2011 Archaeopteryx Software, Inc. d/b/a Wingware
+ Scintilla platform layer for Qt
+
+Files:     src/lexilla/test/unit/LICENSE_1_0.txt
+           src/scintilla/test/unit/LICENSE_1_0.txt
+Copyright: __NO_COPYRIGHT__ in: src/lexilla/test/unit/LICENSE_1_0.txt
+           __NO_COPYRIGHT__ in: src/scintilla/test/unit/LICENSE_1_0.txt
+License:   __UNKNOWN__
+ Permission is hereby granted, free of charge, to any person or organization
+ obtaining a copy of the software and accompanying documentation covered by
+ this license (the "Software") to use, reproduce, display, distribute,
+ execute, and transmit the Software, and to prepare derivative works of the
+ Software, and to permit third-parties to whom the Software is furnished to
+ do so, all subject to the following:
+ .
+ The copyright notices in the Software and this entire statement, including
+ the above license grant, this restriction and the following disclaimer,
+ must be included in all copies of the Software, in whole or in part, and
+ all derivative works of the Software, unless such copies or derivative
+ works are solely in the form of machine-executable object code generated by
+ a source language processor.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+ SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+ FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ DEALINGS IN THE SOFTWARE.
+
+Files:     src/scintilla/include/ScintillaMessages.h
+           src/scintilla/include/ScintillaTypes.h
+Copyright: 1998-2019 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ Most of this file is automatically generated from the Scintilla.iface interface definition
+ file which contains any comments about the definitions. ScintillaAPIFacer.py does the generation.
+
+Files:     src/lexilla/lexers/LexSAS.cxx
+           src/lexilla/lexers/LexStata.cxx
+Copyright: __NO_COPYRIGHT__ in: src/lexilla/lexers/LexSAS.cxx
+           __NO_COPYRIGHT__ in: src/lexilla/lexers/LexStata.cxx
+License:   __UNKNOWN__
+ The License.txt file describes the conditions under which this software may
+ be distributed.
+ .
+ Developed as part of the StatTag project at Northwestern University Feinberg
+ School of Medicine with funding from Northwestern University Clinical and
+ Translational Sciences Institute through CTSA grant UL1TR001422.  This work
+ has not been reviewed or endorsed by NCATS or the NIH.
+
+Files:     src/scintilla/call/ScintillaCall.cxx
+           src/scintilla/include/ScintillaCall.h
+Copyright: 1998-2019 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ Most of this file is automatically generated from the Scintilla.iface interface definition
+ file which contains any comments about the definitions. APIFacer.py does the generation.
+
+Files:     src/lexilla/lexlib/StyleContext.cxx
+           src/lexilla/lexlib/StyleContext.h
+Copyright: 1998-2004 Neil Hodgson <neilh@scintilla.org>
+License:   Public domain
+ This file is in the public domain.
+
+Files:     src/lua/src/lua.h
+Copyright: 1994-2017 Lua.org, PUC-Rio.
+License:   Expat
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Files:     src/LuaBridge/detail/TypeList.h
+Copyright: 2007 Nathan Reed
+           2012 Vinnie Falco <vinnie.falco@gmail.com>
+License:   Expat
+ License: The MIT License (http://www.opensource.org/licenses/mit-license.php)
+ .
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ .
+ This file incorporates work covered by the following copyright and
+ permission notice:
+ .
+ The Loki Library
+ Copyright (c) 2001 by Andrei Alexandrescu
+ This code accompanies the book:
+ Alexandrescu, Andrei. "Modern C++ Design: Generic Programming and Design
+ Patterns Applied". Copyright (c) 2001. Addison-Wesley.
+ Permission to use, copy, modify, distribute and sell this software for any
+ purpose is hereby granted without fee, provided that the above copyright
+ notice appear in all copies and that both that copyright notice and this
+ permission notice appear in supporting documentation.
+ The author or Addison-Welsey Longman make no representations about the
+ suitability of this software for any purpose. It is provided "as is"
+ without express or implied warranty.
+
+Files:     src/LuaBridge/RefCountedObject.h
+Copyright: 2004-2011 Raw Material Software Ltd.
+           2012 Vinnie Falco <vinnie.falco@gmail.com>
+License:   Expat
+ This is a derivative work used by permission from part of
+ JUCE, available at http://www.rawaterialsoftware.com
+ .
+ License: The MIT License (http://www.opensource.org/licenses/mit-license.php)
+ .
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ .
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ .
+ This file incorporates work covered by the following copyright and
+ permission notice:
+ .
+ This file is part of the JUCE library - "Jules' Utility Class Extensions"
+ Copyright 2004-11 by Raw Material Software Ltd.
+
+Files:     src/lua.pri
+Copyright: 2019 Justin Dailey
+License:   GPL-3.0+
+ Notepad Next is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ .
+ Notepad Next is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
+ .
+ Set the paths to an empty string
+ .
+ On Debian systems, the complete text of the GNU General Public License
+ Version 3 can be found in `/usr/share/common-licenses/GPL-3'.
+
+Files:     installer/NsisMultiUser/Include/StdUtils.nsh
+Copyright: 2004-2018 LoRd_MuldeR <MuldeR2@GMX.de>
+License:   LGPL-2.1+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+ .
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ .
+ http://www.gnu.org/licenses/lgpl-2.1.txt
+ .
+ DEVELOPER NOTES:
+ - Please see "https://github.com/lordmulder/stdutils/" for news and updates!
+ - Please see "Docs\StdUtils\StdUtils.html" for detailed function descriptions!
+ - Please see "Examples\StdUtils\StdUtilsTest.nsi" for usage examples!
+ .
+ FUNCTION DECLARTIONS
+ .
+ On Debian systems, the complete text of the GNU Lesser General Public License
+ Version 2.1 can be found in `/usr/share/common-licenses/LGPL-2.1'.
+
+Files:     src/scintilla/include/Scintilla.iface
+Copyright: 2000-2003 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __HEADER___
+ A line starting with ## is a pure comment and should be stripped by readers.
+ A line starting with #! is for future shbang use
+ A line starting with # followed by a space is a documentation comment and refers
+ to the next feature definition.
+ .
+ Each feature is defined by a line starting with fun, get, set, val, evt, enu, lex, or ali.
+ cat -> start a category
+ fun -> a function
+ get -> a property get function
+ set -> a property set function
+ val -> definition of a constant
+ evt -> an event
+ enu -> associate an enumeration with a set of vals with a prefix
+ lex -> associate a lexer with the lexical classes it produces
+
+Files:     src/lexilla/lexers/LexVisualProlog.cxx
+Copyright: 1998-2005 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ The line state contains:
+
+Files:     src/lexilla/lexers/LexGui4Cli.cxx
+Copyright: 1998-2002 Neil Hodgson <neilh@scintilla.org> @file LexGui4Cli.cxx
+License:   __UNKNOWN__
+ This is the Lexer for Gui4Cli, included in SciLexer.dll
+ - by d. Keletsekis, 2/10/2003
+ .
+ To add to SciLexer.dll:
+ 1. Add the values below to INCLUDE\Scintilla.iface
+ 2. Run the scripts/HFacer.py script
+ 3. Run the scripts/LexGen.py script
+
+Files:     src/lexilla/lexlib/PropSetSimple.cxx
+Copyright: 1998-2010 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ Maintain a dictionary of properties
+
+Files:     src/scintilla/gtk/ScintillaGTKAccessible.cxx
+Copyright: 2016 Colomban Wendling <colomban@geany.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ REFERENCES BETWEEN THE DIFFERENT OBJECTS
+ .
+ ScintillaGTKAccessible is the actual implementation, as a C++ class.
+ ScintillaObjectAccessible is the GObject derived from AtkObject that
+ implements the various ATK interfaces, through ScintillaGTKAccessible.
+ This follows the same pattern as ScintillaGTK and ScintillaObject.
+ .
+ ScintillaGTK owns a strong reference to the ScintillaObjectAccessible, and
+ is both responsible for creating and destroying that object.
+ .
+ ScintillaObjectAccessible owns a strong reference to ScintillaGTKAccessible,
+ and is responsible for creating and destroying that object.
+ .
+ ScintillaGTKAccessible has weak references to both the ScintillaGTK and
+ the ScintillaObjectAccessible objects associated, but does not own any
+ strong references to those objects.
+ .
+ The chain of ownership is as follows:
+ ScintillaGTK -> ScintillaObjectAccessible -> ScintillaGTKAccessible
+ .
+ DETAILS ON THE GOBJECT TYPE IMPLEMENTATION
+ .
+ On GTK < 3.2, we need to use the AtkObjectFactory.  We need to query
+ the factory to see what type we should derive from, thus making use of
+ dynamic inheritance.  It's tricky, but it works so long as it's done
+ carefully enough.
+ .
+ On GTK 3.2 through 3.6, we need to hack around because GTK stopped
+ registering its accessible types in the factory, so we can't query
+ them that way.  Unfortunately, the accessible types aren't exposed
+ yet (not until 3.8), so there's no proper way to know which type to
+ inherit from.  To work around this, we instantiate the parent's
+ AtkObject temporarily, and use it's type.  It means creating an extra
+ throwaway object and being able to pass the type information up to the
+ type registration code, but it's the only solution I could find.
+ .
+ On GTK 3.8 onward, we use the proper exposed GtkContainerAccessible as
+ parent, and so a straightforward class.
+ .
+ To hide and contain the complexity in type creation arising from the
+ hackish support for GTK 3.2 to 3.8, the actual implementation for the
+
+Files:     src/lexilla/lexers/LexLaTeX.cxx
+Copyright: 1998-2001 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ Modified by G. HU in 2013. Added folding, syntax highting inside math environments, and changed some minor behaviors.
+
+Files:     src/lexilla/lexers/LexPO.cxx
+Copyright: 2012 Colomban Wendling <ban@herbesfolles.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ see https://www.gnu.org/software/gettext/manual/gettext.html#PO-Files for the syntax reference
+ some details are taken from the GNU msgfmt behavior (like that indent is allows in front of lines)
+ .
+ TODO:
+ * add keywords for flags (fuzzy, c-format, ...)
+ * highlight formats inside c-format strings (%s, %d, etc.)
+
+Files:     src/lexilla/lexers/LexPOV.cxx
+Copyright: 1998-2005 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ Some points that distinguish from a simple C lexer:
+ Identifiers start only by a character.
+ No line continuation character.
+ Strings are limited to 256 characters.
+ Directives are similar to preprocessor commands,
+ but we match directive keywords and colorize incorrect ones.
+ Block comments can be nested (code stolen from my code in LexLua).
+
+Files:     src/lexilla/lexers/LexFSharp.cxx
+Copyright: __NO_COPYRIGHT__ in: src/lexilla/lexers/LexFSharp.cxx
+License:   __UNKNOWN__
+ clang-format off
+
+Files:     src/lexilla/lexers/LexTADS3.cxx
+Copyright: 1998-2006 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ TADS3 is a language designed by Michael J. Roberts for the writing of text
+ based games.  TADS comes from Text Adventure Development System.  It has good
+ support for the processing and outputting of formatted text and much of a
+ TADS program listing consists of strings.
+ .
+ TADS has two types of strings, those enclosed in single quotes (') and those
+ enclosed in double quotes (").  These strings have different symantics and
+ can be given different highlighting if desired.
+ .
+ There can be embedded within both types of strings html tags
+
+Files:     src/lexilla/lexers/LexCSS.cxx
+Copyright: 1998-2002 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ TODO: handle SCSS nested properties like font: { weight: bold; size: 1em; }
+ TODO: handle SCSS interpolation: #{}
+ TODO: add features for Less if somebody feels like contributing; http://lesscss.org/
+ TODO: refactor this monster so that the next poor slob can read it!
+
+Files:     src/lexilla/lexers/LexBasic.cxx
+Copyright: 1998-2003 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ This tries to be a unified Lexer/Folder for all the BlitzBasic/BlitzMax/PurBasic basics
+ and derivatives. Once they diverge enough, might want to split it into multiple
+ lexers for more code clearity.
+ .
+ Mail me (elias <at> users <dot> sf <dot> net) for any bugs.
+ .
+ Folding only works for simple things like functions or types.
+ .
+ You may want to have a look at my ctags lexer as well, if you additionally to coloring
+ and folding need to extract things like label tags in your editor.
+
+Files:     src/lexilla/lexers/LexMetapost.cxx
+Copyright: : 1998-2003  Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ This lexer is derived from the one written for the texwork environment (1999++) which in
+ turn is inspired on texedit (1991++) which finds its roots in wdt (1986).
+
+Files:     src/lexilla/src/lexilla.mak
+Copyright: 2019 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ This makefile is for using Visual C++ with nmake.
+ Usage for Microsoft:
+ nmake -f lexilla.mak
+ For debug versions define DEBUG on the command line:
+
+Files:     src/lexilla/lexers/LexBibTeX.cxx
+Copyright: 2008-2010 Sergiu Dotenco. The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ @brief General BibTeX coloring scheme.
+ @author Sergiu Dotenco
+ @date April 18, 2009
+
+Files:     src/lexilla/lexers/LexKVIrc.cxx
+Copyright: 2013 OmegaPhil <OmegaPhil+scintilla@gmail.com>, based in part from LexPython Copyright 1998-2002  Neil Hodgson <neilh@scintilla.org> and LexCmake Copyright 2007  Cristian Adam <cristian [dot] adam [at] gmx [dot] net>
+License:   __UNKNOWN__
+ The License.txt file describes the conditions under which this software may be distributed.
+
+Files:     src/lexilla/lexers/LexTeX.cxx
+Copyright: : 1998-2003  Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ This lexer is derived from the one written for the texwork environment (1999++) which in
+ turn is inspired on texedit (1991++) which finds its roots in wdt (1986).
+ .
+ If you run into strange boundary cases, just tell me and I'll look into it.
+
+Files:     src/lexilla/lexers/LexRaku.cxx
+Copyright: 1998-2005 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+           2019 Mark Reay <mark@reay.net.au>
+License:   __UNKNOWN__
+ Raku (Perl6) Lexer for Scintilla
+
+Files:     src/lexilla/lexers/LexBaan.cxx
+Copyright: 2001 Vamsi Potluru <vamsi@who.net> & Praveen Ambekar <ambekarpraveen@yahoo.com>
+License:   __UNKNOWN__
+ C standard library
+
+Files:     src/scintilla/win32/scintilla.mak
+Copyright: 1998-2010 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ This makefile is for using Visual C++ with nmake.
+ Usage for Microsoft:
+ nmake -f scintilla.mak
+ For debug versions define DEBUG on the command line:
+
+Files:     src/lexilla/lexers/LexProgress.cxx
+Copyright: 2006-2016 Yuval Papish <Yuval@YuvCom.com> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ TODO:
+ .
+ SpeedScript support in html lexer
+ Differentiate between labels and variables
+ Option 1: By symbols table
+ Option 2: As a single unidentified symbol in a sytactical line
+
+Files:     src/lexilla/include/LexicalStyles.iface
+Copyright: 2000-2020 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ Similar file structure as Scintilla.iface but only contains constants.
+
+Files:     src/scintilla/src/RunStyles.h
+Copyright: 1998-2007 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ Styling buffer using one element for each run rather than using
+ a filled buffer.
+
+Files:     src/lexilla/lexers/LexHex.cxx
+Copyright: 1998-2001 Neil Hodgson <neilh@scintilla.org> The License.txt file describes the conditions under which this software may be distributed.
+License:   __UNKNOWN__
+ Motorola S-Record
+
+Files:     src/lexilla/examples/CheckLexilla/CheckLexilla.c
+Copyright: 2021 Neil Hodgson <neilh@scintilla.org>
+License:   Public domain
+ This file is in the public domain.
+ If the public domain is not possible in your location then it can also be used under the same
+ license as Scintilla. https://www.scintilla.org/License.txt
+ .
+ Build and run
+ .
+ Win32
+ gcc CheckLexilla.c -I ../../include -o CheckLexilla
+ CheckLexilla
+ CheckLexilla ../SimpleLexer/SimpleLexer.dll
+ .
+ Win32 Visual C++
+ cl CheckLexilla.c -I ../../include -Fe: CheckLexilla
+ CheckLexilla
+ CheckLexilla ../SimpleLexer/SimpleLexer.dll
+ .
+ macOS
+ clang CheckLexilla.c -I ../../include -o CheckLexilla
+ ./CheckLexilla
+ ./CheckLexilla ../SimpleLexer/SimpleLexer.dylib
+ .
+ Linux
+ gcc CheckLexilla.c -I ../../include -ldl -o CheckLexilla
+ ./CheckLexilla
+ ./CheckLexilla ../SimpleLexer/SimpleLexer.so
+ .
+ While principally meant for compilation as C to act as an example of using Lexilla
+ from C it can also be built as C++.
+ .
+ Warnings are intentionally shown for the deprecated typedef LexerNameFromIDFn when compiled with
+ GCC or Clang or as C++.
+
+Files:     src/lexilla/examples/SimpleLexer/SimpleLexer.cxx
+Copyright: 2021 Neil Hodgson <neilh@scintilla.org>
+License:   Public domain
+ This file is in the public domain.
+ If the public domain is not possible in your location then it can also be used under the same
+ license as Scintilla. https://www.scintilla.org/License.txt
+ .
+ Windows/MSVC
+ cl -std:c++17 -EHsc -LD -I ../../../scintilla/include -I ../../include -I ../../lexlib SimpleLexer.cxx ../../lexlib/*.cxx
+ .
+ macOS/clang
+
+#----------------------------------------------------------------------------
+# xml and html files (skipped):
+#         src/NotepadNext/scripts.qrc
+#         src/NotepadNext/QuickFindWidget.ui
+#         src/NotepadNext/resources.qrc
+#         src/NotepadNext/dialogs/FindReplaceDialog.ui
+#         src/NotepadNext/dialogs/MainWindow.ui
+#         src/NotepadNext/dialogs/MacroSaveDialog.ui
+#         src/NotepadNext/dialogs/PreferencesDialog.ui
+#         src/NotepadNext/dialogs/MacroRunDialog.ui
+#         src/NotepadNext/docks/FolderAsWorkspaceDock.ui
+#         src/NotepadNext/docks/EditorInspectorDock.ui
+#         src/NotepadNext/docks/LuaConsoleDock.ui
+#         src/NotepadNext/docks/LanguageInspectorDock.ui
+#         src/lexilla/src/Lexilla/Info.plist
+#         src/lexilla/src/Lexilla/Lexilla.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+#         src/lexilla/test/TestLexers.vcxproj
+#         src/lexilla/test/unit/Sci.natvis
+#         src/lexilla/test/examples/hypertext/Issue47.html
+#         src/lexilla/test/examples/hypertext/Issue20Numbers.php
+#         src/lexilla/test/examples/hypertext/x.html
+#         src/lexilla/test/examples/hypertext/x.php
+#         src/lexilla/test/examples/hypertext/Bug2207.html
+#         src/lexilla/test/examples/hypertext/x.asp
+#         src/lexilla/test/examples/hypertext/Issue53.html
+#         src/lexilla/test/examples/hypertext/apostophe.php
+#         src/lexilla/test/examples/hypertext/Issue19.php
+#         src/lexilla/doc/LexillaDownload.html
+#         src/lexilla/doc/LexillaHistory.html
+#         src/lexilla/doc/Lexilla.html
+#         src/lexilla/doc/LexillaDoc.html
+#         src/scintilla/cocoa/ScintillaTest/Scintilla-Info.plist
+#         src/scintilla/cocoa/ScintillaTest/Info.plist
+#         src/scintilla/cocoa/ScintillaTest/ScintillaTest.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+#         src/scintilla/cocoa/ScintillaTest/ScintillaTest.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+#         src/scintilla/cocoa/ScintillaTest/en.lproj/MainMenu.xib
+#         src/scintilla/cocoa/Scintilla/Info.plist
+#         src/scintilla/cocoa/Scintilla/Scintilla.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+#         src/scintilla/cocoa/Scintilla/Scintilla.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+#         src/scintilla/test/unit/Sci.natvis
+#         src/scintilla/test/gi/Scintilla-0.1.gir.good
+#         src/scintilla/doc/Scintilla5Migration.html
+#         src/scintilla/doc/StyleMetadata.html
+#         src/scintilla/doc/Design.html
+#         src/scintilla/doc/Steps.html
+#         src/scintilla/doc/SciCoding.html
+#         src/scintilla/doc/ScintillaUsage.html
+#         src/scintilla/doc/ScintillaHistory.html
+#         src/scintilla/doc/ScintillaRelated.html
+#         src/scintilla/doc/ScintillaDoc.html
+#         src/scintilla/doc/Privacy.html
+#         src/scintilla/doc/ScintillaDownload.html
+#         src/scintilla/doc/ScintillaToDo.html
+#         src/scintilla/doc/Icons.html
+#         src/scintilla/doc/index.html
+#         icon/NotepadNext.svg
+
+#----------------------------------------------------------------------------
+# huge files   (skipped):
+#         deploy/windows/libcrypto-1_1-x64.dll
+
+#----------------------------------------------------------------------------
+# Files marked as NO_LICENSE_TEXT_FOUND may be covered by the following
+# license/copyright files.
+
+#----------------------------------------------------------------------------
+# License file: LICENSE
+                     GNU GENERAL PUBLIC LICENSE
+                        Version 3, 29 June 2007
+ .
+  Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+  Everyone is permitted to copy and distribute verbatim copies
+  of this license document, but changing it is not allowed.
+ .
+                             Preamble
+ .
+   The GNU General Public License is a free, copyleft license for
+ software and other kinds of works.
+ .
+   The licenses for most software and other practical works are designed
+ to take away your freedom to share and change the works.  By contrast,
+ the GNU General Public License is intended to guarantee your freedom to
+ share and change all versions of a program--to make sure it remains free
+ software for all its users.  We, the Free Software Foundation, use the
+ GNU General Public License for most of our software; it applies also to
+ any other work released this way by its authors.  You can apply it to
+ your programs, too.
+ .
+   When we speak of free software, we are referring to freedom, not
+ price.  Our General Public Licenses are designed to make sure that you
+ have the freedom to distribute copies of free software (and charge for
+ them if you wish), that you receive source code or can get it if you
+ want it, that you can change the software or use pieces of it in new
+ free programs, and that you know you can do these things.
+ .
+   To protect your rights, we need to prevent others from denying you
+ these rights or asking you to surrender the rights.  Therefore, you have
+ certain responsibilities if you distribute copies of the software, or if
+ you modify it: responsibilities to respect the freedom of others.
+ .
+   For example, if you distribute copies of such a program, whether
+ gratis or for a fee, you must pass on to the recipients the same
+ freedoms that you received.  You must make sure that they, too, receive
+ or can get the source code.  And you must show them these terms so they
+ know their rights.
+ .
+   Developers that use the GNU GPL protect your rights with two steps:
+ (1) assert copyright on the software, and (2) offer you this License
+ giving you legal permission to copy, distribute and/or modify it.
+ .
+   For the developers' and authors' protection, the GPL clearly explains
+ that there is no warranty for this free software.  For both users' and
+ authors' sake, the GPL requires that modified versions be marked as
+ changed, so that their problems will not be attributed erroneously to
+ authors of previous versions.
+ .
+   Some devices are designed to deny users access to install or run
+ modified versions of the software inside them, although the manufacturer
+ can do so.  This is fundamentally incompatible with the aim of
+ protecting users' freedom to change the software.  The systematic
+ pattern of such abuse occurs in the area of products for individuals to
+ use, which is precisely where it is most unacceptable.  Therefore, we
+ have designed this version of the GPL to prohibit the practice for those
+ products.  If such problems arise substantially in other domains, we
+ stand ready to extend this provision to those domains in future versions
+ of the GPL, as needed to protect the freedom of users.
+ .
+   Finally, every program is threatened constantly by software patents.
+ States should not allow patents to restrict development and use of
+ software on general-purpose computers, but in those that do, we wish to
+ avoid the special danger that patents applied to a free program could
+ make it effectively proprietary.  To prevent this, the GPL assures that
+ patents cannot be used to render the program non-free.
+ .
+   The precise terms and conditions for copying, distribution and
+ modification follow.
+ .
+                        TERMS AND CONDITIONS
+ .
+   0. Definitions.
+ .
+   "This License" refers to version 3 of the GNU General Public License.
+ .
+   "Copyright" also means copyright-like laws that apply to other kinds of
+ works, such as semiconductor masks.
+ .
+   "The Program" refers to any copyrightable work licensed under this
+ License.  Each licensee is addressed as "you".  "Licensees" and
+ "recipients" may be individuals or organizations.
+ .
+   To "modify" a work means to copy from or adapt all or part of the work
+ in a fashion requiring copyright permission, other than the making of an
+ exact copy.  The resulting work is called a "modified version" of the
+ earlier work or a work "based on" the earlier work.
+ .
+   A "covered work" means either the unmodified Program or a work based
+ on the Program.
+ .
+   To "propagate" a work means to do anything with it that, without
+ permission, would make you directly or secondarily liable for
+ infringement under applicable copyright law, except executing it on a
+ computer or modifying a private copy.  Propagation includes copying,
+ distribution (with or without modification), making available to the
+ public, and in some countries other activities as well.
+ .
+   To "convey" a work means any kind of propagation that enables other
+ parties to make or receive copies.  Mere interaction with a user through
+ a computer network, with no transfer of a copy, is not conveying.
+ .
+   An interactive user interface displays "Appropriate Legal Notices"
+ to the extent that it includes a convenient and prominently visible
+ feature that (1) displays an appropriate copyright notice, and (2)
+ tells the user that there is no warranty for the work (except to the
+ extent that warranties are provided), that licensees may convey the
+ work under this License, and how to view a copy of this License.  If
+ the interface presents a list of user commands or options, such as a
+ menu, a prominent item in the list meets this criterion.
+ .
+   1. Source Code.
+ .
+   The "source code" for a work means the preferred form of the work
+ for making modifications to it.  "Object code" means any non-source
+ form of a work.
+ .
+   A "Standard Interface" means an interface that either is an official
+ standard defined by a recognized standards body, or, in the case of
+ interfaces specified for a particular programming language, one that
+ is widely used among developers working in that language.
+ .
+   The "System Libraries" of an executable work include anything, other
+ than the work as a whole, that (a) is included in the normal form of
+ packaging a Major Component, but which is not part of that Major
+ Component, and (b) serves only to enable use of the work with that
+ Major Component, or to implement a Standard Interface for which an
+ implementation is available to the public in source code form.  A
+ "Major Component", in this context, means a major essential component
+ (kernel, window system, and so on) of the specific operating system
+ (if any) on which the executable work runs, or a compiler used to
+ produce the work, or an object code interpreter used to run it.
+ .
+   The "Corresponding Source" for a work in object code form means all
+ the source code needed to generate, install, and (for an executable
+ work) run the object code and to modify the work, including scripts to
+ control those activities.  However, it does not include the work's
+ System Libraries, or general-purpose tools or generally available free
+ programs which are used unmodified in performing those activities but
+ which are not part of the work.  For example, Corresponding Source
+ includes interface definition files associated with source files for
+ the work, and the source code for shared libraries and dynamically
+ linked subprograms that the work is specifically designed to require,
+ such as by intimate data communication or control flow between those
+ subprograms and other parts of the work.
+ .
+   The Corresponding Source need not include anything that users
+ can regenerate automatically from other parts of the Corresponding
+ Source.
+ .
+   The Corresponding Source for a work in source code form is that
+ same work.
+ .
+   2. Basic Permissions.
+ .
+   All rights granted under this License are granted for the term of
+ copyright on the Program, and are irrevocable provided the stated
+ conditions are met.  This License explicitly affirms your unlimited
+ permission to run the unmodified Program.  The output from running a
+ covered work is covered by this License only if the output, given its
+ content, constitutes a covered work.  This License acknowledges your
+ rights of fair use or other equivalent, as provided by copyright law.
+ .
+   You may make, run and propagate covered works that you do not
+ convey, without conditions so long as your license otherwise remains
+ in force.  You may convey covered works to others for the sole purpose
+ of having them make modifications exclusively for you, or provide you
+ with facilities for running those works, provided that you comply with
+ the terms of this License in conveying all material for which you do
+ not control copyright.  Those thus making or running the covered works
+ for you must do so exclusively on your behalf, under your direction
+ and control, on terms that prohibit them from making any copies of
+ your copyrighted material outside their relationship with you.
+ .
+   Conveying under any other circumstances is permitted solely under
+ the conditions stated below.  Sublicensing is not allowed; section 10
+ makes it unnecessary.
+ .
+   3. Protecting Users' Legal Rights From Anti-Circumvention Law.
+ .
+   No covered work shall be deemed part of an effective technological
+ measure under any applicable law fulfilling obligations under article
+ 11 of the WIPO copyright treaty adopted on 20 December 1996, or
+ similar laws prohibiting or restricting circumvention of such
+ measures.
+ .
+   When you convey a covered work, you waive any legal power to forbid
+ circumvention of technological measures to the extent such circumvention
+ is effected by exercising rights under this License with respect to
+ the covered work, and you disclaim any intention to limit operation or
+ modification of the work as a means of enforcing, against the work's
+ users, your or third parties' legal rights to forbid circumvention of
+ technological measures.
+ .
+   4. Conveying Verbatim Copies.
+ .
+   You may convey verbatim copies of the Program's source code as you
+ receive it, in any medium, provided that you conspicuously and
+ appropriately publish on each copy an appropriate copyright notice;
+ keep intact all notices stating that this License and any
+ non-permissive terms added in accord with section 7 apply to the code;
+ keep intact all notices of the absence of any warranty; and give all
+ recipients a copy of this License along with the Program.
+ .
+   You may charge any price or no price for each copy that you convey,
+ and you may offer support or warranty protection for a fee.
+ .
+   5. Conveying Modified Source Versions.
+ .
+   You may convey a work based on the Program, or the modifications to
+ produce it from the Program, in the form of source code under the
+ terms of section 4, provided that you also meet all of these conditions:
+ .
+     a) The work must carry prominent notices stating that you modified
+     it, and giving a relevant date.
+ .
+     b) The work must carry prominent notices stating that it is
+     released under this License and any conditions added under section
+     7.  This requirement modifies the requirement in section 4 to
+     "keep intact all notices".
+ .
+     c) You must license the entire work, as a whole, under this
+     License to anyone who comes into possession of a copy.  This
+     License will therefore apply, along with any applicable section 7
+     additional terms, to the whole of the work, and all its parts,
+     regardless of how they are packaged.  This License gives no
+     permission to license the work in any other way, but it does not
+     invalidate such permission if you have separately received it.
+ .
+     d) If the work has interactive user interfaces, each must display
+     Appropriate Legal Notices; however, if the Program has interactive
+     interfaces that do not display Appropriate Legal Notices, your
+     work need not make them do so.
+ .
+   A compilation of a covered work with other separate and independent
+ works, which are not by their nature extensions of the covered work,
+ and which are not combined with it such as to form a larger program,
+ in or on a volume of a storage or distribution medium, is called an
+ "aggregate" if the compilation and its resulting copyright are not
+ used to limit the access or legal rights of the compilation's users
+ beyond what the individual works permit.  Inclusion of a covered work
+ in an aggregate does not cause this License to apply to the other
+ parts of the aggregate.
+ .
+   6. Conveying Non-Source Forms.
+ .
+   You may convey a covered work in object code form under the terms
+ of sections 4 and 5, provided that you also convey the
+ machine-readable Corresponding Source under the terms of this License,
+ in one of these ways:
+ .
+     a) Convey the object code in, or embodied in, a physical product
+     (including a physical distribution medium), accompanied by the
+     Corresponding Source fixed on a durable physical medium
+     customarily used for software interchange.
+ .
+     b) Convey the object code in, or embodied in, a physical product
+     (including a physical distribution medium), accompanied by a
+     written offer, valid for at least three years and valid for as
+     long as you offer spare parts or customer support for that product
+     model, to give anyone who possesses the object code either (1) a
+     copy of the Corresponding Source for all the software in the
+     product that is covered by this License, on a durable physical
+     medium customarily used for software interchange, for a price no
+     more than your reasonable cost of physically performing this
+     conveying of source, or (2) access to copy the
+     Corresponding Source from a network server at no charge.
+ .
+     c) Convey individual copies of the object code with a copy of the
+     written offer to provide the Corresponding Source.  This
+     alternative is allowed only occasionally and noncommercially, and
+     only if you received the object code with such an offer, in accord
+     with subsection 6b.
+ .
+     d) Convey the object code by offering access from a designated
+     place (gratis or for a charge), and offer equivalent access to the
+     Corresponding Source in the same way through the same place at no
+     further charge.  You need not require recipients to copy the
+     Corresponding Source along with the object code.  If the place to
+     copy the object code is a network server, the Corresponding Source
+     may be on a different server (operated by you or a third party)
+     that supports equivalent copying facilities, provided you maintain
+     clear directions next to the object code saying where to find the
+     Corresponding Source.  Regardless of what server hosts the
+     Corresponding Source, you remain obligated to ensure that it is
+     available for as long as needed to satisfy these requirements.
+ .
+     e) Convey the object code using peer-to-peer transmission, provided
+     you inform other peers where the object code and Corresponding
+     Source of the work are being offered to the general public at no
+     charge under subsection 6d.
+ .
+   A separable portion of the object code, whose source code is excluded
+ from the Corresponding Source as a System Library, need not be
+ included in conveying the object code work.
+ .
+   A "User Product" is either (1) a "consumer product", which means any
+ tangible personal property which is normally used for personal, family,
+ or household purposes, or (2) anything designed or sold for incorporation
+ into a dwelling.  In determining whether a product is a consumer product,
+ doubtful cases shall be resolved in favor of coverage.  For a particular
+ product received by a particular user, "normally used" refers to a
+ typical or common use of that class of product, regardless of the status
+ of the particular user or of the way in which the particular user
+ actually uses, or expects or is expected to use, the product.  A product
+ is a consumer product regardless of whether the product has substantial
+ commercial, industrial or non-consumer uses, unless such uses represent
+ the only significant mode of use of the product.
+ .
+   "Installation Information" for a User Product means any methods,
+ procedures, authorization keys, or other information required to install
+ and execute modified versions of a covered work in that User Product from
+ a modified version of its Corresponding Source.  The information must
+ suffice to ensure that the continued functioning of the modified object
+ code is in no case prevented or interfered with solely because
+ modification has been made.
+ .
+   If you convey an object code work under this section in, or with, or
+ specifically for use in, a User Product, and the conveying occurs as
+ part of a transaction in which the right of possession and use of the
+ User Product is transferred to the recipient in perpetuity or for a
+ fixed term (regardless of how the transaction is characterized), the
+ Corresponding Source conveyed under this section must be accompanied
+ by the Installation Information.  But this requirement does not apply
+ if neither you nor any third party retains the ability to install
+ modified object code on the User Product (for example, the work has
+ been installed in ROM).
+ .
+   The requirement to provide Installation Information does not include a
+ requirement to continue to provide support service, warranty, or updates
+ for a work that has been modified or installed by the recipient, or for
+ the User Product in which it has been modified or installed.  Access to a
+ network may be denied when the modification itself materially and
+ adversely affects the operation of the network or violates the rules and
+ protocols for communication across the network.
+ .
+   Corresponding Source conveyed, and Installation Information provided,
+ in accord with this section must be in a format that is publicly
+ documented (and with an implementation available to the public in
+ source code form), and must require no special password or key for
+ unpacking, reading or copying.
+ .
+   7. Additional Terms.
+ .
+   "Additional permissions" are terms that supplement the terms of this
+ License by making exceptions from one or more of its conditions.
+ Additional permissions that are applicable to the entire Program shall
+ be treated as though they were included in this License, to the extent
+ that they are valid under applicable law.  If additional permissions
+ apply only to part of the Program, that part may be used separately
+ under those permissions, but the entire Program remains governed by
+ this License without regard to the additional permissions.
+ .
+   When you convey a copy of a covered work, you may at your option
+ remove any additional permissions from that copy, or from any part of
+ it.  (Additional permissions may be written to require their own
+ removal in certain cases when you modify the work.)  You may place
+ additional permissions on material, added by you to a covered work,
+ for which you have or can give appropriate copyright permission.
+ .
+   Notwithstanding any other provision of this License, for material you
+ add to a covered work, you may (if authorized by the copyright holders of
+ that material) supplement the terms of this License with terms:
+ .
+     a) Disclaiming warranty or limiting liability differently from the
+     terms of sections 15 and 16 of this License; or
+ .
+     b) Requiring preservation of specified reasonable legal notices or
+     author attributions in that material or in the Appropriate Legal
+     Notices displayed by works containing it; or
+ .
+     c) Prohibiting misrepresentation of the origin of that material, or
+     requiring that modified versions of such material be marked in
+     reasonable ways as different from the original version; or
+ .
+     d) Limiting the use for publicity purposes of names of licensors or
+     authors of the material; or
+ .
+     e) Declining to grant rights under trademark law for use of some
+     trade names, trademarks, or service marks; or
+ .
+     f) Requiring indemnification of licensors and authors of that
+     material by anyone who conveys the material (or modified versions of
+     it) with contractual assumptions of liability to the recipient, for
+     any liability that these contractual assumptions directly impose on
+     those licensors and authors.
+ .
+   All other non-permissive additional terms are considered "further
+ restrictions" within the meaning of section 10.  If the Program as you
+ received it, or any part of it, contains a notice stating that it is
+ governed by this License along with a term that is a further
+ restriction, you may remove that term.  If a license document contains
+ a further restriction but permits relicensing or conveying under this
+ License, you may add to a covered work material governed by the terms
+ of that license document, provided that the further restriction does
+ not survive such relicensing or conveying.
+ .
+   If you add terms to a covered work in accord with this section, you
+ must place, in the relevant source files, a statement of the
+ additional terms that apply to those files, or a notice indicating
+ where to find the applicable terms.
+ .
+   Additional terms, permissive or non-permissive, may be stated in the
+ form of a separately written license, or stated as exceptions;
+ the above requirements apply either way.
+ .
+   8. Termination.
+ .
+   You may not propagate or modify a covered work except as expressly
+ provided under this License.  Any attempt otherwise to propagate or
+ modify it is void, and will automatically terminate your rights under
+ this License (including any patent licenses granted under the third
+ paragraph of section 11).
+ .
+   However, if you cease all violation of this License, then your
+ license from a particular copyright holder is reinstated (a)
+ provisionally, unless and until the copyright holder explicitly and
+ finally terminates your license, and (b) permanently, if the copyright
+ holder fails to notify you of the violation by some reasonable means
+ prior to 60 days after the cessation.
+ .
+   Moreover, your license from a particular copyright holder is
+ reinstated permanently if the copyright holder notifies you of the
+ violation by some reasonable means, this is the first time you have
+ received notice of violation of this License (for any work) from that
+ copyright holder, and you cure the violation prior to 30 days after
+ your receipt of the notice.
+ .
+   Termination of your rights under this section does not terminate the
+ licenses of parties who have received copies or rights from you under
+ this License.  If your rights have been terminated and not permanently
+ reinstated, you do not qualify to receive new licenses for the same
+ material under section 10.
+ .
+   9. Acceptance Not Required for Having Copies.
+ .
+   You are not required to accept this License in order to receive or
+ run a copy of the Program.  Ancillary propagation of a covered work
+ occurring solely as a consequence of using peer-to-peer transmission
+ to receive a copy likewise does not require acceptance.  However,
+ nothing other than this License grants you permission to propagate or
+ modify any covered work.  These actions infringe copyright if you do
+ not accept this License.  Therefore, by modifying or propagating a
+ covered work, you indicate your acceptance of this License to do so.
+ .
+   10. Automatic Licensing of Downstream Recipients.
+ .
+   Each time you convey a covered work, the recipient automatically
+ receives a license from the original licensors, to run, modify and
+ propagate that work, subject to this License.  You are not responsible
+ for enforcing compliance by third parties with this License.
+ .
+   An "entity transaction" is a transaction transferring control of an
+ organization, or substantially all assets of one, or subdividing an
+ organization, or merging organizations.  If propagation of a covered
+ work results from an entity transaction, each party to that
+ transaction who receives a copy of the work also receives whatever
+ licenses to the work the party's predecessor in interest had or could
+ give under the previous paragraph, plus a right to possession of the
+ Corresponding Source of the work from the predecessor in interest, if
+ the predecessor has it or can get it with reasonable efforts.
+ .
+   You may not impose any further restrictions on the exercise of the
+ rights granted or affirmed under this License.  For example, you may
+ not impose a license fee, royalty, or other charge for exercise of
+ rights granted under this License, and you may not initiate litigation
+ (including a cross-claim or counterclaim in a lawsuit) alleging that
+ any patent claim is infringed by making, using, selling, offering for
+ sale, or importing the Program or any portion of it.
+ .
+   11. Patents.
+ .
+   A "contributor" is a copyright holder who authorizes use under this
+ License of the Program or a work on which the Program is based.  The
+ work thus licensed is called the contributor's "contributor version".
+ .
+   A contributor's "essential patent claims" are all patent claims
+ owned or controlled by the contributor, whether already acquired or
+ hereafter acquired, that would be infringed by some manner, permitted
+ by this License, of making, using, or selling its contributor version,
+ but do not include claims that would be infringed only as a
+ consequence of further modification of the contributor version.  For
+ purposes of this definition, "control" includes the right to grant
+ patent sublicenses in a manner consistent with the requirements of
+ this License.
+ .
+   Each contributor grants you a non-exclusive, worldwide, royalty-free
+ patent license under the contributor's essential patent claims, to
+ make, use, sell, offer for sale, import and otherwise run, modify and
+ propagate the contents of its contributor version.
+ .
+   In the following three paragraphs, a "patent license" is any express
+ agreement or commitment, however denominated, not to enforce a patent
+ (such as an express permission to practice a patent or covenant not to
+ sue for patent infringement).  To "grant" such a patent license to a
+ party means to make such an agreement or commitment not to enforce a
+ patent against the party.
+ .
+   If you convey a covered work, knowingly relying on a patent license,
+ and the Corresponding Source of the work is not available for anyone
+ to copy, free of charge and under the terms of this License, through a
+ publicly available network server or other readily accessible means,
+ then you must either (1) cause the Corresponding Source to be so
+ available, or (2) arrange to deprive yourself of the benefit of the
+ patent license for this particular work, or (3) arrange, in a manner
+ consistent with the requirements of this License, to extend the patent
+ license to downstream recipients.  "Knowingly relying" means you have
+ actual knowledge that, but for the patent license, your conveying the
+ covered work in a country, or your recipient's use of the covered work
+ in a country, would infringe one or more identifiable patents in that
+ country that you have reason to believe are valid.
+ .
+   If, pursuant to or in connection with a single transaction or
+ arrangement, you convey, or propagate by procuring conveyance of, a
+ covered work, and grant a patent license to some of the parties
+ receiving the covered work authorizing them to use, propagate, modify
+ or convey a specific copy of the covered work, then the patent license
+ you grant is automatically extended to all recipients of the covered
+ work and works based on it.
+ .
+   A patent license is "discriminatory" if it does not include within
+ the scope of its coverage, prohibits the exercise of, or is
+ conditioned on the non-exercise of one or more of the rights that are
+ specifically granted under this License.  You may not convey a covered
+ work if you are a party to an arrangement with a third party that is
+ in the business of distributing software, under which you make payment
+ to the third party based on the extent of your activity of conveying
+ the work, and under which the third party grants, to any of the
+ parties who would receive the covered work from you, a discriminatory
+ patent license (a) in connection with copies of the covered work
+ conveyed by you (or copies made from those copies), or (b) primarily
+ for and in connection with specific products or compilations that
+ contain the covered work, unless you entered into that arrangement,
+ or that patent license was granted, prior to 28 March 2007.
+ .
+   Nothing in this License shall be construed as excluding or limiting
+ any implied license or other defenses to infringement that may
+ otherwise be available to you under applicable patent law.
+ .
+   12. No Surrender of Others' Freedom.
+ .
+   If conditions are imposed on you (whether by court order, agreement or
+ otherwise) that contradict the conditions of this License, they do not
+ excuse you from the conditions of this License.  If you cannot convey a
+ covered work so as to satisfy simultaneously your obligations under this
+ License and any other pertinent obligations, then as a consequence you may
+ not convey it at all.  For example, if you agree to terms that obligate you
+ to collect a royalty for further conveying from those to whom you convey
+ the Program, the only way you could satisfy both those terms and this
+ License would be to refrain entirely from conveying the Program.
+ .
+   13. Use with the GNU Affero General Public License.
+ .
+   Notwithstanding any other provision of this License, you have
+ permission to link or combine any covered work with a work licensed
+ under version 3 of the GNU Affero General Public License into a single
+ combined work, and to convey the resulting work.  The terms of this
+ License will continue to apply to the part which is the covered work,
+ but the special requirements of the GNU Affero General Public License,
+ section 13, concerning interaction through a network will apply to the
+ combination as such.
+ .
+   14. Revised Versions of this License.
+ .
+   The Free Software Foundation may publish revised and/or new versions of
+ the GNU General Public License from time to time.  Such new versions will
+ be similar in spirit to the present version, but may differ in detail to
+ address new problems or concerns.
+ .
+   Each version is given a distinguishing version number.  If the
+ Program specifies that a certain numbered version of the GNU General
+ Public License "or any later version" applies to it, you have the
+ option of following the terms and conditions either of that numbered
+ version or of any later version published by the Free Software
+ Foundation.  If the Program does not specify a version number of the
+ GNU General Public License, you may choose any version ever published
+ by the Free Software Foundation.
+ .
+   If the Program specifies that a proxy can decide which future
+ versions of the GNU General Public License can be used, that proxy's
+ public statement of acceptance of a version permanently authorizes you
+ to choose that version for the Program.
+ .
+   Later license versions may give you additional or different
+ permissions.  However, no additional obligations are imposed on any
+ author or copyright holder as a result of your choosing to follow a
+ later version.
+ .
+   15. Disclaimer of Warranty.
+ .
+   THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
+ APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
+ HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
+ OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
+ THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
+ IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
+ ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+ .
+   16. Limitation of Liability.
+ .
+   IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+ WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS
+ THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY
+ GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+ USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF
+ DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD
+ PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
+ EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGES.
+ .
+   17. Interpretation of Sections 15 and 16.
+ .
+   If the disclaimer of warranty and limitation of liability provided
+ above cannot be given local legal effect according to their terms,
+ reviewing courts shall apply local law that most closely approximates
+ an absolute waiver of all civil liability in connection with the
+ Program, unless a warranty or assumption of liability accompanies a
+ copy of the Program in return for a fee.
+ .
+                      END OF TERMS AND CONDITIONS
+ .
+             How to Apply These Terms to Your New Programs
+ .
+   If you develop a new program, and you want it to be of the greatest
+ possible use to the public, the best way to achieve this is to make it
+ free software which everyone can redistribute and change under these terms.
+ .
+   To do so, attach the following notices to the program.  It is safest
+ to attach them to the start of each source file to most effectively
+ state the exclusion of warranty; and each file should have at least
+ the "copyright" line and a pointer to where the full notice is found.
+ .
+     <one line to give the program's name and a brief idea of what it does.>
+     Copyright (C) <year>  <name of author>
+ .
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+ .
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+ .
+     You should have received a copy of the GNU General Public License
+     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ .
+ Also add information on how to contact you by electronic and paper mail.
+ .
+   If the program does terminal interaction, make it output a short
+ notice like this when it starts in an interactive mode:
+ .
+     <program>  Copyright (C) <year>  <name of author>
+     This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+     This is free software, and you are welcome to redistribute it
+     under certain conditions; type `show c' for details.
+ .
+ The hypothetical commands `show w' and `show c' should show the appropriate
+ parts of the General Public License.  Of course, your program's commands
+ might be different; for a GUI interface, you would use an "about box".
+ .
+   You should also get your employer (if you work as a programmer) or school,
+ if any, to sign a "copyright disclaimer" for the program, if necessary.
+ For more information on this, and how to apply and follow the GNU GPL, see
+ <https://www.gnu.org/licenses/>.
+ .
+   The GNU General Public License does not permit incorporating your program
+ into proprietary programs.  If your program is a subroutine library, you
+ may consider it more useful to permit linking proprietary applications with
+ the library.  If this is what you want to do, use the GNU Lesser General
+ Public License instead of this License.  But first, please read
+ <https://www.gnu.org/licenses/why-not-lgpl.html>.

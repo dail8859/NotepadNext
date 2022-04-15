@@ -1,0 +1,5 @@
+notepadnext (0.4.10-1) obs; urgency=low
+
+  * Initial release. Closes: packages-want#23
+
+ -- B. Stack <bgstack15@gmail.com>  Thu, 14 Apr 2022 10:51:50 -0400

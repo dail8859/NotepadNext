@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+# You must remove unused comment lines for the released package.
+#export DH_VERBOSE = 1
+#export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+# Omit -Werror=format-security with -format here, because of LuaExtension.cpp weirdness, 2022-04-14
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all,-format
+
+%:
+	dh $@ --buildsystem=qmake --sourcedirectory=src/NotepadNext
+
+override_dh_auto_build:
+	mkdir build || :
+	cd build ; pwd ; qmake6 ../src/NotepadNext.pro; make
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf build/ || :
