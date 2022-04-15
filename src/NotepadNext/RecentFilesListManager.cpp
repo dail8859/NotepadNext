@@ -96,6 +96,8 @@ void RecentFilesListManager::populateMenu(QMenu *menu)
 
 void RecentFilesListManager::recentFileActionTriggered()
 {
+    qInfo(Q_FUNC_INFO);
+
     const QAction *action = qobject_cast<const QAction *>(sender());
     emit fileOpenRequest(action->data().toString());
 }
