@@ -26,7 +26,19 @@
 
 #include "LuaState.h"
 #include "lua.hpp"
+
+// This is the only fix needed for CMake.
+// When you include a CMake project, properly, the includes will get
+// subdirectory to avoid name collision (imagine two sub-projects having
+// an "assert.h" file).
+// Some of the 3rd parties have been fixed manually to avoid this, but as
+// the internal code/git-sub-modules will get removed - these kind of hacks
+// will get removed, and all includes will have a prefix.
+#if defined(CMAKE_EXPERIMENTAL)
+#include "LuaBridge/LuaBridge.h"
+#else
 #include "LuaBridge.h"
+#endif
 
 #include "EditorConfigAppDecorator.h"
 
