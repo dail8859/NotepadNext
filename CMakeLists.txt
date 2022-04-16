@@ -2,30 +2,31 @@ cmake_minimum_required(VERSION 3.20)
 
 project(NotepadPlusPlusNext)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Setup singleapplication - we want the GUI application, not console
+# setup singleapplication - we want the GUI application, not console
 set(QAPPLICATION_CLASS QApplication CACHE STRING "Inheritance class for SingleApplication")
 
 # setup ADS - we don't need to build the examples
 set(BUILD_EXAMPLES CACHE BOOL False)
 set(BUILD_STATIC CACHE BOOL False)
 
-# seetup lua bridge, we want C++ 17 support
+# setup lua bridge, we want C++ 17 support
 set(LUABRIDGE_CXX17 CACHE BOOL true)
 
 include(CPM.cmake)
 
+# note: when using "gl" - you canot link to a branch, only tag/sha1
+# note: latest tag is 0.0.7 - way too old to be usable
+# note: gitlab requires a user, so I am using the githab mirror
+CPMAddPackage("gh:freedesktop/uchardet#23a664560b79715c04cbf73a7e2771e26086b210")
 CPMAddPackage("gh:vinniefalco/LuaBridge#2.6")
 CPMAddPackage("gh:githubuser0xFFFF/Qt-Advanced-Docking-System#3.8.2")
 CPMAddPackage("gh:itay-grudev/SingleApplication#v3.3.2")
 
-# TODO: why can't I use gitlab, which seems to tbe the real upstream?
-# TODO: pin a specific tag
-CPMAddPackage("gh:freedesktop/uchardet#master")
-
-#add_subdirectory(src/lua)
 # this a a repack of the 5.3.4 upstream version with a cmake file
-CPMAddPackage("gh:elcuco/lua#v5.3.4-cmake")
+CPMAddPackage("gh:elcuco/lua#v5.3.4-cmake-v2")
 
 # this a a repack of the upstream#62e0ce7 with a cmake file
 CPMAddPackage("gh:elcuco/QSimpleUpdater#3b13dba")
@@ -35,8 +36,9 @@ CPMAddPackage("gh:elcuco/QSimpleUpdater#3b13dba")
 CPMAddPackage("gh:elcuco/editorconfig-core-qt#3bf1e539f3b2d2a8cdd19ed55a2c8b4f4a704dea")
 
 # this a a repack of the upstream#rel5-2-0 with a cmake file
-CPMAddPackage("gh:elcuco/scintilla-code#5cd77e59")
-CPMAddPackage("gh:elcuco/lexilla#15fd70899bdcbd788bc9131d40ff085ad9bffa8d")
+CPMAddPackage("gh:elcuco/scintilla-code#7f4f74fcf4e667c63368f59ef7979d9069a1b941")
+
+# this a a repack of the upstream#rel5-1-5 with a cmake file
+CPMAddPackage("gh:elcuco/lexilla#rel-5-1-5-cmake2")
 
 add_subdirectory(src/NotepadNext)
-

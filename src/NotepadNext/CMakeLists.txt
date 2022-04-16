@@ -5,10 +5,6 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt5 COMPONENTS Widgets PrintSupport REQUIRED)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-add_definitions(-DAPP_VERSION="0.4.9")
-add_definitions(-DAPP_COPYRIGHT="Copyright 2019-2022 Justin Dailey")
-add_definitions(-DCMAKE_EXPERIMENTAL)
-
 add_executable(NotepadNext
     ColorPickerDelegate.cpp
     ComboBoxDelegate.cpp
@@ -131,6 +127,21 @@ target_link_libraries(NotepadNext Qt5::Widgets Qt5::PrintSupport
     scintilla-qt-edit
 )
 target_include_directories(NotepadNext PRIVATE decorators dialogs docks widgets src)
+target_compile_definitions(NotepadNext PRIVATE SCI_OWNREGEX)
+target_compile_definitions(NotepadNext PRIVATE APP_VERSION="0.5.0")
+target_compile_definitions(NotepadNext PRIVATE APP_COPYRIGHT="Copyright 2019-2022 Justin Dailey")
+target_compile_definitions(NotepadNext PRIVATE CMAKE_EXPERIMENTAL)
+
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+    target_compile_options(NotepadNext PRIVATE -Wall -Wextra -pedantic --warn-no-unused-variable -Wformat -Wformat-security)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    target_compile_options(NotepadNext PRIVATE -Wall -Wextra -pedantic --warn-no-unused-variable -Wformat -Wformat-security)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
+    MESSAGE("Intel")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    target_compile_options(NotepadNext PRIVATE /utf-8 /guard:cf)
+    target_link_options(NotepadNex PRIVATE /guard:cf)
+endif()
 
 # For some reason - this library slips the linking part.
 if(UNIX AND NOT APPLE)
