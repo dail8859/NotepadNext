@@ -246,7 +246,7 @@ void LuaConsoleDock::writeErrorToOutput(const char *s)
     const int length = static_cast<int>(strlen(s));
     QVector<cell> cells(length + 1);
 
-    for (size_t i = 0; i < length; ++i) {
+    for (auto i = 0; i < length; ++i) {
         cells[i].c = s[i];
         cells[i].style = 39;
     }

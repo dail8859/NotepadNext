@@ -680,7 +680,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
     const ScintillaNext *mostRecentEditor = Q_NULLPTR;
 
     for (const QString &filePath : fileNames) {
-        qInfo(qUtf8Printable(filePath));
+        qInfo("%s", qUtf8Printable(filePath));
 
         // Search currently open editors to see if it is already open
         ScintillaNext *editor = app->getEditorManager()->getEditorByFilePath(filePath);
@@ -1278,7 +1278,7 @@ void MainWindow::activateEditor(ScintillaNext *editor)
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 {
     qInfo(Q_FUNC_INFO);
-    qInfo(qUtf8Printable("Language Name: " + languageName));
+    qInfo("%s", qUtf8Printable("Language Name: " + languageName));
 
     app->setEditorLanguage(editor, languageName);
 }
