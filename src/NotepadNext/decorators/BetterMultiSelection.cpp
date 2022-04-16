@@ -192,7 +192,7 @@ QVector<Selection> BetterMultiSelection::GetSelections() {
 }
 
 void BetterMultiSelection::SetSelections(const QVector<Selection> &selections) {
-    for (size_t i = 0; i < selections.size(); ++i) {
+    for (auto i = 0; i < selections.size(); ++i) {
         if (i == 0)
             editor->setSelection(selections[i].caret, selections[i].anchor);
         else

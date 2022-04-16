@@ -18,6 +18,7 @@
 
 #include "ScintillaNext.h"
 #include "uchardet.h"
+#include <cinttypes>
 
 #include <QDir>
 #include <QMouseEvent>
@@ -351,7 +352,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
 
         chunk.resize(bytesRead);
 
-        qDebug("Read %d bytes", bytesRead);
+        qDebug("Read %lld bytes", bytesRead);
 
         // TODO: this needs moved out of here. Would make much more sense to have a class (or classes)
         // responsible for handling low level situations like this to do things like:
@@ -404,7 +405,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
     // modEventMask(SC_MODEVENTMASKALL)?
 
     if (status() != SC_STATUS_OK) {
-        qWarning("something bad happend in document->add_data() %d", status());
+        qWarning("something bad happend in document->add_data() %ld", status());
         return false;
     }
 

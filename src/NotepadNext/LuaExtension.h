@@ -18,7 +18,7 @@
 
 
 #ifndef LUAEXTENSION_H
-#define LUAEXTENTION_H
+#define LUAEXTENSION_H
 
 #include "ScintillaNext.h"
 #include <vector>

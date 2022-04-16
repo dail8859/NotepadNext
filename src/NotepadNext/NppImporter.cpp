@@ -233,7 +233,7 @@ void NppImporter::readLangsModel(const QString &filePath)
             }
         }
         if (xml.hasError()) {
-            qWarning(qUtf8Printable(xml.errorString()));
+            qWarning("%s", qUtf8Printable(xml.errorString()));
         }
     }
 }
@@ -258,7 +258,7 @@ void NppImporter::readStylersModel(const QString &filePath)
             }
         }
         if (xml.hasError()) {
-            qWarning(qUtf8Printable(xml.errorString()));
+            qWarning("%s", qUtf8Printable(xml.errorString()));
         }
     }
 }
@@ -280,14 +280,14 @@ void NppImporter::readConfigModel(const QString &filePath)
             }
         }
         if (xml.hasError()) {
-            qWarning(qUtf8Printable(xml.errorString()));
+            qWarning("%s", qUtf8Printable(xml.errorString()));
         }
     }
 }
 
 void NppImporter::readLexerStyles(QXmlStreamReader &xml)
 {
-    qInfo(qUtf8Printable(xml.name().toString()));
+    qInfo("%s", qUtf8Printable(xml.name().toString()));
 
     while (xml.readNextStartElement()) {
         auto attrs = xml.attributes();
