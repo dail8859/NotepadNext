@@ -5,6 +5,7 @@ on: [push, pull_request]
 jobs:
   build-linux:
     strategy:
+      fail-fast: false
       matrix:
         config:
         - 
@@ -57,6 +58,7 @@ jobs:
 
   build-mac:
     strategy:
+      fail-fast: false
       matrix:
         config:
         -
@@ -97,6 +99,7 @@ jobs:
 
   build-windows:
     strategy:
+      fail-fast: false
       matrix:
         config:
         - 
@@ -138,13 +141,26 @@ jobs:
           cd build
           jom
 
-      - name: Create package
+      - name: Create zip package
         run: |
           cd build
           jom package
 
-      - name: Upload artifact
+      - name: Create installer
+        if: matrix.config.qt_version == '5.15.2'
+        run: |
+          cd build
+          jom installer
+
+      - name: Upload zip package
         uses: actions/upload-artifact@v2
         with:
-          name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}
+          name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Zip
           path: ${{ github.workspace }}/build/package/
+
+      - name: Upload installer
+        if: matrix.config.qt_version == '5.15.2'
+        uses: actions/upload-artifact@v2
+        with:
+          name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Installer
+          path: ${{ github.workspace }}/installer/NotepadNext*.exe

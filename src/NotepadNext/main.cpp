@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
     // Log some debug info
     qInfo("=============================");
     qInfo("%s v%s", qUtf8Printable(QApplication::applicationName()), qUtf8Printable(QApplication::applicationVersion()));
+    qInfo("Build Date/Time: %s %s", __DATE__, __TIME__);
     qInfo("Qt: %s", qVersion());
     qInfo("OS: %s", qUtf8Printable(QSysInfo::prettyProductName()));
     qInfo("CPU: %s", qUtf8Printable(QSysInfo::currentCpuArchitecture()));
