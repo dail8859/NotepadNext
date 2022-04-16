@@ -1,11 +1,6 @@
 # Notepad Next
 
-| Branch | Status |
-|---|---|
-| master | ![Build Notepad Next](https://github.com/dail8859/NotepadNext/workflows/Build%20Notepad%20Next/badge.svg) |
-| dev | ![Build Notepad Next](https://github.com/dail8859/NotepadNext/workflows/Build%20Notepad%20Next/badge.svg?branch=dev) |
-
-
+![Build Notepad Next](https://github.com/dail8859/NotepadNext/workflows/Build%20Notepad%20Next/badge.svg)
 
 A cross-platform, reimplementation of Notepad++. Releases are available for Windows and Linux.
 
