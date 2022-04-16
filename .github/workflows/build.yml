@@ -11,11 +11,13 @@ jobs:
         - 
           qt_version: "5.15.2"
           modules: ""
+          os: ubuntu-18.04
         - 
           qt_version: "6.2.4"
           modules: "qt5compat"
+          os: ubuntu-latest
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.config.os }}
 
     steps:
       - uses: actions/checkout@v2
