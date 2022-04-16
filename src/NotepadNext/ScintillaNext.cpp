@@ -404,7 +404,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
     // modEventMask(SC_MODEVENTMASKALL)?
 
     if (status() != SC_STATUS_OK) {
-        qWarning("something bad happend in document->add_data() %d", status());
+        qWarning("something bad happend in document->add_data() %llu", status());
         return false;
     }
 

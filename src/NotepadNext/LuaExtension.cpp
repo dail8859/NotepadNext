@@ -92,11 +92,11 @@ static bool tracebackEnabled = true;
 typedef int NppExtensionAPIPane;
 void hostTrace(const char *s)
 {
-    qInfo(s);
+    qInfo("%s", s);
 }
 void hostTraceError(const char *s)
 {
-    qWarning(s);
+    qWarning("%s", s);
 }
 
 // Forward declarations
