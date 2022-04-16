@@ -1,4 +1,3 @@
-!addplugindir /x86-ansi ".\NsisMultiUser\Plugins\x86-ansi\"
 !addplugindir /x86-unicode ".\NsisMultiUser\Plugins\x86-unicode\"
 !addincludedir ".\NsisMultiUser\Include\"
 

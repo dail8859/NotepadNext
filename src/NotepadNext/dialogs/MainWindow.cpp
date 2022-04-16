@@ -518,7 +518,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                                     GNU General Public License for more details.</p>
                                     <p>You should have received a copy of the GNU General Public License
                                     along with this program. If not, see &lt;https://www.gnu.org/licenses/&gt;.</p>)")
-                                .arg(APP_VERSION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
+                                .arg(QApplication::applicationVersion(), QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
 
     QAction *separator = ui->menuHelp->insertSeparator(ui->actionCheckForUpdates);
