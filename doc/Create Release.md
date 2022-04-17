@@ -1,6 +1,7 @@
 ## Prepare Release
 
 - Update version in `src/Version.pri`
+- Add new `<release>` tag to metainfo file in `deploy/linux`
 - Commit
 - Tag commit with new version number
 - Push to commit and tag to GitHub
