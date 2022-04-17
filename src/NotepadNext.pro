@@ -24,7 +24,7 @@ TEMPLATE = subdirs
 SUBDIRS = NotepadNext
 
 TRANSLATIONS = \
-    ../i18n/language.zh_CN.ts
+    ../i18n/NotepadNext.zh_CN.ts
 
 # Extra Windows targets
 win32 {

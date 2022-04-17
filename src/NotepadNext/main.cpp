@@ -52,8 +52,8 @@ int main(int argc, char *argv[])
     // Load default translation
     QTranslator translator;
     QString locale = QLocale::system().name();
-    // look up e.g. i18n/language.qm
-    if (translator.load(QLocale(), QString("language"), QString("."), QString("i18n"))) {
+    // look up e.g. i18n/NotepadNext_en.qm
+    if (translator.load(QLocale(), QApplication::applicationName(), QString("."), QString("i18n"))) {
         app.installTranslator(&translator);
         qInfo("Load translation: %s", qUtf8Printable(locale));
     } else {
