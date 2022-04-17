@@ -21,9 +21,12 @@ include(CPM.cmake)
 # note: latest tag is 0.0.7 - way too old to be usable
 # note: gitlab requires a user, so I am using the githab mirror
 CPMAddPackage("gh:freedesktop/uchardet#23a664560b79715c04cbf73a7e2771e26086b210")
-CPMAddPackage("gh:vinniefalco/LuaBridge#2.6")
+
+# Using a modern sha1, 2.6 is 2 years old
+CPMAddPackage("gh:vinniefalco/LuaBridge#efb62e5be5c12d75e085357072039db9199f7ebf")
+
 CPMAddPackage("gh:githubuser0xFFFF/Qt-Advanced-Docking-System#3.8.2")
-CPMAddPackage("gh:itay-grudev/SingleApplication#v3.3.2")
+CPMAddPackage("gh:itay-grudev/SingleApplication#v3.3.4")
 
 # this a a repack of the 5.3.4 upstream version with a cmake file
 CPMAddPackage("gh:elcuco/lua#v5.4.4-cmake2")
