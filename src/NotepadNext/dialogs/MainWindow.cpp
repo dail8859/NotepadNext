@@ -182,7 +182,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionCopyFullPath, &QAction::triggered, [=]() {
         auto editor = dockedEditor->getCurrentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(editor->getPath());
+            QApplication::clipboard()->setText(editor->getFilePath());
         }
     });
     connect(ui->actionCopyFileName, &QAction::triggered, [=]() {
@@ -191,7 +191,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionCopyFileDirectory, &QAction::triggered, [=]() {
         auto editor = dockedEditor->getCurrentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(editor->getFilePath());
+            QApplication::clipboard()->setText(editor->getPath());
         }
     });
     connect(ui->actionIncrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->tab();});
