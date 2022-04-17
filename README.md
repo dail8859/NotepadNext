@@ -2,7 +2,7 @@
 
 ![Build Notepad Next](https://github.com/dail8859/NotepadNext/workflows/Build%20Notepad%20Next/badge.svg)
 
-A cross-platform, reimplementation of Notepad++. Releases are available for Windows and Linux.
+A cross-platform, reimplementation of Notepad++. Releases are available for Windows, Linux, and macOS.
 
 Though the application overall is stable and usable, it should not be considered safe for critically important work.
 
@@ -11,7 +11,7 @@ There are numerous bugs and half working implementations. Pull requests are grea
 ![screenshot](/doc/screenshot.png)
 
 # Development
-Current development is done using Visual Studio 2019 and Qt v5.15 on Windows. This is known to build successfully on Ubuntu 21.10. Other Linux distributions are likely to work as well. Other platforms/compilers have not been tested but should be usable with minor modifications.
+Current development is done using Visual Studio 2019 and Qt v5.15 on Windows. This is also known to build successfully on various Linux distributions and macOS. Other platforms/compilers should be usable with minor modifications.
 
 If you are familiar with building C++ Qt desktop applications with Qt Creator, then this should be as simple as opening `src/NotepadNext.pro` and build/run the project.
 
