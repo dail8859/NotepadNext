@@ -56,6 +56,9 @@ COPIES += license
 license.files = ../../LICENSE
 license.path = $$OUT_PWD
 
+COPIES += translations
+translations.files = $$files(../../i18n/*.qm)
+translations.path = $$OUT_PWD/i18n
 
 SOURCES += \
     ColorPickerDelegate.cpp \
