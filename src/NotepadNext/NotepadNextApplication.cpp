@@ -247,10 +247,6 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
         end
         editor.Property["fold"] = "1"
         editor.Property["fold.compact"] = "0"
-
-        -- The document needs redone, but don't force it to do the whole thing
-        -- since SC_IDLESTYLING_TOVISIBLE is used
-        editor:Colourise(0, 1);
     )");
 }
 
