@@ -627,7 +627,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="183"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">运行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="190"/>
@@ -668,647 +668,655 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="17"/>
         <source>Notepad Next[*]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="33"/>
         <source>+</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="48"/>
         <source>&amp;File</source>
-        <translation type="unfinished">文件(&amp;F)</translation>
+        <translation>文件(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="52"/>
         <source>Close More</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">更多关闭方式</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="60"/>
         <source>&amp;Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">最近打开的文件(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="89"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="93"/>
         <source>Copy More</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">更多复制选项</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="101"/>
         <source>Indent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">缩进</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="108"/>
         <source>EOL Conversion</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">行尾序列(EOL)转换</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="116"/>
         <source>Convert Case</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">大小写转换</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="123"/>
         <source>Line Operations</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">行操作</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="149"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="162"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>视图(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="166"/>
         <source>&amp;Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">缩放(&amp;Z)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="175"/>
         <source>Show Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">显示符号标记</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="192"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>语言</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="197"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>选项</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="203"/>
         <source>Macro</source>
-        <translation type="unfinished"></translation>
+        <translation>宏</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="212"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>帮助</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="221"/>
         <source>Encoding</source>
-        <translation type="unfinished"></translation>
+        <translation>文件编码</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="226"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation>运行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="242"/>
         <source>Main Tool Bar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">主菜单栏</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="302"/>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">新建(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="305"/>
         <source>Create a new file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">新建文件</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="308"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="318"/>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">打开(&amp;O)...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="321"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="334"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">保存(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="337"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">保存</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="340"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="345"/>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">退出(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="348"/>
         <source>Alt+F4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="361"/>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">撤销(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="364"/>
         <source>Ctrl+Z</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="374"/>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">重做(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="377"/>
         <source>Ctrl+Y</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="387"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">剪切(&amp;t)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="390"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="400"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">复制(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="403"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="413"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">粘贴(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="416"/>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="421"/>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">删除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="424"/>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Delete 对应的快捷键</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="429"/>
         <source>Copy Full Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">复制完整路径</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="434"/>
         <source>Copy File Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">复制文件名</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="439"/>
         <source>Copy File Directory</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">复制文件夹</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="448"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关闭(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="451"/>
         <source>Close the current file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关闭当前</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="454"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="459"/>
         <source>Save &amp;As...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">另存为(&amp;A)...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="462"/>
         <source>Ctrl+Alt+S</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="467"/>
         <source>Save a Copy As...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">副本另存为...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="476"/>
         <source>Sav&amp;e All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">保存所有(&amp;e)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="479"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="484"/>
         <source>Select A&amp;ll</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">选择所有(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="487"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="496"/>
         <source>Increase Indent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">增加缩进</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="505"/>
         <source>Decrease Indent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">减少缩进</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="510"/>
         <source>Rename...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">重命名...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="519"/>
         <source>Re&amp;load</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">重新加载(&amp;l)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="527"/>
         <source>Windows (CR LF)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Windows (CR LF)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="535"/>
         <source>Unix (LF)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Unix (LF)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="543"/>
         <source>Macintosh (CR)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Macintosh (CR)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="548"/>
         <source>UPPER CASE</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>仅转换选中的词。</translatorcomment>
+        <translation type="unfinished">转换为大写</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="551"/>
         <source>Convert text to upper case</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">转换文本到大写</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="556"/>
         <source>lower case</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>仅转换选中的词。</translatorcomment>
+        <translation type="unfinished">转换为小写</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="559"/>
         <source>Convert text to lower case</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">转换文本到小写</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="564"/>
         <source>Duplicate Current Line</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>会在下一行插入</translatorcomment>
+        <translation type="unfinished">复制并插入当前行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="569"/>
         <source>Split Lines</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>效果与打开“自动折行”一致，不过使用了硬换行</translatorcomment>
+        <translation type="unfinished">拆分当前行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="574"/>
         <source>Join Lines</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>需要选中多行，否则没有效果。</translatorcomment>
+        <translation type="unfinished">合并多行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="577"/>
         <source>Ctrl+J</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="582"/>
         <source>Move Selected Lines Up</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">向下移动选中的行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="585"/>
         <source>Ctrl+Shift+Up</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="590"/>
         <source>Move Selected Lines Down</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">向上移动选中的行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="593"/>
         <source>Ctrl+Shift+Down</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="602"/>
         <source>Clos&amp;e All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关闭所有(&amp;e)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="605"/>
         <source>Close All files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关闭所有</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="608"/>
         <source>Ctrl+Shift+W</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="613"/>
         <source>Close All Except Active Document</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关闭其他</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="618"/>
         <source>Close All to the Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关闭至左侧</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="623"/>
         <source>Close All to the Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">关闭至右侧</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="633"/>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">放大(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="636"/>
         <source>Ctrl++</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="646"/>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">缩小(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="649"/>
         <source>Ctrl+-</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="654"/>
         <source>Reset Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">重置缩放</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="657"/>
         <source>Ctrl+/</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="662"/>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>关于 Qt</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="674"/>
         <source>About Notepad Next</source>
-        <translation type="unfinished"></translation>
+        <translation>关于 Notepad Next</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="685"/>
         <source>Show Whitespace</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">显示空格</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="693"/>
         <source>Show End of Line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">显示行尾</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="706"/>
         <source>Show All Characters</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">显示所有字符</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="719"/>
         <source>Show Indent Guide</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">显示缩进指引</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="727"/>
         <source>Show Wrap Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">显示换行标记</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="740"/>
         <source>Word Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">自动换行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="745"/>
         <source>Restore Recently Closed File</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>只恢复（重新打开）一个文件</translatorcomment>
+        <translation type="unfinished">恢复最近关闭的文件</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="748"/>
         <source>Ctrl+Shift+T</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="753"/>
         <source>Open All Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">打开所有最近关闭的文件</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="758"/>
         <source>Clear Recent Files List</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">清除最近打开的文件</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="768"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">查找(&amp;F)...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="771"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="776"/>
         <source>Find in Files...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">在文件中查找...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="781"/>
         <source>Find &amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">查找下一个(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="784"/>
         <source>F3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="789"/>
         <source>Find &amp;Previous</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">查找上一个(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="799"/>
         <source>&amp;Replace...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">替换(&amp;R)...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="802"/>
         <source>Ctrl+H</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="810"/>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">全屏</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="813"/>
         <source>F11</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="826"/>
         <source>Start Recording</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">开始录制</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="838"/>
         <source>Playback</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">重放</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="841"/>
         <source>Ctrl+Shift+P</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="853"/>
         <source>Save Current Recorded Macro...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">保存当前已录制的宏...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="865"/>
         <source>Run a Macro Multiple Times...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">多次运行宏...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="870"/>
         <source>Windows...</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>界面中未显示</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="875"/>
         <source>Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">偏好设置....</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="883"/>
         <source>Quick Find</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">快速查找</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="886"/>
         <source>Ctrl+Alt+I</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="891"/>
         <source>Select Next Instance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">选择下一个实例</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="894"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="903"/>
         <source>Move to Trash...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">移动至回收站...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="906"/>
         <source>Move to Trash</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">移动至回收站</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="911"/>
         <source>Check for Updates...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">检查更新...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="916"/>
         <source>&amp;Go to Line...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">转跳到行(&amp;G)...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="919"/>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="928"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">打印...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="931"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="936"/>
         <source>Open Folder as Workspace...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">打开文件夹为工作区...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="274"/>
@@ -1403,22 +1411,22 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="14"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>偏好设置</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="22"/>
         <source>Menu Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>菜单栏l</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="29"/>
         <source>Tool Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>工具栏</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="36"/>
         <source>Status Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>状态栏</translation>
     </message>
 </context>
 <context>
@@ -1464,7 +1472,7 @@
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="43"/>
         <source>Aa</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="53"/>
@@ -1474,7 +1482,7 @@
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="56"/>
         <source>|A|</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="66"/>
@@ -1484,12 +1492,12 @@
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="69"/>
         <source>. *</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="72"/>
         <source>Alt+E</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="97"/>
@@ -1517,7 +1525,7 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="473"/>
         <source>No updates are available for the moment</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">暂时没有可用的更新</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="475"/>
