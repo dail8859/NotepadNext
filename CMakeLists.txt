@@ -26,7 +26,7 @@ CPMAddPackage("gh:githubuser0xFFFF/Qt-Advanced-Docking-System#3.8.2")
 CPMAddPackage("gh:itay-grudev/SingleApplication#v3.3.2")
 
 # this a a repack of the 5.3.4 upstream version with a cmake file
-CPMAddPackage("gh:elcuco/lua#v5.3.4-cmake-v2")
+CPMAddPackage("gh:elcuco/lua#v5.4.4-cmake2")
 
 # this a a repack of the upstream#62e0ce7 with a cmake file
 CPMAddPackage("gh:elcuco/QSimpleUpdater#3b13dba")
