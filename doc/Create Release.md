@@ -1,14 +1,13 @@
 ## Prepare Release
 
 - Update version in `src/Version.pri`
-- Commit on `dev` branch
-- Merge into `master`
-- Tag merged commit with new version number
-- Follow procedures below
-- Once Github action finishes download AppImage
-- Attach AppImage, exe, and zip to the Github release
+- Commit
+- Tag commit with new version number
+- Push to commit and tag to GitHub
+- Once GitHub action finishes download Qt5 outputs for each platform
+- Extract each and attach a new release
 
-## Build Release
+## Manually Build Release
 Example bat script to build release
 
 ```
