@@ -39,9 +39,9 @@ CPMAddPackage("gh:elcuco/QSimpleUpdater#3b13dba")
 CPMAddPackage("gh:elcuco/editorconfig-core-qt#3bf1e539f3b2d2a8cdd19ed55a2c8b4f4a704dea")
 
 # this a a repack of the upstream#rel5-2-0 with a cmake file
-CPMAddPackage("gh:elcuco/scintilla-code#7f4f74fcf4e667c63368f59ef7979d9069a1b941")
+CPMAddPackage("gh:elcuco/scintilla-code#rel-5-2-0-cmake")
 
 # this a a repack of the upstream#rel5-1-5 with a cmake file
-CPMAddPackage("gh:elcuco/lexilla#rel-5-1-5-cmake2")
+CPMAddPackage("gh:elcuco/lexilla#rel-5-1-5-cmake3")
 
 add_subdirectory(src/NotepadNext)
