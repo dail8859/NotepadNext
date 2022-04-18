@@ -28,11 +28,14 @@
 #include <QStandardPaths>
 #include <QWindow>
 #include <QPushButton>
-#include <QSimpleUpdater.h>
 #include <QTimer>
 #include <QInputDialog>
 #include <QPrintPreviewDialog>
 #include <QPrinter>
+
+#ifdef Q_OS_WIN
+#include <QSimpleUpdater.h>
+#endif
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -545,37 +548,6 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->menuView->addAction(fawDock->toggleViewAction());
     connect(fawDock, &FolderAsWorkspaceDock::fileDoubleClicked, this, &MainWindow::openFile);
 
-
-#ifdef QT_DEBUG
-    if (true) {
-#else
-    QSettings registry(QSettings::NativeFormat, QSettings::UserScope, QApplication::organizationName(), QApplication::applicationName());
-    const bool autoUpdatesEnabled = registry.value("AutoUpdate", 0).toBool();
-    qInfo("AutoUpdates: %d", autoUpdatesEnabled);
-
-    if (autoUpdatesEnabled) {
-#endif
-        connect(ui->actionCheckForUpdates, &QAction::triggered, this, &MainWindow::checkForUpdates);
-
-        // A bit after startup, see if we need to automatically check for an update
-        QTimer::singleShot(15000, this, [=]() {
-            QSettings settings;
-            QDateTime dt = settings.value("App/LastUpdateCheck", QDateTime::currentDateTime()).toDateTime();
-
-            if (dt.isValid()) {
-                qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
-
-                if (dt.addDays(7) < QDateTime::currentDateTime()) {
-                    checkForUpdates(true);
-                }
-            }
-        });
-    }
-    else {
-        ui->actionCheckForUpdates->setDisabled(true);
-        ui->actionCheckForUpdates->setVisible(false);
-    }
-
     connect(app->getSettings(), &Settings::showMenuBarChanged, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
@@ -594,6 +566,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     f.close();
 
     restoreSettings();
+
+    initUpdateCheck();
 }
 
 MainWindow::~MainWindow()
@@ -1442,6 +1416,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
 
 void MainWindow::checkForUpdates(bool silent)
 {
+#ifdef Q_OS_WIN
     qInfo(Q_FUNC_INFO);
 
     QString url = "https://github.com/dail8859/NotepadNext/raw/master/updates.json";
@@ -1456,13 +1431,56 @@ void MainWindow::checkForUpdates(bool silent)
 
     QSettings settings;
     settings.setValue("App/LastUpdateCheck", QDateTime::currentDateTime());
+#else
+    Q_UNUSED(silent);
+#endif
 }
 
 void MainWindow::checkForUpdatesFinished(QString url)
 {
+#ifdef Q_OS_WIN
     if (!QSimpleUpdater::getInstance()->getUpdateAvailable(url)) {
         QMessageBox::information(this, "Notepad Next", "No updates are availale at this time.");
     }
+#endif
+}
+
+void MainWindow::initUpdateCheck()
+{
+#ifdef Q_OS_WIN
+#ifdef QT_DEBUG
+    if (true) {
+#else
+    QSettings registry(QSettings::NativeFormat, QSettings::UserScope, QApplication::organizationName(), QApplication::applicationName());
+    const bool autoUpdatesEnabled = registry.value("AutoUpdate", 0).toBool();
+    qInfo("AutoUpdates: %d", autoUpdatesEnabled);
+
+    if (autoUpdatesEnabled) {
+#endif
+        connect(ui->actionCheckForUpdates, &QAction::triggered, this, &MainWindow::checkForUpdates);
+
+        // A bit after startup, see if we need to automatically check for an update
+        QTimer::singleShot(15000, this, [=]() {
+            QSettings settings;
+            QDateTime dt = settings.value("App/LastUpdateCheck", QDateTime::currentDateTime()).toDateTime();
+
+            if (dt.isValid()) {
+                qInfo("Last checked for updates at: %s", qUtf8Printable(dt.toString()));
+
+                if (dt.addDays(7) < QDateTime::currentDateTime()) {
+                    checkForUpdates(true);
+                }
+            }
+        });
+    }
+    else {
+        ui->actionCheckForUpdates->setDisabled(true);
+        ui->actionCheckForUpdates->setVisible(false);
+    }
+#else
+    ui->actionCheckForUpdates->setDisabled(true);
+    ui->actionCheckForUpdates->setVisible(false);
+#endif
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
