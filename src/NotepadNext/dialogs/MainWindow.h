@@ -131,6 +131,7 @@ private:
     DockedEditor *dockedEditor = Q_NULLPTR;
     MacroRecorder *recorder = Q_NULLPTR;
 
+    void initUpdateCheck();
     bool isInInitialState();
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);

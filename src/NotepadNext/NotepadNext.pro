@@ -33,7 +33,7 @@ include(../uchardet.pri)
 include(../lua.pri)
 include(../ads.pri)
 include(../editorconfig-core-qt/EditorConfig.pri)
-include(../QSimpleUpdater/QSimpleUpdater.pri)
+win32:include(../QSimpleUpdater/QSimpleUpdater.pri)
 
 # Set variables for output executable
 VERSION = $$APP_VERSION
