@@ -34,6 +34,7 @@ include(../lua.pri)
 include(../ads.pri)
 include(../editorconfig-core-qt/EditorConfig.pri)
 include(../QSimpleUpdater/QSimpleUpdater.pri)
+include(../i18n.pri)
 
 # Set variables for output executable
 VERSION = $$APP_VERSION
@@ -55,15 +56,6 @@ win32 {
 COPIES += license
 license.files = ../../LICENSE
 license.path = $$OUT_PWD
-
-TRANSLATIONS = \
-    ../../i18n/NotepadNext.zh_CN.ts
-LRELEASE_DIR = ../../i18n
-CONFIG += lrelease
-
-COPIES += translations
-translations.files = ../../i18n/
-translations.path = $$OUT_PWD
 
 SOURCES += \
     ColorPickerDelegate.cpp \
