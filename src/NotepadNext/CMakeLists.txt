@@ -140,7 +140,7 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
     MESSAGE("Intel")
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     target_compile_options(NotepadNext PRIVATE /utf-8 /guard:cf)
-    target_link_options(NotepadNex PRIVATE /guard:cf)
+    target_link_options(NotepadNext PRIVATE /guard:cf)
 endif()
 
 # For some reason - this library slips the linking part.
