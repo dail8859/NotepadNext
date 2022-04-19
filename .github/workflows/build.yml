@@ -10,6 +10,38 @@ on:
 
 
 jobs:
+  build-linux-cmake-qt5:
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        -
+          qt_version: "5.15.2"
+          modules: ""
+          os: ubuntu-18.04
+
+    runs-on: ${{ matrix.config.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{ matrix.config.qt_version }}
+          modules: ${{ matrix.config.modules }}
+
+      - name: Setup
+        run: sudo apt-get install libxkbcommon-dev
+
+      - name: Compile
+        run: |
+          cmake -S . -B cbuild -G Ninja
+          cmake --build cbuild
+
+
   build-linux:
     strategy:
       fail-fast: false
