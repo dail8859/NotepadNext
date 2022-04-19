@@ -34,7 +34,7 @@ jobs:
           modules: ${{ matrix.config.modules }}
 
       - name: Setup
-        run: sudo apt-get install libxkbcommon-dev
+        run: sudo apt-get install libxkbcommon-dev ninja-build
 
       - name: Compile
         run: |
@@ -71,7 +71,7 @@ jobs:
           modules: ${{ matrix.config.modules }}
       
       - name: Setup
-        run: sudo apt-get install libxkbcommon-dev ninja-build
+        run: sudo apt-get install libxkbcommon-dev
 
       - name: Compile
         run: |
