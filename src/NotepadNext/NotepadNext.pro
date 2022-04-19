@@ -62,8 +62,8 @@ LRELEASE_DIR = ../../i18n
 CONFIG += lrelease
 
 COPIES += translations
-translations.files = $$files(../../i18n/*.qm)
-translations.path = $$OUT_PWD/i18n
+translations.files = ../../i18n/
+translations.path = $$OUT_PWD
 
 SOURCES += \
     ColorPickerDelegate.cpp \
