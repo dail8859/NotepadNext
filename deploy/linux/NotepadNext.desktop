@@ -7,3 +7,4 @@ Name=Notepad Next
 StartupNotify=true
 Terminal=false
 Categories=Qt;TextEditor;Utility;
+MimeType=text/plain;
