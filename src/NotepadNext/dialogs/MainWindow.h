@@ -88,6 +88,10 @@ public slots:
 
     void print();
 
+    void toggleComment();
+    void commentLine();
+    void uncommentLine();
+
     void convertEOLs(int eolMode);
 
     void updateFileStatusBasedUi(ScintillaNext *editor);
@@ -136,9 +140,10 @@ private:
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     bool checkFileForModification(ScintillaNext *editor);
-
     void saveSettings() const;
     void restoreSettings();
+
+    void initialiseCommentsForLanguages();
 
     QActionGroup *languageActionGroup;
 
@@ -151,6 +156,9 @@ private:
 
     QVector<Macro *> macros;
     Macro *currentMacro = Q_NULLPTR;
+
+    //Map between each supported language and its comment string
+    std::map<QString, QString> singleLineCommentCharacters;
 };
 
 #endif // MAINWINDOW_H
