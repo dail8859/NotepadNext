@@ -23,6 +23,10 @@ jobs:
           qt_version: "5.15.2"
           modules: ""
           os: windows-latest
+        -
+          qt_version: "5.15.2"
+          modules: ""
+          os: osx-latest
 
     runs-on: ${{ matrix.config.os }}
 
@@ -41,11 +45,11 @@ jobs:
         uses: seanmiddleditch/gha-setup-ninja@master
 
       - name: Setup (Linux)
-        if: matrix.os == 'ubuntu-18.04'
+        if: startsWith (matrix.config.os, 'ubuntu')
         run: sudo apt-get install libxkbcommon-dev
 
-      - name: Setup VS tools
-        if: matrix.os == 'windows-latest'
+      - name: Setup VS tools (Windows)
+        if: startsWith (matrix.config.os, 'windows')
         uses: egor-tensin/vs-shell@v2
         with:
           arch: x64
