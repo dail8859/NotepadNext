@@ -56,6 +56,11 @@ COPIES += license
 license.files = ../../LICENSE
 license.path = $$OUT_PWD
 
+TRANSLATIONS = \
+    ../../i18n/NotepadNext.zh_CN.ts
+LRELEASE_DIR = ../../i18n
+CONFIG += lrelease
+
 COPIES += translations
 translations.files = $$files(../../i18n/*.qm)
 translations.path = $$OUT_PWD/i18n

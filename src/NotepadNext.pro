@@ -23,10 +23,6 @@ TEMPLATE = subdirs
 
 SUBDIRS = NotepadNext
 
-TRANSLATIONS = \
-    ../i18n/NotepadNext.zh_CN.ts
-LRELEASE_DIR = ../i18n
-CONFIG += lrelease
 
 # Extra Windows targets
 win32 {
