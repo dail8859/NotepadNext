@@ -39,14 +39,14 @@ CPMAddPackage("gh:elcuco/QSimpleUpdater#3b13dba")
 CPMAddPackage("gh:elcuco/editorconfig-core-qt#3bf1e539f3b2d2a8cdd19ed55a2c8b4f4a704dea")
 
 # this a a repack of the upstream#rel5-2-2 with a cmake file
-CPMAddPackage("gh:elcuco/scintilla-code#rel-5-2-2-cmake")
+#CPMAddPackage("gh:elcuco/scintilla-code#rel-5-2-2-cmake")
 
 # this a a repack of the upstream#rel5-1-6 with a cmake file
 CPMAddPackage("gh:elcuco/lexilla#rel-5-1-6-cmake")
 
 # Instead of the two above, you can use a moving branch. Both track
 # upstream `master`. Seem to compile and work.
-#CPMAddPackage("gh:elcuco/scintilla-code#cmake-support")
+CPMAddPackage("gh:elcuco/scintilla-code#cmake-support")
 #CPMAddPackage("gh:elcuco/lexilla#cmake-support")
 
 add_subdirectory(src/NotepadNext)
