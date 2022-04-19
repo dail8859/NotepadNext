@@ -19,9 +19,7 @@
 
 ## Update the `.ts` file, then generate the `.qm` file
 # All `*.ts` files:
-TRANSLATIONS = \
-    $$PWD/../i18n/NotepadNext.zh_CN.ts
-
+TRANSLATIONS = $$files($$PWD/../i18n/*.ts)
 # Output folder for `.qm` files:
 LRELEASE_DIR = $$PWD/../i18n
 CONFIG += lrelease
