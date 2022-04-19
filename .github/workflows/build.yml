@@ -19,6 +19,10 @@ jobs:
           qt_version: "5.15.2"
           modules: ""
           os: ubuntu-18.04
+        -
+          qt_version: "5.15.2"
+          modules: ""
+          os: windows-latest
 
     runs-on: ${{ matrix.config.os }}
 
@@ -33,8 +37,18 @@ jobs:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
 
-      - name: Setup
-        run: sudo apt-get install libxkbcommon-dev ninja-build
+      - name: Install Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+
+      - name: Setup (Linux)
+        run: sudo apt-get install libxkbcommon-dev
+        if: matrix.os == 'ubuntu-18.04'
+
+      - name: Setup VS tools
+        uses: egor-tensin/vs-shell@v2
+        if: matrix.os == 'windows-latest'
+        with:
+          arch: x64
 
       - name: Compile
         run: |
