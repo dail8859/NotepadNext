@@ -2,13 +2,13 @@
 
 ## Overview of the Process
 
-1. The strings meant for translation are marked using tr() in source code.
-2. lupdate - A tool that scans the source files for tr() and places the strings in a .ts xml file. At this point the .ts file contains only strings that are meant to be translated.
-3. A translator provides translations by opening the .ts file using Qt Linguist. At this point the .ts file contains both the string to be translated and the translation. 
-3. lrelease - A tool that takes the .ts which contains translated strings and converts them into a binary .qm format that can be loaded into an application at runtime.
+1. The strings meant for translation are marked using tr() in the source code.
+2. lupdate - A tool that scans the source files for tr() and places the strings in a .ts XML file. At this point, the .ts file contains only strings that are meant to be translated.
+3. A translator provides translations by opening the .ts file using Qt Linguist. At this point, the .ts file contains both the string to be translated and the translation.
+3. lrelease - A tool that takes the .ts which contain translated strings and converts them into a binary .qm format that can be loaded into an application at runtime.
 4. Application uses QTranslator is used to load .qm file(s) depending on the locale/settings.
 5. QCoreApplication::installTranslator is used to install the QTranslator.
-6. Result : All tr() invocations of step1 automatically get translations made in step 3.
+6. Result: All tr() invocations of step1 automatically get translations made in step 3.
 
 ## Reference and Detailed Info
 [Internationalization with Qt](https://doc.qt.io/qt-5/internationalization.html)  
@@ -24,6 +24,16 @@ For translators:
 For developers:
 - lupdate
 - lrelease
+
+If you use Qt creator, you can execute the lupdate/lrelease command from the menu:  
+Tools > External > Qt linguist > lupdate/lrelease.  
+Or from console/terminal:  
+```
+$ lupdate NotepadNext.pro
+```
+```
+$ lrelease NotepadNext.pro
+```
 
 ## Translation Process for Developers
 
@@ -61,20 +71,15 @@ void same_global_function(LoginWidget *logwid)
 
 ### Generating Translation Files
 
-If new language is added to the project or new phrases (QLabels, any literals taht apperas on UI) added to the source code, run ```lupdate NotepadNext.pro```.  
-This will produces or updates TS translation files.
+If a new language is added to the project or new phrases (QLabels, any literals that appear on UI) are added to the source code, run **lupdate**.  
 
 ### Translating with Qt Linguist
 
-At this point there is no work from a developer side.
+At this point, there is no work from a developer side.
 
 ### Generating Translation Binary Files
 
-Run lrelease to produce QM files out of TS files. The QM file format is a compact binary format that is used by the localized application.
-
-```lrelease NotepadNext.pro```
-
-TODO: "The TS files lrelease processes can be specified at the command line, or given indirectly by a Qt .pro project file." Look up this, can it be automated? 
+Run **lrelease** to produce QM files out of TS files. The QM file format is a compact binary format that is used by localized application.
 
 ### Use Translation Binary Files in Application
 
@@ -89,11 +94,11 @@ app.installTranslator(&translator);
 
 ## Translation Process for Translators
 
-1. If you want to help with tanslating but the targe language is not supported yet, please let the developers know and they create a new .ts file which you can use.
+1. If you want to help with translating but the target language is not supported yet, please let the developers know and they create a new .ts file which you can use.
 2. If the file is ready or has been already created, then start Qt Linguist.
 3. Open the .ts file and translate the phrases.
 4. Update the new .ts file in the NotepadNext repo.
 
 QT Linguist is contained in the Qt SDK that you can download [here](https://www.qt.io/download-qt-installer).  
-If you don't want to download the whole SDK, there is a community made standalone version for Qt Linguist: [https://github.com/lelegard/qtlinguist-installers/releases](https://github.com/lelegard/qtlinguist-installers/releases)  
+If you don't want to download the whole SDK, there is a community made a standalone version for Qt Linguist: [https://github.com/lelegard/qtlinguist-installers/releases](https://github.com/lelegard/qtlinguist-installers/releases)  
 If you don't want to install anything or the standalone version does not work as intended, we can send a list of phrases to translate.
