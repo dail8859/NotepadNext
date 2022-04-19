@@ -26,7 +26,7 @@ jobs:
         -
           qt_version: "5.15.2"
           modules: ""
-          os: osx-latest
+          os: macos-latest
 
     runs-on: ${{ matrix.config.os }}
 
