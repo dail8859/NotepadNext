@@ -45,7 +45,7 @@ win32 {
     QMAKE_TARGET_DESCRIPTION = Notepad Next
     QMAKE_TARGET_COPYRIGHT = $$APP_COPYRIGHT
     QMAKE_TARGET_PRODUCT = Notepad Next
-    RC_ICONS = ../../icon/nn.ico
+    RC_ICONS = ../../icon/NotepadNext.ico
 
     COPIES += openssl
     openssl.files = $$files(../../deploy/windows/*.dll)
