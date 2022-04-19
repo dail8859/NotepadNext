@@ -41,12 +41,12 @@ jobs:
         uses: seanmiddleditch/gha-setup-ninja@master
 
       - name: Setup (Linux)
-        run: sudo apt-get install libxkbcommon-dev
         if: matrix.os == 'ubuntu-18.04'
+        run: sudo apt-get install libxkbcommon-dev
 
       - name: Setup VS tools
-        uses: egor-tensin/vs-shell@v2
         if: matrix.os == 'windows-latest'
+        uses: egor-tensin/vs-shell@v2
         with:
           arch: x64
 
