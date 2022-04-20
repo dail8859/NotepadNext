@@ -56,6 +56,7 @@ struct luabridge::Stack <QString const&>
 NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     : SingleApplication(argc, argv, true, opts)
 {
+    setWindowIcon(QIcon(QStringLiteral(":/icons/NotepadNext.png")));
 }
 
 bool NotepadNextApplication::init()
