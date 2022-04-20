@@ -25,6 +25,7 @@
 #include "SingleApplication"
 
 #include <QPointer>
+#include <QTranslator>
 
 
 class MainWindow;
@@ -67,6 +68,7 @@ private:
 
     void applyArguments(const QStringList &args);
     MainWindow *createNewWindow();
+    QTranslator translator;
 };
 
 #endif // NOTEPADNEXTAPPLICATION_H

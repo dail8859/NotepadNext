@@ -35,7 +35,7 @@
 
 #include <QCommandLineParser>
 #include <QSettings>
-#include <QTranslator>
+
 
 const SingleApplication::Options opts = SingleApplication::ExcludeAppPath | SingleApplication::ExcludeAppVersion | SingleApplication::SecondaryNotification;
 
@@ -272,7 +272,6 @@ QString NotepadNextApplication::detectLanguageFromExtension(const QString &exten
 
 void NotepadNextApplication::loadSystemDefaultTranslation()
 {
-    QTranslator translator;
     QLocale locale =  QLocale::system();
 
     // look up e.g. i18n/NotepadNext.en.qm
