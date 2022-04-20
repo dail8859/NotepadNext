@@ -95,7 +95,7 @@ void EditorInfoStatusBar::editorUpdated(Scintilla::Update updated)
 
 void EditorInfoStatusBar::updateDocumentSize(ScintillaNext *editor)
 {
-    QString sizeText = QStringLiteral("Length: %1    Lines: %2").arg(
+    QString sizeText = tr("Length: %1    Lines: %2").arg(
             QLocale::system().toString(editor->length()),
             QLocale::system().toString(editor->lineCount()));
     docSize->setText(sizeText);
@@ -106,7 +106,7 @@ void EditorInfoStatusBar::updateSelectionInfo(ScintillaNext *editor)
     QString selectionText;
 
     if (editor->selections() > 1) {
-        selectionText = QStringLiteral("Sel: N/A");
+        selectionText = tr("Sel: N/A");
     }
     else {
         int start = editor->selectionStart();
@@ -116,13 +116,13 @@ void EditorInfoStatusBar::updateSelectionInfo(ScintillaNext *editor)
         if (end > start)
             lines++;
 
-        selectionText = QStringLiteral("Sel: %1 | %2").arg(
+        selectionText = tr("Sel: %1 | %2").arg(
                 QLocale::system().toString(editor->countCharacters(start, end)),
                 QLocale::system().toString(lines));
     }
 
     const int pos = editor->currentPos();
-    QString positionText = QStringLiteral("Ln: %1    Col: %2    ").arg(
+    QString positionText = tr("Ln: %1    Col: %2    ").arg(
             QLocale::system().toString(editor->lineFromPosition(pos) + 1),
             QLocale::system().toString(editor->column(pos) + 1));
     docPos->setText(positionText + selectionText);
@@ -140,13 +140,13 @@ void EditorInfoStatusBar::updateEol(ScintillaNext *editor)
 
     switch(editor->eOLMode()) {
     case SC_EOL_CR:
-        eolFormat->setText(QStringLiteral("Macintosh (CR)"));
+        eolFormat->setText(tr("Macintosh (CR)"));
         break;
     case SC_EOL_CRLF:
-        eolFormat->setText(QStringLiteral("Windows (CR LF)"));
+        eolFormat->setText(tr("Windows (CR LF)"));
         break;
     case SC_EOL_LF:
-        eolFormat->setText(QStringLiteral("Unix (LF)"));
+        eolFormat->setText(tr("Unix (LF)"));
         break;
     }
 }
@@ -155,10 +155,10 @@ void EditorInfoStatusBar::updateEncoding(ScintillaNext *editor)
 {
     switch(editor->codePage()) {
     case 0:
-        unicodeType->setText(QStringLiteral("ANSI"));
+        unicodeType->setText(tr("ANSI"));
         break;
     case SC_CP_UTF8:
-        unicodeType->setText(QStringLiteral("UTF-8"));
+        unicodeType->setText(tr("UTF-8"));
         break;
     default:
         unicodeType->setText(QString::number(editor->codePage()));

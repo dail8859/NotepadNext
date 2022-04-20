@@ -36,20 +36,20 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     positionInfo->setText(0, "Position Information");
     positionInfo->setExpanded(true);
 
-    newItem(positionInfo, "Current Position", [](ScintillaNext *editor) { return QString::number(editor->currentPos()); });
-    newItem(positionInfo, "Current Position (x, y)", [](ScintillaNext *editor) { return QString("(%1, %2)").arg(editor->pointXFromPosition(editor->currentPos())).arg(editor->pointYFromPosition(editor->currentPos())); });
-    newItem(positionInfo, "Column", [](ScintillaNext *editor) { return QString::number(editor->column(editor->currentPos())); });
+    newItem(positionInfo, tr("Current Position"), [](ScintillaNext *editor) { return QString::number(editor->currentPos()); });
+    newItem(positionInfo, tr("Current Position (x, y)"), [](ScintillaNext *editor) { return QString("(%1, %2)").arg(editor->pointXFromPosition(editor->currentPos())).arg(editor->pointYFromPosition(editor->currentPos())); });
+    newItem(positionInfo, tr("Column"), [](ScintillaNext *editor) { return QString::number(editor->column(editor->currentPos())); });
     // SCI_GETCHARAT(position pos) → int
-    newItem(positionInfo, "Current Style", [](ScintillaNext *editor) { return QString::number(editor->styleAt(editor->currentPos())); });
-    newItem(positionInfo, "Current Line", [](ScintillaNext *editor) { return QString::number(editor->lineFromPosition(editor->currentPos()) + 1); });
-    newItem(positionInfo, "Line Length", [](ScintillaNext *editor) { return QString::number(editor->lineLength(editor->lineFromPosition(editor->currentPos()))); });
-    newItem(positionInfo, "Line End Position", [](ScintillaNext *editor) { return QString::number(editor->lineEndPosition(editor->lineFromPosition(editor->currentPos()))); });
-    newItem(positionInfo, "Line Indentation", [](ScintillaNext *editor) { return QString::number(editor->lineIndentation(editor->lineFromPosition(editor->currentPos()))); });
-    newItem(positionInfo, "Line Indent Position", [](ScintillaNext *editor) { return QString::number(editor->lineIndentPosition(editor->lineFromPosition(editor->currentPos()))); });
+    newItem(positionInfo, tr("Current Style"), [](ScintillaNext *editor) { return QString::number(editor->styleAt(editor->currentPos())); });
+    newItem(positionInfo, tr("Current Line"), [](ScintillaNext *editor) { return QString::number(editor->lineFromPosition(editor->currentPos()) + 1); });
+    newItem(positionInfo, tr("Line Length"), [](ScintillaNext *editor) { return QString::number(editor->lineLength(editor->lineFromPosition(editor->currentPos()))); });
+    newItem(positionInfo, tr("Line End Position"), [](ScintillaNext *editor) { return QString::number(editor->lineEndPosition(editor->lineFromPosition(editor->currentPos()))); });
+    newItem(positionInfo, tr("Line Indentation"), [](ScintillaNext *editor) { return QString::number(editor->lineIndentation(editor->lineFromPosition(editor->currentPos()))); });
+    newItem(positionInfo, tr("Line Indent Position"), [](ScintillaNext *editor) { return QString::number(editor->lineIndentPosition(editor->lineFromPosition(editor->currentPos()))); });
 
 
     QTreeWidgetItem *selInfo = new QTreeWidgetItem(ui->treeWidget);
-    selInfo->setText(0, "Selection Information");
+    selInfo->setText(0, tr("Selection Information"));
     selInfo->setExpanded(true);
 
     newItem(selInfo, "Mode", [](ScintillaNext *editor) {
@@ -66,44 +66,44 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
                 return QStringLiteral("");
         }
     });
-    newItem(selInfo, "Is Rectangle", [](ScintillaNext *editor) { return toBool(editor->selectionIsRectangle()); });
-    newItem(selInfo, "Selection Empty", [](ScintillaNext *editor) { return toBool(editor->selectionEmpty()); });
-    newItem(selInfo, "Main Selection", [](ScintillaNext *editor) { return QString::number(editor->mainSelection()); });
-    newItem(selInfo, "# of Selections", [](ScintillaNext *editor) { return QString::number(editor->selections()); });
+    newItem(selInfo, tr("Is Rectangle"), [](ScintillaNext *editor) { return toBool(editor->selectionIsRectangle()); });
+    newItem(selInfo, tr("Selection Empty"), [](ScintillaNext *editor) { return toBool(editor->selectionEmpty()); });
+    newItem(selInfo, tr("Main Selection"), [](ScintillaNext *editor) { return QString::number(editor->mainSelection()); });
+    newItem(selInfo, tr("# of Selections"), [](ScintillaNext *editor) { return QString::number(editor->selections()); });
 
     selectionsInfo = new QTreeWidgetItem(selInfo);
-    selectionsInfo->setText(0, "Multiple Selections");
+    selectionsInfo->setText(0, tr("Multiple Selections"));
     selectionsInfo->setExpanded(true);
 
 
     QTreeWidgetItem *documentInfo = new QTreeWidgetItem(ui->treeWidget);
-    documentInfo->setText(0, "Document Information");
+    documentInfo->setText(0, tr("Document Information"));
     documentInfo->setExpanded(true);
 
-    newItem(documentInfo, "Length ", [](ScintillaNext *editor) { return QString::number(editor->length()); });
-    newItem(documentInfo, "Line Count", [](ScintillaNext *editor) { return QString::number(editor->lineCount()); });
+    newItem(documentInfo, tr("Length "), [](ScintillaNext *editor) { return QString::number(editor->length()); });
+    newItem(documentInfo, tr("Line Count"), [](ScintillaNext *editor) { return QString::number(editor->lineCount()); });
 
 
     QTreeWidgetItem *viewInfo = new QTreeWidgetItem(ui->treeWidget);
-    viewInfo->setText(0, "View Information");
+    viewInfo->setText(0, tr("View Information"));
     viewInfo->setExpanded(true);
 
-    newItem(viewInfo, "Lines on Screen", [](ScintillaNext *editor) { return QString::number(editor->linesOnScreen()); });
-    newItem(viewInfo, "First Visible Line", [](ScintillaNext *editor) { return QString::number(editor->firstVisibleLine() + 1); });
-    newItem(viewInfo, "X Offset", [](ScintillaNext *editor) { return QString::number(editor->xOffset()); });
+    newItem(viewInfo, tr("Lines on Screen"), [](ScintillaNext *editor) { return QString::number(editor->linesOnScreen()); });
+    newItem(viewInfo, tr("First Visible Line"), [](ScintillaNext *editor) { return QString::number(editor->firstVisibleLine() + 1); });
+    newItem(viewInfo, tr("X Offset"), [](ScintillaNext *editor) { return QString::number(editor->xOffset()); });
 
 
     QTreeWidgetItem *foldInfo = new QTreeWidgetItem(ui->treeWidget);
-    foldInfo->setText(0, "Fold Information");
+    foldInfo->setText(0, tr("Fold Information"));
     foldInfo->setExpanded(true);
 
-    newItem(foldInfo, "Visible From Doc Line", [](ScintillaNext *editor) { return QString::number(editor->visibleFromDocLine(editor->lineFromPosition(editor->currentPos())) + 1); });
-    newItem(foldInfo, "Doc Line From Visible", [](ScintillaNext *editor) { return QString::number(editor->docLineFromVisible(editor->lineFromPosition(editor->currentPos())) + 1); });
-    newItem(foldInfo, "Fold Level", [](ScintillaNext *editor) { return QString::number((editor->foldLevel(editor->lineFromPosition(editor->currentPos())) & SC_FOLDLEVELNUMBERMASK) - SC_FOLDLEVELBASE); });
-    newItem(foldInfo, "Is Fold Header", [](ScintillaNext *editor) { return toBool((editor->foldLevel(editor->lineFromPosition(editor->currentPos())) & SC_FOLDLEVELHEADERFLAG) == SC_FOLDLEVELHEADERFLAG); });
-    newItem(foldInfo, "Fold Parent", [](ScintillaNext *editor) { return QString::number(editor->foldParent(editor->lineFromPosition(editor->currentPos())) + 1); });
-    newItem(foldInfo, "Last Child", [](ScintillaNext *editor) { return QString::number(editor->lastChild(editor->lineFromPosition(editor->currentPos()), -1) + 1); });
-    newItem(foldInfo, "Contracted Fold Next", [](ScintillaNext *editor) { return QString::number(editor->contractedFoldNext(editor->lineFromPosition(editor->currentPos())) + 1); });
+    newItem(foldInfo, tr("Visible From Doc Line"), [](ScintillaNext *editor) { return QString::number(editor->visibleFromDocLine(editor->lineFromPosition(editor->currentPos())) + 1); });
+    newItem(foldInfo, tr("Doc Line From Visible"), [](ScintillaNext *editor) { return QString::number(editor->docLineFromVisible(editor->lineFromPosition(editor->currentPos())) + 1); });
+    newItem(foldInfo, tr("Fold Level"), [](ScintillaNext *editor) { return QString::number((editor->foldLevel(editor->lineFromPosition(editor->currentPos())) & SC_FOLDLEVELNUMBERMASK) - SC_FOLDLEVELBASE); });
+    newItem(foldInfo, tr("Is Fold Header"), [](ScintillaNext *editor) { return toBool((editor->foldLevel(editor->lineFromPosition(editor->currentPos())) & SC_FOLDLEVELHEADERFLAG) == SC_FOLDLEVELHEADERFLAG); });
+    newItem(foldInfo, tr("Fold Parent"), [](ScintillaNext *editor) { return QString::number(editor->foldParent(editor->lineFromPosition(editor->currentPos())) + 1); });
+    newItem(foldInfo, tr("Last Child"), [](ScintillaNext *editor) { return QString::number(editor->lastChild(editor->lineFromPosition(editor->currentPos()), -1) + 1); });
+    newItem(foldInfo, tr("Contracted Fold Next"), [](ScintillaNext *editor) { return QString::number(editor->contractedFoldNext(editor->lineFromPosition(editor->currentPos())) + 1); });
 
     connect(this, &QDockWidget::visibilityChanged, this, [=](bool visible) {
         if (visible) {
@@ -172,19 +172,19 @@ void EditorInspectorDock::updateEditorInfo(ScintillaNext *editor)
         selection->setExpanded(true);
 
         QTreeWidgetItem *caret = new QTreeWidgetItem(selection);
-        caret->setText(0, QStringLiteral("Caret"));
+        caret->setText(0, tr("Caret"));
         caret->setText(1, QString::number(editor->selectionNCaret(i)));
 
         QTreeWidgetItem *anchor = new QTreeWidgetItem(selection);
-        anchor->setText(0, QStringLiteral("Anchor"));
+        anchor->setText(0, tr("Anchor"));
         anchor->setText(1, QString::number(editor->selectionNAnchor(i)));
 
         QTreeWidgetItem *caretVirtual = new QTreeWidgetItem(selection);
-        caretVirtual->setText(0, QStringLiteral("Caret Virtual Space"));
+        caretVirtual->setText(0, tr("Caret Virtual Space"));
         caretVirtual->setText(1, QString::number(editor->selectionNCaretVirtualSpace(i)));
 
         QTreeWidgetItem *anchorVirtual = new QTreeWidgetItem(selection);
-        anchorVirtual->setText(0, QStringLiteral("Anchor Virtual Space"));
+        anchorVirtual->setText(0, tr("Anchor Virtual Space"));
         anchorVirtual->setText(1, QString::number(editor->selectionNAnchorVirtualSpace(i)));
     }
 
