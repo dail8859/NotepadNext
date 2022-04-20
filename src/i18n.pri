@@ -16,16 +16,10 @@
 
 ## [i18n.pri]  Configuration related to internationalization.
 
-
-## Update the `.ts` file, then generate the `.qm` file
-# All `*.ts` files:
-TRANSLATIONS = $$files($$PWD/../i18n/*.ts)
-# Output folder for `.qm` files:
-LRELEASE_DIR = $$PWD/../i18n
 CONFIG += lrelease
 
+# All `*.ts` files:
+TRANSLATIONS = $$files($$PWD/../i18n/*.ts)
 
-## Copy the entire i18n folder to the output directory
-COPIES += translations
-translations.files = $$PWD/../i18n/
-translations.path = $$OUT_PWD
+# Output folder for `.qm` files
+LRELEASE_DIR = $$OUT_PWD/i18n

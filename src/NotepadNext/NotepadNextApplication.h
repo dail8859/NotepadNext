@@ -53,6 +53,8 @@ public:
     void setEditorLanguage(ScintillaNext *editor, const QString &languageName) const;
     QString detectLanguageFromExtension(const QString &extension) const;
 
+    void loadSystemDefaultTranslation();
+
 private:
     EditorManager *editorManager;
     RecentFilesListManager *recentFilesListManager;

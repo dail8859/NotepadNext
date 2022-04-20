@@ -22,7 +22,6 @@
 #include <QSysInfo>
 #include <QApplication>
 #include <QDataStream>
-#include <QTranslator>
 
 #include "NotepadNextApplication.h"
 
@@ -49,30 +48,21 @@ int main(int argc, char *argv[])
 
     NotepadNextApplication app(argc, argv);
 
-    // Load default translation
-    QTranslator translator;
-    QString locale = QLocale::system().name();
-    // look up e.g. i18n/NotepadNext_en.qm
-    if (translator.load(QLocale(), QApplication::applicationName(), QString("."), QString("i18n"))) {
-        app.installTranslator(&translator);
-        qInfo("Load translation: %s", qUtf8Printable(locale));
-    } else {
-        qWarning("Failed to load translation: %s", qUtf8Printable(locale));
-    }
-
     // Log some debug info
     qInfo("=============================");
     qInfo("%s v%s", qUtf8Printable(QApplication::applicationName()), qUtf8Printable(QApplication::applicationVersion()));
     qInfo("Build Date/Time: %s %s", __DATE__, __TIME__);
     qInfo("Qt: %s", qVersion());
     qInfo("OS: %s", qUtf8Printable(QSysInfo::prettyProductName()));
-    qInfo("Locale: %s", qUtf8Printable(locale));
+    qInfo("Locale: %s", qUtf8Printable(QLocale::system().name()));
     qInfo("CPU: %s", qUtf8Printable(QSysInfo::currentCpuArchitecture()));
     qInfo("File Path: %s", qUtf8Printable(QApplication::applicationFilePath()));
     qInfo("Arguments: %s", qUtf8Printable(QApplication::arguments().join(' ')));
     qInfo("=============================");
 
     if(app.isPrimary()) {
+        app.loadSystemDefaultTranslation();
+
         app.init();
 
         return app.exec();
