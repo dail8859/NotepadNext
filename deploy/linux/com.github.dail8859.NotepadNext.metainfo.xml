@@ -3,6 +3,7 @@
 <!-- https://www.freedesktop.org/software/appstream/docs/chap-Metadata.html -->
 <component type="desktop-application">
     <id>com.github.dail8859.NotepadNext</id>
+    <developer_name>Justin Dailey</developer_name>
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>GPL-3.0</project_license>
     <content_rating type="oars-1.1" />
