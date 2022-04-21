@@ -2,6 +2,10 @@ QStatusBar {
     border-top: 1px solid darkgray;
 }
 
+ads--CDockWidgetTab ads--CElidingLabel {
+    color : black;
+}
+
 ads--CDockWidgetTab {
     background: rgb(192, 192, 192);
     margin-top: 2px;
