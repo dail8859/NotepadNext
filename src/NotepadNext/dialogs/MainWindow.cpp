@@ -663,7 +663,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
             QFileInfo fileInfo(filePath);
 
             if (!fileInfo.isFile()) {
-                auto reply = QMessageBox::question(this, tr("Create File"), QString(tr("<b>%1</b> does not exist. Do you want to create it?")).arg(filePath));
+                auto reply = QMessageBox::question(this, tr("Create File"), tr("<b>%1</b> does not exist. Do you want to create it?").arg(filePath));
 
                 if (reply == QMessageBox::Yes) {
                     editor = app->getEditorManager()->createEditorFromFile(filePath);
@@ -1252,7 +1252,7 @@ void MainWindow::activateEditor(ScintillaNext *editor)
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 {
     qInfo(Q_FUNC_INFO);
-    qInfo("%s", qUtf8Printable(tr("Language Name: ") + languageName));
+    qInfo("%s", qUtf8Printable("Language Name: " + languageName));
 
     app->setEditorLanguage(editor, languageName);
 }
