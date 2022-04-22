@@ -168,10 +168,228 @@
     </message>
 </context>
 <context>
+    <name>EditorInfoStatusBar</name>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="98"/>
+        <source>Length: %1    Lines: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="109"/>
+        <source>Sel: N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="119"/>
+        <source>Sel: %1 | %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="125"/>
+        <source>Ln: %1    Col: %2    </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="143"/>
+        <source>Macintosh (CR)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="146"/>
+        <source>Windows (CR LF)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="149"/>
+        <source>Unix (LF)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="158"/>
+        <source>ANSI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="161"/>
+        <source>UTF-8</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EditorInspectorDock</name>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.ui" line="14"/>
         <source>Editor Inspector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="39"/>
+        <source>Current Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="40"/>
+        <source>Current Position (x, y)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="41"/>
+        <source>Column</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="43"/>
+        <source>Current Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="44"/>
+        <source>Current Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="45"/>
+        <source>Line Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="46"/>
+        <source>Line End Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="47"/>
+        <source>Line Indentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="48"/>
+        <source>Line Indent Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="52"/>
+        <source>Selection Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="69"/>
+        <source>Is Rectangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="70"/>
+        <source>Selection Empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="71"/>
+        <source>Main Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="72"/>
+        <source># of Selections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="75"/>
+        <source>Multiple Selections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="80"/>
+        <source>Document Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="83"/>
+        <source>Length </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="84"/>
+        <source>Line Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="88"/>
+        <source>View Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="91"/>
+        <source>Lines on Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="92"/>
+        <source>First Visible Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="93"/>
+        <source>X Offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="97"/>
+        <source>Fold Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="100"/>
+        <source>Visible From Doc Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="101"/>
+        <source>Doc Line From Visible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="102"/>
+        <source>Fold Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="103"/>
+        <source>Is Fold Header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="104"/>
+        <source>Fold Parent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="105"/>
+        <source>Last Child</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="106"/>
+        <source>Contracted Fold Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="175"/>
+        <source>Caret</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="179"/>
+        <source>Anchor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="183"/>
+        <source>Caret Virtual Space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="187"/>
+        <source>Anchor Virtual Space</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -180,6 +398,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="441"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="674"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="57"/>
         <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
@@ -288,6 +507,36 @@
         <source>Wra&amp;p Around</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="58"/>
+        <source>Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="204"/>
+        <source>No matches found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="234"/>
+        <source>1 occurrence was replaced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="243"/>
+        <source>No more occurrences were found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="272"/>
+        <source>Replaced %1 matches</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="296"/>
+        <source>Found %1 matches</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FolderAsWorkspaceDock</name>
@@ -332,6 +581,11 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="121"/>
         <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.cpp" line="137"/>
+        <source>Postion %1 Style %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1054,6 +1308,93 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="936"/>
         <source>Open Folder as Workspace...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="274"/>
+        <source>Go to line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="274"/>
+        <source>Line Number (1 - %1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="632"/>
+        <source>New %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="666"/>
+        <source>Create File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="666"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="715"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="811"/>
+        <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="716"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="812"/>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="769"/>
+        <source>Open Folder as Workspace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="785"/>
+        <source>Reload File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="785"/>
+        <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="974"/>
+        <source>Save a Copy As</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="998"/>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1024"/>
+        <source>Delete File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1024"/>
+        <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1034"/>
+        <source>Error Deleting File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1034"/>
+        <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1443"/>
+        <source>No updates are availale at this time.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
