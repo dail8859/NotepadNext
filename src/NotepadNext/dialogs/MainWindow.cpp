@@ -110,10 +110,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     connect(ui->actionPrint, &QAction::triggered, this, &MainWindow::print);
 
-    this->initialiseCommentsForLanguages();
-    connect(ui->actionToggle_Single_Line_Comment, &QAction::triggered, this, &MainWindow::toggleComment);
-    connect(ui->actionSingle_Line_Comment, &QAction::triggered, this, &MainWindow::commentLine);
-    connect(ui->actionSingle_Line_Uncomment, &QAction::triggered, this, &MainWindow::uncommentLine);
+    connect(ui->actionToggle_Single_Line_Comment, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->toggleComment();});
+    connect(ui->actionSingle_Line_Comment, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->commentLine();});
+    connect(ui->actionSingle_Line_Uncomment, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->uncommentLine();});
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
 
@@ -1060,69 +1059,6 @@ void MainWindow::print()
     printDialog.exec();
 }
 
-void MainWindow::toggleComment()
-{
-    ScintillaNext *editor = dockedEditor->getCurrentEditor();
-
-    //Return if the language doesn't support single-line comments
-    QString commentString = singleLineCommentCharacters[editor->languageName];
-    if (commentString.length() == 0) return;
-
-    //Get the current line text and number
-    QString currentLineText = QString(editor->getCurLine(editor->textLength()));
-    sptr_t currentLineNumber = editor->lineFromPosition(editor->currentPos());
-
-    //Strip the comment (incase it was indented) and then check if it already has a comment
-    if (currentLineText.remove('\t').remove(' ').startsWith(commentString))
-    {
-        //Delete the comment if it exists
-        editor->deleteRange(editor->positionFromLine(currentLineNumber), commentString.length());
-    }
-    else
-    {
-        //Add the comment if it doesn't exist
-        editor->insertText(editor->positionFromLine(currentLineNumber), commentString.toStdString().c_str());
-    }
-}
-
-void MainWindow::commentLine()
-{
-    ScintillaNext *editor = dockedEditor->getCurrentEditor();
-
-    //Return if the language doesn't support single-line comments
-    QString commentString = singleLineCommentCharacters[editor->languageName];
-    if (commentString.length() == 0) return;
-
-    QString currentLineText = QString(editor->getCurLine(editor->textLength()));
-    sptr_t currentLineNumber = editor->lineFromPosition(editor->currentPos());
-
-    //Strip the comment (incase it was indented) and then check if it doesn't have a comment
-    if (!currentLineText.remove('\t').remove(' ').startsWith(commentString))
-    {
-        //Insert the comment if it didn't exist
-        editor->insertText(editor->positionFromLine(currentLineNumber), commentString.toStdString().c_str());
-    }
-}
-
-void MainWindow::uncommentLine()
-{
-    ScintillaNext *editor = dockedEditor->getCurrentEditor();
-
-    //Return if the language doesn't support single-line comments
-    QString commentString = singleLineCommentCharacters[editor->languageName];
-    if (commentString.length() == 0) return;
-
-    QString currentLineText = QString(editor->getCurLine(editor->textLength()));
-    sptr_t currentLineNumber = editor->lineFromPosition(editor->currentPos());
-
-    //Strip the comment (incase it was indented) and then check if it has a comment
-    if (currentLineText.remove('\t').remove(' ').startsWith(commentString))
-    {
-        //Remove the comment if it exists
-        editor->deleteRange(editor->positionFromLine(currentLineNumber), commentString.length());
-    }
-}
-
 void MainWindow::convertEOLs(int eolMode)
 {
     ScintillaNext *editor = dockedEditor->getCurrentEditor();
@@ -1427,92 +1363,6 @@ void MainWindow::restoreSettings()
 
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     fawDock->setRootPath(settings.value("FolderAsWorkspace/RootPath").toString());
-}
-
-void MainWindow::initialiseCommentsForLanguages()
-{
-    this->singleLineCommentCharacters["ActionScript"] = "//";
-    this->singleLineCommentCharacters["ADA"] = "--";
-    this->singleLineCommentCharacters["ASN.1"] = "";
-    this->singleLineCommentCharacters["asp"] = "'";
-    this->singleLineCommentCharacters["autoIt"] = ";";
-    this->singleLineCommentCharacters["AviSynth"] = "#";
-    this->singleLineCommentCharacters["BaanC"] = "//";
-    this->singleLineCommentCharacters["bash"] = "#";
-    this->singleLineCommentCharacters["Batch"] = "REM";
-    this->singleLineCommentCharacters["BlitzBasic"] = ";";
-    this->singleLineCommentCharacters["C"] = "//";
-    this->singleLineCommentCharacters["Caml"] = "";
-    this->singleLineCommentCharacters["COBOL"] = "*";
-    this->singleLineCommentCharacters["Csound"] = ";";
-    this->singleLineCommentCharacters["CoffeeScript"] = "#";
-    this->singleLineCommentCharacters["C++"] = "//";
-    this->singleLineCommentCharacters["C#"] = "//";
-    this->singleLineCommentCharacters["CSS"] = "";
-    this->singleLineCommentCharacters["D"] = "//";
-    this->singleLineCommentCharacters["DIFF"] = "";
-    this->singleLineCommentCharacters["Erlang"] = "%";
-    this->singleLineCommentCharacters["ESCRIPT"] = "//";
-    this->singleLineCommentCharacters["Forth"] = "\\";
-    this->singleLineCommentCharacters["Fortran (free form)"] = "!";
-    this->singleLineCommentCharacters["Fortran (fixed form)"] = "C";
-    this->singleLineCommentCharacters["FreeBasic"] = "'";
-    this->singleLineCommentCharacters["GUI4CLI"] = "//";
-    this->singleLineCommentCharacters["Go"] = "//";
-    this->singleLineCommentCharacters["Haskell"] = "--";
-    this->singleLineCommentCharacters["HTML"] = "";
-    this->singleLineCommentCharacters["ini file"] = ";";
-    this->singleLineCommentCharacters["InnoSetup"] = ";";
-    this->singleLineCommentCharacters["Intel HEX"] = "";
-    this->singleLineCommentCharacters["Java"] = "//";
-    this->singleLineCommentCharacters["JavaScript (embedded)"] = "//";
-    this->singleLineCommentCharacters["JavaScript"] = "//";
-    this->singleLineCommentCharacters["JSON"] = "";
-    this->singleLineCommentCharacters["KiXtart"] = "";
-    this->singleLineCommentCharacters["LISP"] = ";";
-    this->singleLineCommentCharacters["LaTeX"] = "%";
-    this->singleLineCommentCharacters["Lua"] = "--";
-    this->singleLineCommentCharacters["Makefile"] = "#";
-    this->singleLineCommentCharacters["Markdown"] = "";
-    this->singleLineCommentCharacters["Matlab"] = "%";
-    this->singleLineCommentCharacters["MMIXAL"] = "#";
-    this->singleLineCommentCharacters["Nimrod"] = "!";
-    this->singleLineCommentCharacters["extended crontab"] = "#";
-    this->singleLineCommentCharacters["Dos Style"] = "REM";
-    this->singleLineCommentCharacters["NSIS"] = ";";
-    this->singleLineCommentCharacters["OScript"] = "//";
-    this->singleLineCommentCharacters["Objective-C"] = "//";
-    this->singleLineCommentCharacters["Pascal"] = "//";
-    this->singleLineCommentCharacters["Perl"] = "#";
-    this->singleLineCommentCharacters["PHP"] = "//";
-    this->singleLineCommentCharacters["Postscript"] = "%";
-    this->singleLineCommentCharacters["PowerShell"] = "#";
-    this->singleLineCommentCharacters["Properties file"] = "#";
-    this->singleLineCommentCharacters["PureBasic"] = ";";
-    this->singleLineCommentCharacters["Python"] = "#";
-    this->singleLineCommentCharacters["R"] = "#";
-    this->singleLineCommentCharacters["REBOL"] = ";";
-    this->singleLineCommentCharacters["registry"] = ";";
-    this->singleLineCommentCharacters["rc"] = "#";
-    this->singleLineCommentCharacters["Ruby"] = "#";
-    this->singleLineCommentCharacters["Rust"] = "//";
-    this->singleLineCommentCharacters["Scheme"] = ";";
-    this->singleLineCommentCharacters["Smalltalk"] = "";
-    this->singleLineCommentCharacters["spice"] = "*";
-    this->singleLineCommentCharacters["SQL"] = "--";
-    this->singleLineCommentCharacters["S-Record"] = "#";
-    this->singleLineCommentCharacters["Swift"] = "//";
-    this->singleLineCommentCharacters["TCL"] = "#";
-    this->singleLineCommentCharacters["Tektronix extended HEX"] = "";
-    this->singleLineCommentCharacters["TeX"] = "%";
-    this->singleLineCommentCharacters["Text"] = "";
-    this->singleLineCommentCharacters["VB / VBS"] = "'";
-    this->singleLineCommentCharacters["txt2tags"] = "!";
-    this->singleLineCommentCharacters["Verilog"] = "//";
-    this->singleLineCommentCharacters["VHDL"] = "--";
-    this->singleLineCommentCharacters["Visual Prolog"] = "%";
-    this->singleLineCommentCharacters["XML"] = "";
-    this->singleLineCommentCharacters["YAML"] = "#";
 }
 
 void MainWindow::focusIn()
