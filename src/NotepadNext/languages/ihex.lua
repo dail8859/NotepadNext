@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "ihex"
 
+L.singleLineComment = ""
+
 L.extensions = {
 	"hex",
 }

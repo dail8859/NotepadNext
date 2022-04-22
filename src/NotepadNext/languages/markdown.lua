@@ -4,6 +4,8 @@ L.lexer = "markdown"
 
 L.disableFoldMargin = true
 
+L.singleLineComment = ""
+
 L.extensions = {
     "md",
     "markdown",

@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "tehex"
 
+L.singleLineComment = ""
+
 L.extensions = {
 	"tek",
 }

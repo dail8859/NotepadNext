@@ -68,6 +68,7 @@ public:
     void setFoldMarkers(const QString &type);
 
     QString languageName;
+    QString languageSingleLineComment;
 
 public slots:
     void close();
@@ -82,8 +83,6 @@ public slots:
     void toggleComment();
     void commentLine();
     void uncommentLine();
-
-    void initialiseCommentsForLanguages();
 
 signals:
     void aboutToSave();

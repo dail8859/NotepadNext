@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "asn1"
 
+L.singleLineComment = ""
+
 L.extensions = {
 	"mib",
 }
