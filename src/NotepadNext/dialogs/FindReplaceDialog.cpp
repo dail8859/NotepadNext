@@ -54,8 +54,8 @@ FindReplaceDialog::FindReplaceDialog(QWidget *parent) :
     ui->setupUi(this);
 
     tabBar = new QTabBar();
-    tabBar->addTab("Find");
-    tabBar->addTab("Replace");
+    tabBar->addTab(tr("Find"));
+    tabBar->addTab(tr("Replace"));
     tabBar->setExpanding(false);
     qobject_cast<QVBoxLayout *>(layout())->insertWidget(0, tabBar);
     connect(tabBar, &QTabBar::currentChanged, this, &FindReplaceDialog::changeTab);
@@ -201,7 +201,7 @@ void FindReplaceDialog::find()
         goToMatch(range);
     }
     else {
-        showMessage("No matches found.", "red");
+        showMessage(tr("No matches found."), "red");
     }
 }
 
@@ -231,7 +231,7 @@ void FindReplaceDialog::replace()
     Sci_CharacterRange range = finder->replaceSelectionIfMatch(replaceText);
 
     if (isRangeValid(range)) {
-        showMessage("1 occurrence was replaced", "blue");
+        showMessage(tr("1 occurrence was replaced"), "blue");
     }
 
     Sci_CharacterRange next_match = finder->findNext();
@@ -240,7 +240,7 @@ void FindReplaceDialog::replace()
         goToMatch(next_match);
     }
     else {
-        showMessage("No more occurrences were found", "red");
+        showMessage(tr("No more occurrences were found"), "red");
         ui->comboFind->setFocus();
         ui->comboFind->lineEdit()->selectAll();
     }
@@ -269,7 +269,7 @@ void FindReplaceDialog::replaceAll()
     finder->setSearchText(findText);
 
     int count = finder->replaceAll(replaceText);
-    showMessage(QString("Replaced %1 matches").arg(count), "green");
+    showMessage(tr("Replaced %1 matches").arg(count), "green");
 }
 
 void FindReplaceDialog::count()
@@ -293,7 +293,7 @@ void FindReplaceDialog::count()
     finder->setSearchText(text);
 
     int total = finder->count();
-    showMessage(QString("Found %1 matches").arg(total), "green");
+    showMessage(tr("Found %1 matches").arg(total), "green");
 }
 
 void FindReplaceDialog::setEditor(ScintillaNext *edit)

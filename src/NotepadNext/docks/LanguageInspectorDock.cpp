@@ -134,7 +134,7 @@ void LanguageInspectorDock::updatePositionInfo(Scintilla::Update updated)
 
     if (FlagSet(updated, Scintilla::Update::Content) || FlagSet(updated, Scintilla::Update::Selection)) {
         ScintillaNext *editor = qobject_cast<ScintillaNext*>(sender());
-        ui->lblInfo->setText(QString("Postion %1 Style %2").arg(editor->currentPos()).arg(editor->styleAt(editor->currentPos())));
+        ui->lblInfo->setText(tr("Postion %1 Style %2").arg(editor->currentPos()).arg(editor->styleAt(editor->currentPos())));
     }
 }
 
