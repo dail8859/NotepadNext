@@ -950,7 +950,7 @@
     <string>Toggle Single Line Comment</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Q</string>
+    <string>Ctrl+/</string>
    </property>
   </action>
   <action name="actionSingle_Line_Comment">
