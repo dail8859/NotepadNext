@@ -507,9 +507,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
     connect(ui->actionAboutNotepadNext, &QAction::triggered, [=]() {
-        QMessageBox::about(this, tr("About Notepad Next"),
-                            tr("<h3>Notepad Next v%1</h3>"
-                                    "<p>%2</p>"
+        QMessageBox::about(this, QString(),
+                            QStringLiteral("<h3>%1 v%2</h3>"
+                                    "<p>%3</p>"
                                     "<p>This program does stuff.</p>"
                                     R"(<p>This program is free software: you can redistribute it and/or modify
                                     it under the terms of the GNU General Public License as published by
@@ -521,7 +521,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                                     GNU General Public License for more details.</p>
                                     <p>You should have received a copy of the GNU General Public License
                                     along with this program. If not, see &lt;https://www.gnu.org/licenses/&gt;.</p>)")
-                                .arg(APP_VERSION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
+                                .arg(QApplication::applicationDisplayName(), APP_VERSION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
 
     QAction *separator = ui->menuHelp->insertSeparator(ui->actionCheckForUpdates);
@@ -1252,7 +1252,7 @@ void MainWindow::activateEditor(ScintillaNext *editor)
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 {
     qInfo(Q_FUNC_INFO);
-    qInfo("%s", qUtf8Printable("Language Name: " + languageName));
+    qInfo("Language Name: %s", qUtf8Printable(languageName));
 
     app->setEditorLanguage(editor, languageName);
 }
@@ -1440,7 +1440,7 @@ void MainWindow::checkForUpdatesFinished(QString url)
 {
 #ifdef Q_OS_WIN
     if (!QSimpleUpdater::getInstance()->getUpdateAvailable(url)) {
-        QMessageBox::information(this, "Notepad Next", tr("No updates are availale at this time."));
+        QMessageBox::information(this, QString(), tr("No updates are availale at this time."));
     }
 #endif
 }
