@@ -16,6 +16,7 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <QApplication>
 
 #include "EditorManager.h"
 #include "ScintillaNext.h"
@@ -36,6 +37,15 @@ const int MARK_BOOKMARK = 24;
 const int MARK_HIDELINESBEGIN = 23;
 const int MARK_HIDELINESEND = 22;
 const int MARK_HIDELINESUNDERLINE = 21;
+
+
+static int DefaultFontSize()
+{
+    QFont font = QApplication::font();
+
+    // Make it slightly larger than the UI font
+    return font.pointSize() + 2;
+}
 
 
 EditorManager::EditorManager(QObject *parent) : QObject(parent)
@@ -197,7 +207,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     editor->styleSetFore(STYLE_DEFAULT, 0x000000);
     editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
-    editor->styleSetSize(STYLE_DEFAULT, 10);
+    editor->styleSetSize(STYLE_DEFAULT, DefaultFontSize());
     editor->styleSetFont(STYLE_DEFAULT, "Courier New");
 
     editor->styleClearAll();
