@@ -2,8 +2,6 @@ local L = {}
 
 L.lexer = "caml"
 
-L.singleLineComment = ""
-
 L.extensions = {
 	"ml",
 	"mli",

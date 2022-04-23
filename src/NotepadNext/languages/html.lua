@@ -2,8 +2,6 @@ local L = {}
 
 L.lexer = "hypertext"
 
-L.singleLineComment = ""
-
 L.extensions = {
 	"html",
 	"htm",

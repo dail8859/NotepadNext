@@ -104,9 +104,6 @@ private:
     QDateTime fileTimestamp();
     void updateTimestamp();
     void setFileInfo(const QString &filePath);
-
-    //Map between each supported language and its comment string
-    std::map<QString, QString> singleLineCommentCharacters;
 };
 
 

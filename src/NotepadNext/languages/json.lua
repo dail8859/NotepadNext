@@ -2,8 +2,6 @@ local L = {}
 
 L.lexer = "json"
 
-L.singleLineComment = ""
-
 L.extensions = {
 	"json",
 }

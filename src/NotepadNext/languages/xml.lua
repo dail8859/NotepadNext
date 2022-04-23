@@ -2,8 +2,6 @@ local L = {}
 
 L.lexer = "xml"
 
-L.singleLineComment = ""
-
 L.extensions = {
 	"xml",
 	"xaml",

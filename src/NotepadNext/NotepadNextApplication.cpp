@@ -206,7 +206,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     const QString lexer = getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
 
     editor->languageName = languageName;
-    editor->languageSingleLineComment = getLuaState()->executeAndReturn<QString>("return languages[languageName].singleLineComment");
+    editor->languageSingleLineComment = getLuaState()->executeAndReturn<QString>("return languages[languageName].singleLineComment or \"\"");
 
     auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
     editor->setILexer((sptr_t) lexerInstance);

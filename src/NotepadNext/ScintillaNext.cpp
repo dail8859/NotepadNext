@@ -303,55 +303,54 @@ bool ScintillaNext::moveToTrash()
 void ScintillaNext::toggleComment()
 {
     //Return if the language doesn't support single-line comments
-    if (this->languageSingleLineComment.length() == 0) return;
+    if (languageSingleLineComment.length() == 0) return;
 
     //Get the current line text and number
-    QString currentLineText = QString(ScintillaEdit::getCurLine(ScintillaEdit::textLength()));
-    sptr_t currentLineNumber = ScintillaEdit::lineFromPosition(ScintillaEdit::currentPos());
+    QString currentLineText = QString(getCurLine(textLength()));
+    sptr_t currentLineNumber = lineFromPosition(currentPos());
 
     //Strip the comment (incase it was indented) and then check if it already has a comment
-    if (currentLineText.remove('\t').remove(' ').startsWith(this->languageSingleLineComment))
+    if (currentLineText.remove('\t').remove(' ').startsWith(languageSingleLineComment))
     {
         //Delete the comment if it exists
-        ScintillaEdit::deleteRange(ScintillaEdit::positionFromLine(currentLineNumber), this->languageSingleLineComment.length());
+        ScintillaEdit::deleteRange(ScintillaEdit::positionFromLine(currentLineNumber), languageSingleLineComment.length());
     }
     else
     {
         //Add the comment if it doesn't exist
-        ScintillaEdit::insertText(ScintillaEdit::positionFromLine(currentLineNumber), this->languageSingleLineComment.toStdString().c_str());
+        ScintillaEdit::insertText(ScintillaEdit::positionFromLine(currentLineNumber), languageSingleLineComment.toStdString().c_str());
     }
 }
 
 void ScintillaNext::commentLine()
 {
     //Return if the language doesn't support single-line comments
-    if (this->languageSingleLineComment.length() == 0) return;
+    if (languageSingleLineComment.length() == 0) return;
 
     QString currentLineText = QString(ScintillaEdit::getCurLine(ScintillaEdit::textLength()));
     sptr_t currentLineNumber = ScintillaEdit::lineFromPosition(ScintillaEdit::currentPos());
 
     //Strip the comment (incase it was indented) and then check if it doesn't have a comment
-    if (!currentLineText.remove('\t').remove(' ').startsWith(this->languageSingleLineComment))
+    if (!currentLineText.remove('\t').remove(' ').startsWith(languageSingleLineComment))
     {
         //Insert the comment if it didn't exist
-        ScintillaEdit::insertText(ScintillaEdit::positionFromLine(currentLineNumber), this->languageSingleLineComment.toStdString().c_str());
+        ScintillaEdit::insertText(ScintillaEdit::positionFromLine(currentLineNumber), languageSingleLineComment.toStdString().c_str());
     }
 }
 
 void ScintillaNext::uncommentLine()
 {
     //Return if the language doesn't support single-line comments
-    //Return if the language doesn't support single-line comments
-    if (this->languageSingleLineComment.length() == 0) return;
+    if (languageSingleLineComment.length() == 0) return;
 
     QString currentLineText = QString(ScintillaEdit::getCurLine(ScintillaEdit::textLength()));
     sptr_t currentLineNumber = ScintillaEdit::lineFromPosition(ScintillaEdit::currentPos());
 
     //Strip the comment (incase it was indented) and then check if it has a comment
-    if (currentLineText.remove('\t').remove(' ').startsWith(this->languageSingleLineComment))
+    if (currentLineText.remove('\t').remove(' ').startsWith(languageSingleLineComment))
     {
         //Remove the comment if it exists
-        ScintillaEdit::deleteRange(ScintillaEdit::positionFromLine(currentLineNumber), this->languageSingleLineComment.length());
+        ScintillaEdit::deleteRange(ScintillaEdit::positionFromLine(currentLineNumber), languageSingleLineComment.length());
     }
 }
 

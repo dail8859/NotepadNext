@@ -2,8 +2,6 @@ local L = {}
 
 L.lexer = "smalltalk"
 
-L.singleLineComment = ""
-
 L.extensions = {
 	"st",
 }

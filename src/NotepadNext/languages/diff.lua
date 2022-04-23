@@ -2,8 +2,6 @@ local L = {}
 
 L.lexer = "diff"
 
-L.singleLineComment = ""
-
 L.extensions = {
 	"diff",
 	"patch",
