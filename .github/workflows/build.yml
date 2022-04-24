@@ -10,7 +10,7 @@ on:
 
 
 jobs:
-  build-linux-cmake-qt5:
+  cmake-build:
     strategy:
       fail-fast: false
       matrix:
