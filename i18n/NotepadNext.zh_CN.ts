@@ -172,47 +172,47 @@
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="98"/>
         <source>Length: %1    Lines: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>长度: %1    行数: %2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="109"/>
         <source>Sel: N/A</source>
-        <translation type="unfinished"></translation>
+        <translation>已选择: N/A</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="119"/>
         <source>Sel: %1 | %2</source>
-        <translation type="unfinished"></translation>
+        <translation>已选择: %1 | %2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="125"/>
         <source>Ln: %1    Col: %2    </source>
-        <translation type="unfinished"></translation>
+        <translation>行: %1    列: %2    </translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="143"/>
         <source>Macintosh (CR)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="146"/>
         <source>Windows (CR LF)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="149"/>
         <source>Unix (LF)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="158"/>
         <source>ANSI</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="161"/>
         <source>UTF-8</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -225,7 +225,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="39"/>
         <source>Current Position</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="40"/>
