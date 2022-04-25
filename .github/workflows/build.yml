@@ -41,8 +41,10 @@ jobs:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
 
+      # disable meanwhile, until I understand how to fix the install prefix with ninja
       - name: Install Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
+        if: false
 
       - name: Setup (Linux)
         if: startsWith (matrix.config.os, 'ubuntu')
@@ -56,9 +58,26 @@ jobs:
 
       - name: Compile
         run: |
-          cmake -S . -B cbuild -G Ninja
-          cmake --build cbuild
+          cmake -S . -B cbuild
+          cmake --build cbuild --parallel $(nproc)
 
+      - name: Create App Image
+        if: startsWith (matrix.config.os, 'ubuntu')
+        run: |
+            make -C cbuild install INSTALL_ROOT=AppDir
+            cd cbuild
+
+            wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
+            wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
+            chmod +x linuxdeploy*.AppImage
+            export OUTPUT=NotepadNext-x86_64.AppImage
+            ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage
+      - name: Upload AppImage
+        if: startsWith (matrix.config.os, 'ubuntu')
+        uses: actions/upload-artifact@v2
+        with:
+          name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}-cmake-AppImage
+          path: ${{ github.workspace }}/cbuild/NotepadNext-x86_64.AppImage
 
   build-linux:
     strategy:
