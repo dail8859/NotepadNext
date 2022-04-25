@@ -116,18 +116,17 @@ add_executable(NotepadNext
 )
 
 target_link_libraries(NotepadNext Qt5::Widgets Qt5::PrintSupport
-    libuchardet
+    libuchardet_static
     lua
     LuaBridge
     qtadvanceddocking
     SingleApplication
     QSimpleUpdater
     editorconfig-core-qt
-    lexzilla
     scintilla-qt-edit
+    lexzilla
 )
 target_include_directories(NotepadNext PRIVATE decorators dialogs docks widgets src)
-target_compile_definitions(NotepadNext PRIVATE SCI_OWNREGEX)
 target_compile_definitions(NotepadNext PRIVATE APP_VERSION="0.5.0")
 target_compile_definitions(NotepadNext PRIVATE APP_COPYRIGHT="Copyright 2019-2022 Justin Dailey")
 target_compile_definitions(NotepadNext PRIVATE CMAKE_EXPERIMENTAL)
@@ -147,3 +146,11 @@ endif()
 if(UNIX AND NOT APPLE)
 	target_link_libraries(NotepadNext xcb)
 endif()
+
+include(GNUInstallDirs)
+install(TARGETS NotepadNext)
+install(FILES ../../deploy/linux/NotepadNext.desktop
+    DESTINATION share/applications)
+install(FILES ../../icon/NotepadNext.svg
+    DESTINATION share/icons/hicolor/scalable/mimetypes)
+
