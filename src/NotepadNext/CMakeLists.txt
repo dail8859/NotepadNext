@@ -149,8 +149,8 @@ endif()
 
 include(GNUInstallDirs)
 install(TARGETS NotepadNext)
-install(FILES ../../deploy/linux/NotepadNext.desktop
+install(FILES ${CMAKE_SOURCE_DIR}/deploy/linux/NotepadNext.desktop
     DESTINATION share/applications)
-install(FILES ../../icon/NotepadNext.svg
+install(FILES ${CMAKE_SOURCE_DIR}/icon/NotepadNext.svg
     DESTINATION share/icons/hicolor/scalable/mimetypes)
 
