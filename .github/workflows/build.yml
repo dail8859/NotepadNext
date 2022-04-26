@@ -64,7 +64,7 @@ jobs:
       - name: Create App Image
         if: startsWith (matrix.config.os, 'ubuntu')
         run: |
-            make -C cbuild install INSTALL_ROOT=AppDir
+            make -C cbuild DESTDIR=AppDir install
             cd cbuild
 
             wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
