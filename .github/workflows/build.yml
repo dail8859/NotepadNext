@@ -58,8 +58,8 @@ jobs:
 
       - name: Compile
         run: |
-          cmake -S . -B cbuild
-          cmake --build cbuild --parallel $(nproc) -DCMAKE_INSTALL_PREFIX:PATH=/usr/
+          cmake -S . -B cbuild  -DCMAKE_INSTALL_PREFIX:PATH=/usr/
+          cmake --build cbuild --parallel $(nproc)
 
       - name: Create App Image
         if: startsWith (matrix.config.os, 'ubuntu')
