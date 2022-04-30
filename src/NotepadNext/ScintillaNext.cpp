@@ -16,7 +16,10 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+
 #include "ScintillaNext.h"
+#include "ScintillaCommenter.h"
+
 #include "uchardet.h"
 #include <cinttypes>
 
@@ -299,127 +302,22 @@ bool ScintillaNext::moveToTrash()
     return false;
 }
 
-
 void ScintillaNext::toggleCommentSelection()
 {
-    // Ensure there is a comment string set
-    if (languageSingleLineComment.length() == 0) {
-        return;
-    }
-
-    int caret = selectionNCaret(mainSelection());
-    int anchor = selectionNAnchor(mainSelection());
-
-    beginUndoAction();
-
-    forEachLineInSelection(mainSelection(), [&](int line) {
-        auto indentPos = lineIndentPosition(line);
-        auto lineEnd = qMin(indentPos + languageSingleLineComment.length(), lineEndPosition(line));
-
-        const QByteArray currentLineText = get_text_range(indentPos, lineEnd);
-
-        if (currentLineText == languageSingleLineComment) {
-            // Adjust the caret and anchor. Use the min incase they are within the comment string being removed
-            if (caret > indentPos) {
-                caret -= qMin(static_cast<int>(caret - indentPos), languageSingleLineComment.length());
-            }
-            if (anchor > indentPos) {
-                anchor -= qMin(static_cast<int>(anchor - indentPos), languageSingleLineComment.length());
-            }
-
-            deleteRange(indentPos, languageSingleLineComment.length());
-        }
-        else {
-            // Don't comment lines with only indentation
-            if (indentPos == lineEndPosition(line)) {
-                return;
-            }
-
-            if (caret >= indentPos) {
-                caret += languageSingleLineComment.length();
-            }
-            if (anchor >=indentPos) {
-                anchor += languageSingleLineComment.length();
-            }
-
-            insertText(indentPos, languageSingleLineComment.toUtf8());
-        }
-    });
-
-    endUndoAction();
-
-    setSelection(caret, anchor);
+    ScintillaCommenter sc(this);
+    sc.toggleSelection();
 }
 
 void ScintillaNext::commentLineSelection()
 {
-    // Ensure there is a comment string set
-    if (languageSingleLineComment.length() == 0) {
-        return;
-    }
-
-    int caret = selectionNCaret(mainSelection());
-    int anchor = selectionNAnchor(mainSelection());
-
-    beginUndoAction();
-
-    forEachLineInSelection(mainSelection(), [&](int line) {
-        auto indentPos = lineIndentPosition(line);
-
-        // Don't comment lines with only indentation
-        if (indentPos == lineEndPosition(line)) {
-            return;
-        }
-
-        if (caret >= indentPos) {
-            caret += languageSingleLineComment.length();
-        }
-        if (anchor >=indentPos) {
-            anchor += languageSingleLineComment.length();
-        }
-
-        insertText(indentPos, languageSingleLineComment.toUtf8());
-    });
-
-    endUndoAction();
-
-    setSelection(caret, anchor);
+    ScintillaCommenter sc(this);
+    sc.commentSelection();
 }
 
 void ScintillaNext::uncommentLineSelection()
 {
-    // Ensure there is a comment string set
-    if (languageSingleLineComment.length() == 0) {
-        return;
-    }
-
-    int caret = selectionNCaret(mainSelection());
-    int anchor = selectionNAnchor(mainSelection());
-
-    beginUndoAction();
-
-    forEachLineInSelection(mainSelection(), [&](int line) {
-        auto indentPos = lineIndentPosition(line);
-        auto lineEnd = qMin(indentPos + languageSingleLineComment.length(), lineEndPosition(line));
-
-        const QByteArray commentText = get_text_range(indentPos, lineEnd);
-
-        if (commentText == languageSingleLineComment) {
-            // Adjust the caret and anchor. Use the min incase they are within the comment string being removed
-            if (caret > indentPos) {
-                caret -= qMin(static_cast<int>(caret - indentPos), languageSingleLineComment.length());
-            }
-            if (anchor > indentPos) {
-                anchor -= qMin(static_cast<int>(anchor - indentPos), languageSingleLineComment.length());
-            }
-
-            deleteRange(indentPos, languageSingleLineComment.length());
-        }
-    });
-
-    endUndoAction();
-
-    setSelection(caret, anchor);
+    ScintillaCommenter sc(this);
+    sc.uncommentSelection();
 }
 
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)
