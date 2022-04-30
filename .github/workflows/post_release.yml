@@ -8,6 +8,9 @@ jobs:
   create-issues:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - run: |
           gh issue create --title "Publish Windows Release for $RELEASE_TAG" --body "Update json file in root of project."
           gh issue create --title "Publish Flatpak Release for $RELEASE_TAG" --body "Update https://github.com/flathub/com.github.dail8859.NotepadNext"
