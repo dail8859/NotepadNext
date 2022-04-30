@@ -230,47 +230,47 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="40"/>
         <source>Current Position (x, y)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">当前位置 (x, y)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="41"/>
         <source>Column</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">列</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="43"/>
         <source>Current Style</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">当前样式</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="44"/>
         <source>Current Line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">当前行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="45"/>
         <source>Line Length</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">行长</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="46"/>
         <source>Line End Position</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">行尾位置</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="47"/>
         <source>Line Indentation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">行缩进</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="48"/>
         <source>Line Indent Position</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">行缩进位置</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="52"/>
         <source>Selection Information</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">选择信息</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="69"/>
@@ -280,7 +280,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="70"/>
         <source>Selection Empty</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">已选择为空</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="71"/>
@@ -300,42 +300,42 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="80"/>
         <source>Document Information</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">文档信息</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="83"/>
         <source>Length </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">长度 </translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="84"/>
         <source>Line Count</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">行数</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="88"/>
         <source>View Information</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">浏览信息</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="91"/>
         <source>Lines on Screen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">屏幕上行数</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="92"/>
         <source>First Visible Line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">第一可视行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="93"/>
         <source>X Offset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X 偏差</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="97"/>
         <source>Fold Information</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">折叠信息</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="100"/>
@@ -350,27 +350,27 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="102"/>
         <source>Fold Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">折叠等级</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="103"/>
         <source>Is Fold Header</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">是折叠标题行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="104"/>
         <source>Fold Parent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">折叠父级（行号）</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="105"/>
         <source>Last Child</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">最后子节点（行号）</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="106"/>
         <source>Contracted Fold Next</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">下一个已折叠项</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="175"/>
