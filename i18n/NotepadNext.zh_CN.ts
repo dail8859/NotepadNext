@@ -36,12 +36,12 @@
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="411"/>
         <source>Time remaining</source>
-        <translation type="unfinished">剩余时间</translation>
+        <translation>剩余时间</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
         <source>unknown</source>
-        <translation type="unfinished">未知</translation>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
@@ -51,7 +51,7 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
         <source>Cannot find downloaded update!</source>
-        <translation type="unfinished">无法找到可下载的更新！</translation>
+        <translation type="unfinished">无法找到已下载的更新!</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="201"/>
@@ -61,7 +61,7 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="202"/>
         <source>Download complete!</source>
-        <translation type="unfinished">下载完成！</translation>
+        <translation>下载完成！</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="203"/>
@@ -124,17 +124,17 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="357"/>
         <source>Downloading Updates</source>
-        <translation type="unfinished">下载更新中</translation>
+        <translation>下载更新中</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
         <source>Time Remaining</source>
-        <translation type="unfinished">剩余时间</translation>
+        <translation>剩余时间</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
         <source>Unknown</source>
-        <translation type="unfinished">未知</translation>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="385"/>
@@ -460,7 +460,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="711"/>
         <source>Replace All in &amp;Opened Documents</source>
-        <translation type="unfinished">替换已打开的所有文档(&amp;O)</translation>
+        <translation type="unfinished">在已打开的文档中替换所有(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="718"/>
@@ -510,32 +510,32 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="58"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">替换</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="204"/>
         <source>No matches found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">没有找到匹配项。</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="234"/>
         <source>1 occurrence was replaced</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">已替换 1 个匹配项</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="243"/>
         <source>No more occurrences were found</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">没有找到更多匹配项</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="272"/>
         <source>Replaced %1 matches</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">替换了 %1 个匹配项</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="296"/>
         <source>Found %1 matches</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">找到了 %1 个匹配项</translation>
     </message>
 </context>
 <context>
@@ -544,7 +544,7 @@
         <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.ui" line="14"/>
         <source>Folder as Workspace</source>
         <translatorcomment>窗口标题</translatorcomment>
-        <translation type="unfinished">文件夹工作区</translation>
+        <translation>文件夹工作区</translation>
     </message>
 </context>
 <context>
@@ -587,7 +587,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.cpp" line="137"/>
         <source>Postion %1 Style %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">未知 %1 样式 %2</translation>
     </message>
 </context>
 <context>
@@ -641,7 +641,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished">对话框</translation>
+        <translation>对话框</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="25"/>
@@ -1322,89 +1322,90 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="274"/>
         <source>Go to line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">转跳到行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="274"/>
         <source>Line Number (1 - %1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">行号 (1 - %1)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="632"/>
         <source>New %1</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>用作新建空白文件的标题</translatorcomment>
+        <translation type="unfinished">新文件 %1</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="666"/>
         <source>Create File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">新建文件</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="666"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; 尚不存在。你想要新建一个吗？</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="715"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="811"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">保存文件 &lt;b&gt;%1&lt;/b&gt;？</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="716"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="812"/>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">保存文件</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="769"/>
         <source>Open Folder as Workspace</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">打开文件夹作为工作区</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="785"/>
         <source>Reload File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">重新加载文件</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="785"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">你确定要重新加载 &lt;b&gt;%1&lt;/b&gt;？任何未保存的修改都会丢失。</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="974"/>
         <source>Save a Copy As</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">副本另存为</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="998"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">重命名</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1024"/>
         <source>Delete File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">删除文件</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1024"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">你确定要将 &lt;b&gt;%1&lt;/b&gt; 移至回收站？</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1034"/>
         <source>Error Deleting File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">删除文件时出错</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1034"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">删除  &lt;b&gt;%1&lt;/b&gt; 时出错了？</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1443"/>
         <source>No updates are availale at this time.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">目前没有可用更新。</translation>
     </message>
 </context>
 <context>
