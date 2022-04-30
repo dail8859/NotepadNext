@@ -44,6 +44,9 @@ public:
     template<typename Func>
     void forEachMatchInRange(const QByteArray &byteArray, Func callback, Sci_CharacterRange range);
 
+    template<typename Func>
+    void forEachLineInSelection(int selection, Func callback);
+
     bool isFile() const;
     bool isSavedToDisk() const;
     QFileInfo getFileInfo() const;
@@ -80,9 +83,9 @@ public slots:
     ScintillaNext::FileStateChange checkFileForStateChange();
     bool moveToTrash();
 
-    void toggleComment();
-    void commentLine();
-    void uncommentLine();
+    void toggleCommentSelection();
+    void commentLineSelection();
+    void uncommentLineSelection();
 
 signals:
     void aboutToSave();
@@ -106,7 +109,16 @@ private:
     void setFileInfo(const QString &filePath);
 };
 
+template<typename Func>
+void ScintillaNext::forEachLineInSelection(int selection, Func callback)
+{
+    int lineStart = lineFromPosition(selectionNStart(selection));
+    int lineEnd = lineFromPosition(selectionNEnd(selection));
 
+    for (int curLine = lineStart; curLine <= lineEnd; ++curLine) {
+        callback(curLine);
+    }
+}
 
 // Stick this in the header file...because C++, that's why
 template<typename Func>

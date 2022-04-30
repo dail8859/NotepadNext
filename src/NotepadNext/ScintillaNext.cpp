@@ -300,58 +300,126 @@ bool ScintillaNext::moveToTrash()
 }
 
 
-void ScintillaNext::toggleComment()
+void ScintillaNext::toggleCommentSelection()
 {
-    //Return if the language doesn't support single-line comments
-    if (languageSingleLineComment.length() == 0) return;
-
-    //Get the current line text and number
-    QString currentLineText = QString(getCurLine(textLength()));
-    sptr_t currentLineNumber = lineFromPosition(currentPos());
-
-    //Strip the comment (incase it was indented) and then check if it already has a comment
-    if (currentLineText.remove('\t').remove(' ').startsWith(languageSingleLineComment))
-    {
-        //Delete the comment if it exists
-        deleteRange(positionFromLine(currentLineNumber), languageSingleLineComment.length());
+    // Ensure there is a comment string set
+    if (languageSingleLineComment.length() == 0) {
+        return;
     }
-    else
-    {
-        //Add the comment if it doesn't exist
-        insertText(positionFromLine(currentLineNumber), languageSingleLineComment.toStdString().c_str());
-    }
+
+    int caret = selectionNCaret(mainSelection());
+    int anchor = selectionNAnchor(mainSelection());
+
+    beginUndoAction();
+
+    forEachLineInSelection(mainSelection(), [&](int line) {
+        auto indentPos = lineIndentPosition(line);
+        auto lineEnd = qMin(indentPos + languageSingleLineComment.length(), lineEndPosition(line));
+
+        const QByteArray currentLineText = get_text_range(indentPos, lineEnd);
+
+        if (currentLineText == languageSingleLineComment) {
+            // Adjust the caret and anchor. Use the min incase they are within the comment string being removed
+            if (caret > indentPos) {
+                caret -= qMin(static_cast<int>(caret - indentPos), languageSingleLineComment.length());
+            }
+            if (anchor > indentPos) {
+                anchor -= qMin(static_cast<int>(anchor - indentPos), languageSingleLineComment.length());
+            }
+
+            deleteRange(indentPos, languageSingleLineComment.length());
+        }
+        else {
+            // Don't comment lines with only indentation
+            if (indentPos == lineEndPosition(line)) {
+                return;
+            }
+
+            if (caret >= indentPos) {
+                caret += languageSingleLineComment.length();
+            }
+            if (anchor >=indentPos) {
+                anchor += languageSingleLineComment.length();
+            }
+
+            insertText(indentPos, languageSingleLineComment.toUtf8());
+        }
+    });
+
+    endUndoAction();
+
+    setSelection(caret, anchor);
 }
 
-void ScintillaNext::commentLine()
+void ScintillaNext::commentLineSelection()
 {
-    //Return if the language doesn't support single-line comments
-    if (languageSingleLineComment.length() == 0) return;
-
-    QString currentLineText = QString(getCurLine(textLength()));
-    sptr_t currentLineNumber = lineFromPosition(currentPos());
-
-    //Strip the comment (incase it was indented) and then check if it doesn't have a comment
-    if (!currentLineText.remove('\t').remove(' ').startsWith(languageSingleLineComment))
-    {
-        //Insert the comment if it didn't exist
-        insertText(positionFromLine(currentLineNumber), languageSingleLineComment.toStdString().c_str());
+    // Ensure there is a comment string set
+    if (languageSingleLineComment.length() == 0) {
+        return;
     }
+
+    int caret = selectionNCaret(mainSelection());
+    int anchor = selectionNAnchor(mainSelection());
+
+    beginUndoAction();
+
+    forEachLineInSelection(mainSelection(), [&](int line) {
+        auto indentPos = lineIndentPosition(line);
+
+        // Don't comment lines with only indentation
+        if (indentPos == lineEndPosition(line)) {
+            return;
+        }
+
+        if (caret >= indentPos) {
+            caret += languageSingleLineComment.length();
+        }
+        if (anchor >=indentPos) {
+            anchor += languageSingleLineComment.length();
+        }
+
+        insertText(indentPos, languageSingleLineComment.toUtf8());
+    });
+
+    endUndoAction();
+
+    setSelection(caret, anchor);
 }
 
-void ScintillaNext::uncommentLine()
+void ScintillaNext::uncommentLineSelection()
 {
-    //Return if the language doesn't support single-line comments
-    if (languageSingleLineComment.length() == 0) return;
-
-    QString currentLineText = QString(getCurLine(textLength()));
-    sptr_t currentLineNumber = lineFromPosition(currentPos());
-
-    //Strip the comment (incase it was indented) and then check if it has a comment
-    if (currentLineText.remove('\t').remove(' ').startsWith(languageSingleLineComment))
-    {
-        //Remove the comment if it exists
-        deleteRange(positionFromLine(currentLineNumber), languageSingleLineComment.length());
+    // Ensure there is a comment string set
+    if (languageSingleLineComment.length() == 0) {
+        return;
     }
+
+    int caret = selectionNCaret(mainSelection());
+    int anchor = selectionNAnchor(mainSelection());
+
+    beginUndoAction();
+
+    forEachLineInSelection(mainSelection(), [&](int line) {
+        auto indentPos = lineIndentPosition(line);
+        auto lineEnd = qMin(indentPos + languageSingleLineComment.length(), lineEndPosition(line));
+
+        const QByteArray commentText = get_text_range(indentPos, lineEnd);
+
+        if (commentText == languageSingleLineComment) {
+            // Adjust the caret and anchor. Use the min incase they are within the comment string being removed
+            if (caret > indentPos) {
+                caret -= qMin(static_cast<int>(caret - indentPos), languageSingleLineComment.length());
+            }
+            if (anchor > indentPos) {
+                anchor -= qMin(static_cast<int>(anchor - indentPos), languageSingleLineComment.length());
+            }
+
+            deleteRange(indentPos, languageSingleLineComment.length());
+        }
+    });
+
+    endUndoAction();
+
+    setSelection(caret, anchor);
 }
 
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)
