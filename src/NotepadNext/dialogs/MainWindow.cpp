@@ -413,7 +413,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     recorder = new MacroRecorder(this);
     connect(ui->actionMacroRecording, &QAction::triggered, [=](bool b) {
         if (b) {
-            ui->actionMacroRecording->setText("Stop Recording");
+            ui->actionMacroRecording->setText(tr("Stop Recording"));
             recorder->startRecording(dockedEditor->getCurrentEditor());
 
             // A macro is being recorded so disable some macro options
@@ -422,7 +422,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             ui->actionSaveCurrentRecordedMacro->setEnabled(false);
         }
         else {
-            ui->actionMacroRecording->setText("Start Recording");
+            ui->actionMacroRecording->setText(tr("Start Recording"));
             Macro *m = recorder->stopRecording();
 
             if (m->size() > 0) {
