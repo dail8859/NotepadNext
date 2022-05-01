@@ -516,7 +516,8 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="876"/>
         <source>Wra&amp;p Around</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>开启此选项，搜索达到文件末尾后，会自动从头继续搜索。</translatorcomment>
+        <translation type="unfinished">循环搜索(&amp;p)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="58"/>
@@ -680,11 +681,13 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="17"/>
         <source>Notepad Next[*]</source>
+        <translatorcomment>【不译】</translatorcomment>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="33"/>
         <source>+</source>
+        <translatorcomment>【不译】按F11进入全屏模式，右上角按钮。用于退出全屏</translatorcomment>
         <translation></translation>
     </message>
     <message>
@@ -710,7 +713,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="93"/>
         <source>Copy More</source>
-        <translation type="unfinished">更多复制选项</translation>
+        <translation type="unfinished">更多复制方式</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="101"/>
@@ -1177,6 +1180,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="753"/>
         <source>Open All Recent Files</source>
+        <translatorcomment>历史记录里有的文件都会打开</translatorcomment>
         <translation type="unfinished">打开所有最近关闭的文件</translation>
     </message>
     <message>
