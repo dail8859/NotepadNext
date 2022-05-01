@@ -33,7 +33,7 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     ui->setupUi(this);
 
     QTreeWidgetItem *positionInfo = new QTreeWidgetItem(ui->treeWidget);
-    positionInfo->setText(0, "Position Information");
+    positionInfo->setText(0, tr("Position Information"));
     positionInfo->setExpanded(true);
 
     newItem(positionInfo, tr("Current Position"), [](ScintillaNext *editor) { return QString::number(editor->currentPos()); });
@@ -52,7 +52,7 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     selInfo->setText(0, tr("Selection Information"));
     selInfo->setExpanded(true);
 
-    newItem(selInfo, "Mode", [](ScintillaNext *editor) {
+    newItem(selInfo, tr("Mode"), [](ScintillaNext *editor) {
         switch (editor->selectionMode()) {
             case SC_SEL_STREAM:
                 return QStringLiteral("SC_SEL_STREAM");
@@ -80,7 +80,7 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     documentInfo->setText(0, tr("Document Information"));
     documentInfo->setExpanded(true);
 
-    newItem(documentInfo, tr("Length "), [](ScintillaNext *editor) { return QString::number(editor->length()); });
+    newItem(documentInfo, tr("Length"), [](ScintillaNext *editor) { return QString::number(editor->length()); });
     newItem(documentInfo, tr("Line Count"), [](ScintillaNext *editor) { return QString::number(editor->lineCount()); });
 
 
