@@ -225,7 +225,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="39"/>
         <source>Current Position</source>
-        <translation></translation>
+        <translation type="unfinished">当前位置</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="40"/>
@@ -275,6 +275,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="69"/>
         <source>Is Rectangle</source>
+        <translatorcomment>TODO: 具体含义尚不清楚</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -315,7 +316,8 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="88"/>
         <source>View Information</source>
-        <translation type="unfinished">浏览信息</translation>
+        <translatorcomment>指主编辑器视图</translatorcomment>
+        <translation type="unfinished">视图信息</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="91"/>
@@ -340,11 +342,13 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="100"/>
         <source>Visible From Doc Line</source>
+        <translatorcomment>TODO: 具体含义尚不清楚</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="101"/>
         <source>Doc Line From Visible</source>
+        <translatorcomment>TODO: 具体含义尚不清楚</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -355,41 +359,48 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="103"/>
         <source>Is Fold Header</source>
-        <translation type="unfinished">是折叠标题行</translation>
+        <translation type="unfinished">是折叠组标题行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="104"/>
         <source>Fold Parent</source>
-        <translation type="unfinished">折叠父级（行号）</translation>
+        <translatorcomment>（行号）</translatorcomment>
+        <translation type="unfinished">折叠组父级</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="105"/>
         <source>Last Child</source>
-        <translation type="unfinished">最后子节点（行号）</translation>
+        <translatorcomment>（行号）</translatorcomment>
+        <translation type="unfinished">最后子节点</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="106"/>
         <source>Contracted Fold Next</source>
+        <translatorcomment>（行号）</translatorcomment>
         <translation type="unfinished">下一个已折叠项</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="175"/>
         <source>Caret</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>选择终止的位置</translatorcomment>
+        <translation type="unfinished">光标位置</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="179"/>
         <source>Anchor</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>选择开始的位置</translatorcomment>
+        <translation type="unfinished">锚点位置</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="183"/>
         <source>Caret Virtual Space</source>
+        <translatorcomment>TODO: 具体含义尚不清楚</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="187"/>
         <source>Anchor Virtual Space</source>
+        <translatorcomment>TODO: 具体含义尚不清楚</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1231,7 +1242,8 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="838"/>
         <source>Playback</source>
-        <translation>重放</translation>
+        <translatorcomment>&quot;Macro &gt; Playback&quot;</translatorcomment>
+        <translation type="unfinished">重放宏</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="841"/>
@@ -1405,7 +1417,8 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1443"/>
         <source>No updates are availale at this time.</source>
-        <translation type="unfinished">目前没有可用更新。</translation>
+        <translatorcomment>菜单栏：&quot;Help &gt; Check for Updates...&quot;</translatorcomment>
+        <translation type="unfinished">目前没有可用的更新。</translation>
     </message>
 </context>
 <context>
