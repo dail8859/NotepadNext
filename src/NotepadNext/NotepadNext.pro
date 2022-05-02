@@ -191,14 +191,18 @@ RCC_DIR = build/qrc
 UI_DIR = build/ui
 
 unix {
-    target.path = /usr/bin
+    isEmpty(PREFIX) {
+        PREFIX = /usr
+    }
+
+    target.path = $$PREFIX/bin
     INSTALLS += target
 
-    desktopfile.path = /usr/share/applications/
+    desktopfile.path = $$PREFIX/share/applications/
     desktopfile.files += ../../deploy/linux/NotepadNext.desktop
     INSTALLS += desktopfile
 
-    iconscalable.path = /usr/share/icons/hicolor/scalable/mimetypes/
+    iconscalable.path = $$PREFIX/share/icons/hicolor/scalable/mimetypes/
     iconscalable.files = ../../icon/NotepadNext.svg
     INSTALLS += iconscalable
 }
