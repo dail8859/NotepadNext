@@ -310,22 +310,22 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="36"/>
         <source>Position Information</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">位置信息</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="55"/>
         <source>Mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">模式</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="83"/>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">长度</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="84"/>
         <source>Line Count</source>
-        <translation type="unfinished">行数</translation>
+        <translation>行数</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="88"/>
