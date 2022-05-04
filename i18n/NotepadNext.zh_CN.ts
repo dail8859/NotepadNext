@@ -304,9 +304,23 @@
         <translation type="unfinished">文档信息</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="83"/>
         <source>Length </source>
-        <translation type="unfinished">长度 </translation>
+        <translation type="obsolete">长度 </translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="36"/>
+        <source>Position Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="55"/>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="83"/>
+        <source>Length</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="84"/>
@@ -1240,6 +1254,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="826"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="425"/>
         <source>Start Recording</source>
         <translation>开始录制</translation>
     </message>
@@ -1344,6 +1359,11 @@
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="274"/>
         <source>Line Number (1 - %1)</source>
         <translation type="unfinished">行号 (1 - %1)</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="416"/>
+        <source>Stop Recording</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="632"/>
