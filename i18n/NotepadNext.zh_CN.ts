@@ -275,8 +275,8 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="69"/>
         <source>Is Rectangle</source>
-        <translatorcomment>TODO: 具体含义尚不清楚</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>仅多光标模式下为 True</translatorcomment>
+        <translation type="unfinished">矩形选择</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="70"/>
@@ -286,17 +286,18 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="71"/>
         <source>Main Selection</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>永远是最后一个光标；编号从 #0 开始；光标列表见下方（Multiple Selections）</translatorcomment>
+        <translation>主光标编号</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="72"/>
         <source># of Selections</source>
-        <translation type="unfinished"></translation>
+        <translation>光标数</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="75"/>
         <source>Multiple Selections</source>
-        <translation type="unfinished"></translation>
+        <translation>光标列表</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="80"/>
@@ -346,7 +347,8 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="93"/>
         <source>X Offset</source>
-        <translation type="unfinished">X 偏差</translation>
+        <translatorcomment>TODO: 具体含义尚不清楚</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="97"/>
