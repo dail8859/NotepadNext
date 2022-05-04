@@ -34,10 +34,22 @@ win32 {
         xcopy $$shell_path($${OUT_PWD}/NotepadNext/LICENSE) $$shell_path($${OUT_PWD}/package/) /Y && \
         xcopy $$shell_path($${OUT_PWD}/NotepadNext/i18n/*.qm) $$shell_path($${OUT_PWD}/package/i18n/) /Y &&
 
+    # Get all translation language names
+    #   get full path:      `../i18n/NotepadNext.en.ts`
+    TRANSLATION_LANGS = $$files($$PWD/../i18n/*.ts)
+    #   keep filename:      `NotepadNext.en.ts`
+    TRANSLATION_LANGS = $$basename(TRANSLATION_LANGS)
+    #   remove App name:    `en.ts`
+    TRANSLATION_LANGS = $$replace(TRANSLATION_LANGS, NotepadNext.,)
+    #   remove `.ts` ext:   `en`
+    TRANSLATION_LANGS = $$replace(TRANSLATION_LANGS, .ts,)
+    #   join all lang:      `en,zh_CN,...`
+    TRANSLATION_LANGS = $$join(TRANSLATION_LANGS, ',', '', '')
+
     equals(QT_MAJOR_VERSION, 6) {
-        package.commands += windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-opengl-sw $$shell_path($${OUT_PWD}/package/NotepadNext.exe)
+        package.commands += windeployqt --release --translations $$TRANSLATION_LANGS --no-system-d3d-compiler --no-compiler-runtime --no-opengl-sw $$shell_path($${OUT_PWD}/package/NotepadNext.exe)
     } else {
-        package.commands += windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-angle --no-opengl-sw $$shell_path($${OUT_PWD}/package/NotepadNext.exe)
+        package.commands += windeployqt --release --translations $$TRANSLATION_LANGS --no-system-d3d-compiler --no-compiler-runtime --no-angle --no-opengl-sw $$shell_path($${OUT_PWD}/package/NotepadNext.exe)
     }
 
     # Zip it up
