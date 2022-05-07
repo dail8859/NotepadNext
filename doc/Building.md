@@ -52,3 +52,8 @@ cd build
 qmake ../src/NotepadNext.pro
 make -j$(nproc)
 ```
+
+If encountered `/usr/lib/qt5/bin/lrelease not found` error. Please install `qttools5-dev-tools`.
+```
+sudo apt-get install qttools5-dev-tools
+```
