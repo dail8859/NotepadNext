@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "autoit"
 
+L.singleLineComment = "; "
+
 L.extensions = {
 	"au3",
 }

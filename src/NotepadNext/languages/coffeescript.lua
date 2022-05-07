@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "coffeescript"
 
+L.singleLineComment = "# "
+
 L.extensions = {
 	"coffee",
 	"litcoffee",

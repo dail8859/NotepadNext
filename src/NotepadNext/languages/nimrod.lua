@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "nimrod"
 
+L.singleLineComment = "! "
+
 L.extensions = {
 	"nim",
 }

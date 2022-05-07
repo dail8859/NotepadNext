@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "actionscript"
 
+L.singleLineComment = "// "
+
 L.extensions = {
 	"as",
 	"mx",

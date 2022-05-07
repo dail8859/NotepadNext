@@ -110,6 +110,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     connect(ui->actionPrint, &QAction::triggered, this, &MainWindow::print);
 
+    connect(ui->actionToggle_Single_Line_Comment, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->toggleCommentSelection();});
+    connect(ui->actionSingle_Line_Comment, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->commentLineSelection();});
+    connect(ui->actionSingle_Line_Uncomment, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->uncommentLineSelection();});
+
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
 
     connect(ui->actionMoveToTrash, &QAction::triggered, this, &MainWindow::moveCurrentFileToTrash);

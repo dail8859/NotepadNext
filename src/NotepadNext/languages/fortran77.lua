@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "fortran77"
 
+L.singleLineComment = "C "
+
 L.extensions = {
 	"f77",
 }

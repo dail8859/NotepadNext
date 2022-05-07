@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "verilog"
 
+L.singleLineComment = "// "
+
 L.extensions = {
 	"v",
 	"sv",

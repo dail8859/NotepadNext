@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "oscript"
 
+L.singleLineComment = "// "
+
 L.extensions = {
 	"osx",
 }

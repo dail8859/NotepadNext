@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "mmixal"
 
+L.singleLineComment = "# "
+
 L.extensions = {
 	"mms",
 }

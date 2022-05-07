@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "cmake"
 
+L.singleLineComment = "# "
+
 L.extensions = {
 	"cmake",
 }

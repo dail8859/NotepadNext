@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "objc"
 
+L.singleLineComment = "// "
+
 L.extensions = {
 	"mm",
 }

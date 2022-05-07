@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "asp"
 
+L.singleLineComment = "' "
+
 L.extensions = {
 	"asp",
 }

@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "haskell"
 
+L.singleLineComment = "-- "
+
 L.extensions = {
 	"hs",
 	"lhs",

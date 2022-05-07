@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "nncrontab"
 
+L.singleLineComment = "# "
+
 L.extensions = {
 	"tab",
 	"spf",

@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "visualprolog"
 
+L.singleLineComment = "% "
+
 L.extensions = {
 	"pro",
 	"cl",

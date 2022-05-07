@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "inno"
 
+L.singleLineComment = "; "
+
 L.extensions = {
 	"iss",
 }

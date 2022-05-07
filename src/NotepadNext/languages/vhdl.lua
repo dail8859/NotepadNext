@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "vhdl"
 
+L.singleLineComment = "-- "
+
 L.extensions = {
 	"vhd",
 	"vhdl",

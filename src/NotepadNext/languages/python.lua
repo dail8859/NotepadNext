@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "python"
 
+L.singleLineComment = "# "
+
 L.tabSize = 4
 
 L.tabSettings = "spaces"

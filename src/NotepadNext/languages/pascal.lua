@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "pascal"
 
+L.singleLineComment = "// "
+
 L.extensions = {
 	"pas",
 	"pp",

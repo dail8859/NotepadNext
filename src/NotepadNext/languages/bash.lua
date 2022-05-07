@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "bash"
 
+L.singleLineComment = "# "
+
 L.extensions = {
 	"bash",
 	"sh",

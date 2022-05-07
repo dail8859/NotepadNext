@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "forth"
 
+L.singleLineComment = "\\ "
+
 L.extensions = {
 	"forth",
 }

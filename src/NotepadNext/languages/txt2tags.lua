@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "txt2tags"
 
+L.singleLineComment = "! "
+
 L.extensions = {
 	"t2t",
 }

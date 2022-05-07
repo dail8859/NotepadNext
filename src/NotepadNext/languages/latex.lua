@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "latex"
 
+L.singleLineComment = "% "
+
 L.extensions = {
 	"tex",
 	"sty",

@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "freebasic"
 
+L.singleLineComment = "' "
+
 L.extensions = {
 	"bas",
 	"bi",

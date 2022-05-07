@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "phpscript"
 
+L.singleLineComment = "// "
+
 L.extensions = {
 	"php",
 	"php3",

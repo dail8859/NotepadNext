@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "r"
 
+L.singleLineComment = "# "
+
 L.extensions = {
 	"r",
 	"s",
