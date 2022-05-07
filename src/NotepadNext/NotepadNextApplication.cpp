@@ -179,6 +179,7 @@ bool NotepadNextApplication::init()
 
     // Everything should be ready at this point
 
+    windows.first()->restoreWindowState();
     windows.first()->show();
 
     return true;
