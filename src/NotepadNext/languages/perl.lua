@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "perl"
 
-L.singleLineComment = "#"
+L.singleLineComment = "# "
 
 L.extensions = {
 	"pl",

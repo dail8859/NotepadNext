@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "verilog"
 
-L.singleLineComment = "//"
+L.singleLineComment = "// "
 
 L.extensions = {
 	"v",

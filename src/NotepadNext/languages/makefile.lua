@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "makefile"
 
-L.singleLineComment = "#"
+L.singleLineComment = "# "
 
 L.extensions = {
 	"mak",

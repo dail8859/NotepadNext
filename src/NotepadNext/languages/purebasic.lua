@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "purebasic"
 
-L.singleLineComment = ";"
+L.singleLineComment = "; "
 
 L.extensions = {
 	"pb",

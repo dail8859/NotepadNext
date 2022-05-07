@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "postscript"
 
-L.singleLineComment = "%"
+L.singleLineComment = "% "
 
 L.extensions = {
 	"ps",

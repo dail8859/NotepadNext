@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "latex"
 
-L.singleLineComment = "%"
+L.singleLineComment = "% "
 
 L.extensions = {
 	"tex",

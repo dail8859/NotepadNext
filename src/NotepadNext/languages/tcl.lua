@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "tcl"
 
-L.singleLineComment = "#"
+L.singleLineComment = "# "
 
 L.extensions = {
 	"tcl",

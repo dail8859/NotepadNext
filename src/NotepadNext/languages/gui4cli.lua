@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "gui4cli"
 
-L.singleLineComment = "//"
+L.singleLineComment = "// "
 
 L.keywords = {
 	[0] = "None",

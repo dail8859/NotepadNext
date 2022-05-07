@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "visualprolog"
 
-L.singleLineComment = "%"
+L.singleLineComment = "% "
 
 L.extensions = {
 	"pro",

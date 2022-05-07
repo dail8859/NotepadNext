@@ -62,7 +62,7 @@ void ScintillaCommenter::toggleLine(int line)
             return;
         }
 
-        editor->insertText(indentPos, editor->languageSingleLineComment.toUtf8());
+        editor->insertText(indentPos, editor->languageSingleLineComment.constData());
 
         st.trackInsertion(indentPos, editor->languageSingleLineComment.length());
     }
@@ -77,7 +77,7 @@ void ScintillaCommenter::commentLine(int line)
         return;
     }
 
-    editor->insertText(indentPos, editor->languageSingleLineComment.toUtf8());
+    editor->insertText(indentPos, editor->languageSingleLineComment.constData());
 
     st.trackInsertion(indentPos, editor->languageSingleLineComment.length());
 }

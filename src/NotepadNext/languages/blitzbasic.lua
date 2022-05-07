@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "blitzbasic"
 
-L.singleLineComment = ";"
+L.singleLineComment = "; "
 
 L.extensions = {
 	"bb",

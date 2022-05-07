@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "rebol"
 
-L.singleLineComment = ";"
+L.singleLineComment = "; "
 
 L.extensions = {
 	"r2",

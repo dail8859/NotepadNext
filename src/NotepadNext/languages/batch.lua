@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "batch"
 
-L.singleLineComment = "REM"
+L.singleLineComment = "REM "
 
 L.extensions = {
 	"bat",

@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "lisp"
 
-L.singleLineComment = ";"
+L.singleLineComment = "; "
 
 L.extensions = {
 	"lsp",

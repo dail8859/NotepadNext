@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "powershell"
 
-L.singleLineComment = "#"
+L.singleLineComment = "# "
 
 L.extensions = {
 	"ps1",

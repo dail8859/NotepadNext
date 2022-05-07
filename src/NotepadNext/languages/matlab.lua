@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "matlab"
 
-L.singleLineComment = "%"
+L.singleLineComment = "% "
 
 L.extensions = {
 	"m",

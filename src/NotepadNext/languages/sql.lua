@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "sql"
 
-L.singleLineComment = "--"
+L.singleLineComment = "-- "
 
 L.extensions = {
 	"sql",

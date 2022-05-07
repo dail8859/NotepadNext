@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "lua"
 
-L.singleLineComment = "--"
+L.singleLineComment = "-- "
 
 L.extensions = {
 	"lua",

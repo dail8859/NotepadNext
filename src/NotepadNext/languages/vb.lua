@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "vb"
 
-L.singleLineComment = "'"
+L.singleLineComment = "' "
 
 L.extensions = {
 	"vb",

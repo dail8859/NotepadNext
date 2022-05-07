@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "pascal"
 
-L.singleLineComment = "//"
+L.singleLineComment = "// "
 
 L.extensions = {
 	"pas",

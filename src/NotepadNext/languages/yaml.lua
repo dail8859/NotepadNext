@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "yaml"
 
-L.singleLineComment = "#"
+L.singleLineComment = "# "
 
 L.extensions = {
 	"yml",

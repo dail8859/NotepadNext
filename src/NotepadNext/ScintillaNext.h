@@ -71,7 +71,7 @@ public:
     void setFoldMarkers(const QString &type);
 
     QString languageName;
-    QString languageSingleLineComment;
+    QByteArray languageSingleLineComment;
 
 public slots:
     void close();

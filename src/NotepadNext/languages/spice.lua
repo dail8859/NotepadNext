@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "spice"
 
-L.singleLineComment = "*"
+L.singleLineComment = "* "
 
 L.extensions = {
 	"scp",

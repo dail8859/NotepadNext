@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "swift"
 
-L.singleLineComment = "//"
+L.singleLineComment = "// "
 
 L.extensions = {
 	"swift",

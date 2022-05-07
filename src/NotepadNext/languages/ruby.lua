@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "ruby"
 
-L.singleLineComment = "#"
+L.singleLineComment = "# "
 
 L.extensions = {
 	"rb",

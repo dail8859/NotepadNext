@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "freebasic"
 
-L.singleLineComment = "'"
+L.singleLineComment = "' "
 
 L.extensions = {
 	"bas",

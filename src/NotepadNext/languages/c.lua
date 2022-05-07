@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "cpp"
 
-L.singleLineComment = "//"
+L.singleLineComment = "// "
 
 L.extensions = {
 	"c",

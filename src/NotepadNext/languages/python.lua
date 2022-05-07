@@ -2,7 +2,7 @@ local L = {}
 
 L.lexer = "python"
 
-L.singleLineComment = "#"
+L.singleLineComment = "# "
 
 L.tabSize = 4
 
