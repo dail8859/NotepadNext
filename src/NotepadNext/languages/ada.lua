@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "ada"
 
+L.singleLineComment = "-- "
+
 L.extensions = {
 	"ada",
 	"ads",

@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "nsis"
 
+L.singleLineComment = "; "
+
 L.extensions = {
 	"nsi",
 	"nsh",

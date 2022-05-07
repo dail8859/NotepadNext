@@ -78,9 +78,12 @@ SOURCES += \
     QuickFindWidget.cpp \
     RecentFilesListManager.cpp \
     SciIFaceTable.cpp \
+    ScintillaCommenter.cpp \
     ScintillaNext.cpp \
+    SelectionTracker.cpp \
     Settings.cpp \
     SpinBoxDelegate.cpp \
+    UndoAction.cpp \
     decorators/ApplicationDecorator.cpp \
     decorators/AutoCompletion.cpp \
     decorators/AutoIndentation.cpp \
@@ -128,9 +131,12 @@ HEADERS += \
     QuickFindWidget.h \
     RecentFilesListManager.h \
     SciIFaceTable.h \
+    ScintillaCommenter.h \
     ScintillaNext.h \
+    SelectionTracker.h \
     Settings.h \
     SpinBoxDelegate.h \
+    UndoAction.h \
     decorators/ApplicationDecorator.h \
     decorators/AutoCompletion.h \
     decorators/AutoIndentation.h \

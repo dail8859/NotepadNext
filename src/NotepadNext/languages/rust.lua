@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "rust"
 
+L.singleLineComment = "// "
+
 L.extensions = {
 	"rs",
 }

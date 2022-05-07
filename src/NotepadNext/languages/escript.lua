@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "escript"
 
+L.singleLineComment = "// "
+
 L.extensions = {
 	"src",
 	"em",

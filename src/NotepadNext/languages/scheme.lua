@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "scheme"
 
+L.singleLineComment = "; "
+
 L.extensions = {
 	"scm",
 	"smd",

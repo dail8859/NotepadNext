@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "registry"
 
+L.singleLineComment = "; "
+
 L.extensions = {
 	"reg",
 }

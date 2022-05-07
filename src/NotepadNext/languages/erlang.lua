@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "erlang"
 
+L.singleLineComment = "% "
+
 L.extensions = {
 	"erl",
 	"hrl",

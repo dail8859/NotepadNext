@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "cs"
 
+L.singleLineComment = "// "
+
 L.extensions = {
 	"cs",
 }

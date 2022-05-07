@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "cobol"
 
+L.singleLineComment = "* "
+
 L.extensions = {
 	"cbl",
 	"cbd",

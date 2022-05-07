@@ -128,6 +128,14 @@
      <addaction name="actionMoveSelectedLinesUp"/>
      <addaction name="actionMoveSelectedLinesDown"/>
     </widget>
+    <widget class="QMenu" name="menuComment_Uncomment">
+     <property name="title">
+      <string>Comment/Uncomment</string>
+     </property>
+     <addaction name="actionToggle_Single_Line_Comment"/>
+     <addaction name="actionSingle_Line_Comment"/>
+     <addaction name="actionSingle_Line_Uncomment"/>
+    </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
@@ -143,6 +151,7 @@
     <addaction name="menuConvert_Case"/>
     <addaction name="menuEOLConversion"/>
     <addaction name="menuLine_Operations"/>
+    <addaction name="menuComment_Uncomment"/>
    </widget>
    <widget class="QMenu" name="menuSearch">
     <property name="title">
@@ -654,7 +663,7 @@
     <string>Reset Zoom</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+/</string>
+    <string>Ctrl+0</string>
    </property>
   </action>
   <action name="actionAboutQt">
@@ -934,6 +943,30 @@
   <action name="actionOpenFolderasWorkspace">
    <property name="text">
     <string>Open Folder as Workspace...</string>
+   </property>
+  </action>
+  <action name="actionToggle_Single_Line_Comment">
+   <property name="text">
+    <string>Toggle Single Line Comment</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+/</string>
+   </property>
+  </action>
+  <action name="actionSingle_Line_Comment">
+   <property name="text">
+    <string>Single Line Comment</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+K</string>
+   </property>
+  </action>
+  <action name="actionSingle_Line_Uncomment">
+   <property name="text">
+    <string>Single Line Uncomment</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+K</string>
    </property>
   </action>
  </widget>

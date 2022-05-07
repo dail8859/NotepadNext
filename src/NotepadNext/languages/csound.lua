@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "csound"
 
+L.singleLineComment = "; "
+
 L.extensions = {
 	"orc",
 	"sco",

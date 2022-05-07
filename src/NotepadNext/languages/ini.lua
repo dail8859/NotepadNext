@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "props"
 
+L.singleLineComment = "; "
+
 L.extensions = {
 	"ini",
 	"inf",

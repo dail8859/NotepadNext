@@ -16,7 +16,10 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+
 #include "ScintillaNext.h"
+#include "ScintillaCommenter.h"
+
 #include "uchardet.h"
 #include <cinttypes>
 
@@ -299,6 +302,24 @@ bool ScintillaNext::moveToTrash()
     return false;
 }
 
+void ScintillaNext::toggleCommentSelection()
+{
+    ScintillaCommenter sc(this);
+    sc.toggleSelection();
+}
+
+void ScintillaNext::commentLineSelection()
+{
+    ScintillaCommenter sc(this);
+    sc.commentSelection();
+}
+
+void ScintillaNext::uncommentLineSelection()
+{
+    ScintillaCommenter sc(this);
+    sc.uncommentSelection();
+}
+
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)
 {
     // Ignore all drag and drop events with urls and let the main application handle it
@@ -306,7 +327,7 @@ void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)
         return;
     }
 
-    ScintillaEdit::dragEnterEvent(event);
+    dragEnterEvent(event);
 }
 
 void ScintillaNext::dropEvent(QDropEvent *event)
@@ -316,7 +337,7 @@ void ScintillaNext::dropEvent(QDropEvent *event)
         return;
     }
 
-    ScintillaEdit::dropEvent(event);
+    dropEvent(event);
 }
 
 bool ScintillaNext::readFromDisk(QFile &file)

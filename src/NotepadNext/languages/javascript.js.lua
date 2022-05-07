@@ -2,6 +2,8 @@ local L = {}
 
 L.lexer = "javascript.js"
 
+L.singleLineComment = "// "
+
 L.extensions = {
 	"js",
 	"jsm",
