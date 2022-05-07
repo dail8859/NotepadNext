@@ -112,6 +112,8 @@ public slots:
 
     void checkForUpdates(bool silent = false);
 
+    void restoreWindowState();
+
 signals:
     void editorActivated(ScintillaNext *editor);
 

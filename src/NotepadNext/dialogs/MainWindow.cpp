@@ -1347,9 +1347,6 @@ void MainWindow::restoreSettings()
 
     QSettings settings;
 
-    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
-    restoreState(settings.value("MainWindow/windowState").toByteArray());
-
     app->getSettings()->setShowMenuBar(settings.value("Gui/ShowMenuBar", true).toBool());
     app->getSettings()->setShowToolBar(settings.value("Gui/ShowToolBar", true).toBool());
     app->getSettings()->setShowStatusBar(settings.value("Gui/ShowStatusBar", true).toBool());
@@ -1360,6 +1357,15 @@ void MainWindow::restoreSettings()
 
     ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
     ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
+}
+
+
+void MainWindow::restoreWindowState()
+{
+    QSettings settings;
+
+    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
+    restoreState(settings.value("MainWindow/windowState").toByteArray());
 
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     fawDock->setRootPath(settings.value("FolderAsWorkspace/RootPath").toString());
