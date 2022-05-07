@@ -1404,7 +1404,6 @@ void MainWindow::addEditor(ScintillaNext *editor)
         }
     });
 
-
     if (ui->actionWordWrap->isChecked())
         editor->setWrapMode(SC_WRAP_WHITESPACE);
 

@@ -136,6 +136,7 @@ private:
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     bool checkFileForModification(ScintillaNext *editor);
+
     void saveSettings() const;
     void restoreSettings();
 
@@ -150,7 +151,6 @@ private:
 
     QVector<Macro *> macros;
     Macro *currentMacro = Q_NULLPTR;
-
 };
 
 #endif // MAINWINDOW_H
