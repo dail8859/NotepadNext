@@ -21,7 +21,7 @@ include(Version.pri)
 DEFINES += APP_VERSION='"\\\"$$APP_VERSION\\\""'
 DEFINES += APP_COPYRIGHT='"\\\"$$APP_COPYRIGHT\\\""'
 
-CONFIG += c++17
+CONFIG += c++1z
 CONFIG -= debug_and_release debug_and_release_target
 
 # Controls if we want to define our own regex engine using QRegularExpression
