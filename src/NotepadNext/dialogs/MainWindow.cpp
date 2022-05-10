@@ -528,22 +528,19 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                                 .arg(QApplication::applicationDisplayName(), APP_VERSION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
 
-    QAction *separator = ui->menuHelp->insertSeparator(ui->actionCheckForUpdates);
-
     EditorInspectorDock *editorInspectorDock = new EditorInspectorDock(this);
     editorInspectorDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, editorInspectorDock);
-    ui->menuHelp->insertAction(separator, editorInspectorDock->toggleViewAction());
 
     LanguageInspectorDock *languageInspectorDock = new LanguageInspectorDock(this);
     languageInspectorDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
-    ui->menuHelp->insertAction(editorInspectorDock->toggleViewAction(), languageInspectorDock->toggleViewAction());
 
     LuaConsoleDock *luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
     luaConsoleDock->hide();
     addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
-    ui->menuHelp->insertAction(languageInspectorDock->toggleViewAction(), luaConsoleDock->toggleViewAction());
+
+    ui->menuHelp->insertActions(ui->menuHelp->actions().at(0), {luaConsoleDock->toggleViewAction(), languageInspectorDock->toggleViewAction(), editorInspectorDock->toggleViewAction()});
 
     FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
     fawDock->hide();
