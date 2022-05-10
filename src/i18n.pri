@@ -18,8 +18,11 @@
 
 CONFIG += lrelease
 
-# All `*.ts` files:
-TRANSLATIONS = $$files($$PWD/../i18n/*.ts)
+TRANSLATIONS = \
+    ../../i18n/NotepadNext.zh_CN.ts
+
+EXTRA_TRANSLATIONS = \
+    $$[QT_INSTALL_TRANSLATIONS]/qt_zh_CN.qm
 
 # Output folder for `.qm` files
 LRELEASE_DIR = $$OUT_PWD/i18n

@@ -289,7 +289,7 @@ void NotepadNextApplication::loadSystemDefaultTranslation()
 
     // Load translation for Qt components
     //  e.g. `translations/qt_en.qm`
-    if (translatorQt.load(locale, QString("qt"), QString("_"), QString("translations"))) {
+    if (translatorQt.load(locale, QString("qt"), QString("_"), QString("i18n"))) {
         installTranslator(&translatorQt);
         qInfo("Loaded %s translation for QT components", qUtf8Printable(locale.name()));
     } else {
