@@ -68,7 +68,8 @@ private:
 
     void applyArguments(const QStringList &args);
     MainWindow *createNewWindow();
-    QTranslator translator;
+    QTranslator translatorNpn;
+    QTranslator translatorQt;
 };
 
 #endif // NOTEPADNEXTAPPLICATION_H
