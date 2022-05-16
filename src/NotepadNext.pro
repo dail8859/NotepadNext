@@ -37,7 +37,8 @@ win32 {
     equals(QT_MAJOR_VERSION, 6) {
         package.commands += windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-opengl-sw $$shell_path($${OUT_PWD}/package/NotepadNext.exe)
     } else {
-        package.commands += windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-angle --no-opengl-sw $$shell_path($${OUT_PWD}/package/NotepadNext.exe)
+        package.commands += windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-angle --no-opengl-sw $$quote($$shell_path($${OUT_PWD}/package/NotepadNext.exe)) &&
+        package.commands += del $$quote($$shell_path($${OUT_PWD}/package/imageformats/qjpeg.dll)) $$quote($$shell_path($${OUT_PWD}/package/imageformats/qtiff.dll)) $$quote($$shell_path($${OUT_PWD}/package/imageformats/qwebp.dll))
     }
 
     # Zip it up
