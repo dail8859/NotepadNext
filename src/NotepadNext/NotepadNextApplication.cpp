@@ -278,12 +278,22 @@ void NotepadNextApplication::loadSystemDefaultTranslation()
 {
     QLocale locale =  QLocale::system();
 
-    // look up e.g. i18n/NotepadNext.en.qm
-    if (translator.load(locale, QApplication::applicationName(), QString("."), QString("i18n"))) {
-        installTranslator(&translator);
-        qInfo("Loaded translation for %s", qUtf8Printable(locale.name()));
+    // Load translation for NotepadNext
+    //  e.g. `i18n/NotepadNext.en.qm`
+    if (translatorNpn.load(locale, QApplication::applicationName(), QString("."), QString("i18n"))) {
+        installTranslator(&translatorNpn);
+        qInfo("Loaded %s translation for NotepadNext", qUtf8Printable(locale.name()));
     } else {
-        qInfo("Translation not found for %s", qUtf8Printable(locale.name()));
+        qInfo("%s translation not found for NotepadNext", qUtf8Printable(locale.name()));
+    }
+
+    // Load translation for Qt components
+    //  e.g. `translations/qt_en.qm`
+    if (translatorQt.load(locale, QString("qt"), QString("_"), QString("i18n"))) {
+        installTranslator(&translatorQt);
+        qInfo("Loaded %s translation for QT components", qUtf8Printable(locale.name()));
+    } else {
+        qInfo("%s translation not found for QT components", qUtf8Printable(locale.name()));
     }
 }
 
