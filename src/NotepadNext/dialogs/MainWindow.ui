@@ -111,7 +111,7 @@
      <addaction name="actionUnix"/>
      <addaction name="actionMacintosh"/>
     </widget>
-    <widget class="QMenu" name="menuConvert_Case">
+    <widget class="QMenu" name="menuConvertCase">
      <property name="title">
       <string>Convert Case</string>
      </property>
@@ -128,13 +128,13 @@
      <addaction name="actionMoveSelectedLinesUp"/>
      <addaction name="actionMoveSelectedLinesDown"/>
     </widget>
-    <widget class="QMenu" name="menuComment_Uncomment">
+    <widget class="QMenu" name="menuCommentUncomment">
      <property name="title">
       <string>Comment/Uncomment</string>
      </property>
-     <addaction name="actionToggle_Single_Line_Comment"/>
-     <addaction name="actionSingle_Line_Comment"/>
-     <addaction name="actionSingle_Line_Uncomment"/>
+     <addaction name="actionToggleSingleLineComment"/>
+     <addaction name="actionSingleLineComment"/>
+     <addaction name="actionSingleLineUncomment"/>
     </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
@@ -148,10 +148,10 @@
     <addaction name="separator"/>
     <addaction name="menuCopyMore"/>
     <addaction name="menuIndent"/>
-    <addaction name="menuConvert_Case"/>
+    <addaction name="menuConvertCase"/>
     <addaction name="menuEOLConversion"/>
     <addaction name="menuLine_Operations"/>
-    <addaction name="menuComment_Uncomment"/>
+    <addaction name="menuCommentUncomment"/>
    </widget>
    <widget class="QMenu" name="menuSearch">
     <property name="title">
@@ -947,7 +947,7 @@
     <string>Open Folder as Workspace...</string>
    </property>
   </action>
-  <action name="actionToggle_Single_Line_Comment">
+  <action name="actionToggleSingleLineComment">
    <property name="text">
     <string>Toggle Single Line Comment</string>
    </property>
@@ -955,7 +955,7 @@
     <string>Ctrl+/</string>
    </property>
   </action>
-  <action name="actionSingle_Line_Comment">
+  <action name="actionSingleLineComment">
    <property name="text">
     <string>Single Line Comment</string>
    </property>
@@ -963,7 +963,7 @@
     <string>Ctrl+K</string>
    </property>
   </action>
-  <action name="actionSingle_Line_Uncomment">
+  <action name="actionSingleLineUncomment">
    <property name="text">
     <string>Single Line Uncomment</string>
    </property>

@@ -72,7 +72,8 @@
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
-    app(app)
+    app(app),
+    recorder(new MacroRecorder(this))
 {
     qInfo(Q_FUNC_INFO);
 
@@ -111,15 +112,15 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     connect(ui->actionPrint, &QAction::triggered, this, &MainWindow::print);
 
-    connect(ui->actionToggle_Single_Line_Comment, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->toggleCommentSelection();});
-    connect(ui->actionSingle_Line_Comment, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->commentLineSelection();});
-    connect(ui->actionSingle_Line_Uncomment, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->uncommentLineSelection();});
+    connect(ui->actionToggleSingleLineComment, &QAction::triggered, this, [=]() { currentEditor()->toggleCommentSelection(); });
+    connect(ui->actionSingleLineComment, &QAction::triggered, this, [=]() { currentEditor()->commentLineSelection(); });
+    connect(ui->actionSingleLineUncomment, &QAction::triggered, this, [=]() { currentEditor()->uncommentLineSelection(); });
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
 
     connect(ui->actionMoveToTrash, &QAction::triggered, this, &MainWindow::moveCurrentFileToTrash);
 
-    connect(ui->menuRecentFiles, &QMenu::aboutToShow, [=]() {
+    connect(ui->menuRecentFiles, &QMenu::aboutToShow, this, [=]() {
         // NOTE: its unfortunate that this has to be hard coded, but there's no way
         // to easily determine what should or shouldn't be there
         while (ui->menuRecentFiles->actions().size() > 4) {
@@ -129,13 +130,13 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         app->getRecentFilesListManager()->populateMenu(ui->menuRecentFiles);
     });
 
-    connect(ui->actionRestoreRecentlyClosedFile, &QAction::triggered, [=]() {
+    connect(ui->actionRestoreRecentlyClosedFile, &QAction::triggered, this, [=]() {
         if (app->getRecentFilesListManager()->count() > 0) {
             openFileList(QStringList() << app->getRecentFilesListManager()->mostRecentFile());
         }
     });
 
-    connect(ui->actionOpenAllRecentFiles, &QAction::triggered, [=]() {
+    connect(ui->actionOpenAllRecentFiles, &QAction::triggered, this, [=]() {
         openFileList(app->getRecentFilesListManager()->fileList());
     });
 
@@ -146,64 +147,64 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     eolActionGroup->addAction(ui->actionUnix);
     eolActionGroup->addAction(ui->actionMacintosh);
 
-    connect(ui->actionWindows, &QAction::triggered, [=]() { convertEOLs(SC_EOL_CRLF); });
-    connect(ui->actionUnix, &QAction::triggered, [=]() { convertEOLs(SC_EOL_LF); });
-    connect(ui->actionMacintosh, &QAction::triggered, [=]() { convertEOLs(SC_EOL_CR); });
+    connect(ui->actionWindows, &QAction::triggered, this, [=]() { convertEOLs(SC_EOL_CRLF); });
+    connect(ui->actionUnix, &QAction::triggered, this, [=]() { convertEOLs(SC_EOL_LF); });
+    connect(ui->actionMacintosh, &QAction::triggered, this, [=]() { convertEOLs(SC_EOL_CR); });
 
-    connect(ui->actionUpperCase, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->upperCase();});
-    connect(ui->actionLowerCase, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->lowerCase();});
+    connect(ui->actionUpperCase, &QAction::triggered, this, [=]() { currentEditor()->upperCase(); });
+    connect(ui->actionLowerCase, &QAction::triggered, this, [=]() { currentEditor()->lowerCase(); });
 
-    connect(ui->actionDuplicateCurrentLine, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->lineDuplicate();});
-    connect(ui->actionMoveSelectedLinesUp, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->moveSelectedLinesUp();});
-    connect(ui->actionMoveSelectedLinesDown, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->moveSelectedLinesDown();});
-    connect(ui->actionSplitLines, &QAction::triggered, [=]() {
-        dockedEditor->getCurrentEditor()->targetFromSelection();
-        dockedEditor->getCurrentEditor()->linesSplit(0);
+    connect(ui->actionDuplicateCurrentLine, &QAction::triggered, this, [=]() { currentEditor()->lineDuplicate(); });
+    connect(ui->actionMoveSelectedLinesUp, &QAction::triggered, this, [=]() { currentEditor()->moveSelectedLinesUp(); });
+    connect(ui->actionMoveSelectedLinesDown, &QAction::triggered, this, [=]() { currentEditor()->moveSelectedLinesDown(); });
+    connect(ui->actionSplitLines, &QAction::triggered, this, [=]() {
+        currentEditor()->targetFromSelection();
+        currentEditor()->linesSplit(0);
     });
-    connect(ui->actionJoinLines, &QAction::triggered, [=]()  {
-        dockedEditor->getCurrentEditor()->targetFromSelection();
-        dockedEditor->getCurrentEditor()->linesJoin();
+    connect(ui->actionJoinLines, &QAction::triggered, this, [=]()  {
+        currentEditor()->targetFromSelection();
+        currentEditor()->linesJoin();
     });
 
-    connect(ui->actionUndo, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->undo();});
-    connect(ui->actionRedo, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->redo();});
-    connect(ui->actionCut, &QAction::triggered, [=]() {
-        if (dockedEditor->getCurrentEditor()->selectionEmpty()) {
-            dockedEditor->getCurrentEditor()->copyAllowLine();
-            dockedEditor->getCurrentEditor()->lineDelete();
+    connect(ui->actionUndo, &QAction::triggered, this, [=]() { currentEditor()->undo(); });
+    connect(ui->actionRedo, &QAction::triggered, this, [=]() { currentEditor()->redo(); });
+    connect(ui->actionCut, &QAction::triggered, this, [=]() {
+        if (currentEditor()->selectionEmpty()) {
+            currentEditor()->copyAllowLine();
+            currentEditor()->lineDelete();
         }
         else {
-            dockedEditor->getCurrentEditor()->cut();
+            currentEditor()->cut();
         }
     });
-    connect(ui->actionCopy, &QAction::triggered, [=]() {
-        dockedEditor->getCurrentEditor()->copyAllowLine();
+    connect(ui->actionCopy, &QAction::triggered, this, [=]() {
+        currentEditor()->copyAllowLine();
     });
-    connect(ui->actionDelete, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->clear();});
-    connect(ui->actionPaste, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->paste();});
-    connect(ui->actionSelect_All, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->selectAll();});
-    connect(ui->actionSelect_Next, &QAction::triggered, [=]() {
+    connect(ui->actionDelete, &QAction::triggered, this, [=]() { currentEditor()->clear();});
+    connect(ui->actionPaste, &QAction::triggered, this, [=]() { currentEditor()->paste();});
+    connect(ui->actionSelect_All, &QAction::triggered, this, [=]() { currentEditor()->selectAll();});
+    connect(ui->actionSelect_Next, &QAction::triggered, this, [=]() {
         // Set search flags here?
-        dockedEditor->getCurrentEditor()->targetWholeDocument();
-        dockedEditor->getCurrentEditor()->multipleSelectAddNext();
+        currentEditor()->targetWholeDocument();
+        currentEditor()->multipleSelectAddNext();
     });
-    connect(ui->actionCopyFullPath, &QAction::triggered, [=]() {
-        auto editor = dockedEditor->getCurrentEditor();
+    connect(ui->actionCopyFullPath, &QAction::triggered, this, [=]() {
+        auto editor = currentEditor();
         if (editor->isFile()) {
             QApplication::clipboard()->setText(editor->getFilePath());
         }
     });
-    connect(ui->actionCopyFileName, &QAction::triggered, [=]() {
-        QApplication::clipboard()->setText(dockedEditor->getCurrentEditor()->getName());
+    connect(ui->actionCopyFileName, &QAction::triggered, this, [=]() {
+        QApplication::clipboard()->setText(currentEditor()->getName());
     });
-    connect(ui->actionCopyFileDirectory, &QAction::triggered, [=]() {
-        auto editor = dockedEditor->getCurrentEditor();
+    connect(ui->actionCopyFileDirectory, &QAction::triggered, this, [=]() {
+        auto editor = currentEditor();
         if (editor->isFile()) {
             QApplication::clipboard()->setText(editor->getPath());
         }
     });
-    connect(ui->actionIncrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->tab();});
-    connect(ui->actionDecrease_Indent, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->backTab();});
+    connect(ui->actionIncrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->tab(); });
+    connect(ui->actionDecrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->backTab(); });
 
     SearchResultsDock *srDock = new SearchResultsDock(this);
     srDock->hide();
@@ -211,8 +212,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     srDock->toggleViewAction()->setShortcut(Qt::Key_F7);
     ui->menuView->addAction(srDock->toggleViewAction());
 
-    connect(ui->actionFind, &QAction::triggered, [=]() {
-        ScintillaNext *editor = dockedEditor->getCurrentEditor();
+    connect(ui->actionFind, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
         FindReplaceDialog *frd = nullptr;
 
         // Create it if it doesn't exist
@@ -256,26 +257,24 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         frd->activateWindow();
     });
 
-    connect(ui->actionFindNext, &QAction::triggered, [=]() {
+    connect(ui->actionFindNext, &QAction::triggered, this, [=]() {
         if (dialogs.contains("FindReplaceDialog")) {
             qobject_cast<FindReplaceDialog *>(dialogs["FindReplaceDialog"])->performLastSearch();
         }
     });
 
-    connect(ui->actionQuickFind, &QAction::triggered, [=]() {
-        ScintillaNext *editor = dockedEditor->getCurrentEditor();
-
+    connect(ui->actionQuickFind, &QAction::triggered, this, [=]() {
         if (quickFind == Q_NULLPTR) {
             quickFind = new QuickFindWidget(this);
         }
-        quickFind->setEditor(editor);
+        quickFind->setEditor(currentEditor());
         quickFind->setFocus();
 
         quickFind->show();
     });
 
     connect(ui->actionGoToLine, &QAction::triggered, this, [=]() {
-        ScintillaNext *editor = dockedEditor->getCurrentEditor();
+        ScintillaNext *editor = currentEditor();
         const int currentLine = editor->lineFromPosition(editor->currentPos()) + 1;
         const int maxLine = editor->lineCount();
         bool ok;
@@ -329,7 +328,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->pushExitFullScreen->setParent(this); // This is important
     ui->pushExitFullScreen->setVisible(false);
     connect(ui->pushExitFullScreen, &QPushButton::clicked, ui->actionFullScreen, &QAction::trigger);
-    connect(ui->actionFullScreen, &QAction::triggered, [=](bool b) {
+    connect(ui->actionFullScreen, &QAction::triggered, this, [=](bool b) {
         if (b) {
             // NOTE: don't hide() these as it will cancel their actions they hold
             ui->menuBar->setMaximumHeight(0);
@@ -349,12 +348,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionShowAllCharacters, &QAction::triggered, [=](bool b) {
+    connect(ui->actionShowAllCharacters, &QAction::triggered, this, [=](bool b) {
         ui->actionShowWhitespace->setChecked(b);
         ui->actionShowEndofLine->setChecked(b);
     });
 
-    connect(ui->actionShowWhitespace, &QAction::toggled, [=](bool b) {
+    connect(ui->actionShowWhitespace, &QAction::toggled, this, [=](bool b) {
         // TODO: could make SCWS_VISIBLEALWAYS configurable via settings. Probably not worth
         // taking up menu space e.g. show all, show leading, show trailing
         for (auto &editor : dockedEditor->editors()) {
@@ -364,7 +363,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ui->actionShowAllCharacters->setChecked(b && ui->actionShowEndofLine->isChecked());
     });
 
-    connect(ui->actionShowEndofLine, &QAction::toggled, [=](bool b) {
+    connect(ui->actionShowEndofLine, &QAction::toggled, this, [=](bool b) {
         for (auto &editor : dockedEditor->editors()) {
             editor->setViewEOL(b);
         }
@@ -372,40 +371,41 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ui->actionShowAllCharacters->setChecked(b && ui->actionShowWhitespace->isChecked());
     });
 
-    connect(ui->actionShowWrapSymbol, &QAction::triggered, [=](bool b) {
+    connect(ui->actionShowWrapSymbol, &QAction::triggered, this, [=](bool b) {
         for (auto &editor : dockedEditor->editors()) {
             editor->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
         }
     });
 
-    connect(ui->actionShowIndentGuide, &QAction::triggered, [=](bool b) {
-        dockedEditor->getCurrentEditor()->setIndentationGuides(b ? SC_IV_LOOKBOTH : SC_IV_NONE);
+    connect(ui->actionShowIndentGuide, &QAction::triggered, this, [=](bool b) {
+        currentEditor()->setIndentationGuides(b ? SC_IV_LOOKBOTH : SC_IV_NONE);
     });
     ui->actionShowIndentGuide->setChecked(true);
 
-    connect(ui->actionWordWrap, &QAction::triggered, [=](bool b) {
-        ScintillaNext *editor = dockedEditor->getCurrentEditor();
+    connect(ui->actionWordWrap, &QAction::triggered, this, [=](bool b) {
         if (b) {
             for (auto &editor : dockedEditor->editors()) {
                 editor->setWrapMode(SC_WRAP_WORD);
             }
         }
         else {
-            // Store the top line and restore it after the lines have been unwrapped
-            int topLine = editor->docLineFromVisible(editor->firstVisibleLine());
-            editor->setWrapMode(SC_WRAP_NONE);
-            editor->setFirstVisibleLine(topLine);
+            for (auto &editor : dockedEditor->editors()) {
+                // Store the top line and restore it after the lines have been unwrapped
+                int topLine = editor->docLineFromVisible(editor->firstVisibleLine());
+                editor->setWrapMode(SC_WRAP_NONE);
+                editor->setFirstVisibleLine(topLine);
+            }
         }
     });
 
-    connect(ui->actionZoomIn, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->zoomIn(); });
-    connect(ui->actionZoomOut, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->zoomOut(); });
-    connect(ui->actionZoomReset, &QAction::triggered, [=]() { dockedEditor->getCurrentEditor()->setZoom(0); });
+    connect(ui->actionZoomIn, &QAction::triggered, this, [=]() { currentEditor()->zoomIn(); });
+    connect(ui->actionZoomOut, &QAction::triggered, this, [=]() { currentEditor()->zoomOut(); });
+    connect(ui->actionZoomReset, &QAction::triggered, this, [=]() { currentEditor()->setZoom(0); });
 
     languageActionGroup = new QActionGroup(this);
     languageActionGroup->setExclusive(true);
 
-    connect(ui->actionPreferences, &QAction::triggered, [=] {
+    connect(ui->actionPreferences, &QAction::triggered, this, [=] {
         PreferencesDialog *pd = nullptr;
 
         if (!dialogs.contains("PreferencesDialog")) {
@@ -421,11 +421,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         pd->activateWindow();
     });
 
-    recorder = new MacroRecorder(this);
-    connect(ui->actionMacroRecording, &QAction::triggered, [=](bool b) {
+    connect(ui->actionMacroRecording, &QAction::triggered, this, [=](bool b) {
         if (b) {
             ui->actionMacroRecording->setText(tr("Stop Recording"));
-            recorder->startRecording(dockedEditor->getCurrentEditor());
+            recorder->startRecording(currentEditor());
 
             // A macro is being recorded so disable some macro options
             ui->actionPlayback->setEnabled(false);
@@ -459,11 +458,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionPlayback, &QAction::triggered, [=]() {
-        currentMacro->replay(dockedEditor->getCurrentEditor());
+    connect(ui->actionPlayback, &QAction::triggered, this, [=]() {
+        currentMacro->replay(currentEditor());
     });
 
-    connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, [=]() {
+    connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, this, [=]() {
         MacroRunDialog *mrd = nullptr;
 
         if (!dialogs.contains("MacroRunDialog")) {
@@ -472,9 +471,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
             connect(mrd, &MacroRunDialog::execute, dockedEditor, [=](Macro *macro, int times) {
                 if (times > 0)
-                    macro->replay(dockedEditor->getCurrentEditor(), times);
+                    macro->replay(currentEditor(), times);
                 else if (times == -1)
-                    macro->replayTillEndOfFile(dockedEditor->getCurrentEditor());
+                    macro->replayTillEndOfFile(currentEditor());
             });
         }
         else {
@@ -491,7 +490,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         mrd->activateWindow();
     });
 
-    connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, [=]() {
+    connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, this, [=]() {
         MacroSaveDialog msd;
 
         msd.show();
@@ -517,7 +516,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionAboutQt, &QAction::triggered, &QApplication::aboutQt);
 
     ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
-    connect(ui->actionAboutNotepadNext, &QAction::triggered, [=]() {
+    connect(ui->actionAboutNotepadNext, &QAction::triggered, this, [=]() {
         QMessageBox::about(this, QString(),
                             QStringLiteral("<h3>%1 v%2</h3>"
                                     "<p>%3</p>"
@@ -555,7 +554,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->menuView->addAction(fawDock->toggleViewAction());
     connect(fawDock, &FolderAsWorkspaceDock::fileDoubleClicked, this, &MainWindow::openFile);
 
-    connect(app->getSettings(), &Settings::showMenuBarChanged, [=](bool showMenuBar) {
+    connect(app->getSettings(), &Settings::showMenuBarChanged, this, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
     });
@@ -643,7 +642,7 @@ void MainWindow::newFile()
 bool MainWindow::isInInitialState()
 {
     if (dockedEditor->count() == 1) {
-        ScintillaNext *editor = dockedEditor->getCurrentEditor();
+        ScintillaNext *editor = currentEditor();
         return !editor->isFile() && editor->isSavedToDisk();
     }
 
@@ -746,7 +745,7 @@ void MainWindow::openFileDialog()
 {
     QString dialogDir;
     const QString filter = app->getFileDialogFilter();
-    const ScintillaNext *editor = dockedEditor->getCurrentEditor();
+    const ScintillaNext *editor = currentEditor();
 
     // Use the path if possible
     if (editor->isFile()) {
@@ -766,7 +765,7 @@ void MainWindow::openFile(const QString &filePath)
 void MainWindow::openFolderAsWorkspaceDialog()
 {
     QString dialogDir;
-    const ScintillaNext *editor = dockedEditor->getCurrentEditor();
+    const ScintillaNext *editor = currentEditor();
 
     // Use the path if possible
     if (editor->isFile()) {
@@ -782,7 +781,7 @@ void MainWindow::openFolderAsWorkspaceDialog()
 
 void MainWindow::reloadFile()
 {
-    auto editor = dockedEditor->getCurrentEditor();
+    auto editor = currentEditor();
 
     if (!editor->isFile() && !editor->isSavedToDisk()) {
         return;
@@ -798,7 +797,7 @@ void MainWindow::reloadFile()
 
 void MainWindow::closeCurrentFile()
 {
-    closeFile(dockedEditor->getCurrentEditor());
+    closeFile(currentEditor());
 }
 
 void MainWindow::closeFile(ScintillaNext *editor)
@@ -858,7 +857,7 @@ void MainWindow::closeAllFiles(bool forceClose = false)
 
 void MainWindow::closeAllExceptActive()
 {
-    auto e = dockedEditor->getCurrentEditor();
+    auto e = currentEditor();
     auto editors = dockedEditor->editors();
 
     editors.removeOne(e);
@@ -907,7 +906,7 @@ void MainWindow::closeAllToRight()
 
 bool MainWindow::saveCurrentFile()
 {
-    return saveFile(dockedEditor->getCurrentEditor());
+    return saveFile(currentEditor());
 }
 
 bool MainWindow::saveFile(ScintillaNext *editor)
@@ -934,7 +933,7 @@ bool MainWindow::saveCurrentFileAsDialog()
 {
     QString dialogDir;
     const QString filter = app->getFileDialogFilter();
-    ScintillaNext *editor = dockedEditor->getCurrentEditor();
+    ScintillaNext *editor = currentEditor();
 
     // Use the file path if possible
     if (editor->isFile()) {
@@ -955,7 +954,7 @@ bool MainWindow::saveCurrentFileAsDialog()
 
 bool MainWindow::saveCurrentFileAs(const QString &fileName)
 {
-    return saveFileAs(dockedEditor->getCurrentEditor(), fileName);
+    return saveFileAs(currentEditor(), fileName);
 }
 
 bool MainWindow::saveFileAs(ScintillaNext *editor, const QString &fileName)
@@ -971,7 +970,7 @@ void MainWindow::saveCopyAsDialog()
 {
     QString dialogDir;
     const QString filter = app->getFileDialogFilter();
-    const ScintillaNext* editor = dockedEditor->getCurrentEditor();
+    const ScintillaNext* editor = currentEditor();
 
     // Use the file path if possible
     if (editor->isFile()) {
@@ -985,7 +984,7 @@ void MainWindow::saveCopyAsDialog()
 
 void MainWindow::saveCopyAs(const QString &fileName)
 {
-    auto editor = dockedEditor->getCurrentEditor();
+    auto editor = currentEditor();
     editor->saveCopyAs(fileName);
 }
 
@@ -998,7 +997,7 @@ void MainWindow::saveAll()
 
 void MainWindow::renameFile()
 {
-    ScintillaNext *editor = dockedEditor->getCurrentEditor();
+    ScintillaNext *editor = currentEditor();
 
     Q_ASSERT(editor->isFile());
 
@@ -1018,7 +1017,7 @@ void MainWindow::renameFile()
 
 void MainWindow::moveCurrentFileToTrash()
 {
-    ScintillaNext *editor = dockedEditor->getCurrentEditor();
+    ScintillaNext *editor = currentEditor();
 
     moveFileToTrash(editor);
 }
@@ -1046,7 +1045,7 @@ void MainWindow::moveFileToTrash(ScintillaNext *editor)
 void MainWindow::print()
 {
     QPrintPreviewDialog printDialog(this, Qt::Window);
-    EditorPrintPreviewRenderer renderer(dockedEditor->getCurrentEditor());
+    EditorPrintPreviewRenderer renderer(currentEditor());
 
     connect(&printDialog, &QPrintPreviewDialog::paintRequested, &renderer, &EditorPrintPreviewRenderer::render);
 
@@ -1064,7 +1063,7 @@ void MainWindow::print()
 
 void MainWindow::convertEOLs(int eolMode)
 {
-    ScintillaNext *editor = dockedEditor->getCurrentEditor();
+    ScintillaNext *editor = currentEditor();
 
     // TODO: does convertEOLs trigger SCN_MODIFIED notifications? If so can these be turned off to increase performance?
     editor->convertEOLs(eolMode);
@@ -1383,8 +1382,8 @@ void MainWindow::focusIn()
 {
     qInfo(Q_FUNC_INFO);
 
-    if (checkFileForModification(dockedEditor->getCurrentEditor())) {
-        updateGui(dockedEditor->getCurrentEditor());
+    if (checkFileForModification(currentEditor())) {
+        updateGui(currentEditor());
     }
 }
 
@@ -1567,7 +1566,7 @@ void MainWindow::dropEvent(QDropEvent *event)
         }
 
         newFile();
-        dockedEditor->getCurrentEditor()->setText(event->mimeData()->text().toLocal8Bit().constData());
+        currentEditor()->setText(event->mimeData()->text().toLocal8Bit().constData());
         bringWindowToForeground();
         event->acceptProposedAction();
     }
@@ -1602,11 +1601,10 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
     menu->popup(QCursor::pos());
 }
 
-
 void MainWindow::languageMenuTriggered()
 {
     const QAction *act = qobject_cast<QAction *>(sender());
-    auto editor = dockedEditor->getCurrentEditor();
+    auto editor = currentEditor();
     QVariant v = act->data();
 
     setLanguage(editor, v.toString());
