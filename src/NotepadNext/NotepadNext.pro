@@ -77,6 +77,7 @@ SOURCES += \
     QRegexSearch.cpp \
     QuickFindWidget.cpp \
     RecentFilesListManager.cpp \
+    RecentFilesListMenuBuilder.cpp \
     SciIFaceTable.cpp \
     ScintillaCommenter.cpp \
     ScintillaNext.cpp \
@@ -131,6 +132,7 @@ HEADERS += \
     QRegexSearch.h \
     QuickFindWidget.h \
     RecentFilesListManager.h \
+    RecentFilesListMenuBuilder.h \
     SciIFaceTable.h \
     ScintillaCommenter.h \
     ScintillaNext.h \

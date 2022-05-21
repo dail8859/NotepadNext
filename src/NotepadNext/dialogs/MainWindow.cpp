@@ -50,6 +50,7 @@
 #include "ScintillaNext.h"
 
 #include "RecentFilesListManager.h"
+#include "RecentFilesListMenuBuilder.h"
 #include "EditorManager.h"
 
 #include "MacroRecorder.h"
@@ -120,6 +121,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     connect(ui->actionMoveToTrash, &QAction::triggered, this, &MainWindow::moveCurrentFileToTrash);
 
+    RecentFilesListMenuBuilder *recentFileListMenuBuilder = new RecentFilesListMenuBuilder(app->getRecentFilesListManager());
     connect(ui->menuRecentFiles, &QMenu::aboutToShow, this, [=]() {
         // NOTE: its unfortunate that this has to be hard coded, but there's no way
         // to easily determine what should or shouldn't be there
@@ -127,7 +129,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             delete ui->menuRecentFiles->actions().takeLast();
         }
 
-        app->getRecentFilesListManager()->populateMenu(ui->menuRecentFiles);
+        recentFileListMenuBuilder->populateMenu(ui->menuRecentFiles);
     });
 
     connect(ui->actionRestoreRecentlyClosedFile, &QAction::triggered, this, [=]() {
@@ -140,7 +142,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         openFileList(app->getRecentFilesListManager()->fileList());
     });
 
-    connect(app->getRecentFilesListManager(), &RecentFilesListManager::fileOpenRequest, this, &MainWindow::openFile);
+    connect(recentFileListMenuBuilder, &RecentFilesListMenuBuilder::fileOpenRequest, this, &MainWindow::openFile);
 
     QActionGroup *eolActionGroup = new QActionGroup(this);
     eolActionGroup->addAction(ui->actionWindows);

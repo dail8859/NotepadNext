@@ -17,19 +17,11 @@
  */
 
 
-#include <QDir>
-#include <QMenu>
-
 #include "RecentFilesListManager.h"
 
 RecentFilesListManager::RecentFilesListManager(QObject *parent) :
     QObject(parent)
 {
-}
-
-RecentFilesListManager::~RecentFilesListManager()
-{
-    clear();
 }
 
 void RecentFilesListManager::addFile(const QString &filePath)
@@ -74,30 +66,4 @@ void RecentFilesListManager::setFileList(const QStringList &list)
 {
     clear();
     recentFiles.append(list);
-}
-
-void RecentFilesListManager::populateMenu(QMenu *menu)
-{
-    int i = 0;
-
-    QList<QAction *> recentFileListActions;
-    for (const QString &file : recentFiles) {
-        ++i;
-        QAction *action = new QAction(QString("%1%2: %3").arg(i < 10 ? "&" : "").arg(i).arg(QDir::toNativeSeparators(file)), menu);
-
-        action->setData(file);
-        connect(action, &QAction::triggered, this, &RecentFilesListManager::recentFileActionTriggered);
-
-        recentFileListActions.append(action);
-    }
-
-    menu->addActions(recentFileListActions);
-}
-
-void RecentFilesListManager::recentFileActionTriggered()
-{
-    qInfo(Q_FUNC_INFO);
-
-    const QAction *action = qobject_cast<const QAction *>(sender());
-    emit fileOpenRequest(action->data().toString());
 }
