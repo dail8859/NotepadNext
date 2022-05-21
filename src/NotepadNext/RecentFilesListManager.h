@@ -22,21 +22,13 @@
 
 #include <QObject>
 #include <QList>
-#include <QAction>
-
-class QMenu;
 
 class RecentFilesListManager : public QObject
 {
     Q_OBJECT
 
 public:
-    RecentFilesListManager(QObject *parent = Q_NULLPTR);
-    ~RecentFilesListManager();
-
-    void addFile(const QString &filePath);
-    void removeFile(const QString &filePath);
-    void clear();
+    explicit RecentFilesListManager(QObject *parent = Q_NULLPTR);
 
     QString mostRecentFile() const;
     QStringList fileList() const;
@@ -44,13 +36,10 @@ public:
 
     int count() const { return recentFiles.size(); }
 
-    void populateMenu(QMenu *menu);
-
-signals:
-    void fileOpenRequest(const QString &filePath);
-
-private slots:
-    void recentFileActionTriggered();
+public slots:
+    void addFile(const QString &filePath);
+    void removeFile(const QString &filePath);
+    void clear();
 
 private:
     QStringList recentFiles;
