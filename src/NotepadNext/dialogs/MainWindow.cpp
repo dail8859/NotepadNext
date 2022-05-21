@@ -465,13 +465,13 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, this, [=]() {
-        MacroRunDialog *mrd = nullptr;
+        MacroRunDialog *macroRunDialog = nullptr;
 
         if (!dialogs.contains("MacroRunDialog")) {
-            mrd = new MacroRunDialog(this);
-            dialogs["MacroRunDialog"] = mrd;
+            macroRunDialog = new MacroRunDialog(this);
+            dialogs["MacroRunDialog"] = macroRunDialog;
 
-            connect(mrd, &MacroRunDialog::execute, dockedEditor, [=](Macro *macro, int times) {
+            connect(macroRunDialog, &MacroRunDialog::execute, dockedEditor, [=](Macro *macro, int times) {
                 if (times > 0)
                     macro->replay(currentEditor(), times);
                 else if (times == -1)
@@ -479,34 +479,34 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             });
         }
         else {
-            mrd = qobject_cast<MacroRunDialog *>(dialogs["MacroRunDialog"]);
+            macroRunDialog = qobject_cast<MacroRunDialog *>(dialogs["MacroRunDialog"]);
         }
 
         if (!macros.contains(currentMacro))
-            mrd->setMacros(QVector<Macro *>(macros) << currentMacro);
+            macroRunDialog->setMacros(QVector<Macro *>(macros) << currentMacro);
         else
-            mrd->setMacros(macros);
+            macroRunDialog->setMacros(macros);
 
-        mrd->show();
-        mrd->raise();
-        mrd->activateWindow();
+        macroRunDialog->show();
+        macroRunDialog->raise();
+        macroRunDialog->activateWindow();
     });
 
     connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, this, [=]() {
-        MacroSaveDialog msd;
+        MacroSaveDialog macroSaveDialog;
 
-        msd.show();
-        msd.raise();
-        msd.activateWindow();
+        macroSaveDialog.show();
+        macroSaveDialog.raise();
+        macroSaveDialog.activateWindow();
 
-        if (msd.exec() == QDialog::Accepted) {
+        if (macroSaveDialog.exec() == QDialog::Accepted) {
             // The macro has been saved so disable save option
             ui->actionSaveCurrentRecordedMacro->setEnabled(false);
 
             // TODO: does the macro name already exist?
 
-            currentMacro->setName(msd.getName());
-            if (!msd.getShortcut().isEmpty()) {
+            currentMacro->setName(macroSaveDialog.getName());
+            if (!macroSaveDialog.getShortcut().isEmpty()) {
                 // do something with msd.getShortcut().isEmpty()
             }
 
