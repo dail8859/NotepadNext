@@ -32,5 +32,6 @@
         <file>icons/bin_closed.png</file>
         <file>icons/printer.png</file>
         <file>icons/NotepadNext.png</file>
+        <file>icons/cog.png</file>
     </qresource>
 </RCC>
