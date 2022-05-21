@@ -209,7 +209,6 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionDecrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->backTab(); });
 
     SearchResultsDock *srDock = new SearchResultsDock(this);
-    srDock->hide();
     addDockWidget(Qt::BottomDockWidgetArea, srDock);
     srDock->toggleViewAction()->setShortcut(Qt::Key_F7);
     ui->menuView->addAction(srDock->toggleViewAction());
@@ -358,7 +357,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionShowWhitespace, &QAction::toggled, this, [=](bool b) {
         // TODO: could make SCWS_VISIBLEALWAYS configurable via settings. Probably not worth
         // taking up menu space e.g. show all, show leading, show trailing
-        for (auto &editor : dockedEditor->editors()) {
+        for (auto &editor : editors()) {
             editor->setViewWS(b ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
         }
 
@@ -366,7 +365,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionShowEndofLine, &QAction::toggled, this, [=](bool b) {
-        for (auto &editor : dockedEditor->editors()) {
+        for (auto &editor : editors()) {
             editor->setViewEOL(b);
         }
 
@@ -374,7 +373,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionShowWrapSymbol, &QAction::triggered, this, [=](bool b) {
-        for (auto &editor : dockedEditor->editors()) {
+        for (auto &editor : editors()) {
             editor->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
         }
     });
@@ -386,12 +385,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     connect(ui->actionWordWrap, &QAction::triggered, this, [=](bool b) {
         if (b) {
-            for (auto &editor : dockedEditor->editors()) {
+            for (auto &editor : editors()) {
                 editor->setWrapMode(SC_WRAP_WORD);
             }
         }
         else {
-            for (auto &editor : dockedEditor->editors()) {
+            for (auto &editor : editors()) {
                 // Store the top line and restore it after the lines have been unwrapped
                 int topLine = editor->docLineFromVisible(editor->firstVisibleLine());
                 editor->setWrapMode(SC_WRAP_NONE);
@@ -471,7 +470,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             macroRunDialog = new MacroRunDialog(this);
             dialogs["MacroRunDialog"] = macroRunDialog;
 
-            connect(macroRunDialog, &MacroRunDialog::execute, dockedEditor, [=](Macro *macro, int times) {
+            connect(macroRunDialog, &MacroRunDialog::execute, this, [=](Macro *macro, int times) {
                 if (times > 0)
                     macro->replay(currentEditor(), times);
                 else if (times == -1)
@@ -631,6 +630,11 @@ int MainWindow::editorCount() const
     return dockedEditor->count();
 }
 
+QVector<ScintillaNext *> MainWindow::editors() const
+{
+    return dockedEditor->editors();
+}
+
 void MainWindow::newFile()
 {
     qInfo(Q_FUNC_INFO);
@@ -643,7 +647,7 @@ void MainWindow::newFile()
 // One unedited, new blank document
 bool MainWindow::isInInitialState()
 {
-    if (dockedEditor->count() == 1) {
+    if (editorCount() == 1) {
         ScintillaNext *editor = currentEditor();
         return !editor->isFile() && editor->isSavedToDisk();
     }
@@ -837,7 +841,7 @@ void MainWindow::closeFile(ScintillaNext *editor)
     }
 
     // If the last document was closed, start with a new one
-    if (dockedEditor->count() == 0) {
+    if (editorCount() == 0) {
         newFile();
     }
 }
@@ -845,13 +849,13 @@ void MainWindow::closeFile(ScintillaNext *editor)
 void MainWindow::closeAllFiles(bool forceClose = false)
 {
     if (!forceClose) {
-        if (!checkEditorsBeforeClose(dockedEditor->editors())) {
+        if (!checkEditorsBeforeClose(editors())) {
             return;
         }
     }
 
     // Ask the manager to close the editors the dockedEditor knows about
-    for (ScintillaNext *editor : dockedEditor->editors()) {
+    for (ScintillaNext *editor : editors()) {
         editor->close();
     }
 
@@ -862,12 +866,12 @@ void MainWindow::closeAllFiles(bool forceClose = false)
 void MainWindow::closeAllExceptActive()
 {
     auto e = currentEditor();
-    auto editors = dockedEditor->editors();
+    auto editor_list = editors();
 
-    editors.removeOne(e);
+    editor_list.removeOne(e);
 
-    if (checkEditorsBeforeClose(editors)) {
-        for (ScintillaNext *editor : editors) {
+    if (checkEditorsBeforeClose(editor_list)) {
+        for (ScintillaNext *editor : editor_list) {
             editor->close();
         }
     }
@@ -994,7 +998,7 @@ void MainWindow::saveCopyAs(const QString &fileName)
 
 void MainWindow::saveAll()
 {
-    for (ScintillaNext *editor : dockedEditor->editors()) {
+    for (ScintillaNext *editor : editors()) {
         saveFile(editor);
     }
 }
@@ -1105,7 +1109,7 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
 
 bool MainWindow::isAnyUnsaved() const
 {
-    for (const ScintillaNext *editor : dockedEditor->editors()) {
+    for (const ScintillaNext *editor : editors()) {
         if (!editor->isSavedToDisk()) {
             return true;
         }
@@ -1142,7 +1146,7 @@ void MainWindow::updateSaveStatusBasedUi(ScintillaNext *editor)
     ui->actionSave->setEnabled(isDirty);
     ui->actionSaveAll->setEnabled(isDirty || isAnyUnsaved());
 
-    if (dockedEditor->count() == 1) {
+    if (editorCount() == 1) {
         bool ableToClose = editor->isFile() || isDirty;
         ui->actionClose->setEnabled(ableToClose);
         ui->actionCloseAll->setEnabled(ableToClose);
@@ -1160,7 +1164,7 @@ void MainWindow::updateEditorPositionBasedUi()
 
     ui->actionCloseAllToLeft->setEnabled(index > 0);
     ui->actionCloseAllToRight->setEnabled(index < (total - 1));
-    ui->actionCloseAllExceptActive->setEnabled(dockedEditor->count() > 1);
+    ui->actionCloseAllExceptActive->setEnabled(editorCount() > 1);
 }
 
 void MainWindow::updateLanguageBasedUi(ScintillaNext *editor)
@@ -1506,7 +1510,7 @@ void MainWindow::initUpdateCheck()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if (!checkEditorsBeforeClose(dockedEditor->editors())) {
+    if (!checkEditorsBeforeClose(editors())) {
         event->ignore();
         return;
     }
