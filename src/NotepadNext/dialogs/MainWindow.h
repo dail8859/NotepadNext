@@ -52,6 +52,7 @@ public:
     void setupLanguageMenu();
     ScintillaNext *currentEditor() const;
     int editorCount() const;
+    QVector<ScintillaNext *> editors() const;
 
 public slots:
     void newFile();
