@@ -309,7 +309,7 @@ void RunStyles<DISTANCE, STYLE>::Check() const {
 
 template class Scintilla::Internal::RunStyles<int, int>;
 template class Scintilla::Internal::RunStyles<int, char>;
-#if (PTRDIFF_MAX != INT_MAX) || PLAT_HAIKU
+#if (PTRDIFF_MAX != INT_MAX) || defined(__HAIKU__)
 template class Scintilla::Internal::RunStyles<ptrdiff_t, int>;
 template class Scintilla::Internal::RunStyles<ptrdiff_t, char>;
 #endif

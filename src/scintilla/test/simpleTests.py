@@ -48,13 +48,16 @@ class TestSimple(unittest.TestCase):
 
 	def testAddStyledText(self):
 		self.assertEquals(self.ed.EndStyled, 0)
-		self.ed.AddStyledText(2, b"x\002")
-		self.assertEquals(self.ed.Length, 1)
+		self.ed.AddStyledText(4, b"x\002y\377")
+		self.assertEquals(self.ed.Length, 2)
 		self.assertEquals(self.ed.GetCharAt(0), ord("x"))
 		self.assertEquals(self.ed.GetStyleAt(0), 2)
+		self.assertEquals(self.ed.GetStyleIndexAt(0), 2)
+		self.assertEquals(self.ed.GetStyleIndexAt(1), 255)
 		self.assertEquals(self.ed.StyledTextRange(0, 1), b"x\002")
+		self.assertEquals(self.ed.StyledTextRange(1, 2), b"y\377")
 		self.ed.ClearDocumentStyle()
-		self.assertEquals(self.ed.Length, 1)
+		self.assertEquals(self.ed.Length, 2)
 		self.assertEquals(self.ed.GetCharAt(0), ord("x"))
 		self.assertEquals(self.ed.GetStyleAt(0), 0)
 		self.assertEquals(self.ed.StyledTextRange(0, 1), b"x\0")
@@ -161,6 +164,17 @@ class TestSimple(unittest.TestCase):
 		# Should now be "xxyy"
 		self.assertEquals(self.ed.Length, 4)
 		self.assertEquals(b"xxyy", self.ed.ByteRange(0,4))
+
+	def testTextRangeFull(self):
+		data = b"xy"
+		self.ed.InsertText(0, data)
+		self.assertEquals(self.ed.Length, 2)
+		self.assertEquals(data, self.ed.ByteRangeFull(0,2))
+
+		self.ed.InsertText(1, data)
+		# Should now be "xxyy"
+		self.assertEquals(self.ed.Length, 4)
+		self.assertEquals(b"xxyy", self.ed.ByteRangeFull(0,4))
 
 	def testInsertNul(self):
 		data = b"\0"
@@ -1182,6 +1196,12 @@ class TestSearch(unittest.TestCase):
 		pos = self.ed.FindBytes(0, self.ed.Length, b"zzz", 0)
 		self.assertEquals(pos, -1)
 		pos = self.ed.FindBytes(0, self.ed.Length, b"big", 0)
+		self.assertEquals(pos, 2)
+
+	def testFindFull(self):
+		pos = self.ed.FindBytesFull(0, self.ed.Length, b"zzz", 0)
+		self.assertEquals(pos, -1)
+		pos = self.ed.FindBytesFull(0, self.ed.Length, b"big", 0)
 		self.assertEquals(pos, 2)
 
 	def testFindEmpty(self):

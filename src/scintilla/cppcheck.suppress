@@ -31,6 +31,10 @@ constParameter:scintilla/lexlib/StyleContext.cxx
 // ScintillaDocument is providing an API and there are no consumers of the API inside Scintilla
 unusedFunction:scintilla/qt/ScintillaEdit/ScintillaDocument.cpp
 
+// Doesn't understand changing dropWentOutside in Editor
+knownConditionTrueFalse:scintilla/qt/ScintillaEditBase/ScintillaQt.cpp
+knownConditionTrueFalse:scintilla/win32/ScintillaWin.cxx
+
 // moc_ files show #error as they are not built with standard context
 preprocessorErrorDirective:scintilla/qt/*.cpp
 

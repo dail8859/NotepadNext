@@ -406,14 +406,15 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void PaintSelMargin(Surface *surfaceWindow, const PRectangle &rc);
 	void RefreshPixMaps(Surface *surfaceWindow);
 	void Paint(Surface *surfaceWindow, PRectangle rcArea);
-	Sci::Position FormatRange(bool draw, const Scintilla::RangeToFormat *pfr);
+	Sci::Position FormatRange(Scintilla::Message iMessage, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
 	long TextWidth(Scintilla::uptr_t style, const char *text);
 
 	virtual void SetVerticalScrollPos() = 0;
 	virtual void SetHorizontalScrollPos() = 0;
 	virtual bool ModifyScrollBars(Sci::Line nMax, Sci::Line nPage) = 0;
 	virtual void ReconfigureScrollBars();
-	void SetScrollBars();
+	void ChangeScrollBars();
+	virtual void SetScrollBars();
 	void ChangeSize();
 
 	void FilterSelections();
@@ -502,6 +503,7 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 
 	virtual std::unique_ptr<CaseFolder> CaseFolderForEncoding();
 	Sci::Position FindText(Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
+	Sci::Position FindTextFull(Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
 	void SearchAnchor();
 	Sci::Position SearchText(Scintilla::Message iMessage, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
 	Sci::Position SearchInTarget(const char *text, Sci::Position length);
@@ -592,6 +594,8 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	virtual bool ValidCodePage(int /* codePage */) const { return true; }
 	virtual std::string UTF8FromEncoded(std::string_view encoded) const = 0;
 	virtual std::string EncodedFromUTF8(std::string_view utf8) const = 0;
+	virtual std::unique_ptr<Surface> CreateMeasurementSurface() const;
+	virtual std::unique_ptr<Surface> CreateDrawingSurface(SurfaceID sid, std::optional<Scintilla::Technology> technologyOpt = {}) const;
 
 	Sci::Line WrapCount(Sci::Line line);
 	void AddStyledText(const char *buffer, Sci::Position appendLength);
@@ -684,19 +688,11 @@ class AutoSurface {
 private:
 	std::unique_ptr<Surface> surf;
 public:
-	AutoSurface(const Editor *ed) {
-		if (ed->wMain.GetID()) {
-			surf = Surface::Allocate(ed->technology);
-			surf->Init(ed->wMain.GetID());
-			surf->SetMode(SurfaceMode(ed->CodePage(), ed->BidirectionalR2L()));
-		}
+	AutoSurface(const Editor *ed) :
+		surf(ed->CreateMeasurementSurface())  {
 	}
-	AutoSurface(SurfaceID sid, Editor *ed, std::optional<Scintilla::Technology> technology = {}) {
-		if (ed->wMain.GetID()) {
-			surf = Surface::Allocate(technology ? *technology : ed->technology);
-			surf->Init(sid, ed->wMain.GetID());
-			surf->SetMode(SurfaceMode(ed->CodePage(), ed->BidirectionalR2L()));
-		}
+	AutoSurface(SurfaceID sid, Editor *ed, std::optional<Scintilla::Technology> technology = {}) :
+		surf(ed->CreateDrawingSurface(sid, technology)) {
 	}
 	// Deleted so AutoSurface objects can not be copied.
 	AutoSurface(const AutoSurface &) = delete;

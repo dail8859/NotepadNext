@@ -5,6 +5,13 @@
 	if (1);
 {9}#endif
 {0}
+{2}// Test preprocessor expressions with parentheses 
+{9}#if ((0))
+{75}a{64}
+{9}#elif ((1))
+{11}b{0}
+{9}#endif
+{0}
 {3}/** {17}@file{3} LexCPP.cxx
  <{17}file{3}>
  <{17}file{3} >filename</{17}file{3}>

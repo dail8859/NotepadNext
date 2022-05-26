@@ -71,6 +71,7 @@ public:
 	sptr_t currentPos() const;
 	sptr_t anchor() const;
 	sptr_t styleAt(sptr_t pos) const;
+	sptr_t styleIndexAt(sptr_t pos) const;
 	void redo();
 	void setUndoCollection(bool collectUndo);
 	void selectAll();

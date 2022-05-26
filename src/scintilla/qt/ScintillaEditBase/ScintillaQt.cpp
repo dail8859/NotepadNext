@@ -35,7 +35,7 @@ ScintillaQt::ScintillaQt(QAbstractScrollArea *parent)
 
 	imeInteraction = IMEInteraction::Inline;
 
-	// On OS X drawing text into a pixmap moves it around 1 pixel to
+	// On macOS drawing text into a pixmap moves it around 1 pixel to
 	// the right compared to drawing it directly onto a window.
 	// Buffered drawing turned off by default to avoid this.
 	view.bufferedDraw = false;
@@ -178,7 +178,7 @@ static void AddRectangularToMime(QMimeData *mimeData, [[maybe_unused]] const QSt
 	// Add an empty marker
 	mimeData->setData(sMSDEVColumnSelect, QByteArray());
 #elif defined(Q_OS_MAC)
-	// OS X gets marker + data to work with other implementations.
+	// macOS gets marker + data to work with other implementations.
 	// Don't understand how this works but it does - the
 	// clipboard format is supposed to be UTF-16, not UTF-8.
 	mimeData->setData(sScintillaRecMimeType, su.toUtf8());
@@ -557,7 +557,6 @@ class CaseFolderDBCS : public CaseFolderTable {
 	QTextCodec *codec;
 public:
 	explicit CaseFolderDBCS(QTextCodec *codec_) : codec(codec_) {
-		StandardASCII();
 	}
 	size_t Fold(char *folded, size_t sizeFolded, const char *mixed, size_t lenMixed) override {
 		if ((lenMixed == 1) && (sizeFolded > 0)) {
@@ -590,7 +589,6 @@ std::unique_ptr<CaseFolder> ScintillaQt::CaseFolderForEncoding()
 		if (charSetBuffer) {
 			if (pdoc->dbcsCodePage == 0) {
 				std::unique_ptr<CaseFolderTable> pcf = std::make_unique<CaseFolderTable>();
-				pcf->StandardASCII();
 				QTextCodec *codec = QTextCodec::codecForName(charSetBuffer);
 				// Only for single byte encodings
 				for (int i=0x80; i<0x100; i++) {

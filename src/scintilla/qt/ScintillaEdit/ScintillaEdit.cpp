@@ -132,6 +132,10 @@ sptr_t ScintillaEdit::styleAt(sptr_t pos) const {
     return send(SCI_GETSTYLEAT, pos, 0);
 }
 
+sptr_t ScintillaEdit::styleIndexAt(sptr_t pos) const {
+    return send(SCI_GETSTYLEINDEXAT, pos, 0);
+}
+
 void ScintillaEdit::redo() {
     send(SCI_REDO, 0, 0);
 }

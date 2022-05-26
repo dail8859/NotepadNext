@@ -577,9 +577,115 @@
 	<td>Arkadiusz Michalski</td>
       </tr><tr>
 	<td>Red_M</td>
+	<td>cdbdev</td>
+	<td>Andrey Smolyakov</td>
+	<td>Knut Leimbert</td>
     </tr>
     </table>
     <h2>Releases</h2>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla517.zip">Release 5.1.7</a>
+    </h3>
+    <ul>
+	<li>
+	Released 22 May 2022.
+	</li>
+	<li>
+	Add LexAccessor::StyleIndexAt to retrieve style values as unsigned to handle styles > 127 better.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/61">Issue #61</a>.
+	</li>
+	<li>
+	Associate more than one file extension with a setting for testing.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/81">Issue #81</a>.
+	</li>
+	<li>
+	CMake: Fix folding of "ElseIf".
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/77">Issue #77</a>,
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/78">Pull request #78</a>,
+	<a href="https://sourceforge.net/p/scintilla/bugs/2213/">Bug #2213</a>.
+	</li>
+	<li>
+	HTML: Fix folding of JavaScript doc comments.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2219/">Bug #2219</a>.
+	</li>
+	<li>
+	Matlab: add "classdef" and "spmd" to folding keywords.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/70">Pull request #70</a>.
+	</li>
+	<li>
+	Matlab: handle "arguments" contextual keyword.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/70">Pull request #70</a>.
+	</li>
+	<li>
+	Matlab: improve support of class definition syntax.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/75">Pull request #75</a>.
+	</li>
+	<li>
+	Raku: fix escape detection.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/76">Pull request #76</a>.
+	</li>
+	<li>
+	Ruby: fix character sequence "?\\#" to not include '#' in SCE_RB_NUMBER as only second '\' is quoted.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/69">Issue #69</a>.
+	</li>
+	<li>
+	Ruby: improve styling of ternary expressions as commonly used.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/69">Issue #69</a>.
+	</li>
+	<li>
+	VHDL: support folding for VHDL 08 else-generate and case-generate.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/80">Pull request #80</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla516.zip">Release 5.1.6</a>
+    </h3>
+    <ul>
+	<li>
+	Released 31 March 2022.
+	</li>
+	<li>
+	Implement conditional statements "if" and "match", comparison function "$(=", and "FileNameExt"
+	property in TestLexers to allow varying lexer properties over different files.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/62">Issue #62</a>.
+	</li>
+	<li>
+	Add LexAccessor::BufferStyleAt to retrieve style values to simplify logic and
+	improve performance.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/54">Issue #54</a>.
+	</li>
+	<li>
+	Markdown: Optionally style all of Markdown header lines.
+	Enabled with lexer.markdown.header.eolfill=1.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/60">Issue #60</a>.
+	</li>
+	<li>
+	Ruby: Fix operator method styling so next word not treated as method name.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/65">Issue #65</a>.
+	</li>
+	<li>
+	Ruby: Fix folding for Ruby 3 endless method definition.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/65">Issue #65</a>.
+	</li>
+	<li>
+	Ruby: Fold string array SCE_RB_STRING_QW.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/65">Issue #65</a>.
+	</li>
+	<li>
+	Ruby: Fix final \n in indented heredoc to be SCE_RB_HERE_Q.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/66">Issue #66</a>.
+	</li>
+	<li>
+	Ruby: Fix heredoc recognition when '.' and ',' used in method calls and after SCE_RB_GLOBAL.
+	Classify word after heredoc delimiter instead of styling as keyword.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/67">Issue #67</a>.
+	</li>
+	<li>
+	Ruby: Improve method highlighting so method name is styled as SCE_RB_DEFNAME and class/object
+	is styled appropriately.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/68">Issue #68</a>.
+	</li>
+    </ul>
     <h3>
        <a href="https://www.scintilla.org/lexilla515.zip">Release 5.1.5</a>
     </h3>

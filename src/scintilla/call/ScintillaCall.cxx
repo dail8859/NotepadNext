@@ -16,6 +16,7 @@
 #include "ScintillaTypes.h"
 #include "ScintillaMessages.h"
 #include "ScintillaCall.h"
+#include "ScintillaStructures.h"
 
 namespace Scintilla {
 
@@ -51,7 +52,7 @@ intptr_t ScintillaCall::CallString(Message msg, uintptr_t wParam, const char *s)
 }
 
 std::string ScintillaCall::CallReturnString(Message msg, uintptr_t wParam) {
-	size_t len = CallPointer(msg, wParam, nullptr);
+	const size_t len = CallPointer(msg, wParam, nullptr);
 	if (len) {
 		std::string value(len, '\0');
 		CallPointer(msg, wParam, value.data());
@@ -96,8 +97,7 @@ char ScintillaCall::CharacterAt(Position position) {
 }
 
 int ScintillaCall::UnsignedStyleAt(Position position) {
-	// Returns signed value but easier to use as unsigned
-	return static_cast<unsigned char>(Call(Message::GetStyleAt, position));
+	return static_cast<int>(Call(Message::GetStyleIndexAt, position));
 }
 
 std::string ScintillaCall::StringOfSpan(Span span) {
@@ -107,6 +107,17 @@ std::string ScintillaCall::StringOfSpan(Span span) {
 		std::string text(span.Length(), '\0');
 		SetTarget(span);
 		TargetText(text.data());
+		return text;
+	}
+}
+
+std::string ScintillaCall::StringOfRange(Span span) {
+	if (span.Length() == 0) {
+		return std::string();
+	} else {
+		std::string text(span.Length(), '\0');
+		TextRangeFull tr{ {span.start, span.end}, text.data() };
+		GetTextRangeFull(&tr);
 		return text;
 	}
 }
@@ -190,6 +201,10 @@ Position ScintillaCall::Anchor() {
 
 int ScintillaCall::StyleAt(Position pos) {
 	return static_cast<int>(Call(Message::GetStyleAt, pos));
+}
+
+int ScintillaCall::StyleIndexAt(Position pos) {
+	return static_cast<int>(Call(Message::GetStyleIndexAt, pos));
 }
 
 void ScintillaCall::Redo() {
@@ -1124,8 +1139,16 @@ Position ScintillaCall::FindText(Scintilla::FindOption searchFlags, void *ft) {
 	return CallPointer(Message::FindText, static_cast<uintptr_t>(searchFlags), ft);
 }
 
+Position ScintillaCall::FindTextFull(Scintilla::FindOption searchFlags, void *ft) {
+	return CallPointer(Message::FindTextFull, static_cast<uintptr_t>(searchFlags), ft);
+}
+
 Position ScintillaCall::FormatRange(bool draw, void *fr) {
 	return CallPointer(Message::FormatRange, draw, fr);
+}
+
+Position ScintillaCall::FormatRangeFull(bool draw, void *fr) {
+	return CallPointer(Message::FormatRangeFull, draw, fr);
 }
 
 Line ScintillaCall::FirstVisibleLine() {
@@ -1182,6 +1205,10 @@ std::string ScintillaCall::GetSelText() {
 
 Position ScintillaCall::GetTextRange(void *tr) {
 	return CallPointer(Message::GetTextRange, 0, tr);
+}
+
+Position ScintillaCall::GetTextRangeFull(void *tr) {
+	return CallPointer(Message::GetTextRangeFull, 0, tr);
 }
 
 void ScintillaCall::HideSelection(bool hide) {

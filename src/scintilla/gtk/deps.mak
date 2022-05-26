@@ -128,6 +128,7 @@ CaseConvert.o: \
 	../src/UniConversion.h
 CaseFolder.o: \
 	../src/CaseFolder.cxx \
+	../src/CharacterType.h \
 	../src/CaseFolder.h \
 	../src/CaseConvert.h
 CellBuffer.o: \
@@ -314,6 +315,8 @@ KeyMap.o: \
 	../include/ScintillaTypes.h \
 	../include/ScintillaMessages.h \
 	../src/Debugging.h \
+	../src/Geometry.h \
+	../src/Platform.h \
 	../src/KeyMap.h
 LineMarker.o: \
 	../src/LineMarker.cxx \

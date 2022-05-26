@@ -259,6 +259,10 @@ ScintillaGTK::~ScintillaGTK() {
 		g_source_remove(styleIdleID);
 		styleIdleID = 0;
 	}
+	if (scrollBarIdleID) {
+		g_source_remove(scrollBarIdleID);
+		scrollBarIdleID = 0;
+	}
 	ClearPrimarySelection();
 	wPreedit.Destroy();
 	if (settingsHandlerId) {
@@ -1109,6 +1113,7 @@ bool ScintillaGTK::ModifyScrollBars(Sci::Line nMax, Sci::Line nPage) {
 #if !GTK_CHECK_VERSION(3,18,0)
 		gtk_adjustment_changed(GTK_ADJUSTMENT(adjustmentv));
 #endif
+		gtk_adjustment_set_value(GTK_ADJUSTMENT(adjustmentv), static_cast<gdouble>(topLine));
 		modified = true;
 	}
 
@@ -1130,6 +1135,7 @@ bool ScintillaGTK::ModifyScrollBars(Sci::Line nMax, Sci::Line nPage) {
 #if !GTK_CHECK_VERSION(3,18,0)
 		gtk_adjustment_changed(GTK_ADJUSTMENT(adjustmenth));
 #endif
+		gtk_adjustment_set_value(GTK_ADJUSTMENT(adjustmenth), xOffset);
 		modified = true;
 	}
 	if (modified && (paintState == PaintState::painting)) {
@@ -1142,6 +1148,27 @@ bool ScintillaGTK::ModifyScrollBars(Sci::Line nMax, Sci::Line nPage) {
 void ScintillaGTK::ReconfigureScrollBars() {
 	const PRectangle rc = wMain.GetClientPosition();
 	Resize(static_cast<int>(rc.Width()), static_cast<int>(rc.Height()));
+}
+
+void ScintillaGTK::SetScrollBars() {
+	if (scrollBarIdleID) {
+		// Only allow one scroll bar change to be queued
+		return;
+	}
+	constexpr gint priorityScrollBar = GDK_PRIORITY_REDRAW + 5;
+	// On GTK, unlike other platforms, modifying scrollbars inside some events including
+	// resizes causes problems. Deferring the modification to a lower priority (125) idle
+	// event avoids the problems. This code did not always work when the priority was
+	// higher than GTK's resize (GTK_PRIORITY_RESIZE=110) or redraw 
+	// (GDK_PRIORITY_REDRAW=120) idle tasks.
+	scrollBarIdleID = gdk_threads_add_idle_full(priorityScrollBar,
+		[](gpointer pSci) -> gboolean {
+			ScintillaGTK *sciThis = static_cast<ScintillaGTK *>(pSci);
+			sciThis->ChangeScrollBars();
+			sciThis->scrollBarIdleID = 0;
+			return FALSE;
+		},
+		this, nullptr);
 }
 
 void ScintillaGTK::NotifyChange() {
@@ -1193,7 +1220,6 @@ class CaseFolderDBCS : public CaseFolderTable {
 	const char *charSet;
 public:
 	explicit CaseFolderDBCS(const char *charSet_) noexcept : charSet(charSet_) {
-		StandardASCII();
 	}
 	size_t Fold(char *folded, size_t sizeFolded, const char *mixed, size_t lenMixed) override {
 		if ((lenMixed == 1) && (sizeFolded > 0)) {
@@ -1230,7 +1256,6 @@ std::unique_ptr<CaseFolder> ScintillaGTK::CaseFolderForEncoding() {
 		if (charSetBuffer) {
 			if (pdoc->dbcsCodePage == 0) {
 				std::unique_ptr<CaseFolderTable> pcf = std::make_unique<CaseFolderTable>();
-				pcf->StandardASCII();
 				// Only for single byte encodings
 				for (int i=0x80; i<0x100; i++) {
 					char sCharacter[2] = "A";
@@ -1965,7 +1990,7 @@ gint ScintillaGTK::ScrollEvent(GtkWidget *widget, GdkEventScroll *event) {
 		// Compute amount and direction to scroll (even tho on win32 there is
 		// intensity of scrolling info in the native message, gtk doesn't
 		// support this so we simulate similarly adaptive scrolling)
-		// Note that this is disabled on OS X (Darwin) with the X11 backend
+		// Note that this is disabled on macOS (Darwin) with the X11 backend
 		// where the X11 server already has an adaptive scrolling algorithm
 		// that fights with this one
 		int cLineScroll;
@@ -1999,11 +2024,6 @@ gint ScintillaGTK::ScrollEvent(GtkWidget *widget, GdkEventScroll *event) {
 		// issues spurious button 2 mouse events during wheeling, which can cause
 		// problems (a patch for both was submitted by archaeopteryx.com on 13Jun2001)
 
-		// Data zoom not supported
-		if (event->state & GDK_SHIFT_MASK) {
-			return FALSE;
-		}
-
 #if GTK_CHECK_VERSION(3,4,0)
 		// Smooth scrolling not supported
 		if (event->direction == GDK_SCROLL_SMOOTH) {
@@ -2012,8 +2032,10 @@ gint ScintillaGTK::ScrollEvent(GtkWidget *widget, GdkEventScroll *event) {
 #endif
 
 		// Horizontal scrolling
-		if (event->direction == GDK_SCROLL_LEFT || event->direction == GDK_SCROLL_RIGHT) {
-			sciThis->HorizontalScrollTo(sciThis->xOffset + cLineScroll);
+		if (event->direction == GDK_SCROLL_LEFT || event->direction == GDK_SCROLL_RIGHT || event->state & GDK_SHIFT_MASK) {
+			int hScroll = gtk_adjustment_get_step_increment(sciThis->adjustmenth);
+			hScroll *= cLineScroll; // scroll by this many characters
+			sciThis->HorizontalScrollTo(sciThis->xOffset + hScroll);
 
 			// Text font size zoom
 		} else if (event->state & GDK_CONTROL_MASK) {
@@ -2656,13 +2678,13 @@ gboolean ScintillaGTK::DrawTextThis(cairo_t *cr) {
 
 		rcPaint = GetClientRectangle();
 
-		PLATFORM_ASSERT(rgnUpdate == nullptr);
+		cairo_rectangle_list_t *oldRgnUpdate = rgnUpdate;
 		rgnUpdate = cairo_copy_clip_rectangle_list(cr);
 		if (rgnUpdate && rgnUpdate->status != CAIRO_STATUS_SUCCESS) {
 			// If not successful then ignore
 			fprintf(stderr, "DrawTextThis failed to copy update region %d [%d]\n", rgnUpdate->status, rgnUpdate->num_rectangles);
 			cairo_rectangle_list_destroy(rgnUpdate);
-			rgnUpdate = 0;
+			rgnUpdate = nullptr;
 		}
 
 		double x1, y1, x2, y2;
@@ -2687,7 +2709,7 @@ gboolean ScintillaGTK::DrawTextThis(cairo_t *cr) {
 		if (rgnUpdate) {
 			cairo_rectangle_list_destroy(rgnUpdate);
 		}
-		rgnUpdate = 0;
+		rgnUpdate = oldRgnUpdate;
 		paintState = PaintState::notPainting;
 	} catch (...) {
 		errorStatus = Status::Failure;
@@ -2759,7 +2781,7 @@ gboolean ScintillaGTK::ExposeTextThis(GtkWidget * /*widget*/, GdkEventExpose *os
 				  ose->area.x + ose->area.width,
 				  ose->area.y + ose->area.height);
 
-		PLATFORM_ASSERT(rgnUpdate == nullptr);
+		GdkRegion *oldRgnUpdate = rgnUpdate;
 		rgnUpdate = gdk_region_copy(ose->region);
 		const PRectangle rcClient = GetClientRectangle();
 		paintingAllText = rcPaint.Contains(rcClient);
@@ -2779,7 +2801,7 @@ gboolean ScintillaGTK::ExposeTextThis(GtkWidget * /*widget*/, GdkEventExpose *os
 		if (rgnUpdate) {
 			gdk_region_destroy(rgnUpdate);
 		}
-		rgnUpdate = nullptr;
+		rgnUpdate = oldRgnUpdate;
 	} catch (...) {
 		errorStatus = Status::Failure;
 	}

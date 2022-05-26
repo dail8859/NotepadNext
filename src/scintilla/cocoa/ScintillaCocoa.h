@@ -84,7 +84,7 @@ extern "C" NSString *ScintillaRecPboardType;
 namespace Scintilla::Internal {
 
 /**
- * Main scintilla class, implemented for OS X (Cocoa).
+ * Main scintilla class, implemented for macOS (Cocoa).
  */
 class ScintillaCocoa : public ScintillaBase {
 private:
