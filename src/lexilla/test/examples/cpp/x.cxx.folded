@@ -5,6 +5,13 @@
  0 401 401 | 	if (1);
  0 401 400 | #endif
  1 400 400   
+ 0 400 400   // Test preprocessor expressions with parentheses 
+ 2 400 401 + #if ((0))
+ 0 401 401 | a
+ 0 401 401 | #elif ((1))
+ 0 401 401 | b
+ 0 401 400 | #endif
+ 1 400 400   
  2 400 401 + /** @file LexCPP.cxx
  0 401 401 |  <file>
  0 401 401 |  <file >filename</file>

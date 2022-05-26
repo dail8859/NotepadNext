@@ -20,6 +20,8 @@ passedByValue
 // Suppress most lexer warnings since the lexers are maintained by others
 redundantCondition:lexilla/lexers/LexA68k.cxx
 constParameter:lexilla/lexers/LexAbaqus.cxx
+unusedStructMember:lexilla/lexers/LexAsciidoc.cxx
+constParameterCallback:lexilla/lexers/LexAsn1.cxx
 knownConditionTrueFalse:lexilla/lexers/LexAU3.cxx
 shadowVariable:lexilla/lexers/LexAU3.cxx
 constParameter:lexilla/lexers/LexBaan.cxx
@@ -36,6 +38,7 @@ constParameter:lexilla/lexers/LexCPP.cxx
 variableScope:lexilla/lexers/LexCSS.cxx
 variableScope:lexilla/lexers/LexDataflex.cxx
 knownConditionTrueFalse:lexilla/lexers/LexECL.cxx
+knownConditionTrueFalse:lexilla/lexers/LexEiffel.cxx
 variableScope:lexilla/lexers/LexErlang.cxx
 knownConditionTrueFalse:lexilla/lexers/LexEScript.cxx
 constParameter:lexilla/lexers/LexFortran.cxx
@@ -83,6 +86,7 @@ redundantInitialization:lexilla/lexers/LexRegistry.cxx
 constParameter:lexilla/lexers/LexRuby.cxx
 constParameter:lexilla/lexers/LexRust.cxx
 constParameter:lexilla/lexers/LexScriptol.cxx
+knownConditionTrueFalse:lexilla/lexers/LexScriptol.cxx
 variableScope:lexilla/lexers/LexSpecman.cxx
 unreadVariable:lexilla/lexers/LexSpice.cxx
 constParameter:lexilla/lexers/LexSTTXT.cxx
@@ -93,6 +97,7 @@ invalidscanf:lexilla/lexers/LexTCMD.cxx
 constParameter:lexilla/lexers/LexTeX.cxx
 variableScope:lexilla/lexers/LexTeX.cxx
 knownConditionTrueFalse:lexilla/lexers/LexTxt2tags.cxx
+knownConditionTrueFalse:lexilla/lexers/LexVB.cxx
 constParameter:lexilla/lexers/LexVerilog.cxx
 constParameter:lexilla/lexers/LexVHDL.cxx
 shadowVariable:lexilla/lexers/LexVHDL.cxx
@@ -136,9 +141,6 @@ constVariable:lexilla/lexers/LexStata.cxx
 constVariable:lexilla/lexers/LexTACL.cxx
 constVariable:lexilla/lexers/LexTADS3.cxx
 constVariable:lexilla/lexers/LexTAL.cxx
-
-// bp.itBracket not actually redundant as needed by return statements
-redundantAssignment:lexilla/lexers/LexCPP.cxx
 
 // Suppress consting argv in main as non-const is standard
 constParameter:lexilla/examples/CheckLexilla/CheckLexilla.c

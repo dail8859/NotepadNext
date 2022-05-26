@@ -5,6 +5,13 @@
 	if (1);
 #endif
 
+// Test preprocessor expressions with parentheses 
+#if ((0))
+a
+#elif ((1))
+b
+#endif
+
 /** @file LexCPP.cxx
  <file>
  <file >filename</file>

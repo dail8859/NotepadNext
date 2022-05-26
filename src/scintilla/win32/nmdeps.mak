@@ -87,6 +87,7 @@ $(DIR_O)/CaseConvert.obj: \
 	../src/UniConversion.h
 $(DIR_O)/CaseFolder.obj: \
 	../src/CaseFolder.cxx \
+	../src/CharacterType.h \
 	../src/CaseFolder.h \
 	../src/CaseConvert.h
 $(DIR_O)/CellBuffer.obj: \
@@ -273,6 +274,8 @@ $(DIR_O)/KeyMap.obj: \
 	../include/ScintillaTypes.h \
 	../include/ScintillaMessages.h \
 	../src/Debugging.h \
+	../src/Geometry.h \
+	../src/Platform.h \
 	../src/KeyMap.h
 $(DIR_O)/LineMarker.obj: \
 	../src/LineMarker.cxx \
