@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - run: |
-          gh release create ${{ github.ref }} --title ${{ github.ref }} --generate-notes --draft
+          gh release create ${{ github.ref_name }} --title ${{ github.ref_name }} --generate-notes --draft
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
