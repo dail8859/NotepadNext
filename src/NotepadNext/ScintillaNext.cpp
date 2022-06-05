@@ -56,19 +56,21 @@ ScintillaNext::ScintillaNext(QString name, QWidget *parent) :
 {
 }
 
-ScintillaNext *ScintillaNext::fromFile(const QString &filePath)
+ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate)
 {
-    QFileInfo info(filePath);
+    QFile file(filePath);
+    ScintillaNext *editor = new ScintillaNext(file.fileName());
 
-    // TODO: check file permissions
+    if(tryToCreate && !file.exists()) {
+        qInfo("Trying to create %s", qUtf8Printable(filePath));
+        QDir d;
+        d.mkpath(QFileInfo(file).path());
 
-    if(!info.exists()) {
-        return Q_NULLPTR;
+        QFile f(filePath);
+        f.open(QIODevice::WriteOnly);
+        f.close();
     }
 
-    ScintillaNext *editor = new ScintillaNext(info.fileName());
-
-    QFile file(filePath);
     bool readSuccessful = editor->readFromDisk(file);
 
     if (!readSuccessful) {

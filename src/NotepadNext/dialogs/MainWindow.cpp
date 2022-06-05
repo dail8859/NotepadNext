@@ -678,7 +678,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
                 auto reply = QMessageBox::question(this, tr("Create File"), tr("<b>%1</b> does not exist. Do you want to create it?").arg(filePath));
 
                 if (reply == QMessageBox::Yes) {
-                    editor = app->getEditorManager()->createEditorFromFile(filePath);
+                    editor = app->getEditorManager()->createEditorFromFile(filePath, true);
                 }
                 else {
                     // Make sure it is not still in the recent files list still.
