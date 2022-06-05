@@ -70,9 +70,9 @@ ScintillaNext *EditorManager::createEmptyEditor(const QString &name)
     return editor;
 }
 
-ScintillaNext *EditorManager::createEditorFromFile(const QString &filePath)
+ScintillaNext *EditorManager::createEditorFromFile(const QString &filePath, bool tryToCreate)
 {
-    ScintillaNext *editor = ScintillaNext::fromFile(filePath);
+    ScintillaNext *editor = ScintillaNext::fromFile(filePath, tryToCreate);
 
     manageEditor(editor);
 

@@ -33,7 +33,7 @@ class ScintillaNext : public ScintillaEdit
 
 public:
     explicit ScintillaNext(QString name, QWidget *parent = Q_NULLPTR);
-    static ScintillaNext *fromFile(const QString &filePath);
+    static ScintillaNext *fromFile(const QString &filePath, bool tryToCreate=false);
 
     template<typename Func>
     void forEachMatch(const QString &text, Func callback) { forEachMatch(text.toUtf8(), callback); }
