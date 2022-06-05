@@ -156,7 +156,13 @@ bool NotepadNextApplication::init()
 
     QObject::connect(this, &NotepadNextApplication::applicationStateChanged, [&](Qt::ApplicationState state) {
         if (state == Qt::ApplicationActive) {
-            windows.first()->focusIn();
+
+            // Make sure it is active...
+            // The applicaiton can be active without the main window being show e.g. if there is a
+            // message box that pops up before the main window
+            if (windows.first()->isActiveWindow()) {
+                windows.first()->focusIn();
+            }
 
             if (!currentlyFocusedWidget.isNull()) {
                 currentlyFocusedWidget->activateWindow();
