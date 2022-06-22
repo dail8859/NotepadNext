@@ -19,10 +19,12 @@
 CONFIG += lrelease
 
 TRANSLATIONS = \
-    ../../i18n/NotepadNext.zh_CN.ts
+    ../../i18n/NotepadNext.zh_CN.ts \
+    ../../i18n/NotepadNext.sv_SE.ts
 
 EXTRA_TRANSLATIONS = \
-    $$[QT_INSTALL_TRANSLATIONS]/qt_zh_CN.qm
+    $$[QT_INSTALL_TRANSLATIONS]/qt_zh_CN.qm \
+    $$[QT_INSTALL_TRANSLATIONS]/qt_sv.qm
 
 # Output folder for `.qm` files
 LRELEASE_DIR = $$OUT_PWD/i18n
