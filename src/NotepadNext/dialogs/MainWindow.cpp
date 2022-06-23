@@ -226,8 +226,6 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             frd = qobject_cast<FindReplaceDialog *>(dialogs["FindReplaceDialog"]);
         }
 
-        frd->setEditor(editor);
-
         // TODO: if dockedEditor::editorActivated() is fired, or if the editor get closed
         // the FindReplaceDialog's editor pointer needs updated...
 

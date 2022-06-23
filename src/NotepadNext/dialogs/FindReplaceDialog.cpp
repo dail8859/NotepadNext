@@ -26,6 +26,7 @@
 #include <QKeyEvent>
 
 #include "ScintillaNext.h"
+#include "MainWindow.h"
 
 static bool isRangeValid(const Sci_CharacterRange &range)
 {
@@ -42,8 +43,8 @@ static void convertToExtended(QString &str)
     // TODO: more
 }
 
-FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, QWidget *parent) :
-    QDialog(parent, Qt::Dialog),
+FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, MainWindow *window) :
+    QDialog(window, Qt::Dialog),
     ui(new Ui::FindReplaceDialog),
     searchResults(searchResults)
 {
@@ -53,6 +54,10 @@ FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, QWidget *
     setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
     ui->setupUi(this);
+
+    // Get the current editor, and keep up the reference
+    setEditor(window->currentEditor());
+    connect(window, &MainWindow::editorActivated, this, &FindReplaceDialog::setEditor);
 
     tabBar = new QTabBar();
     tabBar->addTab(tr("Find"));
@@ -84,7 +89,7 @@ FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, QWidget *
         savePosition();
     });
 
-    connect(ui->radioRegexSearch, &QRadioButton::toggled, [=](bool checked) {
+    connect(ui->radioRegexSearch, &QRadioButton::toggled, this, [=](bool checked) {
         ui->checkBoxBackwardsDirection->setDisabled(checked);
         ui->checkBoxMatchWholeWord->setDisabled(checked);
         ui->checkBoxRegexMatchesNewline->setEnabled(checked);
