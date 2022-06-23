@@ -51,8 +51,10 @@ public:
     explicit FindReplaceDialog(SearchResultsDock *searchResults, MainWindow *window = nullptr);
     ~FindReplaceDialog() override;
 
-    void setFindText(const QString &string);
+    void setFindString(const QString &string);
     void setTab(int tab);
+
+    QString replaceString();
 
 protected:
     bool event(QEvent *event) override;
@@ -67,6 +69,7 @@ public slots:
 
     void find();
     void findAllInCurrentDocument();
+    void findAllInDocuments();
     void count();
     void replace();
     void replaceAll();
@@ -81,6 +84,8 @@ private slots:
     void changeTab(int index);
 
 private:
+    QString findString();
+    void prepareToPerformSearch(bool replace=false);
     void loadSettings();
     void saveSettings();
 
@@ -94,13 +99,11 @@ private:
 
     void updateFindList(const QString &text);
     void updateReplaceList(const QString &text);
-    void saveSearchTerm(const QString &text);
 
     bool isFirstTime = true;
     QPoint position;
     Ui::FindReplaceDialog *ui;
 
-    QString searchTerm;
     ScintillaNext *editor;
     QStatusBar *statusBar;
     QTabBar *tabBar;

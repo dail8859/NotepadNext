@@ -27,7 +27,7 @@ class Finder
 public:
     explicit Finder(ScintillaNext *edit);
 
-    void setEditor(ScintillaNext *edit) { this->editor = edit; }
+    void setEditor(ScintillaNext *editor) { this->editor = editor; }
     void setSearchFlags(int flags);
     void setWrap(bool wrap);
     void setSearchText(const QString &text);
