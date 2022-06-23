@@ -22,20 +22,19 @@
 
 #include <QDialog>
 #include <QEvent>
-#include <QMetaEnum>
 #include <QStatusBar>
 #include <QTabBar>
 
 #include "Finder.h"
 #include "SearchResultsDock.h"
 
+
 class ScintillaNext;
+class MainWindow;
 
 namespace Ui {
 class FindReplaceDialog;
 }
-
-
 
 class FindReplaceDialog : public QDialog
 {
@@ -49,7 +48,7 @@ public:
         MARK_TAB = 3
     };
 
-    explicit FindReplaceDialog(SearchResultsDock *searchResults, QWidget *parent = nullptr);
+    explicit FindReplaceDialog(SearchResultsDock *searchResults, MainWindow *window = nullptr);
     ~FindReplaceDialog() override;
 
     void setFindText(const QString &string);
@@ -64,7 +63,6 @@ signals:
     void windowDeactivated();
 
 public slots:
-    void setEditor(ScintillaNext *edit);
     void performLastSearch();
 
     void find();
@@ -74,6 +72,7 @@ public slots:
     void replaceAll();
 
 private slots:
+    void setEditor(ScintillaNext *edit);
     void adjustOpacity(int value);
     void transparencyToggled(bool on);
     void adjustOpacityWhenLosingFocus(bool checked);
