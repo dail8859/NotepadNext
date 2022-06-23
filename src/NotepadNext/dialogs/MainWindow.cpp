@@ -236,7 +236,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             int end = editor->selectionNEnd(selection);
             if (end > start) {
                 auto selText = editor->get_text_range(start, end);
-                frd->setFindText(QString::fromUtf8(selText));
+                frd->setFindString(QString::fromUtf8(selText));
             }
         }
         else {
@@ -246,7 +246,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                 editor->setSelectionStart(start);
                 editor->setSelectionEnd(end);
                 auto selText = editor->get_text_range(start, end);
-                frd->setFindText(QString::fromUtf8(selText));
+                frd->setFindString(QString::fromUtf8(selText));
             }
         }
 

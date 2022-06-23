@@ -101,7 +101,30 @@ FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, MainWindo
 
     connect(ui->buttonFind, &QPushButton::clicked, this, &FindReplaceDialog::find);
     connect(ui->buttonCount, &QPushButton::clicked, this, &FindReplaceDialog::count);
-    connect(ui->buttonFindAllInCurrent, &QPushButton::clicked, this, &FindReplaceDialog::findAllInCurrentDocument);
+    connect(ui->buttonFindAllInCurrent, &QPushButton::clicked, this, [=]() {
+        prepareToPerformSearch();
+
+        searchResults->show();
+        searchResults->newSearch(findString());
+
+        findAllInCurrentDocument();
+
+        searchResults->completeSearch();
+
+        close();
+    });
+    connect(ui->buttonFindAllInDocuments, &QPushButton::clicked, this, [=]() {
+        prepareToPerformSearch();
+
+        searchResults->show();
+        searchResults->newSearch(findString());
+
+        findAllInDocuments();
+
+        searchResults->completeSearch();
+
+        close();
+    });
     connect(ui->buttonReplace, &QPushButton::clicked, this, &FindReplaceDialog::replace);
     connect(ui->buttonReplaceAll, &QPushButton::clicked, this, &FindReplaceDialog::replaceAll);
     connect(ui->buttonClose, &QPushButton::clicked, this, &FindReplaceDialog::close);
@@ -118,7 +141,7 @@ FindReplaceDialog::~FindReplaceDialog()
     delete ui;
 }
 
-void FindReplaceDialog::setFindText(const QString &string)
+void FindReplaceDialog::setFindString(const QString &string)
 {
     ui->comboFind->setCurrentText(string);
     ui->comboFind->lineEdit()->selectAll();
@@ -147,6 +170,7 @@ void FindReplaceDialog::showEvent(QShowEvent *event)
 
     if (!isFirstTime)
         restorePosition();
+
     isFirstTime = false;
 
     QDialog::showEvent(event);
@@ -155,14 +179,12 @@ void FindReplaceDialog::showEvent(QShowEvent *event)
 static void updateComboList(QComboBox *comboBox, const QString &text)
 {
     // Block the signals while it is manipulated
-    comboBox->blockSignals(true);
+    const QSignalBlocker blocker(comboBox);
 
     // Remove it if it is in the list, add it to beginning, and select it
     comboBox->removeItem(comboBox->findText(text));
     comboBox->insertItem(0, text);
     comboBox->setCurrentIndex(0);
-
-    comboBox->blockSignals(false);
 }
 
 void FindReplaceDialog::updateFindList(const QString &text)
@@ -176,30 +198,11 @@ void FindReplaceDialog::updateReplaceList(const QString &text)
     updateComboList(ui->comboReplace, text);
 }
 
-void FindReplaceDialog::saveSearchTerm(const QString &text)
-{
-    searchTerm = text;
-}
-
 void FindReplaceDialog::find()
 {
     qInfo(Q_FUNC_INFO);
 
-    QString text = ui->comboFind->currentText();
-
-    saveSearchTerm(text);
-
-    updateFindList(text);
-
-    statusBar->clearMessage();
-
-    if (ui->radioExtendedSearch->isChecked()) {
-        convertToExtended(text);
-    }
-
-    finder->setWrap(ui->checkBoxWrapAround->isChecked());
-    finder->setSearchFlags(computeSearchFlags());
-    finder->setSearchText(text);
+    prepareToPerformSearch();
 
     Sci_CharacterRange range = finder->findNext();
 
@@ -214,56 +217,52 @@ void FindReplaceDialog::find()
 
 void FindReplaceDialog::findAllInCurrentDocument()
 {
-    QString text = ui->comboFind->currentText();
+    bool firstMatch = true;
 
-    saveSearchTerm(text);
-
-    updateFindList(text);
-
-    statusBar->clearMessage();
-
-    searchResults->show();
-    searchResults->newSearch(text);
-    searchResults->newFileEntry(editor->getName());
+    QString text = findString();
 
     editor->forEachMatch(text, [&](int start, int end) {
-        int line = editor->lineFromPosition(start);
-        int lineStartPosition = editor->positionFromLine(line);
-        int lineEndPosition = editor->lineEndPosition(line);
+        // Only add the file entry if there was a valid search result
+        if (firstMatch) {
+            searchResults->newFileEntry(editor->getName());
+            firstMatch = false;
+        }
+
+        const int line = editor->lineFromPosition(start);
+        const int lineStartPosition = editor->positionFromLine(line);
+        const int lineEndPosition = editor->lineEndPosition(line);
         QString lineText = editor->get_text_range(lineStartPosition, lineEndPosition);
 
         searchResults->newResultsEntry(lineText);
 
         return end;
     });
+}
 
-    searchResults->completeSearch();
+void FindReplaceDialog::findAllInDocuments()
+{
+    ScintillaNext *current_editor = editor;
+    MainWindow *window = qobject_cast<MainWindow *>(parent());
 
-    close();
+    for(ScintillaNext *editor : window->editors()) {
+        setEditor(editor);
+        findAllInCurrentDocument();
+    }
+
+    setEditor(current_editor);
 }
 
 void FindReplaceDialog::replace()
 {
     qInfo(Q_FUNC_INFO);
 
-    QString findText = ui->comboFind->currentText();
+    prepareToPerformSearch();
+
     QString replaceText = ui->comboReplace->currentText();
 
-    saveSearchTerm(findText);
-
-    updateFindList(findText);
-    updateReplaceList(replaceText);
-
-    statusBar->clearMessage();
-
     if (ui->radioExtendedSearch->isChecked()) {
-        convertToExtended(findText);
         convertToExtended(replaceText);
     }
-
-    finder->setWrap(ui->checkBoxWrapAround->isChecked());
-    finder->setSearchFlags(computeSearchFlags());
-    finder->setSearchText(findText);
 
     Sci_CharacterRange range = finder->replaceSelectionIfMatch(replaceText);
 
@@ -287,23 +286,13 @@ void FindReplaceDialog::replaceAll()
 {
     qInfo(Q_FUNC_INFO);
 
-    QString findText = ui->comboFind->currentText();
+    prepareToPerformSearch();
+
     QString replaceText = ui->comboReplace->currentText();
 
-    saveSearchTerm(findText);
-
-    updateFindList(findText);
-    updateReplaceList(replaceText);
-
-    statusBar->clearMessage();
-
     if (ui->radioExtendedSearch->isChecked()) {
-        convertToExtended(findText);
         convertToExtended(replaceText);
     }
-
-    finder->setSearchFlags(computeSearchFlags());
-    finder->setSearchText(findText);
 
     int count = finder->replaceAll(replaceText);
     showMessage(tr("Replaced %1 matches").arg(count), "green");
@@ -313,42 +302,25 @@ void FindReplaceDialog::count()
 {
     qInfo(Q_FUNC_INFO);
 
-    QString text = ui->comboFind->currentText();
-
-    saveSearchTerm(text);
-
-    updateFindList(text);
-
-    statusBar->clearMessage();
-
-    if (ui->radioExtendedSearch->isChecked()) {
-        convertToExtended(text);
-    }
-
-    finder->setWrap(ui->checkBoxWrapAround->isChecked());
-    finder->setSearchFlags(computeSearchFlags());
-    finder->setSearchText(text);
+    prepareToPerformSearch();
 
     int total = finder->count();
+
     showMessage(tr("Found %1 matches").arg(total), "green");
 }
 
-void FindReplaceDialog::setEditor(ScintillaNext *edit)
+void FindReplaceDialog::setEditor(ScintillaNext *editor)
 {
-    if (finder == Q_NULLPTR)
-        finder = new Finder(edit);
-    else
-        finder->setEditor(edit);
+    this->editor = editor;
 
-    editor = edit;
+    if (finder == Q_NULLPTR)
+        finder = new Finder(editor);
+    else
+        finder->setEditor(editor);
 }
 
 void FindReplaceDialog::performLastSearch()
 {
-    finder->setSearchText(searchTerm);
-
-    // TODO: should the search flags also have been saved from the last search?
-
     goToMatch(finder->findNext());
 }
 
@@ -444,6 +416,40 @@ void FindReplaceDialog::changeTab(int index)
 
     ui->comboFind->setFocus();
     ui->comboFind->lineEdit()->selectAll();
+}
+
+QString FindReplaceDialog::findString()
+{
+    return ui->comboFind->currentText();
+}
+
+QString FindReplaceDialog::replaceString()
+{
+    return ui->comboReplace->currentText();
+}
+
+void FindReplaceDialog::prepareToPerformSearch(bool replace)
+{
+    qInfo(Q_FUNC_INFO);
+
+    QString findText = findString();
+
+    updateFindList(findText);
+    if (replace) {
+        QString replaceText = replaceString();
+        updateReplaceList(replaceText);
+    }
+
+    statusBar->clearMessage();
+
+    if (ui->radioExtendedSearch->isChecked()) {
+        convertToExtended(findText);
+        //convertToExtended(replaceText);
+    }
+
+    finder->setWrap(ui->checkBoxWrapAround->isChecked());
+    finder->setSearchFlags(computeSearchFlags());
+    finder->setSearchText(findText);
 }
 
 void FindReplaceDialog::loadSettings()
