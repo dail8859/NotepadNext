@@ -24,9 +24,14 @@ Finder::Finder(ScintillaNext *edit) :
 {
 }
 
+void Finder::setEditor(ScintillaNext *editor)
+{
+    this->editor = editor;
+}
+
 void Finder::setSearchFlags(int flags)
 {
-    editor->setSearchFlags(flags);
+    this->search_flags = flags;
 }
 
 void Finder::setWrap(bool wrap)
@@ -48,6 +53,7 @@ Sci_CharacterRange Finder::findNext(int startPos)
     const QByteArray textData = text.toUtf8();
 
     editor->setTargetRange(pos, editor->length());
+    editor->setSearchFlags(search_flags);
 
     if (editor->searchInTarget(textData.length(), textData.constData()) != INVALID_POSITION) {
         return {static_cast<Sci_PositionCR>(editor->targetStart()), static_cast<Sci_PositionCR>(editor->targetEnd())};
@@ -71,6 +77,7 @@ Sci_CharacterRange Finder::findPrev()
     const QByteArray textData = text.toUtf8();
 
     editor->setTargetRange(pos, editor->length());
+    editor->setSearchFlags(search_flags);
 
     auto range = editor->findText(editor->searchFlags(), textData.constData(), pos, 0);
 
@@ -93,6 +100,7 @@ int Finder::count()
     int total = 0;
 
     if (text.length() > 0) {
+        editor->setSearchFlags(search_flags);
         editor->forEachMatch(text, [&](int start, int end) { Q_UNUSED(start); total++; return end; });
     }
 
@@ -107,6 +115,7 @@ Sci_CharacterRange Finder::replaceSelectionIfMatch(const QString &replaceText)
     // Search just in the selection to see if the current selection is a match
     editor->setTargetStart(editor->selectionStart());
     editor->setTargetEnd(editor->selectionEnd());
+    editor->setSearchFlags(search_flags);
 
     if (editor->searchInTarget(textData.length(), textData.constData()) != INVALID_POSITION) {
         const QByteArray replaceData = replaceText.toUtf8();
@@ -128,8 +137,10 @@ int Finder::replaceAll(const QString &replaceText)
         return 0;
 
     const QByteArray replaceData = replaceText.toUtf8();
-    bool isRegex = editor->searchFlags() & SCFIND_REGEXP;
+    bool isRegex = search_flags & SCFIND_REGEXP;
     int total = 0;
+
+    editor->setSearchFlags(search_flags);
 
     editor->beginUndoAction();
     editor->forEachMatch(text, [&](int start, int end) {
