@@ -217,9 +217,14 @@ void FindReplaceDialog::find()
 
 void FindReplaceDialog::findAllInCurrentDocument()
 {
+    qInfo(Q_FUNC_INFO);
+
     bool firstMatch = true;
 
     QString text = findString();
+
+    // HACK: this is a temporary solution, really should use the finder to be searching through the editor
+    editor->setSearchFlags(computeSearchFlags());
 
     editor->forEachMatch(text, [&](int start, int end) {
         // Only add the file entry if there was a valid search result
@@ -241,6 +246,8 @@ void FindReplaceDialog::findAllInCurrentDocument()
 
 void FindReplaceDialog::findAllInDocuments()
 {
+    qInfo(Q_FUNC_INFO);
+
     ScintillaNext *current_editor = editor;
     MainWindow *window = qobject_cast<MainWindow *>(parent());
 
@@ -258,7 +265,7 @@ void FindReplaceDialog::replace()
 
     prepareToPerformSearch();
 
-    QString replaceText = ui->comboReplace->currentText();
+    QString replaceText = replaceString();
 
     if (ui->radioExtendedSearch->isChecked()) {
         convertToExtended(replaceText);
@@ -288,7 +295,7 @@ void FindReplaceDialog::replaceAll()
 
     prepareToPerformSearch();
 
-    QString replaceText = ui->comboReplace->currentText();
+    QString replaceText = replaceString();
 
     if (ui->radioExtendedSearch->isChecked()) {
         convertToExtended(replaceText);
@@ -575,6 +582,6 @@ void FindReplaceDialog::goToMatch(const Sci_CharacterRange &range)
 
 void FindReplaceDialog::showMessage(const QString &message, const QString &color)
 {
-    statusBar->setStyleSheet("color: " + color);
+    statusBar->setStyleSheet(QStringLiteral("color: %1").arg(color));
     statusBar->showMessage(message);
 }
