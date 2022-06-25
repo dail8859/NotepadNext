@@ -84,6 +84,14 @@ ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate
     return editor;
 }
 
+void ScintillaNext::goToRange(const Sci_CharacterRange &range)
+{
+    if (isRangeValid(range)) {
+        setSelection(range.cpMin, range.cpMax);
+        scrollRange(range.cpMax, range.cpMin);
+    }
+}
+
 bool ScintillaNext::isSavedToDisk() const
 {
     return bufferType != ScintillaNext::FileMissing && !modify();
