@@ -22,6 +22,7 @@
 Finder::Finder(ScintillaNext *edit) :
     editor(edit)
 {
+    search_flags = editor->searchFlags();
 }
 
 void Finder::setEditor(ScintillaNext *editor)
