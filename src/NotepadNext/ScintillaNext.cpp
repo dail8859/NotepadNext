@@ -86,7 +86,13 @@ ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate
 
 void ScintillaNext::goToRange(const Sci_CharacterRange &range)
 {
+    qInfo(Q_FUNC_INFO);
+
     if (isRangeValid(range)) {
+        // Lines can be folded so make sure they are visible
+        ensureVisible(lineFromPosition(range.cpMin));
+        ensureVisible(lineFromPosition(range.cpMax));
+
         setSelection(range.cpMin, range.cpMax);
         scrollRange(range.cpMax, range.cpMin);
     }
