@@ -109,7 +109,7 @@ private:
     QTabBar *tabBar;
 
     SearchResultsDock *searchResults;
-    Finder *finder = Q_NULLPTR;
+    Finder *finder;
 };
 
 #endif // FINDREPLACEDIALOG_H
