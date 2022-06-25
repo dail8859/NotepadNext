@@ -46,7 +46,8 @@ static void convertToExtended(QString &str)
 FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, MainWindow *window) :
     QDialog(window, Qt::Dialog),
     ui(new Ui::FindReplaceDialog),
-    searchResults(searchResults)
+    searchResults(searchResults),
+    finder(new Finder(window->currentEditor()))
 {
     qInfo(Q_FUNC_INFO);
 
@@ -127,6 +128,28 @@ FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, MainWindo
     });
     connect(ui->buttonReplace, &QPushButton::clicked, this, &FindReplaceDialog::replace);
     connect(ui->buttonReplaceAll, &QPushButton::clicked, this, &FindReplaceDialog::replaceAll);
+    connect(ui->buttonReplaceAllInDocuments, &QPushButton::clicked, this, [=]() {
+        prepareToPerformSearch(true);
+
+        QString replaceText = replaceString();
+
+        if (ui->radioExtendedSearch->isChecked()) {
+            convertToExtended(replaceText);
+        }
+
+        int count = 0;
+        ScintillaNext *current_editor = editor;
+        MainWindow *window = qobject_cast<MainWindow *>(parent());
+
+        for(ScintillaNext *editor : window->editors()) {
+            setEditor(editor);
+            count += finder->replaceAll(replaceText);
+        }
+
+        setEditor(current_editor);
+
+        showMessage(tr("Replaced %1 matches").arg(count), "green");
+    });
     connect(ui->buttonClose, &QPushButton::clicked, this, &FindReplaceDialog::close);
 
     loadSettings();
@@ -139,6 +162,7 @@ FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, MainWindo
 FindReplaceDialog::~FindReplaceDialog()
 {
     delete ui;
+    delete finder;
 }
 
 void FindReplaceDialog::setFindString(const QString &string)
@@ -290,7 +314,7 @@ void FindReplaceDialog::replaceAll()
 {
     qInfo(Q_FUNC_INFO);
 
-    prepareToPerformSearch();
+    prepareToPerformSearch(true);
 
     QString replaceText = replaceString();
 
@@ -317,10 +341,7 @@ void FindReplaceDialog::setEditor(ScintillaNext *editor)
 {
     this->editor = editor;
 
-    if (finder == Q_NULLPTR)
-        finder = new Finder(editor);
-    else
-        finder->setEditor(editor);
+    finder->setEditor(editor);
 }
 
 void FindReplaceDialog::performLastSearch()
