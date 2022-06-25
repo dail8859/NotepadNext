@@ -101,8 +101,11 @@ int Finder::count()
     int total = 0;
 
     if (text.length() > 0) {
-        editor->setSearchFlags(search_flags);
-        editor->forEachMatch(text, [&](int start, int end) { Q_UNUSED(start); total++; return end; });
+        this->forEachMatch(text.toUtf8(), [&](int start, int end) {
+            Q_UNUSED(start);
+            total++;
+            return end;
+        });
     }
 
     return total;
