@@ -39,6 +39,12 @@ public:
     Sci_CharacterRange replaceSelectionIfMatch(const QString &replaceText);
     int replaceAll(const QString &replaceText);
 
+    template<typename Func>
+    void forEachMatch(const QByteArray &byteArray, Func callback) { forEachMatchInRange(byteArray, callback, {0, (Sci_PositionCR)editor->length()}); }
+
+    template<typename Func>
+    void forEachMatchInRange(const QByteArray &byteArray, Func callback, Sci_CharacterRange range);
+
 private:
     ScintillaNext *editor;
 
@@ -46,5 +52,16 @@ private:
     int search_flags = 0;
     QString text;
 };
+
+
+template<typename Func>
+void Finder::forEachMatchInRange(const QByteArray &text, Func callback, Sci_CharacterRange range)
+{
+    Sci_TextToFind ttf {range, text.constData(), {-1, -1}};
+
+    while (editor->send(SCI_FINDTEXT, editor->searchFlags(), reinterpret_cast<sptr_t>(&ttf)) != -1) {
+        ttf.chrg.cpMin = callback(ttf.chrgText.cpMin, ttf.chrgText.cpMax);
+    }
+}
 
 #endif // FINDER_H

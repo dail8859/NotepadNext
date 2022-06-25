@@ -223,10 +223,7 @@ void FindReplaceDialog::findAllInCurrentDocument()
 
     QString text = findString();
 
-    // HACK: this is a temporary solution, really should use the finder to be searching through the editor
-    editor->setSearchFlags(computeSearchFlags());
-
-    editor->forEachMatch(text, [&](int start, int end) {
+    finder->forEachMatch(text.toUtf8(), [&](int start, int end){
         // Only add the file entry if there was a valid search result
         if (firstMatch) {
             searchResults->newFileEntry(editor->getName());
@@ -576,7 +573,7 @@ void FindReplaceDialog::goToMatch(const Sci_CharacterRange &range)
 {
     if (isRangeValid(range)) {
         editor->setSelection(range.cpMin, range.cpMax);
-        editor->ensureVisibleEnforcePolicy(editor->lineFromPosition(range.cpMin));
+        editor->scrollRange(range.cpMax, range.cpMin);
     }
 }
 
