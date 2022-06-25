@@ -27,6 +27,12 @@
 #include <QFileInfo>
 
 
+static bool isRangeValid(const Sci_CharacterRange &range)
+{
+    return range.cpMin != INVALID_POSITION && range.cpMax != INVALID_POSITION;
+}
+
+
 class ScintillaNext : public ScintillaEdit
 {
     Q_OBJECT
@@ -46,6 +52,8 @@ public:
 
     template<typename Func>
     void forEachLineInSelection(int selection, Func callback);
+
+    void goToRange(const Sci_CharacterRange &range);
 
     bool isFile() const;
     bool isSavedToDisk() const;

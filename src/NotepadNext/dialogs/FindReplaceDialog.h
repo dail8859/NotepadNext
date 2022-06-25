@@ -94,7 +94,6 @@ private:
 
     int computeSearchFlags();
 
-    void goToMatch(const Sci_CharacterRange &range);
     void showMessage(const QString &message, const QString &color);
 
     void updateFindList(const QString &text);

@@ -28,10 +28,6 @@
 #include "ScintillaNext.h"
 #include "MainWindow.h"
 
-static bool isRangeValid(const Sci_CharacterRange &range)
-{
-    return range.cpMin != INVALID_POSITION && range.cpMax != INVALID_POSITION;
-}
 
 static void convertToExtended(QString &str)
 {
@@ -232,7 +228,7 @@ void FindReplaceDialog::find()
 
     if (isRangeValid(range)) {
         // TODO: determine if search wrapped around and show message
-        goToMatch(range);
+        editor->goToRange(range);
     }
     else {
         showMessage(tr("No matches found."), "red");
@@ -301,7 +297,7 @@ void FindReplaceDialog::replace()
     Sci_CharacterRange next_match = finder->findNext();
 
     if (isRangeValid(next_match)) {
-        goToMatch(next_match);
+        editor->goToRange(next_match);
     }
     else {
         showMessage(tr("No more occurrences were found"), "red");
@@ -346,7 +342,7 @@ void FindReplaceDialog::setEditor(ScintillaNext *editor)
 
 void FindReplaceDialog::performLastSearch()
 {
-    goToMatch(finder->findNext());
+    editor->goToRange(finder->findNext());
 }
 
 void FindReplaceDialog::adjustOpacity(int value)
@@ -588,14 +584,6 @@ int FindReplaceDialog::computeSearchFlags()
         flags |= SCFIND_REGEXP;
 
     return flags;
-}
-
-void FindReplaceDialog::goToMatch(const Sci_CharacterRange &range)
-{
-    if (isRangeValid(range)) {
-        editor->setSelection(range.cpMin, range.cpMax);
-        editor->scrollRange(range.cpMax, range.cpMin);
-    }
 }
 
 void FindReplaceDialog::showMessage(const QString &message, const QString &color)
