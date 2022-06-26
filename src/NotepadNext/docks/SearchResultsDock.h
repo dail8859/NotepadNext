@@ -27,6 +27,7 @@ class SearchResultsDock;
 }
 
 class QTreeWidgetItem;
+class ScintillaNext;
 
 class SearchResultsDock : public QDockWidget
 {
@@ -38,9 +39,15 @@ public:
 
 public slots:
     void newSearch(const QString searchTerm);
-    void newFileEntry(const QString filePath);
-    void newResultsEntry(const QString line);
+    void newFileEntry(ScintillaNext *editor);
+    void newResultsEntry(const QString line, int lineNumber);
     void completeSearch();
+
+private slots:
+    void itemActivated(QTreeWidgetItem *item, int column);
+
+signals:
+    void searchResultActivated(ScintillaNext *editor, int lineNumber);
 
 private:
     void updateSearchStatus();

@@ -213,6 +213,16 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     srDock->toggleViewAction()->setShortcut(Qt::Key_F7);
     ui->menuView->addAction(srDock->toggleViewAction());
 
+    connect(srDock, &SearchResultsDock::searchResultActivated, this, [=](ScintillaNext *editor, int lineNumber) {
+        dockedEditor->switchToEditor(editor);
+
+        editor->ensureVisible(lineNumber);
+        editor->gotoLine(lineNumber);
+        editor->verticalCentreCaret();
+
+        editor->grabFocus();
+    });
+
     connect(ui->actionFind, &QAction::triggered, this, [=]() {
         ScintillaNext *editor = currentEditor();
         FindReplaceDialog *frd = nullptr;

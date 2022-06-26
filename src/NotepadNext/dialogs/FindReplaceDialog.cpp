@@ -246,7 +246,7 @@ void FindReplaceDialog::findAllInCurrentDocument()
     finder->forEachMatch(text.toUtf8(), [&](int start, int end){
         // Only add the file entry if there was a valid search result
         if (firstMatch) {
-            searchResults->newFileEntry(editor->getName());
+            searchResults->newFileEntry(editor);
             firstMatch = false;
         }
 
@@ -255,7 +255,7 @@ void FindReplaceDialog::findAllInCurrentDocument()
         const int lineEndPosition = editor->lineEndPosition(line);
         QString lineText = editor->get_text_range(lineStartPosition, lineEndPosition);
 
-        searchResults->newResultsEntry(lineText);
+        searchResults->newResultsEntry(lineText, line);
 
         return end;
     });
