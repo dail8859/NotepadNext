@@ -61,8 +61,6 @@ int main(int argc, char *argv[])
     qInfo("=============================");
 
     if(app.isPrimary()) {
-        app.loadSystemDefaultTranslation();
-
         app.init();
 
         return app.exec();
@@ -79,7 +77,7 @@ int main(int argc, char *argv[])
 
         app.sendMessage(buffer);
 
-        qInfo() <<"Secondary instance closing...";
+        qInfo() << "Secondary instance closing...";
 
         app.exit(0);
         return 0;

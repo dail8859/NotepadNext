@@ -24,6 +24,7 @@
 
 #include "SingleApplication"
 
+#include <QCommandLineParser>
 #include <QPointer>
 #include <QTranslator>
 
@@ -55,8 +56,12 @@ public:
     QString detectLanguageFromExtension(const QString &extension) const;
 
     void loadSystemDefaultTranslation();
+    void loadTranslation(QLocale locale);
 
 private:
+    void processArguments(const QStringList &args);
+    void openFilesFromCommandLine();
+
     EditorManager *editorManager;
     RecentFilesListManager *recentFilesListManager;
     Settings *settings;
@@ -66,10 +71,12 @@ private:
     QList<MainWindow *> windows;
     QPointer<QWidget> currentlyFocusedWidget; // Keep a weak pointer to the QWidget since we don't own it
 
-    void applyArguments(const QStringList &args);
     MainWindow *createNewWindow();
+
     QTranslator translatorNpn;
     QTranslator translatorQt;
+
+    QCommandLineParser parser;
 };
 
 #endif // NOTEPADNEXTAPPLICATION_H
