@@ -216,6 +216,11 @@ unix {
     iconscalable.path = $$PREFIX/share/icons/hicolor/scalable/mimetypes/
     iconscalable.files = ../../icon/NotepadNext.svg
     INSTALLS += iconscalable
+
+    i18n.path = $$PREFIX/translations/
+    # You must manually run 'lrelease <.pro file>' before this so that the qm files exist
+    i18n.files += ../../i18n/NotepadNext*.qm
+    INSTALLS += i18n
 }
 
 macx: {

@@ -38,6 +38,7 @@ jobs:
           rm -rf build-linux
           mkdir build-linux 
           cd build-linux
+          lrelease ../src/NotepadNext.pro
           qmake ../src/NotepadNext.pro
           make -j$(nproc)
 
