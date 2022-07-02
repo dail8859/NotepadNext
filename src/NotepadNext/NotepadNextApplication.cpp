@@ -64,6 +64,15 @@ bool NotepadNextApplication::init()
 {
     qInfo(Q_FUNC_INFO);
 
+    processArguments(SingleApplication::arguments());
+
+    if (!parser.value("translation").isEmpty()) {
+        loadTranslation(QLocale(parser.value("translation")));
+    }
+    else {
+        loadSystemDefaultTranslation();
+    }
+
     luaState = new LuaState();
 
     recentFilesListManager = new RecentFilesListManager(this);
@@ -151,7 +160,8 @@ bool NotepadNextApplication::init()
 
         stream >> args;
 
-        applyArguments(args);
+        processArguments(args);
+        openFilesFromCommandLine();
     });
 
     QObject::connect(this, &NotepadNextApplication::applicationStateChanged, [&](Qt::ApplicationState state) {
@@ -175,10 +185,10 @@ bool NotepadNextApplication::init()
         LuaExtension::Instance().setEditor(editor);
     });
 
-    applyArguments(SingleApplication::arguments());
+    openFilesFromCommandLine();
 
-    // If the window does not have any editors (meaning the applyArguments() did not
-    // have any files to open) then create a new empty file
+    // If the window does not have any editors (meaning the no files were
+    // specified on the command line) then create a new empty file
     if (windows.first()->editorCount() == 0) {
         windows.first()->newFile();
     }
@@ -282,40 +292,52 @@ QString NotepadNextApplication::detectLanguageFromExtension(const QString &exten
 
 void NotepadNextApplication::loadSystemDefaultTranslation()
 {
-    QLocale locale =  QLocale::system();
+    loadTranslation(QLocale::system());
+}
+
+void NotepadNextApplication::loadTranslation(QLocale locale)
+{
+    qInfo(Q_FUNC_INFO);
 
     // Load translation for NotepadNext
     //  e.g. `i18n/NotepadNext.en.qm`
     if (translatorNpn.load(locale, QApplication::applicationName(), QString("."), QString("i18n"))) {
         installTranslator(&translatorNpn);
-        qInfo("Loaded %s translation for NotepadNext", qUtf8Printable(locale.name()));
+        qInfo("Loaded %s translation for Notepad Next", qUtf8Printable(locale.name()));
     } else {
-        qInfo("%s translation not found for NotepadNext", qUtf8Printable(locale.name()));
+        qInfo("%s translation not found for Notepad Next", qUtf8Printable(locale.name()));
     }
 
     // Load translation for Qt components
     //  e.g. `translations/qt_en.qm`
     if (translatorQt.load(locale, QString("qt"), QString("_"), QString("i18n"))) {
         installTranslator(&translatorQt);
-        qInfo("Loaded %s translation for QT components", qUtf8Printable(locale.name()));
+        qInfo("Loaded %s translation for Qt components", qUtf8Printable(locale.name()));
     } else {
-        qInfo("%s translation not found for QT components", qUtf8Printable(locale.name()));
+        qInfo("%s translation not found for Qt components", qUtf8Printable(locale.name()));
     }
 }
 
-void NotepadNextApplication::applyArguments(const QStringList &args)
+void NotepadNextApplication::processArguments(const QStringList &args)
 {
     qInfo(Q_FUNC_INFO);
 
-    QCommandLineParser parser;
     parser.setApplicationDescription("Notepad Next");
     parser.addHelpOption();
     parser.addVersionOption();
 
-    // TODO: add more options
-    parser.addPositionalArgument("files", "The files to open.");
+    parser.addPositionalArgument("files", tr("Files to open."));
+
+    parser.addOptions({
+        {"translation", tr("Overrides the system default translation."), tr("translation")},
+    });
 
     parser.process(args);
+}
+
+void NotepadNextApplication::openFilesFromCommandLine()
+{
+    qInfo(Q_FUNC_INFO);
 
     for (const QString &file : parser.positionalArguments()) {
         windows.first()->openFile(file);
