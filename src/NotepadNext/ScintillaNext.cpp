@@ -343,7 +343,7 @@ void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)
         return;
     }
 
-    dragEnterEvent(event);
+    ScintillaEdit::dragEnterEvent(event);
 }
 
 void ScintillaNext::dropEvent(QDropEvent *event)
@@ -353,7 +353,7 @@ void ScintillaNext::dropEvent(QDropEvent *event)
         return;
     }
 
-    dropEvent(event);
+    ScintillaEdit::dropEvent(event);
 }
 
 bool ScintillaNext::readFromDisk(QFile &file)
