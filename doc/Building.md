@@ -29,7 +29,6 @@ This section specifically describes how to build Notepad Next using Microsoft's 
 1. In a command prompt (or git shell, powershell, etc) run:
 1. `git clone --recurse-submodules https://github.com/dail8859/NotepadNext.git`
 1. `cd NotepadNext`
-1. `git checkout dev`
 
 
 ## Building/Running Notepad Next
