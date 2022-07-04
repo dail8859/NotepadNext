@@ -59,7 +59,7 @@ void SearchResultsDock::newFileEntry(ScintillaNext *editor)
     QPointer<ScintillaNext> editor_pointer = editor;
 
     totalFileHitCount = 0;
-    currentFilePath = editor->getName();
+    currentFilePath = editor->isFile() ? editor->getFilePath() : editor->getName();
 
     currentFile = new QTreeWidgetItem(currentSearch);
     currentFile->setData(0, Qt::UserRole, QVariant::fromValue(editor_pointer));
