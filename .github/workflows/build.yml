@@ -190,8 +190,16 @@ jobs:
       - name: Create Draft Release
         run: |
           gh release create ${{ github.ref_name }} --title ${{ github.ref_name }} --generate-notes --draft
-      
+
       - name: Upload Windows Installer
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-Windows-Qt5.15.2-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe
+
+      - name: Upload Linux AppImage
+        run: |
+          gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt5.15.2-AppImage/NotepadNext-x86_64.AppImage
+
+      - name: Upload macOS App
+        run: |
+          gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt5.15.2/NotepadNext.dmg
 
