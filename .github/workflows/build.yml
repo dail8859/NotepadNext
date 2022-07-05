@@ -20,7 +20,8 @@ jobs:
     runs-on: ${{ matrix.config.os }}
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
         with:
           submodules: true
 
@@ -52,7 +53,7 @@ jobs:
           export OUTPUT=NotepadNext-x86_64.AppImage
           ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage
 
-      - name: Upload artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}-AppImage
@@ -73,7 +74,8 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
         with:
           submodules: true
 
@@ -93,7 +95,7 @@ jobs:
           cd NotepadNext
           macdeployqt NotepadNext.app -dmg
 
-      - name: Upload artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: NotepadNext-macOS-Qt${{ matrix.config.qt_version }}
@@ -114,7 +116,8 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
         with:
           submodules: true
 
@@ -124,7 +127,7 @@ jobs:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
 
-      - name: Setup VS tools
+      - name: Setup Visual Studio Tools
         uses: egor-tensin/vs-shell@v2
         with:
           arch: x64
@@ -143,26 +146,60 @@ jobs:
           cd build
           jom
 
-      - name: Create zip package
+      - name: Create zip Package
         run: |
           cd build
           jom package
 
-      - name: Create installer
+      - name: Create Installer
         if: matrix.config.qt_version == '5.15.2'
         run: |
           cd build
           jom installer
 
-      - name: Upload zip package
+      - name: Upload zip Package
         uses: actions/upload-artifact@v2
         with:
           name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Zip
           path: ${{ github.workspace }}/build/package/
 
-      - name: Upload installer
+      - name: Upload Installer
         if: matrix.config.qt_version == '5.15.2'
         uses: actions/upload-artifact@v2
         with:
           name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Installer
           path: ${{ github.workspace }}/installer/NotepadNext*.exe
+
+  github:
+    name: Draft GitHub Release
+    runs-on: ubuntu-latest
+    needs: [build-linux, build-mac, build-windows]
+
+    if: github.repository == 'dail8859/NotepadNext' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') == 'true'
+    
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+        
+      - name: Create Draft Release
+        run: |
+          gh release create ${{ github.ref_name }} --title ${{ github.ref_name }} --generate-notes --draft
+
+      - name: Upload Windows Installer
+        run: |
+          gh release upload ${{ github.ref_name }} NotepadNext-Windows-Qt5.15.2-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe
+
+      - name: Upload Linux AppImage
+        run: |
+          gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt5.15.2-AppImage/NotepadNext-x86_64.AppImage
+
+      - name: Upload macOS App
+        run: |
+          gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt5.15.2/NotepadNext.dmg
+
