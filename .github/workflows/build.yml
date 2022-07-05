@@ -140,7 +140,7 @@ jobs:
           mkdir build
           cd build
           qmake ..\src\NotepadNext.pro
-      
+
       - name: Build
         run: |
           cd build
