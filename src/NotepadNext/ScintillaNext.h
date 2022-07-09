@@ -39,6 +39,8 @@ class ScintillaNext : public ScintillaEdit
 
 public:
     explicit ScintillaNext(QString name, QWidget *parent = Q_NULLPTR);
+    virtual ~ScintillaNext();
+
     static ScintillaNext *fromFile(const QString &filePath, bool tryToCreate=false);
 
     template<typename Func>
@@ -101,11 +103,14 @@ signals:
     void closed();
     void renamed();
 
+    void lexerChanged();
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
 
 private:
+    ScintillaDocument *doc;
     QString name;
     BufferType bufferType = BufferType::Temporary;
     QFileInfo fileInfo;
