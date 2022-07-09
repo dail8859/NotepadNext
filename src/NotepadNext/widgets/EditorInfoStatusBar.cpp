@@ -75,7 +75,7 @@ void EditorInfoStatusBar::connectToEditor(ScintillaNext *editor)
 
     // Connect to the new editor
     editorUiUpdated = connect(editor, &ScintillaNext::updateUi, this, &EditorInfoStatusBar::editorUpdated);
-    documentLexerChanged = connect(editor->get_doc(), &ScintillaDocument::lexer_changed, this, [=]() { updateLanguage(editor); });
+    documentLexerChanged = connect(editor, &ScintillaNext::lexerChanged, this, [=]() { updateLanguage(editor); });
 
     refresh(editor);
 }
