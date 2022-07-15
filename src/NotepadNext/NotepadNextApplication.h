@@ -35,6 +35,8 @@ class EditorManager;
 class RecentFilesListManager;
 class ScintillaNext;
 
+void parseCommandLine(QCommandLineParser &parser, const QStringList &args);
+
 class NotepadNextApplication : public SingleApplication
 {
     Q_OBJECT
@@ -42,7 +44,7 @@ class NotepadNextApplication : public SingleApplication
 public:
     NotepadNextApplication(int &argc, char **argv);
 
-    bool init();
+    bool init(const QCommandLineParser &parser);
 
     RecentFilesListManager *getRecentFilesListManager() const { return recentFilesListManager; }
     EditorManager *getEditorManager() const { return editorManager; }
@@ -59,8 +61,7 @@ public:
     void loadTranslation(QLocale locale);
 
 private:
-    void processArguments(const QStringList &args);
-    void openFilesFromCommandLine();
+    void openFiles(const QStringList &files);
 
     EditorManager *editorManager;
     RecentFilesListManager *recentFilesListManager;
@@ -75,8 +76,6 @@ private:
 
     QTranslator translatorNpn;
     QTranslator translatorQt;
-
-    QCommandLineParser parser;
 };
 
 #endif // NOTEPADNEXTAPPLICATION_H

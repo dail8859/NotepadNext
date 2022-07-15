@@ -53,18 +53,31 @@ struct luabridge::Stack <QString const&>
     }
 };
 
+void parseCommandLine(QCommandLineParser &parser, const QStringList &args)
+{
+    parser.setApplicationDescription("Notepad Next");
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    parser.addPositionalArgument("files", "Files to open.");
+
+    parser.addOptions({
+        {"translation", "Overrides the system default translation.", "translation"},
+    });
+
+    parser.process(args);
+}
 
 NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     : SingleApplication(argc, argv, true, opts)
 {
-    setWindowIcon(QIcon(QStringLiteral(":/icons/NotepadNext.png")));
 }
 
-bool NotepadNextApplication::init()
+bool NotepadNextApplication::init(const QCommandLineParser &parser)
 {
     qInfo(Q_FUNC_INFO);
 
-    processArguments(SingleApplication::arguments());
+    setWindowIcon(QIcon(QStringLiteral(":/icons/NotepadNext.png")));
 
     if (!parser.value("translation").isEmpty()) {
         loadTranslation(QLocale(parser.value("translation")));
@@ -160,8 +173,10 @@ bool NotepadNextApplication::init()
 
         stream >> args;
 
-        processArguments(args);
-        openFilesFromCommandLine();
+        QCommandLineParser parser;
+        parseCommandLine(parser, args);
+
+        openFiles(parser.positionalArguments());
     });
 
     QObject::connect(this, &NotepadNextApplication::applicationStateChanged, [&](Qt::ApplicationState state) {
@@ -185,7 +200,7 @@ bool NotepadNextApplication::init()
         LuaExtension::Instance().setEditor(editor);
     });
 
-    openFilesFromCommandLine();
+    openFiles(parser.positionalArguments());
 
     // If the window does not have any editors (meaning the no files were
     // specified on the command line) then create a new empty file
@@ -318,28 +333,11 @@ void NotepadNextApplication::loadTranslation(QLocale locale)
     }
 }
 
-void NotepadNextApplication::processArguments(const QStringList &args)
+void NotepadNextApplication::openFiles(const QStringList &files)
 {
     qInfo(Q_FUNC_INFO);
 
-    parser.setApplicationDescription("Notepad Next");
-    parser.addHelpOption();
-    parser.addVersionOption();
-
-    parser.addPositionalArgument("files", tr("Files to open."));
-
-    parser.addOptions({
-        {"translation", tr("Overrides the system default translation."), tr("translation")},
-    });
-
-    parser.process(args);
-}
-
-void NotepadNextApplication::openFilesFromCommandLine()
-{
-    qInfo(Q_FUNC_INFO);
-
-    for (const QString &file : parser.positionalArguments()) {
+    for (const QString &file : files) {
         windows.first()->openFile(file);
     }
 }

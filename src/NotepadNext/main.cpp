@@ -48,6 +48,10 @@ int main(int argc, char *argv[])
 
     NotepadNextApplication app(argc, argv);
 
+    const QStringList args = app.arguments();
+    QCommandLineParser parser;
+    parseCommandLine(parser, args);
+
     // Log some debug info
     qInfo("=============================");
     qInfo("%s v%s%s", qUtf8Printable(QApplication::applicationName()), qUtf8Printable(QApplication::applicationVersion()), APP_DISTRIBUTION);
@@ -61,25 +65,25 @@ int main(int argc, char *argv[])
     qInfo("=============================");
 
     if(app.isPrimary()) {
-        app.init();
+        app.init(parser);
 
         return app.exec();
     }
     else {
+        qInfo() << "Primary instance already running. PID:" << app.primaryPid();
+
         // This eventually needs moved into the NotepadNextApplication to keep
         // sending/receiving logic in the same place
         QByteArray buffer;
         QDataStream stream(&buffer, QIODevice::WriteOnly);
 
-        stream << app.arguments();
-
-        qInfo() << "Primary instance already running. PID:" << app.primaryPid();
-
+        stream << args;
         app.sendMessage(buffer);
 
         qInfo() << "Secondary instance closing...";
 
         app.exit(0);
+
         return 0;
     }
 }
