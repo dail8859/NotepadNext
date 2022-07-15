@@ -43,7 +43,7 @@ jobs:
           rm -rf build-linux
           mkdir build-linux 
           cd build-linux
-          qmake ../src/NotepadNext.pro
+          qmake ../src/NotepadNext.pro "DISTRIBUTION=AppImage"
           make -j$(nproc)
 
       - name: Build AppImage
