@@ -77,7 +77,8 @@ void SearchResultsDock::newResultsEntry(const QString line, int lineNumber)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(currentFile);
 
-    item->setText(0, QString::number(lineNumber));
+    // Scintilla internally references line numbers starting at 0, however it needs displayed starting at 1
+    item->setText(0, QString::number(lineNumber + 1));
     item->setData(0, Qt::UserRole, lineNumber);
     item->setBackground(0, QBrush(QColor(220, 220, 220)));
     item->setTextAlignment(0, Qt::AlignRight);
