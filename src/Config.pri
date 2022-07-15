@@ -21,6 +21,13 @@ include(Version.pri)
 DEFINES += APP_VERSION='"\\\"$$APP_VERSION\\\""'
 DEFINES += APP_COPYRIGHT='"\\\"$$APP_COPYRIGHT\\\""'
 
+!isEmpty(DISTRIBUTION) {
+    DEFINES += APP_DISTRIBUTION='"\\\" ($$DISTRIBUTION)\\\""'
+}
+else {
+    DEFINES += APP_DISTRIBUTION='"\\\"\\\""'
+}
+
 CONFIG += c++1z
 CONFIG -= debug_and_release debug_and_release_target
 

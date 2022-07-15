@@ -527,8 +527,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
     connect(ui->actionAboutNotepadNext, &QAction::triggered, this, [=]() {
         QMessageBox::about(this, QString(),
-                            QStringLiteral("<h3>%1 v%2</h3>"
-                                    "<p>%3</p>"
+                            QStringLiteral("<h3>%1 v%2%3</h3>"
+                                    "<p>%4</p>"
                                     "<p>This program does stuff.</p>"
                                     R"(<p>This program is free software: you can redistribute it and/or modify
                                     it under the terms of the GNU General Public License as published by
@@ -540,7 +540,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                                     GNU General Public License for more details.</p>
                                     <p>You should have received a copy of the GNU General Public License
                                     along with this program. If not, see &lt;https://www.gnu.org/licenses/&gt;.</p>)")
-                                .arg(QApplication::applicationDisplayName(), APP_VERSION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
+                                .arg(QApplication::applicationDisplayName(), APP_VERSION, APP_DISTRIBUTION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
 
     EditorInspectorDock *editorInspectorDock = new EditorInspectorDock(this);
