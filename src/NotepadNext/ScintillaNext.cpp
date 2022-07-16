@@ -386,14 +386,14 @@ bool ScintillaNext::readFromDisk(QFile &file)
 
     QByteArray chunk;
     qint64 bytesRead;
+    QTextCodec *codec = Q_NULLPTR;
+    QTextCodec::ConverterState state;
 
-    QTextDecoder *decoder = nullptr;
     bool first_read = true;
     do {
         // Try to read as much as possible
         chunk.resize(CHUNK_SIZE);
         bytesRead = file.read(chunk.data(), CHUNK_SIZE);
-
         chunk.resize(bytesRead);
 
         qDebug("Read %lld bytes", bytesRead);
@@ -403,43 +403,48 @@ bool ScintillaNext::readFromDisk(QFile &file)
         // - determine encoding
         // - determine space vs tabs
         // - determine indentation size
+
         if (first_read) {
             first_read = false;
 
-            // Try uchardet library first
-            uchardet_t ud = uchardet_new();
-            if (uchardet_handle_data(ud, chunk.constData(), chunk.size()) != 0) {
-                qWarning("uchardet failed to detect encoding");
+            // Search for a BOM mark
+            codec = QTextCodec::codecForUtfText(chunk, Q_NULLPTR);
+
+            if (codec != Q_NULLPTR) {
+                qDebug("BOM mark found");
             }
-            uchardet_data_end(ud);
+            else {
+                qDebug("BOM mark not found, using uchardet");
 
-            QByteArray encoding(uchardet_get_charset(ud));
-            uchardet_delete(ud);
+                // Limit decoding to the first 64 kilobytes
+                int detectionSize = qMin(chunk.size(), 64 * 1024);
 
-            qInfo("Encoding detected as: %s", qUtf8Printable(encoding));
+                // Use uchardet to try and detect file encoding since no BOM was found
+                uchardet_t encodingDetector = uchardet_new();
+                if (uchardet_handle_data(encodingDetector, chunk.data(), detectionSize) == 0) {
+                    uchardet_data_end(encodingDetector);
 
-            QTextCodec *codec = QTextCodec::codecForName(encoding);
-            if (codec) {
-                decoder = codec->makeDecoder();
-            } else {
-                qWarning("No avialable Codecs for: \"%s\"", qUtf8Printable(encoding));
-                qWarning("Falling back to QTextCodec::codecForUtfText()");
-
-                if (chunk.size() >= 2)
-                    qWarning("%d %d", chunk.at(0), chunk.at(1));
-
-                codec = QTextCodec::codecForUtfText(chunk);
-                decoder = codec->makeDecoder();
-
-                qWarning("Using: %s", qUtf8Printable(codec->name()));
+                    qDebug("uchardet detected encoding as: '%s'", uchardet_get_charset(encodingDetector));
+                    codec = QTextCodec::codecForName(uchardet_get_charset(encodingDetector));
+                }
+                else {
+                    qDebug("uchardet failure");
+                }
+                uchardet_delete(encodingDetector);
             }
+
+            qDebug("Using codec: '%s'", codec ? codec->name().constData() : "");
+            setCodePage(codec ? SC_CP_UTF8 : 0);
         }
 
-        QByteArray utf8_data = decoder->toUnicode(chunk).toUtf8();
-        appendText(utf8_data.size(), utf8_data.constData());
+        if (codec) {
+            const QByteArray utf8_data = codec->toUnicode(chunk.constData(), chunk.size(), &state).toUtf8();
+            appendText(utf8_data.size(), utf8_data.constData());
+        }
+        else {
+            appendText(chunk.size(), chunk.constData());
+        }
     } while (!file.atEnd() && status() == SC_STATUS_OK);
-
-    delete decoder;
 
     file.close();
 
