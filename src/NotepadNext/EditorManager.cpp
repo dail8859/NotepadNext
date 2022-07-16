@@ -133,8 +133,6 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setIdleStyling(SC_IDLESTYLING_TOVISIBLE);
     editor->setEndAtLastLine(false);
 
-    editor->setCodePage(SC_CP_UTF8);
-
     editor->setMultipleSelection(true);
     editor->setAdditionalSelectionTyping(true);
     editor->setMultiPaste(SC_MULTIPASTE_EACH);
