@@ -18,6 +18,7 @@
 
 
 #include "MainWindow.h"
+#include "DebugLogDock.h"
 #include "ui_MainWindow.h"
 
 #include <QFileDialog>
@@ -555,7 +556,16 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     luaConsoleDock->hide();
     addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
 
-    ui->menuHelp->insertActions(ui->menuHelp->actions().at(0), {luaConsoleDock->toggleViewAction(), languageInspectorDock->toggleViewAction(), editorInspectorDock->toggleViewAction()});
+    DebugLogDock *debugLogDock = new DebugLogDock(this);
+    debugLogDock->hide();
+    addDockWidget(Qt::RightDockWidgetArea, debugLogDock);
+
+    ui->menuHelp->insertActions(ui->menuHelp->actions().at(0), {
+                                    luaConsoleDock->toggleViewAction(),
+                                    languageInspectorDock->toggleViewAction(),
+                                    editorInspectorDock->toggleViewAction(),
+                                    debugLogDock->toggleViewAction()
+                                });
 
     FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
     fawDock->hide();

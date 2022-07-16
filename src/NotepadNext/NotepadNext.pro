@@ -60,6 +60,7 @@ license.path = $$OUT_PWD
 SOURCES += \
     ColorPickerDelegate.cpp \
     ComboBoxDelegate.cpp \
+    DebugManager.cpp \
     DockedEditor.cpp \
     EditorManager.cpp \
     EditorPrintPreviewRenderer.cpp \
@@ -91,6 +92,7 @@ SOURCES += \
     decorators/BetterMultiSelection.cpp \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
+    docks/DebugLogDock.cpp \
     docks/EditorInspectorDock.cpp \
     dialogs/FindReplaceDialog.cpp \
     docks/FolderAsWorkspaceDock.cpp \
@@ -113,6 +115,7 @@ SOURCES += \
 HEADERS += \
     ColorPickerDelegate.h \
     ComboBoxDelegate.h \
+    DebugManager.h \
     DockedEditor.h \
     DockedEditorTitleBar.h \
     EditorManager.h \
@@ -146,6 +149,7 @@ HEADERS += \
     decorators/BetterMultiSelection.h \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
+    docks/DebugLogDock.h \
     docks/EditorInspectorDock.h \
     dialogs/FindReplaceDialog.h \
     docks/FolderAsWorkspaceDock.h \
@@ -166,6 +170,7 @@ HEADERS += \
 
 FORMS += \
     QuickFindWidget.ui \
+    docks/DebugLogDock.ui \
     docks/EditorInspectorDock.ui \
     docks/FolderAsWorkspaceDock.ui \
     docks/LanguageInspectorDock.ui \

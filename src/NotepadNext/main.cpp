@@ -48,10 +48,6 @@ int main(int argc, char *argv[])
 
     NotepadNextApplication app(argc, argv);
 
-    const QStringList args = app.arguments();
-    QCommandLineParser parser;
-    parseCommandLine(parser, args);
-
     // Log some debug info
     qInfo("=============================");
     qInfo("%s v%s%s", qUtf8Printable(QApplication::applicationName()), qUtf8Printable(QApplication::applicationVersion()), APP_DISTRIBUTION);
@@ -61,11 +57,11 @@ int main(int argc, char *argv[])
     qInfo("Locale: %s", qUtf8Printable(QLocale::system().name()));
     qInfo("CPU: %s", qUtf8Printable(QSysInfo::currentCpuArchitecture()));
     qInfo("File Path: %s", qUtf8Printable(QApplication::applicationFilePath()));
-    qInfo("Arguments: %s", qUtf8Printable(QApplication::arguments().join(' ')));
+    qInfo("Arguments: %s", qUtf8Printable(app.arguments().join(' ')));
     qInfo("=============================");
 
     if(app.isPrimary()) {
-        app.init(parser);
+        app.init();
 
         return app.exec();
     }
@@ -77,7 +73,7 @@ int main(int argc, char *argv[])
         QByteArray buffer;
         QDataStream stream(&buffer, QIODevice::WriteOnly);
 
-        stream << args;
+        stream << app.arguments();
         app.sendMessage(buffer);
 
         qInfo() << "Secondary instance closing...";

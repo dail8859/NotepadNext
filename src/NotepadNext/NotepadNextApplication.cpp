@@ -22,6 +22,7 @@
 #include "RecentFilesListManager.h"
 #include "EditorManager.h"
 #include "LuaExtension.h"
+#include "DebugManager.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
@@ -71,9 +72,13 @@ void parseCommandLine(QCommandLineParser &parser, const QStringList &args)
 NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     : SingleApplication(argc, argv, true, opts)
 {
+    parseCommandLine(parser, arguments());
+
+    DebugManager::manageDebugOutput();
+    DebugManager::pauseDebugOutput();
 }
 
-bool NotepadNextApplication::init(const QCommandLineParser &parser)
+bool NotepadNextApplication::init()
 {
     qInfo(Q_FUNC_INFO);
 
@@ -212,6 +217,8 @@ bool NotepadNextApplication::init(const QCommandLineParser &parser)
 
     windows.first()->restoreWindowState();
     windows.first()->show();
+
+    DebugManager::resumeDebugOutput();
 
     return true;
 }
