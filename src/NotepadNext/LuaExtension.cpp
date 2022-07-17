@@ -41,11 +41,6 @@ IFaceTableMixer ifacemixer;
 #define EOFMARK         "<eof>"
 #define marklen         (sizeof(EOFMARK)/sizeof(char) - 1)
 
-// This got removed in LUA v5.4.4
-#ifndef LUA_QL
-#define LUA_QL(x)	"'" x "'"
-#endif
-
 static bool call_function(lua_State *L, int nargs, bool ignoreFunctionReturnValue);
 
 // Helper function from SciTE

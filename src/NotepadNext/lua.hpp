@@ -7,3 +7,8 @@ extern "C" {
 #include <lualib.h>
 #include <lauxlib.h>
 }
+
+// This got removed in LUA v5.4.4
+#ifndef LUA_QL
+#define LUA_QL(x)	"'" x "'"
+#endif
