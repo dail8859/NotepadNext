@@ -4,6 +4,7 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt5 COMPONENTS Widgets PrintSupport REQUIRED)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+add_compile_definitions(APP_DISTRIBUTION="local")
 
 add_executable(NotepadNext
     ColorPickerDelegate.cpp
@@ -25,10 +26,19 @@ add_executable(NotepadNext
     QRegexSearch.cpp
     QuickFindWidget.cpp
     RecentFilesListManager.cpp
+    RecentFilesListManager.h
+    RecentFilesListMenuBuilder.cpp
+    RecentFilesListMenuBuilder.h
     SciIFaceTable.cpp
     ScintillaNext.cpp
     Settings.cpp
     SpinBoxDelegate.cpp
+    UndoAction.h
+    UndoAction.cpp
+    ScintillaCommenter.h
+    ScintillaCommenter.cpp
+    SelectionTracker.h
+    SelectionTracker.cpp
     decorators/ApplicationDecorator.cpp
     decorators/AutoCompletion.cpp
     decorators/AutoIndentation.cpp
@@ -111,6 +121,11 @@ add_executable(NotepadNext
     dialogs/MacroRunDialog.ui
     dialogs/MacroSaveDialog.ui
     dialogs/PreferencesDialog.ui
+
+    docks/SearchResultsDock.cpp
+    docks/SearchResultsDock.h
+    docks/SearchResultsDock.ui
+
     resources.qrc
     scripts.qrc
 )
