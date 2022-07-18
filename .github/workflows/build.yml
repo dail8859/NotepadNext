@@ -17,15 +17,15 @@ jobs:
         config:
         -
           qt_version: "6.2.4"
-          modules: ""
+          modules: "qt5compat"
           os: ubuntu-18.04
         -
           qt_version: "6.2.4"
-          modules: ""
+          modules: "qt5compat"
           os: windows-latest
         -
           qt_version: "6.2.4"
-          modules: ""
+          modules: "qt5compat"
           os: macos-latest
 
     runs-on: ${{ matrix.config.os }}
