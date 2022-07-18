@@ -2,7 +2,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt5 COMPONENTS Widgets PrintSupport REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets PrintSupport REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets PrintSupport )
+if (Qt6_FOUND)
+    find_package(Qt6 REQUIRED COMPONENTS Core5Compat)
+endif()
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 add_compile_definitions(APP_DISTRIBUTION="local")
 
@@ -130,7 +135,7 @@ add_executable(NotepadNext
     scripts.qrc
 )
 
-target_link_libraries(NotepadNext Qt5::Widgets Qt5::PrintSupport
+target_link_libraries(NotepadNext Qt::Widgets Qt::PrintSupport
     libuchardet_static
     lua
     LuaBridge
@@ -141,6 +146,11 @@ target_link_libraries(NotepadNext Qt5::Widgets Qt5::PrintSupport
     scintilla-qt-edit
     lexzilla
 )
+
+if (Qt6_FOUND)
+    target_link_libraries(NotepadNext Qt6::Core5Compat)
+endif()
+
 target_include_directories(NotepadNext PRIVATE decorators dialogs docks widgets src)
 target_compile_definitions(NotepadNext PRIVATE APP_VERSION="0.5.0")
 target_compile_definitions(NotepadNext PRIVATE APP_COPYRIGHT="Copyright 2019-2022 Justin Dailey")
