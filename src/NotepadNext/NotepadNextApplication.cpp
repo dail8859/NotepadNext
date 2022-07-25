@@ -64,6 +64,7 @@ void parseCommandLine(QCommandLineParser &parser, const QStringList &args)
 
     parser.addOptions({
         {"translation", "Overrides the system default translation.", "translation"},
+        {"reset-settings", "Resets all application settings."},
     });
 
     parser.process(args);
@@ -83,6 +84,11 @@ bool NotepadNextApplication::init()
     qInfo(Q_FUNC_INFO);
 
     setWindowIcon(QIcon(QStringLiteral(":/icons/NotepadNext.png")));
+
+    if (parser.isSet("reset-settings")) {
+        QSettings settings;
+        settings.clear();
+    }
 
     if (!parser.value("translation").isEmpty()) {
         loadTranslation(QLocale(parser.value("translation")));
