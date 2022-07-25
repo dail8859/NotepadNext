@@ -346,6 +346,22 @@ void NotepadNextApplication::loadTranslation(QLocale locale)
     }
 }
 
+bool NotepadNextApplication::event(QEvent *event)
+{
+    // Handle the QFileOpenEvent to open files on MacOS X.
+    if (event->type() == QEvent::FileOpen) {
+        QFileOpenEvent *fileOpenEvent = static_cast<QFileOpenEvent*>(event);
+
+        qInfo("QFileOpenEvent %s", qUtf8Printable(fileOpenEvent->file()));
+
+        openFiles(QStringList() << fileOpenEvent->file());
+
+        return true;
+    }
+
+    return SingleApplication::event(event);
+}
+
 void NotepadNextApplication::openFiles(const QStringList &files)
 {
     qInfo(Q_FUNC_INFO);
