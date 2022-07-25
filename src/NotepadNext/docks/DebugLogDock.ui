@@ -56,6 +56,9 @@
       <property name="readOnly">
        <bool>true</bool>
       </property>
+      <property name="textInteractionFlags">
+       <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+      </property>
       <property name="maximumBlockCount">
        <number>1000</number>
       </property>
