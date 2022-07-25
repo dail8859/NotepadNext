@@ -18,7 +18,6 @@
 
 
 #include "DebugLogDock.h"
-#include "NotepadNextApplication.h"
 #include "ui_DebugLogDock.h"
 #include "DebugManager.h"
 
@@ -29,9 +28,6 @@ static QPlainTextEdit *output = Q_NULLPTR;
 static void debugLogDockMessageHandler(const QString &msg)
 {
     output->appendPlainText(msg);
-
-    output->verticalScrollBar()->setValue(output->verticalScrollBar()->maximum());
-    output->horizontalScrollBar()->setValue(0);
 }
 
 DebugLogDock::DebugLogDock(QWidget *parent) :
@@ -43,6 +39,11 @@ DebugLogDock::DebugLogDock(QWidget *parent) :
     output = ui->txtDebugOutput;
     DebugManager::addMessageHandler(debugLogDockMessageHandler);
 
+    connect(this, &QDockWidget::visibilityChanged, this, [=](bool visible) {
+        if (visible) {
+            ui->txtDebugOutput->horizontalScrollBar()->setValue(0);
+        }
+    });
 }
 
 DebugLogDock::~DebugLogDock()
