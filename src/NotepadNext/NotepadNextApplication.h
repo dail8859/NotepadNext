@@ -58,6 +58,9 @@ public:
     void loadSystemDefaultTranslation();
     void loadTranslation(QLocale locale);
 
+protected:
+    bool event(QEvent *event) override;
+
 private:
     void openFiles(const QStringList &files);
 
