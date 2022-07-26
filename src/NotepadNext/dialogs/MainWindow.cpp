@@ -36,14 +36,10 @@
 
 #ifdef Q_OS_WIN
 #include <QSimpleUpdater.h>
-#endif
-
-#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
 #include "DockAreaWidget.h"
-#include "DockWidgetTab.h"
 
 #include "NotepadNextApplication.h"
 #include "Settings.h"
@@ -1293,20 +1289,8 @@ void MainWindow::bringWindowToForeground()
 {
     qInfo(Q_FUNC_INFO);
 
-    //setWindowState(windowState() & ~Qt::WindowMinimized);
-    //raise();
-    //activateWindow();
-
-    // Make sure the window isn't minimized
-    // TODO: this always puts it in the "normal" state but it might have been maximized
-    // before minimized...so either a flag needs stored or find a Qt call to do it appropriately
-    if (isMinimized())
-        showNormal();
-
 #ifdef Q_OS_WIN
-    // TODO: there doesn't seem to be a cross platform way to force the window
-    // to the foreground. So this will need moved to a platform specific file
-
+    // Windows doesn't like it when you want to force a window to the foreground
     HWND hWnd = reinterpret_cast<HWND>(effectiveWinId());
     if (hWnd) {
         // I have no idea what this does but it works mostly
@@ -1319,7 +1303,15 @@ void MainWindow::bringWindowToForeground()
 
         AttachThreadInput(GetWindowThreadProcessId(GetForegroundWindow(), nullptr), GetCurrentThreadId(), FALSE);
     }
+#else
+    show();
+    raise();
+    activateWindow();
 #endif
+
+    if (isMinimized()) {
+        showNormal();
+    }
 }
 
 bool MainWindow::checkFileForModification(ScintillaNext *editor)
