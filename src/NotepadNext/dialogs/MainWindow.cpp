@@ -214,11 +214,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     srDock->toggleViewAction()->setShortcut(Qt::Key_F7);
     ui->menuView->addAction(srDock->toggleViewAction());
 
-    connect(srDock, &SearchResultsDock::searchResultActivated, this, [=](ScintillaNext *editor, int lineNumber) {
+    connect(srDock, &SearchResultsDock::searchResultActivated, this, [=](ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning) {
         dockedEditor->switchToEditor(editor);
 
-        editor->ensureVisible(lineNumber);
-        editor->gotoLine(lineNumber);
+        int linePos = editor->positionFromLine(lineNumber);
+        editor->goToRange({linePos + startPositionFromBeginning, linePos + endPositionFromBeginning});
         editor->verticalCentreCaret();
 
         editor->grabFocus();

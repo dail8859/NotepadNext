@@ -40,7 +40,7 @@ public:
 public slots:
     void newSearch(const QString searchTerm);
     void newFileEntry(ScintillaNext *editor);
-    void newResultsEntry(const QString line, int lineNumber);
+    void newResultsEntry(const QString line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning);
     void completeSearch();
 
     void collapseAll() const;
@@ -52,7 +52,7 @@ private slots:
     void itemActivated(QTreeWidgetItem *item, int column);
 
 signals:
-    void searchResultActivated(ScintillaNext *editor, int lineNumber);
+    void searchResultActivated(ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning);
 
 private:
     void updateSearchStatus();
