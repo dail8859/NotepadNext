@@ -152,7 +152,7 @@ SectionEnd
 
 # -----------------------------------------------
 
-${MementoUnselectedSection} "Start Menu Shortcut" SEC_START_MENU_SHORTCUT
+${MementoSection} "Start Menu Shortcut" SEC_START_MENU_SHORTCUT
 	CreateShortCut "$SMPROGRAMS\Notepad Next.lnk" "$INSTDIR\NotepadNext.exe"
 ${MementoSectionEnd}
 
@@ -162,7 +162,7 @@ SectionEnd
 
 # -----------------------------------------------
 
-${MementoUnselectedSection} "Context Menu" SEC_CONTEXT_MENU
+${MementoSection} "Context Menu" SEC_CONTEXT_MENU
 	SetRegView 64
 
 	WriteRegStr SHCTX "Software\Classes\*\shell\NotepadNext" "" "Edit with Notepad Next"
@@ -178,7 +178,7 @@ SectionEnd
 
 # -----------------------------------------------
 
-${MementoUnselectedSection} "Auto Updater" SEC_AUTO_UPDATER
+${MementoSection} "Auto Updater" SEC_AUTO_UPDATER
 	SetRegView 64
 	SetOutPath $INSTDIR
 
