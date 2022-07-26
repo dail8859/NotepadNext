@@ -95,9 +95,7 @@ void EditorInfoStatusBar::editorUpdated(Scintilla::Update updated)
 
 void EditorInfoStatusBar::updateDocumentSize(ScintillaNext *editor)
 {
-    QString sizeText = tr("Length: %1    Lines: %2").arg(
-            QLocale::system().toString(editor->length()),
-            QLocale::system().toString(editor->lineCount()));
+    QString sizeText = tr("Length: %L1    Lines: %L2").arg(editor->length()).arg(editor->lineCount());
     docSize->setText(sizeText);
 }
 
@@ -116,15 +114,11 @@ void EditorInfoStatusBar::updateSelectionInfo(ScintillaNext *editor)
         if (end > start)
             lines++;
 
-        selectionText = tr("Sel: %1 | %2").arg(
-                QLocale::system().toString(editor->countCharacters(start, end)),
-                QLocale::system().toString(lines));
+        selectionText = tr("Sel: %L1 | %L2").arg(editor->countCharacters(start, end)).arg(lines);
     }
 
     const int pos = editor->currentPos();
-    QString positionText = tr("Ln: %1    Col: %2    ").arg(
-            QLocale::system().toString(editor->lineFromPosition(pos) + 1),
-            QLocale::system().toString(editor->column(pos) + 1));
+    QString positionText = tr("Ln: %L1    Col: %L2    ").arg(editor->lineFromPosition(pos) + 1).arg(editor->column(pos) + 1);
     docPos->setText(positionText + selectionText);
 }
 
