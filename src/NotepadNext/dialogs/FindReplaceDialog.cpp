@@ -253,9 +253,11 @@ void FindReplaceDialog::findAllInCurrentDocument()
         const int line = editor->lineFromPosition(start);
         const int lineStartPosition = editor->positionFromLine(line);
         const int lineEndPosition = editor->lineEndPosition(line);
+        const int startPositionFromBeginning = start - lineStartPosition;
+        const int endPositionFromBeginning = end - lineStartPosition;
         QString lineText = editor->get_text_range(lineStartPosition, lineEndPosition);
 
-        searchResults->newResultsEntry(lineText, line);
+        searchResults->newResultsEntry(lineText, line, startPositionFromBeginning, endPositionFromBeginning);
 
         return end;
     });

@@ -26,6 +26,13 @@
 #include <QMenu>
 #include <QShortcut>
 
+enum SearchResultData
+{
+    LineNumber = Qt::UserRole,
+    LinePosStart,
+    LinePosEnd
+};
+
 SearchResultsDock::SearchResultsDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::SearchResultsDock)
@@ -97,13 +104,15 @@ void SearchResultsDock::newFileEntry(ScintillaNext *editor)
     updateSearchStatus();
 }
 
-void SearchResultsDock::newResultsEntry(const QString line, int lineNumber)
+void SearchResultsDock::newResultsEntry(const QString line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(currentFile);
 
     // Scintilla internally references line numbers starting at 0, however it needs displayed starting at 1
     item->setText(0, QString::number(lineNumber + 1));
-    item->setData(0, Qt::UserRole, lineNumber);
+    item->setData(0, SearchResultData::LineNumber, lineNumber);
+    item->setData(0, SearchResultData::LinePosStart, startPositionFromBeginning);
+    item->setData(0, SearchResultData::LinePosEnd, endPositionFromBeginning);
     item->setBackground(0, QBrush(QColor(220, 220, 220)));
     item->setTextAlignment(0, Qt::AlignRight);
 
@@ -166,9 +175,11 @@ void SearchResultsDock::itemActivated(QTreeWidgetItem *item, int column)
 
         // The editor may no longer exist
         if (editor) {
-            int lineNumber = item->data(0, Qt::UserRole).toInt();
+            int lineNumber = item->data(0, SearchResultData::LineNumber).toInt();
+            int startPositionFromBeginning = item->data(0, SearchResultData::LinePosStart).toInt();
+            int endPositionFromBeginning = item->data(0, SearchResultData::LinePosEnd).toInt();
 
-            emit searchResultActivated(editor, lineNumber);
+            emit searchResultActivated(editor, lineNumber, startPositionFromBeginning, endPositionFromBeginning);
         }
     }
 }
