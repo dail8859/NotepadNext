@@ -43,6 +43,11 @@ public slots:
     void newResultsEntry(const QString line, int lineNumber);
     void completeSearch();
 
+    void collapseAll() const;
+    void expandAll() const;
+    void deleteEntry(QTreeWidgetItem *item);
+    void deleteAll();
+
 private slots:
     void itemActivated(QTreeWidgetItem *item, int column);
 
