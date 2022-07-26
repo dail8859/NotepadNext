@@ -23,6 +23,8 @@
 
 #include <QKeyEvent>
 #include <QPointer>
+#include <QMenu>
+#include <QShortcut>
 
 SearchResultsDock::SearchResultsDock(QWidget *parent) :
     QDockWidget(parent),
@@ -30,7 +32,29 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Close the results when escape is pressed
+    new QShortcut(QKeySequence::Cancel, this, this, &SearchResultsDock::close, Qt::WidgetWithChildrenShortcut);
+
     connect(ui->treeWidget, &QTreeWidget::itemActivated, this, &SearchResultsDock::itemActivated);
+
+    connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
+        QTreeWidgetItem *item = ui->treeWidget->itemAt(pos);
+
+        if (item == Q_NULLPTR) {
+            return;
+        }
+
+        // Create the menu and show it
+        QMenu menu(this);
+        menu.addAction(tr("Collapse All"), this, &SearchResultsDock::collapseAll);
+        menu.addAction(tr("Expand All"), this, &SearchResultsDock::expandAll);
+        menu.addSeparator();
+        menu.addAction(tr("Delete Entry"), this, [=]() { deleteEntry(item); });
+        menu.addSeparator();
+        menu.addAction(tr("Delete All"), this, &SearchResultsDock::deleteAll);
+
+        menu.exec(QCursor::pos());
+    });
 }
 
 SearchResultsDock::~SearchResultsDock()
@@ -100,6 +124,35 @@ void SearchResultsDock::completeSearch()
     totalHitCount = 0;
 
     ui->treeWidget->resizeColumnToContents(0);
+}
+
+void SearchResultsDock::collapseAll() const
+{
+    ui->treeWidget->collapseAll();
+}
+
+void SearchResultsDock::expandAll() const
+{
+    ui->treeWidget->expandAll();
+}
+
+void SearchResultsDock::deleteEntry(QTreeWidgetItem *item)
+{
+    QTreeWidgetItem *parent = item->parent();
+
+    if (parent != Q_NULLPTR) {
+        parent->removeChild(item);
+        delete item;
+    }
+    else {
+        const int index = ui->treeWidget->indexOfTopLevelItem(item);
+        delete ui->treeWidget->takeTopLevelItem(index);
+    }
+}
+
+void SearchResultsDock::deleteAll()
+{
+    ui->treeWidget->clear();
 }
 
 void SearchResultsDock::itemActivated(QTreeWidgetItem *item, int column)
