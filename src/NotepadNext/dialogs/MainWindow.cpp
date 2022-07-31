@@ -43,7 +43,6 @@
 #endif
 
 #include "DockAreaWidget.h"
-#include "DockWidgetTab.h"
 
 #include "NotepadNextApplication.h"
 #include "Settings.h"
@@ -53,8 +52,6 @@
 #include "RecentFilesListManager.h"
 #include "RecentFilesListMenuBuilder.h"
 #include "EditorManager.h"
-
-#include "MacroRecorder.h"
 
 #include "LuaConsoleDock.h"
 #include "LanguageInspectorDock.h"
@@ -74,8 +71,7 @@
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
-    app(app),
-    recorder(new MacroRecorder(this))
+    app(app)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -431,73 +427,40 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         pd->activateWindow();
     });
 
+    // The macro manager has already loaded any saved macros, so it might have some already
+    ui->actionRunMacroMultipleTimes->setEnabled(macroManager.availableMacros().size() > 0);
+
     connect(ui->actionMacroRecording, &QAction::triggered, this, [=](bool b) {
         if (b) {
-            ui->actionMacroRecording->setText(tr("Stop Recording"));
-            recorder->startRecording(currentEditor());
-
-            // A macro is being recorded so disable some macro options
-            ui->actionPlayback->setEnabled(false);
-            ui->actionRunMacroMultipleTimes->setEnabled(false);
-            ui->actionSaveCurrentRecordedMacro->setEnabled(false);
+            macroManager.startRecording(currentEditor());
         }
         else {
-            ui->actionMacroRecording->setText(tr("Start Recording"));
-            Macro *m = recorder->stopRecording();
-
-            if (m->size() > 0) {
-                currentMacro = m;
-                ui->actionPlayback->setEnabled(true);
-                ui->actionRunMacroMultipleTimes->setEnabled(true);
-                ui->actionSaveCurrentRecordedMacro->setEnabled(true);
-            }
-            else {
-                // Don't need the macro returned from the recorder
-                delete m;
-
-                // A previously recorded one may still be valid
-                if (currentMacro) {
-                    ui->actionPlayback->setEnabled(true);
-                    ui->actionRunMacroMultipleTimes->setEnabled(true);
-
-                    // It may or may not be "saved" in the list
-                    if (!macros.contains(currentMacro))
-                        ui->actionSaveCurrentRecordedMacro->setEnabled(true);
-                }
-            }
+            macroManager.stopRecording();
         }
+    });
+
+    connect(&macroManager, &MacroManager::recordingStarted, this, [=]() {
+        ui->actionMacroRecording->setText(tr("Stop Recording"));
+
+        // A macro is being recorded so disable some macro options
+        ui->actionPlayback->setEnabled(false);
+        ui->actionRunMacroMultipleTimes->setEnabled(false);
+        ui->actionSaveCurrentRecordedMacro->setEnabled(false);
+    });
+
+    connect(&macroManager, &MacroManager::recordingStopped, this, [=]() {
+        ui->actionMacroRecording->setText(tr("Start Recording"));
+
+        // Only enable these if the macro manager recorded a valid macro
+        ui->actionPlayback->setEnabled(macroManager.hasCurrentMacro());
+        ui->actionSaveCurrentRecordedMacro->setEnabled(macroManager.hasCurrentMacro());
+
+        // The macro manager might have other macros
+        ui->actionRunMacroMultipleTimes->setEnabled(macroManager.availableMacros().size() > 0);
     });
 
     connect(ui->actionPlayback, &QAction::triggered, this, [=]() {
-        currentMacro->replay(currentEditor());
-    });
-
-    connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, this, [=]() {
-        MacroRunDialog *macroRunDialog = nullptr;
-
-        if (!dialogs.contains("MacroRunDialog")) {
-            macroRunDialog = new MacroRunDialog(this);
-            dialogs["MacroRunDialog"] = macroRunDialog;
-
-            connect(macroRunDialog, &MacroRunDialog::execute, this, [=](Macro *macro, int times) {
-                if (times > 0)
-                    macro->replay(currentEditor(), times);
-                else if (times == -1)
-                    macro->replayTillEndOfFile(currentEditor());
-            });
-        }
-        else {
-            macroRunDialog = qobject_cast<MacroRunDialog *>(dialogs["MacroRunDialog"]);
-        }
-
-        if (!macros.contains(currentMacro))
-            macroRunDialog->setMacros(QVector<Macro *>(macros) << currentMacro);
-        else
-            macroRunDialog->setMacros(macros);
-
-        macroRunDialog->show();
-        macroRunDialog->raise();
-        macroRunDialog->activateWindow();
+        macroManager.replayCurrentMacro(currentEditor());
     });
 
     connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, this, [=]() {
@@ -511,14 +474,49 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             // The macro has been saved so disable save option
             ui->actionSaveCurrentRecordedMacro->setEnabled(false);
 
-            // TODO: does the macro name already exist?
+            // TODO: does the macro name already exist? Make the user retry
 
-            currentMacro->setName(macroSaveDialog.getName());
+            macroManager.saveCurrentMacro(macroSaveDialog.getName());
+
+            // TODO handle shortcuts
             if (!macroSaveDialog.getShortcut().isEmpty()) {
                 // do something with msd.getShortcut().isEmpty()
             }
+        }
+    });
 
-            macros.append(currentMacro);
+    connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, this, [=]() {
+        MacroRunDialog *macroRunDialog = nullptr;
+
+        if (!dialogs.contains("MacroRunDialog")) {
+            macroRunDialog = new MacroRunDialog(this, &macroManager);
+            dialogs["MacroRunDialog"] = macroRunDialog;
+
+            connect(macroRunDialog, &MacroRunDialog::execute, this, [=](Macro *macro, int times) {
+                if (times > 0)
+                    macro->replay(currentEditor(), times);
+                else if (times == -1)
+                    macro->replayTillEndOfFile(currentEditor());
+            });
+        }
+        else {
+            macroRunDialog = qobject_cast<MacroRunDialog *>(dialogs["MacroRunDialog"]);
+        }
+
+        macroRunDialog->show();
+        macroRunDialog->raise();
+        macroRunDialog->activateWindow();
+    });
+
+    connect(ui->menuMacro, &QMenu::aboutToShow, this, [=]() {
+        // NOTE: its unfortunate that this has to be hard coded, but there's no way
+        // to easily determine what should or shouldn't be there
+        while (ui->menuMacro->actions().size() > 5) {
+            delete ui->menuMacro->actions().takeLast();
+        }
+
+        for (const Macro *m : macroManager.availableMacros()) {
+            ui->menuMacro->addAction(m->getName(), [=]() { m->replay(currentEditor()); });
         }
     });
 
@@ -1367,13 +1365,6 @@ void MainWindow::saveSettings() const
 
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     settings.setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
-
-    settings.beginWriteArray("Macros");
-    for (int i = 0; i < macros.size(); ++i) {
-        settings.setArrayIndex(i);
-        settings.setValue("Macro", QVariant::fromValue(*macros.at(i)));
-    }
-    settings.endArray();
 }
 
 void MainWindow::restoreSettings()
@@ -1392,14 +1383,6 @@ void MainWindow::restoreSettings()
 
     ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
     ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
-
-    int size = settings.beginReadArray("Macros");
-    for (int i = 0; i < size; ++i) {
-        settings.setArrayIndex(i);
-        Macro *m = new Macro(settings.value("Macro").value<Macro>());
-        macros.append(m);
-    }
-    settings.endArray();
 }
 
 

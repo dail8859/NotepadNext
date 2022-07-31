@@ -208,7 +208,7 @@
     </property>
     <addaction name="actionPreferences"/>
    </widget>
-   <widget class="QMenu" name="menuTools">
+   <widget class="QMenu" name="menuMacro">
     <property name="title">
      <string>Macro</string>
     </property>
@@ -216,6 +216,7 @@
     <addaction name="actionPlayback"/>
     <addaction name="actionSaveCurrentRecordedMacro"/>
     <addaction name="actionRunMacroMultipleTimes"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -244,7 +245,7 @@
    <addaction name="menuEncodings"/>
    <addaction name="menuLanguage"/>
    <addaction name="menuSettings"/>
-   <addaction name="menuTools"/>
+   <addaction name="menuMacro"/>
    <addaction name="menuRun"/>
    <addaction name="menuHelp"/>
   </widget>
