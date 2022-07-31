@@ -1367,6 +1367,13 @@ void MainWindow::saveSettings() const
 
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     settings.setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
+
+    settings.beginWriteArray("Macros");
+    for (int i = 0; i < macros.size(); ++i) {
+        settings.setArrayIndex(i);
+        settings.setValue("Macro", QVariant::fromValue(*macros.at(i)));
+    }
+    settings.endArray();
 }
 
 void MainWindow::restoreSettings()
@@ -1385,6 +1392,14 @@ void MainWindow::restoreSettings()
 
     ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
     ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
+
+    int size = settings.beginReadArray("Macros");
+    for (int i = 0; i < size; ++i) {
+        settings.setArrayIndex(i);
+        Macro *m = new Macro(settings.value("Macro").value<Macro>());
+        macros.append(m);
+    }
+    settings.endArray();
 }
 
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * Copyright 2022 Justin Dailey
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,32 +17,34 @@
  */
 
 
-#ifndef MACRORECORDER_H
-#define MACRORECORDER_H
+#ifndef MACRO_H
+#define MACRO_H
 
-#include <QObject>
+#include "MacroAction.h"
 
-#include "ScintillaNext.h"
-#include "Macro.h"
-
-
-
-class MacroRecorder : public QObject
+class Macro
 {
-    Q_OBJECT
-
 public:
-    MacroRecorder(QObject *parent = nullptr);
+    Macro();
+    ~Macro();
 
-    void startRecording(ScintillaNext *editor);
-    Macro *stopRecording();
+    void addMacroStep(Scintilla::Message message, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
 
-public slots:
-    void recordMacroStep(Scintilla::Message message, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
+    int size() const { return actions.size(); }
+
+    void replay(ScintillaNext *editor, int n = 1) const;
+    void replayTillEndOfFile(ScintillaNext *editor) const;
+
+    QString getName() const;
+    void setName(const QString &value);
+
+    friend QDataStream &operator<<(QDataStream& stream, const Macro &Macro);
+    friend QDataStream &operator>>(QDataStream& stream, Macro &Macro);
 
 private:
-    ScintillaNext *editor = Q_NULLPTR;
-    Macro *macro = Q_NULLPTR;
+    QVector<MacroAction> actions;
+    QString name;
 };
+Q_DECLARE_METATYPE(Macro)
 
-#endif // MACRORECORDER_H
+#endif // MACRO_H
