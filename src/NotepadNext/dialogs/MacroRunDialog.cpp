@@ -17,19 +17,20 @@
  */
 
 
+#include "MacroManager.h"
 #include "MacroRunDialog.h"
+
 #include "ui_MacroRunDialog.h"
 
-#include "MacroRecorder.h"
 
-MacroRunDialog::MacroRunDialog(QWidget *parent) :
+MacroRunDialog::MacroRunDialog(QWidget *parent, MacroManager *mm) :
     QDialog(parent, Qt::Tool),
-    ui(new Ui::MacroRunDialog)
+    ui(new Ui::MacroRunDialog),
+    macroManager(mm)
 {
     ui->setupUi(this);
 
-    //connect(ui->buttonOk, &QPushButton::clicked, this, &MacroRunDialog::accept);
-    connect(ui->buttonRun, &QPushButton::clicked, [=]() {
+    connect(ui->buttonRun, &QPushButton::clicked, this, [=]() {
         const int index = ui->comboBox->currentIndex();
         int times = -1; // for end of file
 
@@ -37,7 +38,7 @@ MacroRunDialog::MacroRunDialog(QWidget *parent) :
             times = ui->spinTimes->value();
         }
 
-        emit execute(macros.at(index), times);
+        emit execute(macroManager->availableMacros().at(index), times);
     });
 }
 
@@ -46,15 +47,13 @@ MacroRunDialog::~MacroRunDialog()
     delete ui;
 }
 
-void MacroRunDialog::setMacros(QVector<Macro *> macros)
+void MacroRunDialog::showEvent(QShowEvent *event)
 {
-    qInfo(Q_FUNC_INFO);
-
-    this->macros = macros;
-
     ui->comboBox->clear();
 
-    for (const Macro *macro : macros) {
+    for (const Macro *macro : macroManager->availableMacros()) {
         ui->comboBox->addItem(macro->getName());
     }
+
+    QDialog::showEvent(event);
 }

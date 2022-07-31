@@ -74,6 +74,7 @@ SOURCES += \
     LuaState.cpp \
     Macro.cpp \
     MacroAction.cpp \
+    MacroManager.cpp \
     MacroRecorder.cpp \
     NotepadNextApplication.cpp \
     NppImporter.cpp \
@@ -133,6 +134,7 @@ HEADERS += \
     LuaState.h \
     Macro.h \
     MacroAction.h \
+    MacroManager.h \
     MacroRecorder.h \
     NotepadNextApplication.h \
     NppImporter.h \
