@@ -790,6 +790,9 @@ QRect ScreenRectangleForPoint(QPoint posGlobal)
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 	const QScreen *screen = QGuiApplication::screenAt(posGlobal);
+    if (!screen) {
+        screen = QGuiApplication::primaryScreen();
+    }
 	return screen->availableGeometry();
 #else
 	const QDesktopWidget *desktop = QApplication::desktop();
