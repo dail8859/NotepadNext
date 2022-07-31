@@ -72,6 +72,8 @@ SOURCES += \
     LanguageStylesModel.cpp \
     LuaExtension.cpp \
     LuaState.cpp \
+    Macro.cpp \
+    MacroAction.cpp \
     MacroRecorder.cpp \
     NotepadNextApplication.cpp \
     NppImporter.cpp \
@@ -129,6 +131,8 @@ HEADERS += \
     LanguageStylesModel.h \
     LuaExtension.h \
     LuaState.h \
+    Macro.h \
+    MacroAction.h \
     MacroRecorder.h \
     NotepadNextApplication.h \
     NppImporter.h \
