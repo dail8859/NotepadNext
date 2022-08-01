@@ -19,3 +19,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
+
+  winget:
+    name: Publish to WinGet
+    runs-on: windows-latest
+    steps:
+      - uses: vedantmgoyal2009/winget-releaser@latest
+        with:
+          identifier: dail8859.NotepadNext
+          token: ${{ secrets.WINGET_TOKEN }}
