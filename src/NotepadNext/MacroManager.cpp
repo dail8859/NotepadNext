@@ -6,35 +6,11 @@
 MacroManager::MacroManager(QObject *parent) :
     QObject{parent}
 {
-    QSettings settings;
+    qInfo(Q_FUNC_INFO);
 
-    int size = settings.beginReadArray("Macros");
-    for (int i = 0; i < size; ++i) {
-        settings.setArrayIndex(i);
-        Macro *m = new Macro(settings.value("Macro").value<Macro>());
+    loadSettings();
 
-        if (m->size() == 0) {
-            qWarning("MacroManager: Skipping invalid Macro");
-            delete m;
-        }
-        else {
-            macros.append(m);
-        }
-    }
-    settings.endArray();
-
-    connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, [=]() {
-        QSettings settings;
-
-        settings.remove("Macros");
-
-        settings.beginWriteArray("Macros");
-        for (int i = 0; i < macros.size(); ++i) {
-            settings.setArrayIndex(i);
-            settings.setValue("Macro", QVariant::fromValue(*macros.at(i)));
-        }
-        settings.endArray();
-    });
+    connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &MacroManager::saveSettings);
 }
 
 void MacroManager::startRecording(ScintillaNext *editor)
@@ -75,6 +51,45 @@ void MacroManager::stopRecording()
     emit recordingStopped();
 }
 
+void MacroManager::loadSettings()
+{
+    qInfo(Q_FUNC_INFO);
+
+    QSettings settings;
+
+    int size = settings.beginReadArray("Macros");
+    for (int i = 0; i < size; ++i) {
+        settings.setArrayIndex(i);
+
+        if (settings.value("Macro").canConvert<Macro>()) {
+            Macro *m = new Macro(settings.value("Macro").value<Macro>());
+            macros.append(m);
+        }
+        else {
+            qWarning("MacroManager: Skipping invalid Macro");
+        }
+    }
+    settings.endArray();
+}
+
+void MacroManager::saveSettings() const
+{
+    qInfo(Q_FUNC_INFO);
+
+    QSettings settings;
+
+    settings.remove("Macros");
+
+    if (macros.size() > 0) {
+        settings.beginWriteArray("Macros");
+        for (int i = 0; i < macros.size(); ++i) {
+            settings.setArrayIndex(i);
+            settings.setValue("Macro", QVariant::fromValue(*macros.at(i)));
+        }
+        settings.endArray();
+    }
+}
+
 void MacroManager::replayCurrentMacro(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
@@ -92,7 +107,7 @@ void MacroManager::saveCurrentMacro(const QString &macroName)
     macros.append(currentMacro);
 }
 
-bool MacroManager::hasCurrentMacro() const
+bool MacroManager::hasCurrentUnsavedMacro() const
 {
-    return currentMacro != Q_NULLPTR;
+    return currentMacro != Q_NULLPTR && isCurrentMacroSaved == false;
 }

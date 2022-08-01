@@ -13,14 +13,20 @@ public:
     explicit MacroManager(QObject *parent = nullptr);
 
     bool isRecording() const;
+    const QVector<Macro *> availableMacros() const { return macros; };
+
     void replayCurrentMacro(ScintillaNext *editor);
     void saveCurrentMacro(const QString &macroName);
-    const QVector<Macro *> availableMacros() const { return macros; };
-    bool hasCurrentMacro() const;
+    bool hasCurrentUnsavedMacro() const;
+    Macro *getCurrentMacro() const { return currentMacro; }
 
 public slots:
     void startRecording(ScintillaNext *editor);
     void stopRecording();
+
+private slots:
+    void loadSettings();
+    void saveSettings() const;
 
 signals:
     void recordingStarted();

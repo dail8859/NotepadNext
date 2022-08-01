@@ -31,14 +31,14 @@ MacroRunDialog::MacroRunDialog(QWidget *parent, MacroManager *mm) :
     ui->setupUi(this);
 
     connect(ui->buttonRun, &QPushButton::clicked, this, [=]() {
-        const int index = ui->comboBox->currentIndex();
+        Macro *selectedMacro = ui->comboBox->currentData().value<Macro*>();
         int times = -1; // for end of file
 
         if (ui->radioExecute->isChecked()) {
             times = ui->spinTimes->value();
         }
 
-        emit execute(macroManager->availableMacros().at(index), times);
+        emit execute(selectedMacro, times);
     });
 }
 
@@ -51,8 +51,12 @@ void MacroRunDialog::showEvent(QShowEvent *event)
 {
     ui->comboBox->clear();
 
-    for (const Macro *macro : macroManager->availableMacros()) {
-        ui->comboBox->addItem(macro->getName());
+    if (macroManager->hasCurrentUnsavedMacro()) {
+        ui->comboBox->addItem(macroManager->getCurrentMacro()->getName(), QVariant::fromValue(macroManager->getCurrentMacro()));
+    }
+
+    for (Macro *macro : macroManager->availableMacros()) {
+        ui->comboBox->addItem(macro->getName(), QVariant::fromValue(macro));
     }
 
     QDialog::showEvent(event);
