@@ -46,5 +46,6 @@ private:
     QString name;
 };
 Q_DECLARE_METATYPE(Macro)
+Q_DECLARE_METATYPE(Macro*)
 
 #endif // MACRO_H

@@ -452,11 +452,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ui->actionMacroRecording->setText(tr("Start Recording"));
 
         // Only enable these if the macro manager recorded a valid macro
-        ui->actionPlayback->setEnabled(macroManager.hasCurrentMacro());
-        ui->actionSaveCurrentRecordedMacro->setEnabled(macroManager.hasCurrentMacro());
+        ui->actionPlayback->setEnabled(macroManager.hasCurrentUnsavedMacro());
+        ui->actionSaveCurrentRecordedMacro->setEnabled(macroManager.hasCurrentUnsavedMacro());
 
         // The macro manager might have other macros
-        ui->actionRunMacroMultipleTimes->setEnabled(macroManager.availableMacros().size() > 0);
+        ui->actionRunMacroMultipleTimes->setEnabled(macroManager.availableMacros().size() > 0 || macroManager.hasCurrentUnsavedMacro());
     });
 
     connect(ui->actionPlayback, &QAction::triggered, this, [=]() {

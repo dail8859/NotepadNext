@@ -214,8 +214,8 @@
     </property>
     <addaction name="actionMacroRecording"/>
     <addaction name="actionPlayback"/>
-    <addaction name="actionSaveCurrentRecordedMacro"/>
     <addaction name="actionRunMacroMultipleTimes"/>
+    <addaction name="actionSaveCurrentRecordedMacro"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
