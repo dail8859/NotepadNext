@@ -4,9 +4,10 @@
 - Add new `<release>` tag to metainfo file in `deploy/linux`
 - Commit
 - Tag commit with new version number
-- Push to commit and tag to GitHub
-- Once GitHub action finishes download Qt5 outputs for each platform
-- Extract each and attach a new release
+- Push commit and tag to GitHub
+- Once GitHub action finishes, edit draft notes of new release that was automatically created
+- Download the zip, rename, upload to the draft release (the zip is not automatically uploaded)
+- Publish
 
 ## Manually Build Release
 Example bat script to build release
