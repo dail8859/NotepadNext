@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - master
-  pull_request:
-  push:
     tags:
       - '*'
+  pull_request:
+
 
 jobs:
   build-linux:
