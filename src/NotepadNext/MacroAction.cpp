@@ -17,7 +17,11 @@
  */
 
 
+#include <QMetaEnum>
+
+#include "ScintillaNext.h"
 #include "MacroAction.h"
+
 
 using namespace Scintilla;
 
@@ -44,15 +48,17 @@ MacroAction::~MacroAction()
 
 QString MacroAction::toString() const
 {
+    QMetaEnum metaEnum = QMetaEnum::fromType<ScintillaNext::Message>();
+
     if (MacroAction::MessageHasString(message)) {
         return QString("MacroAction(%1, %2, \"%3\")")
-                .arg(static_cast<int>(message))
+                .arg(metaEnum.valueToKey(static_cast<int>(message)))
                 .arg(wParam)
                 .arg(str.constData());
     }
     else {
         return QString("MacroAction(%1, %2, %3)")
-                .arg(static_cast<int>(message))
+                .arg(metaEnum.valueToKey(static_cast<int>(message)))
                 .arg(wParam)
                 .arg(lParam);
     }
