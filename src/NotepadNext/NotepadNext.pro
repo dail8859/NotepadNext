@@ -144,6 +144,7 @@ HEADERS += \
     RecentFilesListMenuBuilder.h \
     SciIFaceTable.h \
     ScintillaCommenter.h \
+    ScintillaEnums.h \
     ScintillaNext.h \
     SelectionTracker.h \
     Settings.h \

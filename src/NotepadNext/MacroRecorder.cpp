@@ -19,6 +19,7 @@
 
 #include "MacroRecorder.h"
 #include "ScintillaNext.h"
+#include <QMetaEnum>
 
 using namespace Scintilla;
 
