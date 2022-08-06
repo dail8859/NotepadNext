@@ -20,12 +20,12 @@
 #include <QMetaEnum>
 
 #include "ScintillaNext.h"
-#include "MacroAction.h"
+#include "MacroStep.h"
 
 
 using namespace Scintilla;
 
-MacroAction::MacroAction(Message message, uptr_t wParam, sptr_t lParam) :
+MacroStep::MacroStep(Message message, uptr_t wParam, sptr_t lParam) :
     message(message),
     wParam(wParam)
 {
@@ -42,36 +42,36 @@ MacroAction::MacroAction(Message message, uptr_t wParam, sptr_t lParam) :
     }
 }
 
-MacroAction::~MacroAction()
+MacroStep::~MacroStep()
 {
 }
 
-QString MacroAction::toString() const
+QString MacroStep::toString() const
 {
-    if (MacroAction::MessageHasString(message)) {
-        return QString("MacroAction(%1, %2, \"%3\")")
+    if (MacroStep::MessageHasString(message)) {
+        return QString("MacroStep(%1, %2, \"%3\")")
                 .arg(name())
                 .arg(wParam)
                 .arg(str.constData());
     }
     else {
-        return QString("MacroAction(%1, %2, %3)")
+        return QString("MacroStep(%1, %2, %3)")
                 .arg(name())
                 .arg(wParam)
                 .arg(lParam);
     }
 }
 
-QString MacroAction::name() const
+QString MacroStep::name() const
 {
     QMetaEnum metaEnum = QMetaEnum::fromType<ScintillaNext::Message>();
 
     return metaEnum.valueToKey(static_cast<int>(message));
 }
 
-void MacroAction::replay(ScintillaNext *editor) const
+void MacroStep::replay(ScintillaNext *editor) const
 {
-    if (MacroAction::MessageHasString(message)) {
+    if (MacroStep::MessageHasString(message)) {
         editor->sends(static_cast<int>(message), wParam, str.constBegin());
     }
     else {
@@ -79,7 +79,7 @@ void MacroAction::replay(ScintillaNext *editor) const
     }
 }
 
-bool MacroAction::MessageHasString(Scintilla::Message message)
+bool MacroStep::MessageHasString(Scintilla::Message message)
 {
     return message == Message::ReplaceSel ||
             message == Message::InsertText ||
@@ -87,22 +87,22 @@ bool MacroAction::MessageHasString(Scintilla::Message message)
             message == Message::AppendText;
 }
 
-QDataStream &operator<<(QDataStream& stream, const MacroAction &macroAction)
+QDataStream &operator<<(QDataStream& stream, const MacroStep &macroStep)
 {
-    stream << macroAction.message << macroAction.wParam;
+    stream << macroStep.message << macroStep.wParam;
 
-    if (MacroAction::MessageHasString(macroAction.message))
-        return stream << macroAction.str;
+    if (MacroStep::MessageHasString(macroStep.message))
+        return stream << macroStep.str;
     else
-        return stream << macroAction.lParam;
+        return stream << macroStep.lParam;
 }
 
-QDataStream &operator>>(QDataStream& stream, MacroAction &macroAction)
+QDataStream &operator>>(QDataStream& stream, MacroStep &macroStep)
 {
-    stream >> macroAction.message >> macroAction.wParam;
+    stream >> macroStep.message >> macroStep.wParam;
 
-    if (MacroAction::MessageHasString(macroAction.message))
-        return stream >> macroAction.str;
+    if (MacroStep::MessageHasString(macroStep.message))
+        return stream >> macroStep.str;
     else
-        return stream >> macroAction.lParam;
+        return stream >> macroStep.lParam;
 }

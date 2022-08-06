@@ -71,14 +71,14 @@ void MacroEditorDialog::selectionChanged()
     ui->editMacroName->setText(m->getName());
 
     ui->tblMacroSteps->clearContents();
-    ui->tblMacroSteps->setRowCount(m->steps().size());
+    ui->tblMacroSteps->setRowCount(m->getSteps().size());
 
     int i = 0;
-    for (const MacroAction &ma : m->steps()) {
-        ui->tblMacroSteps->setItem(i, 0, new QTableWidgetItem(ma.name()));
+    for (const MacroStep &step : m->getSteps()) {
+        ui->tblMacroSteps->setItem(i, 0, new QTableWidgetItem(step.name()));
 
-        if (MacroAction::MessageHasString(ma.message)) {
-            ui->tblMacroSteps->setItem(i, 1, new QTableWidgetItem(QString(ma.str)));
+        if (MacroStep::MessageHasString(step.message)) {
+            ui->tblMacroSteps->setItem(i, 1, new QTableWidgetItem(QString(step.str)));
         }
         ++i;
     }

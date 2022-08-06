@@ -17,24 +17,24 @@
  */
 
 
-#ifndef MACROACTION_H
-#define MACROACTION_H
+#ifndef MACROSTEP_H
+#define MACROSTEP_H
 
 #include "ScintillaNext.h"
 
-class MacroAction {
+class MacroStep {
 public:
-    MacroAction() {}
-    MacroAction(Scintilla::Message message, uptr_t wParam,  sptr_t lParam);
-    ~MacroAction();
+    MacroStep() {}
+    MacroStep(Scintilla::Message message, uptr_t wParam,  sptr_t lParam);
+    ~MacroStep();
 
     QString toString() const;
     QString name() const;
 
     void replay(ScintillaNext *editor) const;
 
-    friend QDataStream &operator<<(QDataStream& stream, const MacroAction &macroAction);
-    friend QDataStream &operator>>(QDataStream& stream, MacroAction &macroAction);
+    friend QDataStream &operator<<(QDataStream& stream, const MacroStep &macroStep);
+    friend QDataStream &operator>>(QDataStream& stream, MacroStep &macroStep);
 
     static bool MessageHasString(Scintilla::Message message);
 
@@ -43,6 +43,6 @@ public:
     sptr_t lParam;
     QByteArray str;
 };
-Q_DECLARE_METATYPE(MacroAction)
+Q_DECLARE_METATYPE(MacroStep)
 
-#endif // MACROACTION_H
+#endif // MACROSTEP_H
