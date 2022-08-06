@@ -48,20 +48,25 @@ MacroAction::~MacroAction()
 
 QString MacroAction::toString() const
 {
-    QMetaEnum metaEnum = QMetaEnum::fromType<ScintillaNext::Message>();
-
     if (MacroAction::MessageHasString(message)) {
         return QString("MacroAction(%1, %2, \"%3\")")
-                .arg(metaEnum.valueToKey(static_cast<int>(message)))
+                .arg(name())
                 .arg(wParam)
                 .arg(str.constData());
     }
     else {
         return QString("MacroAction(%1, %2, %3)")
-                .arg(metaEnum.valueToKey(static_cast<int>(message)))
+                .arg(name())
                 .arg(wParam)
                 .arg(lParam);
     }
+}
+
+QString MacroAction::name() const
+{
+    QMetaEnum metaEnum = QMetaEnum::fromType<ScintillaNext::Message>();
+
+    return metaEnum.valueToKey(static_cast<int>(message));
 }
 
 void MacroAction::replay(ScintillaNext *editor) const

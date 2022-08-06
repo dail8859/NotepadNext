@@ -38,6 +38,8 @@ public:
     QString getName() const;
     void setName(const QString &value);
 
+    const QVector<MacroAction> &steps() const { return actions; }
+
     friend QDataStream &operator<<(QDataStream& stream, const Macro &Macro);
     friend QDataStream &operator>>(QDataStream& stream, Macro &Macro);
 

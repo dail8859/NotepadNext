@@ -216,6 +216,7 @@
     <addaction name="actionPlayback"/>
     <addaction name="actionRunMacroMultipleTimes"/>
     <addaction name="actionSaveCurrentRecordedMacro"/>
+    <addaction name="actionEditMacros"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -974,6 +975,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+K</string>
+   </property>
+  </action>
+  <action name="actionEditMacros">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Edit Macros...</string>
    </property>
   </action>
  </widget>

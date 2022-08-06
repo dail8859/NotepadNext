@@ -95,6 +95,7 @@ SOURCES += \
     decorators/BetterMultiSelection.cpp \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
+    dialogs/MacroEditorDialog.cpp \
     docks/DebugLogDock.cpp \
     docks/EditorInspectorDock.cpp \
     dialogs/FindReplaceDialog.cpp \
@@ -156,6 +157,7 @@ HEADERS += \
     decorators/BetterMultiSelection.h \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
+    dialogs/MacroEditorDialog.h \
     docks/DebugLogDock.h \
     docks/EditorInspectorDock.h \
     dialogs/FindReplaceDialog.h \
@@ -177,6 +179,7 @@ HEADERS += \
 
 FORMS += \
     QuickFindWidget.ui \
+    dialogs/MacroEditorDialog.ui \
     docks/DebugLogDock.ui \
     docks/EditorInspectorDock.ui \
     docks/FolderAsWorkspaceDock.ui \

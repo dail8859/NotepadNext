@@ -29,6 +29,7 @@ public:
     ~MacroAction();
 
     QString toString() const;
+    QString name() const;
 
     void replay(ScintillaNext *editor) const;
 
