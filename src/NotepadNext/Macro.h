@@ -20,7 +20,7 @@
 #ifndef MACRO_H
 #define MACRO_H
 
-#include "MacroAction.h"
+#include "MacroStep.h"
 
 class Macro
 {
@@ -30,7 +30,7 @@ public:
 
     void addMacroStep(Scintilla::Message message, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
 
-    int size() const { return actions.size(); }
+    int size() const { return steps.size(); }
 
     void replay(ScintillaNext *editor, int n = 1) const;
     void replayTillEndOfFile(ScintillaNext *editor) const;
@@ -38,13 +38,13 @@ public:
     QString getName() const;
     void setName(const QString &value);
 
-    const QVector<MacroAction> &steps() const { return actions; }
+    const QVector<MacroStep> &getSteps() const { return steps; }
 
     friend QDataStream &operator<<(QDataStream& stream, const Macro &Macro);
     friend QDataStream &operator>>(QDataStream& stream, Macro &Macro);
 
 private:
-    QVector<MacroAction> actions;
+    QVector<MacroStep> steps;
     QString name;
 };
 Q_DECLARE_METATYPE(Macro)

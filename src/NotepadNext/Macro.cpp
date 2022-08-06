@@ -32,26 +32,26 @@ void Macro::addMacroStep(Message message, uptr_t wParam, sptr_t lParam)
     qInfo(Q_FUNC_INFO);
 
     // Combine ReplaceSel messages into a single string
-    if (message == Message::ReplaceSel && !actions.empty() && actions.constLast().message == Message::ReplaceSel) {
-        actions.last().str.append(reinterpret_cast<const char*>(lParam));
+    if (message == Message::ReplaceSel && !steps.empty() && steps.constLast().message == Message::ReplaceSel) {
+        steps.last().str.append(reinterpret_cast<const char*>(lParam));
     }
     // Combine DeleteBack (backspace) with ReplaceSel
-    else if (message == Message::DeleteBack && !actions.empty() && actions.constLast().message == Message::ReplaceSel) {
-        if (actions.last().str.size() == 1) {
+    else if (message == Message::DeleteBack && !steps.empty() && steps.constLast().message == Message::ReplaceSel) {
+        if (steps.last().str.size() == 1) {
             // A single char left so just remvoe the action
-            actions.takeLast();
+            steps.takeLast();
         }
         else {
-            actions.last().str.chop(1);
+            steps.last().str.chop(1);
         }
     }
     else {
-        actions.append(MacroAction(message, wParam, lParam));
+        steps.append(MacroStep(message, wParam, lParam));
     }
 
 #ifdef QT_DEBUG
-    for (const MacroAction &ma : actions) {
-        qInfo("%s", qUtf8Printable(ma.toString()));
+    for (const MacroStep &step : steps) {
+        qInfo("%s", qUtf8Printable(step.toString()));
     }
 #endif
 }
@@ -63,8 +63,8 @@ void Macro::replay(ScintillaNext *editor, int n) const
     editor->beginUndoAction();
 
     while (n > 0) {
-        for (const MacroAction &ma : actions) {
-            ma.replay(editor);
+        for (const MacroStep &step : steps) {
+            step.replay(editor);
         }
 
         --n;
@@ -125,10 +125,10 @@ void Macro::setName(const QString &value)
 
 QDataStream &operator<<(QDataStream& stream, const Macro &macro)
 {
-    return stream << macro.name << macro.actions;
+    return stream << macro.name << macro.steps;
 }
 
 QDataStream &operator>>(QDataStream& stream, Macro &macro)
 {
-    return stream >> macro.name >> macro.actions;
+    return stream >> macro.name >> macro.steps;
 }

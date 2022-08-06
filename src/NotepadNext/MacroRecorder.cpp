@@ -27,8 +27,8 @@ using namespace Scintilla;
 MacroRecorder::MacroRecorder(QObject *parent) :
     QObject(parent)
 {
-    qRegisterMetaTypeStreamOperators<MacroAction>("MacroAction");
-    qRegisterMetaTypeStreamOperators<QVector<MacroAction>>("QVector<MacroAction>");
+    qRegisterMetaTypeStreamOperators<MacroStep>("MacroStep");
+    qRegisterMetaTypeStreamOperators<QVector<MacroStep>>("MacroSteps");
     qRegisterMetaTypeStreamOperators<Macro>("Macro");
 }
 

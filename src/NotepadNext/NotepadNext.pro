@@ -73,9 +73,9 @@ SOURCES += \
     LuaExtension.cpp \
     LuaState.cpp \
     Macro.cpp \
-    MacroAction.cpp \
     MacroManager.cpp \
     MacroRecorder.cpp \
+    MacroStep.cpp \
     NotepadNextApplication.cpp \
     NppImporter.cpp \
     QRegexSearch.cpp \
@@ -134,9 +134,9 @@ HEADERS += \
     LuaExtension.h \
     LuaState.h \
     Macro.h \
-    MacroAction.h \
     MacroManager.h \
     MacroRecorder.h \
+    MacroStep.h \
     NotepadNextApplication.h \
     NppImporter.h \
     QRegexSearch.h \
