@@ -17,32 +17,34 @@
  */
 
 
-#ifndef MACROACTION_H
-#define MACROACTION_H
+#ifndef MACROEDITORDIALOG_H
+#define MACROEDITORDIALOG_H
 
-#include "ScintillaNext.h"
+#include <QDialog>
 
-class MacroAction {
+namespace Ui {
+class MacroEditorDialog;
+}
+class MacroManager;
+class Macro;
+
+class MacroEditorDialog : public QDialog
+{
+    Q_OBJECT
+
 public:
-    MacroAction() {}
-    MacroAction(Scintilla::Message message, uptr_t wParam,  sptr_t lParam);
-    ~MacroAction();
+    explicit MacroEditorDialog(QWidget *parent, MacroManager *mm);
+    ~MacroEditorDialog();
 
-    QString toString() const;
-    QString name() const;
+private:
+    Macro *currentSelectedMacro() const;
 
-    void replay(ScintillaNext *editor) const;
+private slots:
+    void selectionChanged();
 
-    friend QDataStream &operator<<(QDataStream& stream, const MacroAction &macroAction);
-    friend QDataStream &operator>>(QDataStream& stream, MacroAction &macroAction);
-
-    static bool MessageHasString(Scintilla::Message message);
-
-    Scintilla::Message message;
-    uptr_t wParam;
-    sptr_t lParam;
-    QByteArray str;
+private:
+    Ui::MacroEditorDialog *ui;
+    MacroManager *macroManager;
 };
-Q_DECLARE_METATYPE(MacroAction)
 
-#endif // MACROACTION_H
+#endif // MACROEDITORDIALOG_H

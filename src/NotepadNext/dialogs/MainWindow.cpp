@@ -67,6 +67,7 @@
 #include "QuickFindWidget.h"
 
 #include "EditorPrintPreviewRenderer.h"
+#include "MacroEditorDialog.h"
 
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
@@ -429,6 +430,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     // The macro manager has already loaded any saved macros, so it might have some already
     ui->actionRunMacroMultipleTimes->setEnabled(macroManager.availableMacros().size() > 0);
+    ui->actionEditMacros->setEnabled(macroManager.availableMacros().size() > 0);
 
     connect(ui->actionMacroRecording, &QAction::triggered, this, [=](bool b) {
         if (b) {
@@ -508,10 +510,20 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         macroRunDialog->activateWindow();
     });
 
+    connect(ui->actionEditMacros, &QAction::triggered, this, [=]() {
+        MacroEditorDialog med(this, &macroManager);
+
+        med.show();
+        med.raise();
+        med.activateWindow();
+
+        med.exec();
+    });
+
     connect(ui->menuMacro, &QMenu::aboutToShow, this, [=]() {
         // NOTE: its unfortunate that this has to be hard coded, but there's no way
         // to easily determine what should or shouldn't be there
-        while (ui->menuMacro->actions().size() > 5) {
+        while (ui->menuMacro->actions().size() > 6) {
             delete ui->menuMacro->actions().takeLast();
         }
 
