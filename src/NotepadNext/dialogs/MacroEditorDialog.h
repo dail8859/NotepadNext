@@ -20,15 +20,14 @@
 #ifndef MACROEDITORDIALOG_H
 #define MACROEDITORDIALOG_H
 
-#include <QAbstractItemModel>
 #include <QDialog>
+
+#include "MacroListModel.h"
+#include "MacroManager.h"
 
 namespace Ui {
 class MacroEditorDialog;
 }
-class MacroManager;
-class Macro;
-class MacroModel;
 
 class MacroEditorDialog : public QDialog
 {
@@ -51,27 +50,8 @@ private slots:
 private:
     Ui::MacroEditorDialog *ui;
     MacroManager *macroManager;
-    MacroModel *model;
+    MacroListModel *model;
 };
 
-
-class MacroModel : public QAbstractListModel
-{
-    Q_OBJECT
-
-public :
-    MacroModel(QObject * parent, MacroManager *mm);
-
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role) const override;
-
-    bool removeRows(int row, int count, const QModelIndex &parent) override;
-    bool insertRows(int row, int count, const QModelIndex &parent=QModelIndex()) override;
-
-    Macro *macro(const QModelIndex &index);
-
-private:
-   MacroManager *macroManager;
-};
 
 #endif // MACROEDITORDIALOG_H

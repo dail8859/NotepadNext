@@ -73,6 +73,7 @@ SOURCES += \
     LuaExtension.cpp \
     LuaState.cpp \
     Macro.cpp \
+    MacroListModel.cpp \
     MacroManager.cpp \
     MacroRecorder.cpp \
     MacroStep.cpp \
@@ -134,6 +135,7 @@ HEADERS += \
     LuaExtension.h \
     LuaState.h \
     Macro.h \
+    MacroListModel.h \
     MacroManager.h \
     MacroRecorder.h \
     MacroStep.h \

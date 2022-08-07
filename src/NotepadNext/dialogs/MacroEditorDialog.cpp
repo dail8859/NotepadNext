@@ -22,7 +22,6 @@
 #include <QModelIndex>
 
 #include "MacroEditorDialog.h"
-#include "MacroManager.h"
 
 #include "ui_MacroEditorDialog.h"
 
@@ -31,7 +30,7 @@ MacroEditorDialog::MacroEditorDialog(QWidget *parent, MacroManager *mm) :
     QDialog(parent),
     ui(new Ui::MacroEditorDialog),
     macroManager(mm),
-    model(new MacroModel(this, mm))
+    model(new MacroListModel(this, mm))
 {
     setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
@@ -47,7 +46,7 @@ MacroEditorDialog::MacroEditorDialog(QWidget *parent, MacroManager *mm) :
 
     connect(ui->btnCopyMacro, &QPushButton::clicked, this, &MacroEditorDialog::copyCurrentMacro);
 
-   ui->listMacros->setCurrentIndex(model->index(0));
+    ui->listMacros->setCurrentIndex(model->index(0));
 }
 
 MacroEditorDialog::~MacroEditorDialog()
@@ -151,69 +150,4 @@ void MacroEditorDialog::copyCurrentMacro()
         // Select the newly created macro
         ui->listMacros->setCurrentIndex(model->index(currentIndex.row() + 1));
     }
-}
-
-
-MacroModel::MacroModel(QObject *parent, MacroManager *mm) :
-    QAbstractListModel(parent),
-    macroManager(mm)
-{
-}
-
-int MacroModel::rowCount(const QModelIndex &parent) const
-{
-    Q_UNUSED(parent);
-
-    return macroManager->availableMacros().size();
-}
-
-QVariant MacroModel::data(const QModelIndex &index, int role) const
-{
-    if (!index.isValid())
-        return QVariant();
-
-   if (role == Qt::DisplayRole) {
-       return macroManager->availableMacros()[index.row()]->getName();
-   }
-
-   return QVariant();
-}
-
-bool MacroModel::removeRows(int row, int count, const QModelIndex &parent)
-{
-    Q_UNUSED(parent);
-
-    beginRemoveRows(QModelIndex(), row, row + count - 1);
-
-    while (count--) {
-        delete macroManager->availableMacros().takeAt(row);
-    }
-
-    endRemoveRows();
-
-    return true;
-}
-
-bool MacroModel::insertRows(int row, int count, const QModelIndex &parent)
-{
-    if (count < 1 || row < 0 || row > rowCount(parent))
-        return false;
-
-    beginInsertRows(QModelIndex(), row, row + count - 1);
-
-    for (int r = 0; r < count; ++r) {
-        macroManager->availableMacros().insert(row, new Macro());
-    }
-
-    endInsertRows();
-
-    return true;
-}
-
-Macro *MacroModel::macro(const QModelIndex &index)
-{
-    if (index.isValid())
-        return macroManager->availableMacros()[index.row()];
-    else
-        return Q_NULLPTR;
 }
