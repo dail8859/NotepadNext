@@ -147,6 +147,9 @@ void MacroEditorDialog::copyCurrentMacro()
         for (const MacroStep &step : originalMacro->getSteps()) {
             newMacro->addMacroStep(step);
         }
+
+        // Select the newly created macro
+        ui->listMacros->setCurrentIndex(model->index(currentIndex.row() + 1));
     }
 }
 
