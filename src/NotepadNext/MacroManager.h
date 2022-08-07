@@ -13,7 +13,7 @@ public:
     explicit MacroManager(QObject *parent = nullptr);
 
     bool isRecording() const;
-    const QVector<Macro *> availableMacros() const { return macros; };
+    QVector<Macro *> &availableMacros() { return macros; };
 
     void replayCurrentMacro(ScintillaNext *editor);
     void saveCurrentMacro(const QString &macroName);
