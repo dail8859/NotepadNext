@@ -70,9 +70,6 @@
        </item>
        <item>
         <widget class="QTableView" name="tblMacroSteps">
-         <property name="editTriggers">
-          <set>QAbstractItemView::NoEditTriggers</set>
-         </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::SingleSelection</enum>
          </property>

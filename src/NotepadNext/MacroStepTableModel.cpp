@@ -58,7 +58,7 @@ QVariant MacroStepTableModel::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-    if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
+    if (role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::ToolTipRole) {
         switch (index.column()) {
             case 0:
                 return macro->getSteps()[index.row()].name();
@@ -68,13 +68,23 @@ QVariant MacroStepTableModel::data(const QModelIndex &index, int role) const
                 break;
         }
     }
-    else if (role == Qt::TextAlignmentRole) {
-        if (index.column() == 3) {
-            return Qt::AlignCenter;
+
+    return QVariant();
+}
+
+bool MacroStepTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (index.isValid() && role == Qt::EditRole) {
+        if (index.column() == 1) {
+            macro->getSteps()[index.row()].str = value.toString().toUtf8();
+
+            emit dataChanged(index, index, QVector<int>() << role);
+
+            return true;
         }
     }
 
-    return QVariant();
+    return false;
 }
 
 bool MacroStepTableModel::insertRows(int row, int count, const QModelIndex &parent)
@@ -146,9 +156,12 @@ Qt::ItemFlags MacroStepTableModel::flags(const QModelIndex &index) const
     if (!index.isValid())
         return Qt::NoItemFlags;
 
-    if (index.column() != 3)
-        return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+    //if (index.column() == 0)
+    //    return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
 
-    return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
+    if (index.column() == 1 && MacroStep::MessageHasString(macro->getSteps()[index.row()].message))
+        return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
+
+    return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
 }
 
