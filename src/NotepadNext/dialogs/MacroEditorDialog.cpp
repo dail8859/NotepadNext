@@ -33,6 +33,8 @@ MacroEditorDialog::MacroEditorDialog(QWidget *parent, MacroManager *mm) :
     macroManager(mm),
     model(new MacroModel(this, mm))
 {
+    setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+
     ui->setupUi(this);
 
     ui->listMacros->setModel(model);
