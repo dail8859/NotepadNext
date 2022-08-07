@@ -77,6 +77,7 @@ SOURCES += \
     MacroManager.cpp \
     MacroRecorder.cpp \
     MacroStep.cpp \
+    MacroStepTableModel.cpp \
     NotepadNextApplication.cpp \
     NppImporter.cpp \
     QRegexSearch.cpp \
@@ -139,6 +140,7 @@ HEADERS += \
     MacroManager.h \
     MacroRecorder.h \
     MacroStep.h \
+    MacroStepTableModel.h \
     NotepadNextApplication.h \
     NppImporter.h \
     QRegexSearch.h \

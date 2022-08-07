@@ -40,7 +40,7 @@ public:
     QString getName() const;
     void setName(const QString &value);
 
-    const QVector<MacroStep> &getSteps() const { return steps; }
+    QVector<MacroStep> &getSteps() { return steps; }
 
     friend QDataStream &operator<<(QDataStream& stream, const Macro &Macro);
     friend QDataStream &operator>>(QDataStream& stream, Macro &Macro);

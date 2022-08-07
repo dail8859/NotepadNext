@@ -981,6 +981,10 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/table_edit.png</normaloff>:/icons/table_edit.png</iconset>
+   </property>
    <property name="text">
     <string>Edit Macros...</string>
    </property>
