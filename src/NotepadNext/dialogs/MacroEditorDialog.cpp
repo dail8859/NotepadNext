@@ -97,6 +97,15 @@ void MacroEditorDialog::rowChanged(const QModelIndex &current, const QModelIndex
 
 void MacroEditorDialog::macroNameChanged(const QString &text)
 {
+    // Ensure there is a non-blank name
+    if (text.trimmed().isEmpty()) {
+        ui->editMacroName->setStyleSheet("QLineEdit{border: 2px solid red}");
+        return;
+    }
+    else {
+        ui->editMacroName->setStyleSheet("");
+    }
+
     QModelIndex currentIndex = ui->listMacros->selectionModel()->currentIndex();
 
     if (currentIndex.isValid()) {
