@@ -473,6 +473,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         macroSaveDialog.activateWindow();
 
         if (macroSaveDialog.exec() == QDialog::Accepted) {
+            // We have at least 1 saved macro at this point
+            ui->actionEditMacros->setEnabled(true);
+
             // The macro has been saved so disable save option
             ui->actionSaveCurrentRecordedMacro->setEnabled(false);
 
@@ -518,6 +521,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         med.activateWindow();
 
         med.exec();
+
+        ui->actionEditMacros->setEnabled(macroManager.availableMacros().size() > 0);
     });
 
     connect(ui->menuMacro, &QMenu::aboutToShow, this, [=]() {

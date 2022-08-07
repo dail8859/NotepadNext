@@ -17,41 +17,35 @@
  */
 
 
+#include <QItemSelectionModel>
+#include <QMessageBox>
+#include <QModelIndex>
+
 #include "MacroEditorDialog.h"
 #include "MacroManager.h"
-#include "ComboBoxDelegate.h"
 
 #include "ui_MacroEditorDialog.h"
+
 
 MacroEditorDialog::MacroEditorDialog(QWidget *parent, MacroManager *mm) :
     QDialog(parent),
     ui(new Ui::MacroEditorDialog),
-    macroManager(mm)
+    macroManager(mm),
+    model(new MacroModel(this, mm))
 {
     ui->setupUi(this);
 
-    for (const Macro *macro : macroManager->availableMacros()) {
-        ui->listMacros->addItem(macro->getName());
-    }
+    ui->listMacros->setModel(model);
 
-    connect(ui->listMacros, &QListWidget::itemSelectionChanged, this, &MacroEditorDialog::selectionChanged);
+    connect(ui->listMacros->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &MacroEditorDialog::rowChanged);
 
-    connect(ui->editMacroName, &QLineEdit::textChanged, this, [=](const QString &text) {
-        Macro *macro = currentSelectedMacro();
-        macro->setName(text);
-        ui->listMacros->currentItem()->setText(macro->getName());
-    });
+    connect(ui->editMacroName, &QLineEdit::textChanged, this, &MacroEditorDialog::macroNameChanged);
 
-    //QList<ComboBoxItem> caseItems{
-    //    {"SC_CASE_MIXED", SC_CASE_MIXED},
-    //    {"SC_CASE_UPPER", SC_CASE_UPPER},
-    //    {"SC_CASE_LOWER", SC_CASE_LOWER},
-    //    {"SC_CASE_CAMEL", SC_CASE_CAMEL}
-    //};
-    //ComboBoxDelegate *caseComoboDelegate = new ComboBoxDelegate(caseItems, this);
-    //ui->tblMacroSteps->setItemDelegateForColumn(0, caseComoboDelegate);
+    connect(ui->btnDeleteMacro, &QPushButton::clicked, this, &MacroEditorDialog::deleteCurrentMacro);
 
-    ui->listMacros->setCurrentRow(0);
+    connect(ui->btnCopyMacro, &QPushButton::clicked, this, &MacroEditorDialog::copyCurrentMacro);
+
+   ui->listMacros->setCurrentIndex(model->index(0));
 }
 
 MacroEditorDialog::~MacroEditorDialog()
@@ -61,27 +55,151 @@ MacroEditorDialog::~MacroEditorDialog()
 
 Macro *MacroEditorDialog::currentSelectedMacro() const
 {
-    return macroManager->availableMacros()[ui->listMacros->currentRow()];
+    return Q_NULLPTR;
 }
 
-void MacroEditorDialog::selectionChanged()
+void MacroEditorDialog::rowChanged(const QModelIndex &current, const QModelIndex &previous)
 {
-    const Macro *m = currentSelectedMacro();
+    Q_UNUSED(previous);
 
-    ui->editMacroName->setText(m->getName());
+    if (!current.isValid()){
+        ui->editMacroName->setReadOnly(true);
+        ui->editMacroName->clear();
+        ui->keyMacroShortcut->clear();
+        ui->tblMacroSteps->clearContents();
+        return;
+    }
+    else {
+        ui->editMacroName->setReadOnly(false);
 
-    ui->tblMacroSteps->clearContents();
-    ui->tblMacroSteps->setRowCount(m->getSteps().size());
+        Macro *macro = model->macro(current);
 
-    int i = 0;
-    for (const MacroStep &step : m->getSteps()) {
-        ui->tblMacroSteps->setItem(i, 0, new QTableWidgetItem(step.name()));
+        ui->editMacroName->setText(macro->getName());
 
-        if (MacroStep::MessageHasString(step.message)) {
-            ui->tblMacroSteps->setItem(i, 1, new QTableWidgetItem(QString(step.str)));
+        ui->tblMacroSteps->clearContents();
+        ui->tblMacroSteps->setRowCount(macro->getSteps().size());
+
+        int i = 0;
+        for (const MacroStep &step : macro->getSteps()) {
+            ui->tblMacroSteps->setItem(i, 0, new QTableWidgetItem(step.name()));
+
+            if (MacroStep::MessageHasString(step.message)) {
+                ui->tblMacroSteps->setItem(i, 1, new QTableWidgetItem(QString(step.str)));
+            }
+            ++i;
         }
-        ++i;
+
+        ui->tblMacroSteps->resizeRowsToContents();
+    }
+}
+
+void MacroEditorDialog::macroNameChanged(const QString &text)
+{
+    QModelIndex currentIndex = ui->listMacros->selectionModel()->currentIndex();
+
+    if (currentIndex.isValid()) {
+        Macro *macro = model->macro(currentIndex);
+        macro->setName(text);
+
+        // Since the macro was edited directly, need to notify the model this index changed
+        emit model->dataChanged(currentIndex, currentIndex);
+    }
+}
+
+void MacroEditorDialog::deleteCurrentMacro()
+{
+    QModelIndex currentIndex = ui->listMacros->selectionModel()->currentIndex();
+
+    if (currentIndex.isValid()) {
+        const QString macroName = currentIndex.data(Qt::DisplayRole).toString();
+        QMessageBox::StandardButton reply = QMessageBox::question(this, tr("Delete Macro"), tr("Are you sure you want to delete <b>%1</b>?").arg(macroName));
+
+        if (reply == QMessageBox::Yes) {
+            model->removeRow(currentIndex.row());
+        }
+    }
+}
+
+void MacroEditorDialog::copyCurrentMacro()
+{
+    QModelIndex currentIndex = ui->listMacros->selectionModel()->currentIndex();
+
+    if (currentIndex.isValid()) {
+        Macro *originalMacro = model->macro(currentIndex);
+
+        model->insertRows(currentIndex.row() + 1, 1);
+
+        Macro *newMacro = model->macro(model->index(currentIndex.row() + 1));
+
+        newMacro->setName(originalMacro->getName() + " " + tr("(Copy)"));
+
+        for (const MacroStep &step : originalMacro->getSteps()) {
+            newMacro->addMacroStep(step);
+        }
+    }
+}
+
+
+MacroModel::MacroModel(QObject *parent, MacroManager *mm) :
+    QAbstractListModel(parent),
+    macroManager(mm)
+{
+}
+
+int MacroModel::rowCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent);
+
+    return macroManager->availableMacros().size();
+}
+
+QVariant MacroModel::data(const QModelIndex &index, int role) const
+{
+    if (!index.isValid())
+        return QVariant();
+
+   if (role == Qt::DisplayRole) {
+       return macroManager->availableMacros()[index.row()]->getName();
+   }
+
+   return QVariant();
+}
+
+bool MacroModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    Q_UNUSED(parent);
+
+    beginRemoveRows(QModelIndex(), row, row + count - 1);
+
+    while (count--) {
+        delete macroManager->availableMacros().takeAt(row);
     }
 
-    ui->tblMacroSteps->resizeRowsToContents();
+    endRemoveRows();
+
+    return true;
+}
+
+bool MacroModel::insertRows(int row, int count, const QModelIndex &parent)
+{
+    if (count < 1 || row < 0 || row > rowCount(parent))
+        return false;
+
+    beginInsertRows(QModelIndex(), row, row + count - 1);
+
+    for (int r = 0; r < count; ++r) {
+        macroManager->availableMacros().insert(row, new Macro());
+    }
+
+    endInsertRows();
+
+    return true;
+}
+
+Macro *MacroModel::macro(const QModelIndex &index)
+{
+    if (index.isValid())
+        return macroManager->availableMacros()[index.row()];
+    else
+        return Q_NULLPTR;
 }

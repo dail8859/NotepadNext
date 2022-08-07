@@ -38,7 +38,7 @@ void Macro::addMacroStep(Message message, uptr_t wParam, sptr_t lParam)
     // Combine DeleteBack (backspace) with ReplaceSel
     else if (message == Message::DeleteBack && !steps.empty() && steps.constLast().message == Message::ReplaceSel) {
         if (steps.last().str.size() == 1) {
-            // A single char left so just remvoe the action
+            // A single char left so just remove the action
             steps.takeLast();
         }
         else {
@@ -54,6 +54,11 @@ void Macro::addMacroStep(Message message, uptr_t wParam, sptr_t lParam)
         qInfo("%s", qUtf8Printable(step.toString()));
     }
 #endif
+}
+
+void Macro::addMacroStep(MacroStep step)
+{
+    steps.append(step);
 }
 
 void Macro::replay(ScintillaNext *editor, int n) const
