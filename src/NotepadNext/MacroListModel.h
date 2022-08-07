@@ -17,41 +17,32 @@
  */
 
 
-#ifndef MACROEDITORDIALOG_H
-#define MACROEDITORDIALOG_H
+#ifndef MACROLISTMODEL_H
+#define MACROLISTMODEL_H
 
-#include <QDialog>
 
-#include "MacroListModel.h"
+#include <QAbstractItemModel>
+
 #include "MacroManager.h"
 
-namespace Ui {
-class MacroEditorDialog;
-}
 
-class MacroEditorDialog : public QDialog
+class MacroListModel : public QAbstractListModel
 {
     Q_OBJECT
 
-public:
-    explicit MacroEditorDialog(QWidget *parent, MacroManager *mm);
-    ~MacroEditorDialog();
+public :
+    MacroListModel(QObject * parent, MacroManager *mm);
+
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+
+    bool removeRows(int row, int count, const QModelIndex &parent) override;
+    bool insertRows(int row, int count, const QModelIndex &parent=QModelIndex()) override;
+
+    Macro *macro(const QModelIndex &index);
 
 private:
-    Macro *currentSelectedMacro() const;
-
-private slots:
-    void rowChanged(const QModelIndex &current, const QModelIndex &previous);
-    void macroNameChanged(const QString &text);
-
-    void deleteCurrentMacro();
-    void copyCurrentMacro();
-
-private:
-    Ui::MacroEditorDialog *ui;
-    MacroManager *macroManager;
-    MacroListModel *model;
+   MacroManager *macroManager;
 };
 
-
-#endif // MACROEDITORDIALOG_H
+#endif // MACROLISTMODEL_H
