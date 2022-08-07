@@ -33,5 +33,11 @@
         <file>icons/printer.png</file>
         <file>icons/NotepadNext.png</file>
         <file>icons/cog.png</file>
+        <file>icons/table_delete.png</file>
+        <file>icons/table_row_delete.png</file>
+        <file>icons/table_row_insert.png</file>
+        <file>icons/arrow_down.png</file>
+        <file>icons/arrow_up.png</file>
+        <file>icons/table_edit.png</file>
     </qresource>
 </RCC>
