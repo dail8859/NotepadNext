@@ -208,14 +208,16 @@
     </property>
     <addaction name="actionPreferences"/>
    </widget>
-   <widget class="QMenu" name="menuTools">
+   <widget class="QMenu" name="menuMacro">
     <property name="title">
      <string>Macro</string>
     </property>
     <addaction name="actionMacroRecording"/>
     <addaction name="actionPlayback"/>
-    <addaction name="actionSaveCurrentRecordedMacro"/>
     <addaction name="actionRunMacroMultipleTimes"/>
+    <addaction name="actionSaveCurrentRecordedMacro"/>
+    <addaction name="actionEditMacros"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -244,7 +246,7 @@
    <addaction name="menuEncodings"/>
    <addaction name="menuLanguage"/>
    <addaction name="menuSettings"/>
-   <addaction name="menuTools"/>
+   <addaction name="menuMacro"/>
    <addaction name="menuRun"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -973,6 +975,18 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+K</string>
+   </property>
+  </action>
+  <action name="actionEditMacros">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/table_edit.png</normaloff>:/icons/table_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Edit Macros...</string>
    </property>
   </action>
  </widget>

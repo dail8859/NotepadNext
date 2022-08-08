@@ -1,6 +1,6 @@
 /*
  * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * Copyright 2022 Justin Dailey
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,28 +17,43 @@
  */
 
 
-#ifndef MACROSAVEDIALOG_H
-#define MACROSAVEDIALOG_H
+#ifndef MACROEDITORDIALOG_H
+#define MACROEDITORDIALOG_H
 
 #include <QDialog>
 
+#include "MacroListModel.h"
+#include "MacroStepTableModel.h"
+#include "MacroManager.h"
+
 namespace Ui {
-class MacroSaveDialog;
+class MacroEditorDialog;
 }
 
-class MacroSaveDialog : public QDialog
+class MacroEditorDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit MacroSaveDialog(QWidget *parent = 0);
-    ~MacroSaveDialog();
+    explicit MacroEditorDialog(QWidget *parent, MacroManager *mm);
+    ~MacroEditorDialog();
 
-    QString getName() const;
-    QKeySequence getShortcut() const;
+private slots:
+    void rowChanged(const QModelIndex &current, const QModelIndex &previous);
+    void macroNameChanged(const QString &text);
+
+    void deleteCurrentMacro();
+    void copyCurrentMacro();
+
+    void insertMacroStep();
+    void deleteMacroStep();
+    void moveMacroStepUp();
+    void moveMacroStepDown();
 
 private:
-    Ui::MacroSaveDialog *ui;
+    Ui::MacroEditorDialog *ui;
+    MacroManager *macroManager;
+    MacroListModel *model;
 };
 
-#endif // MACROSAVEDIALOG_H
+#endif // MACROEDITORDIALOG_H

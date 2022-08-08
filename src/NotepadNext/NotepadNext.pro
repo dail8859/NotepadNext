@@ -72,7 +72,12 @@ SOURCES += \
     LanguageStylesModel.cpp \
     LuaExtension.cpp \
     LuaState.cpp \
+    Macro.cpp \
+    MacroListModel.cpp \
+    MacroManager.cpp \
     MacroRecorder.cpp \
+    MacroStep.cpp \
+    MacroStepTableModel.cpp \
     NotepadNextApplication.cpp \
     NppImporter.cpp \
     QRegexSearch.cpp \
@@ -92,6 +97,7 @@ SOURCES += \
     decorators/BetterMultiSelection.cpp \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
+    dialogs/MacroEditorDialog.cpp \
     docks/DebugLogDock.cpp \
     docks/EditorInspectorDock.cpp \
     dialogs/FindReplaceDialog.cpp \
@@ -129,7 +135,12 @@ HEADERS += \
     LanguageStylesModel.h \
     LuaExtension.h \
     LuaState.h \
+    Macro.h \
+    MacroListModel.h \
+    MacroManager.h \
     MacroRecorder.h \
+    MacroStep.h \
+    MacroStepTableModel.h \
     NotepadNextApplication.h \
     NppImporter.h \
     QRegexSearch.h \
@@ -138,6 +149,7 @@ HEADERS += \
     RecentFilesListMenuBuilder.h \
     SciIFaceTable.h \
     ScintillaCommenter.h \
+    ScintillaEnums.h \
     ScintillaNext.h \
     SelectionTracker.h \
     Settings.h \
@@ -149,6 +161,7 @@ HEADERS += \
     decorators/BetterMultiSelection.h \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
+    dialogs/MacroEditorDialog.h \
     docks/DebugLogDock.h \
     docks/EditorInspectorDock.h \
     dialogs/FindReplaceDialog.h \
@@ -170,6 +183,7 @@ HEADERS += \
 
 FORMS += \
     QuickFindWidget.ui \
+    dialogs/MacroEditorDialog.ui \
     docks/DebugLogDock.ui \
     docks/EditorInspectorDock.ui \
     docks/FolderAsWorkspaceDock.ui \

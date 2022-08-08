@@ -83,6 +83,8 @@ public:
     QString languageName;
     QByteArray languageSingleLineComment;
 
+    #include "ScintillaEnums.h"
+
 public slots:
     void close();
     bool save();

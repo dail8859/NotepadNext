@@ -43,7 +43,6 @@
 #endif
 
 #include "DockAreaWidget.h"
-#include "DockWidgetTab.h"
 
 #include "NotepadNextApplication.h"
 #include "Settings.h"
@@ -53,8 +52,6 @@
 #include "RecentFilesListManager.h"
 #include "RecentFilesListMenuBuilder.h"
 #include "EditorManager.h"
-
-#include "MacroRecorder.h"
 
 #include "LuaConsoleDock.h"
 #include "LanguageInspectorDock.h"
@@ -70,12 +67,12 @@
 #include "QuickFindWidget.h"
 
 #include "EditorPrintPreviewRenderer.h"
+#include "MacroEditorDialog.h"
 
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
-    app(app),
-    recorder(new MacroRecorder(this))
+    app(app)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -431,52 +428,73 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         pd->activateWindow();
     });
 
+    // The macro manager has already loaded any saved macros, so it might have some already
+    ui->actionRunMacroMultipleTimes->setEnabled(macroManager.availableMacros().size() > 0);
+    ui->actionEditMacros->setEnabled(macroManager.availableMacros().size() > 0);
+
     connect(ui->actionMacroRecording, &QAction::triggered, this, [=](bool b) {
         if (b) {
-            ui->actionMacroRecording->setText(tr("Stop Recording"));
-            recorder->startRecording(currentEditor());
-
-            // A macro is being recorded so disable some macro options
-            ui->actionPlayback->setEnabled(false);
-            ui->actionRunMacroMultipleTimes->setEnabled(false);
-            ui->actionSaveCurrentRecordedMacro->setEnabled(false);
+            macroManager.startRecording(currentEditor());
         }
         else {
-            ui->actionMacroRecording->setText(tr("Start Recording"));
-            Macro *m = recorder->stopRecording();
-
-            if (m->size() > 0) {
-                currentMacro = m;
-                ui->actionPlayback->setEnabled(true);
-                ui->actionRunMacroMultipleTimes->setEnabled(true);
-                ui->actionSaveCurrentRecordedMacro->setEnabled(true);
-            }
-            else {
-                // Don't need the macro returned from the recorder
-                delete m;
-
-                // A previously recorded one may still be valid
-                if (currentMacro) {
-                    ui->actionPlayback->setEnabled(true);
-                    ui->actionRunMacroMultipleTimes->setEnabled(true);
-
-                    // It may or may not be "saved" in the list
-                    if (!macros.contains(currentMacro))
-                        ui->actionSaveCurrentRecordedMacro->setEnabled(true);
-                }
-            }
+            macroManager.stopRecording();
         }
     });
 
+    connect(&macroManager, &MacroManager::recordingStarted, this, [=]() {
+        ui->actionMacroRecording->setText(tr("Stop Recording"));
+
+        // A macro is being recorded so disable some macro options
+        ui->actionPlayback->setEnabled(false);
+        ui->actionRunMacroMultipleTimes->setEnabled(false);
+        ui->actionSaveCurrentRecordedMacro->setEnabled(false);
+    });
+
+    connect(&macroManager, &MacroManager::recordingStopped, this, [=]() {
+        ui->actionMacroRecording->setText(tr("Start Recording"));
+
+        // Only enable these if the macro manager recorded a valid macro
+        ui->actionPlayback->setEnabled(macroManager.hasCurrentUnsavedMacro());
+        ui->actionSaveCurrentRecordedMacro->setEnabled(macroManager.hasCurrentUnsavedMacro());
+
+        // The macro manager might have other macros
+        ui->actionRunMacroMultipleTimes->setEnabled(macroManager.availableMacros().size() > 0 || macroManager.hasCurrentUnsavedMacro());
+    });
+
     connect(ui->actionPlayback, &QAction::triggered, this, [=]() {
-        currentMacro->replay(currentEditor());
+        macroManager.replayCurrentMacro(currentEditor());
+    });
+
+    connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, this, [=]() {
+        MacroSaveDialog macroSaveDialog;
+
+        macroSaveDialog.show();
+        macroSaveDialog.raise();
+        macroSaveDialog.activateWindow();
+
+        if (macroSaveDialog.exec() == QDialog::Accepted) {
+            // We have at least 1 saved macro at this point
+            ui->actionEditMacros->setEnabled(true);
+
+            // The macro has been saved so disable save option
+            ui->actionSaveCurrentRecordedMacro->setEnabled(false);
+
+            // TODO: does the macro name already exist? Make the user retry
+
+            macroManager.saveCurrentMacro(macroSaveDialog.getName());
+
+            // TODO handle shortcuts
+            if (!macroSaveDialog.getShortcut().isEmpty()) {
+                // do something with msd.getShortcut().isEmpty()
+            }
+        }
     });
 
     connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, this, [=]() {
         MacroRunDialog *macroRunDialog = nullptr;
 
         if (!dialogs.contains("MacroRunDialog")) {
-            macroRunDialog = new MacroRunDialog(this);
+            macroRunDialog = new MacroRunDialog(this, &macroManager);
             dialogs["MacroRunDialog"] = macroRunDialog;
 
             connect(macroRunDialog, &MacroRunDialog::execute, this, [=](Macro *macro, int times) {
@@ -490,35 +508,32 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             macroRunDialog = qobject_cast<MacroRunDialog *>(dialogs["MacroRunDialog"]);
         }
 
-        if (!macros.contains(currentMacro))
-            macroRunDialog->setMacros(QVector<Macro *>(macros) << currentMacro);
-        else
-            macroRunDialog->setMacros(macros);
-
         macroRunDialog->show();
         macroRunDialog->raise();
         macroRunDialog->activateWindow();
     });
 
-    connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, this, [=]() {
-        MacroSaveDialog macroSaveDialog;
+    connect(ui->actionEditMacros, &QAction::triggered, this, [=]() {
+        MacroEditorDialog med(this, &macroManager);
 
-        macroSaveDialog.show();
-        macroSaveDialog.raise();
-        macroSaveDialog.activateWindow();
+        med.show();
+        med.raise();
+        med.activateWindow();
 
-        if (macroSaveDialog.exec() == QDialog::Accepted) {
-            // The macro has been saved so disable save option
-            ui->actionSaveCurrentRecordedMacro->setEnabled(false);
+        med.exec();
 
-            // TODO: does the macro name already exist?
+        ui->actionEditMacros->setEnabled(macroManager.availableMacros().size() > 0);
+    });
 
-            currentMacro->setName(macroSaveDialog.getName());
-            if (!macroSaveDialog.getShortcut().isEmpty()) {
-                // do something with msd.getShortcut().isEmpty()
-            }
+    connect(ui->menuMacro, &QMenu::aboutToShow, this, [=]() {
+        // NOTE: its unfortunate that this has to be hard coded, but there's no way
+        // to easily determine what should or shouldn't be there
+        while (ui->menuMacro->actions().size() > 6) {
+            delete ui->menuMacro->actions().takeLast();
+        }
 
-            macros.append(currentMacro);
+        for (const Macro *m : macroManager.availableMacros()) {
+            ui->menuMacro->addAction(m->getName(), [=]() { m->replay(currentEditor()); });
         }
     });
 
