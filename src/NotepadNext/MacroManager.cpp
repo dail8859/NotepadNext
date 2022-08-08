@@ -8,6 +8,14 @@ MacroManager::MacroManager(QObject *parent) :
 {
     qInfo(Q_FUNC_INFO);
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    qRegisterMetaTypeStreamOperators<Macro>("Macro");
+#else
+    // HACK: For some reason this is required to make QVariant recognize it as a valid type
+    // see https://stackoverflow.com/q/70974383
+    QMetaType::fromType<Macro>().hasRegisteredDataStreamOperators();
+#endif
+
     loadSettings();
 
     connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &MacroManager::saveSettings);

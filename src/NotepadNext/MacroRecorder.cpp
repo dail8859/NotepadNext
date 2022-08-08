@@ -27,11 +27,6 @@ using namespace Scintilla;
 MacroRecorder::MacroRecorder(QObject *parent) :
     QObject(parent)
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    qRegisterMetaTypeStreamOperators<MacroStep>("MacroStep");
-    qRegisterMetaTypeStreamOperators<QVector<MacroStep>>("MacroSteps");
-    qRegisterMetaTypeStreamOperators<Macro>("Macro");
-#endif
 }
 
 void MacroRecorder::startRecording(ScintillaNext *editor)
