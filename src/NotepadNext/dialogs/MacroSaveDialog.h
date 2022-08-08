@@ -37,9 +37,6 @@ public:
     QString getName() const;
     QKeySequence getShortcut() const;
 
-public slots:
-    int exec() override;
-
 private:
     Ui::MacroSaveDialog *ui;
 };

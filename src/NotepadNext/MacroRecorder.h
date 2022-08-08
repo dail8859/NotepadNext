@@ -23,28 +23,8 @@
 #include <QObject>
 
 #include "ScintillaNext.h"
+#include "Macro.h"
 
-
-class MacroAction;
-
-class Macro
-{
-public:
-    Macro();
-    ~Macro();
-
-    void addMacroStep(Scintilla::Message message, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
-    int size() const { return actions.size(); }
-    void replay(ScintillaNext *editor, int n = 1) const;
-    void replayTillEndOfFile(ScintillaNext *editor) const;
-
-    QString getName() const;
-    void setName(const QString &value);
-
-private:
-    QVector<MacroAction *> actions;
-    QString name;
-};
 
 
 class MacroRecorder : public QObject

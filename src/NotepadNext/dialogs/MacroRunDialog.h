@@ -20,9 +20,11 @@
 #ifndef MACRORUNDIALOG_H
 #define MACRORUNDIALOG_H
 
+
 #include <QDialog>
 
 class Macro;
+class MacroManager;
 
 namespace Ui {
 class MacroRunDialog;
@@ -33,17 +35,18 @@ class MacroRunDialog : public QDialog
     Q_OBJECT
 
 public:
-    MacroRunDialog(QWidget *parent);
+    MacroRunDialog(QWidget *parent, MacroManager *mm);
     ~MacroRunDialog();
 
-    void setMacros(QVector<Macro*> macros);
+protected:
+    void showEvent(QShowEvent *event) override;
 
 signals:
     void execute(Macro *macro, int times);
 
 private:
     Ui::MacroRunDialog *ui;
-    QVector<Macro*> macros;
+    MacroManager *macroManager;
 };
 
 #endif // MACRORUNDIALOG_H

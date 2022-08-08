@@ -26,6 +26,7 @@
 
 #include "DockedEditor.h"
 
+#include "MacroManager.h"
 #include "ScintillaNext.h"
 #include "NppImporter.h"
 
@@ -34,7 +35,6 @@ class MainWindow;
 }
 
 class NotepadNextApplication;
-class MacroRecorder;
 class Macro;
 class Settings;
 class QuickFindWidget;
@@ -132,7 +132,6 @@ private:
     Ui::MainWindow *ui = Q_NULLPTR;
     NotepadNextApplication *app = Q_NULLPTR;
     DockedEditor *dockedEditor = Q_NULLPTR;
-    MacroRecorder *recorder = Q_NULLPTR;
 
     void initUpdateCheck();
     bool isInInitialState();
@@ -152,8 +151,7 @@ private:
 
     QuickFindWidget *quickFind = Q_NULLPTR;
 
-    QVector<Macro *> macros;
-    Macro *currentMacro = Q_NULLPTR;
+    MacroManager macroManager;
 };
 
 #endif // MAINWINDOW_H

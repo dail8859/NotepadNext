@@ -21,15 +21,16 @@
 #include "ui_MacroSaveDialog.h"
 
 MacroSaveDialog::MacroSaveDialog(QWidget *parent) :
-    QDialog(parent, Qt::Tool),
+    QDialog(parent),
     ui(new Ui::MacroSaveDialog)
 {
+    setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+
     ui->setupUi(this);
 
     connect(ui->editName, &QLineEdit::textChanged, [=](const QString &text) {
-        ui->buttonOk->setEnabled(text.size() > 0);
+        ui->buttonOk->setEnabled(text.trimmed().size() > 0);
     });
-
 }
 
 MacroSaveDialog::~MacroSaveDialog()
@@ -45,12 +46,4 @@ QString MacroSaveDialog::getName() const
 QKeySequence MacroSaveDialog::getShortcut() const
 {
     return ui->keySequenceEdit->keySequence();
-}
-
-int MacroSaveDialog::exec()
-{
-    ui->editName->clear();
-    ui->keySequenceEdit->clear();
-
-    return QDialog::exec();
 }
