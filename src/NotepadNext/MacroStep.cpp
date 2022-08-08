@@ -217,20 +217,33 @@ QList<Message> MacroStep::RecordableMacroMessages()
 
 QDataStream &operator<<(QDataStream& stream, const MacroStep &macroStep)
 {
-    stream << macroStep.message << macroStep.wParam;
+    // NOTE: Need to force the wParam and lParam into 32 bits due to Scintilla defining
+    // them differently on different systems.
+
+    stream << macroStep.message << static_cast<quint32>(macroStep.wParam);
 
     if (MacroStep::MessageHasString(macroStep.message))
         return stream << macroStep.str;
     else
-        return stream << macroStep.lParam;
+        return stream << static_cast<qint32>(macroStep.lParam);
 }
 
 QDataStream &operator>>(QDataStream& stream, MacroStep &macroStep)
 {
-    stream >> macroStep.message >> macroStep.wParam;
+    // NOTE: Need to force the wParam and lParam into 32 bits due to Scintilla defining
+    // them differently on different systems.
+
+    quint32 w;
+    qint32 l;
+
+    stream >> macroStep.message >> w;
+    macroStep.wParam = static_cast<quint32>(w);
 
     if (MacroStep::MessageHasString(macroStep.message))
         return stream >> macroStep.str;
-    else
-        return stream >> macroStep.lParam;
+    else {
+        stream >> l;
+        macroStep.lParam = static_cast<qint32>(l);
+        return stream;
+    }
 }
