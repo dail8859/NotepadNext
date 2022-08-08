@@ -22,6 +22,7 @@
 #include <QModelIndex>
 
 #include "MacroEditorDialog.h"
+#include "ComboBoxDelegate.h"
 
 #include "ui_MacroEditorDialog.h"
 
@@ -49,6 +50,12 @@ MacroEditorDialog::MacroEditorDialog(QWidget *parent, MacroManager *mm) :
     connect(ui->btnDeleteMacroStep, &QPushButton::clicked, this, &MacroEditorDialog::deleteMacroStep);
     connect(ui->btnMoveMacroStepUp, &QPushButton::clicked, this, &MacroEditorDialog::moveMacroStepUp);
     connect(ui->btnMoveMacroStepDown, &QPushButton::clicked, this, &MacroEditorDialog::moveMacroStepDown);
+
+    QList<ComboBoxItem> recordableMacroMessages;
+    for (Scintilla::Message msg : MacroStep::RecordableMacroMessages()) {
+        recordableMacroMessages.append(qMakePair(MacroStep::NameOfMessage(msg), static_cast<int>(msg)));
+    }
+    ui->tblMacroSteps->setItemDelegateForColumn(0, new ComboBoxDelegate(recordableMacroMessages, this));
 
     ui->listMacros->setCurrentIndex(model->index(0));
 }
@@ -83,6 +90,7 @@ void MacroEditorDialog::rowChanged(const QModelIndex &current, const QModelIndex
         // Resize some stuff now that we have a new model
         ui->tblMacroSteps->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
         ui->tblMacroSteps->resizeRowsToContents();
+        ui->tblMacroSteps->resizeColumnToContents(0);
     }
 }
 
@@ -152,14 +160,16 @@ void MacroEditorDialog::insertMacroStep()
 
     if (currentIndex.isValid()) {
         ui->tblMacroSteps->model()->insertRows(currentIndex.row() + 1, 1);
-        ui->tblMacroSteps->resizeRowsToContents();
         ui->tblMacroSteps->setCurrentIndex(ui->tblMacroSteps->model()->index(currentIndex.row() + 1, 0));
     }
     else {
         ui->tblMacroSteps->model()->insertRows(0, 1);
-        ui->tblMacroSteps->resizeRowsToContents();
         ui->tblMacroSteps->setCurrentIndex(ui->tblMacroSteps->model()->index(0, 0));
     }
+
+    // Resize things if needed
+    ui->tblMacroSteps->resizeRowsToContents();
+    ui->tblMacroSteps->resizeColumnToContents(0);
 }
 
 void MacroEditorDialog::deleteMacroStep()
