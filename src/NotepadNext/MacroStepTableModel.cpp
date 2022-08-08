@@ -30,7 +30,10 @@ QVariant MacroStepTableModel::headerData(int section, Qt::Orientation orientatio
 {
     if (role == Qt::DisplayRole) {
         if (orientation == Qt::Horizontal) {
-            return QStringList{"Name", "Data"}[section];
+            if (section == 0)
+                return tr("Name");
+            else if (section == 1)
+                return tr("Text");
         }
     }
 
@@ -39,18 +42,12 @@ QVariant MacroStepTableModel::headerData(int section, Qt::Orientation orientatio
 
 int MacroStepTableModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
-        return 0;
-    else
-        return macro->getSteps().size();
+    return parent.isValid() ? 0 : macro->getSteps().size();
 }
 
 int MacroStepTableModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
-        return 0;
-    else
-        return 2;
+    return parent.isValid() ? 0 : 2;
 }
 
 QVariant MacroStepTableModel::data(const QModelIndex &index, int role) const
@@ -61,7 +58,12 @@ QVariant MacroStepTableModel::data(const QModelIndex &index, int role) const
     if (role == Qt::DisplayRole || role == Qt::EditRole || role == Qt::ToolTipRole) {
         switch (index.column()) {
             case 0:
-                return macro->getSteps()[index.row()].name();
+                if (role == Qt::EditRole) {
+                    return static_cast<int>(macro->getSteps()[index.row()].message);
+                }
+                else {
+                    return macro->getSteps()[index.row()].getName();
+                }
             case 1:
                 return macro->getSteps()[index.row()].str;
             default:
@@ -74,13 +76,33 @@ QVariant MacroStepTableModel::data(const QModelIndex &index, int role) const
 
 bool MacroStepTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (index.isValid() && role == Qt::EditRole) {
-        if (index.column() == 1) {
-            macro->getSteps()[index.row()].str = value.toString().toUtf8();
+    if (!index.isValid())
+        return false;
 
-            emit dataChanged(index, index, QVector<int>() << role);
+    if (role == Qt::EditRole) {
+        switch (index.column()) {
+            case 0: {
+                Scintilla::Message newMessage = static_cast<Scintilla::Message>(value.toInt());
+                MacroStep &m = macro->getSteps()[index.row()];
 
-            return true;
+                m.message = newMessage;
+
+                if (!MacroStep::MessageHasString(newMessage)) {
+                    m.str.clear();
+                }
+
+                emit dataChanged(index, index, QVector<int>() << role);
+
+                return true;
+            }
+            case 1:
+                macro->getSteps()[index.row()].str = value.toString().toUtf8();
+
+                emit dataChanged(index, index, QVector<int>() << role);
+
+                return true;
+            default:
+                break;
         }
     }
 
@@ -95,7 +117,7 @@ bool MacroStepTableModel::insertRows(int row, int count, const QModelIndex &pare
     beginInsertRows(QModelIndex(), row, row + count - 1);
 
     for (int r = 0; r < count; ++r) {
-        macro->getSteps().insert(row, MacroStep(Scintilla::Message::CharLeftExtend, 0, 0));
+        macro->getSteps().insert(row, MacroStep(Scintilla::Message::ReplaceSel, 0, 0));
     }
 
     endInsertRows();
@@ -156,12 +178,15 @@ Qt::ItemFlags MacroStepTableModel::flags(const QModelIndex &index) const
     if (!index.isValid())
         return Qt::NoItemFlags;
 
-    //if (index.column() == 0)
-    //    return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
-
-    if (index.column() == 1 && MacroStep::MessageHasString(macro->getSteps()[index.row()].message))
+    if (index.column() == 0) {
         return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
-
-    return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+    }
+    else if (index.column() == 1 && MacroStep::MessageHasString(macro->getSteps()[index.row()].message)) {
+        // The second column is only editable if the macro has a string associated with it
+        return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
+    }
+    else {
+        return Qt::ItemIsEnabled;
+    }
 }
 

@@ -29,7 +29,7 @@ public:
     ~MacroStep();
 
     QString toString() const;
-    QString name() const;
+    QString getName() const;
 
     void replay(ScintillaNext *editor) const;
 
@@ -37,6 +37,8 @@ public:
     friend QDataStream &operator>>(QDataStream& stream, MacroStep &macroStep);
 
     static bool MessageHasString(Scintilla::Message message);
+    static QString NameOfMessage(Scintilla::Message message);
+    static QList<Scintilla::Message> RecordableMacroMessages();
 
     Scintilla::Message message;
     uptr_t wParam;
