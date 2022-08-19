@@ -18,7 +18,6 @@
 
 
 #include "MainWindow.h"
-#include "DebugLogDock.h"
 #include "ui_MainWindow.h"
 
 #include <QFileDialog>
@@ -58,6 +57,8 @@
 #include "EditorInspectorDock.h"
 #include "FolderAsWorkspaceDock.h"
 #include "SearchResultsDock.h"
+#include "DebugLogDock.h"
+#include "HexViewerDock.h"
 
 #include "FindReplaceDialog.h"
 #include "MacroRunDialog.h"
@@ -575,11 +576,16 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     debugLogDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, debugLogDock);
 
+    HexViewerDock *hexViewerDock = new HexViewerDock(this);
+    hexViewerDock->hide();
+    addDockWidget(Qt::RightDockWidgetArea, hexViewerDock);
+
     ui->menuHelp->insertActions(ui->menuHelp->actions().at(0), {
                                     luaConsoleDock->toggleViewAction(),
                                     languageInspectorDock->toggleViewAction(),
                                     editorInspectorDock->toggleViewAction(),
-                                    debugLogDock->toggleViewAction()
+                                    debugLogDock->toggleViewAction(),
+                                    hexViewerDock->toggleViewAction()
                                 });
 
     FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
