@@ -18,7 +18,7 @@ jobs:
         - 
           qt_version: "5.15.2"
           modules: ""
-          os: ubuntu-18.04
+          os: ubuntu-latest
         - 
           qt_version: "6.2.4"
           modules: "qt5compat"
