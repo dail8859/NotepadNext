@@ -62,6 +62,7 @@ SOURCES += \
     ComboBoxDelegate.cpp \
     DebugManager.cpp \
     DockedEditor.cpp \
+    EditorHexViewerTableModel.cpp \
     EditorManager.cpp \
     EditorPrintPreviewRenderer.cpp \
     Finder.cpp \
@@ -102,6 +103,7 @@ SOURCES += \
     docks/EditorInspectorDock.cpp \
     dialogs/FindReplaceDialog.cpp \
     docks/FolderAsWorkspaceDock.cpp \
+    docks/HexViewerDock.cpp \
     docks/LanguageInspectorDock.cpp \
     docks/LuaConsoleDock.cpp \
     dialogs/MacroRunDialog.cpp \
@@ -124,6 +126,7 @@ HEADERS += \
     DebugManager.h \
     DockedEditor.h \
     DockedEditorTitleBar.h \
+    EditorHexViewerTableModel.h \
     EditorManager.h \
     EditorPrintPreviewRenderer.h \
     Finder.h \
@@ -166,6 +169,7 @@ HEADERS += \
     docks/EditorInspectorDock.h \
     dialogs/FindReplaceDialog.h \
     docks/FolderAsWorkspaceDock.h \
+    docks/HexViewerDock.h \
     docks/LanguageInspectorDock.h \
     docks/LuaConsoleDock.h \
     dialogs/MacroRunDialog.h \
@@ -187,6 +191,7 @@ FORMS += \
     docks/DebugLogDock.ui \
     docks/EditorInspectorDock.ui \
     docks/FolderAsWorkspaceDock.ui \
+    docks/HexViewerDock.ui \
     docks/LanguageInspectorDock.ui \
     dialogs/MainWindow.ui \
     dialogs/FindReplaceDialog.ui \
