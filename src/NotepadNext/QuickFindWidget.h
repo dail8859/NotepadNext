@@ -26,7 +26,6 @@
 #include <QLineEdit>
 #include <QObject>
 
-#include "FocusWatcher.h"
 #include "ScintillaNext.h"
 
 namespace Ui {

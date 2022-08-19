@@ -18,6 +18,7 @@
 
 
 #include "Finder.h"
+#include "FocusWatcher.h"
 #include "QuickFindWidget.h"
 #include "ScintillaNext.h"
 #include "ui_QuickFindWidget.h"
