@@ -299,6 +299,8 @@ public:
 	sptr_t printMagnification() const;
 	void setPrintColourMode(sptr_t mode);
 	sptr_t printColourMode() const;
+	void setChangeHistory(sptr_t changeHistory);
+	sptr_t changeHistory() const;
 	sptr_t firstVisibleLine() const;
 	QByteArray getLine(sptr_t line);
 	sptr_t lineCount() const;
@@ -311,6 +313,7 @@ public:
 	void setSel(sptr_t anchor, sptr_t caret);
 	QByteArray getSelText();
 	void hideSelection(bool hide);
+	bool selectionHidden() const;
 	sptr_t pointXFromPosition(sptr_t pos);
 	sptr_t pointYFromPosition(sptr_t pos);
 	sptr_t lineFromPosition(sptr_t pos);
