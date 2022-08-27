@@ -52,7 +52,8 @@ SOURCES += \
     $$PWD/scintilla/src/CaseFolder.cxx \
     $$PWD/scintilla/src/CaseConvert.cxx \
     $$PWD/scintilla/src/CallTip.cxx \
-    $$PWD/scintilla/src/AutoComplete.cxx
+    $$PWD/scintilla/src/AutoComplete.cxx \
+    $$PWD/scintilla/src/ChangeHistory.cxx
 
 HEADERS  += \
     $$PWD/scintilla/qt/ScintillaEdit/ScintillaEdit.h \

@@ -16,17 +16,14 @@ knownArgument:scintilla/src/SparseVector.h
 // Some non-explicit constructors are used for conversions or are private to lexers
 noExplicitConstructor
 
+// Document is checking for a change by called methods and cppcheck isn't considering escape
+knownConditionTrueFalse:scintilla/src/Document.cxx
+
 // MarginView access to all bits is safe and is better defined in later versions of C++
 shiftTooManyBitsSigned:scintilla/src/MarginView.cxx
 
 // DLL entry points are unused inside Scintilla
-unusedFunction:scintilla\win32\ScintillaDLL.cxx
-
-// DLLMain is defined exactly as specified by Win32
-constParameter:scintilla\win32\ScintillaDLL.cxx
-
-// The styler parameter is not const as LexAccessor::operator[] is not const
-constParameter:scintilla/lexlib/StyleContext.cxx
+unusedFunction:scintilla/win32/ScintillaDLL.cxx
 
 // ScintillaDocument is providing an API and there are no consumers of the API inside Scintilla
 unusedFunction:scintilla/qt/ScintillaEdit/ScintillaDocument.cpp
@@ -34,6 +31,13 @@ unusedFunction:scintilla/qt/ScintillaEdit/ScintillaDocument.cpp
 // Doesn't understand changing dropWentOutside in Editor
 knownConditionTrueFalse:scintilla/qt/ScintillaEditBase/ScintillaQt.cpp
 knownConditionTrueFalse:scintilla/win32/ScintillaWin.cxx
+
+// This is a weird ABI hack and shouldn't be changed
+unusedStructMember:scintilla/gtk/PlatGTK.cxx
+
+// Have no way of testing ScintillaEdit so don't fix even simple warnings
+cstyleCast:scintilla/qt/ScintillaEdit/ScintillaEdit.cpp
+shadowFunction:scintilla/qt/ScintillaEdit/ScintillaEdit.cpp
 
 // moc_ files show #error as they are not built with standard context
 preprocessorErrorDirective:scintilla/qt/*.cpp
