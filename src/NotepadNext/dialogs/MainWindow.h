@@ -38,6 +38,7 @@ class NotepadNextApplication;
 class Macro;
 class Settings;
 class QuickFindWidget;
+class FunctionListDock;
 
 class MainWindow : public QMainWindow
 {
@@ -122,6 +123,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+	FunctionListDock* m_functionListDock = nullptr;
 
 private slots:
     void tabBarRightClicked(ScintillaNext *editor);

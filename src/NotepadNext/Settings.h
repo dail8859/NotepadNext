@@ -33,7 +33,7 @@ class Settings : public QObject
     Q_PROPERTY(bool showStatusBar READ showStatusBar WRITE setShowStatusBar NOTIFY showStatusBarChanged)
 
     Q_PROPERTY(bool tabsClosable READ tabsClosable WRITE setTabsClosable NOTIFY tabsClosableChanged)
-
+    Q_PROPERTY(QString ctagsCmd READ getCtagsCmd WRITE setCtagsCmd NOTIFY notifyCtagsCmd)
 
     bool m_showMenuBar = true;
     bool m_showToolBar = true;
@@ -41,6 +41,7 @@ class Settings : public QObject
     bool m_showStatusBar = true;
 
     bool m_tabsClosable = true;
+	QString m_ctagsCmd;
 
 public:
     explicit Settings(QObject *parent = nullptr);
@@ -51,6 +52,7 @@ public:
     bool showStatusBar() const;
 
     bool tabsClosable() const;
+	const QString& getCtagsCmd() const { return m_ctagsCmd; }
 
 signals:
     void showMenuBarChanged(bool showMenuBar);
@@ -59,6 +61,7 @@ signals:
     void showStatusBarChanged(bool showTabBar);
 
     void tabsClosableChanged(bool tabsClosable);
+	void notifyCtagsCmd(const QString& cmd);
 
 public slots:
     void setShowMenuBar(bool showMenuBar);
@@ -67,6 +70,7 @@ public slots:
     void setShowStatusBar(bool showStatusBar);
 
     void setTabsClosable(bool tabsClosable);
+	void setCtagsCmd(const QString& cmd);
 };
 
 #endif // SETTINGS_H

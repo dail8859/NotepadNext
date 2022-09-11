@@ -40,6 +40,10 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
     ui->checkBoxStatusBar->setChecked(settings->showStatusBar());
     connect(settings, &Settings::showStatusBarChanged, ui->checkBoxStatusBar, &QCheckBox::setChecked);
     connect(ui->checkBoxStatusBar, &QCheckBox::clicked, settings, &Settings::setShowStatusBar);
+
+	ui->ctagsCmdEdit->setText(settings->getCtagsCmd());
+    connect(settings, &Settings::notifyCtagsCmd, ui->ctagsCmdEdit, &QLineEdit::setText);
+    connect(ui->ctagsCmdEdit, &QLineEdit::textChanged, settings, &Settings::setCtagsCmd);
 }
 
 PreferencesDialog::~PreferencesDialog()

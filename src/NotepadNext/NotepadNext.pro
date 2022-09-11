@@ -106,6 +106,7 @@ SOURCES += \
     docks/HexViewerDock.cpp \
     docks/LanguageInspectorDock.cpp \
     docks/LuaConsoleDock.cpp \
+    docks/FunctionListDock.cpp \
     dialogs/MacroRunDialog.cpp \
     dialogs/MacroSaveDialog.cpp \
     dialogs/MainWindow.cpp \
@@ -172,6 +173,7 @@ HEADERS += \
     docks/HexViewerDock.h \
     docks/LanguageInspectorDock.h \
     docks/LuaConsoleDock.h \
+    docks/FunctionListDock.h \
     dialogs/MacroRunDialog.h \
     dialogs/MacroSaveDialog.h \
     dialogs/MainWindow.h \
@@ -195,6 +197,7 @@ FORMS += \
     docks/LanguageInspectorDock.ui \
     dialogs/MainWindow.ui \
     dialogs/FindReplaceDialog.ui \
+    docks/FunctionListDock.ui \
     docks/LuaConsoleDock.ui \
     dialogs/MacroRunDialog.ui \
     dialogs/MacroSaveDialog.ui \

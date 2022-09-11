@@ -76,3 +76,11 @@ void Settings::setTabsClosable(bool tabsClosable)
     m_tabsClosable = tabsClosable;
     emit tabsClosableChanged(m_tabsClosable);
 }
+
+void Settings::setCtagsCmd(const QString& cmd)
+{
+	if (cmd == m_ctagsCmd) { return; }
+
+    m_ctagsCmd = cmd;
+    emit notifyCtagsCmd(m_ctagsCmd);
+}

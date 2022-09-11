@@ -64,6 +64,7 @@
 #include "MacroRunDialog.h"
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
+#include "FunctionListDock.h"
 
 #include "QuickFindWidget.h"
 
@@ -594,6 +595,23 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->menuView->addAction(fawDock->toggleViewAction());
     connect(fawDock, &FolderAsWorkspaceDock::fileDoubleClicked, this, &MainWindow::openFile);
 
+	// 20220902 afo: FunctionListDock
+	m_functionListDock = new FunctionListDock(this);
+	m_functionListDock->hide();
+    connect(app->getSettings(), &Settings::notifyCtagsCmd, this, [=](const QString& cmd) {
+		m_functionListDock->setCtagsCmd(cmd);
+	});
+	addDockWidget(Qt::RightDockWidgetArea, m_functionListDock);
+    m_functionListDock->toggleViewAction()->setShortcut(Qt::ALT | Qt::Key_2);
+	ui->menuView->addAction(m_functionListDock->toggleViewAction());
+	connect(m_functionListDock, &FunctionListDock::itemActivated, this, [=](int lineNo) {
+		ScintillaNext *editor = currentEditor();
+		editor->ensureVisible(lineNo - 1);
+		editor->gotoLine(lineNo - 1);
+		editor->verticalCentreCaret();
+		editor->grabFocus();
+	});
+
     connect(app->getSettings(), &Settings::showMenuBarChanged, this, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
@@ -953,7 +971,9 @@ void MainWindow::closeAllToRight()
 
 bool MainWindow::saveCurrentFile()
 {
-    return saveFile(currentEditor());
+	bool state = saveFile(currentEditor());
+	m_functionListDock->update(currentEditor()->getFilePath());
+    return state;
 }
 
 bool MainWindow::saveFile(ScintillaNext *editor)
@@ -1299,6 +1319,8 @@ void MainWindow::activateEditor(ScintillaNext *editor)
     checkFileForModification(editor);
     updateGui(editor);
 
+	m_functionListDock->update(editor->getFilePath());
+
     emit editorActivated(editor);
 }
 
@@ -1388,6 +1410,8 @@ void MainWindow::saveSettings() const
 
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     settings.setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
+
+    settings.setValue("App/CtagsCmd", app->getSettings()->getCtagsCmd());
 }
 
 void MainWindow::restoreSettings()
