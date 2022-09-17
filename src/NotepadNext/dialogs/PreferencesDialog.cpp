@@ -16,6 +16,7 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <QFileDialog>
 
 #include "PreferencesDialog.h"
 #include "ui_PreferencesDialog.h"
@@ -44,6 +45,12 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
 	ui->ctagsCmdEdit->setText(settings->getCtagsCmd());
     connect(settings, &Settings::notifyCtagsCmd, ui->ctagsCmdEdit, &QLineEdit::setText);
     connect(ui->ctagsCmdEdit, &QLineEdit::textChanged, settings, &Settings::setCtagsCmd);
+
+	connect(ui->ctagsCmdButton, &QPushButton::clicked, this, [=]() {
+		QString fileName = QFileDialog::getOpenFileName(this, "choose ctags command");
+		if (fileName.size() > 0) { ui->ctagsCmdEdit->setText(fileName); }
+	});
+
 }
 
 PreferencesDialog::~PreferencesDialog()

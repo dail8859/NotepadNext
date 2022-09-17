@@ -6,8 +6,14 @@
 
 #include <QTreeWidgetItem>
 #include <QFile>
+#include <QMessageBox>
 
 #include<vector>
+
+#ifdef _MSC_VER
+#define popen(s,m)		_popen(s,m)
+#define pclose(s)		_pclose(s)
+#endif
 
 struct FunctionListTagItem;
 typedef std::vector<FunctionListTagItem> FunctionListTagList;
@@ -91,6 +97,8 @@ FunctionListDock::FunctionListDock(QWidget *parent)
 	QPalette pal(ui->treeWidget->palette());
 	pal.setColor(QPalette::Base, QColor(220, 220, 220));
 	ui->treeWidget->setPalette(pal);
+	ui->treeWidget->setColumnCount(2);
+	ui->treeWidget->setIndentation(10);
 
 	connect(ui->treeWidget, &QTreeWidget::itemClicked, this, [=](QTreeWidgetItem* item, int /* column */) {
 		QString strLine(item->text(0));
@@ -109,6 +117,11 @@ static QTreeWidgetItem* findScopeItem(const QString& scope, QTreeWidget* treeW, 
 
 	auto itemW = new QTreeWidgetItem(treeW, { scope });
 	itemW->setFirstColumnSpanned(true);
+	if('c' == scope[0]) { itemW->setForeground(0, QColor(160, 0, 0)); }			// class:
+	else if('n' == scope[0]) { itemW->setForeground(0, QColor(34, 140, 34)); }	// namespace:
+	else if('s' == scope[0]) { itemW->setForeground(0, QColor(70, 70, 230)); }	// struct:
+	else if('e' == scope[0]) { itemW->setForeground(0, QColor(0, 0, 120)); }	// enum:
+
 	scopeVec.push_back(itemW);
 	return itemW;
 }
@@ -116,13 +129,26 @@ static QTreeWidgetItem* findScopeItem(const QString& scope, QTreeWidget* treeW, 
 void FunctionListDock::update(const QString& path)
 {
 	m_currentPath = path;
+	if(path.isEmpty()) { return ; }	// new file
 
 	ui->treeWidget->clear();
 
-	if(m_ctagsCmd.isEmpty() || false == QFile::exists(m_ctagsCmd)) { return; }
+	if(m_ctagsCmd.isEmpty() || false == QFile::exists(m_ctagsCmd))
+	{
+		static bool showWarning = true;
+		if(showWarning)
+		{
+			QMessageBox::warning(this, tr("Error FunctionList update"),  tr("Missing ctags command\n\n%1\n\nsetup via Settings/Preferences").arg(m_ctagsCmd));
+			showWarning = false;	// just once!
+		}
+		return;
+	}
 
 	auto globalItemW = new QTreeWidgetItem({ "[ globals ]" });
+	globalItemW->setForeground(0, QColor(222, 140, 0));
+
 	auto macroItemW = new QTreeWidgetItem({ "[ macros ] " });
+	macroItemW->setForeground(0, QColor(0, 0, 160));
 
 	auto tagList(createTagItemList(m_currentPath, m_ctagsCmd));
 
