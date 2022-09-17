@@ -12,6 +12,10 @@ L.extensions = {
 	"bash_profile",
 	"bashrc",
 	"profile",
+	"ksh",
+	"kshrc",
+	"zsh",
+	"zshrc",
 }
 
 L.keywords = {

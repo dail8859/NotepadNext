@@ -7,6 +7,7 @@ L.singleLineComment = "; "
 L.extensions = {
 	"lsp",
 	"lisp",
+	"el",
 }
 
 L.keywords = {

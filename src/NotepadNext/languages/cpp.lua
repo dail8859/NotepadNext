@@ -13,6 +13,7 @@ L.extensions = {
 	"hpp",
 	"hxx",
 	"ino",
+	"idl",
 }
 
 L.properties = {
