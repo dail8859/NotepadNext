@@ -22,9 +22,9 @@
 
 #include <QMainWindow>
 #include <QLabel>
-#include <QActionGroup>
+class QActionGroup;
 
-#include "DockedEditor.h"
+class DockedEditor;
 
 #include "MacroManager.h"
 #include "ScintillaNext.h"
@@ -39,6 +39,7 @@ class Macro;
 class Settings;
 class QuickFindWidget;
 class SearchResultsDock;
+class ListDialog;
 class FunctionListDock;
 
 class MainWindow : public QMainWindow
@@ -128,6 +129,8 @@ protected:
 	void showFindDialog(SearchResultsDock *srDock, int tabPage);
 
 	std::vector<ScintillaNext*> getDockedEditorList() const;
+	void showWindowListDialog();
+	ListDialog* m_windowListDialog = nullptr;
 	FunctionListDock* m_functionListDock = nullptr;
 
 private slots:

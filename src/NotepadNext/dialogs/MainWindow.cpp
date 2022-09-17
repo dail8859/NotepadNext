@@ -41,6 +41,7 @@
 #include <Windows.h>
 #endif
 
+#include "DockedEditor.h"
 #include "DockAreaWidget.h"
 #include "DockWidgetTab.h"
 
@@ -65,6 +66,7 @@
 #include "MacroRunDialog.h"
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
+#include "ListDialog.h"
 #include "FunctionListDock.h"
 
 #include "QuickFindWidget.h"
@@ -183,6 +185,15 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionCopy, &QAction::triggered, this, [=]() {
         currentEditor()->copyAllowLine();
     });
+
+	m_windowListDialog = new ListDialog();
+	m_windowListDialog->setButtonLabels("Activate", "Close File");
+	connect(m_windowListDialog, &ListDialog::clickedApply, this, [=](const QString& filePath) {
+		ScintillaNext* editor = app->getEditorManager()->getEditorByFilePath(filePath);
+		if(nullptr != editor) { closeFile(editor); }
+	});
+
+    connect(ui->actionShowWindowList, &QAction::triggered, this, [=]() { showWindowListDialog(); });
     connect(ui->actionDelete, &QAction::triggered, this, [=]() { currentEditor()->clear();});
     connect(ui->actionPaste, &QAction::triggered, this, [=]() { currentEditor()->paste();});
     connect(ui->actionSelect_All, &QAction::triggered, this, [=]() { currentEditor()->selectAll();});
@@ -255,7 +266,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         int lineToGoTo = d.getInt(this, tr("Go to line"), tr("Line Number (1 - %1)").arg(maxLine), currentLine, 1, maxLine, 1, &ok, flags);
 
         if (ok) { editor->gotoLineVisible(lineToGoTo - 1); }
-    });
+	});
 
 
     ui->pushExitFullScreen->setParent(this); // This is important
@@ -539,11 +550,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     m_functionListDock->toggleViewAction()->setShortcut(Qt::ALT | Qt::Key_2);
 	ui->menuView->addAction(m_functionListDock->toggleViewAction());
 	connect(m_functionListDock, &FunctionListDock::itemActivated, this, [=](int lineNo) {
-		ScintillaNext *editor = currentEditor();
-		editor->ensureVisible(lineNo - 1);
-		editor->gotoLine(lineNo - 1);
-		editor->verticalCentreCaret();
-		editor->grabFocus();
+		currentEditor()->gotoLineVisible(lineNo - 1);
 	});
 
     connect(app->getSettings(), &Settings::showMenuBarChanged, this, [=](bool showMenuBar) {
@@ -585,6 +592,19 @@ std::vector<ScintillaNext*> MainWindow::getDockedEditorList() const
 	return editorVec;
 }
 
+void MainWindow::showWindowListDialog()
+{
+	m_windowListDialog->clear();
+	for(auto editor : getDockedEditorList()) { m_windowListDialog->addLine(editor->getFilePath()); }
+
+	m_windowListDialog->setWindowTitle(QString::number(m_windowListDialog->count()) + "x open files");
+	m_windowListDialog->setCurrentLine(currentEditor()->getFilePath());
+	if(QDialog::Accepted == m_windowListDialog->exec()) {
+		auto filePath(m_windowListDialog->getCurrentLine());
+		ScintillaNext* editor = app->getEditorManager()->getEditorByFilePath(filePath);
+		if(nullptr != editor) { dockedEditor->switchToEditor(editor); }
+	}
+}
 
 void MainWindow::showFindDialog(SearchResultsDock *srDock, int tabPage)
 {
@@ -684,8 +704,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
 {
     qInfo(Q_FUNC_INFO);
 
-    if (fileNames.size() == 0)
-        return;
+    if (fileNames.size() == 0) { return; }
 
     bool wasInitialState = isInInitialState();
     const ScintillaNext *mostRecentEditor = Q_NULLPTR;

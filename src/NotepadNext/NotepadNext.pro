@@ -107,6 +107,7 @@ SOURCES += \
     docks/LanguageInspectorDock.cpp \
     docks/LuaConsoleDock.cpp \
     docks/FunctionListDock.cpp \
+    dialogs/ListDialog.cpp \
     dialogs/MacroRunDialog.cpp \
     dialogs/MacroSaveDialog.cpp \
     dialogs/MainWindow.cpp \
@@ -174,6 +175,7 @@ HEADERS += \
     docks/LanguageInspectorDock.h \
     docks/LuaConsoleDock.h \
     docks/FunctionListDock.h \
+    dialogs/ListDialog.h \
     dialogs/MacroRunDialog.h \
     dialogs/MacroSaveDialog.h \
     dialogs/MainWindow.h \
@@ -197,6 +199,7 @@ FORMS += \
     docks/LanguageInspectorDock.ui \
     dialogs/MainWindow.ui \
     dialogs/FindReplaceDialog.ui \
+    dialogs/ListDialog.ui \
     docks/FunctionListDock.ui \
     docks/LuaConsoleDock.ui \
     dialogs/MacroRunDialog.ui \

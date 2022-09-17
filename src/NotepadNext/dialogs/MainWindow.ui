@@ -172,6 +172,7 @@
     <property name="title">
      <string>&amp;View</string>
     </property>
+    <addaction name="actionShowWindowList" />
     <widget class="QMenu" name="menuZoom">
      <property name="title">
       <string>&amp;Zoom</string>
@@ -430,6 +431,10 @@
    <property name="shortcut">
     <string>Ctrl+V</string>
    </property>
+  </action>
+  <action name="actionShowWindowList">
+   <property name="text"><string>Show Window List ...</string></property>
+   <property name="shortcut"><string>Alt+B</string></property>
   </action>
   <action name="actionEditorReadOnly">
    <property name="text"><string>Set Read Only</string></property>

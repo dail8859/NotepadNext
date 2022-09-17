@@ -35,6 +35,7 @@
 
 #include <QCommandLineParser>
 #include <QSettings>
+#include <QFileOpenEvent>
 
 
 const SingleApplication::Options opts = SingleApplication::ExcludeAppPath | SingleApplication::ExcludeAppVersion | SingleApplication::SecondaryNotification;
