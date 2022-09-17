@@ -152,6 +152,8 @@
     <addaction name="menuEOLConversion"/>
     <addaction name="menuLine_Operations"/>
     <addaction name="menuCommentUncomment"/>
+    <addaction name="separator"/>
+	<addaction name="actionEditorReadOnly" />
    </widget>
    <widget class="QMenu" name="menuSearch">
     <property name="title">
@@ -428,6 +430,10 @@
    <property name="shortcut">
     <string>Ctrl+V</string>
    </property>
+  </action>
+  <action name="actionEditorReadOnly">
+   <property name="text"><string>Set Read Only</string></property>
+   <property name="checkable"><bool>true</bool></property>
   </action>
   <action name="actionDelete">
    <property name="text">

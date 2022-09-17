@@ -42,6 +42,7 @@
 #endif
 
 #include "DockAreaWidget.h"
+#include "DockWidgetTab.h"
 
 #include "NotepadNextApplication.h"
 #include "Settings.h"
@@ -595,6 +596,16 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->menuView->addAction(fawDock->toggleViewAction());
     connect(fawDock, &FolderAsWorkspaceDock::fileDoubleClicked, this, &MainWindow::openFile);
 
+    connect(ui->actionEditorReadOnly, &QAction::triggered, this, [=]() {
+		bool state = ui->actionEditorReadOnly->isChecked();
+        auto editor = currentEditor();
+        if (editor->isFile()) { 
+			editor->setReadOnly(state);
+			ui->actionEditorReadOnly->setChecked(state);
+			ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+			dockWidget->tabWidget()->setIcon(QIcon(state ? ":/icons/readonly.png" : ":/icons/saved.png"));
+		}
+    });
 	// 20220902 afo: FunctionListDock
 	m_functionListDock = new FunctionListDock(this);
 	m_functionListDock->hide();
@@ -1665,6 +1676,7 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
     menu->addAction(ui->actionRename);
     menu->addSeparator();
     menu->addAction(ui->actionReload);
+    menu->addAction(ui->actionEditorReadOnly);
     menu->addSeparator();
     menu->addAction(ui->actionCopyFullPath);
     menu->addAction(ui->actionCopyFileName);
