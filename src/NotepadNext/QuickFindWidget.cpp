@@ -134,12 +134,7 @@ void QuickFindWidget::highlightMatches()
         return qMax(start + 1, end);
     });
 
-    if (foundOne == false) {
-        setSearchContextColor("red");
-    }
-    else {
-        setSearchContextColor("blue");
-    }
+	setSearchContextColor(foundOne ? "blue" : "red");
 }
 
 void QuickFindWidget::navigateToNextMatch(bool skipCurrent)
@@ -244,4 +239,9 @@ void QuickFindWidget::clearHighlights()
 {
     editor->setIndicatorCurrent(28);
     editor->indicatorClearRange(0, editor->length());
+}
+
+void QuickFindWidget::setText(const QString& text)
+{
+    ui->lineEdit->setText(text);
 }

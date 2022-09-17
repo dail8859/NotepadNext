@@ -43,6 +43,8 @@ public:
 
     void setEditor(ScintillaNext *editor);
 
+	void setText(const QString& text);
+
 protected:
    bool eventFilter(QObject *obj, QEvent *event) override;
 

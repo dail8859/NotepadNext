@@ -238,6 +238,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             quickFind = new QuickFindWidget(this);
         }
         quickFind->setEditor(currentEditor());
+        quickFind->setText(currentEditor()->getCurrentWord());
         quickFind->setFocus();
 
         quickFind->show();
@@ -253,11 +254,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         Qt::WindowFlags flags = d.windowFlags() & ~Qt::WindowContextHelpButtonHint;
         int lineToGoTo = d.getInt(this, tr("Go to line"), tr("Line Number (1 - %1)").arg(maxLine), currentLine, 1, maxLine, 1, &ok, flags);
 
-        if (ok) {
-            editor->ensureVisible(lineToGoTo - 1);
-            editor->gotoLine(lineToGoTo - 1);
-            editor->verticalCentreCaret();
-        }
+        if (ok) { editor->gotoLineVisible(lineToGoTo - 1); }
     });
 
 
