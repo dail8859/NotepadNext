@@ -38,6 +38,7 @@ class NotepadNextApplication;
 class Macro;
 class Settings;
 class QuickFindWidget;
+class SearchResultsDock;
 class FunctionListDock;
 
 class MainWindow : public QMainWindow
@@ -123,6 +124,9 @@ protected:
     void closeEvent(QCloseEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+
+	void showFindDialog(SearchResultsDock *srDock, int tabPage);
+
 	std::vector<ScintillaNext*> getDockedEditorList() const;
 	FunctionListDock* m_functionListDock = nullptr;
 

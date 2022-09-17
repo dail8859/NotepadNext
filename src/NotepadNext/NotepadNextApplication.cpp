@@ -248,8 +248,6 @@ bool NotepadNextApplication::init()
         windows.first()->newFile();
     }
 
-	QString ctagsCmd(qsettings.value("App/CtagsCmd").toString());
-    settings->setCtagsCmd(ctagsCmd);
 
     // Everything should be ready at this point
 

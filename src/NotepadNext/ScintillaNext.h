@@ -65,6 +65,9 @@ public:
     QString getPath() const;
     QString getFilePath() const;
 
+	QString getCurrentSelectedTextOrWord();
+	QString getCurrentSelectedText();
+	QString getCurrentWord();
 	void gotoLineVisible(int lineNo);
 
     enum FileStateChange {

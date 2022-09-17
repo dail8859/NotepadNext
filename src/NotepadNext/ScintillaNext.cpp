@@ -136,6 +136,42 @@ QString ScintillaNext::getFilePath() const
     return QDir::toNativeSeparators(fileInfo.canonicalFilePath());
 }
 
+QString ScintillaNext::getCurrentSelectedTextOrWord()
+{
+	auto selText(getCurrentSelectedText());
+	if(selText.isEmpty()) { selText = getCurrentWord(); }
+	return selText;
+}
+
+QString ScintillaNext::getCurrentSelectedText()
+{
+	QString result;
+	if (!selectionEmpty()) {
+		int selection = mainSelection();
+		int start = selectionNStart(selection);
+		int end = selectionNEnd(selection);
+		if (end > start) {
+			auto selText = get_text_range(start, end);
+			result = QString::fromUtf8(selText);
+		}
+	}
+	return result;
+}
+
+QString ScintillaNext::getCurrentWord()
+{
+	QString result;
+	int start = wordStartPosition(currentPos(), true);
+	int end = wordEndPosition(currentPos(), true);
+	if (end > start) {
+		setSelectionStart(start);
+		setSelectionEnd(end);
+		auto selText = get_text_range(start, end);
+		result = QString::fromUtf8(selText);
+	}
+	return result;
+}
+
 void ScintillaNext::gotoLineVisible(int lineNo)
 {
 	if(lineNo < lineCount())
