@@ -136,6 +136,17 @@ QString ScintillaNext::getFilePath() const
     return QDir::toNativeSeparators(fileInfo.canonicalFilePath());
 }
 
+void ScintillaNext::gotoLineVisible(int lineNo)
+{
+	if(lineNo < lineCount())
+	{
+		ensureVisible(lineNo);
+		gotoLine(lineNo);
+	}
+	verticalCentreCaret();
+	grabFocus();
+}
+
 void ScintillaNext::setFoldMarkers(const QString &type)
 {
     QMap<QString, QList<int>> map{

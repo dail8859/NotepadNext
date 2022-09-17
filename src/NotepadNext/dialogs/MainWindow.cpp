@@ -650,6 +650,19 @@ MainWindow::~MainWindow()
     Q_ASSERT(dockedEditor->count() == 0);
 }
 
+// @note: dockedEditor->editors gives a *different* order!!
+std::vector<ScintillaNext*> MainWindow::getDockedEditorList() const
+{
+	std::vector<ScintillaNext*> editorVec;
+    int count = dockedEditor->currentDockArea()->dockWidgetsCount();
+    for (int ndx = 0; ndx < count; ++ndx) {
+        auto editor = qobject_cast<ScintillaNext*>(dockedEditor->currentDockArea()->dockWidget(ndx)->widget());
+		editorVec.push_back(editor);
+	}
+	return editorVec;
+}
+
+
 void MainWindow::setupLanguageMenu()
 {
     qInfo(Q_FUNC_INFO);
@@ -1422,6 +1435,17 @@ void MainWindow::saveSettings() const
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     settings.setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
 
+	QStringList fileList,posList;
+	for(auto editor : getDockedEditorList())
+	{
+		fileList.push_back(editor->getFilePath());
+		posList.push_back(QString::number(editor->currentPos()));
+	}
+
+	settings.setValue("App/OpenFilesList", fileList);
+	settings.setValue("App/OpenFilesPositionList", posList);
+	settings.setValue("App/CurrentFile", currentEditor()->getFilePath());
+
     settings.setValue("App/CtagsCmd", app->getSettings()->getCtagsCmd());
 }
 
@@ -1592,9 +1616,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
     // While tabs are being closed, turn off UI updates so the main window doesn't continuously refresh.
     disconnect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
 
-    closeAllFiles(true);
-
     saveSettings();
+
+    closeAllFiles(true);
 
     event->accept();
 

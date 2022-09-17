@@ -123,6 +123,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+	std::vector<ScintillaNext*> getDockedEditorList() const;
 	FunctionListDock* m_functionListDock = nullptr;
 
 private slots:

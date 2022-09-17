@@ -65,6 +65,8 @@ public:
     QString getPath() const;
     QString getFilePath() const;
 
+	void gotoLineVisible(int lineNo);
+
     enum FileStateChange {
         NoChange,
         Modified,

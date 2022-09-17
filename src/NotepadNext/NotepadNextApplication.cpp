@@ -212,6 +212,36 @@ bool NotepadNextApplication::init()
 
     openFiles(parser.positionalArguments());
 
+	// restore open files and corresponding position - but only existing files
+	auto tmpFileList(qsettings.value("App/OpenFilesList").toStringList());
+	auto tmpPosList(qsettings.value("App/OpenFilesPositionList").toStringList());
+	QStringList fileList, posList;
+	for(int n = 0;n < tmpFileList.size(); ++n)
+	{
+		if(QFile::exists(tmpFileList[n]))
+		{
+			fileList.push_back(tmpFileList[n]);
+			posList.push_back(n < tmpPosList.size() ? tmpPosList[n] : "1"); // tmpFileList and tmpPosList should be in sync, but ...
+		}
+	}
+
+	openFiles(fileList);
+
+	// restore current position
+	for(int ndx = 0; ndx < fileList.size(); ++ndx)
+	{
+		ScintillaNext* editor = editorManager->getEditorByFilePath(fileList[ndx]);
+		if(nullptr == editor) { continue; }
+
+		int currentPos = posList[ndx].toInt();
+		int currentLine = editor->lineFromPosition(currentPos);
+		editor->gotoLineVisible(currentLine);
+		editor->setCurrentPos(currentPos);
+	}
+
+	auto currentFile(qsettings.value("App/CurrentFile").toStringList());
+	if(currentFile.size() > 0) { openFiles(currentFile); }
+
     // If the window does not have any editors (meaning the no files were
     // specified on the command line) then create a new empty file
     if (windows.first()->editorCount() == 0) {
