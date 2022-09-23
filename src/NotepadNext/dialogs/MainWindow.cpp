@@ -1504,7 +1504,7 @@ void MainWindow::checkForUpdatesFinished(QString url)
 {
 #ifdef Q_OS_WIN
     if (!QSimpleUpdater::getInstance()->getUpdateAvailable(url)) {
-        QMessageBox::information(this, QString(), tr("No updates are availale at this time."));
+        QMessageBox::information(this, QString(), tr("No updates are available at this time."));
     }
 #endif
 }
