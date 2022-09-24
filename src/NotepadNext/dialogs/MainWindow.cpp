@@ -968,6 +968,9 @@ bool MainWindow::saveFile(ScintillaNext *editor)
         if (didItGetSaved) {
             return true;
         }
+        else {
+            QMessageBox::warning(this, tr("Error Saving File"),  tr("Something went wrong saving <b>%1</b>?").arg(editor->getName()));
+        }
     }
 
     return false;
