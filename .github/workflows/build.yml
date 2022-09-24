@@ -202,6 +202,10 @@ jobs:
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-Windows-Qt5.15.2-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe
 
+      - name: Upload Windows Zip
+        run: |
+          gh release upload ${{ github.ref_name }} NotepadNext-Windows-Qt5.15.2-Zip/NotepadNext-${{ github.ref_name }}.zip
+
       - name: Upload Linux AppImage
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt5.15.2-AppImage/NotepadNext-x86_64.AppImage

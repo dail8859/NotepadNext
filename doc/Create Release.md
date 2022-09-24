@@ -6,7 +6,6 @@
 - Tag commit with new version number
 - Push commit and tag to GitHub
 - Once GitHub action finishes, edit draft notes of new release that was automatically created
-- Download the zip, rename, upload to the draft release (the zip is not automatically uploaded)
 - Publish
 
 ## Manually Build Release
