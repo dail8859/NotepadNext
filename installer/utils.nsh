@@ -28,15 +28,14 @@
 		Pop $4 ; the stack contains the result of GetLastError
 
 		${if} $0 == "Application"
-		    ${andif} $3 <> 0
+			${andif} $3 <> 0
 			System::Call 'kernel32::CloseHandle(i $3)' ; close the Application mutex
 		${endif}
 
 		${if} $4 = ${ERROR_ALREADY_EXISTS}
 			${orif} $4 = ${ERROR_ACCESS_DENIED}	; ERROR_ACCESS_DENIED means the mutex was created by another user and we don't have access to open it, so application is running
 			; will display NSIS taskbar button, no way to hide it before GUIInit, $HWNDPARENT is 0
-			MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "$5 is already running.$\r$\n\
-				Please, close all instances of it and click Retry to continue, or Cancel to exit." /SD IDCANCEL IDCANCEL cancel
+			MessageBox MB_RETRYCANCEL|MB_ICONSTOP "$5 is already running.$\r$\nPlease, close all instances of it and click Retry to continue, or Cancel to exit." /SD IDCANCEL IDCANCEL cancel
 			System::Call 'kernel32::CloseHandle(i $3)' ; for next CreateMutex call to succeed
 			Goto try
 
@@ -70,3 +69,20 @@
 !macroend
 
 !insertmacro CheckSingleInstanceFunc ""
+
+; Stolen from https://github.com/notepad-plus-plus/notepad-plus-plus/blob/6892bcbf3a6f7477beffd4941730a32a3c3b4a74/PowerEditor/installer/nsisInclude/tools.nsh#L49
+!macro CheckIfRunning un
+	Function ${un}CheckIfRunning
+		Check:
+		System::Call 'kernel32::OpenMutex(i 0x100000, b 0, t "NotepadNextMutex") i .R0'
+		
+		IntCmp $R0 0 NotRunning
+			System::Call 'kernel32::CloseHandle(i $R0)'
+			MessageBox MB_RETRYCANCEL|MB_DEFBUTTON1|MB_ICONSTOP "Notepad Next is currently running.$\r$\nPlease, close all instances of it and click Retry to continue, or Cancel to exit." IDRETRY Retry IDCANCEL Cancel
+			Retry:
+				Goto Check
+			Cancel:
+				Quit
+		NotRunning:
+	FunctionEnd
+!macroend

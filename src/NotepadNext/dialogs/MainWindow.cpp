@@ -35,9 +35,6 @@
 
 #ifdef Q_OS_WIN
 #include <QSimpleUpdater.h>
-#endif
-
-#ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
 
