@@ -463,6 +463,11 @@ bool ScintillaNext::readFromDisk(QFile &file)
         return false;
     }
 
+    if (!QFileInfo(file).isWritable()) {
+        qInfo("Setting file as read-only");
+        setReadOnly(true);
+    }
+
     return true;
 }
 
