@@ -36,6 +36,9 @@
 #include <QCommandLineParser>
 #include <QSettings>
 
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#endif
 
 const SingleApplication::Options opts = SingleApplication::ExcludeAppPath | SingleApplication::ExcludeAppVersion | SingleApplication::SecondaryNotification;
 
@@ -72,6 +75,10 @@ void parseCommandLine(QCommandLineParser &parser, const QStringList &args)
 NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
     : SingleApplication(argc, argv, true, opts)
 {
+#ifdef Q_OS_WIN
+    // Create a system-wide mutex so the installer can detect if it is running
+    CreateMutex(NULL, false, L"NotepadNextMutex");
+#endif
     parseCommandLine(parser, arguments());
 
     DebugManager::manageDebugOutput();

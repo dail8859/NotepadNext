@@ -41,6 +41,10 @@ SetCompressor /SOLID lzma
 !include "FileFunc.nsh"
 !include "utils.nsh"
 
+# Detect if the Notepad Next application is running
+!insertmacro CheckIfRunning ""
+!insertmacro CheckIfRunning "un."
+
 # Configure Memento
 !define MEMENTO_REGISTRY_ROOT SHCTX
 !define MEMENTO_REGISTRY_KEY Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext
@@ -54,6 +58,7 @@ SetCompressor /SOLID lzma
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY # In which folder install page.
+!define MUI_PAGE_CUSTOMFUNCTION_SHOW "CheckIfRunning"
 !insertmacro MUI_PAGE_INSTFILES # Installing page.
 !insertmacro MUI_PAGE_FINISH # Finished installation page.
 
@@ -62,6 +67,7 @@ SetCompressor /SOLID lzma
 !insertmacro MUI_UNPAGE_WELCOME
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MULTIUSER_UNPAGE_INSTALLMODE
+!define MUI_PAGE_CUSTOMFUNCTION_SHOW "un.CheckIfRunning"
 !insertmacro MUI_UNPAGE_INSTFILES
 !insertmacro MUI_UNPAGE_FINISH
 
