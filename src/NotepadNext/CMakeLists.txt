@@ -13,126 +13,137 @@ add_compile_definitions(APP_DISTRIBUTION="local")
 
 add_executable(NotepadNext
     ColorPickerDelegate.cpp
+    ColorPickerDelegate.h
     ComboBoxDelegate.cpp
+    ComboBoxDelegate.h
+    DockedEditor.h
     DockedEditor.cpp
+    DebugManager.cpp
+    DockedEditorTitleBar.h
+    EditorHexViewerTableModel.cpp
+    EditorManager.h
     EditorManager.cpp
+    EditorPrintPreviewRenderer.h
     EditorPrintPreviewRenderer.cpp
     Finder.cpp
+    Finder.h
+    FocusWatcher.h
     IFaceTable.cpp
+    IFaceTable.h
     IFaceTableMixer.cpp
+    IFaceTableMixer.h
+    LanguageKeywordsModel.h
     LanguageKeywordsModel.cpp
     LanguagePropertiesModel.cpp
+    LanguagePropertiesModel.h
     LanguageStylesModel.cpp
+    LanguageStylesModel.h
     LuaExtension.cpp
+    LuaExtension.h
     LuaState.cpp
+    LuaState.h
+    main.cpp
+    Macro.cpp
+    MacroManager.cpp
     MacroRecorder.cpp
+    MacroRecorder.h
+    MacroStep.cpp
+    MacroStepTableModel.cpp
+    MacroListModel.cpp
     NotepadNextApplication.cpp
+    NotepadNextApplication.h
     NppImporter.cpp
+    NppImporter.h
     QRegexSearch.cpp
+    QRegexSearch.h
+    QuickFindWidget.h
     QuickFindWidget.cpp
+    QuickFindWidget.ui
     RecentFilesListManager.cpp
     RecentFilesListManager.h
     RecentFilesListMenuBuilder.cpp
     RecentFilesListMenuBuilder.h
+    resources.qrc
     SciIFaceTable.cpp
     ScintillaNext.cpp
-    Settings.cpp
-    SpinBoxDelegate.cpp
-    UndoAction.h
-    UndoAction.cpp
+    ScintillaNext.h
+    SciIFaceTable.h
     ScintillaCommenter.h
     ScintillaCommenter.cpp
     SelectionTracker.h
+    Settings.cpp
+    Settings.h
     SelectionTracker.cpp
+    SpinBoxDelegate.h
+    SpinBoxDelegate.cpp
+    scripts.qrc
+    UndoAction.h
+    UndoAction.cpp
+
+
     decorators/ApplicationDecorator.cpp
     decorators/AutoCompletion.cpp
     decorators/AutoIndentation.cpp
     decorators/BetterMultiSelection.cpp
     decorators/EditorConfigAppDecorator.cpp
     decorators/SurroundSelection.cpp
-    docks/EditorInspectorDock.cpp
-    dialogs/FindReplaceDialog.cpp
-    docks/FolderAsWorkspaceDock.cpp
-    docks/LanguageInspectorDock.cpp
-    docks/LuaConsoleDock.cpp
-    dialogs/MacroRunDialog.cpp
-    dialogs/MacroSaveDialog.cpp
-    dialogs/MainWindow.cpp
-    dialogs/PreferencesDialog.cpp
-    main.cpp
     decorators/BraceMatch.cpp
     decorators/EditorDecorator.cpp
     decorators/HighlightedScrollBar.cpp
     decorators/LineNumbers.cpp
     decorators/SmartHighlighter.cpp
-    widgets/EditorInfoStatusBar.cpp
-    widgets/StatusLabel.cpp
-
-    ColorPickerDelegate.h
-    ComboBoxDelegate.h
-    DockedEditor.h
-    DockedEditorTitleBar.h
-    EditorManager.h
-    EditorPrintPreviewRenderer.h
-    Finder.h
-    FocusWatcher.h
-    IFaceTable.h
-    IFaceTableMixer.h
-    LanguageKeywordsModel.h
-    LanguagePropertiesModel.h
-    LanguageStylesModel.h
-    LuaExtension.h
-    LuaState.h
-    MacroRecorder.h
-    NotepadNextApplication.h
-    NppImporter.h
-    QRegexSearch.h
-    QuickFindWidget.h
-    RecentFilesListManager.h
-    SciIFaceTable.h
-    ScintillaNext.h
-    Settings.h
-    SpinBoxDelegate.h
     decorators/ApplicationDecorator.h
     decorators/AutoCompletion.h
     decorators/AutoIndentation.h
     decorators/BetterMultiSelection.h
     decorators/EditorConfigAppDecorator.h
     decorators/SurroundSelection.h
-    docks/EditorInspectorDock.h
-    dialogs/FindReplaceDialog.h
-    docks/FolderAsWorkspaceDock.h
-    docks/LanguageInspectorDock.h
-    docks/LuaConsoleDock.h
-    dialogs/MacroRunDialog.h
-    dialogs/MacroSaveDialog.h
-    dialogs/MainWindow.h
-    dialogs/PreferencesDialog.h
     decorators/BraceMatch.h
     decorators/EditorDecorator.h
     decorators/HighlightedScrollBar.h
     decorators/LineNumbers.h
     decorators/SmartHighlighter.h
-    widgets/EditorInfoStatusBar.h
-    widgets/StatusLabel.h
 
-    QuickFindWidget.ui
-    docks/EditorInspectorDock.ui
-    docks/FolderAsWorkspaceDock.ui
-    docks/LanguageInspectorDock.ui
+    dialogs/FindReplaceDialog.cpp
+    dialogs/MacroEditorDialog.cpp
+    dialogs/MacroRunDialog.cpp
+    dialogs/MacroSaveDialog.cpp
+    dialogs/MainWindow.cpp
+    dialogs/PreferencesDialog.cpp
+    dialogs/FindReplaceDialog.h
+    dialogs/MacroRunDialog.h
+    dialogs/MacroSaveDialog.h
+    dialogs/MainWindow.h
+    dialogs/PreferencesDialog.h
     dialogs/MainWindow.ui
     dialogs/FindReplaceDialog.ui
-    docks/LuaConsoleDock.ui
+    dialogs/MacroEditorDialog.ui
     dialogs/MacroRunDialog.ui
     dialogs/MacroSaveDialog.ui
     dialogs/PreferencesDialog.ui
 
+    docks/DebugLogDock.cpp
+    docks/EditorInspectorDock.h
+    docks/EditorInspectorDock.cpp
+    docks/EditorInspectorDock.ui
+    docks/FolderAsWorkspaceDock.cpp
+    docks/FolderAsWorkspaceDock.h
+    docks/FolderAsWorkspaceDock.ui
+    docks/LanguageInspectorDock.cpp
+    docks/LanguageInspectorDock.h
+    docks/LanguageInspectorDock.ui
+    docks/LuaConsoleDock.cpp
+    docks/LuaConsoleDock.ui
+    docks/LuaConsoleDock.h
+    docks/HexViewerDock.cpp
     docks/SearchResultsDock.cpp
     docks/SearchResultsDock.h
     docks/SearchResultsDock.ui
 
-    resources.qrc
-    scripts.qrc
+    widgets/EditorInfoStatusBar.cpp
+    widgets/EditorInfoStatusBar.h
+    widgets/StatusLabel.cpp
+    widgets/StatusLabel.h
 )
 
 target_link_libraries(NotepadNext Qt::Widgets Qt::PrintSupport
@@ -152,7 +163,7 @@ if (Qt6_FOUND)
 endif()
 
 target_include_directories(NotepadNext PRIVATE decorators dialogs docks widgets src)
-target_compile_definitions(NotepadNext PRIVATE APP_VERSION="0.5.0")
+target_compile_definitions(NotepadNext PRIVATE APP_VERSION="0.5.5")
 target_compile_definitions(NotepadNext PRIVATE APP_COPYRIGHT="Copyright 2019-2022 Justin Dailey")
 target_compile_definitions(NotepadNext PRIVATE CMAKE_EXPERIMENTAL)
 
