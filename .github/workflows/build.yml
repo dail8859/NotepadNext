@@ -44,7 +44,6 @@ jobs:
       # disable meanwhile, until I understand how to fix the install prefix with ninja
       - name: Install Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
-        if: false
 
       - name: Setup (Linux)
         if: startsWith (matrix.config.os, 'ubuntu')
@@ -58,22 +57,18 @@ jobs:
 
       - name: Compile
         run: |
-          cmake -S . -B cbuild  -DCMAKE_INSTALL_PREFIX:PATH=/usr/
+          cmake -S . -B cbuild  -DCMAKE_INSTALL_PREFIX:PATH=/usr/ -GNinja
           cmake --build cbuild --parallel $(nproc)
 
       - name: Create App Image
         if: startsWith (matrix.config.os, 'ubuntu')
         run: |
-            make -C cbuild DESTDIR=${{ github.workspace }}/cbuild/AppDir install
+            cmake --install cbuild --prefix=${{ github.workspace }}/cbuild/AppDir
             cd cbuild
             wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
             wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
             chmod +x linuxdeploy*.AppImage
-            pwd
-            ls -lah
-
             export OUTPUT=NotepadNext-x86_64.AppImage
-            find .
             ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage
       - name: Upload AppImage
         if: startsWith (matrix.config.os, 'ubuntu')
