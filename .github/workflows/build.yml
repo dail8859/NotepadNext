@@ -57,13 +57,8 @@ jobs:
 
       - name: Compile
         run: |
-          cmake -S . -B cbuild  -DCMAKE_INSTALL_PREFIX:PATH=/usr/ -GNinja \
-              -DCMAKE_BUILD_TYPE=Release \
-              -DBUILD_EXAMPLES=OFF \
-              -DBUILD_STATIC=ON \
-              -DBUILD_CACHE=ON \
-              -DUSE_BUILD_SHARED_LIBS=OFF
-          cmake --build cbuild --parallel $(nproc)
+          cmake -S . -B cbuild -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_STATIC=ON -DBUILD_CACHE=ON -DUSE_BUILD_SHARED_LIBS=OFF
+          cmake --build cbuild
 
       - name: Create App Image
         if: startsWith (matrix.config.os, 'ubuntu')
