@@ -63,9 +63,8 @@ jobs:
       - name: Create App Image
         if: startsWith (matrix.config.os, 'ubuntu')
         run: |
-            cmake --install cbuild --prefix=${{ github.workspace }}/cbuild/AppDir
+            cmake --install cbuild --prefix=${{ github.workspace }}/cbuild/AppDir/usr/
             cd cbuild
-            find .
             wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
             wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
             chmod +x linuxdeploy*.AppImage
@@ -81,7 +80,7 @@ jobs:
       - name: Create DMG
         if: startsWith (matrix.config.os, 'macos')
         run: |
-          cd cbuild
+          cd cbuild/src/NotepadNext
           macdeployqt NotepadNext.app -dmg
       - name: Upload DMG
         if: startsWith (matrix.config.os, 'macos')
