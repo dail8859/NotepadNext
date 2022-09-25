@@ -80,7 +80,6 @@ add_executable(NotepadNext
     UndoAction.h
     UndoAction.cpp
 
-
     decorators/ApplicationDecorator.cpp
     decorators/AutoCompletion.cpp
     decorators/AutoIndentation.cpp
@@ -147,7 +146,7 @@ add_executable(NotepadNext
 )
 
 target_link_libraries(NotepadNext Qt::Widgets Qt::PrintSupport
-    libuchardet_static
+    libuchardet
     lua
     LuaBridge
     qtadvanceddocking
@@ -155,6 +154,7 @@ target_link_libraries(NotepadNext Qt::Widgets Qt::PrintSupport
     QSimpleUpdater
     editorconfig-core-qt
     scintilla-qt-edit
+    scintilla-qt-edit-base
     lexzilla
 )
 

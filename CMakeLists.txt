@@ -6,22 +6,25 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # uchardet setup
-set(BUILD_BINARY OFF)
-set(USE_BUILD_SHARED_LIBS CACHE BOOL OFF)
-set(BUILD_STATICCACHE OFF)
+set(BUILD_BINARY CACHE BOOL OFF)
+set(BUILD_STATICCACHE CACHE BOOL OFF)
+set(BUILD_SHARED_LIBS CACHE BOOL OFF)
 
 # setup singleapplication - we want the GUI application, not console
-set(QAPPLICATION_CLASS QApplication CACHE STRING "Inheritance class for SingleApplication")
-
+set(QAPPLICATION_CLASS QApplication)
 
 # setup ADS - we don't need to build the examples
-set(BUILD_EXAMPLES OFF)
-set(BUILD_STATIC ON)
-set(BUILD_CACHE ON)
-set(USE_BUILD_SHARED_LIBS OFF)
+set(BUILD_EXAMPLES CACHE BOOL OFF)
+set(BUILD_STATIC CACHE BOOL ON)
+set(BUILD_CACHE CACHE BOOL ON)
+set(USE_BUILD_SHARED_LIBS CACHE BOOL OFF)
 
 # setup lua bridge, we want C++ 17 support
 set(LUABRIDGE_CXX17 CACHE BOOL true)
+
+# SingleApplication needs this - otherwise it gets confused with Qt5
+set(QT_DEFAULT_MAJOR_VERSION 6)
+
 
 include(CPM.cmake)
 
@@ -33,18 +36,17 @@ CPMAddPackage("gh:freedesktop/uchardet#23a664560b79715c04cbf73a7e2771e26086b210"
 # Using a modern sha1, 2.6 is 2 years old
 CPMAddPackage("gh:vinniefalco/LuaBridge#efb62e5be5c12d75e085357072039db9199f7ebf")
 
-CPMAddPackage("gh:githubuser0xFFFF/Qt-Advanced-Docking-System#3.8.2")
+CPMAddPackage("gh:githubuser0xFFFF/Qt-Advanced-Docking-System#3.8.3")
 
-set(QT_DEFAULT_MAJOR_VERSION 6)
 CPMAddPackage("gh:itay-grudev/SingleApplication#v3.3.4")
 
 # this a a repack of the 8426d9b4d4df1da3c5b2d759e509ae1c50a86667 upstream version with a cmake file
-CPMAddPackage("gh:elcuco/lua#9f06e8ad5b562d71c10fb38e6213c2a07465191a")
-#include(lua.cmake)
+#CPMAddPackage("gh:elcuco/lua#9f06e8ad5b562d71c10fb38e6213c2a07465191a")
+include(lua.cmake)
 
 # this a a repack of the upstream#52820d5 with a cmake file (upstream does
 # not support building the library, but only unit tests)
-CPMAddPackage("gh:elcuco/editorconfig-core-qt#8363919")
+CPMAddPackage("gh:elcuco/editorconfig-core-qt#6ef2b2db29dad565e43002b64dfbaaf8a6687bc4")
 
 # this a a repack of the upstream#62e0ce7 with a cmake file
 CPMAddPackage("gh:elcuco/QSimpleUpdater#dfbbd8db78cf3c40df5fb3ee9b5a75cd50cae185")
