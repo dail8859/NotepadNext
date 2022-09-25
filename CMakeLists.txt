@@ -19,8 +19,6 @@ set(BUILD_STATIC CACHE BOOL ON)
 set(BUILD_CACHE CACHE BOOL ON)
 set(USE_BUILD_SHARED_LIBS CACHE BOOL OFF)
 
-# setup lua bridge, we want C++ 17 support
-set(LUABRIDGE_CXX17 CACHE BOOL true)
 
 # SingleApplication needs this - otherwise it gets confused with Qt5
 set(QT_DEFAULT_MAJOR_VERSION 6)
