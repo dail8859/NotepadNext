@@ -220,46 +220,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionFind, &QAction::triggered, this, [=]() {
-        ScintillaNext *editor = currentEditor();
-        FindReplaceDialog *frd = nullptr;
-
-        // Create it if it doesn't exist
-        if (!dialogs.contains("FindReplaceDialog")) {
-            frd = new FindReplaceDialog(srDock, this);
-            dialogs["FindReplaceDialog"] = frd;
-        }
-        else {
-            frd = qobject_cast<FindReplaceDialog *>(dialogs["FindReplaceDialog"]);
-        }
-
-        // TODO: if dockedEditor::editorActivated() is fired, or if the editor get closed
-        // the FindReplaceDialog's editor pointer needs updated...
-
-        // Get any selected text
-        if (!editor->selectionEmpty()) {
-            int selection = editor->mainSelection();
-            int start = editor->selectionNStart(selection);
-            int end = editor->selectionNEnd(selection);
-            if (end > start) {
-                auto selText = editor->get_text_range(start, end);
-                frd->setFindString(QString::fromUtf8(selText));
-            }
-        }
-        else {
-            int start = editor->wordStartPosition(editor->currentPos(), true);
-            int end = editor->wordEndPosition(editor->currentPos(), true);
-            if (end > start) {
-                editor->setSelectionStart(start);
-                editor->setSelectionEnd(end);
-                auto selText = editor->get_text_range(start, end);
-                frd->setFindString(QString::fromUtf8(selText));
-            }
-        }
-
-        frd->setTab(FindReplaceDialog::FIND_TAB);
-        frd->show();
-        frd->raise();
-        frd->activateWindow();
+        showFindReplaceDialog(FindReplaceDialog::FIND_TAB);
     });
 
     connect(ui->actionFindNext, &QAction::triggered, this, [=]() {
@@ -278,6 +239,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         quickFind->show();
     });
 
+    connect(ui->actionReplace, &QAction::triggered, this, [=]() {
+        showFindReplaceDialog(FindReplaceDialog::REPLACE_TAB);
+    });
+
     connect(ui->actionGoToLine, &QAction::triggered, this, [=]() {
         ScintillaNext *editor = currentEditor();
         const int currentLine = editor->lineFromPosition(editor->currentPos()) + 1;
@@ -294,42 +259,6 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             editor->verticalCentreCaret();
         }
     });
-
-    //connect(ui->actionReplace, &QAction::triggered, [=]() {
-    //    // Create it if it doesn't exist
-    //    if (frd == Q_NULLPTR) {
-    //        frd = new FindReplaceDialog(this);
-    //        frd->setEditor(editor);
-    //    }
-    //
-    //    // Get any selected text
-    //    if (!editor->selectionEmpty()) {
-    //        int selection = editor->mainSelection();
-    //        int start = editor->selectionNStart(selection);
-    //        int end = editor->selectionNEnd(selection);
-    //        if (end > start) {
-    //            auto selText = editor->get_text_range(start, end);
-    //            frd->setFindText(QString::fromUtf8(selText));
-    //        }
-    //    }
-    //    else {
-    //        int start = editor->wordStartPosition(editor->currentPos(), true);
-    //        int end = editor->wordEndPosition(editor->currentPos(), true);
-    //        if (end > start) {
-    //            editor->setSelectionStart(start);
-    //            editor->setSelectionEnd(end);
-    //            auto selText = editor->get_text_range(start, end);
-    //            frd->setFindText(QString::fromUtf8(selText));
-    //        }
-    //    }
-    //
-    //    frd->setTab(FindReplaceDialog::REPLACE_TAB);
-    //    frd->show();
-    //    frd->raise();
-    //    frd->activateWindow();
-    //});
-
-
     ui->pushExitFullScreen->setParent(this); // This is important
     ui->pushExitFullScreen->setVisible(false);
     connect(ui->pushExitFullScreen, &QPushButton::clicked, ui->actionFullScreen, &QAction::trigger);
@@ -1121,6 +1050,50 @@ void MainWindow::convertEOLs(int eolMode)
     // There's no simple Scintilla notification that the EOL mode has changed
     // So tell the status bar to refresh its info
     ui->statusBar->refresh(editor);
+}
+
+void MainWindow::showFindReplaceDialog(int index)
+{
+    ScintillaNext *editor = currentEditor();
+    FindReplaceDialog *frd = nullptr;
+
+    // Create it if it doesn't exist
+    if (!dialogs.contains("FindReplaceDialog")) {
+        frd = new FindReplaceDialog(findChild<SearchResultsDock *>(), this);
+        dialogs["FindReplaceDialog"] = frd;
+    }
+    else {
+        frd = qobject_cast<FindReplaceDialog *>(dialogs["FindReplaceDialog"]);
+    }
+
+    // TODO: if dockedEditor::editorActivated() is fired, or if the editor get closed
+    // the FindReplaceDialog's editor pointer needs updated...
+
+    // Get any selected text
+    if (!editor->selectionEmpty()) {
+        int selection = editor->mainSelection();
+        int start = editor->selectionNStart(selection);
+        int end = editor->selectionNEnd(selection);
+        if (end > start) {
+            auto selText = editor->get_text_range(start, end);
+            frd->setFindString(QString::fromUtf8(selText));
+        }
+    }
+    else {
+        int start = editor->wordStartPosition(editor->currentPos(), true);
+        int end = editor->wordEndPosition(editor->currentPos(), true);
+        if (end > start) {
+            editor->setSelectionStart(start);
+            editor->setSelectionEnd(end);
+            auto selText = editor->get_text_range(start, end);
+            frd->setFindString(QString::fromUtf8(selText));
+        }
+    }
+
+    frd->setTab(index);
+    frd->show();
+    frd->raise();
+    frd->activateWindow();
 }
 
 void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)

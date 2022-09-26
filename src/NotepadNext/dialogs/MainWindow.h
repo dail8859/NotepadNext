@@ -91,6 +91,8 @@ public slots:
 
     void convertEOLs(int eolMode);
 
+    void showFindReplaceDialog(int index);
+
     void updateFileStatusBasedUi(ScintillaNext *editor);
     void updateEOLBasedUi(ScintillaNext *editor);
     void updateDocumentBasedUi(Scintilla::Update updated);
