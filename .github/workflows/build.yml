@@ -80,7 +80,8 @@ jobs:
       - name: Create DMG
         if: startsWith (matrix.config.os, 'macos')
         run: |
-          cd cbuild/src/NotepadNext
+          #cd cbuild/src/NotepadNext
+          cd cbuild
           macdeployqt NotepadNext.app -dmg
       - name: Upload DMG
         if: startsWith (matrix.config.os, 'macos')

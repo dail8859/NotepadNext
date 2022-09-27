@@ -182,6 +182,16 @@ if(UNIX AND NOT APPLE)
 	target_link_libraries(NotepadNext xcb)
 endif()
 
+if(APPLE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13)
+    set(MACOSX_BUNDLE_BUNDLE_NAME "NotepadNext")
+#    set(MACOSX_BUNDLE_BUNDLE_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
+#    set(MACOSX_BUNDLE_LONG_VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
+#    set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION})
+    set(MACOSX_BUNDLE_ICON_FILE ../icon/NotepadNext.icns)
+    set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.github.dail8859.NotepadNext")
+endif()
+
 include(GNUInstallDirs)
 install(TARGETS NotepadNext)
 install(FILES ${CMAKE_SOURCE_DIR}/deploy/linux/NotepadNext.desktop
