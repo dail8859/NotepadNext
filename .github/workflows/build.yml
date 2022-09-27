@@ -202,9 +202,13 @@ jobs:
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-Windows-Qt5.15.2-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe
 
+      # The artifact is unzipped, so need to zip it back up so it can be uploaded
       - name: Upload Windows Zip
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-Windows-Qt5.15.2-Zip/NotepadNext-${{ github.ref_name }}.zip
+          cd NotepadNext-Windows-Qt5.15.2-Zip/
+          zip -r ../NotepadNext-${{ github.ref_name }}.zip .
+          cd ..
+          gh release upload NotepadNext-${{ github.ref_name }}.zip
 
       - name: Upload Linux AppImage
         run: |
