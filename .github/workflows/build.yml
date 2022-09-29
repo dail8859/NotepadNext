@@ -61,7 +61,7 @@ jobs:
           ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}-AppImage
           path: ${{ github.workspace }}/build-linux/NotepadNext/NotepadNext-x86_64.AppImage
@@ -103,7 +103,7 @@ jobs:
           macdeployqt NotepadNext.app -dmg
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: NotepadNext-macOS-Qt${{ matrix.config.qt_version }}
           path: ${{ github.workspace }}/build-mac/NotepadNext/NotepadNext.dmg
@@ -165,14 +165,14 @@ jobs:
           jom installer
 
       - name: Upload zip Package
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Zip
           path: ${{ github.workspace }}/build/package/
 
       - name: Upload Installer
         if: matrix.config.qt_version == '5.15.2'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Installer
           path: ${{ github.workspace }}/installer/NotepadNext*.exe
