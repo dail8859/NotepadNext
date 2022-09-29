@@ -39,7 +39,6 @@
         <file>languages/ini.lua</file>
         <file>languages/inno.lua</file>
         <file>languages/java.lua</file>
-        <file>languages/javascript.js.lua</file>
         <file>languages/javascript.lua</file>
         <file>languages/json.lua</file>
         <file>languages/kix.lua</file>
