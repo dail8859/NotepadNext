@@ -33,7 +33,7 @@ jobs:
           submodules: true
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
@@ -87,7 +87,7 @@ jobs:
           submodules: true
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
@@ -129,7 +129,7 @@ jobs:
           submodules: true
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
