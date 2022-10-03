@@ -11,6 +11,12 @@ set(QT_DEFAULT_MAJOR_VERSION 6)
 
 include(CPM.cmake)
 
+# uchardet setup
+set(BUILD_BINARY CACHE BOOL OFF)
+set(BUILD_STATICCACHE CACHE BOOL OFF)
+set(BUILD_SHARED_LIBS CACHE BOOL OFF)
+
+
 # uchardet is hosted at gitlab, but CPMAddPackage needs crednetials (?)
 CPMAddPackage("gh:freedesktop/uchardet#23a664560b79715c04cbf73a7e2771e26086b210")
 CPMAddPackage("gh:vinniefalco/LuaBridge#9092ace9615d14e3f5926f2e8a3b612ddc6c8efa")
