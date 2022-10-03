@@ -70,7 +70,7 @@ jobs:
             # so we manually copy them, and later on we copy them to the bundle
             mkdir -p AppDir/usr/lib/
             cp -v *.so* \
-                AppDir/usr/lib/
+                AppDir/usr/lib/ || true
             cp -v _deps/editorconfig-core-qt-build/libeditorconfig-core-qt.so \
                 AppDir/usr/lib/
             cp -v _deps/scintilla-code-build/libscintilla-qt-edit.so* \
@@ -85,8 +85,9 @@ jobs:
             export DEBUG=1
             ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage \
                 --library AppDir/usr/lib/libeditorconfig-core-qt.so \
-                --library AppDir/usr/lib/liblexilla.so \
-                --library AppDir/usr/lib/libscintilla-qt-edit.so.5
+                --library AppDir/usr/lib/libscintilla-qt-edit.so.5 \
+
+                #--library AppDir/usr/lib/liblexilla.so \
 
       - name: Upload AppImage
         if: startsWith (matrix.config.os, 'ubuntu')
