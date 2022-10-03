@@ -16,15 +16,15 @@ jobs:
       matrix:
         config:
         -
-          qt_version: "6.2.4"
+          qt_version: "6.3.1"
           modules: "qt5compat"
           os: ubuntu-20.04
         -
-          qt_version: "6.2.4"
+          qt_version: "6.3.1"
           modules: "qt5compat"
           os: windows-latest
         -
-          qt_version: "6.2.4"
+          qt_version: "6.3.1"
           modules: "qt5compat"
           os: macos-latest
 
@@ -36,7 +36,7 @@ jobs:
           submodules: true
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
@@ -57,10 +57,7 @@ jobs:
 
       - name: Compile
         run: |
-          cmake -S . -B cbuild -G Ninja \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DBUILD_EXAMPLES=OFF \
-            -DBUILD_STATIC=ON
+          cmake -S . -B cbuild -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_STATIC=ON
           cmake --build cbuild
 
       - name: Create App Image
