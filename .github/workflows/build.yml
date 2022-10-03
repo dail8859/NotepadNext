@@ -57,7 +57,10 @@ jobs:
 
       - name: Compile
         run: |
-          cmake -S . -B cbuild -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_STATIC=ON -DBUILD_CACHE=ON -DUSE_BUILD_SHARED_LIBS=OFF
+          cmake -S . -B cbuild -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_EXAMPLES=OFF \
+            -DBUILD_STATIC=ON
           cmake --build cbuild
 
       - name: Create App Image
@@ -81,11 +84,12 @@ jobs:
             chmod +x linuxdeploy*.AppImage
 
             export OUTPUT=NotepadNext-x86_64.AppImage
-            export LD_LIBRARY_PATH=AppDir/usr/lib/
+            export LD_LIBRARY_PATH=AppDir/usr/lib/:$LD_LIBRARY_PATH
+            export DEBUG=1
             ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage \
                 --library AppDir/usr/lib/libeditorconfig-core-qt.so \
                 --library AppDir/usr/lib/liblexilla.so \
-                --library AppDir/usr/lib/libscintilla-qt-edit.so.5 \
+                --library AppDir/usr/lib/libscintilla-qt-edit.so.5
 
       - name: Upload AppImage
         if: startsWith (matrix.config.os, 'ubuntu')

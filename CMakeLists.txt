@@ -12,7 +12,7 @@ set(QT_DEFAULT_MAJOR_VERSION 6)
 include(CPM.cmake)
 
 # uchardet is hosted at gitlab, but CPMAddPackage needs crednetials (?)
-CPMAddPackage("gh:freedesktop/uchardet#143b3fe513bad2cc85903ee564fe55ccbe96d86b")
+CPMAddPackage("gh:freedesktop/uchardet#23a664560b79715c04cbf73a7e2771e26086b210")
 CPMAddPackage("gh:vinniefalco/LuaBridge#9092ace9615d14e3f5926f2e8a3b612ddc6c8efa")
 CPMAddPackage("gh:githubuser0xFFFF/Qt-Advanced-Docking-System#3cd6d766f8ddb0dc306e7e7fa5b3e406f84b56c6")
 CPMAddPackage("gh:itay-grudev/SingleApplication#f1e15081dc57a9c03f7f4f165677f18802e1437a")
