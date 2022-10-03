@@ -66,16 +66,6 @@ jobs:
             cmake --install cbuild --prefix=${{ github.workspace }}/cbuild/AppDir/usr/
             cd cbuild
 
-            # some libraries are not build as static, and are not installed
-            # so we manually copy them, and later on we copy them to the bundle
-            mkdir -p AppDir/usr/lib/
-            cp -v *.so* \
-                AppDir/usr/lib/ || true
-            cp -v _deps/editorconfig-core-qt-build/libeditorconfig-core-qt.so \
-                AppDir/usr/lib/
-            cp -v _deps/scintilla-code-build/libscintilla-qt-edit.so* \
-                AppDir/usr/lib/
-
             wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
             wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
             chmod +x linuxdeploy*.AppImage
@@ -83,11 +73,7 @@ jobs:
             export OUTPUT=NotepadNext-x86_64.AppImage
             export LD_LIBRARY_PATH=AppDir/usr/lib/:$LD_LIBRARY_PATH
             export DEBUG=1
-            ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage \
-                --library AppDir/usr/lib/libeditorconfig-core-qt.so \
-                --library AppDir/usr/lib/libscintilla-qt-edit.so.5 \
-
-                #--library AppDir/usr/lib/liblexilla.so \
+            ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage
 
       - name: Upload AppImage
         if: startsWith (matrix.config.os, 'ubuntu')
