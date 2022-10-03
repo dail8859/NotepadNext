@@ -55,7 +55,7 @@ ScintillaNext::ScintillaNext(QString name, QWidget *parent) :
     doc(get_doc()),
     name(name)
 {
-    connect(doc, &ScintillaDocument::lexer_changed, this, &ScintillaNext::lexerChanged);
+//    connect(this->doc., &ScintillaDocument::lexer_changed, this, &ScintillaNext::lexerChanged);
 }
 
 ScintillaNext::~ScintillaNext()
