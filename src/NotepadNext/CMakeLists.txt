@@ -154,7 +154,7 @@ target_link_libraries(NotepadNext Qt::Widgets Qt::PrintSupport
     QSimpleUpdater
     editorconfig-core-qt
     scintilla-qt-edit
-    lexzilla
+    lexilla
 )
 
 if (Qt6_FOUND)

@@ -1,4 +1,4 @@
-CPMAddPackage("gh:alex-spataru/QSimpleUpdater#14c1bef71d26c915eeaa05c988c55bdad98e1d75")
+CPMAddPackage("gh:alex-spataru/QSimpleUpdater#62e0ce7dde4c76e7533f2f0ee53f19ee1690c8dd")
 
 if (QSimpleUpdater_ADDED)
     set(CMAKE_AUTOMOC ON)
