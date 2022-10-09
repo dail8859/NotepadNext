@@ -2,6 +2,23 @@ function rgb(x)
     return ((x & 0xFF) << 16) | (x & 0xFF00) | ((x & 0xFF0000) >> 16)
 end
 
+function starts_with(str, start)
+   return str:sub(1, #start) == start
+end
+
+function detectLanguageFromContents(contents)
+    for name, L in pairs(languages) do
+        if L.first_line then
+            for _, v in ipairs(L.first_line) do
+                if starts_with(contents, v) then
+                    return name
+                end
+            end
+        end
+    end
+    return "Text"
+end
+
 function DialogFilters()
     local filter = {}
 

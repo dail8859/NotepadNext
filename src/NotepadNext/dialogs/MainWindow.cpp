@@ -1251,13 +1251,12 @@ void MainWindow::detectLanguage(ScintillaNext *editor)
     qInfo(Q_FUNC_INFO);
 
     if (!editor->isFile()) {
+        // Default to some specific language if it is not a file.
         setLanguage(editor, "Text");
         return;
     }
     else {
-        // Only real files have extensions
-        const QString ext = editor->getFileInfo().suffix();
-        const QString language_name = app->detectLanguageFromExtension(ext);
+        const QString language_name = app->detectLanguage(editor);
 
         setLanguage(editor, language_name);
     }
