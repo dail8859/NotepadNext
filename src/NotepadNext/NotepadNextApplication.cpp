@@ -305,6 +305,23 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     )");
 }
 
+QString NotepadNextApplication::detectLanguage(ScintillaNext *editor) const
+{
+    qInfo(Q_FUNC_INFO);
+
+    QString language_name = QStringLiteral("Text");
+
+    if (editor->isFile()) {
+        language_name = detectLanguageFromExtension(editor->getFileInfo().suffix());
+    }
+
+    if (language_name == QStringLiteral("Text")) {
+        language_name = detectLanguageFromContents(editor);
+    }
+
+    return language_name;
+}
+
 QString NotepadNextApplication::detectLanguageFromExtension(const QString &extension) const
 {
     qInfo(Q_FUNC_INFO);
@@ -322,6 +339,20 @@ QString NotepadNextApplication::detectLanguageFromExtension(const QString &exten
     end
     return "Text"
     )").arg(extension).toLatin1().constData());
+}
+
+QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor) const
+{
+    qInfo(Q_FUNC_INFO);
+
+    LuaExtension::Instance().setEditor(editor);
+
+    return getLuaState()->executeAndReturn<QString>(QString(R"(
+    -- Grab a small chunk
+    editor:SetTargetRange(0, 64)
+
+    return detectLanguageFromContents(editor.TargetText)
+    )").toLatin1().constData());
 }
 
 void NotepadNextApplication::loadSystemDefaultTranslation()
