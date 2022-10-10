@@ -2,6 +2,10 @@ local L = {}
 
 L.lexer = "xml"
 
+L.first_line = {
+	"<?xml"
+}
+
 L.extensions = {
 	"xml",
 	"xaml",
