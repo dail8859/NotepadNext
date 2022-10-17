@@ -89,7 +89,7 @@ QVariant EditorHexViewerTableModel::data(const QModelIndex &index, int role) con
         int docPos = (index.row() * 16) + index.column();
         if (docPos >= editor->length()) return QVariant();
 
-        int ch = editor->charAt(docPos);
+        unsigned char ch = static_cast<unsigned char>(editor->charAt(docPos));
         return QString("%1").arg(ch, 2, 16, QChar('0')).toUpper();
     }
     else if (role == Qt::TextAlignmentRole) {
