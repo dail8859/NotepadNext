@@ -60,12 +60,13 @@ ads--CDockWidgetTab[activeTab="false"] QLabel {
 #tabCloseButton:hover
 {
     border: 1px solid rgba(0, 0, 0, 32);
-    background: red;
+    background-color: rgb(251, 115, 115);
+    color: green;
 }
 
 #tabCloseButton:pressed
 {
-    background: rgba(0, 0, 0, 32);
+    background: red;
 }
 
 #QuickFindWidget {
