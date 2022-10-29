@@ -18,13 +18,14 @@ jobs:
         - 
           qt_version: "5.15.2"
           modules: ""
-          os: ubuntu-latest
         - 
           qt_version: "6.2.4"
           modules: "qt5compat"
-          os: ubuntu-latest
+        - 
+          qt_version: "6.4.0"
+          modules: "qt5compat"
 
-    runs-on: ${{ matrix.config.os }}
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout Repository
@@ -77,6 +78,9 @@ jobs:
         -
           qt_version: "6.2.4"
           modules: "qt5compat"
+        - 
+          qt_version: "6.4.0"
+          modules: "qt5compat"
 
     runs-on: macos-latest
 
@@ -118,6 +122,9 @@ jobs:
           modules: ""
         - 
           qt_version: "6.2.4"
+          modules: "qt5compat"
+        - 
+          qt_version: "6.4.0"
           modules: "qt5compat"
 
     runs-on: windows-latest
