@@ -576,6 +576,9 @@
    <property name="text">
     <string>Duplicate Current Line</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+Down</string>
+   </property>
   </action>
   <action name="actionSplitLines">
    <property name="text">
