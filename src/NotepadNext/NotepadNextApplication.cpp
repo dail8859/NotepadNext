@@ -127,8 +127,8 @@ bool NotepadNextApplication::init()
     recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
 
     connect(this, &NotepadNextApplication::aboutToQuit, this, [=]() {
-        QSettings qsettings;
-        qsettings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
+        QSettings settings;
+        settings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
     });
 
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
@@ -210,11 +210,6 @@ bool NotepadNextApplication::init()
                 currentlyFocusedWidget->activateWindow();
             }
         }
-    });
-
-    // Keep Lua's editor reference up to date
-    connect(windows.first(), &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
-        LuaExtension::Instance().setEditor(editor);
     });
 
     openFiles(parser.positionalArguments());
@@ -416,6 +411,20 @@ MainWindow *NotepadNextApplication::createNewWindow()
     MainWindow *w = new MainWindow(this);
 
     windows.append(w);
+
+    // Keep Lua's editor reference up to date
+    connect(w, &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
+        LuaExtension::Instance().setEditor(editor);
+    });
+
+    // Since these editors don't actually get "closed" go ahead and add them to the recent file list
+    connect(w, &MainWindow::aboutToClose, this, [=]() {
+        for (const auto &editor : w->editors()) {
+            if (editor->isFile()) {
+                recentFilesListManager->addFile(editor->getFilePath());
+            }
+        }
+    });
 
     return w;
 }
