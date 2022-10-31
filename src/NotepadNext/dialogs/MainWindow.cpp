@@ -80,6 +80,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     qInfo("setupUi Completed");
 
+    connect(this, &MainWindow::aboutToClose, this, &MainWindow::saveSettings);
+
     // Createa and set up the connections to the docked editor
     dockedEditor = new DockedEditor(this);
     connect(dockedEditor, &DockedEditor::editorCloseRequested, this, [=](ScintillaNext *editor) { closeFile(editor); });
@@ -1526,12 +1528,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         return;
     }
 
-    // While tabs are being closed, turn off UI updates so the main window doesn't continuously refresh.
-    disconnect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
-
-    closeAllFiles(true);
-
-    saveSettings();
+    emit aboutToClose();
 
     event->accept();
 

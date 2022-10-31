@@ -119,6 +119,7 @@ public slots:
 
 signals:
     void editorActivated(ScintillaNext *editor);
+    void aboutToClose();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
