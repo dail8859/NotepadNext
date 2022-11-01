@@ -23,6 +23,7 @@
 #include "EditorManager.h"
 #include "LuaExtension.h"
 #include "DebugManager.h"
+#include "SessionManager.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
@@ -211,6 +212,8 @@ bool NotepadNextApplication::init()
             }
         }
     });
+
+    SessionManager::LoadSession(editorManager);
 
     openFiles(parser.positionalArguments());
 
@@ -430,6 +433,8 @@ MainWindow *NotepadNextApplication::createNewWindow()
                 recentFilesListManager->addFile(editor->getFilePath());
             }
         }
+
+        SessionManager::SaveSession(w->editors());
     });
 
     return w;
