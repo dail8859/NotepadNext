@@ -93,6 +93,7 @@ SOURCES += \
     ScintillaCommenter.cpp \
     ScintillaNext.cpp \
     SelectionTracker.cpp \
+    SessionManager.cpp \
     Settings.cpp \
     SpinBoxDelegate.cpp \
     UndoAction.cpp \
@@ -167,6 +168,7 @@ HEADERS += \
     ScintillaEnums.h \
     ScintillaNext.h \
     SelectionTracker.h \
+    SessionManager.h \
     Settings.h \
     SpinBoxDelegate.h \
     UndoAction.h \
