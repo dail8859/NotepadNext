@@ -211,9 +211,9 @@ jobs:
       - name: Upload Windows Zip
         run: |
           cd NotepadNext-Windows-Qt6.2.4-Zip/
-          zip -r ../NotepadNext-${{ github.ref_name }}.zip .
+          zip -r ../NotepadNext-${{ github.ref_name }}-win64.zip .
           cd ..
-          gh release upload NotepadNext-${{ github.ref_name }}.zip
+          gh release upload NotepadNext-${{ github.ref_name }}-win64.zip
 
       - name: Upload Linux AppImage
         run: |
