@@ -97,8 +97,11 @@ QVector<ScintillaNext *> DockedEditor::editors() const
 {
     QVector<ScintillaNext *> editors;
 
-    for (const ads::CDockWidget* dockWidget : dockManager->dockWidgetsMap()) {
-        editors.append(qobject_cast<ScintillaNext *>(dockWidget->widget()));
+    // For each area, for each widget, append it to our list
+    for (const ads::CDockAreaWidget* areaWidget : dockManager->openedDockAreas()) {
+        for (const ads::CDockWidget* dockWidget : areaWidget->dockWidgets()) {
+            editors.append(qobject_cast<ScintillaNext *>(dockWidget->widget()));
+        }
     }
 
     return editors;
