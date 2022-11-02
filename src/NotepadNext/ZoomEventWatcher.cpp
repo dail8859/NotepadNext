@@ -55,10 +55,8 @@ bool ZoomEventWatcher::eventFilter(QObject *obj, QEvent *event)
             if (QApplication::keyboardModifiers() & Qt::ControlModifier) {
                 if (wheelEventYDelta(wheelEvent) > 0) {
                     emit zoomIn();
-                    qInfo("%s", "zoom in");//sqt->KeyCommand(Message::ZoomIn);
                 } else {
                     emit zoomOut();
-                    qInfo("%s", "zoom out");//sqt->KeyCommand(Message::ZoomOut);
                 }
                 return true;
             }
