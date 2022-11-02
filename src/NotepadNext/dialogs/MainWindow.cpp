@@ -67,10 +67,13 @@
 #include "EditorPrintPreviewRenderer.h"
 #include "MacroEditorDialog.h"
 
+#include "ZoomEventWatcher.h"
+
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
-    app(app)
+    app(app),
+    zoomEventWatcher(new ZoomEventWatcher(this))
 {
     qInfo(Q_FUNC_INFO);
 
@@ -334,9 +337,29 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionZoomIn, &QAction::triggered, this, [=]() { currentEditor()->zoomIn(); });
-    connect(ui->actionZoomOut, &QAction::triggered, this, [=]() { currentEditor()->zoomOut(); });
-    connect(ui->actionZoomReset, &QAction::triggered, this, [=]() { currentEditor()->setZoom(0); });
+    // Zooming controls all editors simulaneously
+    connect(ui->actionZoomIn, &QAction::triggered, this, [=]() {
+        for (ScintillaNext *editor : editors()) {
+            editor->zoomIn();
+        }
+        zoomLevel = currentEditor()->zoom();
+    });
+    connect(ui->actionZoomOut, &QAction::triggered, this, [=]() {
+        for (ScintillaNext *editor : editors()) {
+            editor->zoomOut();
+        }
+        zoomLevel = currentEditor()->zoom();
+    });
+    connect(ui->actionZoomReset, &QAction::triggered, this, [=]() {
+        for (ScintillaNext *editor : editors()) {
+            editor->setZoom(0);
+        }
+        zoomLevel = 0;
+    });
+
+    // Zoom watcher has detected a zoom event, so just trigger the UI action
+    connect(zoomEventWatcher, &ZoomEventWatcher::zoomIn, ui->actionZoomIn, &QAction::trigger);
+    connect(zoomEventWatcher, &ZoomEventWatcher::zoomOut, ui->actionZoomOut, &QAction::trigger);
 
     languageActionGroup = new QActionGroup(this);
     languageActionGroup->setExclusive(true);
@@ -1359,6 +1382,7 @@ void MainWindow::saveSettings() const
 
     settings.setValue("Editor/WordWrap", ui->actionWordWrap->isChecked());
     settings.setValue("Editor/IndentGuide", ui->actionShowIndentGuide->isChecked());
+    settings.setValue("Editor/ZoomLevel", zoomLevel);
 
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     settings.setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
@@ -1380,6 +1404,7 @@ void MainWindow::restoreSettings()
 
     ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
     ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
+    zoomLevel = settings.value("Editor/ZoomLevel", 0).toInt();
 }
 
 
@@ -1438,6 +1463,11 @@ void MainWindow::addEditor(ScintillaNext *editor)
         }
     });
 
+    // Watch for any zoom events (Ctrl+Scroll or pinch-to-zoom (Qt translates it as Ctrl+Scroll)) so that the event
+    // can be handled before the ScintillaEditBase widget, so that it can be applied to all editors to keep zoom level equal.
+    // NOTE: Need to install this on the scroll area's viewport, not on the editor widget itself...that was painful to learn
+    editor->viewport()->installEventFilter(zoomEventWatcher);
+
     if (ui->actionWordWrap->isChecked())
         editor->setWrapMode(SC_WRAP_WHITESPACE);
 
@@ -1447,6 +1477,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setViewWS(ui->actionShowWhitespace->isChecked() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
     editor->setViewEOL(ui->actionShowEndofLine->isChecked());
     editor->setWrapVisualFlags(ui->actionShowWrapSymbol->isChecked() ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+    editor->setZoom(zoomLevel);
 
     // The editor has been entirely configured at this point, so add it to the docked editor
     dockedEditor->addEditor(editor);

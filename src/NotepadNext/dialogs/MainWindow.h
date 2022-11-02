@@ -38,6 +38,7 @@ class NotepadNextApplication;
 class Macro;
 class Settings;
 class QuickFindWidget;
+class ZoomEventWatcher;
 
 class MainWindow : public QMainWindow
 {
@@ -155,6 +156,9 @@ private:
     QuickFindWidget *quickFind = Q_NULLPTR;
 
     MacroManager macroManager;
+
+    ZoomEventWatcher *zoomEventWatcher;
+    int zoomLevel = 0;
 };
 
 #endif // MAINWINDOW_H
