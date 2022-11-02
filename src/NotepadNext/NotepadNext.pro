@@ -92,6 +92,7 @@ SOURCES += \
     Settings.cpp \
     SpinBoxDelegate.cpp \
     UndoAction.cpp \
+    ZoomEventWatcher.cpp \
     decorators/ApplicationDecorator.cpp \
     decorators/AutoCompletion.cpp \
     decorators/AutoIndentation.cpp \
@@ -158,6 +159,7 @@ HEADERS += \
     Settings.h \
     SpinBoxDelegate.h \
     UndoAction.h \
+    ZoomEventWatcher.h \
     decorators/ApplicationDecorator.h \
     decorators/AutoCompletion.h \
     decorators/AutoIndentation.h \
