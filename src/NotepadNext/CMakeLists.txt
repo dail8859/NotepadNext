@@ -79,6 +79,8 @@ add_executable(NotepadNext
     scripts.qrc
     UndoAction.h
     UndoAction.cpp
+    ZoomEventWatcher.h
+    ZoomEventWatcher.cpp
 
     decorators/ApplicationDecorator.cpp
     decorators/AutoCompletion.cpp
