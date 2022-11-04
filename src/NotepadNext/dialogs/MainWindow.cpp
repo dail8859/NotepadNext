@@ -77,8 +77,6 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 {
     qInfo(Q_FUNC_INFO);
 
-    Q_INIT_RESOURCE(ads);
-
     ui->setupUi(this);
 
     qInfo("setupUi Completed");
