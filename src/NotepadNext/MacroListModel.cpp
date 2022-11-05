@@ -27,7 +27,8 @@ MacroListModel::MacroListModel(QObject *parent, MacroManager *mm) :
 
 int MacroListModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    if (parent.isValid())
+        return 0;
 
     return macroManager->availableMacros().size();
 }
