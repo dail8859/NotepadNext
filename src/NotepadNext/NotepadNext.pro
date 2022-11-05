@@ -82,6 +82,7 @@ SOURCES += \
     MacroStepTableModel.cpp \
     NotepadNextApplication.cpp \
     NppImporter.cpp \
+    PluginsManager.cpp \
     QRegexSearch.cpp \
     QuickFindWidget.cpp \
     RecentFilesListManager.cpp \
@@ -94,6 +95,7 @@ SOURCES += \
     SpinBoxDelegate.cpp \
     UndoAction.cpp \
     ZoomEventWatcher.cpp \
+    PluginsManager.cpp \
     decorators/ApplicationDecorator.cpp \
     decorators/AutoCompletion.cpp \
     decorators/AutoIndentation.cpp \
@@ -149,6 +151,9 @@ HEADERS += \
     MacroStepTableModel.h \
     NotepadNextApplication.h \
     NppImporter.h \
+    PluginInterface.h \
+    PluginMessageData.h \
+    PluginsManager.h \
     QRegexSearch.h \
     QuickFindWidget.h \
     RecentFilesListManager.h \
@@ -162,6 +167,9 @@ HEADERS += \
     SpinBoxDelegate.h \
     UndoAction.h \
     ZoomEventWatcher.h \
+    PluginMessageData.h \
+    PluginInterface.h \
+    PluginsManager.h \
     decorators/ApplicationDecorator.h \
     decorators/AutoCompletion.h \
     decorators/AutoIndentation.h \

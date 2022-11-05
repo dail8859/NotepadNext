@@ -32,6 +32,7 @@
 #include <QInputDialog>
 #include <QPrintPreviewDialog>
 #include <QPrinter>
+#include <QDesktopServices>
 
 #ifdef Q_OS_WIN
 #include <QSimpleUpdater.h>
@@ -48,6 +49,7 @@
 #include "RecentFilesListManager.h"
 #include "RecentFilesListMenuBuilder.h"
 #include "EditorManager.h"
+#include "PluginsManager.h"
 
 #include "LuaConsoleDock.h"
 #include "LanguageInspectorDock.h"
@@ -486,6 +488,60 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         for (const Macro *m : macroManager.availableMacros()) {
             ui->menuMacro->addAction(m->getName(), [=]() { m->replay(currentEditor()); });
         }
+    });
+
+    /* TODO: Plugin Manager */
+    QAction *actPlugin = nullptr;
+    PluginsManager *pluginManager = PluginsManager::instance();
+    for(auto plugin : pluginManager->pluginList()){
+
+        QMenu *menuPlugin = ui->menuPlugins->addMenu(plugin->name());
+
+        for(FuncItem func : plugin->getFuncsArray()){
+
+            if(func._itemName[0] == 0){
+                menuPlugin->addSeparator();
+                continue;
+            }
+
+            actPlugin = menuPlugin->addAction(QString::fromUtf8(func._itemName));
+            /* add shortkey */
+            if(func._pShKey._key){
+                int shortKeyNum = func._pShKey._key;
+                if((func._pShKey._modifier & ShortcutKey::ALT) !=0){
+                    shortKeyNum |= Qt::ALT;
+                }
+                if((func._pShKey._modifier & ShortcutKey::CTRL) !=0){
+                    shortKeyNum |= Qt::CTRL;
+                }
+                if((func._pShKey._modifier & ShortcutKey::SHIFT) !=0){
+                    shortKeyNum |= Qt::SHIFT;
+                }
+                QKeySequence shortKey(shortKeyNum);
+                actPlugin->setShortcut(shortKey);
+            }
+
+            actPlugin->setCheckable(func._checkOnInit);
+
+            connect(actPlugin, &QAction::triggered, this,[=](bool checked = false){
+                func._pFunc(checked);
+            });
+        } /* 插件 command 结束 */
+    } /* 插件遍历结束 */
+
+    if(!pluginManager->pluginList().empty())
+        ui->menuPlugins->addSeparator();
+
+    actPlugin = ui->menuPlugins->addAction("Plugins Admin...");
+    connect(actPlugin, &QAction::triggered, this,[=](){
+        QDesktopServices::openUrl(QUrl::fromLocalFile("./plugins"));
+    });
+
+    ui->menuPlugins->addSeparator();
+
+    actPlugin = ui->menuPlugins->addAction("Open Plugins Floder...");
+    connect(actPlugin, &QAction::triggered, this,[=](){
+        QDesktopServices::openUrl(QUrl::fromLocalFile("./plugins"));
     });
 
     ui->actionAboutQt->setIcon(QPixmap(QLatin1String(":/qt-project.org/qmessagebox/images/qtlogo-64.png")));

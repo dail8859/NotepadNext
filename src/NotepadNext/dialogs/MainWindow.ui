@@ -40,7 +40,7 @@
      <x>0</x>
      <y>0</y>
      <width>855</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -235,6 +235,11 @@
     </property>
     <addaction name="actionThis_is_not_currently_implemented"/>
    </widget>
+   <widget class="QMenu" name="menuPlugins">
+    <property name="title">
+     <string>Plugins</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuSearch"/>
@@ -243,6 +248,7 @@
    <addaction name="menuLanguage"/>
    <addaction name="menuSettings"/>
    <addaction name="menuMacro"/>
+   <addaction name="menuPlugins"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">

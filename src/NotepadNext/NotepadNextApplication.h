@@ -24,6 +24,8 @@
 
 #include "SingleApplication"
 
+#include "PluginMessageData.h"
+
 #include <QCommandLineParser>
 #include <QPointer>
 #include <QTranslator>
@@ -63,6 +65,9 @@ public:
 
 protected:
     bool event(QEvent *event) override;
+
+private slots:
+    void recvMessageFormPlugin(PluginMessageData);
 
 private:
     void openFiles(const QStringList &files);
