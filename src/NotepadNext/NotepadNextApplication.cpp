@@ -22,6 +22,7 @@
 #include "RecentFilesListManager.h"
 #include "EditorManager.h"
 #include "LuaExtension.h"
+#include "PluginsManager.h"
 #include "DebugManager.h"
 
 #include "LuaState.h"
@@ -35,6 +36,8 @@
 
 #include <QCommandLineParser>
 #include <QSettings>
+#include <QHash>
+#include <QPluginLoader>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -109,6 +112,10 @@ bool NotepadNextApplication::init()
     editorManager = new EditorManager(this);
     settings = new Settings(this);
 
+    // TODO: Plugin Manager connect signal
+    PluginsManager *pluginsManager = PluginsManager::instance();
+    pluginsManager->loadPlugins(R"(./plugins)");
+
     connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [=](ScintillaNext *editor) {
         if (editor->isFile()) {
             recentFilesListManager->removeFile(editor->getFilePath());
@@ -153,6 +160,10 @@ bool NotepadNextApplication::init()
 
     createNewWindow();
     connect(editorManager, &EditorManager::editorCreated, windows.first(), &MainWindow::addEditor);
+    //TODO: connect
+    for( auto iter = pluginsManager->loaderList().constBegin(); iter!=pluginsManager->loaderList().constEnd(); ++iter){
+        connect(iter.value()->instance(), SIGNAL(sendMessage(PluginMessageData)), this, SLOT(recvMessageFormPlugin(PluginMessageData)));
+    }
 
     luabridge::getGlobalNamespace(luaState->L)
         .beginNamespace("nn")
@@ -228,6 +239,10 @@ bool NotepadNextApplication::init()
     DebugManager::resumeDebugOutput();
 
     return true;
+}
+
+void NotepadNextApplication::recvMessageFormPlugin(PluginMessageData msg){
+    windows.first()->newFile();
 }
 
 QString NotepadNextApplication::getFileDialogFilter() const
