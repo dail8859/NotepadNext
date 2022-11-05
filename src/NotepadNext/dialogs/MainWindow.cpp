@@ -68,6 +68,7 @@
 #include "MacroEditorDialog.h"
 
 #include "ZoomEventWatcher.h"
+#include "FileDialogHelpers.h"
 
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
@@ -746,7 +747,7 @@ void MainWindow::openFileDialog()
         dialogDir = editor->getPath();
     }
 
-    QStringList fileNames = QFileDialog::getOpenFileNames(this, QString(), dialogDir, filter, Q_NULLPTR);
+    QStringList fileNames = FileDialogHelpers::getOpenFileNames(this, QString(), dialogDir, filter);
 
     openFileList(fileNames);
 }
@@ -939,7 +940,7 @@ bool MainWindow::saveCurrentFileAsDialog()
         dialogDir = editor->getFilePath();
     }
 
-    QString fileName = QFileDialog::getSaveFileName(this, QString(), dialogDir, filter, Q_NULLPTR);
+    QString fileName = FileDialogHelpers::getSaveFileName(this, QString(), dialogDir, filter);
 
     if (fileName.size() == 0) {
         return false;
@@ -976,7 +977,7 @@ void MainWindow::saveCopyAsDialog()
         dialogDir = editor->getFilePath();
     }
 
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save a Copy As"), dialogDir, filter, Q_NULLPTR);
+    QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Save a Copy As"), dialogDir, filter);
 
     saveCopyAs(fileName);
 }
@@ -1000,7 +1001,7 @@ void MainWindow::renameFile()
 
     Q_ASSERT(editor->isFile());
 
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Rename"), editor->getFilePath());
+    QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath());
 
     if (fileName.size() == 0) {
         return;
