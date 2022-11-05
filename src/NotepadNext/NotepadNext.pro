@@ -65,6 +65,7 @@ SOURCES += \
     EditorHexViewerTableModel.cpp \
     EditorManager.cpp \
     EditorPrintPreviewRenderer.cpp \
+    FileDialogHelpers.cpp \
     Finder.cpp \
     IFaceTable.cpp \
     IFaceTableMixer.cpp \
@@ -132,6 +133,7 @@ HEADERS += \
     EditorHexViewerTableModel.h \
     EditorManager.h \
     EditorPrintPreviewRenderer.h \
+    FileDialogHelpers.h \
     Finder.h \
     FocusWatcher.h \
     IFaceTable.h \
