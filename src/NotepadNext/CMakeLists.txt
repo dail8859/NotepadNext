@@ -27,6 +27,8 @@ add_executable(NotepadNext
     EditorPrintPreviewRenderer.cpp
     Finder.cpp
     Finder.h
+    FileDialogHelpers.cpp
+    FileDialogHelpers.h
     FocusWatcher.h
     IFaceTable.cpp
     IFaceTable.h
