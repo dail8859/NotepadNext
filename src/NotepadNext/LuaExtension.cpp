@@ -44,7 +44,7 @@ IFaceTableMixer ifacemixer;
 static bool call_function(lua_State *L, int nargs, bool ignoreFunctionReturnValue);
 
 // Helper function from SciTE
-static int Substitute(std::string &s, const std::string &sFind, const std::string &sReplace) {
+[[maybe_unused]] static int Substitute(std::string &s, const std::string &sFind, const std::string &sReplace) {
     int c = 0;
     size_t lenFind = sFind.size();
     size_t lenReplace = sReplace.size();
@@ -58,7 +58,7 @@ static int Substitute(std::string &s, const std::string &sFind, const std::strin
 }
 
 // Helper function from SciTE
-static bool Exists(const char *fileName) {
+[[maybe_unused]] static bool Exists(const char *fileName) {
     bool ret = false;
     if (fileName && fileName[0]) {
         FILE *fp = fopen(fileName, "rb");
@@ -127,7 +127,7 @@ inline int absolute_index(lua_State *L, int index) {
     return ((index < 0) && (index != LUA_REGISTRYINDEX)) ? (lua_gettop(L) + index + 1) : index;
 }
 
-static int cf_npp_send(lua_State *L) {
+[[maybe_unused]] static int cf_npp_send(lua_State *L) {
     // This is reinstated as a replacement for the old <pane>:send, which was removed
     // due to safety concerns.  Is now exposed as npp.SendEditor / npp.SendOutput.
     // It is rewritten to be typesafe, checking the arguments against the metadata in
@@ -162,7 +162,7 @@ static int cf_npp_send(lua_State *L) {
     }
 }
 
-static int cf_npp_constname(lua_State *L) {
+[[maybe_unused]] static int cf_npp_constname(lua_State *L) {
     char constName[100] = "";
     const char *hint = nullptr;
     int message = (int)luaL_checkinteger(L, 1);
@@ -257,7 +257,7 @@ static int cf_global_print(lua_State *L) {
     return 0;
 }
 
-static bool call_function(lua_State *L, int nargs, bool ignoreFunctionReturnValue=false) {
+[[maybe_unused]] static bool call_function(lua_State *L, int nargs, bool ignoreFunctionReturnValue=false) {
     bool handled = false;
     if (L) {
         int traceback = 0;
