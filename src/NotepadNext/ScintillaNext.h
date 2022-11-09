@@ -27,10 +27,6 @@
 #include <QFileInfo>
 
 
-static bool isRangeValid(const Sci_CharacterRange &range)
-{
-    return range.cpMin != INVALID_POSITION && range.cpMax != INVALID_POSITION;
-}
 
 
 class ScintillaNext : public ScintillaEdit
@@ -38,6 +34,11 @@ class ScintillaNext : public ScintillaEdit
     Q_OBJECT
 
 public:
+    static bool isRangeValid(const Sci_CharacterRange &range)
+    {
+        return range.cpMin != INVALID_POSITION && range.cpMax != INVALID_POSITION;
+    }
+
     explicit ScintillaNext(QString name, QWidget *parent = Q_NULLPTR);
     virtual ~ScintillaNext();
 

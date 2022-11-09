@@ -191,6 +191,7 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
     input->installEventFilter(this);
 
     connect(input, &ScintillaNext::updateUi, [=](Scintilla::Update flags) {
+        Q_UNUSED(flags);
         int curPos = input->currentPos();
         int bracePos = INVALID_POSITION;
 
