@@ -11,4 +11,6 @@ jobs:
     name: Check for spelling errors
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
+
     - uses: codespell-project/actions-codespell@master
