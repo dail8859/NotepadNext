@@ -31,6 +31,8 @@ class SessionManager
 public:
     SessionManager();
 
+    static void ClearSession();
+
     static void SaveSession(QVector<ScintillaNext *> editors);
     static void LoadSession(EditorManager *editorManager);
 };

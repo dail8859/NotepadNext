@@ -28,7 +28,7 @@ SessionManager::SessionManager()
 
 }
 
-void SessionManager::SaveSession(QVector<ScintillaNext *> editors)
+void SessionManager::ClearSession()
 {
     // Save session
     QSettings settings;
@@ -36,6 +36,15 @@ void SessionManager::SaveSession(QVector<ScintillaNext *> editors)
 
     // Clear everything out. There can be left over entries that are no longer needed
     settings.remove("");
+}
+
+void SessionManager::SaveSession(QVector<ScintillaNext *> editors)
+{
+    SessionManager::ClearSession();
+
+    // Save session
+    QSettings settings;
+    settings.beginGroup("CurrentSession");
 
     settings.beginWriteArray("OpenedFiles");
 
@@ -49,6 +58,7 @@ void SessionManager::SaveSession(QVector<ScintillaNext *> editors)
             ++i;
         }
     }
+
     settings.endArray();
     settings.endGroup();
 }

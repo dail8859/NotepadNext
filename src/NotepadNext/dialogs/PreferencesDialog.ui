@@ -37,6 +37,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxRememberSession">
+       <property name="text">
+        <string>Restore Previous Session</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>

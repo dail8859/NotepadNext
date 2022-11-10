@@ -125,11 +125,14 @@ bool NotepadNextApplication::init()
     // Restore some settings and schedule saving the settings on quit
     QSettings qsettings;
 
+    settings->setRestorePreviousSession(qsettings.value("App/RestorePreviousSession", false).toBool());
     recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
 
     connect(this, &NotepadNextApplication::aboutToQuit, this, [=]() {
-        QSettings settings;
-        settings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
+        QSettings qsettings;
+
+        qsettings.setValue("App/RestorePreviousSession", settings->restorePreviousSession());
+        qsettings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
     });
 
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
@@ -213,7 +216,10 @@ bool NotepadNextApplication::init()
         }
     });
 
-    SessionManager::LoadSession(editorManager);
+    if (settings->restorePreviousSession()) {
+        qInfo("Restoring previous session");
+        SessionManager::LoadSession(editorManager);
+    }
 
     openFiles(parser.positionalArguments());
 
@@ -434,7 +440,13 @@ MainWindow *NotepadNextApplication::createNewWindow()
             }
         }
 
-        SessionManager::SaveSession(w->editors());
+        if (settings->restorePreviousSession()) {
+            SessionManager::SaveSession(w->editors());
+        }
+        else {
+            // Make sure any previous session info is erased
+            SessionManager::ClearSession();
+        }
     });
 
     return w;
