@@ -1,0 +1,14 @@
+name: Codespell
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  
+jobs:
+  codespell:
+    name: Check for spelling errors
+    runs-on: ubuntu-latest
+    steps:
+    - uses: codespell-project/actions-codespell@master
