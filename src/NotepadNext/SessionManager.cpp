@@ -53,7 +53,7 @@ void SessionManager::SaveSession(QVector<ScintillaNext *> editors)
         if (editor->isFile()) {
             settings.setArrayIndex(i);
             settings.setValue("FilePath", editor->getFilePath());
-            settings.setValue("FirstVisibleLine", editor->firstVisibleLine() + 1); // Keep it 1-based in the settings just for human-readability
+            settings.setValue("FirstVisibleLine", static_cast<int>(editor->firstVisibleLine() + 1)); // Keep it 1-based in the settings just for human-readability
             //settings.setValue("XOffset", editor->xOffset());
             ++i;
         }
