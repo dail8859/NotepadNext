@@ -40,6 +40,10 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
     ui->checkBoxStatusBar->setChecked(settings->showStatusBar());
     connect(settings, &Settings::showStatusBarChanged, ui->checkBoxStatusBar, &QCheckBox::setChecked);
     connect(ui->checkBoxStatusBar, &QCheckBox::clicked, settings, &Settings::setShowStatusBar);
+
+    ui->checkBoxRememberSession->setChecked(settings->restorePreviousSession());
+    connect(settings, &Settings::restorePreviousSessionChanged, ui->checkBoxRememberSession, &QCheckBox::setChecked);
+    connect(ui->checkBoxRememberSession, &QCheckBox::clicked, settings, &Settings::setRestorePreviousSession);
 }
 
 PreferencesDialog::~PreferencesDialog()
