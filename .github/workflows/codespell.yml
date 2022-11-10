@@ -14,3 +14,6 @@ jobs:
     - uses: actions/checkout@v3
 
     - uses: codespell-project/actions-codespell@master
+      with:
+        check_filenames: true
+        skip: ./i18n,./installer/NsisMultiUser,./src/lua,./src/scintilla,./src/lexilla,./src/LuaBridge,*.lua
