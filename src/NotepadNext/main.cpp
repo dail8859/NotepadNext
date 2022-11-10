@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
     NotepadNextApplication app(argc, argv);
 
     // Log some debug info
+    // scoll
     qInfo("=============================");
     qInfo("%s v%s%s", qUtf8Printable(QApplication::applicationDisplayName()), qUtf8Printable(QApplication::applicationVersion()), APP_DISTRIBUTION);
     qInfo("Build Date/Time: %s %s", __DATE__, __TIME__);
