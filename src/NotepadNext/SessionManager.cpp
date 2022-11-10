@@ -54,7 +54,7 @@ void SessionManager::SaveSession(QVector<ScintillaNext *> editors)
             settings.setArrayIndex(i);
             settings.setValue("FilePath", editor->getFilePath());
             settings.setValue("FirstVisibleLine", static_cast<int>(editor->firstVisibleLine() + 1)); // Keep it 1-based in the settings just for human-readability
-            //settings.setValue("XOffset", editor->xOffset());
+            settings.setValue("CurrentPosition", static_cast<int>(editor->currentPos()));
             ++i;
         }
     }
@@ -75,7 +75,7 @@ void SessionManager::LoadSession(EditorManager *editorManager)
         settings.setArrayIndex(i);
         QString filePath = settings.value("FilePath").toString();
         int firstVisibleLine = settings.value("FirstVisibleLine").toInt() - 1;
-        //int xOffset = settings.value("XOffset").toInt();
+        int currentPosition = settings.value("CurrentPosition").toInt();
 
         // See if it is already opened, if so just ignore it
         ScintillaNext *editor = editorManager->getEditorByFilePath(filePath);
@@ -87,7 +87,7 @@ void SessionManager::LoadSession(EditorManager *editorManager)
                 editor = editorManager->createEditorFromFile(filePath);
 
                 editor->setFirstVisibleLine(firstVisibleLine);
-                //editor->setXOffset(xOffset);
+                editor->setEmptySelection(currentPosition);
             }
         }
     }
