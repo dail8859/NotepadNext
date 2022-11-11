@@ -130,7 +130,7 @@ int HighlightedScrollBar::lineToScrollBarY(int line) const
 
 int HighlightedScrollBar::scrollbarArrowHeight() const
 {
-    // NOTE: There is no offical way to get the height of the scrollbar arrow buttons, however for now we can
+    // NOTE: There is no official way to get the height of the scrollbar arrow buttons, however for now we can
     // assume that the buttons are square, meaning the height of them will be the same as the width of
     // the scroll bar.
     return rect().width();

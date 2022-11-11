@@ -150,7 +150,7 @@ private:
 
     //NppImporter *npp;
 
-    // Persistant dialogs
+    // Persistent dialogs
     QMap<QString, QDialog *> dialogs;
 
     QuickFindWidget *quickFind = Q_NULLPTR;

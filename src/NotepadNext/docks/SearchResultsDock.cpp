@@ -86,7 +86,7 @@ void SearchResultsDock::newSearch(const QString searchTerm)
 
 void SearchResultsDock::newFileEntry(ScintillaNext *editor)
 {
-    // Store a QPointer since there is no guarentee this editor will be around later
+    // Store a QPointer since there is no guarantee this editor will be around later
     QPointer<ScintillaNext> editor_pointer = editor;
 
     totalFileHitCount = 0;
