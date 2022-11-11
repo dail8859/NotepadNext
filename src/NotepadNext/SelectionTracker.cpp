@@ -54,7 +54,7 @@ void SelectionTracker::trackInsertion(int pos, int length)
 
 void SelectionTracker::trackDeletion(int pos, int length)
 {
-    // Adjust the caret and anchor. Use the min incase they are within the range being deleted
+    // Adjust the caret and anchor. Use the min in case they are within the range being deleted
     if (caret > pos) {
         caret -= qMin(static_cast<int>(caret - pos), length);
     }

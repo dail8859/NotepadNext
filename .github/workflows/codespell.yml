@@ -17,3 +17,4 @@ jobs:
       with:
         check_filenames: true
         skip: ./i18n,./installer/NsisMultiUser,./src/lua,./src/scintilla,./src/lexilla,./src/LuaBridge,*.lua
+        ignore_words_list: DoubleClick,MSDOS
