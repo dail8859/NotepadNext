@@ -122,6 +122,8 @@ public slots:
 
     void restoreWindowState();
 
+    void switchToEditor(const ScintillaNext *editor);
+
 signals:
     void editorActivated(ScintillaNext *editor);
     void aboutToClose();

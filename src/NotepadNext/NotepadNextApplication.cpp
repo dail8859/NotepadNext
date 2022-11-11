@@ -218,7 +218,7 @@ bool NotepadNextApplication::init()
 
     if (settings->restorePreviousSession()) {
         qInfo("Restoring previous session");
-        SessionManager::LoadSession(editorManager);
+        SessionManager::LoadSession(windows.first(), editorManager);
     }
 
     openFiles(parser.positionalArguments());
@@ -441,7 +441,7 @@ MainWindow *NotepadNextApplication::createNewWindow()
         }
 
         if (settings->restorePreviousSession()) {
-            SessionManager::SaveSession(w->editors());
+            SessionManager::SaveSession(w);
         }
         else {
             // Make sure any previous session info is erased

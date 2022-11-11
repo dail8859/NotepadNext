@@ -1512,6 +1512,11 @@ void MainWindow::restoreWindowState()
     srDock->hide();
 }
 
+void MainWindow::switchToEditor(const ScintillaNext *editor)
+{
+    dockedEditor->switchToEditor(editor);
+}
+
 void MainWindow::focusIn()
 {
     qInfo(Q_FUNC_INFO);
