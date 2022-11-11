@@ -17,5 +17,5 @@ jobs:
       with:
         check_filenames: true
         path: ./src/NotepadNext
-        skip: *.lua,*.ui
+        skip: "*.lua,*.ui"
         ignore_words_list: "DoubleClick,MSDOS"
