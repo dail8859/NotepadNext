@@ -110,7 +110,6 @@ public slots:
     void updateGui(ScintillaNext *editor);
 
     void detectLanguage(ScintillaNext *editor);
-    void activateEditor(ScintillaNext *editor);
 
     void setLanguage(ScintillaNext *editor, const QString &languageName);
 
@@ -136,6 +135,7 @@ private slots:
     void tabBarRightClicked(ScintillaNext *editor);
     void languageMenuTriggered();
     void checkForUpdatesFinished(QString url);
+    void activateEditor(ScintillaNext *editor);
 
 private:
     Ui::MainWindow *ui = Q_NULLPTR;
