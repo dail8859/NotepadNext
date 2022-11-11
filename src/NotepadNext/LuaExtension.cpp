@@ -210,7 +210,7 @@ static NppExtensionAPIPane check_pane_object(lua_State *L, int index) {
     pPane = static_cast<NppExtensionAPIPane *>(luaL_testudata(L, index, "Nn_MT_Application"));
 
     // NOTE: I'm not sure what the above comment about the "back reference" means. This may or
-    // may not apply in thise case. So that if statement may need pasted/modified in this case
+    // may not apply in this case. So that if statement may need pasted/modified in this case
 
     if (pPane) {
         return *pPane;

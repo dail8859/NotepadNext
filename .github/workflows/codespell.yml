@@ -1,0 +1,21 @@
+name: Codespell
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  
+jobs:
+  codespell:
+    name: Check for spelling errors
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: codespell-project/actions-codespell@master
+      with:
+        check_filenames: true
+        path: ./src/NotepadNext
+        skip: "*.lua,*.ui"
+        ignore_words_list: "doubleclick,msdos"

@@ -175,7 +175,7 @@ NppImporter::NppImporter(const QString &configPath, ScintillaEdit *_editor) :
     languages["cpp"].lexer.styles[16].keywordClass = LANG_INDEX_INSTR2;
 
 
-    // Build a temporarly list of the key/value pairs
+    // Build a temporary list of the key/value pairs
     QList<QPair<QString, const Language *>> sortedLanguages;
     for (const QString &key : languages.keys()) {
         sortedLanguages.append(qMakePair(key, &languages[key]));
