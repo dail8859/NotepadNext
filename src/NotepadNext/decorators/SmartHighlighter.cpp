@@ -72,7 +72,7 @@ void SmartHighlighter::highlightCurrentView()
 
     // TODO: Handle large files. By default Notepad++ only monitors the text on screen. However,
     // that will not work when using a highlighted scroll bar. Testing with small files seems to
-    // have minimal impact. For large files, Qt can have a timer set to 0 to do heavier procesing.
+    // have minimal impact. For large files, Qt can have a timer set to 0 to do heavier processing.
     // Using threads seems to be a bit overkill and too burdensome to do it properly.
 
     //const int startLine = editor->firstVisibleLine();
