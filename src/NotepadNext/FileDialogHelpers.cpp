@@ -22,7 +22,7 @@
 
 /*
  * NOTE: This code is nearly identical to the QFileDialog implementation of several static methods.
- * Since the QDir filter options were not exposed, there was no way to specify QDir::Hiden.
+ * Since the QDir filter options were not exposed, there was no way to specify QDir::Hidden.
  */
 
 

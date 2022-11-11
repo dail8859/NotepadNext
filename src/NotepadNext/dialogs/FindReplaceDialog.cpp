@@ -412,7 +412,7 @@ void FindReplaceDialog::changeTab(int index)
     if (index == 0) {
         ui->labelReplaceWith->setMaximumHeight(0);
         ui->comboReplace->setMaximumHeight(0);
-        // The combo box isn't actually "hidden", so adjust the focus policy so it doesnt get tabbed to
+        // The combo box isn't actually "hidden", so adjust the focus policy so it does not get tabbed to
         ui->comboReplace->setFocusPolicy(Qt::NoFocus);
 
         ui->buttonReplace->hide();

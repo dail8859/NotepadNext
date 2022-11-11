@@ -84,7 +84,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     connect(this, &MainWindow::aboutToClose, this, &MainWindow::saveSettings);
 
-    // Createa and set up the connections to the docked editor
+    // Create and set up the connections to the docked editor
     dockedEditor = new DockedEditor(this);
     connect(dockedEditor, &DockedEditor::editorCloseRequested, this, [=](ScintillaNext *editor) { closeFile(editor); });
     connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);

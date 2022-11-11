@@ -200,7 +200,7 @@ bool NotepadNextApplication::init()
         if (state == Qt::ApplicationActive) {
 
             // Make sure it is active...
-            // The applicaiton can be active without the main window being show e.g. if there is a
+            // The application can be active without the main window being show e.g. if there is a
             // message box that pops up before the main window
             if (windows.first()->isActiveWindow()) {
                 windows.first()->focusIn();
