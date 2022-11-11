@@ -18,6 +18,7 @@
 
 
 #include "ScintillaNext.h"
+#include "MainWindow.h"
 #include "SessionManager.h"
 #include "EditorManager.h"
 
@@ -38,9 +39,12 @@ void SessionManager::ClearSession()
     settings.remove("");
 }
 
-void SessionManager::SaveSession(QVector<ScintillaNext *> editors)
+void SessionManager::SaveSession(MainWindow *window)
 {
     SessionManager::ClearSession();
+
+    const ScintillaNext *currentEditor = window->currentEditor();
+    int currentEditorIndex = 0;
 
     // Save session
     QSettings settings;
@@ -49,25 +53,35 @@ void SessionManager::SaveSession(QVector<ScintillaNext *> editors)
     settings.beginWriteArray("OpenedFiles");
 
     int i = 0;
-    for (const auto &editor : editors) {
+    for (const auto &editor : window->editors()) {
         if (editor->isFile()) {
             settings.setArrayIndex(i);
             settings.setValue("FilePath", editor->getFilePath());
             settings.setValue("FirstVisibleLine", static_cast<int>(editor->firstVisibleLine() + 1)); // Keep it 1-based in the settings just for human-readability
             settings.setValue("CurrentPosition", static_cast<int>(editor->currentPos()));
+
+            if (currentEditor == editor) {
+                currentEditorIndex = i;
+            }
             ++i;
         }
     }
 
     settings.endArray();
+
+    settings.setValue("CurrentEditorIndex", currentEditorIndex);
+
     settings.endGroup();
 }
 
-void SessionManager::LoadSession(EditorManager *editorManager)
+void SessionManager::LoadSession(MainWindow *window, EditorManager *editorManager)
 {
     QSettings settings;
 
     settings.beginGroup("CurrentSession");
+
+    ScintillaNext *currentEditor = Q_NULLPTR;
+    const int currentEditorIndex = settings.value("CurrentEditorIndex").toInt();
 
     int size = settings.beginReadArray("OpenedFiles");
 
@@ -90,8 +104,17 @@ void SessionManager::LoadSession(EditorManager *editorManager)
                 editor->setEmptySelection(currentPosition);
             }
         }
+
+        if (editor && currentEditorIndex == i) {
+            currentEditor = editor;
+        }
     }
 
     settings.endArray();
+
+    if (currentEditor) {
+        window->switchToEditor(currentEditor);
+    }
+
     settings.endGroup();
 }
