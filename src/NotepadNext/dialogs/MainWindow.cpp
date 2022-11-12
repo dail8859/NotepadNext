@@ -1310,32 +1310,43 @@ void MainWindow::bringWindowToForeground()
 {
     qInfo(Q_FUNC_INFO);
 
-    //setWindowState(windowState() & ~Qt::WindowMinimized);
-    //raise();
-    //activateWindow();
+    // There doesn't seem to be a cross platform way to force the window to the foreground
 
+#ifdef Q_OS_WIN
+    HWND hWnd = reinterpret_cast<HWND>(effectiveWinId());
+
+    if (hWnd) {
+        // I have no idea what this does, but it seems to work on Windows
+        // References:
+        // https://stackoverflow.com/questions/916259/win32-bring-a-window-to-top
+        // https://github.com/notepad-plus-plus/notepad-plus-plus/blob/ebe7648ee1a5a560d4fc65297cbdcf08055e56e3/PowerEditor/src/winmain.cpp#L596
+
+        HWND hCurWnd = GetForegroundWindow();
+        DWORD threadId = GetCurrentThreadId();
+        DWORD procId = GetWindowThreadProcessId(hCurWnd, NULL);
+
+        int sw = 0;
+        if (IsZoomed(hWnd)) {
+            sw = SW_MAXIMIZE;
+        } else if (IsIconic(hWnd)) {
+            sw = SW_RESTORE;
+        }
+
+        if (sw != 0) {
+            ShowWindow(hWnd, sw);
+        }
+
+        AttachThreadInput(procId, threadId, TRUE);
+        SetForegroundWindow(hWnd);
+        SetFocus(hWnd);
+        AttachThreadInput(procId, threadId, FALSE);
+    }
+#else
     // Make sure the window isn't minimized
     // TODO: this always puts it in the "normal" state but it might have been maximized
     // before minimized...so either a flag needs stored or find a Qt call to do it appropriately
     if (isMinimized())
         showNormal();
-
-#ifdef Q_OS_WIN
-    // TODO: there doesn't seem to be a cross platform way to force the window
-    // to the foreground. So this will need moved to a platform specific file
-
-    HWND hWnd = reinterpret_cast<HWND>(effectiveWinId());
-    if (hWnd) {
-        // I have no idea what this does but it works mostly
-        // https://www.codeproject.com/Articles/1724/Some-handy-dialog-box-tricks-tips-and-workarounds
-
-        AttachThreadInput(GetWindowThreadProcessId(GetForegroundWindow(), nullptr), GetCurrentThreadId(), TRUE);
-
-        SetForegroundWindow(hWnd);
-        SetFocus(hWnd);
-
-        AttachThreadInput(GetWindowThreadProcessId(GetForegroundWindow(), nullptr), GetCurrentThreadId(), FALSE);
-    }
 #endif
 }
 
