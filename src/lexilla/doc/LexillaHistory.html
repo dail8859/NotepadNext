@@ -580,9 +580,108 @@
 	<td>cdbdev</td>
 	<td>Andrey Smolyakov</td>
 	<td>Knut Leimbert</td>
+      </tr><tr>
+	<td>German Aizek</td>
     </tr>
     </table>
     <h2>Releases</h2>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla520.zip">Release 5.2.0</a>
+    </h3>
+    <ul>
+	<li>
+	Released 12 October 2022.
+	</li>
+	<li>
+	PowerShell: End comment before \r carriage return so \r and \n in same
+	SCE_POWERSHELL_DEFAULT style.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/99">Pull request #99</a>.
+	</li>
+	<li>
+	PowerShell: Fix character truncation bug that lead to 'ġ' styled as an operator since its low 8 bits
+	are equal to '!'.
+	</li>
+	<li>
+	R: Support hexadecimal, float exponent and number suffix.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/101">Issue #101</a>.
+	</li>
+	<li>
+	R: Highlight backticks.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/102">Pull request #102</a>.
+	</li>
+	<li>
+	R: Highlight raw strings.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/100">Issue #100</a>.
+	</li>
+	<li>
+	R: Optionally highlight escape sequences in strings.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/100">Issue #100</a>.
+	</li>
+	<li>
+	Fix early truncation from LexAccessor::GetRange and LexAccessor::GetRangeLowered.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/17">Issue #17</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla519.zip">Release 5.1.9</a>
+    </h3>
+    <ul>
+	<li>
+	Released 27 August 2022.
+	</li>
+	<li>
+	Julia: Parse unicode forall and exists as identifiers #42314.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/98">Pull request #98</a>.
+	</li>
+	<li>
+	Julia: Parse apostrophe as char and not adjoint after exclamation.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/97">Issue #97</a>,
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/98">Pull request #98</a>.
+	</li>
+	<li>
+	Properties: Don't set header flag for empty section.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/96">Issue #96</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla518.zip">Release 5.1.8</a>
+    </h3>
+    <ul>
+	<li>
+	Released 10 July 2022.
+	</li>
+	<li>
+	F#: Recognize nested comments in F#.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/93">Issue #93</a>.
+	</li>
+	<li>
+	MS SQL: Recognize nested comments in Transact-SQL.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/87">Issue #87</a>.
+	</li>
+	<li>
+	MS SQL: Preference data types more consistently to not depend on how lexing is broken
+	up into segments. This is needed because there are keywords that are both data type
+	names and function names such as 'CHAR'.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/90">Issue #90</a>.
+	</li>
+	<li>
+	PowerShell: Fix single quoted strings to not treat backtick as escape.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/92">Pull request #92</a>.
+	</li>
+	<li>
+	Visual Prolog: Treat \r\n line ends the same as \n. This makes testing easier.
+	Add test case.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/83">Issue #83</a>.
+	</li>
+	<li>
+	Visual Prolog: Allow disabling verbatim strings.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/89">Pull request #89</a>.
+	</li>
+	<li>
+	Visual Prolog: Support backquoted strings.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/89">Pull request #89</a>.
+	</li>
+    </ul>
     <h3>
        <a href="https://www.scintilla.org/lexilla517.zip">Release 5.1.7</a>
     </h3>
