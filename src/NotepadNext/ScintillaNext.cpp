@@ -52,15 +52,12 @@ static bool writeToDisk(const QByteArray &data, const QString &path)
 
 ScintillaNext::ScintillaNext(QString name, QWidget *parent) :
     ScintillaEdit(parent),
-    doc(get_doc()),
     name(name)
 {
-    connect(doc, &ScintillaDocument::lexer_changed, this, &ScintillaNext::lexerChanged);
 }
 
 ScintillaNext::~ScintillaNext()
 {
-    delete doc;
 }
 
 ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate)
