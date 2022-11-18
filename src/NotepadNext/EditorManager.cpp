@@ -31,6 +31,7 @@
 #include "BetterMultiSelection.h"
 #include "AutoIndentation.h"
 #include "AutoCompletion.h"
+#include "URLFinder.h"
 
 
 const int MARK_BOOKMARK = 24;
@@ -251,6 +252,9 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     AutoCompletion *ac = new AutoCompletion(editor);
     ac->setEnabled(true);
+
+    URLFinder *uf = new URLFinder(editor);
+    uf->setEnabled(true);
 }
 
 void EditorManager::purgeOldEditorPointers()
