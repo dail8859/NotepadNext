@@ -113,7 +113,6 @@ protected:
     void dropEvent(QDropEvent *event) override;
 
 private:
-    ScintillaDocument *doc;
     QString name;
     BufferType bufferType = BufferType::Temporary;
     QFileInfo fileInfo;

@@ -178,6 +178,8 @@ public:
 	void styleSetHotSpot(sptr_t style, bool hotspot);
 	void styleSetCheckMonospaced(sptr_t style, bool checkMonospaced);
 	bool styleCheckMonospaced(sptr_t style) const;
+	void styleSetInvisibleRepresentation(sptr_t style, const char * representation);
+	QByteArray styleInvisibleRepresentation(sptr_t style) const;
 	void setElementColour(sptr_t element, sptr_t colourElement);
 	sptr_t elementColour(sptr_t element) const;
 	void resetElementColour(sptr_t element);

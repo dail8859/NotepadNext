@@ -560,6 +560,14 @@ bool ScintillaEdit::styleCheckMonospaced(sptr_t style) const {
     return send(SCI_STYLEGETCHECKMONOSPACED, style, 0);
 }
 
+void ScintillaEdit::styleSetInvisibleRepresentation(sptr_t style, const char * representation) {
+    send(SCI_STYLESETINVISIBLEREPRESENTATION, style, (sptr_t)representation);
+}
+
+QByteArray ScintillaEdit::styleInvisibleRepresentation(sptr_t style) const {
+    return TextReturner(SCI_STYLEGETINVISIBLEREPRESENTATION, style);
+}
+
 void ScintillaEdit::setElementColour(sptr_t element, sptr_t colourElement) {
     send(SCI_SETELEMENTCOLOUR, element, colourElement);
 }
