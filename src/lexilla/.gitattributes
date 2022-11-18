@@ -19,6 +19,7 @@
 **.def text
 **.manifest text
 **.properties text
+**.props text
 **.session text
 **.styled text
 **.folded text
@@ -30,6 +31,7 @@
 **.d text
 **.erl text
 **.gd text
+**.gui text
 **.iss text
 **.jl text
 **.json text
@@ -40,9 +42,13 @@
 **.octave text
 **.pl text
 **.p6 text
+**.ps1 text
+**.r text
 **.rb text
 **.rs text
+**.sql text
 **.tcl text
+**.tsql text
 **.err text
 **.mms text
 **.tex text

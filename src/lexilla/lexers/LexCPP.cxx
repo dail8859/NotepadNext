@@ -169,7 +169,7 @@ class EscapeSequence {
 	int digitsLeft = 0;
 public:
 	EscapeSequence() = default;
-	void resetEscapeState(int nextChar) {
+	void resetEscapeState(int nextChar) noexcept {
 		digitsLeft = 0;
 		escapeSetValid = &setNoneNumeric;
 		if (nextChar == 'U') {
@@ -186,7 +186,7 @@ public:
 			escapeSetValid = &setOctDigits;
 		}
 	}
-	bool atEscapeEnd(int currChar) const {
+	bool atEscapeEnd(int currChar) const noexcept {
 		return (digitsLeft <= 0) || !escapeSetValid->Contains(currChar);
 	}
 	void consumeDigit() noexcept {
@@ -263,8 +263,7 @@ class LinePPState {
 		}
 	}
 public:
-	LinePPState() noexcept {
-	}
+	LinePPState() noexcept = default;
 	bool ValidLevel() const noexcept {
 		return level >= 0 && level < maximumNestingLevel;
 	}
@@ -315,9 +314,8 @@ public:
 	LinePPState ForLine(Sci_Position line) const noexcept {
 		if ((line > 0) && (vlls.size() > static_cast<size_t>(line))) {
 			return vlls[line];
-		} else {
-			return LinePPState();
 		}
+		return {};
 	}
 	void Add(Sci_Position line, LinePPState lls) {
 		vlls.resize(line+1);
@@ -654,7 +652,7 @@ public:
 			if (styleActive < sizeLexicalClasses)
 				returnBuffer += lexicalClasses[styleActive].tags;
 			else
-				returnBuffer = "";
+				returnBuffer.clear();
 			return returnBuffer.c_str();
 		}
 		return "";
@@ -728,6 +726,8 @@ Sci_Position SCI_METHOD LexerCPP::WordListSet(int n, const char *wl) {
 		break;
 	case 5:
 		wordListN = &markerList;
+		break;
+	default:
 		break;
 	}
 	Sci_Position firstModification = -1;
@@ -883,7 +883,7 @@ void SCI_METHOD LexerCPP::Lex(Sci_PositionU startPos, Sci_Position length, int i
 			lineCurrent++;
 			lineEndNext = styler.LineEnd(lineCurrent);
 			vlls.Add(lineCurrent, preproc);
-			if (rawStringTerminator != "") {
+			if (!rawStringTerminator.empty()) {
 				rawSTNew.Set(lineCurrent-1, rawStringTerminator);
 			}
 		}
@@ -894,7 +894,7 @@ void SCI_METHOD LexerCPP::Lex(Sci_PositionU startPos, Sci_Position length, int i
 				lineCurrent++;
 				lineEndNext = styler.LineEnd(lineCurrent);
 				vlls.Add(lineCurrent, preproc);
-				if (rawStringTerminator != "") {
+				if (!rawStringTerminator.empty()) {
 					rawSTNew.Set(lineCurrent-1, rawStringTerminator);
 				}
 				sc.Forward();
@@ -1161,7 +1161,7 @@ void SCI_METHOD LexerCPP::Lex(Sci_PositionU startPos, Sci_Position length, int i
 					for (size_t termPos=rawStringTerminator.size(); termPos; termPos--)
 						sc.Forward();
 					sc.SetState(SCE_C_DEFAULT|activitySet);
-					rawStringTerminator = "";
+					rawStringTerminator.clear();
 				}
 				break;
 			case SCE_C_CHARACTER:
@@ -1428,7 +1428,7 @@ void SCI_METHOD LexerCPP::Lex(Sci_PositionU startPos, Sci_Position length, int i
 							if (options.updatePreprocessor && preproc.IsActive()) {
 								const std::string restOfLine = GetRestOfLine(styler, sc.currentPos + 5, false);
 								Tokens tokens = Tokenize(restOfLine);
-								if (tokens.size() >= 1) {
+								if (!tokens.empty()) {
 									const std::string key = tokens[0];
 									preprocessorDefinitions.erase(key);
 									ppDefineHistory.push_back(PPDefinition(lineCurrent, key, "", true));
@@ -1634,7 +1634,7 @@ void LexerCPP::EvaluateTokens(Tokens &tokens, const SymbolTable &preprocessorDef
 				if (it->second.IsMacro()) {
 					if ((i + 1 < tokens.size()) && (tokens.at(i + 1) == "(")) {
 						// Create map of argument name to value
-						Tokens argumentNames = StringSplit(it->second.arguments, ',');
+						const Tokens argumentNames = StringSplit(it->second.arguments, ',');
 						std::map<std::string, std::string> arguments;
 						size_t arg = 0;
 						size_t tok = i+2;
@@ -1814,7 +1814,7 @@ bool LexerCPP::EvaluateExpression(const std::string &expr, const SymbolTable &pr
 
 	// "0" or "" -> false else true
 	const bool isFalse = tokens.empty() ||
-		((tokens.size() == 1) && ((tokens[0] == "") || tokens[0] == "0"));
+		((tokens.size() == 1) && (tokens[0].empty() || tokens[0] == "0"));
 	return !isFalse;
 }
 
