@@ -100,6 +100,7 @@ SOURCES += \
     decorators/BetterMultiSelection.cpp \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
+    decorators/URLFinder.cpp \
     dialogs/MacroEditorDialog.cpp \
     docks/DebugLogDock.cpp \
     docks/EditorInspectorDock.cpp \
@@ -168,6 +169,7 @@ HEADERS += \
     decorators/BetterMultiSelection.h \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
+    decorators/URLFinder.h \
     dialogs/MacroEditorDialog.h \
     docks/DebugLogDock.h \
     docks/EditorInspectorDock.h \
