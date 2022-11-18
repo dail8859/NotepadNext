@@ -63,14 +63,33 @@ void URLFinder::findURLs()
 
         const int startPos = editor->positionFromLine(currentLine);
         const int endPos = editor->lineEndPosition(currentLine);
-        QByteArray reg(R"(\bhttps?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))");
+        QByteArray reg = QByteArrayLiteral(R"(\bhttps?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))");
 
         Sci_TextToFind ttf {{startPos, (Sci_PositionCR)endPos}, reg.constData(), {-1, -1}};
         while (editor->send(SCI_FINDTEXT, flags, (sptr_t)&ttf) != -1) {
-            editor->indicatorFillRange(ttf.chrgText.cpMin, ttf.chrgText.cpMax - ttf.chrgText.cpMin);
-            ttf.chrg.cpMin = ttf.chrgText.cpMax;
+            const int startUrl = ttf.chrgText.cpMin;
+            int endUrl = ttf.chrgText.cpMax;
+
+            // Though technically certain characters are allowed in the URL such as brackets, parenthesis, etc
+            // this adds a bit of logic to trim off the end character based on if something is in front if it, for example
+            // [https://example.com] probably shouldn't include the last bracket since it starts with an opening bracket.
+            if (startUrl > 0) {
+                const int prevChar = static_cast<int>(editor->charAt(startUrl - 1));
+                const int nextChar = static_cast<int>(editor->charAt(endUrl - 1));
+
+                if ((prevChar == '(' && nextChar == ')') ||
+                    (prevChar == '[' && nextChar == ']') ||
+                    (prevChar == '<' && nextChar == '>') ||
+                    (prevChar == '"' && nextChar == '"')) {
+                    endUrl--;
+                }
+            }
+
+            editor->indicatorFillRange(startUrl, endUrl - startUrl);
+            ttf.chrg.cpMin = endUrl;
         }
 
+        // If a line is wrapped, skip however many lines it takes up on the screen
         linesLeftToProcess -= editor->wrapCount(currentLine);
 
         // If the current line is a fold header and the fold is not expanded, skip
