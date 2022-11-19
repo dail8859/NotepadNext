@@ -1,6 +1,5 @@
-#CPMAddPackage("gh:elcuco/lexilla#270fb410dd7518736141c9c9c84880b938d957a7")
-
-CPMAddPackage("gh:ScintillaOrg/lexilla#3dbbff6fe2fa53b8d7a3907440e6f8294f8b1eb4")
+# Master is currently: 537dfaa591e83473678d782e394766e7bac6d59e
+CPMAddPackage("gh:ScintillaOrg/lexilla#rel-5-2-0")
 
 if (lexilla_ADDED)
     add_library(lexilla
