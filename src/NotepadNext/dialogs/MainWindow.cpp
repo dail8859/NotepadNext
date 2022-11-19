@@ -1312,7 +1312,7 @@ void MainWindow::bringWindowToForeground()
 
     // There doesn't seem to be a cross platform way to force the window to the foreground
 
-#ifdef Q_OS_WIN
+#ifndef Q_OS_WIN
     HWND hWnd = reinterpret_cast<HWND>(effectiveWinId());
 
     if (hWnd) {
@@ -1342,11 +1342,9 @@ void MainWindow::bringWindowToForeground()
         AttachThreadInput(procId, threadId, FALSE);
     }
 #else
-    // Make sure the window isn't minimized
-    // TODO: this always puts it in the "normal" state but it might have been maximized
-    // before minimized...so either a flag needs stored or find a Qt call to do it appropriately
-    if (isMinimized())
-        showNormal();
+    setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+    raise();
+    activateWindow();
 #endif
 }
 
