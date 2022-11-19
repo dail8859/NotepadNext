@@ -22,49 +22,131 @@
 #include "SessionManager.h"
 #include "EditorManager.h"
 
-#include <QSettings>
+#include <QDir>
+#include <QStandardPaths>
 
-SessionManager::SessionManager()
+SessionManager::SessionManager(SessionFileTypes types)
 {
-
+    setSessionFileTypes(types);
 }
 
-void SessionManager::ClearSession()
+void SessionManager::setSessionFileTypes(SessionFileTypes types)
 {
-    // Save session
+    fileTypes = types;
+}
+
+QDir SessionManager::sessionDirectory() const
+{
+    QDir d(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+
+    d.mkpath("session");
+    d.cd("session");
+
+    return d;
+}
+
+SessionManager::SessionFileType SessionManager::determineType(ScintillaNext *editor) const
+{
+    if (editor->isFile()) {
+        if (editor->isSavedToDisk()) {
+            return SessionManager::SavedFile;
+        }
+        else {
+            return SessionManager::UnsavedFile;
+        }
+    }
+    else {
+        if (!editor->isSavedToDisk()) {
+            return SessionManager::TempFile;
+        }
+        else {
+            return SessionManager::None;
+        }
+    }
+}
+
+void SessionManager::clear() const
+{
+    clearSettings();
+    clearDirectory();
+}
+
+void SessionManager::clearSettings() const
+{
     QSettings settings;
-    settings.beginGroup("CurrentSession");
 
     // Clear everything out. There can be left over entries that are no longer needed
+    settings.beginGroup("CurrentSession");
     settings.remove("");
 }
 
-void SessionManager::SaveSession(MainWindow *window)
+void SessionManager::clearDirectory() const
 {
-    SessionManager::ClearSession();
+    QDir d = sessionDirectory();
+
+    for (const QString &f : d.entryList()) {
+        d.remove(f);
+    }
+}
+
+void SessionManager::saveSession(MainWindow *window)
+{
+    qInfo(Q_FUNC_INFO);
+
+    clear();
+
+    // Early out if no flags are set
+    if (fileTypes == SessionManager::None) {
+        return;
+    }
 
     const ScintillaNext *currentEditor = window->currentEditor();
     int currentEditorIndex = 0;
-
-    // Save session
     QSettings settings;
+
     settings.beginGroup("CurrentSession");
 
     settings.beginWriteArray("OpenedFiles");
 
     int i = 0;
     for (const auto &editor : window->editors()) {
-        if (editor->isFile()) {
-            settings.setArrayIndex(i);
-            settings.setValue("FilePath", editor->getFilePath());
-            settings.setValue("FirstVisibleLine", static_cast<int>(editor->firstVisibleLine() + 1)); // Keep it 1-based in the settings just for human-readability
-            settings.setValue("CurrentPosition", static_cast<int>(editor->currentPos()));
+        settings.setArrayIndex(i);
 
-            if (currentEditor == editor) {
-                currentEditorIndex = i;
+        SessionFileType editorType = determineType(editor);
+
+        if (editorType == SessionManager::SavedFile) {
+            if (fileTypes.testFlag(SessionManager::SavedFile)) {
+                storeFileDetails(editor, settings);
             }
-            ++i;
+            else {
+                continue;
+            }
         }
+        else if (editorType == SessionManager::UnsavedFile) {
+            if (fileTypes.testFlag(SessionManager::UnsavedFile)) {
+                storeFileDetails(editor, settings);
+            }
+            else {
+                continue;
+            }
+        }
+        else if (editorType == SessionManager::TempFile) {
+            if (fileTypes.testFlag(SessionManager::TempFile)) {
+                storeUnsavedTempFile(editor, settings);
+            }
+            else {
+                continue;
+            }
+        }
+        else {
+            continue;
+        }
+
+        if (currentEditor == editor) {
+            currentEditorIndex = i;
+        }
+
+        ++i;
     }
 
     settings.endArray();
@@ -74,47 +156,205 @@ void SessionManager::SaveSession(MainWindow *window)
     settings.endGroup();
 }
 
-void SessionManager::LoadSession(MainWindow *window, EditorManager *editorManager)
+void SessionManager::loadSession(MainWindow *window, EditorManager *editorManager)
 {
+    qInfo(Q_FUNC_INFO);
+
     QSettings settings;
 
     settings.beginGroup("CurrentSession");
 
     ScintillaNext *currentEditor = Q_NULLPTR;
     const int currentEditorIndex = settings.value("CurrentEditorIndex").toInt();
+    const int size = settings.beginReadArray("OpenedFiles");
 
-    int size = settings.beginReadArray("OpenedFiles");
+    // NOTE: In theory the settings should determine what file types are loaded, however if the session file types
+    // change from the last time it was saved then it means the settings were manually altered outside of the app,
+    // which is non-standard behavior, so just load anything in the file
 
     for (int i = 0; i < size; ++i) {
         settings.setArrayIndex(i);
-        QString filePath = settings.value("FilePath").toString();
-        int firstVisibleLine = settings.value("FirstVisibleLine").toInt() - 1;
-        int currentPosition = settings.value("CurrentPosition").toInt();
 
-        // See if it is already opened, if so just ignore it
-        ScintillaNext *editor = editorManager->getEditorByFilePath(filePath);
+        ScintillaNext *editor = Q_NULLPTR;
 
-        if (editor == Q_NULLPTR) {
-            QFileInfo fileInfo(filePath);
+        if (settings.contains("Type")) {
+            const QString type = settings.value("Type").toString();
 
-            if (fileInfo.isFile()) {
-                editor = editorManager->createEditorFromFile(filePath);
+            if (type == QStringLiteral("File")) {
+                editor = loadFileDetails(settings, editorManager);
+            }
+            else if (type == QStringLiteral("UnsavedFile")) {
+                editor = loadUnsavedFileDetails(settings, editorManager);
 
-                editor->setFirstVisibleLine(firstVisibleLine);
-                editor->setEmptySelection(currentPosition);
+            }
+            else if (type == QStringLiteral("UnsavedTemp")) {
+                editor = loadUnsavedTempFile(settings, editorManager);
+            }
+            else {
+                qDebug("Unknown session entry type: %s", qUtf8Printable(type));
+            }
+
+            if (editor) {
+                 if (currentEditorIndex == i) {
+                    currentEditor = editor;
+                }
             }
         }
-
-        if (editor && currentEditorIndex == i) {
-            currentEditor = editor;
+        else {
+            qDebug("Unknown session entry type for index %d", i);
         }
     }
 
     settings.endArray();
 
+    settings.endGroup();
+
     if (currentEditor) {
         window->switchToEditor(currentEditor);
     }
+}
 
-    settings.endGroup();
+bool SessionManager::willFileGetStoredInSession(ScintillaNext *editor) const
+{
+    SessionFileType editorType = determineType(editor);
+
+    // See if the editor type is in the currently supported file types
+    return fileTypes.testFlag(editorType);
+}
+
+void SessionManager::storeFileDetails(ScintillaNext *editor, QSettings &settings)
+{
+    settings.setValue("Type", "File");
+
+    settings.setValue("FilePath", editor->getFilePath());
+    storeEditorViewDetails(editor, settings);
+}
+
+ScintillaNext* SessionManager::loadFileDetails(QSettings &settings, EditorManager *editorManager)
+{
+    qInfo(Q_FUNC_INFO);
+
+    const QString filePath = settings.value("FilePath").toString();
+
+    qDebug("Session file: \"%s\"", qUtf8Printable(filePath));
+
+    ScintillaNext *editor = editorManager->getEditorByFilePath(filePath);
+    if (editor != Q_NULLPTR) {
+        qDebug("  file is already open, ignoring");
+        return Q_NULLPTR;
+    }
+
+    if (QFileInfo::exists(filePath)) {
+        editor = editorManager->createEditorFromFile(filePath);
+    }
+    else {
+        qDebug("  no longer exists on disk, ignoring");
+        return Q_NULLPTR;
+    }
+
+    if (editor) {
+        loadEditorViewDetails(editor, settings);
+        return editor;
+    }
+    else {
+        return Q_NULLPTR;
+    }
+}
+
+void SessionManager::storeUnsavedFileDetails(ScintillaNext *editor, QSettings &settings)
+{
+    settings.setValue("Type", "UnsavedFile");
+
+    settings.setValue("FilePath", editor->getFilePath());
+    storeEditorViewDetails(editor, settings);
+
+    editor->saveCopyAs(sessionDirectory().filePath(editor->getName()));
+}
+
+ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings, EditorManager *editorManager)
+{
+    qInfo(Q_FUNC_INFO);
+
+    const QString filePath = settings.value("FilePath").toString();
+    const QString tempFilePath = sessionDirectory().filePath(QFileInfo(filePath).fileName());
+
+    qDebug("Session file: \"%s\"", qUtf8Printable(filePath));
+    qDebug("  temp loc: \"%s\"", qUtf8Printable(tempFilePath));
+
+    ScintillaNext *editor = editorManager->getEditorByFilePath(filePath);
+    if (editor != Q_NULLPTR) {
+        qDebug("  file is already open, ignoring");
+        return Q_NULLPTR;
+    }
+
+    if (QFileInfo::exists(filePath) && QFileInfo::exists(tempFilePath)) {
+        ScintillaNext *editor = ScintillaNext::fromFile(tempFilePath);
+
+        // Since this editor has different file path info, treat this as a temporary buffer
+        editor->setFileInfo(filePath);
+        editor->setTemporary(true);
+
+        loadEditorViewDetails(editor, settings);
+
+        editorManager->manageEditor(editor);
+
+        return editor;
+    }
+    else {
+        // What if just filePath exists?
+        qDebug("  no longer exists on disk, ignoring this file for session loading");
+        return Q_NULLPTR;
+    }
+}
+
+void SessionManager::storeUnsavedTempFile(ScintillaNext *editor, QSettings &settings)
+{
+    settings.setValue("Type", "UnsavedTemp");
+
+    settings.setValue("FileName", editor->getName());
+    storeEditorViewDetails(editor, settings);
+
+    editor->saveCopyAs(sessionDirectory().filePath(editor->getName()));
+}
+
+ScintillaNext *SessionManager::loadUnsavedTempFile(QSettings &settings, EditorManager *editorManager)
+{
+    qInfo(Q_FUNC_INFO);
+
+    const QString fileName = settings.value("FileName").toString();
+    const QString fullFilePath = sessionDirectory().filePath(QFileInfo(fileName).fileName());
+
+    qDebug("Session temp file: \"%s\"", qUtf8Printable(fullFilePath));
+
+    if (QFileInfo::exists(fullFilePath)) {
+        ScintillaNext *editor = ScintillaNext::fromFile(fullFilePath, false);
+
+        editor->detachFileInfo(fileName);
+        editor->setTemporary(true);
+
+        loadEditorViewDetails(editor, settings);
+
+        editorManager->manageEditor(editor);
+
+        return editor;
+    }
+    else {
+        qDebug("  no longer exists on disk, ignoring");
+        return Q_NULLPTR;
+    }
+}
+
+void SessionManager::storeEditorViewDetails(ScintillaNext *editor, QSettings &settings)
+{
+    settings.setValue("FirstVisibleLine", static_cast<int>(editor->firstVisibleLine() + 1)); // Keep it 1-based in the settings just for human-readability
+    settings.setValue("CurrentPosition", static_cast<int>(editor->currentPos()));
+}
+
+void SessionManager::loadEditorViewDetails(ScintillaNext *editor, QSettings &settings)
+{
+    const int firstVisibleLine = settings.value("FirstVisibleLine").toInt() - 1;
+    const int currentPosition = settings.value("CurrentPosition").toInt();
+
+    editor->setFirstVisibleLine(firstVisibleLine);
+    editor->setEmptySelection(currentPosition);
 }

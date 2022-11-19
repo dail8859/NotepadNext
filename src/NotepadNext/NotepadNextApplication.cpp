@@ -109,6 +109,7 @@ bool NotepadNextApplication::init()
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(this);
     settings = new Settings(this);
+    sessionManager = new SessionManager();
 
     connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [=](ScintillaNext *editor) {
         if (editor->isFile()) {
@@ -126,12 +127,14 @@ bool NotepadNextApplication::init()
     QSettings qsettings;
 
     settings->setRestorePreviousSession(qsettings.value("App/RestorePreviousSession", false).toBool());
+    settings->setRestoreTempFiles(qsettings.value("App/RestoreTempFiles", false).toBool());
     recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
 
     connect(this, &NotepadNextApplication::aboutToQuit, this, [=]() {
         QSettings qsettings;
 
         qsettings.setValue("App/RestorePreviousSession", settings->restorePreviousSession());
+        qsettings.setValue("App/RestoreTempFiles", settings->restoreTempFiles());
         qsettings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
     });
 
@@ -218,7 +221,8 @@ bool NotepadNextApplication::init()
 
     if (settings->restorePreviousSession()) {
         qInfo("Restoring previous session");
-        SessionManager::LoadSession(windows.first(), editorManager);
+
+        sessionManager->loadSession(windows.first(), editorManager);
     }
 
     openFiles(parser.positionalArguments());
@@ -237,6 +241,28 @@ bool NotepadNextApplication::init()
     DebugManager::resumeDebugOutput();
 
     return true;
+}
+
+SessionManager *NotepadNextApplication::getSessionManager() const
+{
+    SessionManager::SessionFileTypes fileTypes;
+
+    if (settings->restorePreviousSession()) {
+        fileTypes |= SessionManager::SavedFile;
+    }
+
+    if (false /*settings->restorePreviousSession()*/) {
+        fileTypes |= SessionManager::UnsavedFile;
+    }
+
+    if (settings->restoreTempFiles()) {
+        fileTypes |= SessionManager::TempFile;
+    }
+
+    // Update the file types supported in case something has changed in the settings
+    sessionManager->setSessionFileTypes(fileTypes);
+
+    return sessionManager;
 }
 
 QString NotepadNextApplication::getFileDialogFilter() const
@@ -440,13 +466,7 @@ MainWindow *NotepadNextApplication::createNewWindow()
             }
         }
 
-        if (settings->restorePreviousSession()) {
-            SessionManager::SaveSession(w);
-        }
-        else {
-            // Make sure any previous session info is erased
-            SessionManager::ClearSession();
-        }
+        getSessionManager()->saveSession(w);
     });
 
     return w;

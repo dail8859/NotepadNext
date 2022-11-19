@@ -85,7 +85,7 @@ void FileListDock::addEditor(ScintillaNext *editor)
     item->setToolTip(editor->getName());
     item->setIcon(QIcon(":/icons/saved.png"));
     item->setData(Qt::UserRole, QVariant::fromValue(editor));
-    item->setIcon(QIcon(editor->modify() ? ":/icons/unsaved.png" : ":/icons/saved.png"));
+    item->setIcon(QIcon(editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png"));
 
     // Need some notifications from the editor itself
     // NOTE: Cannot use a lambda here because item is not a QObject, and thus cannot be used as a context for Qt to know
@@ -138,7 +138,7 @@ void FileListDock::editorSavePointChanged(bool dirty)
         QListWidgetItem* item = lookupItemByEditor(editor);
 
         if (item) {
-            const QString iconPath = dirty ? ":/icons/unsaved.png" : ":/icons/saved.png";
+            const QString iconPath = editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png";
             item->setIcon(QIcon(iconPath));
         }
     }

@@ -35,6 +35,7 @@ class Settings : public QObject
     Q_PROPERTY(bool tabsClosable READ tabsClosable WRITE setTabsClosable NOTIFY tabsClosableChanged)
 
     Q_PROPERTY(bool restorePreviousSession READ restorePreviousSession WRITE setRestorePreviousSession NOTIFY restorePreviousSessionChanged)
+    Q_PROPERTY(bool restoreTempFiles READ restoreTempFiles WRITE setRestoreTempFiles NOTIFY restoreTempFilesChanged)
 
     bool m_showMenuBar = true;
     bool m_showToolBar = true;
@@ -44,6 +45,7 @@ class Settings : public QObject
     bool m_tabsClosable = true;
 
     bool m_restorePreviousSession = false;
+    bool m_restoreTempFiles = false;
 
 public:
     explicit Settings(QObject *parent = nullptr);
@@ -56,6 +58,7 @@ public:
     bool tabsClosable() const;
 
     bool restorePreviousSession() const;
+    bool restoreTempFiles() const;
 
 signals:
     void showMenuBarChanged(bool showMenuBar);
@@ -66,6 +69,7 @@ signals:
     void tabsClosableChanged(bool tabsClosable);
 
     void restorePreviousSessionChanged(bool restorePreviousSession);
+    void restoreTempFilesChanged(bool restoreTempFiles);
 
 public slots:
     void setShowMenuBar(bool showMenuBar);
@@ -76,6 +80,7 @@ public slots:
     void setTabsClosable(bool tabsClosable);
 
     void setRestorePreviousSession(bool restorePreviousSession);
+    void setRestoreTempFiles(bool restoreTempFiles);
 };
 
 #endif // SETTINGS_H

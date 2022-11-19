@@ -32,6 +32,7 @@ bool Settings::showStatusBar() const { return m_showStatusBar; }
 bool Settings::tabsClosable() const { return m_tabsClosable; }
 
 bool Settings::restorePreviousSession() const { return m_restorePreviousSession; }
+bool Settings::restoreTempFiles() const { return m_restoreTempFiles; }
 
 
 void Settings::setShowMenuBar(bool showMenuBar)
@@ -86,4 +87,13 @@ void Settings::setRestorePreviousSession(bool restorePreviousSession)
 
     m_restorePreviousSession = restorePreviousSession;
     emit tabsClosableChanged(m_restorePreviousSession);
+}
+
+void Settings::setRestoreTempFiles(bool restoreTempFiles)
+{
+    if (m_restoreTempFiles == restoreTempFiles)
+        return;
+
+    m_restoreTempFiles = restoreTempFiles;
+    emit tabsClosableChanged(m_restoreTempFiles);
 }

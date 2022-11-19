@@ -44,6 +44,16 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
     ui->checkBoxRememberSession->setChecked(settings->restorePreviousSession());
     connect(settings, &Settings::restorePreviousSessionChanged, ui->checkBoxRememberSession, &QCheckBox::setChecked);
     connect(ui->checkBoxRememberSession, &QCheckBox::clicked, settings, &Settings::setRestorePreviousSession);
+
+    ui->checkBoxRestoreTempFiles->setChecked(settings->restoreTempFiles());
+    connect(ui->checkBoxRememberSession, &QCheckBox::clicked, ui->checkBoxRestoreTempFiles, &QCheckBox::setEnabled);
+    connect(ui->checkBoxRememberSession, &QCheckBox::clicked, this, [=](bool checked) {
+        if (!checked) {
+            ui->checkBoxRestoreTempFiles->setChecked(false);
+        }
+    });
+    connect(settings, &Settings::restoreTempFilesChanged, ui->checkBoxRestoreTempFiles, &QCheckBox::setChecked);
+    connect(ui->checkBoxRestoreTempFiles, &QCheckBox::clicked, settings, &Settings::setRestoreTempFiles);
 }
 
 PreferencesDialog::~PreferencesDialog()

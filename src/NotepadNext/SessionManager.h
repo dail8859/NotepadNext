@@ -20,7 +20,9 @@
 #ifndef SESSIONMANAGER_H
 #define SESSIONMANAGER_H
 
-#include <QVector>
+
+#include <QDir>
+#include <QSettings>
 
 
 class ScintillaNext;
@@ -30,12 +32,49 @@ class MainWindow;
 class SessionManager
 {
 public:
-    SessionManager();
+    enum SessionFileType {
+        None = 0,
+        SavedFile = 1,
+        UnsavedFile = 2,
+        TempFile = 3,
+    };
+    Q_DECLARE_FLAGS(SessionFileTypes, SessionFileType)
 
-    static void ClearSession();
 
-    static void SaveSession(MainWindow *window);
-    static void LoadSession(MainWindow *window, EditorManager *editorManager);
+    SessionManager(SessionFileTypes types = SessionFileTypes());
+
+    void setSessionFileTypes(SessionFileTypes types);
+
+    void clear() const;
+
+    void saveSession(MainWindow *window);
+    void loadSession(MainWindow *window, EditorManager *editorManager);
+
+    bool willFileGetStoredInSession(ScintillaNext *editor) const;
+
+private:
+    QDir sessionDirectory() const;
+
+    SessionFileType determineType(ScintillaNext *editor) const;
+
+    void clearSettings() const;
+    void clearDirectory() const;
+
+    void storeFileDetails(ScintillaNext *editor, QSettings &settings);
+    ScintillaNext *loadFileDetails(QSettings &settings, EditorManager *editorManager);
+
+    void storeUnsavedFileDetails(ScintillaNext *editor, QSettings &settings);
+    ScintillaNext *loadUnsavedFileDetails(QSettings &settings, EditorManager *editorManager);
+
+    void storeUnsavedTempFile(ScintillaNext *editor, QSettings &settings);
+    ScintillaNext *loadUnsavedTempFile(QSettings &settings, EditorManager *editorManager);
+
+    void storeEditorViewDetails(ScintillaNext *editor, QSettings &settings);
+    void loadEditorViewDetails(ScintillaNext *editor, QSettings &settings);
+
+    SessionFileTypes fileTypes;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(SessionManager::SessionFileTypes)
 
 #endif // SESSIONMANAGER_H
