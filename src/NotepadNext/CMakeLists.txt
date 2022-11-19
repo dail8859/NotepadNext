@@ -85,44 +85,47 @@ add_executable(NotepadNext
     ZoomEventWatcher.cpp
 
     decorators/ApplicationDecorator.cpp
-    decorators/AutoCompletion.cpp
-    decorators/AutoIndentation.cpp
-    decorators/BetterMultiSelection.cpp
-    decorators/EditorConfigAppDecorator.cpp
-    decorators/SurroundSelection.cpp
-    decorators/BraceMatch.cpp
-    decorators/EditorDecorator.cpp
-    decorators/HighlightedScrollBar.cpp
-    decorators/LineNumbers.cpp
-    decorators/SmartHighlighter.cpp
     decorators/ApplicationDecorator.h
     decorators/AutoCompletion.h
     decorators/AutoIndentation.h
+    decorators/AutoCompletion.cpp
+    decorators/AutoIndentation.cpp
     decorators/BetterMultiSelection.h
-    decorators/EditorConfigAppDecorator.h
-    decorators/SurroundSelection.h
+    decorators/BetterMultiSelection.cpp
     decorators/BraceMatch.h
+    decorators/BraceMatch.cpp
+    decorators/EditorConfigAppDecorator.cpp
+    decorators/EditorConfigAppDecorator.h
+    decorators/EditorDecorator.cpp
     decorators/EditorDecorator.h
-    decorators/HighlightedScrollBar.h
     decorators/LineNumbers.h
+    decorators/LineNumbers.cpp
+    decorators/HighlightedScrollBar.cpp
+    decorators/HighlightedScrollBar.h
     decorators/SmartHighlighter.h
+    decorators/SurroundSelection.h
+    decorators/SurroundSelection.cpp
+    decorators/SmartHighlighter.cpp
+    decorators/URLFinder.cpp
+    decorators/URLFinder.h
 
     dialogs/FindReplaceDialog.cpp
-    dialogs/MacroEditorDialog.cpp
-    dialogs/MacroRunDialog.cpp
-    dialogs/MacroSaveDialog.cpp
-    dialogs/MainWindow.cpp
-    dialogs/PreferencesDialog.cpp
     dialogs/FindReplaceDialog.h
-    dialogs/MacroRunDialog.h
-    dialogs/MacroSaveDialog.h
-    dialogs/MainWindow.h
-    dialogs/PreferencesDialog.h
-    dialogs/MainWindow.ui
     dialogs/FindReplaceDialog.ui
+    dialogs/MacroEditorDialog.cpp
+    dialogs/MacroEditorDialog.h
     dialogs/MacroEditorDialog.ui
+    dialogs/MacroRunDialog.cpp
+    dialogs/MacroRunDialog.h
     dialogs/MacroRunDialog.ui
+    dialogs/MacroSaveDialog.cpp
+    dialogs/MacroSaveDialog.h
     dialogs/MacroSaveDialog.ui
+    dialogs/MainWindow.cpp
+    dialogs/MainWindow.h
+    dialogs/MainWindow.ui
+    dialogs/PreferencesDialog.cpp
+    dialogs/PreferencesDialog.h
     dialogs/PreferencesDialog.ui
 
     docks/DebugLogDock.cpp
