@@ -44,6 +44,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QCheckBox" name="checkBoxRestoreTempFiles">
+       <property name="text">
+        <string>Restore Temp Files</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>

@@ -18,6 +18,7 @@
 
 
 #include "MainWindow.h"
+#include "SessionManager.h"
 #include "ui_MainWindow.h"
 
 #include <QFileDialog>
@@ -679,7 +680,7 @@ void MainWindow::newFile()
 
     static int count = 1;
 
-    app->getEditorManager()->createEmptyEditor(tr("New %1").arg(count++));
+    app->getEditorManager()->createEditor(tr("New %1").arg(count++));
 }
 
 // One unedited, new blank document
@@ -884,12 +885,10 @@ void MainWindow::closeFile(ScintillaNext *editor)
     }
 }
 
-void MainWindow::closeAllFiles(bool forceClose = false)
+void MainWindow::closeAllFiles()
 {
-    if (!forceClose) {
-        if (!checkEditorsBeforeClose(editors())) {
-            return;
-        }
+    if (!checkEditorsBeforeClose(editors())) {
+        return;
     }
 
     // Ask the manager to close the editors the dockedEditor knows about
@@ -897,8 +896,7 @@ void MainWindow::closeAllFiles(bool forceClose = false)
         editor->close();
     }
 
-    if (!forceClose)
-        newFile();
+    newFile();
 }
 
 void MainWindow::closeAllExceptActive()
@@ -957,7 +955,7 @@ bool MainWindow::saveCurrentFile()
 
 bool MainWindow::saveFile(ScintillaNext *editor)
 {
-    if (!editor->modify())
+    if (editor->isSavedToDisk())
         return true;
 
     if (!editor->isFile()) {
@@ -1647,7 +1645,17 @@ void MainWindow::initUpdateCheck()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if (!checkEditorsBeforeClose(editors())) {
+    const SessionManager *sessionManager = app->getSessionManager();
+    QVector<ScintillaNext *> e;
+
+    // Check all editors to see if the session manager will not handle it
+    for (auto editor : editors()) {
+        if (!sessionManager->willFileGetStoredInSession(editor)) {
+            e.append(editor);
+        }
+    }
+
+    if (!checkEditorsBeforeClose(e)) {
         event->ignore();
         return;
     }

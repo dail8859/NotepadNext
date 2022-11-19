@@ -69,7 +69,7 @@ public slots:
 
     void closeCurrentFile();
     void closeFile(ScintillaNext *editor);
-    void closeAllFiles(bool forceClose);
+    void closeAllFiles();
     void closeAllExceptActive();
     void closeAllToLeft();
     void closeAllToRight();
