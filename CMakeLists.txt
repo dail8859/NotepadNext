@@ -18,7 +18,6 @@ set(BUILD_BINARY OFF)
 set(BUILD_STATICCACHE OFF)
 set(BUILD_SHARED_LIBS OFF)
 
-
 # uchardet is hosted at gitlab, but CPMAddPackage needs credentials (?)
 CPMAddPackage("gh:freedesktop/uchardet#143b3fe513bad2cc85903ee564fe55ccbe96d86b")
 CPMAddPackage("gh:vinniefalco/LuaBridge#9092ace9615d14e3f5926f2e8a3b612ddc6c8efa")
@@ -36,8 +35,9 @@ include(lexilla.cmake)
 # they need python. This fork uses github, and has auto-generated files as
 # part of the repo.
 #
-# rel-5.3.1- this is more or less like upstream 5-3-1... but later on on master,
-# b6ab9e51106f7262e77b31c3eb5ca8a4d95c2fc7 - fixes rectangular selection on unix
-CPMAddPackage("gh:elcuco/scintilla-code#b6ab9e51106f7262e77b31c3eb5ca8a4d95c2fc7")
+# 710a1c87106352f421febe67ec6b47f009e8b123 -
+# fixes rectangular selection on unix, and static builds on Windows, slightly
+# later than rel-5-3-1-cmake
+CPMAddPackage("gh:elcuco/scintilla-code#710a1c87106352f421febe67ec6b47f009e8b123")
 
 add_subdirectory(src/NotepadNext)
