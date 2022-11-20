@@ -1312,7 +1312,7 @@ void MainWindow::bringWindowToForeground()
 
     // There doesn't seem to be a cross platform way to force the window to the foreground
 
-#ifndef Q_OS_WIN
+#ifdef Q_OS_WIN
     HWND hWnd = reinterpret_cast<HWND>(effectiveWinId());
 
     if (hWnd) {
