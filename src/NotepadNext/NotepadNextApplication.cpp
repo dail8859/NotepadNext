@@ -347,9 +347,12 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
 
     return getLuaState()->executeAndReturn<QString>(QString(R"(
     -- Grab a small chunk
-    editor:SetTargetRange(0, 64)
+    if editor.Length > 0 then
+        editor:SetTargetRange(0, math.min(64, editor.Length))
+        return detectLanguageFromContents(editor.TargetText)
+    end
 
-    return detectLanguageFromContents(editor.TargetText)
+    return "Text"
     )").toLatin1().constData());
 }
 
