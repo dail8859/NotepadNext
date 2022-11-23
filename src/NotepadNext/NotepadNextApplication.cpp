@@ -194,7 +194,7 @@ bool NotepadNextApplication::init()
         parseCommandLine(parser, args);
 
         openFiles(parser.positionalArguments());
-    });
+    }, Qt::QueuedConnection);
 
     connect(this, &NotepadNextApplication::applicationStateChanged, this, [&](Qt::ApplicationState state) {
         if (state == Qt::ApplicationActive) {
