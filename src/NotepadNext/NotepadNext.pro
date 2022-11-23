@@ -248,7 +248,7 @@ unix {
     INSTALLS += mimeicon
 
     appicon.path = $$PREFIX/share/icons/hicolor/scalable/apps/
-    mimeappiconicon.files = ../../icon/NotepadNext.svg
+    appicon.files = ../../icon/NotepadNext.svg
     INSTALLS += appicon
 }
 
