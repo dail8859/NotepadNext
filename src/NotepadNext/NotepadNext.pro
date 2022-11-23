@@ -243,9 +243,13 @@ unix {
     desktopfile.files += ../../deploy/linux/NotepadNext.desktop
     INSTALLS += desktopfile
 
-    iconscalable.path = $$PREFIX/share/icons/hicolor/scalable/mimetypes/
-    iconscalable.files = ../../icon/NotepadNext.svg
-    INSTALLS += iconscalable
+    mimeicon.path = $$PREFIX/share/icons/hicolor/scalable/mimetypes/
+    mimeicon.files = ../../icon/NotepadNext.svg
+    INSTALLS += mimeicon
+
+    appicon.path = $$PREFIX/share/icons/hicolor/scalable/apps/
+    mimeappiconicon.files = ../../icon/NotepadNext.svg
+    INSTALLS += appicon
 }
 
 macx: {
