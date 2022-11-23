@@ -39,7 +39,7 @@ jobs:
           modules: ${{ matrix.config.modules }}
       
       - name: Setup
-        run: sudo apt-get install libxkbcommon-dev
+        run: sudo apt-get install libxkbcommon-dev fuse
 
       - name: Compile
         run: |
