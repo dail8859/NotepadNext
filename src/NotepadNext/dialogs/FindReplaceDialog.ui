@@ -355,6 +355,9 @@
        </property>
        <item>
         <layout class="QFormLayout" name="formLayout">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetMinimumSize</enum>
+         </property>
          <property name="horizontalSpacing">
           <number>8</number>
          </property>
@@ -374,7 +377,7 @@
          <item row="0" column="1">
           <widget class="QComboBox" name="comboFind">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -403,7 +406,7 @@
          <item row="1" column="1">
           <widget class="QComboBox" name="comboReplace">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
