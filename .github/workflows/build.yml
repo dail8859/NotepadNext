@@ -22,7 +22,7 @@ jobs:
           qt_version: "6.2.4"
           modules: "qt5compat"
         - 
-          qt_version: "6.4.0"
+          qt_version: "6.4.1"
           modules: "qt5compat"
 
     runs-on: ubuntu-20.04
@@ -79,7 +79,7 @@ jobs:
           qt_version: "6.2.4"
           modules: "qt5compat"
         - 
-          qt_version: "6.4.0"
+          qt_version: "6.4.1"
           modules: "qt5compat"
 
     runs-on: macos-latest
@@ -124,7 +124,7 @@ jobs:
           qt_version: "6.2.4"
           modules: "qt5compat"
         - 
-          qt_version: "6.4.0"
+          qt_version: "6.4.1"
           modules: "qt5compat"
 
     runs-on: windows-latest
