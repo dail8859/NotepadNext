@@ -185,16 +185,16 @@ bool NotepadNextApplication::init()
 
     // If the application is activated (e.g. user switching to another program and them back) the focus
     // needs to be reset on whatever object previously had focus (e.g. the find dialog)
-    QObject::connect(this, &NotepadNextApplication::focusChanged, this, [&](QWidget *old, QWidget *now) {
+    connect(this, &NotepadNextApplication::focusChanged, this, [&](QWidget *old, QWidget *now) {
         Q_UNUSED(old);
         if (now) {
             currentlyFocusedWidget = now;
         }
     });
 
-    QObject::connect(this, &SingleApplication::instanceStarted, windows.first(), &MainWindow::bringWindowToForeground);
+    connect(this, &SingleApplication::instanceStarted, windows.first(), &MainWindow::bringWindowToForeground);
 
-    QObject::connect(this, &SingleApplication::receivedMessage, [&] (quint32 instanceId, QByteArray message) {
+    connect(this, &SingleApplication::receivedMessage, this, [&](quint32 instanceId, QByteArray message) {
         Q_UNUSED(instanceId)
 
         QDataStream stream(&message, QIODevice::ReadOnly);
@@ -206,9 +206,9 @@ bool NotepadNextApplication::init()
         parseCommandLine(parser, args);
 
         openFiles(parser.positionalArguments());
-    });
+    }, Qt::QueuedConnection);
 
-    QObject::connect(this, &NotepadNextApplication::applicationStateChanged, [&](Qt::ApplicationState state) {
+    connect(this, &NotepadNextApplication::applicationStateChanged, this, [&](Qt::ApplicationState state) {
         if (state == Qt::ApplicationActive) {
 
             // Make sure it is active...
@@ -359,9 +359,12 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
 
     return getLuaState()->executeAndReturn<QString>(QString(R"(
     -- Grab a small chunk
-    editor:SetTargetRange(0, 64)
+    if editor.Length > 0 then
+        editor:SetTargetRange(0, math.min(64, editor.Length))
+        return detectLanguageFromContents(editor.TargetText)
+    end
 
-    return detectLanguageFromContents(editor.TargetText)
+    return "Text"
     )").toLatin1().constData());
 }
 

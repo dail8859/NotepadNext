@@ -111,7 +111,7 @@ jobs:
           modules: ${{ matrix.config.modules }}
       
       - name: Setup
-        run: sudo apt-get install libxkbcommon-dev
+        run: sudo apt-get install libxkbcommon-dev fuse
 
       - name: Compile
         run: |
@@ -280,7 +280,7 @@ jobs:
           cd NotepadNext-Windows-Qt5.15.2-Zip/
           zip -r ../NotepadNext-${{ github.ref_name }}.zip .
           cd ..
-          gh release upload NotepadNext-${{ github.ref_name }}.zip
+          gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}.zip
 
       - name: Upload Linux AppImage
         run: |
