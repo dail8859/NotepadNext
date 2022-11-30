@@ -169,7 +169,7 @@ if (Qt6_FOUND)
 endif()
 
 target_include_directories(NotepadNext PRIVATE decorators dialogs docks widgets src)
-target_compile_definitions(NotepadNext PRIVATE APP_VERSION="0.5.5")
+target_compile_definitions(NotepadNext PRIVATE APP_VERSION="0.5.6")
 target_compile_definitions(NotepadNext PRIVATE APP_COPYRIGHT="Copyright 2019-2022 Justin Dailey")
 target_compile_definitions(NotepadNext PRIVATE CMAKE_EXPERIMENTAL)
 
