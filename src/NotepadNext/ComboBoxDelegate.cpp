@@ -17,7 +17,6 @@
  */
 
 #include "ComboBoxDelegate.h"
-#include "Scintilla.h"
 
 #include <QComboBox>
 #include <QApplication>
