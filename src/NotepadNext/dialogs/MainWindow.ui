@@ -152,6 +152,8 @@
     <addaction name="menuEOLConversion"/>
     <addaction name="menuLine_Operations"/>
     <addaction name="menuCommentUncomment"/>
+    <addaction name="separator"/>
+    <addaction name="actionColumnMode"/>
    </widget>
    <widget class="QMenu" name="menuSearch">
     <property name="title">
@@ -993,6 +995,14 @@
    </property>
    <property name="text">
     <string>This is not currently implemented</string>
+   </property>
+  </action>
+  <action name="actionColumnMode">
+   <property name="text">
+    <string>Column Mode...</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+C</string>
    </property>
   </action>
  </widget>

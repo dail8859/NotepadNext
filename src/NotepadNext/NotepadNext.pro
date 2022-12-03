@@ -101,6 +101,7 @@ SOURCES += \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
     decorators/URLFinder.cpp \
+    dialogs/ColumnEditorDialog.cpp \
     dialogs/MacroEditorDialog.cpp \
     docks/DebugLogDock.cpp \
     docks/EditorInspectorDock.cpp \
@@ -171,6 +172,7 @@ HEADERS += \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
     decorators/URLFinder.h \
+    dialogs/ColumnEditorDialog.h \
     dialogs/MacroEditorDialog.h \
     docks/DebugLogDock.h \
     docks/EditorInspectorDock.h \
@@ -195,6 +197,7 @@ HEADERS += \
 
 FORMS += \
     QuickFindWidget.ui \
+    dialogs/ColumnEditorDialog.ui \
     dialogs/MacroEditorDialog.ui \
     docks/DebugLogDock.ui \
     docks/EditorInspectorDock.ui \

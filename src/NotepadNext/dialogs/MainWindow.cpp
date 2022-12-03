@@ -62,6 +62,7 @@
 #include "MacroRunDialog.h"
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
+#include "ColumnEditorDialog.h"
 
 #include "QuickFindWidget.h"
 
@@ -167,6 +168,22 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionJoinLines, &QAction::triggered, this, [=]()  {
         currentEditor()->targetFromSelection();
         currentEditor()->linesJoin();
+    });
+
+    connect(ui->actionColumnMode, &QAction::triggered, this, [=]() {
+        ColumnEditorDialog *columnEditor = nullptr;
+
+        if (!dialogs.contains("ColumnEditorDialog")) {
+            columnEditor = new ColumnEditorDialog(this);
+            dialogs["ColumnEditorDialog"] = columnEditor;
+        }
+        else {
+            columnEditor = qobject_cast<ColumnEditorDialog *>(dialogs["ColumnModeDialog"]);
+        }
+
+        columnEditor->show();
+        columnEditor->raise();
+        columnEditor->activateWindow();
     });
 
     connect(ui->actionUndo, &QAction::triggered, this, [=]() { currentEditor()->undo(); });
