@@ -105,6 +105,7 @@ SOURCES += \
     docks/DebugLogDock.cpp \
     docks/EditorInspectorDock.cpp \
     dialogs/FindReplaceDialog.cpp \
+    docks/FileListDock.cpp \
     docks/FolderAsWorkspaceDock.cpp \
     docks/HexViewerDock.cpp \
     docks/LanguageInspectorDock.cpp \
@@ -174,6 +175,7 @@ HEADERS += \
     docks/DebugLogDock.h \
     docks/EditorInspectorDock.h \
     dialogs/FindReplaceDialog.h \
+    docks/FileListDock.h \
     docks/FolderAsWorkspaceDock.h \
     docks/HexViewerDock.h \
     docks/LanguageInspectorDock.h \
@@ -196,6 +198,7 @@ FORMS += \
     dialogs/MacroEditorDialog.ui \
     docks/DebugLogDock.ui \
     docks/EditorInspectorDock.ui \
+    docks/FileListDock.ui \
     docks/FolderAsWorkspaceDock.ui \
     docks/HexViewerDock.ui \
     docks/LanguageInspectorDock.ui \
