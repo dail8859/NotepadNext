@@ -17,30 +17,30 @@
  */
 
 
-#ifndef COLUMNMODEDIALOG_H
-#define COLUMNMODEDIALOG_H
+#ifndef COLUMNEDITORDIALOG_H
+#define COLUMNEDITORDIALOG_H
 
 #include "MainWindow.h"
 #include <QDialog>
 
 namespace Ui {
-class ColumnModeDialog;
+class ColumnEditorDialog;
 }
 
-class ColumnModeDialog : public QDialog
+class ColumnEditorDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ColumnModeDialog(MainWindow *parent);
-    ~ColumnModeDialog();
+    explicit ColumnEditorDialog(MainWindow *parent);
+    ~ColumnEditorDialog();
 
     void insertTextStartingAtCurrentColumn(const std::function <QString (void)>& f);
     void insertTextAtColumn(ScintillaNext *editor, int line, int column, const QString &str);
 
 private:
-    Ui::ColumnModeDialog *ui;
+    Ui::ColumnEditorDialog *ui;
     MainWindow *parent;
 };
 
-#endif // COLUMNMODEDIALOG_H
+#endif // COLUMNEDITORDIALOG_H

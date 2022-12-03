@@ -17,14 +17,14 @@
  */
 
 
-#include "ColumnModeDialog.h"
+#include "ColumnEditorDialog.h"
 #include "UndoAction.h"
-#include "ui_ColumnModeDialog.h"
+#include "ui_ColumnEditorDialog.h"
 
 
-ColumnModeDialog::ColumnModeDialog(MainWindow *parent) :
+ColumnEditorDialog::ColumnEditorDialog(MainWindow *parent) :
     QDialog(parent),
-    ui(new Ui::ColumnModeDialog),
+    ui(new Ui::ColumnEditorDialog),
     parent(parent)
 {
     setWindowFlag(Qt::WindowContextHelpButtonHint, false);
@@ -62,12 +62,12 @@ ColumnModeDialog::ColumnModeDialog(MainWindow *parent) :
      ui->txtText->setFocus();
 }
 
-ColumnModeDialog::~ColumnModeDialog()
+ColumnEditorDialog::~ColumnEditorDialog()
 {
     delete ui;
 }
 
-void ColumnModeDialog::insertTextStartingAtCurrentColumn(const std::function<QString ()> &f)
+void ColumnEditorDialog::insertTextStartingAtCurrentColumn(const std::function<QString ()> &f)
 {
     ScintillaNext *editor = parent->currentEditor();
 
@@ -98,7 +98,7 @@ void ColumnModeDialog::insertTextStartingAtCurrentColumn(const std::function<QSt
     }
 }
 
-void ColumnModeDialog::insertTextAtColumn(ScintillaNext *editor, int line, int column, const QString &str)
+void ColumnEditorDialog::insertTextAtColumn(ScintillaNext *editor, int line, int column, const QString &str)
 {
     const int lineEndPosition = editor->lineEndPosition(line);
     const int lineEndColumn = editor->column(lineEndPosition);
