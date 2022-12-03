@@ -190,6 +190,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     }
 
     connect(editor, &ScintillaNext::closed, dockWidget, &ads::CDockWidget::closeDockWidget);
+    connect(editor, &ScintillaNext::closed, this, [=]() { emit editorClosed(editor); });
     connect(editor, &ScintillaNext::renamed, this, [=]() { editorRenamed(editor); });
 
     connect(dockWidget, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);

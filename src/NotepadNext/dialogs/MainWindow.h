@@ -54,6 +54,7 @@ public:
     ScintillaNext *currentEditor() const;
     int editorCount() const;
     QVector<ScintillaNext *> editors() const;
+    DockedEditor *getDockedEditor() const { return dockedEditor; }
 
 public slots:
     void newFile();

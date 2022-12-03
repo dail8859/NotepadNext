@@ -55,6 +55,7 @@ private slots:
 signals:
     void editorAdded(ScintillaNext *editor);
     void editorCloseRequested(ScintillaNext *editor);
+    void editorClosed(ScintillaNext *editor);
     void editorActivated(ScintillaNext *editor);
 
     void contextMenuRequestedForEditor(ScintillaNext *editor);

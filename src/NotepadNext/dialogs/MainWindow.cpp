@@ -56,6 +56,7 @@
 #include "SearchResultsDock.h"
 #include "DebugLogDock.h"
 #include "HexViewerDock.h"
+#include "FileListDock.h"
 
 #include "FindReplaceDialog.h"
 #include "MacroRunDialog.h"
@@ -543,6 +544,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     addDockWidget(Qt::LeftDockWidgetArea, fawDock);
     ui->menuView->addAction(fawDock->toggleViewAction());
     connect(fawDock, &FolderAsWorkspaceDock::fileDoubleClicked, this, &MainWindow::openFile);
+
+    FileListDock *fileListDock = new FileListDock(this);
+    fileListDock->hide();
+    addDockWidget(Qt::LeftDockWidgetArea, fileListDock);
+    ui->menuView->addAction(fileListDock->toggleViewAction());
 
     connect(app->getSettings(), &Settings::showMenuBarChanged, this, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
