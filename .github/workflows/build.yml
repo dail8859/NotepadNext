@@ -18,13 +18,14 @@ jobs:
         - 
           qt_version: "5.15.2"
           modules: ""
-          os: ubuntu-18.04
         - 
           qt_version: "6.2.4"
           modules: "qt5compat"
-          os: ubuntu-latest
+        - 
+          qt_version: "6.4.1"
+          modules: "qt5compat"
 
-    runs-on: ${{ matrix.config.os }}
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout Repository
@@ -77,6 +78,9 @@ jobs:
         -
           qt_version: "6.2.4"
           modules: "qt5compat"
+        - 
+          qt_version: "6.4.1"
+          modules: "qt5compat"
 
     runs-on: macos-latest
 
@@ -119,6 +123,9 @@ jobs:
         - 
           qt_version: "6.2.4"
           modules: "qt5compat"
+        - 
+          qt_version: "6.4.1"
+          modules: "qt5compat"
 
     runs-on: windows-latest
 
@@ -159,7 +166,6 @@ jobs:
           jom package
 
       - name: Create Installer
-        if: matrix.config.qt_version == '5.15.2'
         run: |
           cd build
           jom installer
@@ -171,7 +177,6 @@ jobs:
           path: ${{ github.workspace }}/build/package/
 
       - name: Upload Installer
-        if: matrix.config.qt_version == '5.15.2'
         uses: actions/upload-artifact@v3
         with:
           name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Installer
@@ -200,21 +205,22 @@ jobs:
 
       - name: Upload Windows Installer
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-Windows-Qt5.15.2-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe
+          gh release upload ${{ github.ref_name }} NotepadNext-Windows-Qt6.2.4-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe
 
       # The artifact is unzipped, so need to zip it back up so it can be uploaded
       - name: Upload Windows Zip
         run: |
-          cd NotepadNext-Windows-Qt5.15.2-Zip/
-          zip -r ../NotepadNext-${{ github.ref_name }}.zip .
+          cd NotepadNext-Windows-Qt6.2.4-Zip/
+          zip -r ../NotepadNext-${{ github.ref_name }}-win64.zip .
           cd ..
-          gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}.zip
+          gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}-win64.zip
+
 
       - name: Upload Linux AppImage
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt5.15.2-AppImage/NotepadNext-x86_64.AppImage
+          gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt6.2.4-AppImage/NotepadNext-x86_64.AppImage
 
       - name: Upload macOS App
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt5.15.2/NotepadNext.dmg
+          gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt6.2.4/NotepadNext.dmg
 
