@@ -30,7 +30,7 @@ MacOS disk images can be downloaded from the [release](https://github.com/dail88
 
 
 # Development
-Current development is done using Visual Studio 2019 and Qt v5.15 on Windows. This is also known to build successfully on various Linux distributions and macOS. Other platforms/compilers should be usable with minor modifications.
+Current development is done using Visual Studio 2022 and Qt v6.2+ on Windows. This is also known to build successfully on various Linux distributions and macOS. Other platforms/compilers should be usable with minor modifications.
 
 If you are familiar with building C++ Qt desktop applications with Qt Creator, then this should be as simple as opening `src/NotepadNext.pro` and build/run the project.
 
