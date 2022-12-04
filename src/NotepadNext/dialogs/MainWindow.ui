@@ -64,6 +64,13 @@
      <addaction name="actionClearRecentFilesList"/>
      <addaction name="separator"/>
     </widget>
+    <widget class="QMenu" name="menuExportAs">
+     <property name="title">
+      <string>Export As</string>
+     </property>
+     <addaction name="actionExportHtml"/>
+     <addaction name="actionExportRtf"/>
+    </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionOpenFolderasWorkspace"/>
@@ -72,6 +79,7 @@
     <addaction name="actionSaveAs"/>
     <addaction name="actionSaveCopyAs"/>
     <addaction name="actionSaveAll"/>
+    <addaction name="menuExportAs"/>
     <addaction name="actionRename"/>
     <addaction name="actionClose"/>
     <addaction name="actionCloseAll"/>
@@ -136,6 +144,13 @@
      <addaction name="actionSingleLineComment"/>
      <addaction name="actionSingleLineUncomment"/>
     </widget>
+    <widget class="QMenu" name="menuCopyAs">
+     <property name="title">
+      <string>Copy As</string>
+     </property>
+     <addaction name="actionCopyAsHtml"/>
+     <addaction name="actionCopyAsRtf"/>
+    </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
@@ -147,6 +162,7 @@
     <addaction name="actionSelect_Next"/>
     <addaction name="separator"/>
     <addaction name="menuCopyMore"/>
+    <addaction name="menuCopyAs"/>
     <addaction name="menuIndent"/>
     <addaction name="menuConvertCase"/>
     <addaction name="menuEOLConversion"/>
@@ -1003,6 +1019,26 @@
    </property>
    <property name="shortcut">
     <string>Alt+C</string>
+   </property>
+  </action>
+  <action name="actionExportHtml">
+   <property name="text">
+    <string>Export as HTML...</string>
+   </property>
+  </action>
+  <action name="actionExportRtf">
+   <property name="text">
+    <string>Export as RTF...</string>
+   </property>
+  </action>
+  <action name="actionCopyAsHtml">
+   <property name="text">
+    <string>Copy as HTML</string>
+   </property>
+  </action>
+  <action name="actionCopyAsRtf">
+   <property name="text">
+    <string>Copy as RTF</string>
    </property>
   </action>
  </widget>
