@@ -60,6 +60,7 @@ license.path = $$OUT_PWD
 SOURCES += \
     ColorPickerDelegate.cpp \
     ComboBoxDelegate.cpp \
+    Converter.cpp \
     DebugManager.cpp \
     DockedEditor.cpp \
     EditorHexViewerTableModel.cpp \
@@ -67,6 +68,7 @@ SOURCES += \
     EditorPrintPreviewRenderer.cpp \
     FileDialogHelpers.cpp \
     Finder.cpp \
+    HtmlConverter.cpp \
     IFaceTable.cpp \
     IFaceTableMixer.cpp \
     LanguageKeywordsModel.cpp \
@@ -86,6 +88,7 @@ SOURCES += \
     QuickFindWidget.cpp \
     RecentFilesListManager.cpp \
     RecentFilesListMenuBuilder.cpp \
+    RtfConverter.cpp \
     SciIFaceTable.cpp \
     ScintillaCommenter.cpp \
     ScintillaNext.cpp \
@@ -128,6 +131,7 @@ SOURCES += \
 HEADERS += \
     ColorPickerDelegate.h \
     ComboBoxDelegate.h \
+    Converter.h \
     DebugManager.h \
     DockedEditor.h \
     DockedEditorTitleBar.h \
@@ -137,6 +141,7 @@ HEADERS += \
     FileDialogHelpers.h \
     Finder.h \
     FocusWatcher.h \
+    HtmlConverter.h \
     IFaceTable.h \
     IFaceTableMixer.h \
     LanguageKeywordsModel.h \
@@ -156,6 +161,7 @@ HEADERS += \
     QuickFindWidget.h \
     RecentFilesListManager.h \
     RecentFilesListMenuBuilder.h \
+    RtfConverter.h \
     SciIFaceTable.h \
     ScintillaCommenter.h \
     ScintillaEnums.h \
