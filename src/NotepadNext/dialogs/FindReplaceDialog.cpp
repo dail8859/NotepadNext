@@ -226,7 +226,7 @@ void FindReplaceDialog::find()
 
     Sci_CharacterRange range = finder->findNext();
 
-    if (isRangeValid(range)) {
+    if (ScintillaNext::isRangeValid(range)) {
         // TODO: determine if search wrapped around and show message
         editor->goToRange(range);
     }
@@ -292,13 +292,13 @@ void FindReplaceDialog::replace()
 
     Sci_CharacterRange range = finder->replaceSelectionIfMatch(replaceText);
 
-    if (isRangeValid(range)) {
+    if (ScintillaNext::isRangeValid(range)) {
         showMessage(tr("1 occurrence was replaced"), "blue");
     }
 
     Sci_CharacterRange next_match = finder->findNext();
 
-    if (isRangeValid(next_match)) {
+    if (ScintillaNext::isRangeValid(next_match)) {
         editor->goToRange(next_match);
     }
     else {
@@ -412,7 +412,7 @@ void FindReplaceDialog::changeTab(int index)
     if (index == 0) {
         ui->labelReplaceWith->setMaximumHeight(0);
         ui->comboReplace->setMaximumHeight(0);
-        // The combo box isn't actually "hidden", so adjust the focus policy so it doesnt get tabbed to
+        // The combo box isn't actually "hidden", so adjust the focus policy so it does not get tabbed to
         ui->comboReplace->setFocusPolicy(Qt::NoFocus);
 
         ui->buttonReplace->hide();

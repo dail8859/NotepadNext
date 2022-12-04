@@ -38,6 +38,8 @@ class NotepadNextApplication;
 class Macro;
 class Settings;
 class QuickFindWidget;
+class ZoomEventWatcher;
+class Converter;
 
 class MainWindow : public QMainWindow
 {
@@ -53,6 +55,7 @@ public:
     ScintillaNext *currentEditor() const;
     int editorCount() const;
     QVector<ScintillaNext *> editors() const;
+    DockedEditor *getDockedEditor() const { return dockedEditor; }
 
 public slots:
     void newFile();
@@ -81,6 +84,9 @@ public slots:
     void saveCopyAsDialog();
     void saveCopyAs(const QString &fileName);
     void saveAll();
+
+    void exportAsFormat(Converter *converter, const QString &filter);
+    void copyAsFormat(Converter *converter, const QString &mimeType);
 
     void renameFile();
 
@@ -119,6 +125,7 @@ public slots:
 
 signals:
     void editorActivated(ScintillaNext *editor);
+    void aboutToClose();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -148,12 +155,15 @@ private:
 
     //NppImporter *npp;
 
-    // Persistant dialogs
+    // Persistent dialogs
     QMap<QString, QDialog *> dialogs;
 
     QuickFindWidget *quickFind = Q_NULLPTR;
 
     MacroManager macroManager;
+
+    ZoomEventWatcher *zoomEventWatcher;
+    int zoomLevel = 0;
 };
 
 #endif // MAINWINDOW_H

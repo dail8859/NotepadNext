@@ -33,6 +33,7 @@
 #include <QPrintPreviewDialog>
 #include <QPrinter>
 
+
 #ifdef Q_OS_WIN
 #include <QSimpleUpdater.h>
 #include <Windows.h>
@@ -56,31 +57,40 @@
 #include "SearchResultsDock.h"
 #include "DebugLogDock.h"
 #include "HexViewerDock.h"
+#include "FileListDock.h"
 
 #include "FindReplaceDialog.h"
 #include "MacroRunDialog.h"
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
+#include "ColumnEditorDialog.h"
 
 #include "QuickFindWidget.h"
 
 #include "EditorPrintPreviewRenderer.h"
 #include "MacroEditorDialog.h"
 
+#include "ZoomEventWatcher.h"
+#include "FileDialogHelpers.h"
+
+#include "HtmlConverter.h"
+#include "RtfConverter.h"
+
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
-    app(app)
+    app(app),
+    zoomEventWatcher(new ZoomEventWatcher(this))
 {
     qInfo(Q_FUNC_INFO);
-
-    Q_INIT_RESOURCE(ads);
 
     ui->setupUi(this);
 
     qInfo("setupUi Completed");
 
-    // Createa and set up the connections to the docked editor
+    connect(this, &MainWindow::aboutToClose, this, &MainWindow::saveSettings);
+
+    // Create and set up the connections to the docked editor
     dockedEditor = new DockedEditor(this);
     connect(dockedEditor, &DockedEditor::editorCloseRequested, this, [=](ScintillaNext *editor) { closeFile(editor); });
     connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
@@ -106,6 +116,16 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionSaveCopyAs, &QAction::triggered, this, &MainWindow::saveCopyAsDialog);
     connect(ui->actionSaveAll, &QAction::triggered, this, &MainWindow::saveAll);
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
+
+    connect(ui->actionExportHtml, &QAction::triggered, this, [=]() {
+        HtmlConverter html(currentEditor());
+        exportAsFormat(&html, QStringLiteral("HTML files (*.html)"));
+    });
+
+    connect(ui->actionExportRtf, &QAction::triggered, this, [=]() {
+        RtfConverter rtf(currentEditor());
+        exportAsFormat(&rtf, QStringLiteral("RTF Files (*.rtf)"));
+    });
 
     connect(ui->actionPrint, &QAction::triggered, this, &MainWindow::print);
 
@@ -164,6 +184,22 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         currentEditor()->linesJoin();
     });
 
+    connect(ui->actionColumnMode, &QAction::triggered, this, [=]() {
+        ColumnEditorDialog *columnEditor = nullptr;
+
+        if (!dialogs.contains("ColumnEditorDialog")) {
+            columnEditor = new ColumnEditorDialog(this);
+            dialogs["ColumnEditorDialog"] = columnEditor;
+        }
+        else {
+            columnEditor = qobject_cast<ColumnEditorDialog *>(dialogs["ColumnModeDialog"]);
+        }
+
+        columnEditor->show();
+        columnEditor->raise();
+        columnEditor->activateWindow();
+    });
+
     connect(ui->actionUndo, &QAction::triggered, this, [=]() { currentEditor()->undo(); });
     connect(ui->actionRedo, &QAction::triggered, this, [=]() { currentEditor()->redo(); });
     connect(ui->actionCut, &QAction::triggered, this, [=]() {
@@ -201,6 +237,17 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             QApplication::clipboard()->setText(editor->getPath());
         }
     });
+
+    connect(ui->actionCopyAsHtml, &QAction::triggered, this, [=]() {
+        HtmlConverter html(currentEditor());
+        copyAsFormat(&html, "text/html");
+    });
+
+    connect(ui->actionCopyAsRtf, &QAction::triggered, this, [=]() {
+        RtfConverter rtf(currentEditor());
+        copyAsFormat(&rtf, "Rich Text Format");
+    });
+
     connect(ui->actionIncrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->tab(); });
     connect(ui->actionDecrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->backTab(); });
 
@@ -332,9 +379,29 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionZoomIn, &QAction::triggered, this, [=]() { currentEditor()->zoomIn(); });
-    connect(ui->actionZoomOut, &QAction::triggered, this, [=]() { currentEditor()->zoomOut(); });
-    connect(ui->actionZoomReset, &QAction::triggered, this, [=]() { currentEditor()->setZoom(0); });
+    // Zooming controls all editors simulaneously
+    connect(ui->actionZoomIn, &QAction::triggered, this, [=]() {
+        for (ScintillaNext *editor : editors()) {
+            editor->zoomIn();
+        }
+        zoomLevel = currentEditor()->zoom();
+    });
+    connect(ui->actionZoomOut, &QAction::triggered, this, [=]() {
+        for (ScintillaNext *editor : editors()) {
+            editor->zoomOut();
+        }
+        zoomLevel = currentEditor()->zoom();
+    });
+    connect(ui->actionZoomReset, &QAction::triggered, this, [=]() {
+        for (ScintillaNext *editor : editors()) {
+            editor->setZoom(0);
+        }
+        zoomLevel = 0;
+    });
+
+    // Zoom watcher has detected a zoom event, so just trigger the UI action
+    connect(zoomEventWatcher, &ZoomEventWatcher::zoomIn, ui->actionZoomIn, &QAction::trigger);
+    connect(zoomEventWatcher, &ZoomEventWatcher::zoomOut, ui->actionZoomOut, &QAction::trigger);
 
     languageActionGroup = new QActionGroup(this);
     languageActionGroup->setExclusive(true);
@@ -519,6 +586,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     addDockWidget(Qt::LeftDockWidgetArea, fawDock);
     ui->menuView->addAction(fawDock->toggleViewAction());
     connect(fawDock, &FolderAsWorkspaceDock::fileDoubleClicked, this, &MainWindow::openFile);
+
+    FileListDock *fileListDock = new FileListDock(this);
+    fileListDock->hide();
+    addDockWidget(Qt::LeftDockWidgetArea, fileListDock);
+    ui->menuView->addAction(fileListDock->toggleViewAction());
 
     connect(app->getSettings(), &Settings::showMenuBarChanged, this, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
@@ -723,7 +795,7 @@ void MainWindow::openFileDialog()
         dialogDir = editor->getPath();
     }
 
-    QStringList fileNames = QFileDialog::getOpenFileNames(this, QString(), dialogDir, filter, Q_NULLPTR);
+    QStringList fileNames = FileDialogHelpers::getOpenFileNames(this, QString(), dialogDir, filter);
 
     openFileList(fileNames);
 }
@@ -916,7 +988,7 @@ bool MainWindow::saveCurrentFileAsDialog()
         dialogDir = editor->getFilePath();
     }
 
-    QString fileName = QFileDialog::getSaveFileName(this, QString(), dialogDir, filter, Q_NULLPTR);
+    QString fileName = FileDialogHelpers::getSaveFileName(this, QString(), dialogDir, filter);
 
     if (fileName.size() == 0) {
         return false;
@@ -953,7 +1025,7 @@ void MainWindow::saveCopyAsDialog()
         dialogDir = editor->getFilePath();
     }
 
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save a Copy As"), dialogDir, filter, Q_NULLPTR);
+    QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Save a Copy As"), dialogDir, filter);
 
     saveCopyAs(fileName);
 }
@@ -971,13 +1043,44 @@ void MainWindow::saveAll()
     }
 }
 
+void MainWindow::exportAsFormat(Converter *converter, const QString &filter)
+{
+    const QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Export As"), QString(), filter + ";;All files (*)");
+    QFile f(fileName);
+
+    f.open(QIODevice::WriteOnly);
+
+    QTextStream s(&f);
+    converter->convert(s);
+    f.close();
+}
+
+void MainWindow::copyAsFormat(Converter *converter, const QString &mimeType)
+{
+    // This is not ideal as we are *assuming* the converter is currently associated with the currentEditor()
+    ScintillaNext *editor = currentEditor();
+    QByteArray buffer;
+    QTextStream stream(&buffer);
+
+    if (editor->selectionEmpty())
+        converter->convert(stream);
+    else {
+        converter->convertRange(stream, editor->selectionStart(), editor->selectionEnd());
+    }
+
+    QMimeData *mimeData = new QMimeData();
+    mimeData->setData(mimeType, buffer);
+
+    QApplication::clipboard()->setMimeData(mimeData);
+}
+
 void MainWindow::renameFile()
 {
     ScintillaNext *editor = currentEditor();
 
     Q_ASSERT(editor->isFile());
 
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Rename"), editor->getFilePath());
+    QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath());
 
     if (fileName.size() == 0) {
         return;
@@ -1286,32 +1389,41 @@ void MainWindow::bringWindowToForeground()
 {
     qInfo(Q_FUNC_INFO);
 
-    //setWindowState(windowState() & ~Qt::WindowMinimized);
-    //raise();
-    //activateWindow();
-
-    // Make sure the window isn't minimized
-    // TODO: this always puts it in the "normal" state but it might have been maximized
-    // before minimized...so either a flag needs stored or find a Qt call to do it appropriately
-    if (isMinimized())
-        showNormal();
+    // There doesn't seem to be a cross platform way to force the window to the foreground
 
 #ifdef Q_OS_WIN
-    // TODO: there doesn't seem to be a cross platform way to force the window
-    // to the foreground. So this will need moved to a platform specific file
-
     HWND hWnd = reinterpret_cast<HWND>(effectiveWinId());
+
     if (hWnd) {
-        // I have no idea what this does but it works mostly
-        // https://www.codeproject.com/Articles/1724/Some-handy-dialog-box-tricks-tips-and-workarounds
+        // I have no idea what this does, but it seems to work on Windows
+        // References:
+        // https://stackoverflow.com/questions/916259/win32-bring-a-window-to-top
+        // https://github.com/notepad-plus-plus/notepad-plus-plus/blob/ebe7648ee1a5a560d4fc65297cbdcf08055e56e3/PowerEditor/src/winmain.cpp#L596
 
-        AttachThreadInput(GetWindowThreadProcessId(GetForegroundWindow(), nullptr), GetCurrentThreadId(), TRUE);
+        HWND hCurWnd = GetForegroundWindow();
+        DWORD threadId = GetCurrentThreadId();
+        DWORD procId = GetWindowThreadProcessId(hCurWnd, NULL);
 
+        int sw = 0;
+        if (IsZoomed(hWnd)) {
+            sw = SW_MAXIMIZE;
+        } else if (IsIconic(hWnd)) {
+            sw = SW_RESTORE;
+        }
+
+        if (sw != 0) {
+            ShowWindow(hWnd, sw);
+        }
+
+        AttachThreadInput(procId, threadId, TRUE);
         SetForegroundWindow(hWnd);
         SetFocus(hWnd);
-
-        AttachThreadInput(GetWindowThreadProcessId(GetForegroundWindow(), nullptr), GetCurrentThreadId(), FALSE);
+        AttachThreadInput(procId, threadId, FALSE);
     }
+#else
+    setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+    raise();
+    activateWindow();
 #endif
 }
 
@@ -1357,6 +1469,7 @@ void MainWindow::saveSettings() const
 
     settings.setValue("Editor/WordWrap", ui->actionWordWrap->isChecked());
     settings.setValue("Editor/IndentGuide", ui->actionShowIndentGuide->isChecked());
+    settings.setValue("Editor/ZoomLevel", zoomLevel);
 
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     settings.setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
@@ -1378,6 +1491,7 @@ void MainWindow::restoreSettings()
 
     ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
     ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
+    zoomLevel = settings.value("Editor/ZoomLevel", 0).toInt();
 }
 
 
@@ -1436,6 +1550,11 @@ void MainWindow::addEditor(ScintillaNext *editor)
         }
     });
 
+    // Watch for any zoom events (Ctrl+Scroll or pinch-to-zoom (Qt translates it as Ctrl+Scroll)) so that the event
+    // can be handled before the ScintillaEditBase widget, so that it can be applied to all editors to keep zoom level equal.
+    // NOTE: Need to install this on the scroll area's viewport, not on the editor widget itself...that was painful to learn
+    editor->viewport()->installEventFilter(zoomEventWatcher);
+
     if (ui->actionWordWrap->isChecked())
         editor->setWrapMode(SC_WRAP_WHITESPACE);
 
@@ -1445,6 +1564,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setViewWS(ui->actionShowWhitespace->isChecked() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
     editor->setViewEOL(ui->actionShowEndofLine->isChecked());
     editor->setWrapVisualFlags(ui->actionShowWrapSymbol->isChecked() ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+    editor->setZoom(zoomLevel);
 
     // The editor has been entirely configured at this point, so add it to the docked editor
     dockedEditor->addEditor(editor);
@@ -1526,12 +1646,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         return;
     }
 
-    // While tabs are being closed, turn off UI updates so the main window doesn't continuously refresh.
-    disconnect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
-
-    closeAllFiles(true);
-
-    saveSettings();
+    emit aboutToClose();
 
     event->accept();
 

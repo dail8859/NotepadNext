@@ -42,6 +42,12 @@ QRegexSearch::QRegexSearch()
 
 Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, bool caseSensitive, bool word, bool wordStart, Scintilla::FindOption flags, Sci::Position *length)
 {
+    // -----------------------------------------------------------------------------------------------------------------------
+    // NOTE: This section of code has to be very careful about what units of measure is being used. Scintilla wants to operate
+    // in units of bytes (e.g. position 3 is 3 bytes into the text). Qt wants to operate in units of characters. The trouble is
+    // when you start using characters that are >1 byte a piece. Meaning position 3 (3 bytes into a file) could be 1 character.
+    // -----------------------------------------------------------------------------------------------------------------------
+
     //qInfo(Q_FUNC_INFO);
     //qInfo("\tminPos %d", minPos);
     //qInfo("\tmaxPos %d", maxPos);
@@ -50,7 +56,6 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
     //qInfo("\tword %s", word ? "true" : "false");
     //qInfo("\twordStart %s", wordStart ? "true" : "false");
     //qInfo("\tflags %d", flags);
-    //qInfo("length %d", length);
 
     // No need to search an empty range
     if (minPos == maxPos)
@@ -66,19 +71,28 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
     if (!re.isValid())
         return -1; // Invalid regular expression
 
-    // Only need the first maxPos characters
+    // Get the bytes from the document. No need to go past maxPos bytes
     QByteArray view = QByteArray::fromRawData(doc->BufferPointer(), maxPos);
 
-    // Start at minPos, this keeps the position match inline with Scintilla since it thinks it starts at the beginning
-    QRegularExpressionMatch m = re.match(view, minPos, QRegularExpression::NormalMatch, QRegularExpression::NoMatchOption);
+    // NOTE: translate minPos into a character count for Qt
+    QRegularExpressionMatch m = re.match(view, doc->CountCharacters(0, minPos), QRegularExpression::NormalMatch, QRegularExpression::NoMatchOption);
 
     if (!m.hasMatch())
         return -1; // No match
 
     match = m;
-    *length = match.capturedLength(0);
 
-    return match.capturedStart(0);
+    // NOTE: Qt is using character count, so translate this back into a Scintilla position
+    const int characterStart = match.capturedStart(0);
+    const int positionStart = doc->GetRelativePosition(0, characterStart);
+
+    // Now move ahead however many characters we matched
+    const int positionEnd = doc->GetRelativePosition(positionStart, match.capturedLength(0));
+
+    // The length is the number of bytes that was matched
+    *length = positionEnd - positionStart;
+
+    return positionStart;
 }
 
 const char *QRegexSearch::SubstituteByPosition(Document *doc, const char *text, Sci::Position *length)

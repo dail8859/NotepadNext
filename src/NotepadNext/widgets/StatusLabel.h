@@ -47,7 +47,7 @@ class StatusLabel : public ClickableLabel
 
 public:
     explicit StatusLabel(int size = 200, QWidget *parent = 0) : ClickableLabel(parent), preferredSize(size) {
-        // Since these get set alot and plain text is always used go ahead and set the format
+        // Since these get set a lot and plain text is always used go ahead and set the format
         setTextFormat(Qt::PlainText);
     }
 

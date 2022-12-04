@@ -52,15 +52,12 @@ static bool writeToDisk(const QByteArray &data, const QString &path)
 
 ScintillaNext::ScintillaNext(QString name, QWidget *parent) :
     ScintillaEdit(parent),
-    doc(get_doc()),
     name(name)
 {
-    connect(doc, &ScintillaDocument::lexer_changed, this, &ScintillaNext::lexerChanged);
 }
 
 ScintillaNext::~ScintillaNext()
 {
-    delete doc;
 }
 
 ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate)
@@ -371,7 +368,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
     }
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning("Something bad happend when opening \"%s\": (%d) %s", qUtf8Printable(file.fileName()), file.error(), qUtf8Printable(file.errorString()));
+        qWarning("Something bad happened when opening \"%s\": (%d) %s", qUtf8Printable(file.fileName()), file.error(), qUtf8Printable(file.errorString()));
         return false;
     }
 
@@ -454,12 +451,12 @@ bool ScintillaNext::readFromDisk(QFile &file)
     // modEventMask(SC_MODEVENTMASKALL)?
 
     if (status() != SC_STATUS_OK) {
-        qWarning("something bad happend in document->add_data() %ld", status());
+        qWarning("something bad happened in document->add_data() %ld", status());
         return false;
     }
 
     if (bytesRead == -1) {
-        qWarning("Something bad happend when reading disk %d %s", file.error(), qUtf8Printable(file.errorString()));
+        qWarning("Something bad happened when reading disk %d %s", file.error(), qUtf8Printable(file.errorString()));
         return false;
     }
 

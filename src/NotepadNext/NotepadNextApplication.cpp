@@ -127,8 +127,8 @@ bool NotepadNextApplication::init()
     recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
 
     connect(this, &NotepadNextApplication::aboutToQuit, this, [=]() {
-        QSettings qsettings;
-        qsettings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
+        QSettings settings;
+        settings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
     });
 
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
@@ -173,16 +173,16 @@ bool NotepadNextApplication::init()
 
     // If the application is activated (e.g. user switching to another program and them back) the focus
     // needs to be reset on whatever object previously had focus (e.g. the find dialog)
-    QObject::connect(this, &NotepadNextApplication::focusChanged, this, [&](QWidget *old, QWidget *now) {
+    connect(this, &NotepadNextApplication::focusChanged, this, [&](QWidget *old, QWidget *now) {
         Q_UNUSED(old);
         if (now) {
             currentlyFocusedWidget = now;
         }
     });
 
-    QObject::connect(this, &SingleApplication::instanceStarted, windows.first(), &MainWindow::bringWindowToForeground);
+    connect(this, &SingleApplication::instanceStarted, windows.first(), &MainWindow::bringWindowToForeground);
 
-    QObject::connect(this, &SingleApplication::receivedMessage, [&] (quint32 instanceId, QByteArray message) {
+    connect(this, &SingleApplication::receivedMessage, this, [&](quint32 instanceId, QByteArray message) {
         Q_UNUSED(instanceId)
 
         QDataStream stream(&message, QIODevice::ReadOnly);
@@ -194,13 +194,13 @@ bool NotepadNextApplication::init()
         parseCommandLine(parser, args);
 
         openFiles(parser.positionalArguments());
-    });
+    }, Qt::QueuedConnection);
 
-    QObject::connect(this, &NotepadNextApplication::applicationStateChanged, [&](Qt::ApplicationState state) {
+    connect(this, &NotepadNextApplication::applicationStateChanged, this, [&](Qt::ApplicationState state) {
         if (state == Qt::ApplicationActive) {
 
             // Make sure it is active...
-            // The applicaiton can be active without the main window being show e.g. if there is a
+            // The application can be active without the main window being show e.g. if there is a
             // message box that pops up before the main window
             if (windows.first()->isActiveWindow()) {
                 windows.first()->focusIn();
@@ -210,11 +210,6 @@ bool NotepadNextApplication::init()
                 currentlyFocusedWidget->activateWindow();
             }
         }
-    });
-
-    // Keep Lua's editor reference up to date
-    connect(windows.first(), &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
-        LuaExtension::Instance().setEditor(editor);
     });
 
     openFiles(parser.positionalArguments());
@@ -263,6 +258,9 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
     auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
     editor->setILexer((sptr_t) lexerInstance);
+
+    // Not ideal this has to be manually emitted but it works since setILexer() is not widely used
+    emit editor->lexerChanged();
 
     getLuaState()->execute(R"(
         local L = languages[languageName]
@@ -349,9 +347,12 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
 
     return getLuaState()->executeAndReturn<QString>(QString(R"(
     -- Grab a small chunk
-    editor:SetTargetRange(0, 64)
+    if editor.Length > 0 then
+        editor:SetTargetRange(0, math.min(64, editor.Length))
+        return detectLanguageFromContents(editor.TargetText)
+    end
 
-    return detectLanguageFromContents(editor.TargetText)
+    return "Text"
     )").toLatin1().constData());
 }
 
@@ -416,6 +417,20 @@ MainWindow *NotepadNextApplication::createNewWindow()
     MainWindow *w = new MainWindow(this);
 
     windows.append(w);
+
+    // Keep Lua's editor reference up to date
+    connect(w, &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
+        LuaExtension::Instance().setEditor(editor);
+    });
+
+    // Since these editors don't actually get "closed" go ahead and add them to the recent file list
+    connect(w, &MainWindow::aboutToClose, this, [=]() {
+        for (const auto &editor : w->editors()) {
+            if (editor->isFile()) {
+                recentFilesListManager->addFile(editor->getFilePath());
+            }
+        }
+    });
 
     return w;
 }

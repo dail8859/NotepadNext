@@ -60,12 +60,15 @@ license.path = $$OUT_PWD
 SOURCES += \
     ColorPickerDelegate.cpp \
     ComboBoxDelegate.cpp \
+    Converter.cpp \
     DebugManager.cpp \
     DockedEditor.cpp \
     EditorHexViewerTableModel.cpp \
     EditorManager.cpp \
     EditorPrintPreviewRenderer.cpp \
+    FileDialogHelpers.cpp \
     Finder.cpp \
+    HtmlConverter.cpp \
     IFaceTable.cpp \
     IFaceTableMixer.cpp \
     LanguageKeywordsModel.cpp \
@@ -85,6 +88,7 @@ SOURCES += \
     QuickFindWidget.cpp \
     RecentFilesListManager.cpp \
     RecentFilesListMenuBuilder.cpp \
+    RtfConverter.cpp \
     SciIFaceTable.cpp \
     ScintillaCommenter.cpp \
     ScintillaNext.cpp \
@@ -92,16 +96,20 @@ SOURCES += \
     Settings.cpp \
     SpinBoxDelegate.cpp \
     UndoAction.cpp \
+    ZoomEventWatcher.cpp \
     decorators/ApplicationDecorator.cpp \
     decorators/AutoCompletion.cpp \
     decorators/AutoIndentation.cpp \
     decorators/BetterMultiSelection.cpp \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
+    decorators/URLFinder.cpp \
+    dialogs/ColumnEditorDialog.cpp \
     dialogs/MacroEditorDialog.cpp \
     docks/DebugLogDock.cpp \
     docks/EditorInspectorDock.cpp \
     dialogs/FindReplaceDialog.cpp \
+    docks/FileListDock.cpp \
     docks/FolderAsWorkspaceDock.cpp \
     docks/HexViewerDock.cpp \
     docks/LanguageInspectorDock.cpp \
@@ -123,14 +131,17 @@ SOURCES += \
 HEADERS += \
     ColorPickerDelegate.h \
     ComboBoxDelegate.h \
+    Converter.h \
     DebugManager.h \
     DockedEditor.h \
     DockedEditorTitleBar.h \
     EditorHexViewerTableModel.h \
     EditorManager.h \
     EditorPrintPreviewRenderer.h \
+    FileDialogHelpers.h \
     Finder.h \
     FocusWatcher.h \
+    HtmlConverter.h \
     IFaceTable.h \
     IFaceTableMixer.h \
     LanguageKeywordsModel.h \
@@ -150,6 +161,7 @@ HEADERS += \
     QuickFindWidget.h \
     RecentFilesListManager.h \
     RecentFilesListMenuBuilder.h \
+    RtfConverter.h \
     SciIFaceTable.h \
     ScintillaCommenter.h \
     ScintillaEnums.h \
@@ -158,16 +170,20 @@ HEADERS += \
     Settings.h \
     SpinBoxDelegate.h \
     UndoAction.h \
+    ZoomEventWatcher.h \
     decorators/ApplicationDecorator.h \
     decorators/AutoCompletion.h \
     decorators/AutoIndentation.h \
     decorators/BetterMultiSelection.h \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
+    decorators/URLFinder.h \
+    dialogs/ColumnEditorDialog.h \
     dialogs/MacroEditorDialog.h \
     docks/DebugLogDock.h \
     docks/EditorInspectorDock.h \
     dialogs/FindReplaceDialog.h \
+    docks/FileListDock.h \
     docks/FolderAsWorkspaceDock.h \
     docks/HexViewerDock.h \
     docks/LanguageInspectorDock.h \
@@ -187,9 +203,11 @@ HEADERS += \
 
 FORMS += \
     QuickFindWidget.ui \
+    dialogs/ColumnEditorDialog.ui \
     dialogs/MacroEditorDialog.ui \
     docks/DebugLogDock.ui \
     docks/EditorInspectorDock.ui \
+    docks/FileListDock.ui \
     docks/FolderAsWorkspaceDock.ui \
     docks/HexViewerDock.ui \
     docks/LanguageInspectorDock.ui \
@@ -237,9 +255,13 @@ unix {
     desktopfile.files += ../../deploy/linux/NotepadNext.desktop
     INSTALLS += desktopfile
 
-    iconscalable.path = $$PREFIX/share/icons/hicolor/scalable/mimetypes/
-    iconscalable.files = ../../icon/NotepadNext.svg
-    INSTALLS += iconscalable
+    mimeicon.path = $$PREFIX/share/icons/hicolor/scalable/mimetypes/
+    mimeicon.files = ../../icon/NotepadNext.svg
+    INSTALLS += mimeicon
+
+    appicon.path = $$PREFIX/share/icons/hicolor/scalable/apps/
+    appicon.files = ../../icon/NotepadNext.svg
+    INSTALLS += appicon
 }
 
 macx: {

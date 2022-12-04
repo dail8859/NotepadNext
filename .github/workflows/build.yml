@@ -40,7 +40,7 @@ jobs:
           modules: ${{ matrix.config.modules }}
       
       - name: Setup
-        run: sudo apt-get install libxkbcommon-dev
+        run: sudo apt-get install libxkbcommon-dev fuse
 
       - name: Compile
         run: |
@@ -214,6 +214,7 @@ jobs:
           zip -r ../NotepadNext-${{ github.ref_name }}-win64.zip .
           cd ..
           gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}-win64.zip
+
 
       - name: Upload Linux AppImage
         run: |
