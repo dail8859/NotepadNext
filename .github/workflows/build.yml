@@ -16,15 +16,15 @@ jobs:
       matrix:
         config:
         -
-          qt_version: "6.3.2"
+          qt_version: "6.4.1"
           modules: "qt5compat"
           os: ubuntu-20.04
         -
-          qt_version: "6.3.2"
+          qt_version: "6.4.1"
           modules: "qt5compat"
           os: windows-latest
         -
-          qt_version: "6.3.1"
+          qt_version: "6.4.1"
           modules: "qt5compat"
           os: macos-latest
 
