@@ -39,6 +39,7 @@ class Macro;
 class Settings;
 class QuickFindWidget;
 class ZoomEventWatcher;
+class Converter;
 
 class MainWindow : public QMainWindow
 {
@@ -54,6 +55,7 @@ public:
     ScintillaNext *currentEditor() const;
     int editorCount() const;
     QVector<ScintillaNext *> editors() const;
+    DockedEditor *getDockedEditor() const { return dockedEditor; }
 
 public slots:
     void newFile();
@@ -82,6 +84,9 @@ public slots:
     void saveCopyAsDialog();
     void saveCopyAs(const QString &fileName);
     void saveAll();
+
+    void exportAsFormat(Converter *converter, const QString &filter);
+    void copyAsFormat(Converter *converter, const QString &mimeType);
 
     void renameFile();
 

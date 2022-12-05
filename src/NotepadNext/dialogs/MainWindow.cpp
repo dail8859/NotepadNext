@@ -33,6 +33,7 @@
 #include <QPrintPreviewDialog>
 #include <QPrinter>
 
+
 #ifdef Q_OS_WIN
 #include <QSimpleUpdater.h>
 #include <Windows.h>
@@ -56,11 +57,13 @@
 #include "SearchResultsDock.h"
 #include "DebugLogDock.h"
 #include "HexViewerDock.h"
+#include "FileListDock.h"
 
 #include "FindReplaceDialog.h"
 #include "MacroRunDialog.h"
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
+#include "ColumnEditorDialog.h"
 
 #include "QuickFindWidget.h"
 
@@ -69,6 +72,9 @@
 
 #include "ZoomEventWatcher.h"
 #include "FileDialogHelpers.h"
+
+#include "HtmlConverter.h"
+#include "RtfConverter.h"
 
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
@@ -110,6 +116,16 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionSaveCopyAs, &QAction::triggered, this, &MainWindow::saveCopyAsDialog);
     connect(ui->actionSaveAll, &QAction::triggered, this, &MainWindow::saveAll);
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
+
+    connect(ui->actionExportHtml, &QAction::triggered, this, [=]() {
+        HtmlConverter html(currentEditor());
+        exportAsFormat(&html, QStringLiteral("HTML files (*.html)"));
+    });
+
+    connect(ui->actionExportRtf, &QAction::triggered, this, [=]() {
+        RtfConverter rtf(currentEditor());
+        exportAsFormat(&rtf, QStringLiteral("RTF Files (*.rtf)"));
+    });
 
     connect(ui->actionPrint, &QAction::triggered, this, &MainWindow::print);
 
@@ -168,6 +184,22 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         currentEditor()->linesJoin();
     });
 
+    connect(ui->actionColumnMode, &QAction::triggered, this, [=]() {
+        ColumnEditorDialog *columnEditor = nullptr;
+
+        if (!dialogs.contains("ColumnEditorDialog")) {
+            columnEditor = new ColumnEditorDialog(this);
+            dialogs["ColumnEditorDialog"] = columnEditor;
+        }
+        else {
+            columnEditor = qobject_cast<ColumnEditorDialog *>(dialogs["ColumnModeDialog"]);
+        }
+
+        columnEditor->show();
+        columnEditor->raise();
+        columnEditor->activateWindow();
+    });
+
     connect(ui->actionUndo, &QAction::triggered, this, [=]() { currentEditor()->undo(); });
     connect(ui->actionRedo, &QAction::triggered, this, [=]() { currentEditor()->redo(); });
     connect(ui->actionCut, &QAction::triggered, this, [=]() {
@@ -205,6 +237,17 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             QApplication::clipboard()->setText(editor->getPath());
         }
     });
+
+    connect(ui->actionCopyAsHtml, &QAction::triggered, this, [=]() {
+        HtmlConverter html(currentEditor());
+        copyAsFormat(&html, "text/html");
+    });
+
+    connect(ui->actionCopyAsRtf, &QAction::triggered, this, [=]() {
+        RtfConverter rtf(currentEditor());
+        copyAsFormat(&rtf, "Rich Text Format");
+    });
+
     connect(ui->actionIncrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->tab(); });
     connect(ui->actionDecrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->backTab(); });
 
@@ -543,6 +586,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     addDockWidget(Qt::LeftDockWidgetArea, fawDock);
     ui->menuView->addAction(fawDock->toggleViewAction());
     connect(fawDock, &FolderAsWorkspaceDock::fileDoubleClicked, this, &MainWindow::openFile);
+
+    FileListDock *fileListDock = new FileListDock(this);
+    fileListDock->hide();
+    addDockWidget(Qt::LeftDockWidgetArea, fileListDock);
+    ui->menuView->addAction(fileListDock->toggleViewAction());
 
     connect(app->getSettings(), &Settings::showMenuBarChanged, this, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
@@ -993,6 +1041,37 @@ void MainWindow::saveAll()
     for (ScintillaNext *editor : editors()) {
         saveFile(editor);
     }
+}
+
+void MainWindow::exportAsFormat(Converter *converter, const QString &filter)
+{
+    const QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Export As"), QString(), filter + ";;All files (*)");
+    QFile f(fileName);
+
+    f.open(QIODevice::WriteOnly);
+
+    QTextStream s(&f);
+    converter->convert(s);
+    f.close();
+}
+
+void MainWindow::copyAsFormat(Converter *converter, const QString &mimeType)
+{
+    // This is not ideal as we are *assuming* the converter is currently associated with the currentEditor()
+    ScintillaNext *editor = currentEditor();
+    QByteArray buffer;
+    QTextStream stream(&buffer);
+
+    if (editor->selectionEmpty())
+        converter->convert(stream);
+    else {
+        converter->convertRange(stream, editor->selectionStart(), editor->selectionEnd());
+    }
+
+    QMimeData *mimeData = new QMimeData();
+    mimeData->setData(mimeType, buffer);
+
+    QApplication::clipboard()->setMimeData(mimeData);
 }
 
 void MainWindow::renameFile()

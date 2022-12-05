@@ -60,6 +60,7 @@ license.path = $$OUT_PWD
 SOURCES += \
     ColorPickerDelegate.cpp \
     ComboBoxDelegate.cpp \
+    Converter.cpp \
     DebugManager.cpp \
     DockedEditor.cpp \
     EditorHexViewerTableModel.cpp \
@@ -67,6 +68,7 @@ SOURCES += \
     EditorPrintPreviewRenderer.cpp \
     FileDialogHelpers.cpp \
     Finder.cpp \
+    HtmlConverter.cpp \
     IFaceTable.cpp \
     IFaceTableMixer.cpp \
     LanguageKeywordsModel.cpp \
@@ -86,6 +88,7 @@ SOURCES += \
     QuickFindWidget.cpp \
     RecentFilesListManager.cpp \
     RecentFilesListMenuBuilder.cpp \
+    RtfConverter.cpp \
     SciIFaceTable.cpp \
     ScintillaCommenter.cpp \
     ScintillaNext.cpp \
@@ -101,10 +104,12 @@ SOURCES += \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
     decorators/URLFinder.cpp \
+    dialogs/ColumnEditorDialog.cpp \
     dialogs/MacroEditorDialog.cpp \
     docks/DebugLogDock.cpp \
     docks/EditorInspectorDock.cpp \
     dialogs/FindReplaceDialog.cpp \
+    docks/FileListDock.cpp \
     docks/FolderAsWorkspaceDock.cpp \
     docks/HexViewerDock.cpp \
     docks/LanguageInspectorDock.cpp \
@@ -126,6 +131,7 @@ SOURCES += \
 HEADERS += \
     ColorPickerDelegate.h \
     ComboBoxDelegate.h \
+    Converter.h \
     DebugManager.h \
     DockedEditor.h \
     DockedEditorTitleBar.h \
@@ -135,6 +141,7 @@ HEADERS += \
     FileDialogHelpers.h \
     Finder.h \
     FocusWatcher.h \
+    HtmlConverter.h \
     IFaceTable.h \
     IFaceTableMixer.h \
     LanguageKeywordsModel.h \
@@ -154,6 +161,7 @@ HEADERS += \
     QuickFindWidget.h \
     RecentFilesListManager.h \
     RecentFilesListMenuBuilder.h \
+    RtfConverter.h \
     SciIFaceTable.h \
     ScintillaCommenter.h \
     ScintillaEnums.h \
@@ -170,10 +178,12 @@ HEADERS += \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
     decorators/URLFinder.h \
+    dialogs/ColumnEditorDialog.h \
     dialogs/MacroEditorDialog.h \
     docks/DebugLogDock.h \
     docks/EditorInspectorDock.h \
     dialogs/FindReplaceDialog.h \
+    docks/FileListDock.h \
     docks/FolderAsWorkspaceDock.h \
     docks/HexViewerDock.h \
     docks/LanguageInspectorDock.h \
@@ -193,9 +203,11 @@ HEADERS += \
 
 FORMS += \
     QuickFindWidget.ui \
+    dialogs/ColumnEditorDialog.ui \
     dialogs/MacroEditorDialog.ui \
     docks/DebugLogDock.ui \
     docks/EditorInspectorDock.ui \
+    docks/FileListDock.ui \
     docks/FolderAsWorkspaceDock.ui \
     docks/HexViewerDock.ui \
     docks/LanguageInspectorDock.ui \
