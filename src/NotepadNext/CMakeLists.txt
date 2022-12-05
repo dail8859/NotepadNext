@@ -16,8 +16,10 @@ add_executable(NotepadNext
     ColorPickerDelegate.h
     ComboBoxDelegate.cpp
     ComboBoxDelegate.h
-    DockedEditor.h
+    Converter.cpp
+    Converter.h
     DockedEditor.cpp
+    DockedEditor.h
     DebugManager.cpp
     DockedEditorTitleBar.h
     EditorHexViewerTableModel.cpp
@@ -30,6 +32,8 @@ add_executable(NotepadNext
     FileDialogHelpers.cpp
     FileDialogHelpers.h
     FocusWatcher.h
+    HtmlConverter.cpp
+    HtmlConverter.h
     IFaceTable.cpp
     IFaceTable.h
     IFaceTableMixer.cpp
@@ -65,6 +69,8 @@ add_executable(NotepadNext
     RecentFilesListManager.h
     RecentFilesListMenuBuilder.cpp
     RecentFilesListMenuBuilder.h
+    RtfConverter.cpp
+    RtfConverter.h
     resources.qrc
     SciIFaceTable.cpp
     ScintillaNext.cpp
@@ -109,6 +115,9 @@ add_executable(NotepadNext
     decorators/URLFinder.cpp
     decorators/URLFinder.h
 
+    dialogs/ColumnEditorDialog.h
+    dialogs/ColumnEditorDialog.ui
+    dialogs/ColumnEditorDialog.cpp
     dialogs/FindReplaceDialog.cpp
     dialogs/FindReplaceDialog.h
     dialogs/FindReplaceDialog.ui
@@ -129,9 +138,12 @@ add_executable(NotepadNext
     dialogs/PreferencesDialog.ui
 
     docks/DebugLogDock.cpp
-    docks/EditorInspectorDock.h
     docks/EditorInspectorDock.cpp
+    docks/EditorInspectorDock.h
     docks/EditorInspectorDock.ui
+    docks/FileListDock.cpp
+    docks/FileListDock.h
+    docks/FileListDock.ui
     docks/FolderAsWorkspaceDock.cpp
     docks/FolderAsWorkspaceDock.h
     docks/FolderAsWorkspaceDock.ui

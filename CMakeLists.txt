@@ -38,6 +38,6 @@ include(lexilla.cmake)
 # 710a1c87106352f421febe67ec6b47f009e8b123 -
 # fixes rectangular selection on unix, and static builds on Windows, slightly
 # later than rel-5-3-1-cmake
-CPMAddPackage("gh:elcuco/scintilla-code#710a1c87106352f421febe67ec6b47f009e8b123")
+CPMAddPackage("gh:elcuco/scintilla-code#cf2e442e12f41eebc95c5750ed608cc5ec0be796")
 
 add_subdirectory(src/NotepadNext)
