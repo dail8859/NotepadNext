@@ -1,5 +1,4 @@
-# Master is currently: 537dfaa591e83473678d782e394766e7bac6d59e
-CPMAddPackage("gh:ScintillaOrg/lexilla#rel-5-2-0")
+CPMAddPackage("gh:ScintillaOrg/lexilla#rel-5-2-1")
 
 if (lexilla_ADDED)
     add_library(lexilla
@@ -164,6 +163,6 @@ if (lexilla_ADDED)
         ${lexilla_SOURCE_DIR}/lexlib/
         ${lexilla_SOURCE_DIR}/include/
     )
-    set_property(TARGET lexilla PROPERTY VERSION "5.15")
+    set_property(TARGET lexilla PROPERTY VERSION "5.21")
     set_property(TARGET lexilla PROPERTY SOVERSION 5 )
 endif()

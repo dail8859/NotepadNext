@@ -29,15 +29,13 @@ CPMAddPackage("gh:editorconfig/editorconfig-core-qt#b87e96f0e1ca38cdb49fe5a7771d
 # so we do own own locally (internally they clone the upstream repo)
 include(lua.cmake)
 include(qsimpleupdater.cmake)
-include(lexilla.cmake)
 
 # This is scintilla - which upstream uses mercurial, and as part of the build
 # they need python. This fork uses github, and has auto-generated files as
 # part of the repo.
 #
-# 710a1c87106352f421febe67ec6b47f009e8b123 -
-# fixes rectangular selection on unix, and static builds on Windows, slightly
-# later than rel-5-3-1-cmake
-CPMAddPackage("gh:elcuco/scintilla-code#cf2e442e12f41eebc95c5750ed608cc5ec0be796")
+CPMAddPackage("gh:elcuco/scintilla-code#rel-5-3-2-cmake")
+#CPMAddPackage("gh:elcuco/lexilla#rel-5-2-1-cmake")
+include(lexilla.cmake)
 
 add_subdirectory(src/NotepadNext)
