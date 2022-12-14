@@ -21,6 +21,11 @@
 #include "ScintillaNext.h"
 
 
+static int IndexToPos(const QModelIndex &index)
+{
+    return index.row() * 16 + index.column();
+}
+
 EditorHexViewerTableModel::EditorHexViewerTableModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
@@ -86,7 +91,7 @@ QVariant EditorHexViewerTableModel::data(const QModelIndex &index, int role) con
             return str;
         }
 
-        int docPos = (index.row() * 16) + index.column();
+        int docPos = IndexToPos(index);;
         if (docPos >= editor->length()) return QVariant();
 
         unsigned char ch = static_cast<unsigned char>(editor->charAt(docPos));
@@ -100,6 +105,27 @@ QVariant EditorHexViewerTableModel::data(const QModelIndex &index, int role) con
     return QVariant();
 }
 
+bool EditorHexViewerTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (index.isValid() && role == Qt::EditRole) {
+        bool ok;
+        unsigned int charValue = value.toString().toInt(&ok, 16);
+
+        if (ok && charValue <= 255) {
+            QByteArray byte(1, static_cast<char>(charValue));
+            int pos = IndexToPos(index);
+
+            editor->setTargetRange(pos, pos + 1);
+            editor->replaceTarget(1, byte.constData());
+
+            emit dataChanged(index, index, QVector<int>() << role);
+
+            return true;
+        }
+    }
+
+    return false;
+}
 
 Qt::ItemFlags EditorHexViewerTableModel::flags(const QModelIndex &index) const
 {
@@ -107,10 +133,12 @@ Qt::ItemFlags EditorHexViewerTableModel::flags(const QModelIndex &index) const
         return Qt::NoItemFlags;
 
     if (index.column() == 16) {
+        // The string displayed at the end
         return Qt::ItemIsEnabled;
     }
-    else if (index.row() * 16 + index.column() >= editor->length()) {
-        return Qt::ItemIsEnabled;
+    else if (IndexToPos(index) >= editor->length()) {
+        // The potentially empty cells past the end of the document
+        return Qt::NoItemFlags;
     }
     else {
         return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable;
