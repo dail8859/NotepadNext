@@ -32,6 +32,7 @@
 #include <QInputDialog>
 #include <QPrintPreviewDialog>
 #include <QPrinter>
+#include <QDirIterator>
 
 
 #ifdef Q_OS_WIN
@@ -1682,7 +1683,19 @@ void MainWindow::dropEvent(QDropEvent *event)
         QStringList fileNames;
         for (const QUrl &url : event->mimeData()->urls()) {
             if (url.isLocalFile()) {
-                fileNames.append(url.toLocalFile());
+                QFileInfo info(url.toLocalFile());
+
+                if (info.exists()) {
+                    if (info.isDir()) {
+                        QDirIterator it(url.toLocalFile(), QDir::Files, QDirIterator::FollowSymlinks| QDirIterator::Subdirectories);
+                        while (it.hasNext()) {
+                            fileNames << it.next();
+                        }
+                    }
+                    else {
+                        fileNames.append(url.toLocalFile());
+                    }
+                }
             }
         }
 
