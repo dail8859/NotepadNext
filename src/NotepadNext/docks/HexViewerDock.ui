@@ -36,7 +36,10 @@
        <enum>QFrame::NoFrame</enum>
       </property>
       <property name="editTriggers">
-       <set>QAbstractItemView::NoEditTriggers</set>
+       <set>QAbstractItemView::DoubleClicked</set>
+      </property>
+      <property name="tabKeyNavigation">
+       <bool>false</bool>
       </property>
       <property name="showDropIndicator" stdset="0">
        <bool>false</bool>
