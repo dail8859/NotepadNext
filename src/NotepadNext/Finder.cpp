@@ -18,6 +18,7 @@
 
 
 #include "Finder.h"
+#include "UndoAction.h"
 
 Finder::Finder(ScintillaNext *edit) :
     editor(edit)
@@ -140,23 +141,35 @@ int Finder::replaceAll(const QString &replaceText)
     if (text.isEmpty())
         return 0;
 
-    const QByteArray replaceData = replaceText.toUtf8();
-    bool isRegex = search_flags & SCFIND_REGEXP;
+    const QByteArray &replaceData = replaceText.toUtf8();
+    const QByteArray &b = text.toUtf8();
+    const char *c = b.constData();
+    Sci_TextToFind ttf {{0, (Sci_PositionCR)editor->length()}, c, {-1, -1}};
+    const bool isRegex = search_flags & SCFIND_REGEXP;
     int total = 0;
 
+    // Don't technically need to set the search flags here but do it just in case something looks at the search flags later
     editor->setSearchFlags(search_flags);
 
-    editor->beginUndoAction();
-    editor->forEachMatch(text, [&](int start, int end) {
-        total++;
+    // NOTE: can't use editor->forEachMatch() here since the search range can grow since the document is changing
+
+    const UndoAction ua(editor);
+    while (editor->send(SCI_FINDTEXT, search_flags, reinterpret_cast<sptr_t>(&ttf)) != -1) {
+        const int start = ttf.chrgText.cpMin;
+        const int end = ttf.chrgText.cpMax;
+
         editor->setTargetRange(start, end);
 
         if (isRegex)
-            return start + editor->replaceTargetRE(replaceData.length(), replaceData.constData());
+            ttf.chrg.cpMin = start + editor->replaceTargetRE(replaceData.length(), replaceData.constData());
         else
-            return start + editor->replaceTarget(replaceData.length(), replaceData.constData());
-    });
-    editor->endUndoAction();
+            ttf.chrg.cpMin = start + editor->replaceTarget(replaceData.length(), replaceData.constData());
+
+        // The replace could have changed the document size, so update the end of the search range
+        ttf.chrg.cpMax = editor->length();
+
+        total++;
+    }
 
     return total;
 }
