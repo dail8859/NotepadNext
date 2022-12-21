@@ -243,7 +243,8 @@ void FindReplaceDialog::findAllInCurrentDocument()
 
     QString text = findString();
 
-    finder->forEachMatch(text.toUtf8(), [&](int start, int end){
+    finder->setSearchText(text);
+    finder->forEachMatch([&](int start, int end){
         // Only add the file entry if there was a valid search result
         if (firstMatch) {
             searchResults->newFileEntry(editor);

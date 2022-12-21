@@ -26,6 +26,7 @@
 #include <QLineEdit>
 #include <QObject>
 
+#include "Finder.h"
 #include "ScintillaNext.h"
 
 namespace Ui {
@@ -46,22 +47,31 @@ public:
 protected:
    bool eventFilter(QObject *obj, QEvent *event) override;
 
-public slots:
+private slots:
     void highlightMatches();
     void navigateToNextMatch(bool skipCurrent = true);
     void navigateToPrevMatch();
     void highlightAndNavigateToNextMatch();
 
-private slots:
     void positionWidget();
+
+    void prepareSearch();
+
+    void focusIn();
+    void focusOut();
+
+    void returnPressed();
 
 private:
     void clearHighlights();
     int computeSearchFlags() const;
     void setSearchContextColor(QString color);
+    void initializeEditorIndicator();
+    QString searchText() const;
 
     Ui::QuickFindWidget *ui;
     ScintillaNext *editor = Q_NULLPTR;
+    Finder *finder = Q_NULLPTR;
 };
 
 #endif // QUICKFINDWIDGET_H
