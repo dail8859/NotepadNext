@@ -17,7 +17,6 @@
  */
 
 
-#include "Finder.h"
 #include "FocusWatcher.h"
 #include "QuickFindWidget.h"
 #include "ScintillaNext.h"
@@ -35,29 +34,15 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
     ui->setupUi(this);
 
     // Move the focus to the line edit widget
-    this->setFocusProxy(ui->lineEdit);
+    setFocusProxy(ui->lineEdit);
 
     ui->lineEdit->installEventFilter(this);
 
     FocusWatcher *fw = new FocusWatcher(ui->lineEdit);
-    connect(fw, &FocusWatcher::focusOut, this, [=]() {
-        clearHighlights();
-        hide();
-    });
+    connect(fw, &FocusWatcher::focusOut, this, &QuickFindWidget::focusOut);
+    connect(fw, &FocusWatcher::focusIn, this, &QuickFindWidget::focusIn);
 
-    connect(fw, &FocusWatcher::focusIn, this, [=]() {
-        ui->lineEdit->selectAll();
-        highlightAndNavigateToNextMatch();
-    });
-
-    connect(ui->lineEdit, &QLineEdit::returnPressed, this, [=]() {
-        if (QGuiApplication::keyboardModifiers() & Qt::ShiftModifier) {
-            navigateToPrevMatch();
-        }
-        else {
-            navigateToNextMatch(true);
-        }
-    });
+    connect(ui->lineEdit, &QLineEdit::returnPressed, this, &QuickFindWidget::returnPressed);
 
     // Any changes need to trigger a new search
     connect(ui->lineEdit, &QLineEdit::textChanged, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
@@ -68,23 +53,32 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
 
 QuickFindWidget::~QuickFindWidget()
 {
+    if (finder) {
+        delete finder;
+    }
+
     delete ui;
 }
 
 void QuickFindWidget::setEditor(ScintillaNext *editor)
 {
-    if (this->editor != Q_NULLPTR)
+    if (this->editor != Q_NULLPTR) {
         disconnect(editor, &ScintillaNext::resized, this, &QuickFindWidget::positionWidget);
+    }
 
     connect(editor, &ScintillaNext::resized, this, &QuickFindWidget::positionWidget);
 
     this->editor = editor;
 
-    editor->indicSetFore(28, 0xFF8000);
-    editor->indicSetStyle(28, INDIC_FULLBOX);
-    editor->indicSetOutlineAlpha(28, 150);
-    editor->indicSetAlpha(28, 50);
-    editor->indicSetUnder(28, true);
+    if (finder == Q_NULLPTR) {
+        finder = new Finder(editor);
+        finder->setWrap(true); // Always wrap the search
+    }
+    else {
+        finder->setEditor(editor);
+    }
+
+    initializeEditorIndicator();
 
     positionWidget();
 }
@@ -97,7 +91,7 @@ bool QuickFindWidget::eventFilter(QObject *obj, QEvent *event)
         // Use escape key to close the quick find widget
         if (keyEvent->key() == Qt::Key_Escape) {
             clearHighlights();
-            this->hide();
+            hide();
             editor->grabFocus();
         }
     }
@@ -111,17 +105,16 @@ void QuickFindWidget::highlightMatches()
 
     clearHighlights();
 
-    const QString text = ui->lineEdit->text();
-
-    if (text.isEmpty()) {
+    if (searchText().isEmpty()) {
         setSearchContextColor("blue");
         return;
     }
 
-    bool foundOne = false;
+    prepareSearch();
     editor->setIndicatorCurrent(28);
-    editor->setSearchFlags(computeSearchFlags());
-    editor->forEachMatch(text, [&](int start, int end) {
+
+    bool foundOne = false;
+    finder->forEachMatch([&](int start, int end) {
         foundOne = true;
 
         const int length = end - start;
@@ -146,16 +139,9 @@ void QuickFindWidget::navigateToNextMatch(bool skipCurrent)
 {
     qInfo(Q_FUNC_INFO);
 
-    const QString text = ui->lineEdit->text();
-
-    if (text.isEmpty()) {
+    if (searchText().isEmpty()) {
         return;
     }
-
-    Finder f = Finder(editor);
-    f.setWrap(true);
-    f.setSearchFlags(computeSearchFlags());
-    f.setSearchText(text);
 
     int startPos = INVALID_POSITION;
     if (skipCurrent) {
@@ -165,7 +151,9 @@ void QuickFindWidget::navigateToNextMatch(bool skipCurrent)
         startPos = editor->selectionStart();
     }
 
-    auto range = f.findNext(startPos);
+    prepareSearch();
+
+    auto range = finder->findNext(startPos);
     if (range.cpMin == INVALID_POSITION)
         return;
 
@@ -177,18 +165,13 @@ void QuickFindWidget::navigateToPrevMatch()
 {
     qInfo(Q_FUNC_INFO);
 
-    const QString text = ui->lineEdit->text();
-
-    if (text.isEmpty()) {
+    if (searchText().isEmpty()) {
         return;
     }
 
-    Finder f = Finder(editor);
-    f.setWrap(true);
-    f.setSearchFlags(computeSearchFlags());
-    f.setSearchText(text);
+    prepareSearch();
 
-    auto range = f.findPrev();
+    auto range = finder->findPrev();
     if (range.cpMin == INVALID_POSITION)
         return;
 
@@ -226,6 +209,20 @@ void QuickFindWidget::setSearchContextColor(QString color)
     ui->lineEdit->setStyleSheet(QStringLiteral("border: 1px solid %1; padding: 2px;").arg(color));
 }
 
+void QuickFindWidget::initializeEditorIndicator()
+{
+    editor->indicSetFore(28, 0xFF8000);
+    editor->indicSetStyle(28, INDIC_FULLBOX);
+    editor->indicSetOutlineAlpha(28, 150);
+    editor->indicSetAlpha(28, 50);
+    editor->indicSetUnder(28, true);
+}
+
+QString QuickFindWidget::searchText() const
+{
+    return ui->lineEdit->text();
+}
+
 void QuickFindWidget::positionWidget()
 {
     int usableWidth = editor->width();
@@ -235,9 +232,37 @@ void QuickFindWidget::positionWidget()
         usableWidth -= editor->verticalScrollBar()->width();
     }
 
-    QPoint position = QPoint(usableWidth - this->width(), 0);
+    QPoint position = QPoint(usableWidth - width(), 0);
 
-    this->move(editor->mapTo(this->parentWidget(), position));
+    move(editor->mapTo(parentWidget(), position));
+}
+
+void QuickFindWidget::prepareSearch()
+{
+    finder->setSearchText(searchText());
+    finder->setSearchFlags(computeSearchFlags());
+}
+
+void QuickFindWidget::focusIn()
+{
+    ui->lineEdit->selectAll();
+    highlightAndNavigateToNextMatch();
+}
+
+void QuickFindWidget::focusOut()
+{
+    clearHighlights();
+    hide();
+}
+
+void QuickFindWidget::returnPressed()
+{
+    if (QGuiApplication::keyboardModifiers() & Qt::ShiftModifier) {
+        navigateToPrevMatch();
+    }
+    else {
+        navigateToNextMatch(true);
+    }
 }
 
 void QuickFindWidget::clearHighlights()
