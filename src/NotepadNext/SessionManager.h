@@ -55,6 +55,8 @@ public:
 private:
     QDir sessionDirectory() const;
 
+    void saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName) const;
+
     SessionFileType determineType(ScintillaNext *editor) const;
 
     void clearSettings() const;
