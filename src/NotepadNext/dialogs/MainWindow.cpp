@@ -680,7 +680,26 @@ void MainWindow::newFile()
 
     static int count = 1;
 
-    app->getEditorManager()->createEditor(tr("New %1").arg(count++));
+    // NOTE: in theory need to check all editors in the editorManager to future proof this.
+    // If there is another window it would need to check those too to see if New X exists. The editor
+    // manager would encompass all editors
+
+    forever {
+        QString newFileName = tr("New %1").arg(count++);
+        bool canUseName = true;
+
+        for (const ScintillaNext *editor : editors()) {
+            if (!editor->isFile() && editor->getName() == newFileName) {
+                canUseName = false;
+                break;
+            }
+        }
+
+        if (canUseName) {
+            app->getEditorManager()->createEditor(newFileName);
+            break;
+        }
+    }
 }
 
 // One unedited, new blank document
