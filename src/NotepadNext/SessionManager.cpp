@@ -24,6 +24,13 @@
 
 #include <QDir>
 #include <QStandardPaths>
+#include <QUuid>
+
+
+static QString RandomSessionFileName()
+{
+    return QUuid::createUuid().toString(QUuid::WithoutBraces);
+}
 
 SessionManager::SessionManager(SessionFileTypes types)
 {
@@ -43,6 +50,11 @@ QDir SessionManager::sessionDirectory() const
     d.cd("session");
 
     return d;
+}
+
+void SessionManager::saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName) const
+{
+    editor->saveCopyAs(sessionDirectory().filePath(sessionFileName));
 }
 
 SessionManager::SessionFileType SessionManager::determineType(ScintillaNext *editor) const
@@ -224,8 +236,8 @@ bool SessionManager::willFileGetStoredInSession(ScintillaNext *editor) const
 void SessionManager::storeFileDetails(ScintillaNext *editor, QSettings &settings)
 {
     settings.setValue("Type", "File");
-
     settings.setValue("FilePath", editor->getFilePath());
+
     storeEditorViewDetails(editor, settings);
 }
 
@@ -260,13 +272,15 @@ ScintillaNext* SessionManager::loadFileDetails(QSettings &settings, EditorManage
 
 void SessionManager::storeUnsavedFileDetails(ScintillaNext *editor, QSettings &settings)
 {
-    settings.setValue("Type", "UnsavedFile");
+    const QString sessionFileName = RandomSessionFileName();
 
+    settings.setValue("Type", "UnsavedFile");
     settings.setValue("FilePath", editor->getFilePath());
+    settings.setValue("SessionFileName", sessionFileName);
+
     storeEditorViewDetails(editor, settings);
 
-    // Save a copy of the file into the session directory
-    editor->saveCopyAs(sessionDirectory().filePath(editor->getName()));
+    saveIntoSessionDirectory(editor, sessionFileName);
 }
 
 ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings, EditorManager *editorManager)
@@ -274,10 +288,11 @@ ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings, Edito
     qInfo(Q_FUNC_INFO);
 
     const QString filePath = settings.value("FilePath").toString();
-    const QString tempFilePath = sessionDirectory().filePath(QFileInfo(filePath).fileName());
+    const QString sessionFileName = settings.value("SessionFileName").toString();
+    const QString sessionFilePath = sessionDirectory().filePath(sessionFileName);
 
     qDebug("Session file: \"%s\"", qUtf8Printable(filePath));
-    qDebug("  temp loc: \"%s\"", qUtf8Printable(tempFilePath));
+    qDebug("  temp loc: \"%s\"", qUtf8Printable(sessionFilePath));
 
     ScintillaNext *editor = editorManager->getEditorByFilePath(filePath);
     if (editor != Q_NULLPTR) {
@@ -285,8 +300,8 @@ ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings, Edito
         return Q_NULLPTR;
     }
 
-    if (QFileInfo::exists(filePath) && QFileInfo::exists(tempFilePath)) {
-        ScintillaNext *editor = ScintillaNext::fromFile(tempFilePath);
+    if (QFileInfo::exists(filePath) && QFileInfo::exists(sessionFilePath)) {
+        ScintillaNext *editor = ScintillaNext::fromFile(sessionFilePath);
 
         // Since this editor has different file path info, treat this as a temporary buffer
         editor->setFileInfo(filePath);
@@ -307,13 +322,15 @@ ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings, Edito
 
 void SessionManager::storeTempFile(ScintillaNext *editor, QSettings &settings)
 {
-    settings.setValue("Type", "Temp");
+    const QString sessionFileName = RandomSessionFileName();
 
+    settings.setValue("Type", "Temp");
     settings.setValue("FileName", editor->getName());
+    settings.setValue("SessionFileName", sessionFileName);
+
     storeEditorViewDetails(editor, settings);
 
-    // Save a copy of the file into the session directory
-    editor->saveCopyAs(sessionDirectory().filePath(editor->getName()));
+    saveIntoSessionDirectory(editor, sessionFileName);
 }
 
 ScintillaNext *SessionManager::loadTempFile(QSettings &settings, EditorManager *editorManager)
@@ -321,7 +338,8 @@ ScintillaNext *SessionManager::loadTempFile(QSettings &settings, EditorManager *
     qInfo(Q_FUNC_INFO);
 
     const QString fileName = settings.value("FileName").toString();
-    const QString fullFilePath = sessionDirectory().filePath(QFileInfo(fileName).fileName());
+    const QString sessionFileName = settings.value("SessionFileName").toString();
+    const QString fullFilePath = sessionDirectory().filePath(sessionFileName);
 
     qDebug("Session temp file: \"%s\"", qUtf8Printable(fullFilePath));
 
