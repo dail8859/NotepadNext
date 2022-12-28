@@ -45,7 +45,7 @@ QVariant EditorHexViewerTableModel::headerData(int section, Qt::Orientation orie
             return QString("%1").arg(section, 2, 16, QChar('0')).toUpper();
         }
         else if (orientation == Qt::Vertical) {
-            return QString("%1").arg(section * 16, 8, 16, QChar('0')).toUpper();;
+            return QString("%1").arg(section * 16, 8, 16, QChar('0')).toUpper();
         }
     }
     else if (role == Qt::TextAlignmentRole) {
@@ -91,7 +91,7 @@ QVariant EditorHexViewerTableModel::data(const QModelIndex &index, int role) con
             return str;
         }
 
-        int docPos = IndexToPos(index);;
+        int docPos = IndexToPos(index);
         if (docPos >= editor->length()) return QVariant();
 
         unsigned char ch = static_cast<unsigned char>(editor->charAt(docPos));

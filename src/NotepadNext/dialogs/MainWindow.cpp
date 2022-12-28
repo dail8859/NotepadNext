@@ -1107,7 +1107,7 @@ void MainWindow::moveFileToTrash(ScintillaNext *editor)
     Q_ASSERT(editor->isFile());
 
     const QString filePath = editor->getFilePath();
-    auto reply = QMessageBox::question(this, tr("Delete File"), tr("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));;
+    auto reply = QMessageBox::question(this, tr("Delete File"), tr("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));
 
     if (reply == QMessageBox::Yes) {
         if (editor->moveToTrash()) {
