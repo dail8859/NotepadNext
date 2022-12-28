@@ -108,9 +108,9 @@ void SessionManager::saveSession(MainWindow *window)
 
     settings.beginWriteArray("OpenedFiles");
 
-    int i = 0;
+    int index = 0;
     for (const auto &editor : window->editors()) {
-        settings.setArrayIndex(i);
+        settings.setArrayIndex(index);
 
         SessionFileType editorType = determineType(editor);
 
@@ -124,7 +124,7 @@ void SessionManager::saveSession(MainWindow *window)
         }
         else if (editorType == SessionManager::UnsavedFile) {
             if (fileTypes.testFlag(SessionManager::UnsavedFile)) {
-                storeFileDetails(editor, settings);
+                storeUnsavedFileDetails(editor, settings);
             }
             else {
                 continue;
@@ -132,7 +132,7 @@ void SessionManager::saveSession(MainWindow *window)
         }
         else if (editorType == SessionManager::TempFile) {
             if (fileTypes.testFlag(SessionManager::TempFile)) {
-                storeUnsavedTempFile(editor, settings);
+                storeTempFile(editor, settings);
             }
             else {
                 continue;
@@ -143,10 +143,10 @@ void SessionManager::saveSession(MainWindow *window)
         }
 
         if (currentEditor == editor) {
-            currentEditorIndex = i;
+            currentEditorIndex = index;
         }
 
-        ++i;
+        ++index;
     }
 
     settings.endArray();
@@ -168,12 +168,12 @@ void SessionManager::loadSession(MainWindow *window, EditorManager *editorManage
     const int currentEditorIndex = settings.value("CurrentEditorIndex").toInt();
     const int size = settings.beginReadArray("OpenedFiles");
 
-    // NOTE: In theory the settings should determine what file types are loaded, however if the session file types
+    // NOTE: In theory the fileTypes should determine what is loaded, however if the session fileTypes
     // change from the last time it was saved then it means the settings were manually altered outside of the app,
     // which is non-standard behavior, so just load anything in the file
 
-    for (int i = 0; i < size; ++i) {
-        settings.setArrayIndex(i);
+    for (int index = 0; index < size; ++index) {
+        settings.setArrayIndex(index);
 
         ScintillaNext *editor = Q_NULLPTR;
 
@@ -185,23 +185,22 @@ void SessionManager::loadSession(MainWindow *window, EditorManager *editorManage
             }
             else if (type == QStringLiteral("UnsavedFile")) {
                 editor = loadUnsavedFileDetails(settings, editorManager);
-
             }
-            else if (type == QStringLiteral("UnsavedTemp")) {
-                editor = loadUnsavedTempFile(settings, editorManager);
+            else if (type == QStringLiteral("Temp")) {
+                editor = loadTempFile(settings, editorManager);
             }
             else {
                 qDebug("Unknown session entry type: %s", qUtf8Printable(type));
             }
 
             if (editor) {
-                 if (currentEditorIndex == i) {
+                 if (currentEditorIndex == index) {
                     currentEditor = editor;
                 }
             }
         }
         else {
-            qDebug("Unknown session entry type for index %d", i);
+            qDebug("Unknown session entry type for index %d", index);
         }
     }
 
@@ -245,18 +244,16 @@ ScintillaNext* SessionManager::loadFileDetails(QSettings &settings, EditorManage
     }
 
     if (QFileInfo::exists(filePath)) {
-        editor = editorManager->createEditorFromFile(filePath);
-    }
-    else {
-        qDebug("  no longer exists on disk, ignoring");
-        return Q_NULLPTR;
-    }
+        editor = ScintillaNext::fromFile(filePath);
 
-    if (editor) {
         loadEditorViewDetails(editor, settings);
+
+        editorManager->manageEditor(editor);
+
         return editor;
     }
     else {
+        qDebug("  no longer exists on disk, ignoring");
         return Q_NULLPTR;
     }
 }
@@ -268,6 +265,7 @@ void SessionManager::storeUnsavedFileDetails(ScintillaNext *editor, QSettings &s
     settings.setValue("FilePath", editor->getFilePath());
     storeEditorViewDetails(editor, settings);
 
+    // Save a copy of the file into the session directory
     editor->saveCopyAs(sessionDirectory().filePath(editor->getName()));
 }
 
@@ -307,17 +305,18 @@ ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings, Edito
     }
 }
 
-void SessionManager::storeUnsavedTempFile(ScintillaNext *editor, QSettings &settings)
+void SessionManager::storeTempFile(ScintillaNext *editor, QSettings &settings)
 {
-    settings.setValue("Type", "UnsavedTemp");
+    settings.setValue("Type", "Temp");
 
     settings.setValue("FileName", editor->getName());
     storeEditorViewDetails(editor, settings);
 
+    // Save a copy of the file into the session directory
     editor->saveCopyAs(sessionDirectory().filePath(editor->getName()));
 }
 
-ScintillaNext *SessionManager::loadUnsavedTempFile(QSettings &settings, EditorManager *editorManager)
+ScintillaNext *SessionManager::loadTempFile(QSettings &settings, EditorManager *editorManager)
 {
     qInfo(Q_FUNC_INFO);
 

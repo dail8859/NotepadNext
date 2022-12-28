@@ -127,6 +127,7 @@ bool NotepadNextApplication::init()
     QSettings qsettings;
 
     settings->setRestorePreviousSession(qsettings.value("App/RestorePreviousSession", false).toBool());
+    settings->setRestoreUnsavedFiles(qsettings.value("App/RestoreUnsavedFiles", false).toBool());
     settings->setRestoreTempFiles(qsettings.value("App/RestoreTempFiles", false).toBool());
     recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
 
@@ -134,6 +135,7 @@ bool NotepadNextApplication::init()
         QSettings qsettings;
 
         qsettings.setValue("App/RestorePreviousSession", settings->restorePreviousSession());
+        qsettings.setValue("App/RestoreUnsavedFiles", settings->restoreUnsavedFiles());
         qsettings.setValue("App/RestoreTempFiles", settings->restoreTempFiles());
         qsettings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
     });
@@ -251,7 +253,7 @@ SessionManager *NotepadNextApplication::getSessionManager() const
         fileTypes |= SessionManager::SavedFile;
     }
 
-    if (false /*settings->restorePreviousSession()*/) {
+    if (settings->restoreUnsavedFiles()) {
         fileTypes |= SessionManager::UnsavedFile;
     }
 

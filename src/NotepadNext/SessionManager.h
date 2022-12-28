@@ -36,7 +36,7 @@ public:
         None = 0,
         SavedFile = 1,
         UnsavedFile = 2,
-        TempFile = 3,
+        TempFile = 4,
     };
     Q_DECLARE_FLAGS(SessionFileTypes, SessionFileType)
 
@@ -66,8 +66,8 @@ private:
     void storeUnsavedFileDetails(ScintillaNext *editor, QSettings &settings);
     ScintillaNext *loadUnsavedFileDetails(QSettings &settings, EditorManager *editorManager);
 
-    void storeUnsavedTempFile(ScintillaNext *editor, QSettings &settings);
-    ScintillaNext *loadUnsavedTempFile(QSettings &settings, EditorManager *editorManager);
+    void storeTempFile(ScintillaNext *editor, QSettings &settings);
+    ScintillaNext *loadTempFile(QSettings &settings, EditorManager *editorManager);
 
     void storeEditorViewDetails(ScintillaNext *editor, QSettings &settings);
     void loadEditorViewDetails(ScintillaNext *editor, QSettings &settings);

@@ -31,29 +31,37 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
 
     ui->checkBoxMenuBar->setChecked(settings->showMenuBar());
     connect(settings, &Settings::showMenuBarChanged, ui->checkBoxMenuBar, &QCheckBox::setChecked);
-    connect(ui->checkBoxMenuBar, &QCheckBox::clicked, settings, &Settings::setShowMenuBar);
+    connect(ui->checkBoxMenuBar, &QCheckBox::toggled, settings, &Settings::setShowMenuBar);
 
     ui->checkBoxToolBar->setChecked(settings->showToolBar());
     connect(settings, &Settings::showToolBarChanged, ui->checkBoxToolBar, &QCheckBox::setChecked);
-    connect(ui->checkBoxToolBar, &QCheckBox::clicked, settings, &Settings::setShowToolBar);
+    connect(ui->checkBoxToolBar, &QCheckBox::toggled, settings, &Settings::setShowToolBar);
 
     ui->checkBoxStatusBar->setChecked(settings->showStatusBar());
     connect(settings, &Settings::showStatusBarChanged, ui->checkBoxStatusBar, &QCheckBox::setChecked);
-    connect(ui->checkBoxStatusBar, &QCheckBox::clicked, settings, &Settings::setShowStatusBar);
+    connect(ui->checkBoxStatusBar, &QCheckBox::toggled, settings, &Settings::setShowStatusBar);
 
-    ui->checkBoxRememberSession->setChecked(settings->restorePreviousSession());
-    connect(settings, &Settings::restorePreviousSessionChanged, ui->checkBoxRememberSession, &QCheckBox::setChecked);
-    connect(ui->checkBoxRememberSession, &QCheckBox::clicked, settings, &Settings::setRestorePreviousSession);
+    ui->gbxRestorePreviousSession->setChecked(settings->restorePreviousSession());
+    connect(settings, &Settings::restorePreviousSessionChanged, ui->gbxRestorePreviousSession, &QGroupBox::setChecked);
+    connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, settings, &Settings::setRestorePreviousSession);
 
+    ui->checkBoxUnsavedFiles->setChecked(settings->restoreUnsavedFiles());
     ui->checkBoxRestoreTempFiles->setChecked(settings->restoreTempFiles());
-    connect(ui->checkBoxRememberSession, &QCheckBox::clicked, ui->checkBoxRestoreTempFiles, &QCheckBox::setEnabled);
-    connect(ui->checkBoxRememberSession, &QCheckBox::clicked, this, [=](bool checked) {
+
+    connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, ui->checkBoxRestoreTempFiles, &QCheckBox::setEnabled);
+
+    connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, this, [=](bool checked) {
         if (!checked) {
+            ui->checkBoxUnsavedFiles->setChecked(false);
             ui->checkBoxRestoreTempFiles->setChecked(false);
         }
     });
+
+    connect(settings, &Settings::restoreUnsavedFilesChanged, ui->checkBoxUnsavedFiles, &QCheckBox::setChecked);
+    connect(ui->checkBoxUnsavedFiles, &QCheckBox::toggled, settings, &Settings::setRestoreUnsavedFiles);
+
     connect(settings, &Settings::restoreTempFilesChanged, ui->checkBoxRestoreTempFiles, &QCheckBox::setChecked);
-    connect(ui->checkBoxRestoreTempFiles, &QCheckBox::clicked, settings, &Settings::setRestoreTempFiles);
+    connect(ui->checkBoxRestoreTempFiles, &QCheckBox::toggled, settings, &Settings::setRestoreTempFiles);
 }
 
 PreferencesDialog::~PreferencesDialog()

@@ -1493,7 +1493,6 @@ void MainWindow::restoreSettings()
     zoomLevel = settings.value("Editor/ZoomLevel", 0).toInt();
 }
 
-
 void MainWindow::restoreWindowState()
 {
     QSettings settings;

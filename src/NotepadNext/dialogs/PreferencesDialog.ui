@@ -38,17 +38,32 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBoxRememberSession">
-       <property name="text">
+      <widget class="QGroupBox" name="gbxRestorePreviousSession">
+       <property name="title">
         <string>Restore Previous Session</string>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="checkBoxRestoreTempFiles">
-       <property name="text">
-        <string>Restore Temp Files</string>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QCheckBox" name="checkBoxUnsavedFiles">
+          <property name="text">
+           <string>Unsaved changes</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxRestoreTempFiles">
+          <property name="text">
+           <string>Temp Files</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
