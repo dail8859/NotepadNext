@@ -221,7 +221,7 @@ void BetterMultiSelection::EditSelections(std::function<void(Selection &selectio
         totalOffset += editor->length() - length;
     }
 
-    editor->endUndoAction();;
+    editor->endUndoAction();
 
     selections.erase(uniquify(selections.begin(), selections.end()), selections.end());
 

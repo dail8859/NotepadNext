@@ -109,7 +109,7 @@ bool ScintillaNext::isSavedToDisk() const
 
 bool ScintillaNext::isFile() const
 {
-    return bufferType == ScintillaNext::File || bufferType == ScintillaNext::FileMissing;;
+    return bufferType == ScintillaNext::File || bufferType == ScintillaNext::FileMissing;
 }
 
 QFileInfo ScintillaNext::getFileInfo() const

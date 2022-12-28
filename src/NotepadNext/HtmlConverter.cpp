@@ -129,7 +129,7 @@ void HtmlConverter::convertRange(QTextStream &stream, int start, int end)
     stream << "<body>" << Qt::endl;
     stream << "<div class=\"main\">";
     stream << html;
-    stream << "</div>" << Qt::endl;;
+    stream << "</div>" << Qt::endl;
     stream << "</body>" << Qt::endl;
     stream << "<!--EndFragment-->" << Qt::endl;
     stream << "</html>" << Qt::endl;
