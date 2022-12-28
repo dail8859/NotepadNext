@@ -32,6 +32,7 @@ bool Settings::showStatusBar() const { return m_showStatusBar; }
 bool Settings::tabsClosable() const { return m_tabsClosable; }
 
 bool Settings::restorePreviousSession() const { return m_restorePreviousSession; }
+bool Settings::restoreUnsavedFiles() const { return m_restoreUnsavedFiles; }
 bool Settings::restoreTempFiles() const { return m_restoreTempFiles; }
 
 
@@ -86,7 +87,16 @@ void Settings::setRestorePreviousSession(bool restorePreviousSession)
         return;
 
     m_restorePreviousSession = restorePreviousSession;
-    emit tabsClosableChanged(m_restorePreviousSession);
+    emit restorePreviousSessionChanged(m_restorePreviousSession);
+}
+
+void Settings::setRestoreUnsavedFiles(bool restoreUnsavedFiles)
+{
+    if (m_restoreUnsavedFiles == restoreUnsavedFiles)
+        return;
+
+    m_restoreUnsavedFiles = restoreUnsavedFiles;
+    emit restoreUnsavedFilesChanged(m_restoreUnsavedFiles);
 }
 
 void Settings::setRestoreTempFiles(bool restoreTempFiles)
@@ -95,5 +105,5 @@ void Settings::setRestoreTempFiles(bool restoreTempFiles)
         return;
 
     m_restoreTempFiles = restoreTempFiles;
-    emit tabsClosableChanged(m_restoreTempFiles);
+    emit restoreTempFilesChanged(m_restoreTempFiles);
 }
