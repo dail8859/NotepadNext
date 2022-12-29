@@ -32,9 +32,9 @@
 #include "AutoIndentation.h"
 #include "AutoCompletion.h"
 #include "URLFinder.h"
+#include "BookMarkDecorator.h"
 
 
-const int MARK_BOOKMARK = 24;
 const int MARK_HIDELINESBEGIN = 23;
 const int MARK_HIDELINESEND = 22;
 const int MARK_HIDELINESUNDERLINE = 21;
@@ -142,14 +142,9 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setMarginLeft(2);
 
     editor->setMarginWidthN(0, 30);
-    editor->setMarginMaskN(1, (1<<MARK_BOOKMARK) | (1<<MARK_HIDELINESBEGIN) | (1<<MARK_HIDELINESEND) | (1<<MARK_HIDELINESUNDERLINE));
+    editor->setMarginMaskN(1, (1<<MARK_HIDELINESBEGIN) | (1<<MARK_HIDELINESEND) | (1<<MARK_HIDELINESUNDERLINE));
     editor->setMarginMaskN(2, SC_MASK_FOLDERS);
     editor->setMarginWidthN(2, 14);
-
-    editor->markerSetAlpha(MARK_BOOKMARK, 70);
-    editor->markerDefine(MARK_BOOKMARK, SC_MARK_BOOKMARK);
-    editor->markerSetFore(MARK_BOOKMARK, 0xFF2020);
-    editor->markerSetBack(MARK_BOOKMARK, 0xFF2020);
 
     editor->markerDefine(MARK_HIDELINESUNDERLINE, SC_MARK_UNDERLINE);
     editor->markerSetBack(MARK_HIDELINESUNDERLINE, 0x77CC77);
@@ -157,7 +152,6 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->markerDefine(MARK_HIDELINESBEGIN, SC_MARK_ARROW);
     editor->markerDefine(MARK_HIDELINESEND, SC_MARK_ARROWDOWN);
 
-    editor->setMarginSensitiveN(1, true);
     editor->setMarginSensitiveN(2, true);
 
     editor->setFoldFlags(SC_FOLDFLAG_LINEAFTER_CONTRACTED);
@@ -255,6 +249,9 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     URLFinder *uf = new URLFinder(editor);
     uf->setEnabled(true);
+
+    BookMarkDecorator *bm = new BookMarkDecorator(editor);
+    bm->setEnabled(true);
 }
 
 void EditorManager::purgeOldEditorPointers()

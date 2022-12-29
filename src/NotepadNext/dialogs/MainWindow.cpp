@@ -1534,22 +1534,6 @@ void MainWindow::addEditor(ScintillaNext *editor)
     connect(editor, &ScintillaNext::renamed, this, [=]() { detectLanguage(editor); });
     connect(editor, &ScintillaNext::renamed, this, [=]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
-    connect(editor, &ScintillaNext::marginClicked, [editor](Scintilla::Position position, Scintilla::KeyMod modifiers, int margin) {
-        Q_UNUSED(modifiers);
-
-        if (margin == 1) {
-            int line = editor->lineFromPosition(position);
-
-            if (editor->markerGet(line) & (1 << 24)) {
-                while (editor->markerGet(line) & (1 << 24)) {
-                    editor->markerDelete(line, 24);
-                }
-            }
-            else {
-                editor->markerAdd(line, 24);
-            }
-        }
-    });
 
     // Watch for any zoom events (Ctrl+Scroll or pinch-to-zoom (Qt translates it as Ctrl+Scroll)) so that the event
     // can be handled before the ScintillaEditBase widget, so that it can be applied to all editors to keep zoom level equal.
