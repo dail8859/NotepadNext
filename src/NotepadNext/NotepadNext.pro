@@ -101,6 +101,7 @@ SOURCES += \
     decorators/AutoCompletion.cpp \
     decorators/AutoIndentation.cpp \
     decorators/BetterMultiSelection.cpp \
+    decorators/BookMarkDecorator.cpp \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
     decorators/URLFinder.cpp \
@@ -175,6 +176,7 @@ HEADERS += \
     decorators/AutoCompletion.h \
     decorators/AutoIndentation.h \
     decorators/BetterMultiSelection.h \
+    decorators/BookMarkDecorator.h \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
     decorators/URLFinder.h \
