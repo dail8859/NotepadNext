@@ -431,7 +431,6 @@ bool ScintillaNext::readFromDisk(QFile &file)
             }
 
             qDebug("Using codec: '%s'", codec ? codec->name().constData() : "");
-            setCodePage(codec ? SC_CP_UTF8 : 0);
         }
 
         if (codec) {
