@@ -18,6 +18,7 @@
 
 
 #include "MainWindow.h"
+#include "SessionManager.h"
 #include "ui_MainWindow.h"
 
 #include <QFileDialog>
@@ -679,7 +680,26 @@ void MainWindow::newFile()
 
     static int count = 1;
 
-    app->getEditorManager()->createEmptyEditor(tr("New %1").arg(count++));
+    // NOTE: in theory need to check all editors in the editorManager to future proof this.
+    // If there is another window it would need to check those too to see if New X exists. The editor
+    // manager would encompass all editors
+
+    forever {
+        QString newFileName = tr("New %1").arg(count++);
+        bool canUseName = true;
+
+        for (const ScintillaNext *editor : editors()) {
+            if (!editor->isFile() && editor->getName() == newFileName) {
+                canUseName = false;
+                break;
+            }
+        }
+
+        if (canUseName) {
+            app->getEditorManager()->createEditor(newFileName);
+            break;
+        }
+    }
 }
 
 // One unedited, new blank document
@@ -884,12 +904,10 @@ void MainWindow::closeFile(ScintillaNext *editor)
     }
 }
 
-void MainWindow::closeAllFiles(bool forceClose = false)
+void MainWindow::closeAllFiles()
 {
-    if (!forceClose) {
-        if (!checkEditorsBeforeClose(editors())) {
-            return;
-        }
+    if (!checkEditorsBeforeClose(editors())) {
+        return;
     }
 
     // Ask the manager to close the editors the dockedEditor knows about
@@ -897,8 +915,7 @@ void MainWindow::closeAllFiles(bool forceClose = false)
         editor->close();
     }
 
-    if (!forceClose)
-        newFile();
+    newFile();
 }
 
 void MainWindow::closeAllExceptActive()
@@ -957,7 +974,7 @@ bool MainWindow::saveCurrentFile()
 
 bool MainWindow::saveFile(ScintillaNext *editor)
 {
-    if (!editor->modify())
+    if (editor->isSavedToDisk())
         return true;
 
     if (!editor->isFile()) {
@@ -1495,7 +1512,6 @@ void MainWindow::restoreSettings()
     zoomLevel = settings.value("Editor/ZoomLevel", 0).toInt();
 }
 
-
 void MainWindow::restoreWindowState()
 {
     QSettings settings;
@@ -1510,6 +1526,11 @@ void MainWindow::restoreWindowState()
     // Always hide the dock no matter how the application was closed
     SearchResultsDock *srDock = findChild<SearchResultsDock *>();
     srDock->hide();
+}
+
+void MainWindow::switchToEditor(const ScintillaNext *editor)
+{
+    dockedEditor->switchToEditor(editor);
 }
 
 void MainWindow::focusIn()
@@ -1626,7 +1647,17 @@ void MainWindow::initUpdateCheck()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if (!checkEditorsBeforeClose(editors())) {
+    const SessionManager *sessionManager = app->getSessionManager();
+    QVector<ScintillaNext *> e;
+
+    // Check all editors to see if the session manager will not handle it
+    for (auto editor : editors()) {
+        if (!sessionManager->willFileGetStoredInSession(editor)) {
+            e.append(editor);
+        }
+    }
+
+    if (!checkEditorsBeforeClose(e)) {
         event->ignore();
         return;
     }

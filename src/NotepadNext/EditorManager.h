@@ -33,18 +33,18 @@ class EditorManager : public QObject
 public:
     explicit EditorManager(QObject *parent = nullptr);
 
-    ScintillaNext *createEmptyEditor(const QString &name);
+    ScintillaNext *createEditor(const QString &name);
     ScintillaNext *createEditorFromFile(const QString &filePath, bool tryToCreate=false);
-    ScintillaNext *cloneEditor(ScintillaNext *editor);
 
     ScintillaNext *getEditorByFilePath(const QString &filePath);
+
+    void manageEditor(ScintillaNext *editor);
 
 signals:
     void editorCreated(ScintillaNext *editor);
     void editorClosed(ScintillaNext *editor);
 
 private:
-    void manageEditor(ScintillaNext *editor);
     void setupEditor(ScintillaNext *editor);
     void purgeOldEditorPointers();
 
