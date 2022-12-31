@@ -83,7 +83,6 @@ ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate
     }
 
     editor->setFileInfo(filePath);
-    editor->updateTimestamp();
 
     return editor;
 }
@@ -104,7 +103,19 @@ void ScintillaNext::goToRange(const Sci_CharacterRange &range)
 
 bool ScintillaNext::isSavedToDisk() const
 {
-    return bufferType != ScintillaNext::FileMissing && !modify();
+    return !canSaveToDisk();
+}
+
+bool ScintillaNext::canSaveToDisk() const
+{
+    // The buffer can be saved if:
+    // - It is marked as a temporary since as soon as it gets saved it is no longer a temporary buffer
+    // - A modified file
+    // - A missing file since as soon as it is saved it is no longer missing.
+    return temporary ||
+           (bufferType == ScintillaNext::New && modify()) ||
+           (bufferType == ScintillaNext::File && modify()) ||
+           (bufferType == ScintillaNext::FileMissing);
 }
 
 bool ScintillaNext::isFile() const
@@ -176,6 +187,9 @@ bool ScintillaNext::save()
         updateTimestamp();
         setSavePoint();
 
+        // If this was a temporary file, make sure it is not any more
+        setTemporary(false);
+
         emit saved();
     }
 
@@ -215,7 +229,7 @@ void ScintillaNext::reload()
 
 bool ScintillaNext::saveAs(const QString &newFilePath)
 {
-    bool isRenamed = bufferType == ScintillaNext::Temporary || fileInfo.canonicalFilePath() != newFilePath;
+    bool isRenamed = bufferType == ScintillaNext::New || fileInfo.canonicalFilePath() != newFilePath;
 
     emit aboutToSave();
 
@@ -223,8 +237,10 @@ bool ScintillaNext::saveAs(const QString &newFilePath)
 
     if (saveSuccessful) {
         setFileInfo(newFilePath);
-        updateTimestamp();
         setSavePoint();
+
+        // If this was a temporary file, make sure it is not any more
+        setTemporary(false);
 
         emit saved();
 
@@ -253,8 +269,10 @@ bool ScintillaNext::rename(const QString &newFilePath)
 
         // Everything worked fine, so update the buffer's info
         setFileInfo(newFilePath);
-        updateTimestamp();
         setSavePoint();
+
+        // If this was a temporary file, make sure it is not any more
+        setTemporary(false);
 
         emit saved();
 
@@ -268,7 +286,7 @@ bool ScintillaNext::rename(const QString &newFilePath)
 
 ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
 {
-    if (bufferType == BufferType::Temporary) {
+    if (bufferType == BufferType::New) {
         return FileStateChange::NoChange;
     }
     else if (bufferType == BufferType::File) {
@@ -469,7 +487,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
 
 QDateTime ScintillaNext::fileTimestamp()
 {
-    Q_ASSERT(bufferType != ScintillaNext::Temporary);
+    Q_ASSERT(bufferType != ScintillaNext::New);
 
     fileInfo.refresh();
     qInfo("%s last modified %s", qUtf8Printable(fileInfo.fileName()), qUtf8Printable(fileInfo.lastModified().toString()));
@@ -490,4 +508,20 @@ void ScintillaNext::setFileInfo(const QString &filePath)
 
     name = fileInfo.fileName();
     bufferType = ScintillaNext::File;
+
+    updateTimestamp();
+}
+
+void ScintillaNext::detachFileInfo(const QString &newName)
+{
+    this->name = newName;
+    bufferType = ScintillaNext::New;
+}
+
+void ScintillaNext::setTemporary(bool temp)
+{
+    temporary = temp;
+
+    // Fake this signal
+    emit savePointChanged(temporary);
 }

@@ -59,12 +59,19 @@ public:
     void goToRange(const Sci_CharacterRange &range);
 
     bool isFile() const;
-    bool isSavedToDisk() const;
     QFileInfo getFileInfo() const;
+
+    bool isSavedToDisk() const;
+    bool canSaveToDisk() const;
 
     QString getName() const { return name; }
     QString getPath() const;
     QString getFilePath() const;
+
+    // NOTE: this is dangerous and should only be used in very rare situations
+    void setFileInfo(const QString &filePath);
+
+    void detachFileInfo(const QString &newName);
 
     enum FileStateChange {
         NoChange,
@@ -74,10 +81,13 @@ public:
     };
 
     enum BufferType {
-        Temporary = 0, // A temporary buffer, e.g. "New 1"
-        File = 1, // Buffer tied to a file on the file system
-        FileMissing = 2, // Buffer with a missing file on the file system
+        New, // A temporary buffer, e.g. "New 1"
+        File, // Buffer tied to a file on the file system
+        FileMissing, // Buffer with a missing file on the file system
     };
+
+    bool isTemporary() const { return temporary; }
+    void setTemporary(bool temp);
 
     void setFoldMarkers(const QString &type);
 
@@ -85,6 +95,7 @@ public:
     QByteArray languageSingleLineComment;
 
     #include "ScintillaEnums.h"
+
 
 public slots:
     void close();
@@ -114,14 +125,16 @@ protected:
 
 private:
     QString name;
-    BufferType bufferType = BufferType::Temporary;
+    BufferType bufferType = BufferType::New;
     QFileInfo fileInfo;
     QDateTime modifiedTime;
+
+    bool temporary = false; // Temporary file loaded from a session. It can either be a 'New' file or actual 'File'
 
     bool readFromDisk(QFile &file);
     QDateTime fileTimestamp();
     void updateTimestamp();
-    void setFileInfo(const QString &filePath);
+
 };
 
 template<typename Func>

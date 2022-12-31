@@ -58,15 +58,11 @@ EditorManager::EditorManager(QObject *parent) : QObject(parent)
     });
 }
 
-ScintillaNext *EditorManager::createEmptyEditor(const QString &name)
+ScintillaNext *EditorManager::createEditor(const QString &name)
 {
     ScintillaNext *editor = new ScintillaNext(name);
 
     manageEditor(editor);
-
-    setupEditor(editor);
-
-    emit editorCreated(editor);
 
     return editor;
 }
@@ -77,24 +73,7 @@ ScintillaNext *EditorManager::createEditorFromFile(const QString &filePath, bool
 
     manageEditor(editor);
 
-    setupEditor(editor);
-
-    emit editorCreated(editor);
-
     return editor;
-}
-
-ScintillaNext *EditorManager::cloneEditor(ScintillaNext *editor)
-{
-    ScintillaNext *clonedEditor = new ScintillaNext("Clone");
-
-    manageEditor(editor);
-
-    setupEditor(clonedEditor);
-
-    emit editorCreated(clonedEditor);
-
-    return clonedEditor;
 }
 
 ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
@@ -116,6 +95,10 @@ ScintillaNext *EditorManager::getEditorByFilePath(const QString &filePath)
 void EditorManager::manageEditor(ScintillaNext *editor)
 {
     editors.append(QPointer<ScintillaNext>(editor));
+
+    setupEditor(editor);
+
+    emit editorCreated(editor);
 }
 
 void EditorManager::setupEditor(ScintillaNext *editor)
