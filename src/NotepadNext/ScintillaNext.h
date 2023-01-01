@@ -20,6 +20,7 @@
 #ifndef SCINTILLANEXT_H
 #define SCINTILLANEXT_H
 
+#include "RangeAllocator.h"
 #include "ScintillaEdit.h"
 
 #include <QDateTime>
@@ -43,6 +44,8 @@ public:
     virtual ~ScintillaNext();
 
     static ScintillaNext *fromFile(const QString &filePath, bool tryToCreate=false);
+
+    int allocateIndicator(const QString &name);
 
     template<typename Func>
     void forEachMatch(const QString &text, Func callback) { forEachMatch(text.toUtf8(), callback); }
@@ -128,6 +131,7 @@ private:
     BufferType bufferType = BufferType::New;
     QFileInfo fileInfo;
     QDateTime modifiedTime;
+    RangeAllocator indicatorResources;
 
     bool temporary = false; // Temporary file loaded from a session. It can either be a 'New' file or actual 'File'
 

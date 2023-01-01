@@ -37,6 +37,7 @@ public slots:
 
 private:
     QTimer *timer;
+    int indicator;
 };
 
 #endif // URLFINDER_H

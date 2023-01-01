@@ -1,6 +1,6 @@
 /*
  * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * Copyright 2022 Justin Dailey
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,23 @@
  */
 
 
-#ifndef SMARTHIGHLIGHTER_H
-#define SMARTHIGHLIGHTER_H
+#pragma once
 
-#include "EditorDecorator.h"
+#include <QBitArray>
+#include <QMap>
 
 
-class SmartHighlighter : public EditorDecorator
+class RangeAllocator
 {
-    Q_OBJECT
-
 public:
-    SmartHighlighter(ScintillaNext *editor);
+    explicit RangeAllocator(int total);
+
+    void disableRange(int start, int end);
+
+    int requestResource(const QString name);
 
 private:
-    void highlightCurrentView();
-    int indicator;
-
-public slots:
-    void notify(const Scintilla::NotificationData *pscn) override;
+    QBitArray resource;
+    QMap<QString, int> allocation;
 };
 
-#endif // SMARTHIGHLIGHTER_H

@@ -86,6 +86,7 @@ SOURCES += \
     NppImporter.cpp \
     QRegexSearch.cpp \
     QuickFindWidget.cpp \
+    RangeAllocator.cpp \
     RecentFilesListManager.cpp \
     RecentFilesListMenuBuilder.cpp \
     RtfConverter.cpp \
@@ -161,6 +162,7 @@ HEADERS += \
     NppImporter.h \
     QRegexSearch.h \
     QuickFindWidget.h \
+    RangeAllocator.h \
     RecentFilesListManager.h \
     RecentFilesListMenuBuilder.h \
     RtfConverter.h \
