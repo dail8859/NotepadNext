@@ -52,8 +52,13 @@ static bool writeToDisk(const QByteArray &data, const QString &path)
 
 ScintillaNext::ScintillaNext(QString name, QWidget *parent) :
     ScintillaEdit(parent),
-    name(name)
+    name(name),
+    indicatorResources(INDICATOR_MAX + 1)
 {
+    // Per the scintilla documentation, some parts of the range are not generally available
+    indicatorResources.disableRange(0, 7);
+    indicatorResources.disableRange(INDICATOR_IME, INDICATOR_IME_MAX);
+    indicatorResources.disableRange(INDICATOR_HISTORY_REVERTED_TO_ORIGIN_INSERTION, INDICATOR_HISTORY_REVERTED_TO_MODIFIED_DELETION);
 }
 
 ScintillaNext::~ScintillaNext()
@@ -85,6 +90,11 @@ ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate
     editor->setFileInfo(filePath);
 
     return editor;
+}
+
+int ScintillaNext::allocateIndicator(const QString &name)
+{
+    return indicatorResources.requestResource(name);
 }
 
 void ScintillaNext::goToRange(const Sci_CharacterRange &range)

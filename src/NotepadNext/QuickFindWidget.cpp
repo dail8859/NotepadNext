@@ -111,7 +111,7 @@ void QuickFindWidget::highlightMatches()
     }
 
     prepareSearch();
-    editor->setIndicatorCurrent(28);
+    editor->setIndicatorCurrent(indicator);
 
     bool foundOne = false;
     finder->forEachMatch([&](int start, int end) {
@@ -211,11 +211,13 @@ void QuickFindWidget::setSearchContextColor(QString color)
 
 void QuickFindWidget::initializeEditorIndicator()
 {
-    editor->indicSetFore(28, 0xFF8000);
-    editor->indicSetStyle(28, INDIC_FULLBOX);
-    editor->indicSetOutlineAlpha(28, 150);
-    editor->indicSetAlpha(28, 50);
-    editor->indicSetUnder(28, true);
+    indicator = editor->allocateIndicator(QStringLiteral("quick_find"));
+
+    editor->indicSetFore(indicator, 0xFF8000);
+    editor->indicSetStyle(indicator, INDIC_FULLBOX);
+    editor->indicSetOutlineAlpha(indicator, 150);
+    editor->indicSetAlpha(indicator, 50);
+    editor->indicSetUnder(indicator, true);
 }
 
 QString QuickFindWidget::searchText() const
@@ -267,6 +269,6 @@ void QuickFindWidget::returnPressed()
 
 void QuickFindWidget::clearHighlights()
 {
-    editor->setIndicatorCurrent(28);
+    editor->setIndicatorCurrent(indicator);
     editor->indicatorClearRange(0, editor->length());
 }

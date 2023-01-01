@@ -72,6 +72,7 @@ private:
     Ui::QuickFindWidget *ui;
     ScintillaNext *editor = Q_NULLPTR;
     Finder *finder = Q_NULLPTR;
+    int indicator;
 };
 
 #endif // QUICKFINDWIDGET_H

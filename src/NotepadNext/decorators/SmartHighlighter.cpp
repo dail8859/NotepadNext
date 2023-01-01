@@ -27,11 +27,14 @@ SmartHighlighter::SmartHighlighter(ScintillaNext *editor) :
 {
     setObjectName("SmartHighlighter");
 
-    editor->indicSetFore(29, 0x00FF00);
-    editor->indicSetStyle(29, INDIC_ROUNDBOX);
-    editor->indicSetOutlineAlpha(29, 150);
-    editor->indicSetAlpha(29, 100);
-    editor->indicSetUnder(29, true);
+    indicator = editor->allocateIndicator("smart_highlighter");
+
+    editor->indicSetFore(indicator, 0x00FF00);
+    editor->indicSetStyle(indicator, INDIC_ROUNDBOX);
+    editor->indicSetOutlineAlpha(indicator, 150);
+    editor->indicSetAlpha(indicator, 100);
+    editor->indicSetUnder(indicator, true);
+
 }
 
 void SmartHighlighter::notify(const NotificationData *pscn)
@@ -43,7 +46,7 @@ void SmartHighlighter::notify(const NotificationData *pscn)
 
 void SmartHighlighter::highlightCurrentView()
 {
-    editor->setIndicatorCurrent(29);
+    editor->setIndicatorCurrent(indicator);
     editor->indicatorClearRange(0, editor->length());
 
     if (editor->selectionEmpty()) {

@@ -22,18 +22,19 @@
 
 #include "URLFinder.h"
 
-const int URL_INDIC = 10;
 
 URLFinder::URLFinder(ScintillaNext *editor) :
     EditorDecorator(editor),
     timer(new QTimer(this))
 {
     // Setup the indicator
-    editor->indicSetStyle(URL_INDIC, INDIC_PLAIN);
-    editor->indicSetFore(URL_INDIC, 0xFF0000);
+    indicator = editor->allocateIndicator("url_finder");
 
-    editor->indicSetHoverStyle(URL_INDIC, INDIC_DOTS);
-    editor->indicSetHoverFore(URL_INDIC, 0xFF0000);
+    editor->indicSetStyle(indicator, INDIC_PLAIN);
+    editor->indicSetFore(indicator, 0xFF0000);
+
+    editor->indicSetHoverStyle(indicator, INDIC_DOTS);
+    editor->indicSetHoverFore(indicator, 0xFF0000);
 
     // Resizing the window could reveal more text
     connect(editor, &ScintillaNext::resized, timer, qOverload<>(&QTimer::start));
@@ -47,7 +48,7 @@ void URLFinder::findURLs()
 {
     //qInfo(Q_FUNC_INFO);
 
-    editor->setIndicatorCurrent(URL_INDIC);
+    editor->setIndicatorCurrent(indicator);
     editor->indicatorClearRange(0, editor->length());
 
     int currentLine = editor->docLineFromVisible(editor->firstVisibleLine());
@@ -124,11 +125,10 @@ void URLFinder::notify(const Scintilla::NotificationData *pscn)
     else if (pscn->nmhdr.code == Scintilla::Notification::IndicatorClick && FlagSet(pscn->modifiers, Scintilla::KeyMod::Ctrl)) {
         const int indicators = editor->indicatorAllOnFor(pscn->position);
 
-        // TODO: make sure it is the indicator we want
-        if (indicators & (1 << URL_INDIC)) {
+        if (indicators & (1 << indicator)) {
 
-            const int indicatorStart = editor->indicatorStart(URL_INDIC, pscn->position);
-            const int indicatorEnd = editor->indicatorEnd(URL_INDIC, pscn->position);
+            const int indicatorStart = editor->indicatorStart(indicator, pscn->position);
+            const int indicatorEnd = editor->indicatorEnd(indicator, pscn->position);
 
             QUrl url(editor->get_text_range(indicatorStart, indicatorEnd));
 
