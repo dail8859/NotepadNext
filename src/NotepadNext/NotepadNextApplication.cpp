@@ -123,22 +123,9 @@ bool NotepadNextApplication::init()
         }
     });
 
-    // Restore some settings and schedule saving the settings on quit
-    QSettings qsettings;
+    loadSettings();
 
-    settings->setRestorePreviousSession(qsettings.value("App/RestorePreviousSession", false).toBool());
-    settings->setRestoreUnsavedFiles(qsettings.value("App/RestoreUnsavedFiles", false).toBool());
-    settings->setRestoreTempFiles(qsettings.value("App/RestoreTempFiles", false).toBool());
-    recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
-
-    connect(this, &NotepadNextApplication::aboutToQuit, this, [=]() {
-        QSettings qsettings;
-
-        qsettings.setValue("App/RestorePreviousSession", settings->restorePreviousSession());
-        qsettings.setValue("App/RestoreUnsavedFiles", settings->restoreUnsavedFiles());
-        qsettings.setValue("App/RestoreTempFiles", settings->restoreTempFiles());
-        qsettings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
-    });
+    connect(this, &NotepadNextApplication::aboutToQuit, this, &NotepadNextApplication::saveSettings);
 
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
     ecad->setEnabled(true);
@@ -456,6 +443,26 @@ void NotepadNextApplication::openFiles(const QStringList &files)
     for (const QString &file : files) {
         windows.first()->openFile(file);
     }
+}
+
+void NotepadNextApplication::loadSettings()
+{
+    QSettings qsettings;
+
+    settings->setRestorePreviousSession(qsettings.value("App/RestorePreviousSession", false).toBool());
+    settings->setRestoreUnsavedFiles(qsettings.value("App/RestoreUnsavedFiles", false).toBool());
+    settings->setRestoreTempFiles(qsettings.value("App/RestoreTempFiles", false).toBool());
+    recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
+}
+
+void NotepadNextApplication::saveSettings()
+{
+    QSettings qsettings;
+
+    qsettings.setValue("App/RestorePreviousSession", settings->restorePreviousSession());
+    qsettings.setValue("App/RestoreUnsavedFiles", settings->restoreUnsavedFiles());
+    qsettings.setValue("App/RestoreTempFiles", settings->restoreTempFiles());
+    qsettings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
 }
 
 MainWindow *NotepadNextApplication::createNewWindow()

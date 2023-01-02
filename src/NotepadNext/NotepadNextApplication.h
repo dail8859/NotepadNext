@@ -68,8 +68,13 @@ public:
 protected:
     bool event(QEvent *event) override;
 
+private slots:
+    void saveSettings();
+
 private:
     void openFiles(const QStringList &files);
+
+    void loadSettings();
 
     EditorManager *editorManager;
     RecentFilesListManager *recentFilesListManager;
