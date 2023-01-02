@@ -63,6 +63,8 @@ public:
     void loadSystemDefaultTranslation();
     void loadTranslation(QLocale locale);
 
+    void sendInfoToPrimaryInstance();
+
 protected:
     bool event(QEvent *event) override;
 

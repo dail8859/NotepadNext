@@ -424,6 +424,15 @@ void NotepadNextApplication::loadTranslation(QLocale locale)
     }
 }
 
+void NotepadNextApplication::sendInfoToPrimaryInstance()
+{
+    QByteArray buffer;
+    QDataStream stream(&buffer, QIODevice::WriteOnly);
+
+    stream << arguments();
+    sendMessage(buffer);
+}
+
 bool NotepadNextApplication::event(QEvent *event)
 {
     // Handle the QFileOpenEvent to open files on MacOS X.

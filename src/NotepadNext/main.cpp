@@ -68,13 +68,7 @@ int main(int argc, char *argv[])
     else {
         qInfo() << "Primary instance already running. PID:" << app.primaryPid();
 
-        // This eventually needs moved into the NotepadNextApplication to keep
-        // sending/receiving logic in the same place
-        QByteArray buffer;
-        QDataStream stream(&buffer, QIODevice::WriteOnly);
-
-        stream << app.arguments();
-        app.sendMessage(buffer);
+        app.sendInfoToPrimaryInstance();
 
         qInfo() << "Secondary instance closing...";
 
