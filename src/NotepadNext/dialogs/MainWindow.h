@@ -157,11 +157,6 @@ private:
 
     //NppImporter *npp;
 
-    // Persistent dialogs
-    QMap<QString, QDialog *> dialogs;
-
-    QuickFindWidget *quickFind = Q_NULLPTR;
-
     MacroManager macroManager;
 
     ZoomEventWatcher *zoomEventWatcher;
