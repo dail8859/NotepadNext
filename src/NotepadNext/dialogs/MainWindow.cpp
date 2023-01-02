@@ -187,14 +187,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionColumnMode, &QAction::triggered, this, [=]() {
-        ColumnEditorDialog *columnEditor = nullptr;
+        ColumnEditorDialog *columnEditor = findChild<ColumnEditorDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
-        if (!dialogs.contains("ColumnEditorDialog")) {
+        if (columnEditor == Q_NULLPTR) {
             columnEditor = new ColumnEditorDialog(this);
-            dialogs["ColumnEditorDialog"] = columnEditor;
-        }
-        else {
-            columnEditor = qobject_cast<ColumnEditorDialog *>(dialogs["ColumnModeDialog"]);
         }
 
         columnEditor->show();
@@ -273,18 +269,22 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionFindNext, &QAction::triggered, this, [=]() {
-        if (dialogs.contains("FindReplaceDialog")) {
-            qobject_cast<FindReplaceDialog *>(dialogs["FindReplaceDialog"])->performLastSearch();
+        FindReplaceDialog *f = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (f) {
+            f->performLastSearch();
         }
     });
 
     connect(ui->actionQuickFind, &QAction::triggered, this, [=]() {
+        QuickFindWidget *quickFind = findChild<QuickFindWidget *>(QString(), Qt::FindDirectChildrenOnly);
+
         if (quickFind == Q_NULLPTR) {
             quickFind = new QuickFindWidget(this);
         }
+
         quickFind->setEditor(currentEditor());
         quickFind->setFocus();
-
         quickFind->show();
     });
 
@@ -409,14 +409,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     languageActionGroup->setExclusive(true);
 
     connect(ui->actionPreferences, &QAction::triggered, this, [=] {
-        PreferencesDialog *pd = nullptr;
+        PreferencesDialog *pd = findChild<PreferencesDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
-        if (!dialogs.contains("PreferencesDialog")) {
+        if (pd == Q_NULLPTR) {
             pd = new PreferencesDialog(app->getSettings(), this);
-            dialogs["PreferencesDialog"] = pd;
-        }
-        else {
-            pd = qobject_cast<PreferencesDialog *>(dialogs["PreferencesDialog"]);
         }
 
         pd->show();
@@ -487,11 +483,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, this, [=]() {
-        MacroRunDialog *macroRunDialog = nullptr;
+        MacroRunDialog *macroRunDialog = findChild<MacroRunDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
-        if (!dialogs.contains("MacroRunDialog")) {
+        if (macroRunDialog == Q_NULLPTR) {
             macroRunDialog = new MacroRunDialog(this, &macroManager);
-            dialogs["MacroRunDialog"] = macroRunDialog;
 
             connect(macroRunDialog, &MacroRunDialog::execute, this, [=](Macro *macro, int times) {
                 if (times > 0)
@@ -499,9 +494,6 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                 else if (times == -1)
                     macro->replayTillEndOfFile(currentEditor());
             });
-        }
-        else {
-            macroRunDialog = qobject_cast<MacroRunDialog *>(dialogs["MacroRunDialog"]);
         }
 
         macroRunDialog->show();
@@ -599,9 +591,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
     });
     connect(app->getSettings(), &Settings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
-    //connect(app->getSettings(), &Settings::showTabBarChanged, tabbedEditor->getTabBar(), &QTabBar::setVisible);
     connect(app->getSettings(), &Settings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
-    //connect(settings, &Settings::tabsClosableChanged, tabbedEditor->getTabBar(), &QTabBar::setTabsClosable);
 
     setupLanguageMenu();
 
@@ -1176,15 +1166,10 @@ void MainWindow::convertEOLs(int eolMode)
 void MainWindow::showFindReplaceDialog(int index)
 {
     ScintillaNext *editor = currentEditor();
-    FindReplaceDialog *frd = nullptr;
+    FindReplaceDialog *frd = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
-    // Create it if it doesn't exist
-    if (!dialogs.contains("FindReplaceDialog")) {
+    if (frd == Q_NULLPTR) {
         frd = new FindReplaceDialog(findChild<SearchResultsDock *>(), this);
-        dialogs["FindReplaceDialog"] = frd;
-    }
-    else {
-        frd = qobject_cast<FindReplaceDialog *>(dialogs["FindReplaceDialog"]);
     }
 
     // TODO: if dockedEditor::editorActivated() is fired, or if the editor get closed
