@@ -1086,20 +1086,28 @@ void MainWindow::renameFile()
 {
     ScintillaNext *editor = currentEditor();
 
-    Q_ASSERT(editor->isFile());
+    if (editor->isFile()) {
+        QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath());
 
-    QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath());
+        if (fileName.size() == 0) {
+            return;
+        }
 
-    if (fileName.size() == 0) {
-        return;
+        // TODO
+        // The new fileName might be to one of the existing editors.
+        //auto otherEditor = app->getEditorByFilePath(fileName);
+
+        bool renameSuccessful = editor->rename(fileName);
+        Q_UNUSED(renameSuccessful)
     }
+    else {
+        bool ok;
+        QString text = QInputDialog::getText(this, tr("Rename"), tr("Name:"), QLineEdit::Normal, editor->getName(), &ok);
 
-    // TODO
-    // The new fileName might be to one of the existing editors.
-    //auto otherEditor = app->getEditorByFilePath(fileName);
-
-    bool renameSuccessful = editor->rename(fileName);
-    Q_UNUSED(renameSuccessful)
+        if (ok && !text.isEmpty()) {
+            editor->setName(text);
+        }
+    }
 }
 
 void MainWindow::moveCurrentFileToTrash()
@@ -1219,7 +1227,6 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
     setWindowTitle(QStringLiteral("[*]%1").arg(fileName));
 
     ui->actionReload->setEnabled(isFile);
-    ui->actionRename->setEnabled(isFile);
     ui->actionMoveToTrash->setEnabled(isFile);
     ui->actionCopyFullPath->setEnabled(isFile);
     ui->actionCopyFileDirectory->setEnabled(isFile);
