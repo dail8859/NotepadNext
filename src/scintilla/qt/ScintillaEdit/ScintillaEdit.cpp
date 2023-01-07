@@ -1280,6 +1280,10 @@ sptr_t ScintillaEdit::replaceTargetRE(sptr_t length, const char * text) {
     return send(SCI_REPLACETARGETRE, length, (sptr_t)text);
 }
 
+sptr_t ScintillaEdit::replaceTargetMinimal(sptr_t length, const char * text) {
+    return send(SCI_REPLACETARGETMINIMAL, length, (sptr_t)text);
+}
+
 sptr_t ScintillaEdit::searchInTarget(sptr_t length, const char * text) {
     return send(SCI_SEARCHINTARGET, length, (sptr_t)text);
 }

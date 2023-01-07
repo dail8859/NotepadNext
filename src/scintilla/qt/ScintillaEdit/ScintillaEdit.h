@@ -358,6 +358,7 @@ public:
 	void targetWholeDocument();
 	sptr_t replaceTarget(sptr_t length, const char * text);
 	sptr_t replaceTargetRE(sptr_t length, const char * text);
+	sptr_t replaceTargetMinimal(sptr_t length, const char * text);
 	sptr_t searchInTarget(sptr_t length, const char * text);
 	void setSearchFlags(sptr_t searchFlags);
 	sptr_t searchFlags() const;
