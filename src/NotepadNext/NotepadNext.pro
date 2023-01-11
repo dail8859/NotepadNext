@@ -272,4 +272,8 @@ unix {
 
 macx: {
     ICON = ../../icon/NotepadNext.icns
+    
+    versionAtLeast(QT_VERSION, 6.2) { 
+        QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+    }
 }
