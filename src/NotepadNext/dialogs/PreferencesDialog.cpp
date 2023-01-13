@@ -22,6 +22,8 @@
 
 #include "Settings.h"
 
+#include <QMessageBox>
+
 PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
     QDialog(parent, Qt::Tool),
     ui(new Ui::PreferencesDialog),
@@ -54,6 +56,9 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
         if (!checked) {
             ui->checkBoxUnsavedFiles->setChecked(false);
             ui->checkBoxRestoreTempFiles->setChecked(false);
+        }
+        else {
+            QMessageBox::warning(this, tr("Warning"), tr("This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk."));
         }
     });
 
