@@ -3,7 +3,7 @@ local L = {}
 L.lexer = "xml"
 
 L.first_line = {
-	"<?xml"
+	"^<%?xml"
 }
 
 L.extensions = {
