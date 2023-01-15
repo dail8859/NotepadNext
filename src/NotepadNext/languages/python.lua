@@ -8,6 +8,10 @@ L.tabSize = 4
 
 L.tabSettings = "spaces"
 
+L.first_line = {
+	"^#!.*python"
+}
+
 L.extensions = {
 	"py",
 	"pyw",
