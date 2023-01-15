@@ -4,6 +4,10 @@ L.lexer = "perl"
 
 L.singleLineComment = "# "
 
+L.first_line = {
+	"^#!.*perl"
+}
+
 L.extensions = {
 	"pl",
 	"pm",

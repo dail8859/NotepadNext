@@ -4,6 +4,14 @@ L.lexer = "bash"
 
 L.singleLineComment = "# "
 
+L.first_line = {
+	"^#!.*bash",
+	"^#!.*zsh",
+	"^#!.*csh",
+	"^#!.*bsh",
+	"^#!.*sh",
+}
+
 L.extensions = {
 	"bash",
 	"sh",
