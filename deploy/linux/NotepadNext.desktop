@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=NotepadNext
+Exec=NotepadNext %f
 Comment=A cross-platform, reimplementation of Notepad++
 Type=Application
 Icon=NotepadNext
