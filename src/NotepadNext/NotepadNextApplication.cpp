@@ -36,6 +36,8 @@
 
 #include <QCommandLineParser>
 #include <QSettings>
+#include <QStandardPaths>
+#include <QLibraryInfo>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -390,11 +392,22 @@ void NotepadNextApplication::loadTranslation(QLocale locale)
     qInfo(Q_FUNC_INFO);
 
     // TODO: look into QLibraryInfo::location(QLibraryInfo::TranslationsPath)?
+#ifdef Q_OS_LINUX
+    QString languagePath = QStandardPaths::locate(QStandardPaths::AppDataLocation, QString("translations"), QStandardPaths::LocateDirectory);
+#else
     const QString languagePath = QApplication::applicationDirPath() + "/i18n";
+#endif // Q_OS_LINUX
 
     // Load translation for NotepadNext
     //  e.g. `i18n/NotepadNext.en.qm`
-    if (translatorNpn.load(locale, QApplication::applicationName(), QString("."), languagePath)) {
+    bool isTransloaded = translatorNpn.load(locale, QApplication::applicationName(), QString("."), languagePath);
+#ifdef Q_OS_LINUX
+    if (!isTransloaded) {
+      languagePath = QApplication::applicationDirPath() + "/../share/NotepadNext/NotepadNext/translations";
+      isTransloaded = translatorNpn.load(locale, QApplication::applicationName(), QString("."), languagePath);
+    }
+#endif // Q_OS_LINUX
+    if (isTransloaded) {
         installTranslator(&translatorNpn);
         qInfo("Loaded %s translation for Notepad Next", qUtf8Printable(locale.name()));
     } else {
@@ -403,6 +416,9 @@ void NotepadNextApplication::loadTranslation(QLocale locale)
 
     // Load translation for Qt components
     //  e.g. `i18n/qt_en.qm`
+#ifdef Q_OS_LINUX
+    languagePath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+#endif // Q_OS_LINUX
     if (translatorQt.load(locale, QString("qt"), QString("_"), languagePath)) {
         installTranslator(&translatorQt);
         qInfo("Loaded %s translation for Qt components", qUtf8Printable(locale.name()));

@@ -268,6 +268,11 @@ unix {
     appicon.path = $$PREFIX/share/icons/hicolor/scalable/apps/
     appicon.files = ../../icon/NotepadNext.svg
     INSTALLS += appicon
+
+    system("lrelease i18n/*.ts")
+    i18n.path = $$PREFIX/share/NotepadNext/NotepadNext/translations/
+    i18n.files += ../../i18n/NotepadNext*.qm
+    INSTALLS += i18n
 }
 
 macx: {
