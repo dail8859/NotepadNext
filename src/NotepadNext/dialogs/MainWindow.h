@@ -81,8 +81,8 @@ public slots:
     bool saveCurrentFileAs(const QString &fileName);
     bool saveFileAs(ScintillaNext *editor, const QString &fileName);
 
-    void saveCopyAsDialog();
-    void saveCopyAs(const QString &fileName);
+    bool saveCopyAsDialog();
+    bool saveCopyAs(const QString &fileName);
     void saveAll();
 
     void exportAsFormat(Converter *converter, const QString &filter);
@@ -149,6 +149,7 @@ private:
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     bool checkFileForModification(ScintillaNext *editor);
+    void showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileError error);
 
     void saveSettings() const;
     void restoreSettings();

@@ -32,7 +32,7 @@
 const int CHUNK_SIZE = 1024 * 1024 * 4; // Not sure what is best
 
 
-static bool writeToDisk(const QByteArray &data, const QString &path)
+static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString &path)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -42,14 +42,14 @@ static bool writeToDisk(const QByteArray &data, const QString &path)
     if (file.open(QIODevice::WriteOnly)) {
         if (file.write(data) != -1) {
             if (file.commit()) {
-                return true;
+                return QFileDevice::NoError;
             }
         }
     }
 
     // If it got to this point there was an error
     qWarning("writeToDisk() failure code %d: %s", file.error(), qPrintable(file.errorString()));
-    return false;
+    return file.error();
 }
 
 
@@ -193,7 +193,7 @@ void ScintillaNext::close()
     deleteLater();
 }
 
-bool ScintillaNext::save()
+QFileDevice::FileError ScintillaNext::save()
 {
     qInfo(Q_FUNC_INFO);
 
@@ -201,9 +201,9 @@ bool ScintillaNext::save()
 
     emit aboutToSave();
 
-    bool writeSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), fileInfo.filePath());
+    QFileDevice::FileError writeSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), fileInfo.filePath());
 
-    if (writeSuccessful) {
+    if (writeSuccessful == QFileDevice::NoError) {
         updateTimestamp();
         setSavePoint();
 
@@ -247,15 +247,15 @@ void ScintillaNext::reload()
     return;
 }
 
-bool ScintillaNext::saveAs(const QString &newFilePath)
+QFileDevice::FileError ScintillaNext::saveAs(const QString &newFilePath)
 {
     bool isRenamed = bufferType == ScintillaNext::New || fileInfo.canonicalFilePath() != newFilePath;
 
     emit aboutToSave();
 
-    bool saveSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), newFilePath);
+    QFileDevice::FileError saveSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), newFilePath);
 
-    if (saveSuccessful) {
+    if (saveSuccessful == QFileDevice::NoError) {
         setFileInfo(newFilePath);
         setSavePoint();
 
@@ -272,7 +272,7 @@ bool ScintillaNext::saveAs(const QString &newFilePath)
     return saveSuccessful;
 }
 
-bool ScintillaNext::saveCopyAs(const QString &filePath)
+QFileDevice::FileError ScintillaNext::saveCopyAs(const QString &filePath)
 {
     return writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), filePath);
 }

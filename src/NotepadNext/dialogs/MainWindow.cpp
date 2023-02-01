@@ -973,16 +973,15 @@ bool MainWindow::saveFile(ScintillaNext *editor)
         return saveCurrentFileAsDialog();
     }
     else {
-        bool didItGetSaved = editor->save();
-        if (didItGetSaved) {
+        QFileDevice::FileError error = editor->save();
+        if (error == QFileDevice::NoError) {
             return true;
         }
         else {
-            QMessageBox::warning(this, tr("Error Saving File"),  tr("Something went wrong saving <b>%1</b>?").arg(editor->getName()));
+            showSaveErrorMessage(editor, error);
+            return false;
         }
     }
-
-    return false;
 }
 
 bool MainWindow::saveCurrentFileAsDialog()
@@ -1017,12 +1016,18 @@ bool MainWindow::saveFileAs(ScintillaNext *editor, const QString &fileName)
 {
     qInfo("saveFileAs(%s)", qUtf8Printable(fileName));
 
-    bool didItGetSaved = editor->saveAs(fileName);
+    QFileDevice::FileError error = editor->saveAs(fileName);
 
-    return didItGetSaved;
+    if (error == QFileDevice::NoError) {
+        return true;
+    }
+    else {
+        showSaveErrorMessage(editor, error);
+        return false;
+    }
 }
 
-void MainWindow::saveCopyAsDialog()
+bool MainWindow::saveCopyAsDialog()
 {
     QString dialogDir;
     const QString filter = app->getFileDialogFilter();
@@ -1035,13 +1040,22 @@ void MainWindow::saveCopyAsDialog()
 
     QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Save a Copy As"), dialogDir, filter);
 
-    saveCopyAs(fileName);
+    return saveCopyAs(fileName);
 }
 
-void MainWindow::saveCopyAs(const QString &fileName)
+bool MainWindow::saveCopyAs(const QString &fileName)
 {
     auto editor = currentEditor();
-    editor->saveCopyAs(fileName);
+
+    QFileDevice::FileError error = editor->saveCopyAs(fileName);
+
+    if (error == QFileDevice::NoError) {
+        return true;
+    }
+    else {
+        showSaveErrorMessage(editor, error);
+        return false;
+    }
 }
 
 void MainWindow::saveAll()
@@ -1458,6 +1472,12 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
     }
 
     return true;
+}
+
+void MainWindow::showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileError error)
+{
+    const QString name = editor->isFile() ? editor->getFilePath() : editor->getName();
+    QMessageBox::warning(this, tr("Error Saving File"), tr("An error occurred when saving <b>%1</b><br><br>Error: %2").arg(name, qt_error_string(error)));
 }
 
 void MainWindow::saveSettings() const

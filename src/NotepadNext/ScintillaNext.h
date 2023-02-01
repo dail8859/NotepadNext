@@ -103,10 +103,10 @@ public:
 
 public slots:
     void close();
-    bool save();
+    QFileDevice::FileError save();
     void reload();
-    bool saveAs(const QString &newFilePath);
-    bool saveCopyAs(const QString &filePath);
+    QFileDevice::FileError saveAs(const QString &newFilePath);
+    QFileDevice::FileError saveCopyAs(const QString &filePath);
     bool rename(const QString &newFilePath);
     ScintillaNext::FileStateChange checkFileForStateChange();
     bool moveToTrash();
