@@ -40,13 +40,16 @@ static bool writeToDisk(const QByteArray &data, const QString &path)
     file.setDirectWriteFallback(true);
 
     if (file.open(QIODevice::WriteOnly)) {
-        file.write(data);
-        return file.commit();
+        if (file.write(data) != -1) {
+            if (file.commit()) {
+                return true;
+            }
+        }
     }
-    else {
-        qWarning("writeToDisk() failure: %s", qPrintable(file.errorString()));
-        return false;
-    }
+
+    // If it got to this point there was an error
+    qWarning("writeToDisk() failure code %d: %s", file.error(), qPrintable(file.errorString()));
+    return false;
 }
 
 
