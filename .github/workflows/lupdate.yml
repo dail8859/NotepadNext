@@ -1,12 +1,9 @@
 name: Update translation files
 
-on: [workflow_dispatch]
+on: workflow_dispatch
 
 jobs:
-  build-linux:
-    strategy:
-      fail-fast: false
-
+  lupdate:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,6 +22,6 @@ jobs:
 
       - name: Commit translation changes
         uses: stefanzweifel/git-auto-commit-action@v4
-          with:
-            commit_message: Update translation files
-            file_pattern: 'i18n/*.ts'
+        with:
+          commit_message: Update translation files
+          file_pattern: 'i18n/*.ts'
