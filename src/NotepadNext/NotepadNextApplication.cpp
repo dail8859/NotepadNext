@@ -282,6 +282,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
     auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
     editor->setILexer((sptr_t) lexerInstance);
+    editor->clearDocumentStyle(); // Remove all previous style information, setting the lexer does not guarentee styling informaion is cleared
 
     // Not ideal this has to be manually emitted but it works since setILexer() is not widely used
     emit editor->lexerChanged();
@@ -296,19 +297,12 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
             for name, style in pairs(L.styles) do
                 editor.StyleFore[style.id] = style.fgColor
                 editor.StyleBack[style.id] = style.bgColor
+
                 if style.fontStyle then
-                    if style.fontStyle & 1 == 1 then
-                        editor.StyleBold[style.id] = true
-                    end
-                    if style.fontStyle & 2 == 2 then
-                        editor.StyleItalic[style.id] = true
-                    end
-                    if style.fontStyle & 4 == 4 then
-                        editor.StyleUnderline[style.id] = true
-                    end
-                    if style.fontStyle & 8 == 8 then
-                        editor.StyleEOLFilled[style.id] = true
-                    end
+                    editor.StyleBold[style.id] = (style.fontStyle & 1 == 1)
+                    editor.StyleItalic[style.id] = (style.fontStyle & 2 == 2)
+                    editor.StyleUnderline[style.id] = (style.fontStyle & 4 == 4)
+                    editor.StyleEOLFilled[style.id] = (style.fontStyle & 8 == 8)
                 end
             end
         end
@@ -322,6 +316,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
                 editor.Property[p] = v
             end
         end
+
         editor.Property["fold"] = "1"
         editor.Property["fold.compact"] = "0"
     )");
