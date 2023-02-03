@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="20"/>
         <source>Column Mode</source>
-        <translation type="unfinished">列编辑模式</translation>
+        <translation>列编辑模式</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="32"/>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="216"/>
         <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application</source>
-        <translation>为了安装更新，你可能需要退出已打开的程序。这是一个强制更新，现在退出将关闭应用程序。</translation>
+        <translation>为了安装更新，你可能需要退出已打开的程序。这是一个强制更新，现在退出将关闭应用程序</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="235"/>
@@ -132,7 +132,7 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="256"/>
         <source>Are you sure you want to cancel the download? This is a mandatory update, exiting now will close the application</source>
-        <translation>你确定要取消下载吗？这是一个强制更新，现在退出将关闭应用程序。</translation>
+        <translation>你确定要取消下载吗？这是一个强制更新，现在退出将关闭应用程序</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="314"/>
@@ -676,7 +676,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.cpp" line="137"/>
         <source>Position %1 Style %2</source>
-        <translation type="unfinished"></translation>
+        <translation>位置 %1 样式 %2</translation>
     </message>
 </context>
 <context>
@@ -1362,22 +1362,22 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1057"/>
         <source>Base 64 Encode</source>
-        <translation type="unfinished"></translation>
+        <translation>Base 64 编码</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1062"/>
         <source>URL Encode</source>
-        <translation type="unfinished"></translation>
+        <translation>URL 编码</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1067"/>
         <source>Base 64 Decode</source>
-        <translation type="unfinished"></translation>
+        <translation>Base 64 解码</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1072"/>
         <source>URL Decode</source>
-        <translation type="unfinished"></translation>
+        <translation>URL 解码</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="702"/>
@@ -1398,7 +1398,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="156"/>
         <source>Encoding/Decoding</source>
-        <translation type="unfinished"></translation>
+        <translation>编码/解码</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="714"/>
@@ -1707,7 +1707,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1508"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>保存 &lt;b&gt;%1&lt;/b&gt; 时发生了错误&lt;br&gt;&lt;br&gt;错误：%2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1663"/>
