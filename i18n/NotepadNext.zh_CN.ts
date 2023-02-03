@@ -206,21 +206,9 @@
 <context>
     <name>EditorInfoStatusBar</name>
     <message>
-        <source>Length: %1    Lines: %2</source>
-        <translation type="vanished">长度：%1    行数：%2</translation>
-    </message>
-    <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="107"/>
         <source>Sel: N/A</source>
         <translation>选择：N/A</translation>
-    </message>
-    <message>
-        <source>Sel: %1 | %2</source>
-        <translation type="vanished">选择：%1 | %2</translation>
-    </message>
-    <message>
-        <source>Ln: %1    Col: %2    </source>
-        <translation type="vanished">行：%1    列：%2    </translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="98"/>
@@ -571,14 +559,6 @@
         <translation>替换：</translation>
     </message>
     <message>
-        <source>&amp;Find what:</source>
-        <translation type="vanished">搜索(&amp;F)：</translation>
-    </message>
-    <message>
-        <source>Replace with:</source>
-        <translation type="vanished">替换为：</translation>
-    </message>
-    <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="440"/>
         <source>Backward direction</source>
         <translation>反向搜索</translation>
@@ -692,10 +672,6 @@
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="121"/>
         <source>TextLabel</source>
         <translation>文本标签</translation>
-    </message>
-    <message>
-        <source>Postion %1 Style %2</source>
-        <translation type="vanished">位置 %1 样式 %2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.cpp" line="137"/>
@@ -819,10 +795,6 @@
 </context>
 <context>
     <name>MacroSaveDialog</name>
-    <message>
-        <source>Dialog</source>
-        <translation type="vanished">对话框</translation>
-    </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="14"/>
         <source>Save Macro</source>
@@ -970,10 +942,6 @@
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="263"/>
         <source>Encoding</source>
         <translation>编码</translation>
-    </message>
-    <message>
-        <source>Run</source>
-        <translation type="vanished">运行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="279"/>
@@ -1699,10 +1667,6 @@
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1508"/>
         <source>Error Saving File</source>
         <translation>保存文件时出错</translation>
-    </message>
-    <message>
-        <source>Something went wrong saving &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="vanished">保存 &lt;b&gt;%1&lt;/b&gt; 时出错?</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1064"/>
