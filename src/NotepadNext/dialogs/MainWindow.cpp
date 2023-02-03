@@ -1584,6 +1584,18 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setWrapVisualFlags(ui->actionShowWrapSymbol->isChecked() ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
     editor->setZoom(zoomLevel);
 
+    editor->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(editor, &ScintillaNext::customContextMenuRequested, this, [=](const QPoint &pos) {
+        QMenu *menu = new QMenu(this);
+        menu->addAction(ui->actionCut);
+        menu->addAction(ui->actionCopy);
+        menu->addAction(ui->actionPaste);
+        menu->addAction(ui->actionDelete);
+        menu->addSeparator();
+        menu->addAction(ui->actionSelect_All);
+        menu->popup(QCursor::pos());
+    });
+
     // The editor has been entirely configured at this point, so add it to the docked editor
     dockedEditor->addEditor(editor);
 }
