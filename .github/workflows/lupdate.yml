@@ -1,3 +1,5 @@
+name: Update translation files
+
 on: workflow_dispatch
 
 jobs:
