@@ -341,10 +341,6 @@
         <translation>文档信息</translation>
     </message>
     <message>
-        <source>Length </source>
-        <translation type="obsolete">长度 </translation>
-    </message>
-    <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="36"/>
         <source>Position Information</source>
         <translation>位置信息</translation>
@@ -609,14 +605,6 @@
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="336"/>
         <source>Found %L1 matches</source>
         <translation>查找了 %L1 个匹配项</translation>
-    </message>
-    <message>
-        <source>Replaced %1 matches</source>
-        <translation type="obsolete">替换了 %1 个匹配项</translation>
-    </message>
-    <message>
-        <source>Found %1 matches</source>
-        <translation type="obsolete">找到了 %1 个匹配项</translation>
     </message>
 </context>
 <context>
@@ -1713,11 +1701,6 @@
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1663"/>
         <source>No updates are available at this time.</source>
         <translation>本次无可用更新。</translation>
-    </message>
-    <message>
-        <source>No updates are availale at this time.</source>
-        <translatorcomment>菜单栏：&quot;Help &gt; Check for Updates...&quot;</translatorcomment>
-        <translation type="obsolete">目前没有可用的更新。</translation>
     </message>
 </context>
 <context>
