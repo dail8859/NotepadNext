@@ -135,6 +135,29 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionSingleLineComment, &QAction::triggered, this, [=]() { currentEditor()->commentLineSelection(); });
     connect(ui->actionSingleLineUncomment, &QAction::triggered, this, [=]() { currentEditor()->uncommentLineSelection(); });
 
+    connect(ui->actionBase64Encode,&QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        const QByteArray selection = currentEditor()->getSelText();
+        editor->replaceSel(selection.toBase64().constData());
+    });
+    connect(ui->actionURLEncode,&QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        const QByteArray selection = currentEditor()->getSelText();
+        editor->replaceSel(selection.toPercentEncoding().constData());
+    });
+    connect(ui->actionBase64Decode,&QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        const QByteArray selection = editor->getSelText();
+        if (auto result = QByteArray::fromBase64Encoding(selection)) {
+            editor->replaceSel((*result).constData());
+        }
+    });
+    connect(ui->actionURLDecode,&QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        const QByteArray selection = editor->getSelText();
+        editor->replaceSel(QByteArray::fromPercentEncoding(selection).constData());
+    });
+
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
 
     connect(ui->actionMoveToTrash, &QAction::triggered, this, &MainWindow::moveCurrentFileToTrash);
@@ -1371,6 +1394,11 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
 
     ui->actionLowerCase->setEnabled(hasAnySelections);
     ui->actionUpperCase->setEnabled(hasAnySelections);
+
+    ui->actionBase64Encode->setEnabled(hasAnySelections);
+    ui->actionURLEncode->setEnabled(hasAnySelections);
+    ui->actionBase64Decode->setEnabled(hasAnySelections);
+    ui->actionURLEncode->setEnabled(hasAnySelections);
 }
 
 void MainWindow::detectLanguage(ScintillaNext *editor)
@@ -1593,6 +1621,12 @@ void MainWindow::addEditor(ScintillaNext *editor)
         menu->addAction(ui->actionDelete);
         menu->addSeparator();
         menu->addAction(ui->actionSelect_All);
+        menu->addSeparator();
+        menu->addAction(ui->actionBase64Encode);
+        menu->addAction(ui->actionURLEncode);
+        menu->addSeparator();
+        menu->addAction(ui->actionBase64Decode);
+        menu->addAction(ui->actionURLDecode);
         menu->popup(QCursor::pos());
     });
 

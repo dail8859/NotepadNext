@@ -151,6 +151,16 @@
      <addaction name="actionCopyAsHtml"/>
      <addaction name="actionCopyAsRtf"/>
     </widget>
+    <widget class="QMenu" name="menuEncoding_Decoding">
+     <property name="title">
+      <string>Encoding/Decoding</string>
+     </property>
+     <addaction name="actionBase64Encode"/>
+     <addaction name="actionURLEncode"/>
+     <addaction name="separator"/>
+     <addaction name="actionBase64Decode"/>
+     <addaction name="actionURLDecode"/>
+    </widget>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
@@ -168,6 +178,7 @@
     <addaction name="menuEOLConversion"/>
     <addaction name="menuLine_Operations"/>
     <addaction name="menuCommentUncomment"/>
+    <addaction name="menuEncoding_Decoding"/>
     <addaction name="separator"/>
     <addaction name="actionColumnMode"/>
    </widget>
@@ -1039,6 +1050,26 @@
   <action name="actionCopyAsRtf">
    <property name="text">
     <string>Copy as RTF</string>
+   </property>
+  </action>
+  <action name="actionBase64Encode">
+   <property name="text">
+    <string>Base 64 Encode</string>
+   </property>
+  </action>
+  <action name="actionURLEncode">
+   <property name="text">
+    <string>URL Encode</string>
+   </property>
+  </action>
+  <action name="actionBase64Decode">
+   <property name="text">
+    <string>Base 64 Decode</string>
+   </property>
+  </action>
+  <action name="actionURLDecode">
+   <property name="text">
+    <string>URL Decode</string>
    </property>
   </action>
  </widget>
