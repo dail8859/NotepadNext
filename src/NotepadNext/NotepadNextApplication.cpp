@@ -282,7 +282,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
     auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
     editor->setILexer((sptr_t) lexerInstance);
-    editor->clearDocumentStyle(); // Remove all previous style information, setting the lexer does not guarentee styling informaion is cleared
+    editor->clearDocumentStyle(); // Remove all previous style information, setting the lexer does not guarantee styling information is cleared
 
     // Not ideal this has to be manually emitted but it works since setILexer() is not widely used
     emit editor->lexerChanged();
