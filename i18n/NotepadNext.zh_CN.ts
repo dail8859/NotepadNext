@@ -1701,12 +1701,11 @@
         <translation>保存文件时出错</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="981"/>
         <source>Something went wrong saving &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>保存 &lt;b&gt;%1&lt;/b&gt; 时出错?</translation>
+        <translation type="vanished">保存 &lt;b&gt;%1&lt;/b&gt; 时出错?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1036"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1064"/>
         <source>Save a Copy As</source>
         <translation>副本另存为</translation>
     </message>
