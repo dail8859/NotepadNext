@@ -239,21 +239,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     connect(ui->actionUndo, &QAction::triggered, this, [=]() { currentEditor()->undo(); });
     connect(ui->actionRedo, &QAction::triggered, this, [=]() { currentEditor()->redo(); });
-    connect(ui->actionCut, &QAction::triggered, this, [=]() {
-        if (currentEditor()->selectionEmpty()) {
-            currentEditor()->copyAllowLine();
-            currentEditor()->lineDelete();
-        }
-        else {
-            currentEditor()->cut();
-        }
-    });
-    connect(ui->actionCopy, &QAction::triggered, this, [=]() {
-        currentEditor()->copyAllowLine();
-    });
-    connect(ui->actionDelete, &QAction::triggered, this, [=]() { currentEditor()->clear();});
-    connect(ui->actionPaste, &QAction::triggered, this, [=]() { currentEditor()->paste();});
-    connect(ui->actionSelect_All, &QAction::triggered, this, [=]() { currentEditor()->selectAll();});
+    connect(ui->actionCut, &QAction::triggered, this, [=]() { currentEditor()->cutAllowLine(); });
+    connect(ui->actionCopy, &QAction::triggered, this, [=]() { currentEditor()->copyAllowLine(); });
+    connect(ui->actionDelete, &QAction::triggered, this, [=]() { currentEditor()->clear(); });
+    connect(ui->actionPaste, &QAction::triggered, this, [=]() { currentEditor()->paste(); });
+    connect(ui->actionSelect_All, &QAction::triggered, this, [=]() { currentEditor()->selectAll(); });
     connect(ui->actionSelect_Next, &QAction::triggered, this, [=]() {
         // Set search flags here?
         currentEditor()->targetWholeDocument();

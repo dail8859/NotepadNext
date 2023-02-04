@@ -137,6 +137,17 @@ void ScintillaNext::deleteLine(int line)
     deleteRange(positionFromLine(line), lineLength(line));
 }
 
+void ScintillaNext::cutAllowLine()
+{
+    if (selectionEmpty()) {
+        copyAllowLine();
+        lineDelete();
+    }
+    else {
+        cut();
+    }
+}
+
 void ScintillaNext::deleteLeadingEmptyLines()
 {
     while (lineCount() > 1 && lineIsEmpty(0)) {
