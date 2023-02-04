@@ -67,6 +67,8 @@ public:
 
     void deleteLine(int line);
 
+    void cutAllowLine();
+
     void deleteLeadingEmptyLines();
     void deleteTrailingEmptyLines();
 
