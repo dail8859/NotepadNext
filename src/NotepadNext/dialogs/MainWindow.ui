@@ -135,6 +135,8 @@
      <addaction name="actionJoinLines"/>
      <addaction name="actionMoveSelectedLinesUp"/>
      <addaction name="actionMoveSelectedLinesDown"/>
+     <addaction name="separator"/>
+     <addaction name="actionRemoveEmptyLines"/>
     </widget>
     <widget class="QMenu" name="menuCommentUncomment">
      <property name="title">
@@ -151,7 +153,7 @@
      <addaction name="actionCopyAsHtml"/>
      <addaction name="actionCopyAsRtf"/>
     </widget>
-    <widget class="QMenu" name="menuEncoding_Decoding">
+    <widget class="QMenu" name="menuEncodingDecoding">
      <property name="title">
       <string>Encoding/Decoding</string>
      </property>
@@ -178,7 +180,7 @@
     <addaction name="menuEOLConversion"/>
     <addaction name="menuLine_Operations"/>
     <addaction name="menuCommentUncomment"/>
-    <addaction name="menuEncoding_Decoding"/>
+    <addaction name="menuEncodingDecoding"/>
     <addaction name="separator"/>
     <addaction name="actionColumnMode"/>
    </widget>
@@ -1070,6 +1072,11 @@
   <action name="actionURLDecode">
    <property name="text">
     <string>URL Decode</string>
+   </property>
+  </action>
+  <action name="actionRemoveEmptyLines">
+   <property name="text">
+    <string>Remove Empty Lines</string>
    </property>
   </action>
  </widget>

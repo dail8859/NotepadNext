@@ -41,11 +41,6 @@ private:
 };
 
 
-static bool isNewline(char c)
-{
-    return c == '\n' || c == '\r';
-}
-
 EditorConfigAppDecorator::EditorConfigAppDecorator(NotepadNextApplication *app)
      : ApplicationDecorator(app)
 {
@@ -141,12 +136,6 @@ void EditorConfigAppDecorator::ensureNoFinalNewline()
 {
     ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
     const PreventUnfolding pu(editor);
-    const int length = editor->length();
-    int position = length;
 
-    while (position > 0 && isNewline(editor->charAt(position - 1))) {
-        position--;
-    }
-
-    editor->deleteRange(position, length - position);
+    editor->deleteTrailingEmptyLines();
 }

@@ -61,6 +61,15 @@ public:
 
     void goToRange(const Sci_CharacterRange &range);
 
+    QByteArray eolString() const;
+
+    bool lineIsEmpty(int line);
+
+    void deleteLine(int line);
+
+    void deleteLeadingEmptyLines();
+    void deleteTrailingEmptyLines();
+
     bool isFile() const;
     QFileInfo getFileInfo() const;
 
