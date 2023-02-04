@@ -19,6 +19,7 @@
 
 #include "MainWindow.h"
 #include "SessionManager.h"
+#include "UndoAction.h"
 #include "ui_MainWindow.h"
 
 #include <QFileDialog>
@@ -207,6 +208,21 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionJoinLines, &QAction::triggered, this, [=]()  {
         currentEditor()->targetFromSelection();
         currentEditor()->linesJoin();
+    });
+    connect(ui->actionRemoveEmptyLines, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        Finder f(editor);
+        const UndoAction ua(editor);
+
+        f.setSearchText(QStringLiteral("\\R\\R+"));
+        f.setSearchFlags(SCFIND_REGEXP);
+        f.replaceAll(editor->eolString());
+
+        // The regex will not entirely remove a blank first line
+        editor->deleteLeadingEmptyLines();
+
+        // Regex will also not delete the final blank line
+        editor->deleteTrailingEmptyLines();
     });
 
     connect(ui->actionColumnMode, &QAction::triggered, this, [=]() {

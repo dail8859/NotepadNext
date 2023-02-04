@@ -52,6 +52,10 @@ static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString 
     return file.error();
 }
 
+static bool isNewlineCharacter(char c)
+{
+    return c == '\n' || c == '\r';
+}
 
 ScintillaNext::ScintillaNext(QString name, QWidget *parent) :
     ScintillaEdit(parent),
@@ -112,6 +116,44 @@ void ScintillaNext::goToRange(const Sci_CharacterRange &range)
         setSelection(range.cpMin, range.cpMax);
         scrollRange(range.cpMax, range.cpMin);
     }
+}
+
+QByteArray ScintillaNext::eolString() const
+{
+    const int eol = eOLMode();
+
+    if (eol == SC_EOL_LF) return QByteArrayLiteral("\n");
+    else if (eol == SC_EOL_CRLF) return QByteArrayLiteral("\r\n");
+    else return QByteArrayLiteral("\r");
+}
+
+bool ScintillaNext::lineIsEmpty(int line)
+{
+    return (lineEndPosition(line) - positionFromLine(line)) == 0;
+}
+
+void ScintillaNext::deleteLine(int line)
+{
+    deleteRange(positionFromLine(line), lineLength(line));
+}
+
+void ScintillaNext::deleteLeadingEmptyLines()
+{
+    while (lineCount() > 1 && lineIsEmpty(0)) {
+        deleteLine(0);
+    }
+}
+
+void ScintillaNext::deleteTrailingEmptyLines()
+{
+    const int docLength = length();
+    int position = docLength;
+
+    while (position > 0 && isNewlineCharacter(charAt(position - 1))) {
+        position--;
+    }
+
+    deleteRange(position, docLength - position);
 }
 
 bool ScintillaNext::isSavedToDisk() const
