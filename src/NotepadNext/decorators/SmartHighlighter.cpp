@@ -34,7 +34,6 @@ SmartHighlighter::SmartHighlighter(ScintillaNext *editor) :
     editor->indicSetOutlineAlpha(indicator, 150);
     editor->indicSetAlpha(indicator, 100);
     editor->indicSetUnder(indicator, true);
-
 }
 
 void SmartHighlighter::notify(const NotificationData *pscn)

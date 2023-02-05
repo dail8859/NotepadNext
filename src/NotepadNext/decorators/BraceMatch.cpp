@@ -29,22 +29,22 @@ BraceMatch::BraceMatch(ScintillaNext *editor) :
 {
     setObjectName("BraceMatch");
 
-    const int INDIC_BRACEHIGHLIGHT = 8;
-    const int INDIC_BRACEBADLIGHT = 9;
+    const int braceHighlight = editor->allocateIndicator("brace_highlight");
+    const int braceBadlight = editor->allocateIndicator("brace_badlight");
 
-    editor->indicSetStyle(INDIC_BRACEHIGHLIGHT, INDIC_FULLBOX);
-    editor->indicSetFore(INDIC_BRACEHIGHLIGHT, 0x999999);
-    editor->indicSetAlpha(INDIC_BRACEHIGHLIGHT, 100);
-    editor->indicSetOutlineAlpha(INDIC_BRACEHIGHLIGHT, 200);
-    editor->indicSetUnder(INDIC_BRACEHIGHLIGHT, true);
-    editor->braceHighlightIndicator(true, INDIC_BRACEHIGHLIGHT);
+    editor->indicSetStyle(braceHighlight, INDIC_FULLBOX);
+    editor->indicSetFore(braceHighlight, 0x999999);
+    editor->indicSetAlpha(braceHighlight, 100);
+    editor->indicSetOutlineAlpha(braceHighlight, 200);
+    editor->indicSetUnder(braceHighlight, true);
+    editor->braceHighlightIndicator(true, braceHighlight);
 
-    editor->indicSetStyle(INDIC_BRACEBADLIGHT, INDIC_FULLBOX);
-    editor->indicSetFore(INDIC_BRACEBADLIGHT, 0x0000FF);
-    editor->indicSetAlpha(INDIC_BRACEBADLIGHT, 100);
-    editor->indicSetOutlineAlpha(INDIC_BRACEBADLIGHT, 200);
-    editor->indicSetUnder(INDIC_BRACEBADLIGHT, true);
-    editor->braceBadLightIndicator(true, INDIC_BRACEBADLIGHT);
+    editor->indicSetStyle(braceBadlight, INDIC_FULLBOX);
+    editor->indicSetFore(braceBadlight, 0x0000FF);
+    editor->indicSetAlpha(braceBadlight, 100);
+    editor->indicSetOutlineAlpha(braceBadlight, 200);
+    editor->indicSetUnder(braceBadlight, true);
+    editor->braceBadLightIndicator(true, braceBadlight);
 
     editor->setIndentationGuides(SC_IV_LOOKBOTH);
 
