@@ -65,6 +65,8 @@ add_executable(NotepadNext
     QuickFindWidget.h
     QuickFindWidget.cpp
     QuickFindWidget.ui
+    RangeAllocator.h
+    RangeAllocator.cpp
     RecentFilesListManager.cpp
     RecentFilesListManager.h
     RecentFilesListMenuBuilder.cpp
@@ -81,6 +83,8 @@ add_executable(NotepadNext
     SelectionTracker.h
     Settings.cpp
     Settings.h
+    SessionManager.h
+    SessionManager.cpp
     SelectionTracker.cpp
     SpinBoxDelegate.h
     SpinBoxDelegate.cpp
@@ -98,6 +102,8 @@ add_executable(NotepadNext
     decorators/AutoIndentation.cpp
     decorators/BetterMultiSelection.h
     decorators/BetterMultiSelection.cpp
+    decorators/BookMarkDecorator.h
+    decorators/BookMarkDecorator.cpp
     decorators/BraceMatch.h
     decorators/BraceMatch.cpp
     decorators/EditorConfigAppDecorator.cpp
