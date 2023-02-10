@@ -18,10 +18,11 @@ set(BUILD_BINARY OFF)
 set(BUILD_STATICCACHE OFF)
 set(BUILD_SHARED_LIBS OFF)
 
-# uchardet is hosted at gitlab, but CPMAddPackage needs credentials (?)
-CPMAddPackage("gh:freedesktop/uchardet#143b3fe513bad2cc85903ee564fe55ccbe96d86b")
-CPMAddPackage("gh:vinniefalco/LuaBridge#9092ace9615d14e3f5926f2e8a3b612ddc6c8efa")
-CPMAddPackage("gh:githubuser0xFFFF/Qt-Advanced-Docking-System#8d30fc9c3c36ac66bf3d027aaad7adff973f628f")
+
+# an commit after v0.0.8
+CPMAddPackage("gh:freedesktop/uchardet#2f5c24006ebc7f005040358f58f22a61a3c92522")
+CPMAddPackage("gh:vinniefalco/LuaBridge#6580b18755a0fdbf87820aa16a3bc63d24b5bf31")
+CPMAddPackage("gh:githubuser0xFFFF/Qt-Advanced-Docking-System#54c2bd0c304505f9c5abffdd9eaa29ecfd691054")
 CPMAddPackage("gh:itay-grudev/SingleApplication#f1e15081dc57a9c03f7f4f165677f18802e1437a")
 CPMAddPackage("gh:editorconfig/editorconfig-core-qt#b87e96f0e1ca38cdb49fe5a7771df746808bf156")
 
@@ -34,7 +35,7 @@ include(qsimpleupdater.cmake)
 # they need python. This fork uses github, and has auto-generated files as
 # part of the repo.
 #
-CPMAddPackage("gh:elcuco/scintilla-code#rel-5-3-2-cmake")
+CPMAddPackage("gh:elcuco/scintilla-code#rel-5-3-3-cmake")
 #CPMAddPackage("gh:elcuco/lexilla#rel-5-2-1-cmake")
 include(lexilla.cmake)
 
