@@ -40,8 +40,12 @@ This section specifically describes how to build Notepad Next using Microsoft's 
 
 Using a fresh Ubuntu 21.10 setup, the following script will install the needed dependencies and build the executable:
 
+Note - that while Qt5 can be built, we are not longer effectively supporting it,
+nor recommending it. Please build using Qt6 only. Qt5 is not effectively removed
+but it is not used, so code base might rot - and not work/compile.
+
 ```
-sudo apt install qtbase5-dev qt5-qmake qtbase5-dev-tools qttools5-dev-tools qtbase5-private-dev libqt5x11extras5-dev build-essential git
+sudo apt install qtbase6-dev qt6-qmake qtbase6-dev-tools qtbase6-private-dev qt6-5compat-dev build-essential git
 git clone --recurse-submodules https://github.com/dail8859/NotepadNext.git
 cd NotepadNext
 mkdir build
