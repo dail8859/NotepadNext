@@ -69,7 +69,7 @@ public slots:
 
     void closeCurrentFile();
     void closeFile(ScintillaNext *editor);
-    void closeAllFiles(bool forceClose);
+    void closeAllFiles();
     void closeAllExceptActive();
     void closeAllToLeft();
     void closeAllToRight();
@@ -81,8 +81,8 @@ public slots:
     bool saveCurrentFileAs(const QString &fileName);
     bool saveFileAs(ScintillaNext *editor, const QString &fileName);
 
-    void saveCopyAsDialog();
-    void saveCopyAs(const QString &fileName);
+    bool saveCopyAsDialog();
+    bool saveCopyAs(const QString &fileName);
     void saveAll();
 
     void exportAsFormat(Converter *converter, const QString &filter);
@@ -110,7 +110,6 @@ public slots:
     void updateGui(ScintillaNext *editor);
 
     void detectLanguage(ScintillaNext *editor);
-    void activateEditor(ScintillaNext *editor);
 
     void setLanguage(ScintillaNext *editor, const QString &languageName);
 
@@ -122,6 +121,8 @@ public slots:
     void checkForUpdates(bool silent = false);
 
     void restoreWindowState();
+
+    void switchToEditor(const ScintillaNext *editor);
 
 signals:
     void editorActivated(ScintillaNext *editor);
@@ -136,6 +137,7 @@ private slots:
     void tabBarRightClicked(ScintillaNext *editor);
     void languageMenuTriggered();
     void checkForUpdatesFinished(QString url);
+    void activateEditor(ScintillaNext *editor);
 
 private:
     Ui::MainWindow *ui = Q_NULLPTR;
@@ -147,6 +149,7 @@ private:
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     bool checkFileForModification(ScintillaNext *editor);
+    void showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileError error);
 
     void saveSettings() const;
     void restoreSettings();
@@ -154,11 +157,6 @@ private:
     QActionGroup *languageActionGroup;
 
     //NppImporter *npp;
-
-    // Persistent dialogs
-    QMap<QString, QDialog *> dialogs;
-
-    QuickFindWidget *quickFind = Q_NULLPTR;
 
     MacroManager macroManager;
 

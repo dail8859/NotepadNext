@@ -32,7 +32,7 @@
 const int CHUNK_SIZE = 1024 * 1024 * 4; // Not sure what is best
 
 
-static bool writeToDisk(const QByteArray &data, const QString &path)
+static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString &path)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -40,20 +40,32 @@ static bool writeToDisk(const QByteArray &data, const QString &path)
     file.setDirectWriteFallback(true);
 
     if (file.open(QIODevice::WriteOnly)) {
-        file.write(data);
-        return file.commit();
+        if (file.write(data) != -1) {
+            if (file.commit()) {
+                return QFileDevice::NoError;
+            }
+        }
     }
-    else {
-        qWarning("writeToDisk() failure: %s", qPrintable(file.errorString()));
-        return false;
-    }
+
+    // If it got to this point there was an error
+    qWarning("writeToDisk() failure code %d: %s", file.error(), qPrintable(file.errorString()));
+    return file.error();
 }
 
+static bool isNewlineCharacter(char c)
+{
+    return c == '\n' || c == '\r';
+}
 
 ScintillaNext::ScintillaNext(QString name, QWidget *parent) :
     ScintillaEdit(parent),
-    name(name)
+    name(name),
+    indicatorResources(INDICATOR_MAX + 1)
 {
+    // Per the scintilla documentation, some parts of the range are not generally available
+    indicatorResources.disableRange(0, 7);
+    indicatorResources.disableRange(INDICATOR_IME, INDICATOR_IME_MAX);
+    indicatorResources.disableRange(INDICATOR_HISTORY_REVERTED_TO_ORIGIN_INSERTION, INDICATOR_HISTORY_REVERTED_TO_MODIFIED_DELETION);
 }
 
 ScintillaNext::~ScintillaNext()
@@ -83,9 +95,13 @@ ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate
     }
 
     editor->setFileInfo(filePath);
-    editor->updateTimestamp();
 
     return editor;
+}
+
+int ScintillaNext::allocateIndicator(const QString &name)
+{
+    return indicatorResources.requestResource(name);
 }
 
 void ScintillaNext::goToRange(const Sci_CharacterRange &range)
@@ -102,14 +118,82 @@ void ScintillaNext::goToRange(const Sci_CharacterRange &range)
     }
 }
 
+QByteArray ScintillaNext::eolString() const
+{
+    const int eol = eOLMode();
+
+    if (eol == SC_EOL_LF) return QByteArrayLiteral("\n");
+    else if (eol == SC_EOL_CRLF) return QByteArrayLiteral("\r\n");
+    else return QByteArrayLiteral("\r");
+}
+
+bool ScintillaNext::lineIsEmpty(int line)
+{
+    return (lineEndPosition(line) - positionFromLine(line)) == 0;
+}
+
+void ScintillaNext::deleteLine(int line)
+{
+    deleteRange(positionFromLine(line), lineLength(line));
+}
+
+void ScintillaNext::cutAllowLine()
+{
+    if (selectionEmpty()) {
+        copyAllowLine();
+        lineDelete();
+    }
+    else {
+        cut();
+    }
+}
+
+void ScintillaNext::deleteLeadingEmptyLines()
+{
+    while (lineCount() > 1 && lineIsEmpty(0)) {
+        deleteLine(0);
+    }
+}
+
+void ScintillaNext::deleteTrailingEmptyLines()
+{
+    const int docLength = length();
+    int position = docLength;
+
+    while (position > 0 && isNewlineCharacter(charAt(position - 1))) {
+        position--;
+    }
+
+    deleteRange(position, docLength - position);
+}
+
 bool ScintillaNext::isSavedToDisk() const
 {
-    return bufferType != ScintillaNext::FileMissing && !modify();
+    return !canSaveToDisk();
+}
+
+bool ScintillaNext::canSaveToDisk() const
+{
+    // The buffer can be saved if:
+    // - It is marked as a temporary since as soon as it gets saved it is no longer a temporary buffer
+    // - A modified file
+    // - A missing file since as soon as it is saved it is no longer missing.
+    return temporary ||
+           (bufferType == ScintillaNext::New && modify()) ||
+           (bufferType == ScintillaNext::File && modify()) ||
+            (bufferType == ScintillaNext::FileMissing);
+}
+
+void ScintillaNext::setName(const QString &name)
+{
+    this->name = name;
+
+    emit renamed();
 }
 
 bool ScintillaNext::isFile() const
 {
-    return bufferType == ScintillaNext::File || bufferType == ScintillaNext::FileMissing;;
+    return bufferType == ScintillaNext::File || bufferType == ScintillaNext::FileMissing;
 }
 
 QFileInfo ScintillaNext::getFileInfo() const
@@ -162,7 +246,7 @@ void ScintillaNext::close()
     deleteLater();
 }
 
-bool ScintillaNext::save()
+QFileDevice::FileError ScintillaNext::save()
 {
     qInfo(Q_FUNC_INFO);
 
@@ -170,11 +254,14 @@ bool ScintillaNext::save()
 
     emit aboutToSave();
 
-    bool writeSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), fileInfo.filePath());
+    QFileDevice::FileError writeSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), fileInfo.filePath());
 
-    if (writeSuccessful) {
+    if (writeSuccessful == QFileDevice::NoError) {
         updateTimestamp();
         setSavePoint();
+
+        // If this was a temporary file, make sure it is not any more
+        setTemporary(false);
 
         emit saved();
     }
@@ -213,18 +300,20 @@ void ScintillaNext::reload()
     return;
 }
 
-bool ScintillaNext::saveAs(const QString &newFilePath)
+QFileDevice::FileError ScintillaNext::saveAs(const QString &newFilePath)
 {
-    bool isRenamed = bufferType == ScintillaNext::Temporary || fileInfo.canonicalFilePath() != newFilePath;
+    bool isRenamed = bufferType == ScintillaNext::New || fileInfo.canonicalFilePath() != newFilePath;
 
     emit aboutToSave();
 
-    bool saveSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), newFilePath);
+    QFileDevice::FileError saveSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), newFilePath);
 
-    if (saveSuccessful) {
+    if (saveSuccessful == QFileDevice::NoError) {
         setFileInfo(newFilePath);
-        updateTimestamp();
         setSavePoint();
+
+        // If this was a temporary file, make sure it is not any more
+        setTemporary(false);
 
         emit saved();
 
@@ -236,7 +325,7 @@ bool ScintillaNext::saveAs(const QString &newFilePath)
     return saveSuccessful;
 }
 
-bool ScintillaNext::saveCopyAs(const QString &filePath)
+QFileDevice::FileError ScintillaNext::saveCopyAs(const QString &filePath)
 {
     return writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), filePath);
 }
@@ -253,8 +342,10 @@ bool ScintillaNext::rename(const QString &newFilePath)
 
         // Everything worked fine, so update the buffer's info
         setFileInfo(newFilePath);
-        updateTimestamp();
         setSavePoint();
+
+        // If this was a temporary file, make sure it is not any more
+        setTemporary(false);
 
         emit saved();
 
@@ -268,7 +359,7 @@ bool ScintillaNext::rename(const QString &newFilePath)
 
 ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
 {
-    if (bufferType == BufferType::Temporary) {
+    if (bufferType == BufferType::New) {
         return FileStateChange::NoChange;
     }
     else if (bufferType == BufferType::File) {
@@ -431,7 +522,6 @@ bool ScintillaNext::readFromDisk(QFile &file)
             }
 
             qDebug("Using codec: '%s'", codec ? codec->name().constData() : "");
-            setCodePage(codec ? SC_CP_UTF8 : 0);
         }
 
         if (codec) {
@@ -470,7 +560,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
 
 QDateTime ScintillaNext::fileTimestamp()
 {
-    Q_ASSERT(bufferType != ScintillaNext::Temporary);
+    Q_ASSERT(bufferType != ScintillaNext::New);
 
     fileInfo.refresh();
     qInfo("%s last modified %s", qUtf8Printable(fileInfo.fileName()), qUtf8Printable(fileInfo.lastModified().toString()));
@@ -491,4 +581,21 @@ void ScintillaNext::setFileInfo(const QString &filePath)
 
     name = fileInfo.fileName();
     bufferType = ScintillaNext::File;
+
+    updateTimestamp();
+}
+
+void ScintillaNext::detachFileInfo(const QString &newName)
+{
+    setName(newName);
+
+    bufferType = ScintillaNext::New;
+}
+
+void ScintillaNext::setTemporary(bool temp)
+{
+    temporary = temp;
+
+    // Fake this signal
+    emit savePointChanged(temporary);
 }

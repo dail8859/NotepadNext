@@ -9,8 +9,8 @@ end
 function detectLanguageFromContents(contents)
     for name, L in pairs(languages) do
         if L.first_line then
-            for _, v in ipairs(L.first_line) do
-                if starts_with(contents, v) then
+            for _, pattern in ipairs(L.first_line) do
+                if string.match(contents, pattern) then
                     return name
                 end
             end

@@ -624,6 +624,7 @@ enum class CompletionMethods {
 	Tab = 3,
 	Newline = 4,
 	Command = 5,
+	SingleChoice = 6,
 };
 
 enum class CharacterSource {

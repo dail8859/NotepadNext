@@ -86,6 +86,7 @@ SOURCES += \
     NppImporter.cpp \
     QRegexSearch.cpp \
     QuickFindWidget.cpp \
+    RangeAllocator.cpp \
     RecentFilesListManager.cpp \
     RecentFilesListMenuBuilder.cpp \
     RtfConverter.cpp \
@@ -93,6 +94,7 @@ SOURCES += \
     ScintillaCommenter.cpp \
     ScintillaNext.cpp \
     SelectionTracker.cpp \
+    SessionManager.cpp \
     Settings.cpp \
     SpinBoxDelegate.cpp \
     UndoAction.cpp \
@@ -101,6 +103,7 @@ SOURCES += \
     decorators/AutoCompletion.cpp \
     decorators/AutoIndentation.cpp \
     decorators/BetterMultiSelection.cpp \
+    decorators/BookMarkDecorator.cpp \
     decorators/EditorConfigAppDecorator.cpp \
     decorators/SurroundSelection.cpp \
     decorators/URLFinder.cpp \
@@ -159,6 +162,7 @@ HEADERS += \
     NppImporter.h \
     QRegexSearch.h \
     QuickFindWidget.h \
+    RangeAllocator.h \
     RecentFilesListManager.h \
     RecentFilesListMenuBuilder.h \
     RtfConverter.h \
@@ -167,6 +171,7 @@ HEADERS += \
     ScintillaEnums.h \
     ScintillaNext.h \
     SelectionTracker.h \
+    SessionManager.h \
     Settings.h \
     SpinBoxDelegate.h \
     UndoAction.h \
@@ -175,6 +180,7 @@ HEADERS += \
     decorators/AutoCompletion.h \
     decorators/AutoIndentation.h \
     decorators/BetterMultiSelection.h \
+    decorators/BookMarkDecorator.h \
     decorators/EditorConfigAppDecorator.h \
     decorators/SurroundSelection.h \
     decorators/URLFinder.h \
@@ -266,4 +272,8 @@ unix {
 
 macx: {
     ICON = ../../icon/NotepadNext.icns
+    
+    versionAtLeast(QT_VERSION, 6.2) { 
+        QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+    }
 }

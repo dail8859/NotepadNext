@@ -32,6 +32,7 @@ public:
 
 private:
     void highlightCurrentView();
+    int indicator;
 
 public slots:
     void notify(const Scintilla::NotificationData *pscn) override;

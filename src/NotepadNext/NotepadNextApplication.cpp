@@ -23,6 +23,7 @@
 #include "EditorManager.h"
 #include "LuaExtension.h"
 #include "DebugManager.h"
+#include "SessionManager.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
@@ -120,6 +121,7 @@ bool NotepadNextApplication::init()
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(this);
     settings = new Settings(this);
+    sessionManager = new SessionManager();
 
     connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [=](ScintillaNext *editor) {
         if (editor->isFile()) {
@@ -133,15 +135,9 @@ bool NotepadNextApplication::init()
         }
     });
 
-    // Restore some settings and schedule saving the settings on quit
-    QSettings qsettings;
+    loadSettings();
 
-    recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
-
-    connect(this, &NotepadNextApplication::aboutToQuit, this, [=]() {
-        QSettings settings;
-        settings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
-    });
+    connect(this, &NotepadNextApplication::aboutToQuit, this, &NotepadNextApplication::saveSettings);
 
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
     ecad->setEnabled(true);
@@ -224,6 +220,12 @@ bool NotepadNextApplication::init()
         }
     });
 
+    if (settings->restorePreviousSession()) {
+        qInfo("Restoring previous session");
+
+        sessionManager->loadSession(windows.first(), editorManager);
+    }
+
     openFiles(parser.positionalArguments());
 
     // If the window does not have any editors (meaning the no files were
@@ -240,6 +242,28 @@ bool NotepadNextApplication::init()
     DebugManager::resumeDebugOutput();
 
     return true;
+}
+
+SessionManager *NotepadNextApplication::getSessionManager() const
+{
+    SessionManager::SessionFileTypes fileTypes;
+
+    if (settings->restorePreviousSession()) {
+        fileTypes |= SessionManager::SavedFile;
+    }
+
+    if (settings->restoreUnsavedFiles()) {
+        fileTypes |= SessionManager::UnsavedFile;
+    }
+
+    if (settings->restoreTempFiles()) {
+        fileTypes |= SessionManager::TempFile;
+    }
+
+    // Update the file types supported in case something has changed in the settings
+    sessionManager->setSessionFileTypes(fileTypes);
+
+    return sessionManager;
 }
 
 QString NotepadNextApplication::getFileDialogFilter() const
@@ -270,6 +294,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
     auto lexerInstance = CreateLexer(lexer.toLatin1().constData());
     editor->setILexer((sptr_t) lexerInstance);
+    editor->clearDocumentStyle(); // Remove all previous style information, setting the lexer does not guarantee styling information is cleared
 
     // Not ideal this has to be manually emitted but it works since setILexer() is not widely used
     emit editor->lexerChanged();
@@ -284,19 +309,12 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
             for name, style in pairs(L.styles) do
                 editor.StyleFore[style.id] = style.fgColor
                 editor.StyleBack[style.id] = style.bgColor
+
                 if style.fontStyle then
-                    if style.fontStyle & 1 == 1 then
-                        editor.StyleBold[style.id] = true
-                    end
-                    if style.fontStyle & 2 == 2 then
-                        editor.StyleItalic[style.id] = true
-                    end
-                    if style.fontStyle & 4 == 4 then
-                        editor.StyleUnderline[style.id] = true
-                    end
-                    if style.fontStyle & 8 == 8 then
-                        editor.StyleEOLFilled[style.id] = true
-                    end
+                    editor.StyleBold[style.id] = (style.fontStyle & 1 == 1)
+                    editor.StyleItalic[style.id] = (style.fontStyle & 2 == 2)
+                    editor.StyleUnderline[style.id] = (style.fontStyle & 4 == 4)
+                    editor.StyleEOLFilled[style.id] = (style.fontStyle & 8 == 8)
                 end
             end
         end
@@ -310,6 +328,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
                 editor.Property[p] = v
             end
         end
+
         editor.Property["fold"] = "1"
         editor.Property["fold.compact"] = "0"
     )");
@@ -399,6 +418,15 @@ void NotepadNextApplication::loadTranslation(QLocale locale)
     }
 }
 
+void NotepadNextApplication::sendInfoToPrimaryInstance()
+{
+    QByteArray buffer;
+    QDataStream stream(&buffer, QIODevice::WriteOnly);
+
+    stream << arguments();
+    sendMessage(buffer);
+}
+
 bool NotepadNextApplication::event(QEvent *event)
 {
     // Handle the QFileOpenEvent to open files on MacOS X.
@@ -424,6 +452,26 @@ void NotepadNextApplication::openFiles(const QStringList &files)
     }
 }
 
+void NotepadNextApplication::loadSettings()
+{
+    QSettings qsettings;
+
+    settings->setRestorePreviousSession(qsettings.value("App/RestorePreviousSession", false).toBool());
+    settings->setRestoreUnsavedFiles(qsettings.value("App/RestoreUnsavedFiles", false).toBool());
+    settings->setRestoreTempFiles(qsettings.value("App/RestoreTempFiles", false).toBool());
+    recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
+}
+
+void NotepadNextApplication::saveSettings()
+{
+    QSettings qsettings;
+
+    qsettings.setValue("App/RestorePreviousSession", settings->restorePreviousSession());
+    qsettings.setValue("App/RestoreUnsavedFiles", settings->restoreUnsavedFiles());
+    qsettings.setValue("App/RestoreTempFiles", settings->restoreTempFiles());
+    qsettings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
+}
+
 MainWindow *NotepadNextApplication::createNewWindow()
 {
     MainWindow *w = new MainWindow(this);
@@ -442,6 +490,8 @@ MainWindow *NotepadNextApplication::createNewWindow()
                 recentFilesListManager->addFile(editor->getFilePath());
             }
         }
+
+        getSessionManager()->saveSession(w);
     });
 
     return w;

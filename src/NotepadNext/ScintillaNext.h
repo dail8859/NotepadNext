@@ -20,6 +20,7 @@
 #ifndef SCINTILLANEXT_H
 #define SCINTILLANEXT_H
 
+#include "RangeAllocator.h"
 #include "ScintillaEdit.h"
 
 #include <QDateTime>
@@ -44,6 +45,8 @@ public:
 
     static ScintillaNext *fromFile(const QString &filePath, bool tryToCreate=false);
 
+    int allocateIndicator(const QString &name);
+
     template<typename Func>
     void forEachMatch(const QString &text, Func callback) { forEachMatch(text.toUtf8(), callback); }
 
@@ -58,13 +61,32 @@ public:
 
     void goToRange(const Sci_CharacterRange &range);
 
+    QByteArray eolString() const;
+
+    bool lineIsEmpty(int line);
+
+    void deleteLine(int line);
+
+    void cutAllowLine();
+
+    void deleteLeadingEmptyLines();
+    void deleteTrailingEmptyLines();
+
     bool isFile() const;
-    bool isSavedToDisk() const;
     QFileInfo getFileInfo() const;
 
+    bool isSavedToDisk() const;
+    bool canSaveToDisk() const;
+
     QString getName() const { return name; }
+    void setName(const QString &name);
     QString getPath() const;
     QString getFilePath() const;
+
+    // NOTE: this is dangerous and should only be used in very rare situations
+    void setFileInfo(const QString &filePath);
+
+    void detachFileInfo(const QString &newName);
 
     enum FileStateChange {
         NoChange,
@@ -74,10 +96,13 @@ public:
     };
 
     enum BufferType {
-        Temporary = 0, // A temporary buffer, e.g. "New 1"
-        File = 1, // Buffer tied to a file on the file system
-        FileMissing = 2, // Buffer with a missing file on the file system
+        New, // A temporary buffer, e.g. "New 1"
+        File, // Buffer tied to a file on the file system
+        FileMissing, // Buffer with a missing file on the file system
     };
+
+    bool isTemporary() const { return temporary; }
+    void setTemporary(bool temp);
 
     void setFoldMarkers(const QString &type);
 
@@ -86,12 +111,13 @@ public:
 
     #include "ScintillaEnums.h"
 
+
 public slots:
     void close();
-    bool save();
+    QFileDevice::FileError save();
     void reload();
-    bool saveAs(const QString &newFilePath);
-    bool saveCopyAs(const QString &filePath);
+    QFileDevice::FileError saveAs(const QString &newFilePath);
+    QFileDevice::FileError saveCopyAs(const QString &filePath);
     bool rename(const QString &newFilePath);
     ScintillaNext::FileStateChange checkFileForStateChange();
     bool moveToTrash();
@@ -114,14 +140,17 @@ protected:
 
 private:
     QString name;
-    BufferType bufferType = BufferType::Temporary;
+    BufferType bufferType = BufferType::New;
     QFileInfo fileInfo;
     QDateTime modifiedTime;
+    RangeAllocator indicatorResources;
+
+    bool temporary = false; // Temporary file loaded from a session. It can either be a 'New' file or actual 'File'
 
     bool readFromDisk(QFile &file);
     QDateTime fileTimestamp();
     void updateTimestamp();
-    void setFileInfo(const QString &filePath);
+
 };
 
 template<typename Func>

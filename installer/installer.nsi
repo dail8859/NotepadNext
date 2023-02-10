@@ -119,6 +119,23 @@ Function un.onInit
 	!insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
+Section "-Run Uninstaller" SEC_UNINSTALL_PREVIOUS
+	SetRegView 64
+
+	; Check for uninstaller registry entry
+	ReadRegStr $R0 SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "QuietUninstallString"
+
+	${If} $R0 == ""
+		Goto Done
+	${EndIf}
+
+	DetailPrint "Removing previous installation..."
+
+	; Run the uninstaller
+	ExecWait '$R0'
+
+	Done:
+SectionEnd
 
 Section "Notepad Next"
 	SectionIn RO

@@ -13,6 +13,10 @@ useStlAlgorithm
 // Written with variable for consistency
 knownArgument:scintilla/src/SparseVector.h
 
+// The cast converts from 'unsigned char ' to 'char' so isn't unused.
+// Redundant code: Found unused cast of expression 'leadByte'
+constStatement:scintilla/src/Document.cxx
+
 // Some non-explicit constructors are used for conversions or are private to lexers
 noExplicitConstructor
 

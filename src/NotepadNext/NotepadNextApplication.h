@@ -34,6 +34,7 @@ class LuaState;
 class EditorManager;
 class RecentFilesListManager;
 class ScintillaNext;
+class SessionManager;
 
 class NotepadNextApplication : public SingleApplication
 {
@@ -46,6 +47,7 @@ public:
 
     RecentFilesListManager *getRecentFilesListManager() const { return recentFilesListManager; }
     EditorManager *getEditorManager() const { return editorManager; }
+    SessionManager *getSessionManager() const;
 
     LuaState *getLuaState() const { return luaState; }
     QString getFileDialogFilter() const;
@@ -61,15 +63,23 @@ public:
     void loadSystemDefaultTranslation();
     void loadTranslation(QLocale locale);
 
+    void sendInfoToPrimaryInstance();
+
 protected:
     bool event(QEvent *event) override;
+
+private slots:
+    void saveSettings();
 
 private:
     void openFiles(const QStringList &files);
 
+    void loadSettings();
+
     EditorManager *editorManager;
     RecentFilesListManager *recentFilesListManager;
     Settings *settings;
+    SessionManager *sessionManager;
 
     LuaState *luaState = Q_NULLPTR;
 

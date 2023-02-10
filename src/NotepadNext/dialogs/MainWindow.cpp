@@ -18,6 +18,8 @@
 
 
 #include "MainWindow.h"
+#include "SessionManager.h"
+#include "UndoAction.h"
 #include "ui_MainWindow.h"
 
 #include <QFileDialog>
@@ -134,6 +136,29 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionSingleLineComment, &QAction::triggered, this, [=]() { currentEditor()->commentLineSelection(); });
     connect(ui->actionSingleLineUncomment, &QAction::triggered, this, [=]() { currentEditor()->uncommentLineSelection(); });
 
+    connect(ui->actionBase64Encode,&QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        const QByteArray selection = currentEditor()->getSelText();
+        editor->replaceSel(selection.toBase64().constData());
+    });
+    connect(ui->actionURLEncode,&QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        const QByteArray selection = currentEditor()->getSelText();
+        editor->replaceSel(selection.toPercentEncoding().constData());
+    });
+    connect(ui->actionBase64Decode,&QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        const QByteArray selection = editor->getSelText();
+        if (auto result = QByteArray::fromBase64Encoding(selection)) {
+            editor->replaceSel((*result).constData());
+        }
+    });
+    connect(ui->actionURLDecode,&QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        const QByteArray selection = editor->getSelText();
+        editor->replaceSel(QByteArray::fromPercentEncoding(selection).constData());
+    });
+
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
 
     connect(ui->actionMoveToTrash, &QAction::triggered, this, &MainWindow::moveCurrentFileToTrash);
@@ -184,16 +209,27 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         currentEditor()->targetFromSelection();
         currentEditor()->linesJoin();
     });
+    connect(ui->actionRemoveEmptyLines, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        Finder f(editor);
+        const UndoAction ua(editor);
+
+        f.setSearchText(QStringLiteral("\\R\\R+"));
+        f.setSearchFlags(SCFIND_REGEXP);
+        f.replaceAll(editor->eolString());
+
+        // The regex will not entirely remove a blank first line
+        editor->deleteLeadingEmptyLines();
+
+        // Regex will also not delete the final blank line
+        editor->deleteTrailingEmptyLines();
+    });
 
     connect(ui->actionColumnMode, &QAction::triggered, this, [=]() {
-        ColumnEditorDialog *columnEditor = nullptr;
+        ColumnEditorDialog *columnEditor = findChild<ColumnEditorDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
-        if (!dialogs.contains("ColumnEditorDialog")) {
+        if (columnEditor == Q_NULLPTR) {
             columnEditor = new ColumnEditorDialog(this);
-            dialogs["ColumnEditorDialog"] = columnEditor;
-        }
-        else {
-            columnEditor = qobject_cast<ColumnEditorDialog *>(dialogs["ColumnModeDialog"]);
         }
 
         columnEditor->show();
@@ -203,21 +239,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     connect(ui->actionUndo, &QAction::triggered, this, [=]() { currentEditor()->undo(); });
     connect(ui->actionRedo, &QAction::triggered, this, [=]() { currentEditor()->redo(); });
-    connect(ui->actionCut, &QAction::triggered, this, [=]() {
-        if (currentEditor()->selectionEmpty()) {
-            currentEditor()->copyAllowLine();
-            currentEditor()->lineDelete();
-        }
-        else {
-            currentEditor()->cut();
-        }
-    });
-    connect(ui->actionCopy, &QAction::triggered, this, [=]() {
-        currentEditor()->copyAllowLine();
-    });
-    connect(ui->actionDelete, &QAction::triggered, this, [=]() { currentEditor()->clear();});
-    connect(ui->actionPaste, &QAction::triggered, this, [=]() { currentEditor()->paste();});
-    connect(ui->actionSelect_All, &QAction::triggered, this, [=]() { currentEditor()->selectAll();});
+    connect(ui->actionCut, &QAction::triggered, this, [=]() { currentEditor()->cutAllowLine(); });
+    connect(ui->actionCopy, &QAction::triggered, this, [=]() { currentEditor()->copyAllowLine(); });
+    connect(ui->actionDelete, &QAction::triggered, this, [=]() { currentEditor()->clear(); });
+    connect(ui->actionPaste, &QAction::triggered, this, [=]() { currentEditor()->paste(); });
+    connect(ui->actionSelect_All, &QAction::triggered, this, [=]() { currentEditor()->selectAll(); });
     connect(ui->actionSelect_Next, &QAction::triggered, this, [=]() {
         // Set search flags here?
         currentEditor()->targetWholeDocument();
@@ -272,18 +298,22 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionFindNext, &QAction::triggered, this, [=]() {
-        if (dialogs.contains("FindReplaceDialog")) {
-            qobject_cast<FindReplaceDialog *>(dialogs["FindReplaceDialog"])->performLastSearch();
+        FindReplaceDialog *f = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (f) {
+            f->performLastSearch();
         }
     });
 
     connect(ui->actionQuickFind, &QAction::triggered, this, [=]() {
+        QuickFindWidget *quickFind = findChild<QuickFindWidget *>(QString(), Qt::FindDirectChildrenOnly);
+
         if (quickFind == Q_NULLPTR) {
             quickFind = new QuickFindWidget(this);
         }
+
         quickFind->setEditor(currentEditor());
         quickFind->setFocus();
-
         quickFind->show();
     });
 
@@ -408,14 +438,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     languageActionGroup->setExclusive(true);
 
     connect(ui->actionPreferences, &QAction::triggered, this, [=] {
-        PreferencesDialog *pd = nullptr;
+        PreferencesDialog *pd = findChild<PreferencesDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
-        if (!dialogs.contains("PreferencesDialog")) {
+        if (pd == Q_NULLPTR) {
             pd = new PreferencesDialog(app->getSettings(), this);
-            dialogs["PreferencesDialog"] = pd;
-        }
-        else {
-            pd = qobject_cast<PreferencesDialog *>(dialogs["PreferencesDialog"]);
         }
 
         pd->show();
@@ -486,11 +512,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, this, [=]() {
-        MacroRunDialog *macroRunDialog = nullptr;
+        MacroRunDialog *macroRunDialog = findChild<MacroRunDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
-        if (!dialogs.contains("MacroRunDialog")) {
+        if (macroRunDialog == Q_NULLPTR) {
             macroRunDialog = new MacroRunDialog(this, &macroManager);
-            dialogs["MacroRunDialog"] = macroRunDialog;
 
             connect(macroRunDialog, &MacroRunDialog::execute, this, [=](Macro *macro, int times) {
                 if (times > 0)
@@ -498,9 +523,6 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                 else if (times == -1)
                     macro->replayTillEndOfFile(currentEditor());
             });
-        }
-        else {
-            macroRunDialog = qobject_cast<MacroRunDialog *>(dialogs["MacroRunDialog"]);
         }
 
         macroRunDialog->show();
@@ -550,7 +572,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                                     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
                                     GNU General Public License for more details.</p>
                                     <p>You should have received a copy of the GNU General Public License
-                                    along with this program. If not, see &lt;https://www.gnu.org/licenses/&gt;.</p>)")
+                                    along with this program. If not, see &lt;<a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>)")
                                 .arg(QApplication::applicationDisplayName(), APP_VERSION, APP_DISTRIBUTION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
 
@@ -598,9 +620,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
     });
     connect(app->getSettings(), &Settings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
-    //connect(app->getSettings(), &Settings::showTabBarChanged, tabbedEditor->getTabBar(), &QTabBar::setVisible);
     connect(app->getSettings(), &Settings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
-    //connect(settings, &Settings::tabsClosableChanged, tabbedEditor->getTabBar(), &QTabBar::setTabsClosable);
 
     setupLanguageMenu();
 
@@ -679,7 +699,26 @@ void MainWindow::newFile()
 
     static int count = 1;
 
-    app->getEditorManager()->createEmptyEditor(tr("New %1").arg(count++));
+    // NOTE: in theory need to check all editors in the editorManager to future proof this.
+    // If there is another window it would need to check those too to see if New X exists. The editor
+    // manager would encompass all editors
+
+    forever {
+        QString newFileName = tr("New %1").arg(count++);
+        bool canUseName = true;
+
+        for (const ScintillaNext *editor : editors()) {
+            if (!editor->isFile() && editor->getName() == newFileName) {
+                canUseName = false;
+                break;
+            }
+        }
+
+        if (canUseName) {
+            app->getEditorManager()->createEditor(newFileName);
+            break;
+        }
+    }
 }
 
 // One unedited, new blank document
@@ -884,12 +923,10 @@ void MainWindow::closeFile(ScintillaNext *editor)
     }
 }
 
-void MainWindow::closeAllFiles(bool forceClose = false)
+void MainWindow::closeAllFiles()
 {
-    if (!forceClose) {
-        if (!checkEditorsBeforeClose(editors())) {
-            return;
-        }
+    if (!checkEditorsBeforeClose(editors())) {
+        return;
     }
 
     // Ask the manager to close the editors the dockedEditor knows about
@@ -897,8 +934,7 @@ void MainWindow::closeAllFiles(bool forceClose = false)
         editor->close();
     }
 
-    if (!forceClose)
-        newFile();
+    newFile();
 }
 
 void MainWindow::closeAllExceptActive()
@@ -957,7 +993,7 @@ bool MainWindow::saveCurrentFile()
 
 bool MainWindow::saveFile(ScintillaNext *editor)
 {
-    if (!editor->modify())
+    if (editor->isSavedToDisk())
         return true;
 
     if (!editor->isFile()) {
@@ -966,16 +1002,15 @@ bool MainWindow::saveFile(ScintillaNext *editor)
         return saveCurrentFileAsDialog();
     }
     else {
-        bool didItGetSaved = editor->save();
-        if (didItGetSaved) {
+        QFileDevice::FileError error = editor->save();
+        if (error == QFileDevice::NoError) {
             return true;
         }
         else {
-            QMessageBox::warning(this, tr("Error Saving File"),  tr("Something went wrong saving <b>%1</b>?").arg(editor->getName()));
+            showSaveErrorMessage(editor, error);
+            return false;
         }
     }
-
-    return false;
 }
 
 bool MainWindow::saveCurrentFileAsDialog()
@@ -1010,12 +1045,18 @@ bool MainWindow::saveFileAs(ScintillaNext *editor, const QString &fileName)
 {
     qInfo("saveFileAs(%s)", qUtf8Printable(fileName));
 
-    bool didItGetSaved = editor->saveAs(fileName);
+    QFileDevice::FileError error = editor->saveAs(fileName);
 
-    return didItGetSaved;
+    if (error == QFileDevice::NoError) {
+        return true;
+    }
+    else {
+        showSaveErrorMessage(editor, error);
+        return false;
+    }
 }
 
-void MainWindow::saveCopyAsDialog()
+bool MainWindow::saveCopyAsDialog()
 {
     QString dialogDir;
     const QString filter = app->getFileDialogFilter();
@@ -1028,13 +1069,22 @@ void MainWindow::saveCopyAsDialog()
 
     QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Save a Copy As"), dialogDir, filter);
 
-    saveCopyAs(fileName);
+    return saveCopyAs(fileName);
 }
 
-void MainWindow::saveCopyAs(const QString &fileName)
+bool MainWindow::saveCopyAs(const QString &fileName)
 {
     auto editor = currentEditor();
-    editor->saveCopyAs(fileName);
+
+    QFileDevice::FileError error = editor->saveCopyAs(fileName);
+
+    if (error == QFileDevice::NoError) {
+        return true;
+    }
+    else {
+        showSaveErrorMessage(editor, error);
+        return false;
+    }
 }
 
 void MainWindow::saveAll()
@@ -1079,20 +1129,28 @@ void MainWindow::renameFile()
 {
     ScintillaNext *editor = currentEditor();
 
-    Q_ASSERT(editor->isFile());
+    if (editor->isFile()) {
+        QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath());
 
-    QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath());
+        if (fileName.size() == 0) {
+            return;
+        }
 
-    if (fileName.size() == 0) {
-        return;
+        // TODO
+        // The new fileName might be to one of the existing editors.
+        //auto otherEditor = app->getEditorByFilePath(fileName);
+
+        bool renameSuccessful = editor->rename(fileName);
+        Q_UNUSED(renameSuccessful)
     }
+    else {
+        bool ok;
+        QString text = QInputDialog::getText(this, tr("Rename"), tr("Name:"), QLineEdit::Normal, editor->getName(), &ok);
 
-    // TODO
-    // The new fileName might be to one of the existing editors.
-    //auto otherEditor = app->getEditorByFilePath(fileName);
-
-    bool renameSuccessful = editor->rename(fileName);
-    Q_UNUSED(renameSuccessful)
+        if (ok && !text.isEmpty()) {
+            editor->setName(text);
+        }
+    }
 }
 
 void MainWindow::moveCurrentFileToTrash()
@@ -1107,7 +1165,7 @@ void MainWindow::moveFileToTrash(ScintillaNext *editor)
     Q_ASSERT(editor->isFile());
 
     const QString filePath = editor->getFilePath();
-    auto reply = QMessageBox::question(this, tr("Delete File"), tr("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));;
+    auto reply = QMessageBox::question(this, tr("Delete File"), tr("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));
 
     if (reply == QMessageBox::Yes) {
         if (editor->moveToTrash()) {
@@ -1159,15 +1217,10 @@ void MainWindow::convertEOLs(int eolMode)
 void MainWindow::showFindReplaceDialog(int index)
 {
     ScintillaNext *editor = currentEditor();
-    FindReplaceDialog *frd = nullptr;
+    FindReplaceDialog *frd = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
-    // Create it if it doesn't exist
-    if (!dialogs.contains("FindReplaceDialog")) {
+    if (frd == Q_NULLPTR) {
         frd = new FindReplaceDialog(findChild<SearchResultsDock *>(), this);
-        dialogs["FindReplaceDialog"] = frd;
-    }
-    else {
-        frd = qobject_cast<FindReplaceDialog *>(dialogs["FindReplaceDialog"]);
     }
 
     // TODO: if dockedEditor::editorActivated() is fired, or if the editor get closed
@@ -1217,7 +1270,6 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
     setWindowTitle(QStringLiteral("[*]%1").arg(fileName));
 
     ui->actionReload->setEnabled(isFile);
-    ui->actionRename->setEnabled(isFile);
     ui->actionMoveToTrash->setEnabled(isFile);
     ui->actionCopyFullPath->setEnabled(isFile);
     ui->actionCopyFileDirectory->setEnabled(isFile);
@@ -1348,6 +1400,11 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
 
     ui->actionLowerCase->setEnabled(hasAnySelections);
     ui->actionUpperCase->setEnabled(hasAnySelections);
+
+    ui->actionBase64Encode->setEnabled(hasAnySelections);
+    ui->actionURLEncode->setEnabled(hasAnySelections);
+    ui->actionBase64Decode->setEnabled(hasAnySelections);
+    ui->actionURLEncode->setEnabled(hasAnySelections);
 }
 
 void MainWindow::detectLanguage(ScintillaNext *editor)
@@ -1451,6 +1508,12 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
     return true;
 }
 
+void MainWindow::showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileError error)
+{
+    const QString name = editor->isFile() ? editor->getFilePath() : editor->getName();
+    QMessageBox::warning(this, tr("Error Saving File"), tr("An error occurred when saving <b>%1</b><br><br>Error: %2").arg(name, qt_error_string(error)));
+}
+
 void MainWindow::saveSettings() const
 {
     qInfo(Q_FUNC_INFO);
@@ -1495,7 +1558,6 @@ void MainWindow::restoreSettings()
     zoomLevel = settings.value("Editor/ZoomLevel", 0).toInt();
 }
 
-
 void MainWindow::restoreWindowState()
 {
     QSettings settings;
@@ -1510,6 +1572,11 @@ void MainWindow::restoreWindowState()
     // Always hide the dock no matter how the application was closed
     SearchResultsDock *srDock = findChild<SearchResultsDock *>();
     srDock->hide();
+}
+
+void MainWindow::switchToEditor(const ScintillaNext *editor)
+{
+    dockedEditor->switchToEditor(editor);
 }
 
 void MainWindow::focusIn()
@@ -1534,22 +1601,6 @@ void MainWindow::addEditor(ScintillaNext *editor)
     connect(editor, &ScintillaNext::renamed, this, [=]() { detectLanguage(editor); });
     connect(editor, &ScintillaNext::renamed, this, [=]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
-    connect(editor, &ScintillaNext::marginClicked, [editor](Scintilla::Position position, Scintilla::KeyMod modifiers, int margin) {
-        Q_UNUSED(modifiers);
-
-        if (margin == 1) {
-            int line = editor->lineFromPosition(position);
-
-            if (editor->markerGet(line) & (1 << 24)) {
-                while (editor->markerGet(line) & (1 << 24)) {
-                    editor->markerDelete(line, 24);
-                }
-            }
-            else {
-                editor->markerAdd(line, 24);
-            }
-        }
-    });
 
     // Watch for any zoom events (Ctrl+Scroll or pinch-to-zoom (Qt translates it as Ctrl+Scroll)) so that the event
     // can be handled before the ScintillaEditBase widget, so that it can be applied to all editors to keep zoom level equal.
@@ -1566,6 +1617,24 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setViewEOL(ui->actionShowEndofLine->isChecked());
     editor->setWrapVisualFlags(ui->actionShowWrapSymbol->isChecked() ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
     editor->setZoom(zoomLevel);
+
+    editor->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(editor, &ScintillaNext::customContextMenuRequested, this, [=](const QPoint &pos) {
+        QMenu *menu = new QMenu(this);
+        menu->addAction(ui->actionCut);
+        menu->addAction(ui->actionCopy);
+        menu->addAction(ui->actionPaste);
+        menu->addAction(ui->actionDelete);
+        menu->addSeparator();
+        menu->addAction(ui->actionSelect_All);
+        menu->addSeparator();
+        menu->addAction(ui->actionBase64Encode);
+        menu->addAction(ui->actionURLEncode);
+        menu->addSeparator();
+        menu->addAction(ui->actionBase64Decode);
+        menu->addAction(ui->actionURLDecode);
+        menu->popup(QCursor::pos());
+    });
 
     // The editor has been entirely configured at this point, so add it to the docked editor
     dockedEditor->addEditor(editor);
@@ -1642,7 +1711,17 @@ void MainWindow::initUpdateCheck()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if (!checkEditorsBeforeClose(editors())) {
+    const SessionManager *sessionManager = app->getSessionManager();
+    QVector<ScintillaNext *> e;
+
+    // Check all editors to see if the session manager will not handle it
+    for (auto editor : editors()) {
+        if (!sessionManager->willFileGetStoredInSession(editor)) {
+            e.append(editor);
+        }
+    }
+
+    if (!checkEditorsBeforeClose(e)) {
         event->ignore();
         return;
     }
