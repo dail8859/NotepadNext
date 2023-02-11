@@ -71,7 +71,9 @@ ScintillaNext *EditorManager::createEditorFromFile(const QString &filePath, bool
 {
     ScintillaNext *editor = ScintillaNext::fromFile(filePath, tryToCreate);
 
-    manageEditor(editor);
+    if (editor) {
+        manageEditor(editor);
+    }
 
     return editor;
 }

@@ -770,7 +770,9 @@ void MainWindow::openFileList(const QStringList &fileNames)
             }
         }
 
-        mostRecentEditor = editor;
+        if (editor) {
+            mostRecentEditor = editor;
+        }
     }
 
     // If any were successful, switch to the last one
