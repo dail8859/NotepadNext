@@ -274,7 +274,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 {
     LuaExtension::Instance().setEditor(editor);
 
-    getLuaState()->execute(QString("languageName = \"%1\"").arg(QString(languageName)).toLatin1().constData());
+    getLuaState()->execute(QString("languageName = \"%1\"").arg(languageName).toLatin1().constData());
     const QString lexer = getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
 
     editor->languageName = languageName;
@@ -287,11 +287,21 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     // Not ideal this has to be manually emitted but it works since setILexer() is not widely used
     emit editor->lexerChanged();
 
+    // Dynamic properties can be used to skip part of the default initialization. The value in the
+    // property doesn't currently matter, but may be used at a later point.
+    getLuaState()->execute(QString("skip_tabs = \"%1\"").arg(editor->QObject::property("nn_skip_usetabs").isValid() ? "true" : "false").toLatin1().constData());
+    getLuaState()->execute(QString("skip_tabwidth = \"%1\"").arg(editor->QObject::property("nn_skip_tabwidth").isValid() ? "true" : "false").toLatin1().constData());
+
     getLuaState()->execute(R"(
         local L = languages[languageName]
 
-        editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
-        editor.TabWidth = L.tabSize or 4
+        if not skip_tabs then
+            editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
+        end
+        if not skip_tabwidth then
+            editor.TabWidth = L.tabSize or 4
+        end
+
         editor.MarginWidthN[2] = L.disableFoldMargin and 0 or 16
         if L.styles then
             for name, style in pairs(L.styles) do
