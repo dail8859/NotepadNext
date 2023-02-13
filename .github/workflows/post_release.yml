@@ -24,7 +24,7 @@ jobs:
     name: Publish to WinGet
     runs-on: windows-latest
     steps:
-      - uses: vedantmgoyal2009/winget-releaser@v1
+      - uses: vedantmgoyal2009/winget-releaser@v2
         with:
           identifier: dail8859.NotepadNext
           token: ${{ secrets.WINGET_TOKEN }}
