@@ -54,13 +54,7 @@ win32 {
 }
 
 macos {
-    # Build a custom info.plist file
-    info_plist.input = ../../deploy/macos/info.plist.in
-    info_plist.output = $$OUT_PWD/info.plist
-
-    QMAKE_SUBSTITUTES += info_plist
-
-    QMAKE_INFO_PLIST = $$OUT_PWD/info.plist
+    QMAKE_INFO_PLIST = ../../deploy/macos/info.plist
 }
 
 COPIES += license

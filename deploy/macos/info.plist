@@ -1,6 +1,6 @@
-<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
-<plist version=\"1.0\">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
 <dict>
 	<key>CFBundleExecutable</key>
 	<string>NotepadNext</string>
@@ -11,11 +11,11 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.yourcompany.NotepadNext</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$$APP_VERSION</string>
+	<string>${QMAKE_FULL_VERSION}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>$$QMAKE_IOS_DEPLOYMENT_TARGET</string>
+	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsAutomaticGraphicsSwitching</key>
