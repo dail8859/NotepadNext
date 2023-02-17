@@ -53,6 +53,10 @@ win32 {
     openssl.path = $$OUT_PWD
 }
 
+macos {
+    QMAKE_INFO_PLIST = ../../deploy/macos/info.plist
+}
+
 COPIES += license
 license.files = ../../LICENSE
 license.path = $$OUT_PWD
