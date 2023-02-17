@@ -22,6 +22,8 @@
 
 #include <QDockWidget>
 
+#include "ISearchResultsHandler.h"
+
 namespace Ui {
 class SearchResultsDock;
 }
@@ -29,7 +31,7 @@ class SearchResultsDock;
 class QTreeWidgetItem;
 class ScintillaNext;
 
-class SearchResultsDock : public QDockWidget
+class SearchResultsDock : public QDockWidget, public ISearchResultsHandler
 {
     Q_OBJECT
 
@@ -37,12 +39,12 @@ public:
     explicit SearchResultsDock(QWidget *parent = nullptr);
     ~SearchResultsDock();
 
-public slots:
     void newSearch(const QString searchTerm);
     void newFileEntry(ScintillaNext *editor);
     void newResultsEntry(const QString line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning);
     void completeSearch();
 
+public slots:
     void collapseAll() const;
     void expandAll() const;
     void deleteEntry(QTreeWidgetItem *item);
