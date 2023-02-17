@@ -71,6 +71,8 @@ SearchResultsDock::~SearchResultsDock()
 
 void SearchResultsDock::newSearch(const QString searchTerm)
 {
+    show();
+
     this->searchTerm = searchTerm;
 
     ui->treeWidget->collapseAll();

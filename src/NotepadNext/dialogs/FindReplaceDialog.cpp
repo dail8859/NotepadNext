@@ -39,7 +39,7 @@ static void convertToExtended(QString &str)
     // TODO: more
 }
 
-FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, MainWindow *window) :
+FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainWindow *window) :
     QDialog(window, Qt::Dialog),
     ui(new Ui::FindReplaceDialog),
     searchResults(searchResults),
@@ -101,7 +101,6 @@ FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, MainWindo
     connect(ui->buttonFindAllInCurrent, &QPushButton::clicked, this, [=]() {
         prepareToPerformSearch();
 
-        searchResults->show();
         searchResults->newSearch(findString());
 
         findAllInCurrentDocument();
@@ -113,7 +112,6 @@ FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, MainWindo
     connect(ui->buttonFindAllInDocuments, &QPushButton::clicked, this, [=]() {
         prepareToPerformSearch();
 
-        searchResults->show();
         searchResults->newSearch(findString());
 
         findAllInDocuments();

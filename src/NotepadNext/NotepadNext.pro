@@ -151,6 +151,7 @@ HEADERS += \
     HtmlConverter.h \
     IFaceTable.h \
     IFaceTableMixer.h \
+    ISearchResultsHandler.h \
     LanguageKeywordsModel.h \
     LanguagePropertiesModel.h \
     LanguageStylesModel.h \
