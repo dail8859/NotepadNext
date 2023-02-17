@@ -53,6 +53,16 @@ win32 {
     openssl.path = $$OUT_PWD
 }
 
+macos {
+    # Build a custom info.plist file
+    info_plist.input = ../../deploy/macos/info.plist.in
+    info_plist.output = $$OUT_PWD/info.plist
+
+    QMAKE_SUBSTITUTES += info_plist
+
+    QMAKE_INFO_PLIST = $$OUT_PWD/info.plist
+}
+
 COPIES += license
 license.files = ../../LICENSE
 license.path = $$OUT_PWD
