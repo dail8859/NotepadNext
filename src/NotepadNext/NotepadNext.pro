@@ -97,6 +97,7 @@ SOURCES += \
     SciIFaceTable.cpp \
     ScintillaCommenter.cpp \
     ScintillaNext.cpp \
+    SearchResultsCollector.cpp \
     SelectionTracker.cpp \
     SessionManager.cpp \
     Settings.cpp \
@@ -175,6 +176,7 @@ HEADERS += \
     ScintillaCommenter.h \
     ScintillaEnums.h \
     ScintillaNext.h \
+    SearchResultsCollector.h \
     SelectionTracker.h \
     SessionManager.h \
     Settings.h \

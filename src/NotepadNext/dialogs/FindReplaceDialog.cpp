@@ -42,7 +42,7 @@ static void convertToExtended(QString &str)
 FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainWindow *window) :
     QDialog(window, Qt::Dialog),
     ui(new Ui::FindReplaceDialog),
-    searchResults(searchResults),
+    searchResultsHandler(searchResults),
     finder(new Finder(window->currentEditor()))
 {
     qInfo(Q_FUNC_INFO);
@@ -245,7 +245,7 @@ void FindReplaceDialog::findAllInCurrentDocument()
     finder->forEachMatch([&](int start, int end){
         // Only add the file entry if there was a valid search result
         if (firstMatch) {
-            searchResults->newFileEntry(editor);
+            searchResultsHandler->newFileEntry(editor);
             firstMatch = false;
         }
 
@@ -256,7 +256,7 @@ void FindReplaceDialog::findAllInCurrentDocument()
         const int endPositionFromBeginning = end - lineStartPosition;
         QString lineText = editor->get_text_range(lineStartPosition, lineEndPosition);
 
-        searchResults->newResultsEntry(lineText, line, startPositionFromBeginning, endPositionFromBeginning);
+        searchResultsHandler->newResultsEntry(lineText, line, startPositionFromBeginning, endPositionFromBeginning);
 
         return end;
     });
@@ -448,6 +448,11 @@ QString FindReplaceDialog::findString()
 QString FindReplaceDialog::replaceString()
 {
     return ui->comboReplace->currentText();
+}
+
+void FindReplaceDialog::setSearchResultsHandler(ISearchResultsHandler *searchResultsHandler)
+{
+    this->searchResultsHandler = searchResultsHandler;
 }
 
 void FindReplaceDialog::prepareToPerformSearch(bool replace)

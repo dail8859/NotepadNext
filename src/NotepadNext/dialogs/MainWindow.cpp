@@ -1236,7 +1236,10 @@ void MainWindow::showFindReplaceDialog(int index)
     FindReplaceDialog *frd = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
     if (frd == Q_NULLPTR) {
-        frd = new FindReplaceDialog(findChild<SearchResultsDock *>(), this);
+        frd = new FindReplaceDialog(determineSearchResultsHandler(), this);
+    }
+    else {
+        frd->setSearchResultsHandler(determineSearchResultsHandler());
     }
 
     // TODO: if dockedEditor::editorActivated() is fired, or if the editor get closed
@@ -1574,6 +1577,21 @@ void MainWindow::restoreSettings()
     ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
     ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
     zoomLevel = settings.value("Editor/ZoomLevel", 0).toInt();
+}
+
+ISearchResultsHandler *MainWindow::determineSearchResultsHandler()
+{
+    // Determine what will get the search results
+    if (false) {
+        if (!searchResults) {
+            searchResults.reset(new SearchResultsCollector(findChild<SearchResultsDock *>()));
+        }
+
+        return searchResults.data();
+    }
+    else {
+        return findChild<SearchResultsDock *>();
+    }
 }
 
 void MainWindow::restoreWindowState()

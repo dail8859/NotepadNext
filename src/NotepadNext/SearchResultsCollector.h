@@ -19,14 +19,27 @@
 
 #pragma once
 
-#include "ScintillaNext.h"
 
-#include <QString>
+#include "ISearchResultsHandler.h"
 
-class ISearchResultsHandler {
+class SearchResultsCollector: public ISearchResultsHandler
+{
 public:
-    virtual void newSearch(const QString searchTerm) = 0;
-    virtual void newFileEntry(ScintillaNext *editor) = 0;
-    virtual void newResultsEntry(const QString line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning, int hitCount=1) = 0;
-    virtual void completeSearch() = 0;
+    SearchResultsCollector(ISearchResultsHandler *child);
+    virtual ~SearchResultsCollector() {}
+
+    void newSearch(const QString searchTerm) override;
+    void newFileEntry(ScintillaNext *editor) override;
+    void newResultsEntry(const QString line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning, int hitCount=1) override;
+    void completeSearch() override;
+
+private:
+    ISearchResultsHandler *child;
+    int runningHitCount = 0;
+
+    QString prevLine;
+    int prevLineNumber;
+    int prevStartPositionFromBeginning;
+    int prevEndPositionFromBeginning;
 };
+
