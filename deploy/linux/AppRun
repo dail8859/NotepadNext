@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+
+# make sure errors in sourced scripts will cause this script to stop
+set -e
+
+this_dir="$(readlink -f "$(dirname "$0")")"
+
+source "$this_dir"/apprun-hooks/"linuxdeploy-plugin-qt-hook.sh"
+
+export APPIMAGE_APPLICATION_NAME=NotepadNext
+
+exec "$this_dir"/AppRun.wrapped "$@"
