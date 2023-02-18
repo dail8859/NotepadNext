@@ -29,6 +29,7 @@
 #include "MacroManager.h"
 #include "ScintillaNext.h"
 #include "NppImporter.h"
+#include "SearchResultsCollector.h"
 
 namespace Ui {
 class MainWindow;
@@ -144,6 +145,8 @@ private:
     NotepadNextApplication *app = Q_NULLPTR;
     DockedEditor *dockedEditor = Q_NULLPTR;
 
+    QScopedPointer<SearchResultsCollector> searchResults;
+
     void initUpdateCheck();
     bool isInInitialState();
     void openFileList(const QStringList &fileNames);
@@ -153,6 +156,8 @@ private:
 
     void saveSettings() const;
     void restoreSettings();
+
+    ISearchResultsHandler *determineSearchResultsHandler();
 
     QActionGroup *languageActionGroup;
 

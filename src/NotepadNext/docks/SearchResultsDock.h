@@ -39,10 +39,10 @@ public:
     explicit SearchResultsDock(QWidget *parent = nullptr);
     ~SearchResultsDock();
 
-    void newSearch(const QString searchTerm);
-    void newFileEntry(ScintillaNext *editor);
-    void newResultsEntry(const QString line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning);
-    void completeSearch();
+    void newSearch(const QString searchTerm) override;
+    void newFileEntry(ScintillaNext *editor) override;
+    void newResultsEntry(const QString line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning, int hitCount=1) override;
+    void completeSearch() override;
 
 public slots:
     void collapseAll() const;

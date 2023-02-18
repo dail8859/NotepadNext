@@ -56,6 +56,8 @@ public:
 
     QString replaceString();
 
+    void setSearchResultsHandler(ISearchResultsHandler *searchResultsHandler);
+
 protected:
     bool event(QEvent *event) override;
     void showEvent(QShowEvent *event) override;
@@ -107,7 +109,7 @@ private:
     QStatusBar *statusBar;
     QTabBar *tabBar;
 
-    ISearchResultsHandler *searchResults;
+    ISearchResultsHandler *searchResultsHandler;
     Finder *finder;
 };
 
