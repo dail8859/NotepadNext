@@ -1623,6 +1623,8 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(editor, &ScintillaNext::customContextMenuRequested, this, [=](const QPoint &pos) {
         QMenu *menu = new QMenu(this);
+        menu->setAttribute(Qt::WA_DeleteOnClose);
+
         menu->addAction(ui->actionCut);
         menu->addAction(ui->actionCopy);
         menu->addAction(ui->actionPaste);
@@ -1812,6 +1814,8 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
 
     // Create the menu and show it
     QMenu *menu = new QMenu(this);
+    menu->setAttribute(Qt::WA_DeleteOnClose);
+
     menu->addAction(ui->actionClose);
     menu->addAction(ui->actionCloseAllExceptActive);
     menu->addAction(ui->actionCloseAllToLeft);
