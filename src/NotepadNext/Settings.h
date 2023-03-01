@@ -38,6 +38,8 @@ class Settings : public QObject
     Q_PROPERTY(bool restoreUnsavedFiles READ restoreUnsavedFiles WRITE setRestoreUnsavedFiles NOTIFY restoreUnsavedFilesChanged)
     Q_PROPERTY(bool restoreTempFiles READ restoreTempFiles WRITE setRestoreTempFiles NOTIFY restoreTempFilesChanged)
 
+    Q_PROPERTY(bool combineSearchResults READ combineSearchResults WRITE setCombineSearchResults NOTIFY combineSearchResultsChanged)
+
     bool m_showMenuBar = true;
     bool m_showToolBar = true;
     bool m_showTabBar = true;
@@ -48,6 +50,8 @@ class Settings : public QObject
     bool m_restorePreviousSession = false;
     bool m_restoreUnsavedFiles = false;
     bool m_restoreTempFiles = false;
+
+    bool m_combineSearchResults = false;
 
 public:
     explicit Settings(QObject *parent = nullptr);
@@ -63,6 +67,8 @@ public:
     bool restoreUnsavedFiles() const;
     bool restoreTempFiles() const;
 
+    bool combineSearchResults() const;
+
 signals:
     void showMenuBarChanged(bool showMenuBar);
     void showToolBarChanged(bool showToolBar);
@@ -75,6 +81,8 @@ signals:
     void restoreUnsavedFilesChanged(bool restureUnsavedFiles);
     void restoreTempFilesChanged(bool restoreTempFiles);
 
+    void combineSearchResultsChanged(bool combineSearchResults);
+
 public slots:
     void setShowMenuBar(bool showMenuBar);
     void setShowToolBar(bool showToolBar);
@@ -86,6 +94,8 @@ public slots:
     void setRestorePreviousSession(bool restorePreviousSession);
     void setRestoreUnsavedFiles(bool restoreUnsavedFiles);
     void setRestoreTempFiles(bool restoreTempFiles);
+
+    void setCombineSearchResults(bool combineSearchResults);
 };
 
 #endif // SETTINGS_H

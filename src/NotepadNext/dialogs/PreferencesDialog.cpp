@@ -67,6 +67,10 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
 
     connect(settings, &Settings::restoreTempFilesChanged, ui->checkBoxRestoreTempFiles, &QCheckBox::setChecked);
     connect(ui->checkBoxRestoreTempFiles, &QCheckBox::toggled, settings, &Settings::setRestoreTempFiles);
+
+    ui->checkBoxCombineSearchResults->setChecked(settings->combineSearchResults());
+    connect(settings, &Settings::combineSearchResultsChanged, ui->checkBoxCombineSearchResults, &QCheckBox::setChecked);
+    connect(ui->checkBoxCombineSearchResults, &QCheckBox::toggled, settings, &Settings::setCombineSearchResults);
 }
 
 PreferencesDialog::~PreferencesDialog()

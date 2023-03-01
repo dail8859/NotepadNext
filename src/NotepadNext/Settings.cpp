@@ -35,6 +35,7 @@ bool Settings::restorePreviousSession() const { return m_restorePreviousSession;
 bool Settings::restoreUnsavedFiles() const { return m_restoreUnsavedFiles; }
 bool Settings::restoreTempFiles() const { return m_restoreTempFiles; }
 
+bool Settings::combineSearchResults() const { return m_combineSearchResults; }
 
 void Settings::setShowMenuBar(bool showMenuBar)
 {
@@ -106,4 +107,13 @@ void Settings::setRestoreTempFiles(bool restoreTempFiles)
 
     m_restoreTempFiles = restoreTempFiles;
     emit restoreTempFilesChanged(m_restoreTempFiles);
+}
+
+void Settings::setCombineSearchResults(bool combineSearchResults)
+{
+    if (m_combineSearchResults == combineSearchResults)
+        return;
+
+    m_combineSearchResults = combineSearchResults;
+    emit combineSearchResultsChanged(m_combineSearchResults);
 }
