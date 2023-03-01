@@ -243,8 +243,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionCopy, &QAction::triggered, this, [=]() { currentEditor()->copyAllowLine(); });
     connect(ui->actionDelete, &QAction::triggered, this, [=]() { currentEditor()->clear(); });
     connect(ui->actionPaste, &QAction::triggered, this, [=]() { currentEditor()->paste(); });
-    connect(ui->actionSelect_All, &QAction::triggered, this, [=]() { currentEditor()->selectAll(); });
-    connect(ui->actionSelect_Next, &QAction::triggered, this, [=]() {
+    connect(ui->actionSelectAll, &QAction::triggered, this, [=]() { currentEditor()->selectAll(); });
+    connect(ui->actionSelectNext, &QAction::triggered, this, [=]() {
         // Set search flags here?
         currentEditor()->targetWholeDocument();
         currentEditor()->multipleSelectAddNext();
@@ -1630,7 +1630,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
         menu->addAction(ui->actionPaste);
         menu->addAction(ui->actionDelete);
         menu->addSeparator();
-        menu->addAction(ui->actionSelect_All);
+        menu->addAction(ui->actionSelectAll);
         menu->addSeparator();
         menu->addAction(ui->actionBase64Encode);
         menu->addAction(ui->actionURLEncode);
