@@ -170,8 +170,8 @@
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
     <addaction name="actionDelete"/>
-    <addaction name="actionSelect_All"/>
-    <addaction name="actionSelect_Next"/>
+    <addaction name="actionSelectAll"/>
+    <addaction name="actionSelectNext"/>
     <addaction name="separator"/>
     <addaction name="menuCopyMore"/>
     <addaction name="menuCopyAs"/>
@@ -189,9 +189,9 @@
      <string>Search</string>
     </property>
     <addaction name="actionFind"/>
-    <addaction name="actionFind_in_Files"/>
+    <addaction name="actionFindInFiles"/>
     <addaction name="actionFindNext"/>
-    <addaction name="actionFind_Previous"/>
+    <addaction name="actionFindPrevious"/>
     <addaction name="actionReplace"/>
     <addaction name="separator"/>
     <addaction name="actionQuickFind"/>
@@ -518,7 +518,7 @@
     <string>Ctrl+Shift+S</string>
    </property>
   </action>
-  <action name="actionSelect_All">
+  <action name="actionSelectAll">
    <property name="text">
     <string>Select A&amp;ll</string>
    </property>
@@ -813,7 +813,7 @@
     <string>Ctrl+F</string>
    </property>
   </action>
-  <action name="actionFind_in_Files">
+  <action name="actionFindInFiles">
    <property name="text">
     <string>Find in Files...</string>
    </property>
@@ -826,7 +826,7 @@
     <string>F3</string>
    </property>
   </action>
-  <action name="actionFind_Previous">
+  <action name="actionFindPrevious">
    <property name="text">
     <string>Find &amp;Previous</string>
    </property>
@@ -907,11 +907,6 @@
     <string>Run a Macro Multiple Times...</string>
    </property>
   </action>
-  <action name="actionWindowsList">
-   <property name="text">
-    <string>Windows...</string>
-   </property>
-  </action>
   <action name="actionPreferences">
    <property name="icon">
     <iconset resource="../resources.qrc">
@@ -932,7 +927,7 @@
     <string>Ctrl+Alt+I</string>
    </property>
   </action>
-  <action name="actionSelect_Next">
+  <action name="actionSelectNext">
    <property name="text">
     <string>Select Next Instance</string>
    </property>
