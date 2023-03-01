@@ -101,22 +101,22 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     connect(ui->buttonFindAllInCurrent, &QPushButton::clicked, this, [=]() {
         prepareToPerformSearch();
 
-        searchResults->newSearch(findString());
+        searchResultsHandler->newSearch(findString());
 
         findAllInCurrentDocument();
 
-        searchResults->completeSearch();
+        searchResultsHandler->completeSearch();
 
         close();
     });
     connect(ui->buttonFindAllInDocuments, &QPushButton::clicked, this, [=]() {
         prepareToPerformSearch();
 
-        searchResults->newSearch(findString());
+        searchResultsHandler->newSearch(findString());
 
         findAllInDocuments();
 
-        searchResults->completeSearch();
+        searchResultsHandler->completeSearch();
 
         close();
     });
@@ -450,9 +450,9 @@ QString FindReplaceDialog::replaceString()
     return ui->comboReplace->currentText();
 }
 
-void FindReplaceDialog::setSearchResultsHandler(ISearchResultsHandler *searchResultsHandler)
+void FindReplaceDialog::setSearchResultsHandler(ISearchResultsHandler *searchResults)
 {
-    this->searchResultsHandler = searchResultsHandler;
+    this->searchResultsHandler = searchResults;
 }
 
 void FindReplaceDialog::prepareToPerformSearch(bool replace)

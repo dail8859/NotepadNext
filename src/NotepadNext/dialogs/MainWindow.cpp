@@ -1547,6 +1547,7 @@ void MainWindow::saveSettings() const
     settings.setValue("Gui/ShowMenuBar", app->getSettings()->showMenuBar());
     settings.setValue("Gui/ShowToolBar", app->getSettings()->showToolBar());
     settings.setValue("Gui/ShowStatusBar", app->getSettings()->showStatusBar());
+    settings.setValue("Gui/CombineSearchResults", app->getSettings()->combineSearchResults());
 
     settings.setValue("Editor/ShowWhitespace", ui->actionShowWhitespace->isChecked());
     settings.setValue("Editor/ShowEndOfLine", ui->actionShowEndofLine->isChecked());
@@ -1569,6 +1570,7 @@ void MainWindow::restoreSettings()
     app->getSettings()->setShowMenuBar(settings.value("Gui/ShowMenuBar", true).toBool());
     app->getSettings()->setShowToolBar(settings.value("Gui/ShowToolBar", true).toBool());
     app->getSettings()->setShowStatusBar(settings.value("Gui/ShowStatusBar", true).toBool());
+    app->getSettings()->setCombineSearchResults(settings.value("Gui/CombineSearchResults", false).toBool());
 
     ui->actionShowWhitespace->setChecked(settings.value("Editor/ShowWhitespace", false).toBool());
     ui->actionShowEndofLine->setChecked(settings.value("Editor/ShowEndOfLine", false).toBool());
@@ -1582,10 +1584,8 @@ void MainWindow::restoreSettings()
 ISearchResultsHandler *MainWindow::determineSearchResultsHandler()
 {
     // Determine what will get the search results
-    if (false) {
-        if (!searchResults) {
-            searchResults.reset(new SearchResultsCollector(findChild<SearchResultsDock *>()));
-        }
+    if (app->getSettings()->combineSearchResults()) {
+        searchResults.reset(new SearchResultsCollector(findChild<SearchResultsDock *>()));
 
         return searchResults.data();
     }
