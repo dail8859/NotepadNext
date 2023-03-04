@@ -459,7 +459,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
     }
 
     if (!file.open(QIODevice::ReadOnly)) {
-        qWarning("Something bad happened when opening \"%s\": (%d) %s", qUtf8Printable(file.fileName()), file.error(), qUtf8Printable(file.errorString()));
+        qWarning("QFile::open() failed when opening \"%s\" - error code %d: %s", qUtf8Printable(file.fileName()), file.error(), qUtf8Printable(file.errorString()));
         return false;
     }
 
