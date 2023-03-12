@@ -39,5 +39,7 @@
         <file>icons/arrow_down.png</file>
         <file>icons/arrow_up.png</file>
         <file>icons/table_edit.png</file>
+        <file>icons/application_osx_terminal.png</file>
+        <file>icons/folder_go.png</file>
     </qresource>
 </RCC>

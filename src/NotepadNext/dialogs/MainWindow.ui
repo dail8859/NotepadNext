@@ -1074,6 +1074,27 @@
     <string>Remove Empty Lines</string>
    </property>
   </action>
+  <action name="actionShowInExplorer">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/folder_go.png</normaloff>:/icons/folder_go.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show in Explorer</string>
+   </property>
+   <property name="toolTip">
+    <string>Show in Explorer</string>
+   </property>
+  </action>
+  <action name="actionOpenCommandPromptHere">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/application_osx_terminal.png</normaloff>:/icons/application_osx_terminal.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open Command Prompt Here</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

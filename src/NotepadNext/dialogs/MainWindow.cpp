@@ -35,6 +35,7 @@
 #include <QPrintPreviewDialog>
 #include <QPrinter>
 #include <QDirIterator>
+#include <QProcess>
 
 
 #ifdef Q_OS_WIN
@@ -575,6 +576,19 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                                     along with this program. If not, see &lt;<a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>)")
                                 .arg(QApplication::applicationDisplayName(), APP_VERSION, APP_DISTRIBUTION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
+
+#ifdef Q_OS_WIN
+    connect(ui->actionShowInExplorer, &QAction::triggered, this, [=]() {
+        QStringList arguments;
+        arguments << "/select," << QDir::toNativeSeparators(currentEditor()->getFileInfo().canonicalFilePath());
+        QProcess::startDetached("explorer", arguments);
+    });
+    connect(ui->actionOpenCommandPromptHere, &QAction::triggered, this, [=]() {
+        QStringList arguments;
+        arguments << "/c" << "start" << "/d" << QDir::toNativeSeparators(currentEditor()->getFileInfo().dir().canonicalPath()) << "cmd";
+        QProcess::startDetached(QStringLiteral("cmd"), arguments);
+    });
+#endif
 
     EditorInspectorDock *editorInspectorDock = new EditorInspectorDock(this);
     editorInspectorDock->hide();
@@ -1275,6 +1289,8 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
     ui->actionMoveToTrash->setEnabled(isFile);
     ui->actionCopyFullPath->setEnabled(isFile);
     ui->actionCopyFileDirectory->setEnabled(isFile);
+    ui->actionShowInExplorer->setEnabled(isFile);
+    ui->actionOpenCommandPromptHere->setEnabled(isFile);
 }
 
 bool MainWindow::isAnyUnsaved() const
@@ -1827,6 +1843,11 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
     menu->addSeparator();
     menu->addAction(ui->actionReload);
     menu->addSeparator();
+#ifdef Q_OS_WIN
+    menu->addAction(ui->actionShowInExplorer);
+    menu->addAction(ui->actionOpenCommandPromptHere);
+    menu->addSeparator();
+#endif
     menu->addAction(ui->actionCopyFullPath);
     menu->addAction(ui->actionCopyFileName);
     menu->addAction(ui->actionCopyFileDirectory);
