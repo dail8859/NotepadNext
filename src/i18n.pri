@@ -16,7 +16,7 @@
 
 ## [i18n.pri]  Configuration related to internationalization.
 
-CONFIG += lrelease
+CONFIG += lrelease embed_translations
 
 TRANSLATIONS = \
     ../../i18n/NotepadNext.zh_CN.ts \
@@ -25,6 +25,3 @@ TRANSLATIONS = \
 EXTRA_TRANSLATIONS = \
     $$[QT_INSTALL_TRANSLATIONS]/qt_zh_CN.qm \
     $$[QT_INSTALL_TRANSLATIONS]/qt_sv.qm
-
-# Output folder for `.qm` files
-LRELEASE_DIR = $$OUT_PWD/i18n
