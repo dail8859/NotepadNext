@@ -394,11 +394,10 @@ void NotepadNextApplication::loadTranslation(QLocale locale)
 {
     qInfo(Q_FUNC_INFO);
 
-    // TODO: look into QLibraryInfo::location(QLibraryInfo::TranslationsPath)?
-    const QString languagePath = QApplication::applicationDirPath() + "/i18n";
+    // Translation files are stored as a qresource
+    const QString languagePath = QStringLiteral(":/i18n/");
 
-    // Load translation for NotepadNext
-    //  e.g. `i18n/NotepadNext.en.qm`
+    // Load translation for NotepadNext e.g. "i18n/NotepadNext.en.qm"
     if (translatorNpn.load(locale, QApplication::applicationName(), QString("."), languagePath)) {
         installTranslator(&translatorNpn);
         qInfo("Loaded %s translation for Notepad Next", qUtf8Printable(locale.name()));
@@ -406,8 +405,7 @@ void NotepadNextApplication::loadTranslation(QLocale locale)
         qInfo("%s translation not found for Notepad Next", qUtf8Printable(locale.name()));
     }
 
-    // Load translation for Qt components
-    //  e.g. `i18n/qt_en.qm`
+    // Load translation for Qt components e.g. "i18n/qt_en.qm"
     if (translatorQt.load(locale, QString("qt"), QString("_"), languagePath)) {
         installTranslator(&translatorQt);
         qInfo("Loaded %s translation for Qt components", qUtf8Printable(locale.name()));

@@ -31,8 +31,7 @@ win32 {
     package.commands = \
         xcopy $$shell_path($${OUT_PWD}/NotepadNext/NotepadNext.exe) $$shell_path($${OUT_PWD}/package/) /Y && \
         xcopy $$shell_path($${OUT_PWD}/NotepadNext/*.dll) $$shell_path($${OUT_PWD}/package/) /Y && \
-        xcopy $$shell_path($${OUT_PWD}/NotepadNext/LICENSE) $$shell_path($${OUT_PWD}/package/) /Y && \
-        xcopy $$shell_path($${OUT_PWD}/NotepadNext/i18n/*.qm) $$shell_path($${OUT_PWD}/package/i18n/) /Y &&
+        xcopy $$shell_path($${OUT_PWD}/NotepadNext/LICENSE) $$shell_path($${OUT_PWD}/package/) /Y &&
 
     equals(QT_MAJOR_VERSION, 6) {
         package.commands += windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-opengl-sw $$shell_path($${OUT_PWD}/package/NotepadNext.exe)
