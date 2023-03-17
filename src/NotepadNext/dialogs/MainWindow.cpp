@@ -35,6 +35,7 @@
 #include <QPrintPreviewDialog>
 #include <QPrinter>
 #include <QDirIterator>
+#include <QProcess>
 
 
 #ifdef Q_OS_WIN
@@ -243,8 +244,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionCopy, &QAction::triggered, this, [=]() { currentEditor()->copyAllowLine(); });
     connect(ui->actionDelete, &QAction::triggered, this, [=]() { currentEditor()->clear(); });
     connect(ui->actionPaste, &QAction::triggered, this, [=]() { currentEditor()->paste(); });
-    connect(ui->actionSelect_All, &QAction::triggered, this, [=]() { currentEditor()->selectAll(); });
-    connect(ui->actionSelect_Next, &QAction::triggered, this, [=]() {
+    connect(ui->actionSelectAll, &QAction::triggered, this, [=]() { currentEditor()->selectAll(); });
+    connect(ui->actionSelectNext, &QAction::triggered, this, [=]() {
         // Set search flags here?
         currentEditor()->targetWholeDocument();
         currentEditor()->multipleSelectAddNext();
@@ -575,6 +576,19 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                                     along with this program. If not, see &lt;<a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>)")
                                 .arg(QApplication::applicationDisplayName(), APP_VERSION, APP_DISTRIBUTION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
+
+#ifdef Q_OS_WIN
+    connect(ui->actionShowInExplorer, &QAction::triggered, this, [=]() {
+        QStringList arguments;
+        arguments << "/select," << QDir::toNativeSeparators(currentEditor()->getFileInfo().canonicalFilePath());
+        QProcess::startDetached("explorer", arguments);
+    });
+    connect(ui->actionOpenCommandPromptHere, &QAction::triggered, this, [=]() {
+        QStringList arguments;
+        arguments << "/c" << "start" << "/d" << QDir::toNativeSeparators(currentEditor()->getFileInfo().dir().canonicalPath()) << "cmd";
+        QProcess::startDetached(QStringLiteral("cmd"), arguments);
+    });
+#endif
 
     EditorInspectorDock *editorInspectorDock = new EditorInspectorDock(this);
     editorInspectorDock->hide();
@@ -1222,7 +1236,10 @@ void MainWindow::showFindReplaceDialog(int index)
     FindReplaceDialog *frd = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
     if (frd == Q_NULLPTR) {
-        frd = new FindReplaceDialog(findChild<SearchResultsDock *>(), this);
+        frd = new FindReplaceDialog(determineSearchResultsHandler(), this);
+    }
+    else {
+        frd->setSearchResultsHandler(determineSearchResultsHandler());
     }
 
     // TODO: if dockedEditor::editorActivated() is fired, or if the editor get closed
@@ -1275,6 +1292,8 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
     ui->actionMoveToTrash->setEnabled(isFile);
     ui->actionCopyFullPath->setEnabled(isFile);
     ui->actionCopyFileDirectory->setEnabled(isFile);
+    ui->actionShowInExplorer->setEnabled(isFile);
+    ui->actionOpenCommandPromptHere->setEnabled(isFile);
 }
 
 bool MainWindow::isAnyUnsaved() const
@@ -1528,6 +1547,7 @@ void MainWindow::saveSettings() const
     settings.setValue("Gui/ShowMenuBar", app->getSettings()->showMenuBar());
     settings.setValue("Gui/ShowToolBar", app->getSettings()->showToolBar());
     settings.setValue("Gui/ShowStatusBar", app->getSettings()->showStatusBar());
+    settings.setValue("Gui/CombineSearchResults", app->getSettings()->combineSearchResults());
 
     settings.setValue("Editor/ShowWhitespace", ui->actionShowWhitespace->isChecked());
     settings.setValue("Editor/ShowEndOfLine", ui->actionShowEndofLine->isChecked());
@@ -1550,6 +1570,7 @@ void MainWindow::restoreSettings()
     app->getSettings()->setShowMenuBar(settings.value("Gui/ShowMenuBar", true).toBool());
     app->getSettings()->setShowToolBar(settings.value("Gui/ShowToolBar", true).toBool());
     app->getSettings()->setShowStatusBar(settings.value("Gui/ShowStatusBar", true).toBool());
+    app->getSettings()->setCombineSearchResults(settings.value("Gui/CombineSearchResults", false).toBool());
 
     ui->actionShowWhitespace->setChecked(settings.value("Editor/ShowWhitespace", false).toBool());
     ui->actionShowEndofLine->setChecked(settings.value("Editor/ShowEndOfLine", false).toBool());
@@ -1558,6 +1579,19 @@ void MainWindow::restoreSettings()
     ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
     ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
     zoomLevel = settings.value("Editor/ZoomLevel", 0).toInt();
+}
+
+ISearchResultsHandler *MainWindow::determineSearchResultsHandler()
+{
+    // Determine what will get the search results
+    if (app->getSettings()->combineSearchResults()) {
+        searchResults.reset(new SearchResultsCollector(findChild<SearchResultsDock *>()));
+
+        return searchResults.data();
+    }
+    else {
+        return findChild<SearchResultsDock *>();
+    }
 }
 
 void MainWindow::restoreWindowState()
@@ -1623,12 +1657,14 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(editor, &ScintillaNext::customContextMenuRequested, this, [=](const QPoint &pos) {
         QMenu *menu = new QMenu(this);
+        menu->setAttribute(Qt::WA_DeleteOnClose);
+
         menu->addAction(ui->actionCut);
         menu->addAction(ui->actionCopy);
         menu->addAction(ui->actionPaste);
         menu->addAction(ui->actionDelete);
         menu->addSeparator();
-        menu->addAction(ui->actionSelect_All);
+        menu->addAction(ui->actionSelectAll);
         menu->addSeparator();
         menu->addAction(ui->actionBase64Encode);
         menu->addAction(ui->actionURLEncode);
@@ -1812,6 +1848,8 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
 
     // Create the menu and show it
     QMenu *menu = new QMenu(this);
+    menu->setAttribute(Qt::WA_DeleteOnClose);
+
     menu->addAction(ui->actionClose);
     menu->addAction(ui->actionCloseAllExceptActive);
     menu->addAction(ui->actionCloseAllToLeft);
@@ -1823,6 +1861,11 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
     menu->addSeparator();
     menu->addAction(ui->actionReload);
     menu->addSeparator();
+#ifdef Q_OS_WIN
+    menu->addAction(ui->actionShowInExplorer);
+    menu->addAction(ui->actionOpenCommandPromptHere);
+    menu->addSeparator();
+#endif
     menu->addAction(ui->actionCopyFullPath);
     menu->addAction(ui->actionCopyFileName);
     menu->addAction(ui->actionCopyFileDirectory);

@@ -39,10 +39,10 @@ static void convertToExtended(QString &str)
     // TODO: more
 }
 
-FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, MainWindow *window) :
+FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainWindow *window) :
     QDialog(window, Qt::Dialog),
     ui(new Ui::FindReplaceDialog),
-    searchResults(searchResults),
+    searchResultsHandler(searchResults),
     finder(new Finder(window->currentEditor()))
 {
     qInfo(Q_FUNC_INFO);
@@ -101,24 +101,22 @@ FindReplaceDialog::FindReplaceDialog(SearchResultsDock *searchResults, MainWindo
     connect(ui->buttonFindAllInCurrent, &QPushButton::clicked, this, [=]() {
         prepareToPerformSearch();
 
-        searchResults->show();
-        searchResults->newSearch(findString());
+        searchResultsHandler->newSearch(findString());
 
         findAllInCurrentDocument();
 
-        searchResults->completeSearch();
+        searchResultsHandler->completeSearch();
 
         close();
     });
     connect(ui->buttonFindAllInDocuments, &QPushButton::clicked, this, [=]() {
         prepareToPerformSearch();
 
-        searchResults->show();
-        searchResults->newSearch(findString());
+        searchResultsHandler->newSearch(findString());
 
         findAllInDocuments();
 
-        searchResults->completeSearch();
+        searchResultsHandler->completeSearch();
 
         close();
     });
@@ -247,7 +245,7 @@ void FindReplaceDialog::findAllInCurrentDocument()
     finder->forEachMatch([&](int start, int end){
         // Only add the file entry if there was a valid search result
         if (firstMatch) {
-            searchResults->newFileEntry(editor);
+            searchResultsHandler->newFileEntry(editor);
             firstMatch = false;
         }
 
@@ -258,7 +256,7 @@ void FindReplaceDialog::findAllInCurrentDocument()
         const int endPositionFromBeginning = end - lineStartPosition;
         QString lineText = editor->get_text_range(lineStartPosition, lineEndPosition);
 
-        searchResults->newResultsEntry(lineText, line, startPositionFromBeginning, endPositionFromBeginning);
+        searchResultsHandler->newResultsEntry(lineText, line, startPositionFromBeginning, endPositionFromBeginning);
 
         return end;
     });
@@ -450,6 +448,11 @@ QString FindReplaceDialog::findString()
 QString FindReplaceDialog::replaceString()
 {
     return ui->comboReplace->currentText();
+}
+
+void FindReplaceDialog::setSearchResultsHandler(ISearchResultsHandler *searchResults)
+{
+    this->searchResultsHandler = searchResults;
 }
 
 void FindReplaceDialog::prepareToPerformSearch(bool replace)

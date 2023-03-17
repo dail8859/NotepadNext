@@ -71,6 +71,8 @@ SearchResultsDock::~SearchResultsDock()
 
 void SearchResultsDock::newSearch(const QString searchTerm)
 {
+    show();
+
     this->searchTerm = searchTerm;
 
     ui->treeWidget->collapseAll();
@@ -104,7 +106,7 @@ void SearchResultsDock::newFileEntry(ScintillaNext *editor)
     updateSearchStatus();
 }
 
-void SearchResultsDock::newResultsEntry(const QString line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning)
+void SearchResultsDock::newResultsEntry(const QString line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning, int hitCount)
 {
     QTreeWidgetItem *item = new QTreeWidgetItem(currentFile);
 
@@ -118,8 +120,8 @@ void SearchResultsDock::newResultsEntry(const QString line, int lineNumber, int 
 
     item->setText(1, line);
 
-    totalFileHitCount++;
-    totalHitCount++;
+    totalFileHitCount += hitCount;
+    totalHitCount += hitCount;
 
     updateSearchStatus();
 }

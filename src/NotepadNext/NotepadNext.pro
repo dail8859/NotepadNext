@@ -97,6 +97,7 @@ SOURCES += \
     SciIFaceTable.cpp \
     ScintillaCommenter.cpp \
     ScintillaNext.cpp \
+    SearchResultsCollector.cpp \
     SelectionTracker.cpp \
     SessionManager.cpp \
     Settings.cpp \
@@ -151,6 +152,7 @@ HEADERS += \
     HtmlConverter.h \
     IFaceTable.h \
     IFaceTableMixer.h \
+    ISearchResultsHandler.h \
     LanguageKeywordsModel.h \
     LanguagePropertiesModel.h \
     LanguageStylesModel.h \
@@ -174,6 +176,7 @@ HEADERS += \
     ScintillaCommenter.h \
     ScintillaEnums.h \
     ScintillaNext.h \
+    SearchResultsCollector.h \
     SelectionTracker.h \
     SessionManager.h \
     Settings.h \
