@@ -38,6 +38,7 @@ add_executable(NotepadNext
     IFaceTable.h
     IFaceTableMixer.cpp
     IFaceTableMixer.h
+    ISearchResultsHandler.h
     LanguageKeywordsModel.h
     LanguageKeywordsModel.cpp
     LanguagePropertiesModel.cpp
@@ -75,6 +76,8 @@ add_executable(NotepadNext
     RtfConverter.h
     resources.qrc
     SciIFaceTable.cpp
+    SearchResultsCollector.h
+    SearchResultsCollector.cpp
     ScintillaNext.cpp
     ScintillaNext.h
     SciIFaceTable.h
