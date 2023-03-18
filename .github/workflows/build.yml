@@ -47,7 +47,7 @@ jobs:
 
       - name: Setup (Linux)
         if: startsWith (matrix.config.os, 'ubuntu')
-        run: sudo apt-get install libxkbcommon-dev fuse
+        run: sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse
 
       - name: Setup VS tools (Windows)
         if: startsWith (matrix.config.os, 'windows')
