@@ -77,7 +77,7 @@ jobs:
 
       - name: Upload AppImage
         if: startsWith (matrix.config.os, 'ubuntu')
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}-cmake-AppImage
           path: ${{ github.workspace }}/cbuild/NotepadNext-x86_64.AppImage
