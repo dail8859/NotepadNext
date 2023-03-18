@@ -18,7 +18,7 @@ jobs:
         -
           qt_version: "6.4.2"
           modules: "qt5compat"
-          os: ubuntu-22.04
+          os: ubuntu-20.04
         -
           qt_version: "6.4.2"
           modules: "qt5compat"
@@ -47,7 +47,7 @@ jobs:
 
       - name: Setup (Linux)
         if: startsWith (matrix.config.os, 'ubuntu')
-        run: sudo apt-get install libxkbcommon-dev
+        run: sudo apt-get install libxkbcommon-dev fuse
 
       - name: Setup VS tools (Windows)
         if: startsWith (matrix.config.os, 'windows')
