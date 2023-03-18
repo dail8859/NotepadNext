@@ -398,7 +398,7 @@ void NotepadNextApplication::loadTranslation(QLocale locale)
     const QString languagePath = QStringLiteral(":/i18n/");
 
     // Load translation for NotepadNext e.g. "i18n/NotepadNext.en.qm"
-    if (translatorNpn.load(locale, QApplication::applicationName(), QString("."), languagePath)) {
+    if (translatorNpn.load(locale, QApplication::applicationName(), QString("_"), languagePath)) {
         installTranslator(&translatorNpn);
         qInfo("Loaded %s translation for Notepad Next", qUtf8Printable(locale.name()));
     } else {
