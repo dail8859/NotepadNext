@@ -46,6 +46,10 @@ constVariable:scintilla/gtk/ScintillaGTKAccessible.cxx
 cstyleCast:scintilla/qt/ScintillaEdit/ScintillaEdit.cpp
 shadowFunction:scintilla/qt/ScintillaEdit/ScintillaEdit.cpp
 
+// cppcheck fails emit from Qt
+shadowFunction:scintilla/qt/ScintillaEditBase/ScintillaQt.cpp
+shadowFunction:scintilla/qt/ScintillaEditBase/ScintillaEditBase.cpp
+
 // moc_ files show #error as they are not built with standard context
 preprocessorErrorDirective:scintilla/qt/*.cpp
 
@@ -58,3 +62,10 @@ passedByValue
 
 // Suppress everything in catch.hpp as won't be changing
 *:scintilla/test/unit/catch.hpp
+
+// Checks for moves move to variables that are not read but the moved from is checked
+unreadVariable:scintilla/test/unit/*.cxx
+accessMoved:scintilla/test/unit/*.cxx
+
+// cppcheck fails REQUIRE from Catch
+comparisonOfFuncReturningBoolError:scintilla/test/unit/*.cxx
