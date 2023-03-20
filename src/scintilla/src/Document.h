@@ -50,6 +50,10 @@ public:
 		return start == end;
 	}
 
+	[[nodiscard]] Sci::Position Length() const noexcept {
+		return (start <= end) ? (end - start) : (start - end);
+	}
+
 	Sci::Position First() const noexcept {
 		return (start <= end) ? start : end;
 	}
@@ -420,6 +424,7 @@ public:
 	void Indent(bool forwards, Sci::Line lineBottom, Sci::Line lineTop);
 	static std::string TransformLineEnds(const char *s, size_t len, Scintilla::EndOfLine eolModeWanted);
 	void ConvertLineEnds(Scintilla::EndOfLine eolModeSet);
+	std::string_view EOLString() const noexcept;
 	void SetReadOnly(bool set) { cb.SetReadOnly(set); }
 	bool IsReadOnly() const noexcept { return cb.IsReadOnly(); }
 	bool IsLarge() const noexcept { return cb.IsLarge(); }
@@ -449,6 +454,7 @@ public:
 	int MarkerNumberFromLine(Sci::Line line, int which) const noexcept;
 	int MarkerHandleFromLine(Sci::Line line, int which) const noexcept;
 	Sci_Position SCI_METHOD LineStart(Sci_Position line) const override;
+	[[nodiscard]] Range LineRange(Sci::Line line) const noexcept;
 	bool IsLineStartPosition(Sci::Position position) const;
 	Sci_Position SCI_METHOD LineEnd(Sci_Position line) const override;
 	Sci::Position LineEndPosition(Sci::Position position) const;
@@ -461,10 +467,10 @@ public:
 
 	int SCI_METHOD SetLevel(Sci_Position line, int level) override;
 	int SCI_METHOD GetLevel(Sci_Position line) const override;
-	Scintilla::FoldLevel GetFoldLevel(Sci_Position line) const;
+	Scintilla::FoldLevel GetFoldLevel(Sci_Position line) const noexcept;
 	void ClearLevels();
 	Sci::Line GetLastChild(Sci::Line lineParent, std::optional<Scintilla::FoldLevel> level = {}, Sci::Line lastLine = -1);
-	Sci::Line GetFoldParent(Sci::Line line) const;
+	Sci::Line GetFoldParent(Sci::Line line) const noexcept;
 	void GetHighlightDelimiters(HighlightDelimiter &highlightDelimiter, Sci::Line line, Sci::Line lastLine);
 
 	Sci::Position ExtendWordSelect(Sci::Position pos, int delta, bool onlyWordCharacters=false) const;

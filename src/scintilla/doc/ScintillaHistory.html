@@ -575,9 +575,83 @@
 	<td>Reinhard Nißl</td>
 	<td>Ferdinand Oeinck</td>
 	<td>Michael Heath</td>
+	<td>Enrico Tröger</td>
     </tr>
     </table>
     <h2>Releases</h2>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla534.zip">Release 5.3.4</a>
+    </h3>
+    <ul>
+	<li>
+	Released 8 March 2023.
+	</li>
+	<li>
+	Add multithreaded wrap to significantly improve performance of wrapping large files.
+	</li>
+	<li>
+	More typesafe bindings of *Full APIs in ScintillaCall.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1477/">Feature #1477</a>.
+	</li>
+	<li>
+	Fix overlapping of text with line end wrap marker.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2378/">Bug #2378</a>.
+	</li>
+	<li>
+	Fix clipping of line end wrap symbol for SC_WRAPVISUALFLAGLOC_END_BY_TEXT.
+	</li>
+	<li>
+	Where a multi-byte character contains multiple styles, display each byte as a representation.
+	This makes it easier to see and fix lexers that change styles mid-character, commonly because
+	they use fixed size buffers.
+	</li>
+	<li>
+	Fix a potential crash with autocompletion list fill-ups where a SCN_CHARADDED
+	handler retriggered an autocompletion list, but with no items that match the typed character.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla533.zip">Release 5.3.3</a>
+    </h3>
+    <ul>
+	<li>
+	Released 8 February 2023.
+	</li>
+	<li>
+	Fix SCI_LINESJOIN bug where carriage returns were incorrectly retained.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2372/">Bug #2372</a>.
+	</li>
+	<li>
+	Fix SCI_VERTICALCENTRECARET to update the vertical scroll position.
+	</li>
+	<li>
+	When an autocompletion list is shown in response to SCN_CHARADDED, do not process character as fill-up or stop.
+	This avoids closing immediately when a character may both trigger and finish autocompletion.
+	</li>
+	<li>
+	On Cocoa fix character input bug where dotless 'i' and some other extended
+	Latin characters could not be entered.
+	The change also stops SCI_ASSIGNCMDKEY from working with these characters
+	on Cocoa.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2374/">Bug #2374</a>.
+	</li>
+	<li>
+	On GTK, support IME context.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1476/">Feature #1476</a>.
+	</li>
+	<li>
+	On GTK on Win32, fix scrolling speed to not be too fast.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2375/">Bug #2375</a>.
+	</li>
+	<li>
+	On Qt, fix indicator drawing past left of text pane over margin.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2373/">Bug #2373</a>,
+	<a href="https://sourceforge.net/p/scintilla/bugs/1956/">Bug #1956</a>.
+	</li>
+	<li>
+	On Qt, allow scrolling with mouse wheel when scroll bar hidden.
+	</li>
+    </ul>
     <h3>
        <a href="https://www.scintilla.org/scintilla532.zip">Release 5.3.2</a>
     </h3>

@@ -33,6 +33,8 @@ class ScintillaGTK : public ScintillaBase {
 	int verticalScrollBarWidth;
 	int horizontalScrollBarHeight;
 
+	PRectangle rectangleClient;
+
 	SelectionText primary;
 	SelectionPosition posPrimary;
 
@@ -128,6 +130,7 @@ private:
 	bool HaveMouseCapture() override;
 	bool PaintContains(PRectangle rc) override;
 	void FullPaint();
+	void SetClientRectangle();
 	PRectangle GetClientRectangle() const override;
 	void ScrollText(Sci::Line linesToMove) override;
 	void SetVerticalScrollPos() override;
@@ -235,6 +238,11 @@ private:
 	void PreeditChangedInlineThis();
 	void PreeditChangedWindowedThis();
 	static void PreeditChanged(GtkIMContext *context, ScintillaGTK *sciThis);
+	bool RetrieveSurroundingThis(GtkIMContext *context);
+	static gboolean RetrieveSurrounding(GtkIMContext *context, ScintillaGTK *sciThis);
+	bool DeleteSurroundingThis(GtkIMContext *context, gint characterOffset, gint characterCount);
+	static gboolean DeleteSurrounding(GtkIMContext *context, gint characterOffset, gint characterCount,
+					  ScintillaGTK *sciThis);
 	void MoveImeCarets(Sci::Position pos);
 	void DrawImeIndicator(int indicator, Sci::Position len);
 	void SetCandidateWindowPos();
