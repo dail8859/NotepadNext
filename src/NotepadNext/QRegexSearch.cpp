@@ -44,9 +44,13 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
 {
     // -----------------------------------------------------------------------------------------------------------------------
     // NOTE: This section of code has to be very careful about what units of measure is being used. Scintilla wants to operate
-    // in units of bytes (e.g. position 3 is 3 bytes into the text). Qt wants to operate in units of characters. The trouble is
+    // in units of bytes (e.g. position 3 is 3 bytes into the text). Qt wants to operate in units of UTF16 chars. The trouble is
     // when you start using characters that are >1 byte a piece. Meaning position 3 (3 bytes into a file) could be 1 character.
     // -----------------------------------------------------------------------------------------------------------------------
+
+    // Make sure the positiosn are outside of characters
+    minPos = doc->MovePositionOutsideChar(minPos, 1, false);
+    maxPos = doc->MovePositionOutsideChar(maxPos, -1, false);
 
     //qInfo(Q_FUNC_INFO);
     //qInfo("\tminPos %d", minPos);
@@ -72,22 +76,22 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
         return -1; // Invalid regular expression
 
     // Get the bytes from the document. No need to go past maxPos bytes
-    QByteArray view = QByteArray::fromRawData(doc->BufferPointer(), maxPos);
+    // Not actually sure if this copies the data or not
+    const QString utf8 = QString::fromUtf8(doc->BufferPointer(), maxPos);
 
-    // NOTE: translate minPos into a character count for Qt
-    QRegularExpressionMatch m = re.match(view, doc->CountCharacters(0, minPos), QRegularExpression::NormalMatch, QRegularExpression::NoMatchOption);
+    // NOTE: QString uses UTF16 counts since QChars are 16 bits
+    QRegularExpressionMatch m = re.match(utf8, doc->CountUTF16(0, minPos), QRegularExpression::NormalMatch, QRegularExpression::NoMatchOption);
 
     if (!m.hasMatch())
         return -1; // No match
 
     match = m;
 
-    // NOTE: Qt is using character count, so translate this back into a Scintilla position
-    const int characterStart = match.capturedStart(0);
-    const int positionStart = doc->GetRelativePosition(0, characterStart);
+    // NOTE: Returned started is the index into the QString which uses UTF16
+    const int positionStart = doc->GetRelativePositionUTF16(0, match.capturedStart(0));
 
-    // Now move ahead however many characters we matched
-    const int positionEnd = doc->GetRelativePosition(positionStart, match.capturedLength(0));
+    // Now move ahead however many characters we matched. Again, based on UTF16 count
+    const int positionEnd = doc->GetRelativePositionUTF16(positionStart, match.capturedLength(0));
 
     // The length is the number of bytes that was matched
     *length = positionEnd - positionStart;
