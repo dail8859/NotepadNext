@@ -48,6 +48,8 @@ void Finder::setSearchText(const QString &text)
 
 Sci_CharacterRange Finder::findNext(int startPos)
 {
+    did_latest_search_wrap = false;
+
     if (text.isEmpty())
         return {INVALID_POSITION, INVALID_POSITION};
 
@@ -63,6 +65,8 @@ Sci_CharacterRange Finder::findNext(int startPos)
     else if (wrap) {
         editor->setTargetRange(0, pos);
         if (editor->searchInTarget(textData.length(), textData.constData()) != INVALID_POSITION) {
+            did_latest_search_wrap = true;
+
             return {static_cast<Sci_PositionCR>(editor->targetStart()), static_cast<Sci_PositionCR>(editor->targetEnd())};
         }
     }
@@ -72,6 +76,8 @@ Sci_CharacterRange Finder::findNext(int startPos)
 
 Sci_CharacterRange Finder::findPrev()
 {
+    did_latest_search_wrap = false;
+
     if (text.isEmpty())
         return {INVALID_POSITION, INVALID_POSITION};
 
@@ -89,6 +95,8 @@ Sci_CharacterRange Finder::findPrev()
     else if (wrap) {
         range = editor->findText(editor->searchFlags(), textData.constData(), editor->length(), pos);
         if (range.first != INVALID_POSITION) {
+            did_latest_search_wrap = true;
+
             return {static_cast<Sci_PositionCR>(range.first), static_cast<Sci_PositionCR>(range.second)};
         }
     }

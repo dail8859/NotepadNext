@@ -225,7 +225,15 @@ void FindReplaceDialog::find()
     Sci_CharacterRange range = finder->findNext();
 
     if (ScintillaNext::isRangeValid(range)) {
-        // TODO: determine if search wrapped around and show message
+        if (finder->didLatestSearchWrapAround()) {
+            showMessage(tr("The end of the document has been reached. Found 1st occurrence from the top."), "green");
+        }
+
+        // TODO: Handle zero length matches better
+        if (range.cpMin == range.cpMax) {
+            qWarning() << "0 length match at" << range.cpMin;
+        }
+
         editor->goToRange(range);
     }
     else {
