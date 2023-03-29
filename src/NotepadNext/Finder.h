@@ -36,6 +36,8 @@ public:
     Sci_CharacterRange findPrev();
     int count();
 
+    bool didLatestSearchWrapAround() const { return did_latest_search_wrap; }
+
     Sci_CharacterRange replaceSelectionIfMatch(const QString &replaceText);
     int replaceAll(const QString &replaceText);
 
@@ -47,6 +49,7 @@ public:
 
 private:
     ScintillaNext *editor;
+    bool did_latest_search_wrap = false;
 
     bool wrap = false;
     int search_flags = 0;
