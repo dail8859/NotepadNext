@@ -20,8 +20,10 @@ CONFIG += lrelease embed_translations
 
 TRANSLATIONS = \
     ../../i18n/NotepadNext_zh_CN.ts \
-    ../../i18n/NotepadNext_sv_SE.ts
+    ../../i18n/NotepadNext_sv_SE.ts \
+    ../../i18n/NotepadNext_uk_UA.ts
 
 EXTRA_TRANSLATIONS = \
     $$[QT_INSTALL_TRANSLATIONS]/qt_zh_CN.qm \
-    $$[QT_INSTALL_TRANSLATIONS]/qt_sv.qm
+    $$[QT_INSTALL_TRANSLATIONS]/qt_sv.qm \
+    $$[QT_INSTALL_TRANSLATIONS]/qt_uk.qm
