@@ -142,7 +142,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
         setEditor(current_editor);
 
-        showMessage(tr("Replaced %L1 matches").arg(count), "green");
+        showMessage(tr("Replaced %Ln matches", "", count), "green");
     });
     connect(ui->buttonClose, &QPushButton::clicked, this, &FindReplaceDialog::close);
 
@@ -328,7 +328,7 @@ void FindReplaceDialog::replaceAll()
     }
 
     int count = finder->replaceAll(replaceText);
-    showMessage(tr("Replaced %L1 matches").arg(count), "green");
+    showMessage(tr("Replaced %Ln matches", "", count), "green");
 }
 
 void FindReplaceDialog::count()
@@ -339,7 +339,7 @@ void FindReplaceDialog::count()
 
     int total = finder->count();
 
-    showMessage(tr("Found %L1 matches").arg(total), "green");
+    showMessage(tr("Found %Ln matches", "", total), "green");
 }
 
 void FindReplaceDialog::setEditor(ScintillaNext *editor)
