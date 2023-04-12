@@ -24,6 +24,9 @@ jobs:
         - 
           qt_version: "6.4.2"
           modules: "qt5compat"
+        - 
+          qt_version: "6.5"
+          modules: "qt5compat"
 
     runs-on: ubuntu-20.04
 
@@ -40,7 +43,7 @@ jobs:
           modules: ${{ matrix.config.modules }}
       
       - name: Setup
-        run: sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse
+        run: sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev
 
       - name: Compile
         run: |
@@ -80,6 +83,9 @@ jobs:
           modules: "qt5compat"
         - 
           qt_version: "6.4.2"
+          modules: "qt5compat"
+        - 
+          qt_version: "6.5"
           modules: "qt5compat"
 
     runs-on: macos-latest
@@ -125,6 +131,9 @@ jobs:
           modules: "qt5compat"
         - 
           qt_version: "6.4.2"
+          modules: "qt5compat"
+        - 
+          qt_version: "6.5"
           modules: "qt5compat"
 
     runs-on: windows-latest
