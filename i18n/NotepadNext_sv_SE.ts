@@ -587,10 +587,17 @@
         <translation>Ersätt</translation>
     </message>
     <message>
+        <source>Replaced %L1 matches</source>
+        <translation type="vanished">Ersatte %L1 träffar</translation>
+    </message>
+    <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="145"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="331"/>
-        <source>Replaced %L1 matches</source>
-        <translation>Ersatte %L1 träffar</translation>
+        <source>Replaced %Ln matches</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="229"/>
@@ -612,10 +619,17 @@
         <source>No more occurrences were found</source>
         <translation>Inga fler förekomster hittades</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="342"/>
+        <source>Found %Ln matches</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
         <source>Found %L1 matches</source>
-        <translation>Hittade %L1 träffar</translation>
+        <translation type="vanished">Hittade %L1 träffar</translation>
     </message>
     <message>
         <source>Replaced %1 matches</source>
