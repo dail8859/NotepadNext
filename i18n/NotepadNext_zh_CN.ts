@@ -581,10 +581,16 @@
         <translation>替换</translation>
     </message>
     <message>
+        <source>Replaced %L1 matches</source>
+        <translation type="vanished">已替换 %L1 个匹配项</translation>
+    </message>
+    <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="145"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="331"/>
-        <source>Replaced %L1 matches</source>
-        <translation>已替换 %L1 个匹配项</translation>
+        <source>Replaced %Ln matches</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="229"/>
@@ -606,10 +612,16 @@
         <source>No more occurrences were found</source>
         <translation>没有找到更多匹配项</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="342"/>
+        <source>Found %Ln matches</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
         <source>Found %L1 matches</source>
-        <translation>查找了 %L1 个匹配项</translation>
+        <translation type="vanished">查找了 %L1 个匹配项</translation>
     </message>
 </context>
 <context>

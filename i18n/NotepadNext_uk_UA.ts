@@ -567,10 +567,18 @@
         <translation>Замінити</translation>
     </message>
     <message>
+        <source>Replaced %L1 matches</source>
+        <translation type="vanished">Замінено %L1 відповідність</translation>
+    </message>
+    <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="145"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="331"/>
-        <source>Replaced %L1 matches</source>
-        <translation>Замінено %L1 відповідність</translation>
+        <source>Replaced %Ln matches</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="229"/>
@@ -592,10 +600,18 @@
         <source>No more occurrences were found</source>
         <translation>Більше збігів не знайдено</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="342"/>
+        <source>Found %Ln matches</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
         <source>Found %L1 matches</source>
-        <translation>Знайдено %L1 збігів</translation>
+        <translation type="vanished">Знайдено %L1 збігів</translation>
     </message>
 </context>
 <context>
