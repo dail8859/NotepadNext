@@ -18,6 +18,7 @@
 
 
 #include "MainWindow.h"
+#include "BookMarkDecorator.h"
 #include "SessionManager.h"
 #include "UndoAction.h"
 #include "ui_MainWindow.h"
@@ -338,6 +339,69 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             editor->verticalCentreCaret();
         }
     });
+
+    connect(ui->actionToggleBookmark, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            editor->forEachLineInSelection(editor->mainSelection(), [&](int line) {
+                bookMarkDecorator->toggleBookmark(line);
+            });
+        }
+    });
+
+    connect(ui->actionNextBookmark, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            int currentLine = editor->lineFromPosition(editor->currentPos());
+            int nextBookmarkedLine = bookMarkDecorator->nextBookmarkAfter(currentLine + 1);
+
+            if (nextBookmarkedLine != -1) {
+                editor->ensureVisibleEnforcePolicy(nextBookmarkedLine);
+                editor->gotoLine(nextBookmarkedLine);
+            }
+        }
+    });
+
+    connect(ui->actionClearBookmarks, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            bookMarkDecorator->clearBookmarks();
+        }
+    });
+
+    connect(ui->actionInvertBookmarks, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            for (int line = 0; line < editor->lineCount(); line++) {
+                bookMarkDecorator->toggleBookmark(line);
+            }
+        }
+    });
+
+    connect(ui->actionPreviousBookmark, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            int currentLine = editor->lineFromPosition(editor->currentPos());
+            int prevBookmarkedLine = bookMarkDecorator->previousBookMarkBefore(currentLine - 1);
+
+            if (prevBookmarkedLine != -1) {
+                editor->ensureVisibleEnforcePolicy(prevBookmarkedLine);
+                editor->gotoLine(prevBookmarkedLine);
+            }
+        }
+    });
+
+
     ui->pushExitFullScreen->setParent(this); // This is important
     ui->pushExitFullScreen->setVisible(false);
     connect(ui->pushExitFullScreen, &QPushButton::clicked, ui->actionFullScreen, &QAction::trigger);
