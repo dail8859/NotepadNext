@@ -188,6 +188,18 @@
     <property name="title">
      <string>Search</string>
     </property>
+    <widget class="QMenu" name="menuBookmark">
+     <property name="title">
+      <string>Bookmarks</string>
+     </property>
+     <addaction name="actionToggleBookmark"/>
+     <addaction name="separator"/>
+     <addaction name="actionNextBookmark"/>
+     <addaction name="actionPreviousBookmark"/>
+     <addaction name="separator"/>
+     <addaction name="actionClearBookmarks"/>
+     <addaction name="actionInvertBookmarks"/>
+    </widget>
     <addaction name="actionFind"/>
     <addaction name="actionFindInFiles"/>
     <addaction name="actionFindNext"/>
@@ -196,6 +208,8 @@
     <addaction name="separator"/>
     <addaction name="actionQuickFind"/>
     <addaction name="actionGoToLine"/>
+    <addaction name="separator"/>
+    <addaction name="menuBookmark"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -1093,6 +1107,40 @@
    </property>
    <property name="text">
     <string>Open Command Prompt Here</string>
+   </property>
+  </action>
+  <action name="actionToggleBookmark">
+   <property name="text">
+    <string>Toggle Bookmark</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F2</string>
+   </property>
+  </action>
+  <action name="actionNextBookmark">
+   <property name="text">
+    <string>Next Bookmark</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+  </action>
+  <action name="actionPreviousBookmark">
+   <property name="text">
+    <string>Previous Bookmark</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+F2</string>
+   </property>
+  </action>
+  <action name="actionClearBookmarks">
+   <property name="text">
+    <string>Clear Bookmarks</string>
+   </property>
+  </action>
+  <action name="actionInvertBookmarks">
+   <property name="text">
+    <string>Invert Bookmarks</string>
    </property>
   </action>
  </widget>
