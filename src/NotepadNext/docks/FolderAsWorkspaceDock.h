@@ -21,6 +21,8 @@
 #define FOLDERASWORKSPACEDOCK_H
 
 #include <QDockWidget>
+#include <QAction>
+#include <QDir>
 
 namespace Ui {
 class FolderAsWorkspaceDock;
@@ -39,6 +41,9 @@ public:
     void setRootPath(const QString dir);
     QString rootPath() const;
 
+    void setFilter(const QDir::Filters filter);
+    QDir::Filters filter() const;
+
 signals:
     void fileDoubleClicked(const QString &filePath);
 
@@ -46,6 +51,8 @@ private:
     Ui::FolderAsWorkspaceDock *ui;
 
     QFileSystemModel *model;
+    
+    QAction* m_pHideFile;
 };
 
 #endif // FOLDERASWORKSPACEDOCK_H

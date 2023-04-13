@@ -1559,6 +1559,8 @@ void MainWindow::saveSettings() const
 
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     settings.setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
+    int flitersFlag = fawDock->filter();
+    settings.setValue("FolderAsWorkspace/Filters", flitersFlag);
 }
 
 void MainWindow::restoreSettings()
@@ -1604,6 +1606,8 @@ void MainWindow::restoreWindowState()
     // Restore the path if it has one
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     fawDock->setRootPath(settings.value("FolderAsWorkspace/RootPath").toString());
+    int filter = settings.value("FolderAsWorkspace/Filters").toInt();
+    fawDock->setFilter(QDir::Filters(filter));
 
     // Always hide the dock no matter how the application was closed
     SearchResultsDock *srDock = findChild<SearchResultsDock *>();

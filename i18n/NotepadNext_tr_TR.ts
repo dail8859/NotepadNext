@@ -2,6 +2,29 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="tr_TR">
 <context>
+    <name>CTitleBar</name>
+    <message>
+        <location filename="../src/NotepadNext/widgets/TitleBar.cpp" line="57"/>
+        <source>Minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/TitleBar.cpp" line="65"/>
+        <source>Maximize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/TitleBar.cpp" line="73"/>
+        <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/TitleBar.cpp" line="82"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ColumnEditorDialog</name>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="20"/>
@@ -607,6 +630,26 @@
     <message>
         <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.ui" line="14"/>
         <source>Folder as Workspace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="49"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="71"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="54"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="66"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="104"/>
+        <source>Don&apos;t show hidden files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="56"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="63"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="106"/>
+        <source>show hidden files</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1690,7 +1733,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1707"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1711"/>
         <source>No updates are available at this time.</source>
         <translation type="unfinished"></translation>
     </message>

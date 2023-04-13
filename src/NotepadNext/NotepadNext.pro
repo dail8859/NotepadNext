@@ -134,7 +134,8 @@ SOURCES += \
     decorators/LineNumbers.cpp \
     decorators/SmartHighlighter.cpp \
     widgets/EditorInfoStatusBar.cpp \
-    widgets/StatusLabel.cpp
+    widgets/StatusLabel.cpp \
+    widgets/TitleBar.cpp
 
 HEADERS += \
     ColorPickerDelegate.h \
@@ -212,7 +213,8 @@ HEADERS += \
     decorators/SmartHighlighter.h \
     docks/SearchResultsDock.h \
     widgets/EditorInfoStatusBar.h \
-    widgets/StatusLabel.h
+    widgets/StatusLabel.h \
+    widgets/TitleBar.h
 
 FORMS += \
     QuickFindWidget.ui \
