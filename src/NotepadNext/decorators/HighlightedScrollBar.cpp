@@ -54,6 +54,12 @@ void HighlightedScrollBarDecorator::notify(const NotificationData *pscn)
 
 
 
+HighlightedScrollBar::HighlightedScrollBar(ScintillaNext *editor, Qt::Orientation orientation, QWidget *parent)
+    : QScrollBar(orientation, parent), editor(editor)
+{
+    smartHighlighterIndicator = editor->allocateIndicator("smart_highlighter");
+}
+
 void HighlightedScrollBar::paintEvent(QPaintEvent *event)
 {
     // Paint the default scrollbar first
@@ -61,7 +67,7 @@ void HighlightedScrollBar::paintEvent(QPaintEvent *event)
     QPainter p(this);
 
     drawMarker(p, 24);
-    drawIndicator(p, 29);
+    drawIndicator(p, smartHighlighterIndicator);
     drawCursors(p);
 }
 
@@ -83,10 +89,10 @@ void HighlightedScrollBar::drawIndicator(QPainter &p, int indicator)
     int color = editor->indicFore(indicator);
 
     if (curPos > 0) {
-        while ((curPos = editor->indicatorEnd(29, curPos)) < editor->length()) {
+        while ((curPos = editor->indicatorEnd(indicator, curPos)) < editor->length()) {
             drawTickMark(p, posToScrollBarY(curPos), DEFAULT_TICK_HEIGHT, color);
 
-            curPos = editor->indicatorEnd(29, curPos);
+            curPos = editor->indicatorEnd(indicator, curPos);
         }
     }
 }
