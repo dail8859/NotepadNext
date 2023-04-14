@@ -6,6 +6,11 @@ L.extensions = {
 	"json",
 }
 
+L.properties = {
+	["lexer.json.escape.sequence"] = "1",
+	["lexer.json.allow.comments"] = "1",
+}
+
 L.keywords = {
 	[0] = "false null true",
 	[1] = "@id @context @type @value @language @container @list @set @reverse @index @base @vocab @graph",
