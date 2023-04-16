@@ -247,9 +247,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionPaste, &QAction::triggered, this, [=]() { currentEditor()->paste(); });
     connect(ui->actionSelectAll, &QAction::triggered, this, [=]() { currentEditor()->selectAll(); });
     connect(ui->actionSelectNext, &QAction::triggered, this, [=]() {
-        // Set search flags here?
-        currentEditor()->targetWholeDocument();
-        currentEditor()->multipleSelectAddNext();
+        ScintillaNext *editor = currentEditor();
+
+        editor->setSearchFlags(SCFIND_NONE);
+        editor->targetWholeDocument();
+        editor->multipleSelectAddNext();
     });
     connect(ui->actionCopyFullPath, &QAction::triggered, this, [=]() {
         auto editor = currentEditor();
