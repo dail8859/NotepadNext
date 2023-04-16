@@ -4,6 +4,10 @@ L.lexer = "props"
 
 L.singleLineComment = "; "
 
+L.first_line = {
+	"^%[.+%][\r\n]",
+}
+
 L.extensions = {
 	"ini",
 	"inf",
