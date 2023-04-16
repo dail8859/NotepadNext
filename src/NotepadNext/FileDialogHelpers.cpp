@@ -36,6 +36,7 @@ QList<QUrl> FileDialogHelpers::getOpenFileUrls(QWidget *parent, const QString &c
     dialog.setSupportedSchemes(supportedSchemes);
     dialog.setFilter(default_filters);
     dialog.setOptions(options);
+    dialog.setFileMode(QFileDialog::ExistingFiles);
 
     if (selectedFilter && !selectedFilter->isEmpty())
         dialog.selectNameFilter(*selectedFilter);
