@@ -2,6 +2,10 @@ local L = {}
 
 L.lexer = "json"
 
+L.first_line = {
+	"^{[\r\n]",
+}
+
 L.extensions = {
 	"json",
 }
