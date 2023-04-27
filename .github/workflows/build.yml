@@ -22,9 +22,6 @@ jobs:
           qt_version: "6.2.4"
           modules: "qt5compat"
         - 
-          qt_version: "6.4.2"
-          modules: "qt5compat"
-        - 
           qt_version: "6.5"
           modules: "qt5compat"
 
@@ -82,9 +79,6 @@ jobs:
           qt_version: "6.2.4"
           modules: "qt5compat"
         - 
-          qt_version: "6.4.2"
-          modules: "qt5compat"
-        - 
           qt_version: "6.5"
           modules: "qt5compat"
 
@@ -128,9 +122,6 @@ jobs:
           modules: ""
         - 
           qt_version: "6.2.4"
-          modules: "qt5compat"
-        - 
-          qt_version: "6.4.2"
           modules: "qt5compat"
         - 
           qt_version: "6.5"
@@ -214,12 +205,12 @@ jobs:
 
       - name: Upload Windows Installer
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-Windows-Qt6.4.2-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe
+          gh release upload ${{ github.ref_name }} NotepadNext-Windows-Qt6.5-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe
 
       # The artifact is unzipped, so need to zip it back up so it can be uploaded
       - name: Upload Windows Zip
         run: |
-          cd NotepadNext-Windows-Qt6.4.2-Zip/
+          cd NotepadNext-Windows-Qt6.5-Zip/
           zip -r ../NotepadNext-${{ github.ref_name }}-win64.zip .
           cd ..
           gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}-win64.zip
@@ -227,9 +218,9 @@ jobs:
 
       - name: Upload Linux AppImage
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt6.4.2-AppImage/NotepadNext-x86_64.AppImage
+          gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt6.5-AppImage/NotepadNext-x86_64.AppImage
 
       - name: Upload macOS App
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt6.4.2/NotepadNext.dmg
+          gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt6.5/NotepadNext.dmg
 
