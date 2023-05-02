@@ -289,8 +289,8 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
     // Dynamic properties can be used to skip part of the default initialization. The value in the
     // property doesn't currently matter, but may be used at a later point.
-    getLuaState()->execute(QString("skip_tabs = \"%1\"").arg(editor->QObject::property("nn_skip_usetabs").isValid() ? "true" : "false").toLatin1().constData());
-    getLuaState()->execute(QString("skip_tabwidth = \"%1\"").arg(editor->QObject::property("nn_skip_tabwidth").isValid() ? "true" : "false").toLatin1().constData());
+    getLuaState()->execute(QString("skip_tabs = %1").arg(editor->QObject::property("nn_skip_usetabs").isValid() ? "true" : "false").toLatin1().constData());
+    getLuaState()->execute(QString("skip_tabwidth = %1").arg(editor->QObject::property("nn_skip_tabwidth").isValid() ? "true" : "false").toLatin1().constData());
 
     getLuaState()->execute(R"(
         local L = languages[languageName]
