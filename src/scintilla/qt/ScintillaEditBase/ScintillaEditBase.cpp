@@ -267,9 +267,17 @@ void ScintillaEditBase::keyPressEvent(QKeyEvent *event)
 #endif
 
 		QString text = event->text();
-		if (input && !text.isEmpty() && text[0].isPrint()) {
-			QByteArray utext = sqt->BytesForDocument(text);
-			sqt->InsertCharacter(std::string_view(utext.data(), utext.size()), CharacterSource::DirectInput);
+        if (input && !text.isEmpty() && text[0].isPrint()) {
+            const int strLen = text.length();
+
+            for (int i = 0; i < strLen;) {
+                const int ucWidth = text.at(i).isHighSurrogate() ? 2 : 1;
+                const QString oneCharUTF16 = text.mid(i, ucWidth);
+                const QByteArray oneChar = sqt->BytesForDocument(oneCharUTF16);
+
+                sqt->InsertCharacter(std::string_view(oneChar.data(), oneChar.length()), CharacterSource::DirectInput);
+                i += ucWidth;
+            }
 		} else {
 			event->ignore();
 		}
