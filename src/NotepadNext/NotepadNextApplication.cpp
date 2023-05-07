@@ -387,7 +387,8 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
 
 void NotepadNextApplication::loadSystemDefaultTranslation()
 {
-    loadTranslation(QLocale::system());
+    // The wrong translation file may be loaded when passing Locale::system() to loadTranslation function, e.g. "zh_CN" translation file will be loaded when the locale is "en_US". It's probably a Qt bug.
+    loadTranslation(QLocale(QLocale::system().name()));
 }
 
 void NotepadNextApplication::loadTranslation(QLocale locale)
@@ -400,7 +401,7 @@ void NotepadNextApplication::loadTranslation(QLocale locale)
     // Load translation for NotepadNext e.g. "i18n/NotepadNext.en.qm"
     if (translatorNpn.load(locale, QApplication::applicationName(), QString("_"), languagePath)) {
         installTranslator(&translatorNpn);
-        qInfo("Loaded %s translation for Notepad Next", qUtf8Printable(locale.name()));
+        qInfo("Loaded %s translation %s for Notepad Next", qUtf8Printable(locale.name()), qUtf8Printable(translatorNpn.filePath()));
     } else {
         qInfo("%s translation not found for Notepad Next", qUtf8Printable(locale.name()));
     }
@@ -408,7 +409,7 @@ void NotepadNextApplication::loadTranslation(QLocale locale)
     // Load translation for Qt components e.g. "i18n/qt_en.qm"
     if (translatorQt.load(locale, QString("qt"), QString("_"), languagePath)) {
         installTranslator(&translatorQt);
-        qInfo("Loaded %s translation for Qt components", qUtf8Printable(locale.name()));
+        qInfo("Loaded %s translation %s for Qt components", qUtf8Printable(locale.name()), qUtf8Printable(translatorQt.filePath()));
     } else {
         qInfo("%s translation not found for Qt components", qUtf8Printable(locale.name()));
     }
