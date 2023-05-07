@@ -71,5 +71,7 @@ void AutoCompletion::showAutoCompletion()
         return end;
     }, { endPos, (Sci_PositionCR)editor->length()});
 
-    editor->autoCShow(current_word.length(), words.values().join(' '));
+    if (!words.isEmpty()) {
+        editor->autoCShow(current_word.length(), words.values().join(' '));
+    }
 }
