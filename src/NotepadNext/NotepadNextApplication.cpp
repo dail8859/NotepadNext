@@ -387,6 +387,7 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
 
 void NotepadNextApplication::loadSystemDefaultTranslation()
 {
+    // The wrong translation file may be loaded when passing Locale::system() to loadTranslation function, e.g. "zh_CN" translation file will be loaded when the locale is "en_US". It's probably a Qt bug.
     loadTranslation(QLocale(QLocale::system().name()));
 }
 
