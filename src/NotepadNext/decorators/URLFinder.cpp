@@ -19,6 +19,7 @@
 #include <QDesktopServices>
 #include <QTimer>
 #include <QUrl>
+#include <QRegExp>
 
 #include "URLFinder.h"
 
@@ -53,7 +54,6 @@ void URLFinder::findURLs()
 
     int currentLine = editor->docLineFromVisible(editor->firstVisibleLine());
     int linesLeftToProcess = editor->linesOnScreen();
-    const int flags = SCFIND_REGEXP;
 
     while(linesLeftToProcess >= 0 && currentLine < editor->lineCount()) {
         // Should only happen if the line is hidden
@@ -64,30 +64,35 @@ void URLFinder::findURLs()
 
         const int startPos = editor->positionFromLine(currentLine);
         const int endPos = editor->lineEndPosition(currentLine);
-        QByteArray reg = QByteArrayLiteral(R"(\bhttps?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))");
+        const QString lineText = editor->get_text_range(startPos, endPos);
 
-        Sci_TextToFind ttf {{startPos, (Sci_PositionCR)endPos}, reg.constData(), {-1, -1}};
-        while (editor->send(SCI_FINDTEXT, flags, (sptr_t)&ttf) != -1) {
-            const int startUrl = ttf.chrgText.cpMin;
-            int endUrl = ttf.chrgText.cpMax;
+        static QRegExp regex(R"(\bhttps?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))");
+        regex.indexIn(lineText);
+        QStringList matchedTexts = regex.capturedTexts();
+        matchedTexts.removeDuplicates();
+        matchedTexts.removeAll(QString(""));
 
-            // Though technically certain characters are allowed in the URL such as brackets, parenthesis, etc
-            // this adds a bit of logic to trim off the end character based on if something is in front if it, for example
-            // [https://example.com] probably shouldn't include the last bracket since it starts with an opening bracket.
-            if (startUrl > 0) {
-                const int prevChar = static_cast<int>(editor->charAt(startUrl - 1));
-                const int nextChar = static_cast<int>(editor->charAt(endUrl - 1));
+        foreach (const QString &matchedText, matchedTexts) {
+            Sci_TextToFind ttf {{startPos, (Sci_PositionCR)endPos}, matchedText.toLocal8Bit().constData(), {-1, -1}};
+            while (editor->send(SCI_FINDTEXT, SCFIND_MATCHCASE, (sptr_t)&ttf) != INVALID_POSITION) {
+                const int startUrl = ttf.chrgText.cpMin;
+                int endUrl = ttf.chrgText.cpMax;
 
-                if ((prevChar == '(' && nextChar == ')') ||
-                    (prevChar == '[' && nextChar == ']') ||
-                    (prevChar == '<' && nextChar == '>') ||
-                    (prevChar == '"' && nextChar == '"')) {
-                    endUrl--;
+                if (startUrl > 0) {
+                    const int prevChar = static_cast<int>(editor->charAt(startUrl - 1));
+                    const int nextChar = static_cast<int>(editor->charAt(endUrl - 1));
+
+                    if ((prevChar == '(' && nextChar == ')') ||
+                        (prevChar == '[' && nextChar == ']') ||
+                        (prevChar == '<' && nextChar == '>') ||
+                        (prevChar == '"' && nextChar == '"')) {
+                        endUrl--;
+                    }
                 }
-            }
 
-            editor->indicatorFillRange(startUrl, endUrl - startUrl);
-            ttf.chrg.cpMin = endUrl;
+                editor->indicatorFillRange(startUrl, endUrl - startUrl);
+                ttf.chrg.cpMin = endUrl;
+            }
         }
 
         // If a line is wrapped, skip however many lines it takes up on the screen
