@@ -80,6 +80,9 @@ void URLFinder::findURLs()
                 const int startUrl = pos.first;
                 int endUrl = pos.second;
 
+                // Though technically certain characters are allowed in the URL such as brackets, parenthesis, etc
+                // this adds a bit of logic to trim off the end character based on if something is in front if it, for example
+                // [https://example.com] probably shouldn't include the last bracket since it starts with an opening bracket.
                 if (startUrl > 0) {
                     const int prevChar = static_cast<int>(editor->charAt(startUrl - 1));
                     const int nextChar = static_cast<int>(editor->charAt(endUrl - 1));
