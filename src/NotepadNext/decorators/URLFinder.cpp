@@ -72,10 +72,13 @@ void URLFinder::findURLs()
         matchedTexts.removeDuplicates();
         matchedTexts.removeAll(QString(""));
 
+        QPair<int, int> pos = { 0, startPos };
         foreach (const QString &matchedText, matchedTexts) {
-            QPair<int, int> pos = { 0, startPos };
-            do {
+            while (true) {
                 pos = editor->findText(SCFIND_MATCHCASE, matchedText.toLocal8Bit().constData(), pos.second, endPos);
+                if (pos.first == INVALID_POSITION) {
+                    break;
+                }
 
                 const int startUrl = pos.first;
                 int endUrl = pos.second;
@@ -93,10 +96,10 @@ void URLFinder::findURLs()
                         (prevChar == '"' && nextChar == '"')) {
                         endUrl--;
                     }
-
-                    editor->indicatorFillRange(startUrl, endUrl - startUrl);
                 }
-            } while (pos.first != INVALID_POSITION);
+
+                editor->indicatorFillRange(startUrl, endUrl - startUrl);
+            }
         }
 
         // If a line is wrapped, skip however many lines it takes up on the screen
