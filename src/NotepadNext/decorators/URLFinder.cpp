@@ -76,7 +76,6 @@ void URLFinder::findURLs()
             QPair<int, int> pos = { 0, startPos };
             do {
                 pos = editor->findText(SCFIND_MATCHCASE, matchedText.toLocal8Bit().constData(), pos.second, endPos);
-                qDebug() << currentLine << pos;
 
                 const int startUrl = pos.first;
                 int endUrl = pos.second;
@@ -94,7 +93,7 @@ void URLFinder::findURLs()
 
                     editor->indicatorFillRange(startUrl, endUrl - startUrl);
                 }
-            } while (pos.first != -1);
+            } while (pos.first != INVALID_POSITION);
         }
 
         // If a line is wrapped, skip however many lines it takes up on the screen
