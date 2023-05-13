@@ -72,16 +72,13 @@ void URLFinder::findURLs()
         matchedTexts.removeDuplicates();
         matchedTexts.removeAll(QString(""));
 
-        QPair<int, int> pos = { 0, startPos };
         foreach (const QString &matchedText, matchedTexts) {
+            int cpMin = startPos;
             while (true) {
-                pos = editor->findText(SCFIND_MATCHCASE, matchedText.toLocal8Bit().constData(), pos.second, endPos);
-                if (pos.first == INVALID_POSITION) {
+                auto [ startUrl, endUrl ] = editor->findText(SCFIND_MATCHCASE, matchedText.toLocal8Bit().constData(), cpMin, endPos);
+                if (startUrl == INVALID_POSITION) {
                     break;
                 }
-
-                const int startUrl = pos.first;
-                int endUrl = pos.second;
 
                 // Though technically certain characters are allowed in the URL such as brackets, parenthesis, etc
                 // this adds a bit of logic to trim off the end character based on if something is in front if it, for example
@@ -99,6 +96,7 @@ void URLFinder::findURLs()
                 }
 
                 editor->indicatorFillRange(startUrl, endUrl - startUrl);
+                cpMin = endUrl;
             }
         }
 
