@@ -75,7 +75,7 @@ void URLFinder::findURLs()
         foreach (const QString &matchedText, matchedTexts) {
             int cpMin = startPos;
             while (true) {
-                auto [ startUrl, endUrl ] = editor->findText(SCFIND_MATCHCASE, matchedText.toLocal8Bit().constData(), cpMin, endPos);
+                auto [startUrl, endUrl] = editor->findText(SCFIND_MATCHCASE, matchedText.toLocal8Bit().constData(), cpMin, endPos);
                 if (startUrl == INVALID_POSITION) {
                     break;
                 }
