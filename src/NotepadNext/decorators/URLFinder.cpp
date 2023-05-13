@@ -19,7 +19,7 @@
 #include <QDesktopServices>
 #include <QTimer>
 #include <QUrl>
-#include <QRegExp>
+#include <QRegularExpression>
 
 #include "URLFinder.h"
 
@@ -66,9 +66,8 @@ void URLFinder::findURLs()
         const int endPos = editor->lineEndPosition(currentLine);
         const QString lineText = editor->get_text_range(startPos, endPos);
 
-        static QRegExp regex(R"(\bhttps?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))");
-        regex.indexIn(lineText);
-        QStringList matchedTexts = regex.capturedTexts();
+        static QRegularExpression regex(R"(\bhttps?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))");
+        QStringList matchedTexts = regex.match(lineText).capturedTexts();
         matchedTexts.removeDuplicates();
         matchedTexts.removeAll(QString(""));
 
