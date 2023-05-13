@@ -73,10 +73,13 @@ void URLFinder::findURLs()
         matchedTexts.removeAll(QString(""));
 
         foreach (const QString &matchedText, matchedTexts) {
-            Sci_TextToFind ttf {{startPos, (Sci_PositionCR)endPos}, matchedText.toLocal8Bit().constData(), {-1, -1}};
-            while (editor->send(SCI_FINDTEXT, SCFIND_MATCHCASE, (sptr_t)&ttf) != INVALID_POSITION) {
-                const int startUrl = ttf.chrgText.cpMin;
-                int endUrl = ttf.chrgText.cpMax;
+            QPair<int, int> pos = { 0, startPos };
+            do {
+                pos = editor->findText(SCFIND_MATCHCASE, matchedText.toLocal8Bit().constData(), pos.second, endPos);
+                qDebug() << currentLine << pos;
+
+                const int startUrl = pos.first;
+                int endUrl = pos.second;
 
                 if (startUrl > 0) {
                     const int prevChar = static_cast<int>(editor->charAt(startUrl - 1));
@@ -88,11 +91,10 @@ void URLFinder::findURLs()
                         (prevChar == '"' && nextChar == '"')) {
                         endUrl--;
                     }
-                }
 
-                editor->indicatorFillRange(startUrl, endUrl - startUrl);
-                ttf.chrg.cpMin = endUrl;
-            }
+                    editor->indicatorFillRange(startUrl, endUrl - startUrl);
+                }
+            } while (pos.first != -1);
         }
 
         // If a line is wrapped, skip however many lines it takes up on the screen
