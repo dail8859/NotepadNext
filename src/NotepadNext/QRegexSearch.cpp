@@ -77,10 +77,11 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
 
     // Get the bytes from the document. No need to go past maxPos bytes
     // Not actually sure if this copies the data or not
-    const QString utf8 = QString::fromUtf8(doc->BufferPointer(), maxPos);
+    const Sci::Position rangeLength = maxPos - minPos;
+    const QString utf8 = QString::fromUtf8(doc->RangePointer(minPos, rangeLength), rangeLength);
 
     // NOTE: QString uses UTF16 counts since QChars are 16 bits
-    QRegularExpressionMatch m = re.match(utf8, doc->CountUTF16(0, minPos), QRegularExpression::NormalMatch, QRegularExpression::NoMatchOption);
+    QRegularExpressionMatch m = re.match(utf8, 0, QRegularExpression::NormalMatch, QRegularExpression::NoMatchOption);
 
     if (!m.hasMatch())
         return -1; // No match
@@ -88,7 +89,7 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
     match = m;
 
     // NOTE: Returned started is the index into the QString which uses UTF16
-    const int positionStart = doc->GetRelativePositionUTF16(0, match.capturedStart(0));
+    const int positionStart = doc->GetRelativePositionUTF16(minPos, match.capturedStart(0));
 
     // Now move ahead however many characters we matched. Again, based on UTF16 count
     const int positionEnd = doc->GetRelativePositionUTF16(positionStart, match.capturedLength(0));
