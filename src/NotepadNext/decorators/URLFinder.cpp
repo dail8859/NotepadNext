@@ -66,9 +66,9 @@ void URLFinder::findURLs()
         const int endPos = editor->lineEndPosition(currentLine);
         const QByteArray lineText = editor->get_text_range(startPos, endPos);
 
-        static QRegularExpression regex(R"(\bhttps?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))");
+        static QRegularExpression re(R"(\bhttps?://[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*))");
         QStringList matchedTexts;
-        QRegularExpressionMatchIterator iterator = regex.globalMatch(lineText);
+        QRegularExpressionMatchIterator iterator = re.globalMatch(lineText);
         while (iterator.hasNext()) {
             QRegularExpressionMatch match = iterator.next();
             const QString matched = match.captured(0);
