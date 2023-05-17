@@ -33,7 +33,7 @@ HexViewerDock::HexViewerDock(MainWindow *parent) :
     ui->setupUi(this);
 
     // Set the font of the table to a monospaced font...not sure how best to do this
-    QFont font("monospace");
+    QFont font("Courier New");
     font.setStyleHint(QFont::TypeWriter);
     ui->tblHexView->setFont(font);
 
