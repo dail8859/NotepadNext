@@ -39,6 +39,12 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
 {
     ui->setupUi(this);
 
+#ifdef Q_OS_MACOS
+    // Set a slightly larger font on MacOS
+    QFont font("Courier New", 14);
+    ui->treeWidget->setFont(font);
+#endif
+
     // Close the results when escape is pressed
     new QShortcut(QKeySequence::Cancel, this, this, &SearchResultsDock::close, Qt::WidgetWithChildrenShortcut);
 
