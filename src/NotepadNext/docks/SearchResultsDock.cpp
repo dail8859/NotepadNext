@@ -39,6 +39,8 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->treeWidget->setColumnWidth(1, 10000);
+
     // Close the results when escape is pressed
     new QShortcut(QKeySequence::Cancel, this, this, &SearchResultsDock::close, Qt::WidgetWithChildrenShortcut);
 

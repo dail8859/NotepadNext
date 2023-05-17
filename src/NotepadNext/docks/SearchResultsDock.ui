@@ -57,6 +57,9 @@
       <attribute name="headerVisible">
        <bool>false</bool>
       </attribute>
+      <attribute name="headerStretchLastSection">
+       <bool>false</bool>
+      </attribute>
       <column>
        <property name="text">
         <string notr="true">1</string>
