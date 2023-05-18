@@ -16,6 +16,7 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <QFontDatabase>
 
 #include "MainWindow.h"
 #include "ScintillaNext.h"
@@ -33,8 +34,7 @@ HexViewerDock::HexViewerDock(MainWindow *parent) :
     ui->setupUi(this);
 
     // Set the font of the table to a monospaced font...not sure how best to do this
-    QFont font("monospace");
-    font.setStyleHint(QFont::TypeWriter);
+    QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont).family();
     ui->tblHexView->setFont(font);
 
     connect(this, &QDockWidget::visibilityChanged, this, [=](bool visible) {
