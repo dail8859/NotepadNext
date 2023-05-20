@@ -135,6 +135,7 @@ void SearchResultsDock::completeSearch()
     totalHitCount = 0;
 
     ui->treeWidget->resizeColumnToContents(0);
+    ui->treeWidget->resizeColumnToContents(1);
 }
 
 void SearchResultsDock::collapseAll() const
