@@ -52,3 +52,13 @@ win32 {
 
     QMAKE_EXTRA_TARGETS += package zip installer
 }
+
+macos {
+    dmg.target = dmg
+    dmg.commands = \
+        cd NotepadNext && \
+        macdeployqt "NotepadNext.app" -dmg && \
+        mv NotepadNext.dmg NotepadNext-v$${APP_VERSION}.dmg
+
+    QMAKE_EXTRA_TARGETS += dmg
+}
