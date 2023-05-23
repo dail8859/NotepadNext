@@ -98,19 +98,21 @@ jobs:
 
       - name: Compile
         run: |
-          rm -rf build-mac
-          mkdir build-mac
-          cd build-mac
+          mkdir build
+          cd build
           qmake ../src/NotepadNext.pro
           make -j$(sysctl -n hw.ncpu)
-          cd NotepadNext
-          macdeployqt NotepadNext.app -dmg
+
+      - name: Build DMG
+        run: |
+          cd build
+          make dmg
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: NotepadNext-macOS-Qt${{ matrix.config.qt_version }}
-          path: ${{ github.workspace }}/build-mac/NotepadNext/NotepadNext.dmg
+          path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.dmg
 
   build-windows:
     strategy:
@@ -222,5 +224,5 @@ jobs:
 
       - name: Upload macOS App
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt6.5/NotepadNext.dmg
+          gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt6.5/NotepadNext-${{ github.ref_name }}.dmg
 
