@@ -81,7 +81,11 @@ void SearchResultsDock::newSearch(const QString searchTerm)
 
     this->searchTerm = searchTerm;
 
-    ui->treeWidget->collapseAll();
+    for (int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i)
+    {
+        const QTreeWidgetItem* topLevelItem = ui->treeWidget->topLevelItem(i);
+        ui->treeWidget->collapseItem(topLevelItem);
+    }
 
     currentSearch = new QTreeWidgetItem(ui->treeWidget);
     currentSearch->setBackground(0, QColor(232, 232, 255));
