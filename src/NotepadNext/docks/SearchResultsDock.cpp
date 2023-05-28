@@ -49,6 +49,7 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
     new QShortcut(QKeySequence::Cancel, this, this, &SearchResultsDock::close, Qt::WidgetWithChildrenShortcut);
 
     connect(ui->treeWidget, &QTreeWidget::itemActivated, this, &SearchResultsDock::itemActivated);
+    connect(ui->treeWidget, &QTreeWidget::itemExpanded, this, &SearchResultsDock::itemExpanded);
 
     connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
         QTreeWidgetItem *item = ui->treeWidget->itemAt(pos);
@@ -195,6 +196,11 @@ void SearchResultsDock::itemActivated(QTreeWidgetItem *item, int column)
             emit searchResultActivated(editor, lineNumber, startPositionFromBeginning, endPositionFromBeginning);
         }
     }
+}
+
+void SearchResultsDock::itemExpanded(QTreeWidgetItem *)
+{
+    ui->treeWidget->resizeColumnToContents(1);
 }
 
 void SearchResultsDock::updateSearchStatus()
