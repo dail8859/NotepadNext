@@ -52,6 +52,7 @@ public slots:
 
 private slots:
     void itemActivated(QTreeWidgetItem *item, int column);
+    void itemExpanded(QTreeWidgetItem *item);
 
 signals:
     void searchResultActivated(ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning);
