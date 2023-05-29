@@ -257,187 +257,187 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.ui" line="14"/>
         <source>Editor Inspector</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenleyici Denetleyicisi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="36"/>
         <source>Position Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Konum Bilgisi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="39"/>
         <source>Current Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Konum</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="40"/>
         <source>Current Position (x, y)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Konum (x, y)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="41"/>
         <source>Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Sütun</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="43"/>
         <source>Current Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Stil</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="44"/>
         <source>Current Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut Satır</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="45"/>
         <source>Line Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır Uzunluğu</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="46"/>
         <source>Line End Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır Sonu Konumu</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="47"/>
         <source>Line Indentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır Girintisi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="48"/>
         <source>Line Indent Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır Girinti Konumu</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="52"/>
         <source>Selection Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçim Bilgisi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="55"/>
         <source>Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mod</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="69"/>
         <source>Is Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgen Seçim</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="70"/>
         <source>Selection Empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçim Boş</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="71"/>
         <source>Main Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana Seçim</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="72"/>
         <source># of Selections</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçim Sayısı</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="75"/>
         <source>Multiple Selections</source>
-        <translation type="unfinished"></translation>
+        <translation>Birden Fazla Seçim</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="80"/>
         <source>Document Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Belge Bilgisi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="83"/>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluk</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="84"/>
         <source>Line Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır Sayısı</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="88"/>
         <source>View Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilgileri Göster</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="91"/>
         <source>Lines on Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekrandaki Satırlar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="92"/>
         <source>First Visible Line</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk Görünen Satır</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="93"/>
         <source>X Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>X Offset</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="97"/>
         <source>Fold Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Katlama Bilgisi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="100"/>
         <source>Visible From Doc Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Belge Satırından Görünen</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="101"/>
         <source>Doc Line From Visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünenden Belge Satırı</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="102"/>
         <source>Fold Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Katlama Seviyesi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="103"/>
         <source>Is Fold Header</source>
-        <translation type="unfinished"></translation>
+        <translation>Is Fold Header</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="104"/>
         <source>Fold Parent</source>
-        <translation type="unfinished"></translation>
+        <translation>Fold Parent</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="105"/>
         <source>Last Child</source>
-        <translation type="unfinished"></translation>
+        <translation>Last Child</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="106"/>
         <source>Contracted Fold Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Contracted Fold Next</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="175"/>
         <source>Caret</source>
-        <translation type="unfinished"></translation>
+        <translation>İmleç</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="179"/>
         <source>Anchor</source>
-        <translation type="unfinished"></translation>
+        <translation>Bağlantı Noktası (Anchor)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="183"/>
         <source>Caret Virtual Space</source>
-        <translation type="unfinished"></translation>
+        <translation>İmleç Sanal Boşluğu</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="187"/>
         <source>Anchor Virtual Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Bağlantı Noktası (Anchor) Sanal Boşluğu</translation>
     </message>
 </context>
 <context>
@@ -1088,8 +1088,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="498"/>
         <source>Save &amp;As...</source>
-        <translatorcomment>Turkish Grammer is hard... But this is the true way.</translatorcomment>
-        <translation>... &amp;Olarak Kaydet</translation>
+        <translation>&amp;Farklı olarak kaydet...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="501"/>
@@ -1679,7 +1678,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1194"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; silinirken bir hata oluştu</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; silinirken bir hata oluştu?</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1535"/>
