@@ -44,28 +44,21 @@ jobs:
 
       - name: Compile
         run: |
-          rm -rf build-linux
-          mkdir build-linux 
-          cd build-linux
+          mkdir build
+          cd build
           qmake ../src/NotepadNext.pro "DISTRIBUTION=AppImage"
           make -j$(nproc)
 
       - name: Build AppImage
         run: |
-          cd build-linux
-          make install INSTALL_ROOT=AppDir
-          cd NotepadNext
-          wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
-          wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
-          chmod +x linuxdeploy*.AppImage
-          export OUTPUT=NotepadNext-x86_64.AppImage
-          ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage
+          cd build
+          make appimage
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}-AppImage
-          path: ${{ github.workspace }}/build-linux/NotepadNext/NotepadNext-x86_64.AppImage
+          path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.AppImage
 
   build-mac:
     strategy:
@@ -220,7 +213,7 @@ jobs:
 
       - name: Upload Linux AppImage
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt6.5-AppImage/NotepadNext-x86_64.AppImage
+          gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt6.5-AppImage/NotepadNext-${{ github.ref_name }}-x86_64.AppImage
 
       - name: Upload macOS App
         run: |
