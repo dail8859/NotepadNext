@@ -1,0 +1,39 @@
+name: Publish Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New Version (do not include v)'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Update App Version
+        run: |
+          sed -i 's/APP_VERSION = ".*"/APP_VERSION = "${{ github.event.inputs.version }}"/' src/Version.pri
+
+      - name: Update Flatpak Version
+        run: |
+          sed -i "s@<releases>@<releases>\n        <release version=\"v${{ github.event.inputs.version }}\" date=\"$(date +'%Y-%m-%d')\" />@" deploy/linux/com.github.dail8859.NotepadNext.metainfo.xml
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add src/Version.pri deploy/linux/com.github.dail8859.NotepadNext.metainfo.xml
+          git commit -m "Update version to v${{ github.event.inputs.version }}"
+
+      - name: Tag commit
+        run: |
+          git tag v${{ github.event.inputs.version }}
+
+      - name: Push
+        run: |
+          git push origin master --tags
