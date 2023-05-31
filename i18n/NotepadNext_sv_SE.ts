@@ -2,6 +2,29 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="sv_SE">
 <context>
+    <name>CTitleBar</name>
+    <message>
+        <location filename="../src/NotepadNext/widgets/TitleBar.cpp" line="57"/>
+        <source>Minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/TitleBar.cpp" line="65"/>
+        <source>Maximize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/TitleBar.cpp" line="73"/>
+        <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/TitleBar.cpp" line="82"/>
+        <source>Close</source>
+        <translation type="unfinished">Stäng</translation>
+    </message>
+</context>
+<context>
     <name>ColumnEditorDialog</name>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="20"/>
@@ -646,6 +669,26 @@
         <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.ui" line="14"/>
         <source>Folder as Workspace</source>
         <translation>Mapp som arbetsyta</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="49"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="71"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="54"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="66"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="104"/>
+        <source>Don&apos;t show hidden files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="56"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="63"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="106"/>
+        <source>show hidden files</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1744,7 +1787,7 @@
         <translation>Ett fel uppstod när &lt;b&gt;%1&lt;/b&gt; skulle sparas.&lt;br&gt;&lt;br&gt;Fel: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1707"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1711"/>
         <source>No updates are available at this time.</source>
         <translation>Inga uppdateringar tillgängliga den här gången.</translation>
     </message>

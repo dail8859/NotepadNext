@@ -2,6 +2,29 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>CTitleBar</name>
+    <message>
+        <location filename="../src/NotepadNext/widgets/TitleBar.cpp" line="57"/>
+        <source>Minimize</source>
+        <translation>最小化</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/TitleBar.cpp" line="65"/>
+        <source>Maximize</source>
+        <translation>最大化</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/TitleBar.cpp" line="73"/>
+        <source>Floating</source>
+        <translation>浮动</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/TitleBar.cpp" line="82"/>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+</context>
+<context>
     <name>ColumnEditorDialog</name>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="20"/>
@@ -631,6 +654,26 @@
         <source>Folder as Workspace</source>
         <translatorcomment>窗口标题</translatorcomment>
         <translation>文件夹工作区</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="49"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="71"/>
+        <source>Filter</source>
+        <translation>过滤器</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="54"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="66"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="104"/>
+        <source>Don&apos;t show hidden files</source>
+        <translation>不显示隐藏文件</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="56"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="63"/>
+        <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.cpp" line="106"/>
+        <source>show hidden files</source>
+        <translation>显示隐藏文件</translation>
     </message>
 </context>
 <context>
@@ -1725,7 +1768,7 @@
         <translation>保存 &lt;b&gt;%1&lt;/b&gt; 时发生了错误&lt;br&gt;&lt;br&gt;错误：%2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1707"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1711"/>
         <source>No updates are available at this time.</source>
         <translation>本次无可用更新。</translation>
     </message>
