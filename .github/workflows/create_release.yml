@@ -1,4 +1,4 @@
-name: Publish Release
+name: Create Release
 
 on:
   workflow_dispatch:
@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.CREATE_RELEASE_TOKEN }}
 
       - name: Update App Version
         run: |
@@ -28,7 +30,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add src/Version.pri deploy/linux/com.github.dail8859.NotepadNext.metainfo.xml
-          git commit -m "Update version to v${{ github.event.inputs.version }}"
+          git commit -m "v${{ github.event.inputs.version }} release"
 
       - name: Tag commit
         run: |
