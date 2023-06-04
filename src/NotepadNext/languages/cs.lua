@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "cs"
+L.lexer = "cpp"
 
 L.singleLineComment = "// "
 
@@ -10,7 +10,7 @@ L.extensions = {
 
 L.keywords = {
 	[0] = "abstract add alias as ascending async await base break case catch checked continue default delegate descending do dynamic else event explicit extern false finally fixed for foreach from get global goto group if implicit in interface internal into is join let lock namespace new null object operator orderby out override params partial private protected public readonly ref remove return sealed select set sizeof stackalloc switch this throw true try typeof unchecked unsafe using value virtual where while yield",
-	[2] = "bool byte char class const decimal double enum float int long sbyte short static string struct uint ulong ushort var void",
+	[1] = "bool byte char class const decimal double enum float int long sbyte short static string struct uint ulong ushort var void",
 }
 
 L.styles = {
