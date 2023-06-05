@@ -903,7 +903,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="193"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Yer İmleri</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="216"/>
@@ -1595,42 +1595,42 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1114"/>
         <source>Toggle Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Yer İmlerini Aç/Kapat</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1117"/>
         <source>Ctrl+F2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1122"/>
         <source>Next Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonraki Yer İmi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1125"/>
         <source>F2</source>
-        <translation type="unfinished">F2</translation>
+        <translation>F2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1130"/>
         <source>Previous Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceki Yer İmi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1133"/>
         <source>Shift+F2</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+F2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1138"/>
         <source>Clear Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Yer İmlerini Temizle</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1143"/>
         <source>Invert Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Yer İmlerini Tersine Çevir</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="336"/>
