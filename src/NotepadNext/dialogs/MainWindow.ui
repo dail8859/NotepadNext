@@ -397,9 +397,6 @@
    <property name="text">
     <string>E&amp;xit</string>
    </property>
-   <property name="shortcut">
-    <string>Alt+F4</string>
-   </property>
    <property name="menuRole">
     <enum>QAction::QuitRole</enum>
    </property>
