@@ -110,6 +110,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionCloseAll, &QAction::triggered, this, &MainWindow::closeAllFiles);
     connect(ui->actionExit, &QAction::triggered, this, &MainWindow::close);
 
+#ifdef Q_OS_WIN
+    ui->actionExit->setShortcut(QKeySequence("Alt+F4"));
+#else
+    ui->actionExit->setShortcut(QKeySequence::Quit);
+#endif
+
     connect(ui->actionOpenFolderasWorkspace, &QAction::triggered, this, &MainWindow::openFolderAsWorkspaceDialog);
 
     connect(ui->actionCloseAllExceptActive, &QAction::triggered, this, &MainWindow::closeAllExceptActive);
