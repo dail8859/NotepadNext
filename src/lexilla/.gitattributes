@@ -29,6 +29,7 @@
 **.vb text
 **.cmake text
 **.d text
+**.diff text
 **.erl text
 **.gd text
 **.gui text
@@ -36,6 +37,7 @@
 **.jl text
 **.json text
 **.lua text
+**.m3 text
 **.matlab text
 **.ml text
 **.nim text
