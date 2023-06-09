@@ -148,7 +148,7 @@ bool NotepadNextApplication::init()
     luabridge::setGlobal(luaState->L, settings, "settings");
 
     createNewWindow();
-    connect(editorManager, &EditorManager::editorCreated, windows.first(), &MainWindow::addEditor);
+    connect(editorManager, &EditorManager::editorCreated, window, &MainWindow::addEditor);
 
     luabridge::getGlobalNamespace(luaState->L)
         .beginNamespace("nn")
@@ -165,7 +165,7 @@ bool NotepadNextApplication::init()
                 .addFunction("closeFile", &MainWindow::closeCurrentFile)
             .endClass()
         .endNamespace();
-    luabridge::setGlobal(luaState->L, windows.first(), "window");
+    luabridge::setGlobal(luaState->L, window, "window");
 
     // If the application is activated (e.g. user switching to another program and them back) the focus
     // needs to be reset on whatever object previously had focus (e.g. the find dialog)
@@ -176,7 +176,7 @@ bool NotepadNextApplication::init()
         }
     });
 
-    connect(this, &SingleApplication::instanceStarted, windows.first(), &MainWindow::bringWindowToForeground);
+    connect(this, &SingleApplication::instanceStarted, window, &MainWindow::bringWindowToForeground);
 
     connect(this, &SingleApplication::receivedMessage, this, [&](quint32 instanceId, QByteArray message) {
         Q_UNUSED(instanceId)
@@ -198,8 +198,8 @@ bool NotepadNextApplication::init()
             // Make sure it is active...
             // The application can be active without the main window being show e.g. if there is a
             // message box that pops up before the main window
-            if (windows.first()->isActiveWindow()) {
-                windows.first()->focusIn();
+            if (window->isActiveWindow()) {
+                window->focusIn();
             }
 
             if (!currentlyFocusedWidget.isNull()) {
@@ -211,21 +211,21 @@ bool NotepadNextApplication::init()
     if (settings->restorePreviousSession()) {
         qInfo("Restoring previous session");
 
-        sessionManager->loadSession(windows.first(), editorManager);
+        sessionManager->loadSession(window, editorManager);
     }
 
     openFiles(parser.positionalArguments());
 
     // If the window does not have any editors (meaning the no files were
     // specified on the command line) then create a new empty file
-    if (windows.first()->editorCount() == 0) {
-        windows.first()->newFile();
+    if (window->editorCount() == 0) {
+        window->newFile();
     }
 
     // Everything should be ready at this point
 
-    windows.first()->restoreWindowState();
-    windows.first()->show();
+    window->restoreWindowState();
+    window->show();
 
     DebugManager::resumeDebugOutput();
 
@@ -445,7 +445,7 @@ void NotepadNextApplication::openFiles(const QStringList &files)
     qInfo(Q_FUNC_INFO);
 
     for (const QString &file : files) {
-        windows.first()->openFile(file);
+        window->openFile(file);
     }
 }
 
@@ -471,25 +471,25 @@ void NotepadNextApplication::saveSettings()
 
 MainWindow *NotepadNextApplication::createNewWindow()
 {
-    MainWindow *w = new MainWindow(this);
+    Q_ASSERT(window == Q_NULLPTR);
 
-    windows.append(w);
+    window = new MainWindow(this);
 
     // Keep Lua's editor reference up to date
-    connect(w, &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
+    connect(window, &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
         LuaExtension::Instance().setEditor(editor);
     });
 
     // Since these editors don't actually get "closed" go ahead and add them to the recent file list
-    connect(w, &MainWindow::aboutToClose, this, [=]() {
-        for (const auto &editor : w->editors()) {
+    connect(window, &MainWindow::aboutToClose, this, [=]() {
+        for (const auto &editor : window->editors()) {
             if (editor->isFile()) {
                 recentFilesListManager->addFile(editor->getFilePath());
             }
         }
 
-        getSessionManager()->saveSession(w);
+        getSessionManager()->saveSession(window);
     });
 
-    return w;
+    return window;
 }
