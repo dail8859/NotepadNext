@@ -83,7 +83,7 @@ private:
 
     LuaState *luaState = Q_NULLPTR;
 
-    QList<MainWindow *> windows;
+    MainWindow *window = Q_NULLPTR;
     QPointer<QWidget> currentlyFocusedWidget; // Keep a weak pointer to the QWidget since we don't own it
 
     MainWindow *createNewWindow();
