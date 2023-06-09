@@ -23,7 +23,6 @@
 
 #include "MainWindow.h"
 #include "LanguagePropertiesModel.h"
-#include "LanguageKeywordsModel.h"
 #include "LanguageStylesModel.h"
 
 #include "SpinBoxDelegate.h"
@@ -130,8 +129,6 @@ void LanguageInspectorDock::disconnectFromEditor()
 
 void LanguageInspectorDock::updatePositionInfo(Scintilla::Update updated)
 {
-    qInfo(Q_FUNC_INFO);
-
     if (FlagSet(updated, Scintilla::Update::Content) || FlagSet(updated, Scintilla::Update::Selection)) {
         ScintillaNext *editor = qobject_cast<ScintillaNext*>(sender());
         ui->lblInfo->setText(tr("Position %1 Style %2").arg(editor->currentPos()).arg(editor->styleAt(editor->currentPos())));
@@ -167,11 +164,28 @@ void LanguageInspectorDock::updatePropertyInfo(ScintillaNext *editor)
 
 void LanguageInspectorDock::updateKeywordInfo(ScintillaNext *editor)
 {
-    ui->tblKeywords->model()->deleteLater();
-    ui->tblKeywords->setModel(new LanguageKeywordsModel(editor));
+    ui->tblKeywords->clearContents();
+
+    const QString keyWordSetsDescription = QString(editor->describeKeyWordSets());
+
+    if (keyWordSetsDescription.isEmpty()) {
+        ui->tblKeywords->setRowCount(0);
+    }
+    else {
+        QStringList keyWordsSets = keyWordSetsDescription.split('\n');
+
+        ui->tblKeywords->setRowCount(keyWordsSets.count());
+
+        for (int i = 0; i < keyWordsSets.count(); ++i) {
+            auto id = new QTableWidgetItem(QString::number(i));
+            id->setTextAlignment(Qt::AlignCenter);
+
+            ui->tblKeywords->setItem(i, 0, id);
+            ui->tblKeywords->setItem(i, 1, new QTableWidgetItem(keyWordsSets[i]));
+        }
+    }
 
     ui->tblKeywords->resizeColumnToContents(0);
-    ui->tblKeywords->horizontalHeader()->setStretchLastSection(true);
 }
 
 void LanguageInspectorDock::updateStyleInfo(ScintillaNext *editor)
