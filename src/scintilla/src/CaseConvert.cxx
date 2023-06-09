@@ -580,7 +580,7 @@ constexpr std::string_view complexCaseConversions =
 // Maximum length of a case conversion result is 6 bytes in UTF-8
 constexpr size_t maxConversionLength = 6;
 
-class CaseConverter : public ICaseConverter {
+class CaseConverter final : public ICaseConverter {
 	struct ConversionString {
 		char conversion[maxConversionLength+1]{};
 	};
@@ -613,12 +613,6 @@ class CaseConverter : public ICaseConverter {
 
 public:
 	CaseConverter() noexcept = default;
-	// Deleted so CaseConverter objects can not be copied.
-	CaseConverter(const CaseConverter &) = delete;
-	CaseConverter(CaseConverter &&) = delete;
-	CaseConverter &operator=(const CaseConverter &) = delete;
-	CaseConverter &operator=(CaseConverter &&) = delete;
-	virtual ~CaseConverter() noexcept = default;
 	bool Initialised() const noexcept {
 		return !characters.empty();
 	}
