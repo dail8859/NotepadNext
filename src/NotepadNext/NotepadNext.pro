@@ -75,7 +75,6 @@ SOURCES += \
     HtmlConverter.cpp \
     IFaceTable.cpp \
     IFaceTableMixer.cpp \
-    LanguagePropertiesModel.cpp \
     LanguageStylesModel.cpp \
     LuaExtension.cpp \
     LuaState.cpp \
@@ -152,7 +151,6 @@ HEADERS += \
     IFaceTable.h \
     IFaceTableMixer.h \
     ISearchResultsHandler.h \
-    LanguagePropertiesModel.h \
     LanguageStylesModel.h \
     LuaExtension.h \
     LuaState.h \
