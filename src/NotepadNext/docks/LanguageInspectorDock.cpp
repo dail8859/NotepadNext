@@ -184,8 +184,8 @@ void LanguageInspectorDock::updatePropertyInfo(ScintillaNext *editor)
 
             QTableWidgetItem *prop = new QTableWidgetItem(property);
             QTableWidgetItem *type = new QTableWidgetItem(property_type_to_string(editor->propertyType(property.toLatin1().constData())));
-            QTableWidgetItem *desc = new QTableWidgetItem(editor->describeProperty(property.toLatin1().constData()));
-            QTableWidgetItem *val = new QTableWidgetItem(editor->property(property.toLatin1().constData()));
+            QTableWidgetItem *desc = new QTableWidgetItem(QString(editor->describeProperty(property.toLatin1().constData())));
+            QTableWidgetItem *val = new QTableWidgetItem(QString(editor->property(property.toLatin1().constData())));
 
             desc->setToolTip(desc->text());
 
