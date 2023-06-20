@@ -414,12 +414,24 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->pushExitFullScreen->setVisible(false);
     connect(ui->pushExitFullScreen, &QPushButton::clicked, ui->actionFullScreen, &QAction::trigger);
     connect(ui->actionFullScreen, &QAction::triggered, this, [=](bool b) {
+        static bool wasMaximized;
+
         if (b) {
             // NOTE: don't hide() these as it will cancel their actions they hold
             ui->menuBar->setMaximumHeight(0);
             ui->mainToolBar->setMaximumHeight(0);
 
+            wasMaximized = isMaximized();
+            if (wasMaximized) {
+                // By default when calling showMaximized() from a full screen state, the window will resize
+                // to its "normal" size and then immediately resize to the "maximized" size which is very ugly.
+                // By calling setGeometry() to the size of the screen, it at least alleviates the ugly animation
+                // going from: fullscreen -> small "normal" size -> full size of screen
+                setGeometry(screen()->availableGeometry());
+            }
+
             showFullScreen();
+
             ui->pushExitFullScreen->setGeometry(width() - 20, 0, 20, 20);
             ui->pushExitFullScreen->show();
             ui->pushExitFullScreen->raise();
@@ -427,7 +439,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         else {
             ui->menuBar->setMaximumHeight(QWIDGETSIZE_MAX);
             ui->mainToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
-            showNormal();
+
+            if (wasMaximized)
+                showMaximized();
+            else
+                showNormal();
 
             ui->pushExitFullScreen->hide();
         }
