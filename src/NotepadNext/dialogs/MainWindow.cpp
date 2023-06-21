@@ -37,6 +37,7 @@
 #include <QPrinter>
 #include <QDirIterator>
 #include <QProcess>
+#include <QScreen>
 
 
 #ifdef Q_OS_WIN
