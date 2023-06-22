@@ -60,6 +60,8 @@ SetCompressor /SOLID lzma
 !insertmacro MUI_PAGE_DIRECTORY # In which folder install page.
 !define MUI_PAGE_CUSTOMFUNCTION_SHOW "CheckIfRunning"
 !insertmacro MUI_PAGE_INSTFILES # Installing page.
+# After installation, run Notepad Next by default
+!define MUI_FINISHPAGE_RUN "$INSTDIR\NotepadNext.exe"
 !insertmacro MUI_PAGE_FINISH # Finished installation page.
 
 
