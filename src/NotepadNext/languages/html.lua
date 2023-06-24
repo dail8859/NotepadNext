@@ -10,6 +10,7 @@ L.extensions = {
 	"xhtml",
 	"xht",
 	"hta",
+	"vue",
 }
 
 L.keywords = {
