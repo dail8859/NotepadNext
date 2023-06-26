@@ -24,6 +24,7 @@
         <file>languages/cs.lua</file>
         <file>languages/csound.lua</file>
         <file>languages/css.lua</file>
+        <file>languages/scss.lua</file>
         <file>languages/d.lua</file>
         <file>languages/diff.lua</file>
         <file>languages/erlang.lua</file>
@@ -44,6 +45,7 @@
         <file>languages/kix.lua</file>
         <file>languages/latex.lua</file>
         <file>languages/lisp.lua</file>
+        <file>languages/less.lua</file>
         <file>languages/makefile.lua</file>
         <file>languages/matlab.lua</file>
         <file>languages/mmixal.lua</file>
