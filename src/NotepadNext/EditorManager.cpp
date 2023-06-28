@@ -150,58 +150,19 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setCaretLineVisible(true);
     editor->setCaretLineVisibleAlways(true);
     editor->setCaretWidth(2);
-
-    editor->setEdgeColour(0x80FFFF);
-
-    // https://www.scintilla.org/ScintillaDoc.html#ElementColours
-    // SC_ELEMENT_SELECTION_TEXT
-    // SC_ELEMENT_SELECTION_BACK
-    // SC_ELEMENT_SELECTION_ADDITIONAL_TEXT
-    // SC_ELEMENT_SELECTION_ADDITIONAL_BACK
-    // SC_ELEMENT_SELECTION_SECONDARY_TEXT
-    // SC_ELEMENT_SELECTION_SECONDARY_BACK
-    // SC_ELEMENT_SELECTION_INACTIVE_TEXT
-    editor->setElementColour(SC_ELEMENT_SELECTION_INACTIVE_BACK, 0xFFE0E0E0);
-    // SC_ELEMENT_CARET
-    // SC_ELEMENT_CARET_ADDITIONAL
-    editor->setElementColour(SC_ELEMENT_CARET_LINE_BACK, 0xFFFFE8E8);
-    editor->setElementColour(SC_ELEMENT_WHITE_SPACE, 0xFFD0D0D0);
-    // SC_ELEMENT_WHITE_SPACE_BACK
-    // SC_ELEMENT_HOT_SPOT_ACTIVE
-    // SC_ELEMENT_HOT_SPOT_ACTIVE_BACK
-    editor->setElementColour(SC_ELEMENT_FOLD_LINE, 0xFFA0A0A0);
-    // SC_ELEMENT_HIDDEN_LINE
-
-    editor->setWhitespaceSize(2);
-
-    editor->setFoldMarginColour(true, 0xFFFFFF);
-    editor->setFoldMarginHiColour(true, 0xE9E9E9);
-
+    
     editor->setIndentationGuides(SC_IV_LOOKBOTH);
 
     editor->setAutomaticFold(SC_AUTOMATICFOLD_SHOW | SC_AUTOMATICFOLD_CLICK | SC_AUTOMATICFOLD_CHANGE);
-    editor->markerEnableHighlight(true);
-
-
-    editor->styleSetFore(STYLE_DEFAULT, 0x000000);
-    editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
+    editor->markerEnableHighlight(true);    
+    
+    editor->setWhitespaceSize(2);
+    
     editor->styleSetSize(STYLE_DEFAULT, DefaultFontSize());
-    editor->styleSetFont(STYLE_DEFAULT, "Courier New");
+    editor->styleSetFont(STYLE_DEFAULT, "Courier New");    
 
-    editor->styleClearAll();
-
-    editor->styleSetFore(STYLE_LINENUMBER, 0x808080);
-    editor->styleSetBack(STYLE_LINENUMBER, 0xE4E4E4);
-    editor->styleSetBold(STYLE_LINENUMBER, false);
-
-    editor->styleSetFore(STYLE_BRACELIGHT, 0x0000FF);
-    editor->styleSetBack(STYLE_BRACELIGHT, 0xFFFFFF);
-
-    editor->styleSetFore(STYLE_BRACEBAD, 0x000080);
-    editor->styleSetBack(STYLE_BRACEBAD, 0xFFFFFF);
-
-    editor->styleSetFore(STYLE_INDENTGUIDE, 0xC0C0C0);
-    editor->styleSetBack(STYLE_INDENTGUIDE, 0xFFFFFF);
+    // TODO: set up colour, should dark mode aware
+    setupEditorColor(editor);
 
     // STYLE_CONTROLCHAR
     // STYLE_CALLTIP
@@ -237,6 +198,53 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     BookMarkDecorator *bm = new BookMarkDecorator(editor);
     bm->setEnabled(true);
+}
+
+void EditorManager::setupEditorColor(ScintillaNext *editor)
+{
+    editor->setEdgeColour(0x80FFFF);
+
+    // https://www.scintilla.org/ScintillaDoc.html#ElementColours
+    // SC_ELEMENT_SELECTION_TEXT
+    // SC_ELEMENT_SELECTION_BACK
+    // SC_ELEMENT_SELECTION_ADDITIONAL_TEXT
+    // SC_ELEMENT_SELECTION_ADDITIONAL_BACK
+    // SC_ELEMENT_SELECTION_SECONDARY_TEXT
+    // SC_ELEMENT_SELECTION_SECONDARY_BACK
+    // SC_ELEMENT_SELECTION_INACTIVE_TEXT
+    editor->setElementColour(SC_ELEMENT_SELECTION_INACTIVE_BACK, 0xFFE0E0E0);
+    // SC_ELEMENT_CARET
+    // SC_ELEMENT_CARET_ADDITIONAL
+    editor->setElementColour(SC_ELEMENT_CARET_LINE_BACK, 0xFFFFE8E8);
+    editor->setElementColour(SC_ELEMENT_WHITE_SPACE, 0xFFD0D0D0);
+    // SC_ELEMENT_WHITE_SPACE_BACK
+    // SC_ELEMENT_HOT_SPOT_ACTIVE
+    // SC_ELEMENT_HOT_SPOT_ACTIVE_BACK
+    editor->setElementColour(SC_ELEMENT_FOLD_LINE, 0xFFA0A0A0);
+    // SC_ELEMENT_HIDDEN_LINE
+
+    editor->setFoldMarginColour(true, 0xFFFFFF);
+    editor->setFoldMarginHiColour(true, 0xE9E9E9);
+
+
+    editor->styleSetFore(STYLE_DEFAULT, 0x000000);
+    editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
+
+    // why clear all in the middle?
+    editor->styleClearAll();
+
+    editor->styleSetFore(STYLE_LINENUMBER, 0x808080);
+    editor->styleSetBack(STYLE_LINENUMBER, 0xE4E4E4);
+    editor->styleSetBold(STYLE_LINENUMBER, false);
+
+    editor->styleSetFore(STYLE_BRACELIGHT, 0x0000FF);
+    editor->styleSetBack(STYLE_BRACELIGHT, 0xFFFFFF);
+
+    editor->styleSetFore(STYLE_BRACEBAD, 0x000080);
+    editor->styleSetBack(STYLE_BRACEBAD, 0xFFFFFF);
+
+    editor->styleSetFore(STYLE_INDENTGUIDE, 0xC0C0C0);
+    editor->styleSetBack(STYLE_INDENTGUIDE, 0xFFFFFF);    
 }
 
 void EditorManager::purgeOldEditorPointers()
