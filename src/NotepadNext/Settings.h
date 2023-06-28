@@ -39,6 +39,8 @@ class Settings : public QObject
     Q_PROPERTY(bool restoreTempFiles READ restoreTempFiles WRITE setRestoreTempFiles NOTIFY restoreTempFilesChanged)
 
     Q_PROPERTY(bool combineSearchResults READ combineSearchResults WRITE setCombineSearchResults NOTIFY combineSearchResultsChanged)
+    
+    Q_PROPERTY(bool darkMode READ darkMode WRITE setDarkMode NOTIFY darkModeChanged)
 
     bool m_showMenuBar = true;
     bool m_showToolBar = true;
@@ -52,6 +54,8 @@ class Settings : public QObject
     bool m_restoreTempFiles = false;
 
     bool m_combineSearchResults = false;
+    
+    bool m_darkMode = true;
 
 public:
     explicit Settings(QObject *parent = nullptr);
@@ -68,6 +72,8 @@ public:
     bool restoreTempFiles() const;
 
     bool combineSearchResults() const;
+    
+    bool darkMode() const;
 
 signals:
     void showMenuBarChanged(bool showMenuBar);
@@ -82,6 +88,8 @@ signals:
     void restoreTempFilesChanged(bool restoreTempFiles);
 
     void combineSearchResultsChanged(bool combineSearchResults);
+    
+    void darkModeChanged(bool dardMode);
 
 public slots:
     void setShowMenuBar(bool showMenuBar);
@@ -96,6 +104,8 @@ public slots:
     void setRestoreTempFiles(bool restoreTempFiles);
 
     void setCombineSearchResults(bool combineSearchResults);
+    
+    void setDarkMode(bool darkMode);
 };
 
 #endif // SETTINGS_H

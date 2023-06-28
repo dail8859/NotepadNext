@@ -726,15 +726,30 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(app->getSettings(), &Settings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
 
     setupLanguageMenu();
-
-    // Put the style sheet here for now
-    QFile f(":/stylesheets/npp.css");
-    f.open(QFile::ReadOnly);
-    setStyleSheet(f.readAll());
-    f.close();
-
+    
     restoreSettings();
 
+    // Notepad next default style sheet
+    QString cssFile = ":/stylesheets/npp.css";
+    if (app->getSettings()->darkMode()) {
+        // QDarkStyleSheet dark theme
+        cssFile = ":/qdarkstyle/dark/style.qss";
+    }
+    
+    // Put the style sheet here for now
+    QFile f(cssFile);
+    if (!f.exists()) {
+        qInfo("Stylesheet resource file '%s' not found, no style sheet set", qUtf8Printable(cssFile));
+    }
+    else { 
+        qInfo("Stylesheet resource file '%s' loaded", qUtf8Printable(cssFile));
+        
+        f.open(QFile::ReadOnly);
+        QTextStream ts(&f);
+        setStyleSheet(ts.readAll());
+        f.close();
+    }
+    
     initUpdateCheck();
 }
 
@@ -1637,6 +1652,7 @@ void MainWindow::saveSettings() const
     settings.setValue("Gui/ShowToolBar", app->getSettings()->showToolBar());
     settings.setValue("Gui/ShowStatusBar", app->getSettings()->showStatusBar());
     settings.setValue("Gui/CombineSearchResults", app->getSettings()->combineSearchResults());
+    settings.setValue("Gui/DarkMode", app->getSettings()->darkMode());
 
     settings.setValue("Editor/ShowWhitespace", ui->actionShowWhitespace->isChecked());
     settings.setValue("Editor/ShowEndOfLine", ui->actionShowEndofLine->isChecked());
@@ -1660,6 +1676,7 @@ void MainWindow::restoreSettings()
     app->getSettings()->setShowToolBar(settings.value("Gui/ShowToolBar", true).toBool());
     app->getSettings()->setShowStatusBar(settings.value("Gui/ShowStatusBar", true).toBool());
     app->getSettings()->setCombineSearchResults(settings.value("Gui/CombineSearchResults", false).toBool());
+    app->getSettings()->setDarkMode(settings.value("Gui/DarkMode", true).toBool());
 
     ui->actionShowWhitespace->setChecked(settings.value("Editor/ShowWhitespace", false).toBool());
     ui->actionShowEndofLine->setChecked(settings.value("Editor/ShowEndOfLine", false).toBool());

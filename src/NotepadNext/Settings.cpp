@@ -37,6 +37,8 @@ bool Settings::restoreTempFiles() const { return m_restoreTempFiles; }
 
 bool Settings::combineSearchResults() const { return m_combineSearchResults; }
 
+bool Settings::darkMode() const { return m_darkMode; }
+
 void Settings::setShowMenuBar(bool showMenuBar)
 {
     if (m_showMenuBar == showMenuBar)
@@ -116,4 +118,13 @@ void Settings::setCombineSearchResults(bool combineSearchResults)
 
     m_combineSearchResults = combineSearchResults;
     emit combineSearchResultsChanged(m_combineSearchResults);
+}
+
+void Settings::setDarkMode(bool darkMode)
+{
+    if (m_darkMode == darkMode)
+        return;
+
+    m_darkMode = darkMode;
+    emit darkModeChanged(m_darkMode);
 }
