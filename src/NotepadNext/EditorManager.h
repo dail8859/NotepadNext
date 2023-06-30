@@ -25,6 +25,7 @@
 
 
 class ScintillaNext;
+class Settings;
 
 class EditorManager : public QObject
 {
@@ -46,8 +47,10 @@ signals:
 
 private:
     void setupEditor(ScintillaNext *editor);
-    void setupEditorColor(ScintillaNext *editor);
+    void setupEditorTheme(ScintillaNext *editor);
     void purgeOldEditorPointers();
+    Settings* getSettings();
+    int invertColor(int color);
 
     QList<QPointer<ScintillaNext>> editors;
 };

@@ -55,7 +55,7 @@ static int require_resource(lua_State *L)
 {
     const char *module = luaL_checkstring(L, 1);
 
-    QString module_file = QString(":/languages/%1.lua").arg(module);
+    QString module_file = QString(":/%1/%2.lua").arg(luaLanguagePath, module);
     QFile f(module_file);
 
     lua_pop(L, 1);
@@ -174,3 +174,4 @@ void LuaState::raiseError(const char *errorMessage)
     lua_concat(L, 2);
     lua_error(L);
 }
+

@@ -21,6 +21,8 @@
 #include "EditorManager.h"
 #include "ScintillaNext.h"
 #include "Scintilla.h"
+#include "Settings.h"
+#include "NotepadNextApplication.h"
 
 // Editor decorators
 #include "BraceMatch.h"
@@ -110,10 +112,20 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->clearCmdKey(SCK_INSERT);
 
     editor->setFoldMarkers(QStringLiteral("box"));
+    
+    int markerFg = 0xF3F3F3;
+    int markerBg = 0x808080;
+    int markerBackSelectedColor = 0x0000FF;
+    if (getSettings()->darkMode()) {
+        markerBg = 0xF3F3F3;
+        markerFg = 0x808080;
+        markerBackSelectedColor = 0xFFFF00;        
+    }    
+    
     for (int i = SC_MARKNUM_FOLDEREND; i <= SC_MARKNUM_FOLDEROPEN; ++i) {
-        editor->markerSetFore(i, 0xF3F3F3);
-        editor->markerSetBack(i, 0x808080);
-        editor->markerSetBackSelected(i, 0x0000FF);
+        editor->markerSetFore(i, markerFg);
+        editor->markerSetBack(i, markerBg);
+        editor->markerSetBackSelected(i, markerBackSelectedColor);
     }
 
     editor->setIdleStyling(SC_IDLESTYLING_TOVISIBLE);
@@ -132,7 +144,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setMarginWidthN(2, 14);
 
     editor->markerDefine(MARK_HIDELINESUNDERLINE, SC_MARK_UNDERLINE);
-    editor->markerSetBack(MARK_HIDELINESUNDERLINE, 0x77CC77);
+    
 
     editor->markerDefine(MARK_HIDELINESBEGIN, SC_MARK_ARROW);
     editor->markerDefine(MARK_HIDELINESEND, SC_MARK_ARROWDOWN);
@@ -159,10 +171,12 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setWhitespaceSize(2);
     
     editor->styleSetSize(STYLE_DEFAULT, DefaultFontSize());
-    editor->styleSetFont(STYLE_DEFAULT, "Courier New");    
+    editor->styleSetFont(STYLE_DEFAULT, "Courier New"); 
+    
+    editor->styleSetBold(STYLE_LINENUMBER, false);
 
-    // TODO: set up colour, should dark mode aware
-    setupEditorColor(editor);
+    // set up editor theme, only colour now, dark mode aware
+    setupEditorTheme(editor);
 
     // STYLE_CONTROLCHAR
     // STYLE_CALLTIP
@@ -200,51 +214,99 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     bm->setEnabled(true);
 }
 
-void EditorManager::setupEditorColor(ScintillaNext *editor)
+void EditorManager::setupEditorTheme(ScintillaNext *editor)
 {
-    editor->setEdgeColour(0x80FFFF);
+    if (getSettings()->darkMode()) {  
+        editor->setCaretFore(0xFFFFFF);
+        
+        //editor->setSelFore(true, 0xEFEFEF);
+        editor->setSelBack(true, 0xA0A0A0);
+        
+        editor->markerSetBack(MARK_HIDELINESUNDERLINE, invertColor(0x77CC77));        
+        editor->setEdgeColour(invertColor(0x80FFFF));
 
-    // https://www.scintilla.org/ScintillaDoc.html#ElementColours
-    // SC_ELEMENT_SELECTION_TEXT
-    // SC_ELEMENT_SELECTION_BACK
-    // SC_ELEMENT_SELECTION_ADDITIONAL_TEXT
-    // SC_ELEMENT_SELECTION_ADDITIONAL_BACK
-    // SC_ELEMENT_SELECTION_SECONDARY_TEXT
-    // SC_ELEMENT_SELECTION_SECONDARY_BACK
-    // SC_ELEMENT_SELECTION_INACTIVE_TEXT
-    editor->setElementColour(SC_ELEMENT_SELECTION_INACTIVE_BACK, 0xFFE0E0E0);
-    // SC_ELEMENT_CARET
-    // SC_ELEMENT_CARET_ADDITIONAL
-    editor->setElementColour(SC_ELEMENT_CARET_LINE_BACK, 0xFFFFE8E8);
-    editor->setElementColour(SC_ELEMENT_WHITE_SPACE, 0xFFD0D0D0);
-    // SC_ELEMENT_WHITE_SPACE_BACK
-    // SC_ELEMENT_HOT_SPOT_ACTIVE
-    // SC_ELEMENT_HOT_SPOT_ACTIVE_BACK
-    editor->setElementColour(SC_ELEMENT_FOLD_LINE, 0xFFA0A0A0);
-    // SC_ELEMENT_HIDDEN_LINE
+        // https://www.scintilla.org/ScintillaDoc.html#ElementColours 
+        // SC_ELEMENT_SELECTION_TEXT
+        // SC_ELEMENT_SELECTION_BACK
+        // SC_ELEMENT_SELECTION_ADDITIONAL_TEXT
+        // SC_ELEMENT_SELECTION_ADDITIONAL_BACK
+        // SC_ELEMENT_SELECTION_SECONDARY_TEXT
+        // SC_ELEMENT_SELECTION_SECONDARY_BACK
+        // SC_ELEMENT_SELECTION_INACTIVE_TEXT
+        editor->setElementColour(SC_ELEMENT_SELECTION_INACTIVE_BACK, invertColor(0xFFE0E0E0));
+        // SC_ELEMENT_CARET
+        // SC_ELEMENT_CARET_ADDITIONAL
+        editor->setElementColour(SC_ELEMENT_CARET_LINE_BACK, 0x606060);
+        // SC_ELEMENT_WHITE_SPACE
+        // SC_ELEMENT_WHITE_SPACE_BACK
+        // setElementColour supports transparency!
+        editor->setElementColour(SC_ELEMENT_WHITE_SPACE, 0x0000FF);
+        editor->setElementColour(SC_ELEMENT_WHITE_SPACE_BACK, 0xFFFF00);
+        
+        // SC_ELEMENT_HOT_SPOT_ACTIVE
+        // SC_ELEMENT_HOT_SPOT_ACTIVE_BACK
+        editor->setElementColour(SC_ELEMENT_FOLD_LINE, invertColor(0xFFA0A0A0));
+        // SC_ELEMENT_HIDDEN_LINE
 
-    editor->setFoldMarginColour(true, 0xFFFFFF);
-    editor->setFoldMarginHiColour(true, 0xE9E9E9);
+        editor->setFoldMarginColour(true, 0xFFFFFF);
+        editor->setFoldMarginHiColour(true, 0xE9E9E9);
 
+        editor->styleSetFore(STYLE_DEFAULT, 0xFFFFFF);
+        editor->styleSetBack(STYLE_DEFAULT, 0x232D19);
 
-    editor->styleSetFore(STYLE_DEFAULT, 0x000000);
-    editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
+        editor->styleSetFore(STYLE_LINENUMBER, 0xE4E4E4);
+        editor->styleSetBack(STYLE_LINENUMBER, 0x808080);
+       
+        editor->styleSetFore(STYLE_BRACELIGHT, 0xFFFFFF);
+        editor->styleSetBack(STYLE_BRACELIGHT, 0x0000FF);
 
-    // why clear all in the middle?
-    editor->styleClearAll();
+        editor->styleSetFore(STYLE_BRACEBAD, 0xFFFFFF);
+        editor->styleSetBack(STYLE_BRACEBAD, 0x000080);
 
-    editor->styleSetFore(STYLE_LINENUMBER, 0x808080);
-    editor->styleSetBack(STYLE_LINENUMBER, 0xE4E4E4);
-    editor->styleSetBold(STYLE_LINENUMBER, false);
+        editor->styleSetFore(STYLE_INDENTGUIDE, 0xFFFFFF);
+        editor->styleSetBack(STYLE_INDENTGUIDE, 0xC0C0C0);
+    }
+    else {
+        editor->markerSetBack(MARK_HIDELINESUNDERLINE, 0x77CC77);        
+        editor->setEdgeColour(0x80FFFF);
 
-    editor->styleSetFore(STYLE_BRACELIGHT, 0x0000FF);
-    editor->styleSetBack(STYLE_BRACELIGHT, 0xFFFFFF);
+        // https://www.scintilla.org/ScintillaDoc.html#ElementColours
+        // SC_ELEMENT_SELECTION_TEXT
+        // SC_ELEMENT_SELECTION_BACK
+        // SC_ELEMENT_SELECTION_ADDITIONAL_TEXT
+        // SC_ELEMENT_SELECTION_ADDITIONAL_BACK
+        // SC_ELEMENT_SELECTION_SECONDARY_TEXT
+        // SC_ELEMENT_SELECTION_SECONDARY_BACK
+        // SC_ELEMENT_SELECTION_INACTIVE_TEXT
+        editor->setElementColour(SC_ELEMENT_SELECTION_INACTIVE_BACK, 0xFFE0E0E0);
+        // SC_ELEMENT_CARET
+        // SC_ELEMENT_CARET_ADDITIONAL
+        editor->setElementColour(SC_ELEMENT_CARET_LINE_BACK, 0xFFFFE8E8);
+        editor->setElementColour(SC_ELEMENT_WHITE_SPACE, 0xFFD0D0D0);
+        // SC_ELEMENT_WHITE_SPACE_BACK
+        // SC_ELEMENT_HOT_SPOT_ACTIVE
+        // SC_ELEMENT_HOT_SPOT_ACTIVE_BACK
+        editor->setElementColour(SC_ELEMENT_FOLD_LINE, 0xFFA0A0A0);
+        // SC_ELEMENT_HIDDEN_LINE
 
-    editor->styleSetFore(STYLE_BRACEBAD, 0x000080);
-    editor->styleSetBack(STYLE_BRACEBAD, 0xFFFFFF);
+        editor->setFoldMarginColour(true, 0xFFFFFF);
+        editor->setFoldMarginHiColour(true, 0xE9E9E9);
 
-    editor->styleSetFore(STYLE_INDENTGUIDE, 0xC0C0C0);
-    editor->styleSetBack(STYLE_INDENTGUIDE, 0xFFFFFF);    
+        editor->styleSetFore(STYLE_DEFAULT, 0x000000);
+        editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
+
+        editor->styleSetFore(STYLE_LINENUMBER, 0x808080);
+        editor->styleSetBack(STYLE_LINENUMBER, 0xE4E4E4);
+       
+        editor->styleSetFore(STYLE_BRACELIGHT, 0x0000FF);
+        editor->styleSetBack(STYLE_BRACELIGHT, 0xFFFFFF);
+
+        editor->styleSetFore(STYLE_BRACEBAD, 0x000080);
+        editor->styleSetBack(STYLE_BRACEBAD, 0xFFFFFF);
+
+        editor->styleSetFore(STYLE_INDENTGUIDE, 0xC0C0C0);
+        editor->styleSetBack(STYLE_INDENTGUIDE, 0xFFFFFF);    
+    }
 }
 
 void EditorManager::purgeOldEditorPointers()
@@ -256,4 +318,21 @@ void EditorManager::purgeOldEditorPointers()
         if (pointer.isNull())
             it.remove();
     }
+}
+
+Settings* EditorManager::getSettings()
+{
+    return ((NotepadNextApplication*)parent())->getSettings();
+}
+
+int EditorManager::invertColor(int color)
+{
+    // implementation by XOR
+    // return color ^ 0xFFFFFF;
+    
+    int red   = color >> 16;
+    int green = color >> 8;
+    int blue  = color & 0x0000FF;
+    
+    return (255 - red) << 16 | (255 - green) << 8 | (255 - blue);
 }

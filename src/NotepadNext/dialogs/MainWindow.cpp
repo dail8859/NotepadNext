@@ -82,6 +82,25 @@
 #include "HtmlConverter.h"
 #include "RtfConverter.h"
 
+QString loadCssFile(const QString& cssFile)
+{
+    QFile f(cssFile);
+    if (!f.exists()) {
+        qInfo("Stylesheet resource file '%s' not found, no style sheet set", qUtf8Printable(cssFile));
+
+        return "";
+    }
+    else { 
+        qInfo("Stylesheet resource file '%s' loaded", qUtf8Printable(cssFile));
+        
+        f.open(QFile::ReadOnly);
+        QTextStream ts(&f);
+        QString cssContent = ts.readAll();
+        f.close();
+
+        return cssContent;
+    }
+}
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
@@ -730,25 +749,15 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     restoreSettings();
 
     // Notepad next default style sheet
-    QString cssFile = ":/stylesheets/npp.css";
+    QString cssContent = loadCssFile(":/stylesheets/npp.css");
     if (app->getSettings()->darkMode()) {
         // QDarkStyleSheet dark theme
-        cssFile = ":/qdarkstyle/dark/style.qss";
+        QString darkCss = loadCssFile(":/qdarkstyle/dark/style.qss");
+        cssContent.append(darkCss);
     }
     
     // Put the style sheet here for now
-    QFile f(cssFile);
-    if (!f.exists()) {
-        qInfo("Stylesheet resource file '%s' not found, no style sheet set", qUtf8Printable(cssFile));
-    }
-    else { 
-        qInfo("Stylesheet resource file '%s' loaded", qUtf8Printable(cssFile));
-        
-        f.open(QFile::ReadOnly);
-        QTextStream ts(&f);
-        setStyleSheet(ts.readAll());
-        f.close();
-    }
+    setStyleSheet(cssContent);
     
     initUpdateCheck();
 }

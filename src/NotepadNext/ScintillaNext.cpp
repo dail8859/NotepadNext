@@ -181,7 +181,7 @@ bool ScintillaNext::canSaveToDisk() const
     return temporary ||
            (bufferType == ScintillaNext::New && modify()) ||
            (bufferType == ScintillaNext::File && modify()) ||
-            (bufferType == ScintillaNext::FileMissing);
+           (bufferType == ScintillaNext::FileMissing);
 }
 
 void ScintillaNext::setName(const QString &name)

@@ -27,6 +27,8 @@
 
 struct lua_State;
 
+extern QString luaLanguagePath;
+
 class LuaState
 {
 public:
@@ -44,7 +46,6 @@ public:
     void raiseError(const char *errorMessage = Q_NULLPTR);
 
     lua_State *L = Q_NULLPTR;
-
 private:
 };
 

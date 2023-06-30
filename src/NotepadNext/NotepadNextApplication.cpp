@@ -41,6 +41,8 @@
 #include <Windows.h>
 #endif
 
+QString luaLanguagePath;
+
 const SingleApplication::Options opts = SingleApplication::ExcludeAppPath | SingleApplication::ExcludeAppVersion | SingleApplication::SecondaryNotification;
 
 template <>
@@ -123,7 +125,13 @@ bool NotepadNextApplication::init()
         }
     });
 
+    // why setting loaded here? can it be loaded eailer?
     loadSettings();
+
+    // set language path based theme,
+    // dark mode has its own path
+    luaLanguagePath = settings->darkMode() ? "languages/dark" : "languages";
+    qInfo("Lua language path: %s", qUtf8Printable(luaLanguagePath));
 
     connect(this, &NotepadNextApplication::aboutToQuit, this, &NotepadNextApplication::saveSettings);
 
