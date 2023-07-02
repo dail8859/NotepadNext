@@ -12,29 +12,29 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["RECSTART"] = {
 		id = 1,
 		fgColor = rgb(0x7F0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["RECTYPE"] = {
 		id = 2,
 		fgColor = rgb(0x7F0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["RECTYPE_UNKNOWN"] = {
 		id = 3,
 		fgColor = rgb(0x7F0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 2,
 	},
 	["BYTECOUNT"] = {
 		id = 4,
 		fgColor = rgb(0x7F7F00),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["BYTECOUNT_WRONG"] = {
 		id = 5,
@@ -44,55 +44,55 @@ L.styles = {
 	["NOADDRESS"] = {
 		id = 6,
 		fgColor = rgb(0x7F00FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["DATAADDRESS"] = {
 		id = 7,
 		fgColor = rgb(0x007FFF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["STARTADDRESS"] = {
 		id = 9,
 		fgColor = rgb(0x007FFF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["ADDRESSFIELD_UNKNOWN"] = {
 		id = 10,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 		fontStyle = 2,
 	},
 	["EXTENDEDADDRESS"] = {
 		id = 11,
 		fgColor = rgb(0x007FFF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["DATA_ODD"] = {
 		id = 12,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["DATA_EVEN"] = {
 		id = 13,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["DATA_UNKNOWN"] = {
 		id = 14,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 		fontStyle = 2,
 	},
 	["DATA_EMPTY"] = {
 		id = 15,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["CHECKSUM"] = {
 		id = 16,
 		fgColor = rgb(0x00BF00),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["CHECKSUM_WRONG"] = {
 		id = 17,
@@ -101,8 +101,8 @@ L.styles = {
 	},
 	["GARBAGE"] = {
 		id = 18,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 		fontStyle = 2,
 	},
 }

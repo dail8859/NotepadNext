@@ -13,39 +13,39 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["STRING"] = {
 		id = 1,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["NUMBER"] = {
 		id = 2,
 		fgColor = rgb(0xFF8000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["COMMENT"] = {
 		id = 3,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["SYMBOL"] = {
 		id = 4,
 		fgColor = rgb(0x408080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["BINARY"] = {
 		id = 5,
 		fgColor = rgb(0x000080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["BOOL"] = {
 		id = 6,
 		fgColor = rgb(0x8000FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["SELF"] = {
 		id = 7,
@@ -62,43 +62,43 @@ L.styles = {
 	["NIL"] = {
 		id = 9,
 		fgColor = rgb(0x8080C0),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["GLOBAL"] = {
 		id = 10,
 		fgColor = rgb(0x800000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["RETURN"] = {
 		id = 11,
 		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["SPECIAL"] = {
 		id = 12,
 		fgColor = rgb(0x808000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["KWS END"] = {
 		id = 13,
 		fgColor = rgb(0x0080FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["ASSIGN"] = {
 		id = 14,
 		fgColor = rgb(0xFF0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["CHARACTER"] = {
 		id = 15,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["SPECIAL SELECTOR"] = {
 		id = 16,
 		fgColor = rgb(0xFF80C0),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 }
 return L

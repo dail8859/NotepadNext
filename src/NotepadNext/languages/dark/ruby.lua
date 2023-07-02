@@ -16,18 +16,18 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["ERROR"] = {
 		id = 1,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["COMMENTLINE"] = {
 		id = 2,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["POD"] = {
 		id = 3,
@@ -37,28 +37,28 @@ L.styles = {
 	["NUMBER"] = {
 		id = 4,
 		fgColor = rgb(0xFF8000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["INSTRUCTION"] = {
 		id = 5,
 		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["STRING"] = {
 		id = 6,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["CHARACTER"] = {
 		id = 7,
 		fgColor = rgb(0x808000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["CLASS NAME"] = {
 		id = 8,
 		fgColor = rgb(0x0080C0),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["DEF NAME"] = {
@@ -70,45 +70,45 @@ L.styles = {
 	["OPERATOR"] = {
 		id = 10,
 		fgColor = rgb(0x000080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["IDENTIFIER"] = {
 		id = 11,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["REGEX"] = {
 		id = 12,
 		fgColor = rgb(0x0080FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["GLOBAL"] = {
 		id = 13,
 		fgColor = rgb(0x000080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["SYMBOL"] = {
 		id = 14,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["MODULE NAME"] = {
 		id = 15,
 		fgColor = rgb(0x804000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["INSTANCE VAR"] = {
 		id = 16,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["CLASS VAR"] = {
 		id = 17,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["BACKTICKS"] = {
 		id = 18,
@@ -123,7 +123,7 @@ L.styles = {
 	["STRING Q"] = {
 		id = 24,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 }
 return L

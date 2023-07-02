@@ -50,7 +50,6 @@ private:
     void setupEditorTheme(ScintillaNext *editor);
     void purgeOldEditorPointers();
     Settings* getSettings();
-    int invertColor(int color);
 
     QList<QPointer<ScintillaNext>> editors;
 };

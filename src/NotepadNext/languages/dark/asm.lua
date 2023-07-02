@@ -20,45 +20,45 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["NUMBER"] = {
 		id = 2,
 		fgColor = rgb(0xFF8000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["STRING"] = {
 		id = 3,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["OPERATOR"] = {
 		id = 4,
 		fgColor = rgb(0x000080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["IDENTIFIER"] = {
 		id = 5,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["CPU INSTRUCTION"] = {
 		id = 6,
 		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["MATH INSTRUCTION"] = {
 		id = 7,
 		fgColor = rgb(0x0080C0),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["REGISTER"] = {
@@ -70,28 +70,28 @@ L.styles = {
 	["DIRECTIVE"] = {
 		id = 9,
 		fgColor = rgb(0x0080FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["DIRECTIVE OPERAND"] = {
 		id = 10,
 		fgColor = rgb(0x000080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["COMMENT BLOCK"] = {
 		id = 11,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["CHARACTER"] = {
 		id = 12,
 		fgColor = rgb(0x808000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["EXT INSTRUCTION"] = {
 		id = 14,
 		fgColor = rgb(0x804000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 }

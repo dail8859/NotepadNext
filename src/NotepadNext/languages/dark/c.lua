@@ -15,99 +15,104 @@ L.keywords = {
 }
 
 L.styles = {
+	["WHITE SPACCE"] = {
+		id = 0,
+		fgColor = darkFg,
+		bgColor = darkBg,
+	},
 	["PREPROCESSOR"] = {
 		id = 9,
 		fgColor = rgb(0x804000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["DEFAULT"] = {
 		id = 11,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["INSTRUCTION WORD"] = {
 		id = 5,
 		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["TYPE WORD"] = {
 		id = 16,
 		fgColor = rgb(0x8000FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["NUMBER"] = {
 		id = 4,
 		fgColor = rgb(0xFF8000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["STRING"] = {
 		id = 6,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["CHARACTER"] = {
 		id = 7,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["OPERATOR"] = {
 		id = 10,
 		fgColor = rgb(0x000080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["VERBATIM"] = {
 		id = 13,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["REGEX"] = {
 		id = 14,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["COMMENT LINE"] = {
 		id = 2,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["COMMENT DOC"] = {
 		id = 3,
 		fgColor = rgb(0x008080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["COMMENT LINE DOC"] = {
 		id = 15,
 		fgColor = rgb(0x008080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["COMMENT DOC KEYWORD"] = {
 		id = 17,
 		fgColor = rgb(0x008080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["COMMENT DOC KEYWORD ERROR"] = {
 		id = 18,
 		fgColor = rgb(0x008080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["PREPROCESSOR COMMENT"] = {
 		id = 23,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["PREPROCESSOR COMMENT DOC"] = {
 		id = 24,
 		fgColor = rgb(0x008080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 }
 return L

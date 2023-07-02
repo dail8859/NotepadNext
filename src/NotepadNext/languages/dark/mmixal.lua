@@ -17,33 +17,33 @@ L.keywords = {
 L.styles = {
 	["DIVSION OF LEADING WHITESPACE IN LINE"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x007F00),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["LABEL"] = {
 		id = 2,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["OPCODE"] = {
 		id = 3,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["DIVISION BETWEEN LABEL AND OPCODE"] = {
 		id = 4,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["VALID OPCODE"] = {
 		id = 5,
 		fgColor = rgb(0x00007F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["UNKNOWN OPCODE"] = {
@@ -53,59 +53,59 @@ L.styles = {
 	},
 	["DIVISION BETWEEN OPCODE AND OPERANDS"] = {
 		id = 7,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["DIVISION OF OPERANDS"] = {
 		id = 8,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["NUMBER"] = {
 		id = 9,
 		fgColor = rgb(0x007F7F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["REFERENCE (TO A LABEL)"] = {
 		id = 10,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["CHAR"] = {
 		id = 11,
 		fgColor = rgb(0x7F007F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["STRING"] = {
 		id = 12,
 		fgColor = rgb(0x7F007F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["REGISTER"] = {
 		id = 13,
 		fgColor = rgb(0x7F007F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["HEXADECIMAL NUMBER"] = {
 		id = 14,
 		fgColor = rgb(0x7F0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["OPERATOR"] = {
 		id = 15,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["SYMBOL"] = {
 		id = 16,
 		fgColor = rgb(0xFF7777),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["COMMENT OTHERWISE"] = {
 		id = 17,
 		fgColor = rgb(0x007F00),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 }
 return L

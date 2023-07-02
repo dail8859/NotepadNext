@@ -131,7 +131,7 @@ bool NotepadNextApplication::init()
     // set language path based theme,
     // dark mode has its own path
     luaLanguagePath = settings->darkMode() ? "languages/dark" : "languages";
-    qInfo("Lua language path: %s", qUtf8Printable(luaLanguagePath));
+    qInfo("Dark mode: %d, Lua language path: %s", settings->darkMode(), qUtf8Printable(luaLanguagePath));
 
     connect(this, &NotepadNextApplication::aboutToQuit, this, &NotepadNextApplication::saveSettings);
 
@@ -465,6 +465,8 @@ void NotepadNextApplication::loadSettings()
     settings->setRestoreUnsavedFiles(qsettings.value("App/RestoreUnsavedFiles", false).toBool());
     settings->setRestoreTempFiles(qsettings.value("App/RestoreTempFiles", false).toBool());
     recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
+    
+    settings->setDarkMode(qsettings.value("Gui/DarkMode", false).toBool());
 }
 
 void NotepadNextApplication::saveSettings()

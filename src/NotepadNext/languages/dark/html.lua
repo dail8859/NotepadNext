@@ -21,60 +21,60 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF)
+		fgColor = darkFg,
+		bgColor = darkBg
 	},
 	["COMMENT"] = {
 		id = 9,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["NUMBER"] = {
 		id = 5,
 		fgColor = rgb(0xFF0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["DOUBLESTRING"] = {
 		id = 6,
 		fgColor = rgb(0x8000FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["SINGLESTRING"] = {
 		id = 7,
 		fgColor = rgb(0x8000FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["TAG"] = {
 		id = 1,
 		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["TAGEND"] = {
 		id = 11,
 		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["TAGUNKNOWN"] = {
 		id = 2,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["ATTRIBUTE"] = {
 		id = 3,
 		fgColor = rgb(0xFF0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["ATTRIBUTEUNKNOWN"] = {
 		id = 4,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = darkFg,
+		bgColor = darkBg,
 	},
 	["CDATA"] = {
 		id = 17,
 		fgColor = rgb(0xFF8000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 	},
 	["VALUE"] = {
 		id = 19,
@@ -83,38 +83,38 @@ L.styles = {
 	},
 	["ENTITY"] = {
 		id = 10,
-		fgColor = rgb(0x000000),
+		fgColor = darkFg,
 		bgColor = rgb(0xFEFDE0),
 		fontStyle = 2,
 	},
 	["SGML_DEFAULT"] = {
 		id = 21,
 		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["SGML_COMMAND"] = {
 		id = 22,
 		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["SGML_PARAM"] = {
 		id = 23,
 		fgColor = rgb(0xFF0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["SGML_DOUBLESTRING"] = {
 		id = 24,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["SGML_COMMENT"] = {
 		id = 29,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = darkBg,
 		fontStyle = 1,
 	},
 }

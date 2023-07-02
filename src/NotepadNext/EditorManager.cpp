@@ -36,11 +36,17 @@
 #include "URLFinder.h"
 #include "BookMarkDecorator.h"
 
+#define DARK_DEFAULT_BG 0x19232D
 
 const int MARK_HIDELINESBEGIN = 23;
 const int MARK_HIDELINESEND = 22;
 const int MARK_HIDELINESUNDERLINE = 21;
 
+static int invertColor(int color)
+{
+    // implementation by XOR
+    return color ^ 0xFFFFFF;
+}
 
 static int DefaultFontSize()
 {
@@ -112,21 +118,6 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->clearCmdKey(SCK_INSERT);
 
     editor->setFoldMarkers(QStringLiteral("box"));
-    
-    int markerFg = 0xF3F3F3;
-    int markerBg = 0x808080;
-    int markerBackSelectedColor = 0x0000FF;
-    if (getSettings()->darkMode()) {
-        markerBg = 0xF3F3F3;
-        markerFg = 0x808080;
-        markerBackSelectedColor = 0xFFFF00;        
-    }    
-    
-    for (int i = SC_MARKNUM_FOLDEREND; i <= SC_MARKNUM_FOLDEROPEN; ++i) {
-        editor->markerSetFore(i, markerFg);
-        editor->markerSetBack(i, markerBg);
-        editor->markerSetBackSelected(i, markerBackSelectedColor);
-    }
 
     editor->setIdleStyling(SC_IDLESTYLING_TOVISIBLE);
     editor->setEndAtLastLine(false);
@@ -221,8 +212,17 @@ void EditorManager::setupEditorTheme(ScintillaNext *editor)
         
         //editor->setSelFore(true, 0xEFEFEF);
         editor->setSelBack(true, 0xA0A0A0);
+
+        // folding/arker
+        for (int i = SC_MARKNUM_FOLDEREND; i <= SC_MARKNUM_FOLDEROPEN; ++i) {
+            editor->markerSetFore(i, 0x808080);
+            editor->markerSetBack(i, 0x1F1F1F);
+            editor->markerSetBackSelected(i, 0x0000FF);
+        }
         
-        editor->markerSetBack(MARK_HIDELINESUNDERLINE, invertColor(0x77CC77));        
+        editor->markerSetBack(MARK_HIDELINESUNDERLINE, invertColor(0x77CC77));     
+        // end folding/marker
+ 
         editor->setEdgeColour(invertColor(0x80FFFF));
 
         // https://www.scintilla.org/ScintillaDoc.html#ElementColours 
@@ -240,19 +240,19 @@ void EditorManager::setupEditorTheme(ScintillaNext *editor)
         // SC_ELEMENT_WHITE_SPACE
         // SC_ELEMENT_WHITE_SPACE_BACK
         // setElementColour supports transparency!
-        editor->setElementColour(SC_ELEMENT_WHITE_SPACE, 0x0000FF);
-        editor->setElementColour(SC_ELEMENT_WHITE_SPACE_BACK, 0xFFFF00);
+        editor->setElementColour(SC_ELEMENT_WHITE_SPACE, invertColor(0xFFD0D0D0));
+        editor->setElementColour(SC_ELEMENT_WHITE_SPACE_BACK, DARK_DEFAULT_BG);
         
         // SC_ELEMENT_HOT_SPOT_ACTIVE
         // SC_ELEMENT_HOT_SPOT_ACTIVE_BACK
         editor->setElementColour(SC_ELEMENT_FOLD_LINE, invertColor(0xFFA0A0A0));
         // SC_ELEMENT_HIDDEN_LINE
 
-        editor->setFoldMarginColour(true, 0xFFFFFF);
+        editor->setFoldMarginColour(true, 0x3F3F3F);
         editor->setFoldMarginHiColour(true, 0xE9E9E9);
 
         editor->styleSetFore(STYLE_DEFAULT, 0xFFFFFF);
-        editor->styleSetBack(STYLE_DEFAULT, 0x232D19);
+        editor->styleSetBack(STYLE_DEFAULT, DARK_DEFAULT_BG);
 
         editor->styleSetFore(STYLE_LINENUMBER, 0xE4E4E4);
         editor->styleSetBack(STYLE_LINENUMBER, 0x808080);
@@ -263,10 +263,16 @@ void EditorManager::setupEditorTheme(ScintillaNext *editor)
         editor->styleSetFore(STYLE_BRACEBAD, 0xFFFFFF);
         editor->styleSetBack(STYLE_BRACEBAD, 0x000080);
 
-        editor->styleSetFore(STYLE_INDENTGUIDE, 0xFFFFFF);
-        editor->styleSetBack(STYLE_INDENTGUIDE, 0xC0C0C0);
+        editor->styleSetFore(STYLE_INDENTGUIDE, 0xC0C0C0);
+        editor->styleSetBack(STYLE_INDENTGUIDE, DARK_DEFAULT_BG);
     }
     else {
+        for (int i = SC_MARKNUM_FOLDEREND; i <= SC_MARKNUM_FOLDEROPEN; ++i) {
+            editor->markerSetFore(i, 0xF3F3F3);
+            editor->markerSetBack(i, 0x808080);
+            editor->markerSetBackSelected(i, 0x0000FF);
+        }
+
         editor->markerSetBack(MARK_HIDELINESUNDERLINE, 0x77CC77);        
         editor->setEdgeColour(0x80FFFF);
 
@@ -323,16 +329,4 @@ void EditorManager::purgeOldEditorPointers()
 Settings* EditorManager::getSettings()
 {
     return ((NotepadNextApplication*)parent())->getSettings();
-}
-
-int EditorManager::invertColor(int color)
-{
-    // implementation by XOR
-    // return color ^ 0xFFFFFF;
-    
-    int red   = color >> 16;
-    int green = color >> 8;
-    int blue  = color & 0x0000FF;
-    
-    return (255 - red) << 16 | (255 - green) << 8 | (255 - blue);
 }

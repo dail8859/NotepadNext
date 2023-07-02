@@ -1062,8 +1062,8 @@ QPushButton::menu-indicator {
 
 QDialogButtonBox QPushButton {
   /* Issue #194 #248 - Special case of QPushButton inside dialogs, for better UI */
-  /* changed for NotepadNext */
-  min-width: 180px;
+  /* changed for NotepadNext - 'Close without save' button*/
+  min-width: 160px;
 }
 
 /* QToolButton ------------------------------------------------------------

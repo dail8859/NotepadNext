@@ -15,7 +15,7 @@ defaultBg=rgb(0x202020)
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0xFFFFFF),
+		fgColor = darkBg,
 		bgColor = defaultBg,
 	},
 	["SPECIAL"] = {
@@ -43,7 +43,7 @@ L.styles = {
 	},
 	["TEXT"] = {
 		id = 5,
-		fgColor = rgb(0xFFFFFF),
+		fgColor = darkBg,
 		bgColor = defaultBg,
 	},
 }
