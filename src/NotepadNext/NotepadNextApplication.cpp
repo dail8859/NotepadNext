@@ -138,6 +138,10 @@ bool NotepadNextApplication::init()
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
     ecad->setEnabled(true);
 
+    // set language dark mode color
+    luaState->execute(QString("darkFg=%1").arg(DARK_DEFAULT_FG).toLatin1().constData());
+    luaState->execute(QString("darkBg=%1").arg(DARK_DEFAULT_BG).toLatin1().constData());
+
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
 

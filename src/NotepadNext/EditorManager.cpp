@@ -36,8 +36,6 @@
 #include "URLFinder.h"
 #include "BookMarkDecorator.h"
 
-#define DARK_DEFAULT_BG 0x19232D
-
 const int MARK_HIDELINESBEGIN = 23;
 const int MARK_HIDELINESEND = 22;
 const int MARK_HIDELINESUNDERLINE = 21;
@@ -251,7 +249,7 @@ void EditorManager::setupEditorTheme(ScintillaNext *editor)
         editor->setFoldMarginColour(true, 0x3F3F3F);
         editor->setFoldMarginHiColour(true, 0xE9E9E9);
 
-        editor->styleSetFore(STYLE_DEFAULT, 0xFFFFFF);
+        editor->styleSetFore(STYLE_DEFAULT, DARK_DEFAULT_FG);
         editor->styleSetBack(STYLE_DEFAULT, DARK_DEFAULT_BG);
 
         editor->styleSetFore(STYLE_LINENUMBER, 0xE4E4E4);

@@ -55,7 +55,7 @@ class Settings : public QObject
 
     bool m_combineSearchResults = false;
     
-    bool m_darkMode = true;
+    bool m_darkMode = false;
 
 public:
     explicit Settings(QObject *parent = nullptr);
