@@ -23,9 +23,6 @@
 #include <QObject>
 #include <QPointer>
 
-#define DARK_DEFAULT_BG 0x19232D
-#define DARK_DEFAULT_FG 0xFFFFFF
-
 class ScintillaNext;
 class Settings;
 

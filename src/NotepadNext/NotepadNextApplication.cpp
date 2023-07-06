@@ -24,6 +24,7 @@
 #include "LuaExtension.h"
 #include "DebugManager.h"
 #include "SessionManager.h"
+#include "ThemeColors.h"
 
 #include "LuaState.h"
 #include "lua.hpp"

@@ -31,6 +31,8 @@
 
 #include "LuaExtension.h"
 
+#include "ThemeColors.h"
+
 #include <QKeyEvent>
 #include <QVBoxLayout>
 

@@ -35,6 +35,7 @@
 #include "AutoCompletion.h"
 #include "URLFinder.h"
 #include "BookMarkDecorator.h"
+#include "ThemeColors.h"
 
 const int MARK_HIDELINESBEGIN = 23;
 const int MARK_HIDELINESEND = 22;
