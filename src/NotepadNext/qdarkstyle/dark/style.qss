@@ -2211,3 +2211,20 @@ PlotWidget {
   /* Fix cut labels in plots #134 */
   padding: 0px;
 }
+
+/* NotepadNext tabbar configuration ----------------------------------------
+
+----------------------------------------------------------------------------*/
+ads--CDockWidgetTab[activeTab="true"] {
+    background: qlineargradient(spread : pad, x1 : 0, y1 : 0, x2 : 0, y2 : 0.5, stop : 0
+                palette(window), stop:1 palette(light));
+    /*background: palette(highlight);*/
+}
+
+ads--CDockWidgetTab QLabel {
+     color: palette(dark);
+}
+
+ads--CDockWidgetTab[activeTab="true"] QLabel {
+    color: palette(foreground);
+}
