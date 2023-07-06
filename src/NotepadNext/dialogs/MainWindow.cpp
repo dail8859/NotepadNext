@@ -1995,3 +1995,8 @@ void MainWindow::languageMenuTriggered()
 
     setLanguage(editor, v.toString());
 }
+
+Settings* MainWindow::getSettings()
+{
+    return app->getSettings();
+}

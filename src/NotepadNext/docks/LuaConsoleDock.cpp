@@ -24,6 +24,7 @@
 #include "ILexer.h"
 #include "Lexilla.h"
 #include "SciLexer.h"
+#include "MainWindow.h"
 
 #include "LuaState.h"
 
@@ -321,8 +322,6 @@ void LuaConsoleDock::setupStyle(ScintillaNext *editor)
 {
     editor->setEOLMode(SC_EOL_CRLF);
 
-    editor->styleSetFore(STYLE_DEFAULT, 0x000000);
-    editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
     editor->styleSetFont(STYLE_DEFAULT, "Courier New");
     editor->styleSetSize(STYLE_DEFAULT, 10);
     editor->styleClearAll();
@@ -334,29 +333,38 @@ void LuaConsoleDock::setupStyle(ScintillaNext *editor)
     editor->setMarginWidthN(4, 0);
 
     editor->setCodePage(SC_CP_UTF8);
+    editor->styleSetBold(SCE_LUA_WORD, 1); // for SCI_SETKEYWORDS, 0
+    editor->styleSetBold(SCE_LUA_OPERATOR, 1);
+    editor->styleSetBold(SCE_LUA_WORD2, 1); // for SCI_SETKEYWORDS, 1
+    editor->styleSetBold(SCE_LUA_WORD3, 1); // for SCI_SETKEYWORDS, 2
+    editor->styleSetBold(SCE_LUA_WORD4, 1);
+    editor->styleSetItalic(SCE_LUA_WORD4, 1); // for SCI_SETKEYWORDS, 3
+    editor->styleSetBold(SCE_LUA_LABEL, 1);
+    editor->styleSetBold(SCE_LUA_WORD5, 1);
+    editor->styleSetBold(SCE_LUA_WORD6, 1);
+
+    // set colors
+    bool darkMode = ((MainWindow*)parent())->getSettings()->darkMode();
+    int fg = darkMode ? DARK_DEFAULT_FG : LIGHT_DEFAULT_FG;
+    int bg = darkMode ? DARK_DEFAULT_BG : LIGHT_DEFAULT_BG;
+
+    editor->styleSetFore(STYLE_DEFAULT, fg);
+    editor->styleSetBack(STYLE_DEFAULT, bg);
+
     editor->styleSetFore(SCE_LUA_COMMENT, 0x008000);
     editor->styleSetFore(SCE_LUA_COMMENTLINE, 0x008000);
     editor->styleSetFore(SCE_LUA_COMMENTDOC, 0x808000);
     editor->styleSetFore(SCE_LUA_LITERALSTRING, 0x4A0095);
     editor->styleSetFore(SCE_LUA_PREPROCESSOR, 0x004080); // Technically not used since this is lua 5+
     editor->styleSetFore(SCE_LUA_WORD, 0xFF0000);
-    editor->styleSetBold(SCE_LUA_WORD, 1); // for SCI_SETKEYWORDS, 0
     editor->styleSetFore(SCE_LUA_NUMBER, 0x0080FF);
     editor->styleSetFore(SCE_LUA_STRING, 0x808080);
     editor->styleSetFore(SCE_LUA_CHARACTER, 0x808080);
     editor->styleSetFore(SCE_LUA_OPERATOR, 0x800000);
-    editor->styleSetBold(SCE_LUA_OPERATOR, 1);
     editor->styleSetFore(SCE_LUA_WORD2, 0xC08000);
-    editor->styleSetBold(SCE_LUA_WORD2, 1); // for SCI_SETKEYWORDS, 1
     editor->styleSetFore(SCE_LUA_WORD3, 0xFF0080);
-    editor->styleSetBold(SCE_LUA_WORD3, 1); // for SCI_SETKEYWORDS, 2
     editor->styleSetFore(SCE_LUA_WORD4, 0xA00000);
-    editor->styleSetBold(SCE_LUA_WORD4, 1);
-    editor->styleSetItalic(SCE_LUA_WORD4, 1); // for SCI_SETKEYWORDS, 3
     editor->styleSetFore(SCE_LUA_LABEL, 0x008080);
-    editor->styleSetBold(SCE_LUA_LABEL, 1);
     editor->styleSetFore(SCE_LUA_WORD5, 0x004080); // for SCI_SETKEYWORDS, 4, Scintilla defines
-    editor->styleSetBold(SCE_LUA_WORD5, 1);
     editor->styleSetFore(SCE_LUA_WORD6, 0x004080); // for SCI_SETKEYWORDS, 5, Notepad++ defines
-    editor->styleSetBold(SCE_LUA_WORD6, 1);
 }
