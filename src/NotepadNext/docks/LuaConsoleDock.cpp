@@ -91,6 +91,7 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
     ui(new Ui::LuaConsoleDock)
 {
     L = l;
+    darkMode = ((MainWindow*)parent)->getSettings()->darkMode();
 
     // Override print to print to the console
     lua_pushlightuserdata(L->L, this);
@@ -188,9 +189,12 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
 
     output->styleSetFore(39, 0x0000FF); // For error messages
 
+    int minHeight = input->textHeight(0);
+    if(darkMode) minHeight *= 2;    // double height for dark mode
+
     input->setExtraAscent(2);
     input->setExtraDescent(2);
-    input->setMaximumHeight(input->textHeight(0));
+    input->setMaximumHeight(minHeight);
     input->installEventFilter(this);
 
     connect(input, &ScintillaNext::updateUi, [=](Scintilla::Update flags) {
@@ -343,28 +347,54 @@ void LuaConsoleDock::setupStyle(ScintillaNext *editor)
     editor->styleSetBold(SCE_LUA_WORD5, 1);
     editor->styleSetBold(SCE_LUA_WORD6, 1);
 
-    // set colors
-    bool darkMode = ((MainWindow*)parent())->getSettings()->darkMode();
-    int fg = darkMode ? DARK_DEFAULT_FG : LIGHT_DEFAULT_FG;
-    int bg = darkMode ? DARK_DEFAULT_BG : LIGHT_DEFAULT_BG;
+    // set up colors
+    int defaultFg = darkMode ? DARK_DEFAULT_FG : LIGHT_DEFAULT_FG;
+    int defaultBg = darkMode ? DARK_DEFAULT_BG : LIGHT_DEFAULT_BG;
 
-    editor->styleSetFore(STYLE_DEFAULT, fg);
-    editor->styleSetBack(STYLE_DEFAULT, bg);
-
-    editor->styleSetFore(SCE_LUA_COMMENT, 0x008000);
-    editor->styleSetFore(SCE_LUA_COMMENTLINE, 0x008000);
-    editor->styleSetFore(SCE_LUA_COMMENTDOC, 0x808000);
-    editor->styleSetFore(SCE_LUA_LITERALSTRING, 0x4A0095);
-    editor->styleSetFore(SCE_LUA_PREPROCESSOR, 0x004080); // Technically not used since this is lua 5+
-    editor->styleSetFore(SCE_LUA_WORD, 0xFF0000);
-    editor->styleSetFore(SCE_LUA_NUMBER, 0x0080FF);
-    editor->styleSetFore(SCE_LUA_STRING, 0x808080);
-    editor->styleSetFore(SCE_LUA_CHARACTER, 0x808080);
-    editor->styleSetFore(SCE_LUA_OPERATOR, 0x800000);
-    editor->styleSetFore(SCE_LUA_WORD2, 0xC08000);
-    editor->styleSetFore(SCE_LUA_WORD3, 0xFF0080);
-    editor->styleSetFore(SCE_LUA_WORD4, 0xA00000);
-    editor->styleSetFore(SCE_LUA_LABEL, 0x008080);
-    editor->styleSetFore(SCE_LUA_WORD5, 0x004080); // for SCI_SETKEYWORDS, 4, Scintilla defines
-    editor->styleSetFore(SCE_LUA_WORD6, 0x004080); // for SCI_SETKEYWORDS, 5, Notepad++ defines
+    editor->styleSetFore(STYLE_DEFAULT, defaultFg);
+    editor->styleSetBack(STYLE_DEFAULT, defaultBg);
+    
+    if(darkMode){
+        // set back ground color, default
+        for(int i = SCE_LUA_DEFAULT; i <= SCE_LUA_LABEL; i++){
+            editor->styleSetFore(i, defaultFg);
+            editor->styleSetBack(i, DARK_DEFAULT_BG);
+        }
+        
+        int commentColor = 0x808000;
+        editor->styleSetFore(SCE_LUA_COMMENT, commentColor);
+        editor->styleSetFore(SCE_LUA_COMMENTLINE, commentColor);
+        editor->styleSetFore(SCE_LUA_COMMENTDOC, commentColor);
+        editor->styleSetFore(SCE_LUA_LITERALSTRING, 0x4A0095);
+        editor->styleSetFore(SCE_LUA_PREPROCESSOR, 0x004080); // Technically not used since this is lua 5+
+        editor->styleSetFore(SCE_LUA_WORD, 0xFF0000);
+        editor->styleSetFore(SCE_LUA_NUMBER, 0x0080FF);
+        editor->styleSetFore(SCE_LUA_STRING, 0x808080);
+        editor->styleSetFore(SCE_LUA_CHARACTER, 0x808080);
+        editor->styleSetFore(SCE_LUA_OPERATOR, 0x800000);
+        editor->styleSetFore(SCE_LUA_WORD2, 0xC08000);
+        editor->styleSetFore(SCE_LUA_WORD3, 0xFF0080);
+        editor->styleSetFore(SCE_LUA_WORD4, DARK_DEFAULT_FG);
+        editor->styleSetFore(SCE_LUA_LABEL, 0x008080);
+        editor->styleSetFore(SCE_LUA_WORD5, 0x004080); // for SCI_SETKEYWORDS, 4, Scintilla defines
+        editor->styleSetFore(SCE_LUA_WORD6, 0x004080); // for SCI_SETKEYWORDS, 5, Notepad++ defines
+    } 
+    else {
+        editor->styleSetFore(SCE_LUA_COMMENT, 0x008000);
+        editor->styleSetFore(SCE_LUA_COMMENTLINE, 0x008000);
+        editor->styleSetFore(SCE_LUA_COMMENTDOC, 0x808000);
+        editor->styleSetFore(SCE_LUA_LITERALSTRING, 0x4A0095);
+        editor->styleSetFore(SCE_LUA_PREPROCESSOR, 0x004080); // Technically not used since this is lua 5+
+        editor->styleSetFore(SCE_LUA_WORD, 0xFF0000);
+        editor->styleSetFore(SCE_LUA_NUMBER, 0x0080FF);
+        editor->styleSetFore(SCE_LUA_STRING, 0x808080);
+        editor->styleSetFore(SCE_LUA_CHARACTER, 0x808080);
+        editor->styleSetFore(SCE_LUA_OPERATOR, 0x800000);
+        editor->styleSetFore(SCE_LUA_WORD2, 0xC08000);
+        editor->styleSetFore(SCE_LUA_WORD3, 0xFF0080);
+        editor->styleSetFore(SCE_LUA_WORD4, 0x000000);
+        editor->styleSetFore(SCE_LUA_LABEL, 0x008080);
+        editor->styleSetFore(SCE_LUA_WORD5, 0x004080); // for SCI_SETKEYWORDS, 4, Scintilla defines
+        editor->styleSetFore(SCE_LUA_WORD6, 0x004080); // for SCI_SETKEYWORDS, 5, Notepad++ defines
+    }
 }

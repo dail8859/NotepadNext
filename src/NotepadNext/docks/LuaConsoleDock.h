@@ -53,6 +53,8 @@ private:
     ScintillaNext *output;
     ScintillaNext *input;
 
+    bool darkMode = false;
+
 
     void setupStyle(ScintillaNext *editor);
 };
