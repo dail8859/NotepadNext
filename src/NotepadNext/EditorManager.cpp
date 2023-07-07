@@ -207,7 +207,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 void EditorManager::setupEditorTheme(ScintillaNext *editor)
 {
     if (getSettings()->darkMode()) {  
-        editor->setCaretFore(0xFFFFFF);
+        editor->setCaretFore(DARK_DEFAULT_FG);
         
         //editor->setSelFore(true, 0xEFEFEF);
         editor->setSelBack(true, 0xA0A0A0);

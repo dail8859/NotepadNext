@@ -158,6 +158,7 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
     input->setMarginTypeN(1, SC_MARGIN_RTEXT);
     input->styleSetBold(STYLE_LINENUMBER, true);
     input->setMarginLeft(2);
+    input->setCaretFore(DARK_DEFAULT_FG);
 
     input->clearCmdKey('Q' + (SCMOD_CTRL << 16));
     input->clearCmdKey('W' + (SCMOD_CTRL << 16));
@@ -190,7 +191,7 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
     output->styleSetFore(39, 0x0000FF); // For error messages
 
     int minHeight = input->textHeight(0);
-    if(darkMode) minHeight *= 2;    // double height for dark mode
+    if(darkMode) minHeight *= 2;    // double height for dark mode, smaller in dark
 
     input->setExtraAscent(2);
     input->setExtraDescent(2);
@@ -327,14 +328,15 @@ void LuaConsoleDock::setupStyle(ScintillaNext *editor)
     editor->setEOLMode(SC_EOL_CRLF);
 
     editor->styleSetFont(STYLE_DEFAULT, "Courier New");
-    editor->styleSetSize(STYLE_DEFAULT, 10);
+    editor->styleSetSize(STYLE_DEFAULT, 11);    // 10 too small on MacOS at least
     editor->styleClearAll();
 
     // Setup the margins
-    editor->setMarginWidthN(0, 0);
-    editor->setMarginWidthN(2, 0);
-    editor->setMarginWidthN(3, 0);
-    editor->setMarginWidthN(4, 0);
+    int margin = 0;
+    editor->setMarginWidthN(0, margin);
+    editor->setMarginWidthN(2, margin);
+    editor->setMarginWidthN(3, margin);
+    editor->setMarginWidthN(4, margin);
 
     editor->setCodePage(SC_CP_UTF8);
     editor->styleSetBold(SCE_LUA_WORD, 1); // for SCI_SETKEYWORDS, 0
