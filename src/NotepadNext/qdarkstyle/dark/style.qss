@@ -535,6 +535,7 @@ QAbstractScrollArea {
   padding: 2px;
   /* remove min-height to fix #244 */
   color: #E0E1E3;
+  margin-left: -2px;            /* fix NotepadNext editors first charactor cut-off issue */
 }
 
 QAbstractScrollArea:disabled {
