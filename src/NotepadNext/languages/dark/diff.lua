@@ -23,13 +23,13 @@ L.styles = {
 	},
 	["COMMAND"] = {
 		id = 2,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["HEADER"] = {
 		id = 3,
-		fgColor = rgb(0x8000FF),
+		fgColor = rgb(cppTypeColor),
 		bgColor = darkBg,
 	},
 	["POSITION"] = {

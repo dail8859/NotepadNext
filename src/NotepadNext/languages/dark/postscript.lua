@@ -48,7 +48,7 @@ L.styles = {
 	},
 	["INSTRUCTION"] = {
 		id = 6,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -60,7 +60,7 @@ L.styles = {
 	},
 	["IMMEVAL"] = {
 		id = 8,
-		fgColor = rgb(0x000080),
+		fgColor = rgb(cppOperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -78,7 +78,7 @@ L.styles = {
 	},
 	["PAREN PROC"] = {
 		id = 11,
-		fgColor = rgb(0x000080),
+		fgColor = rgb(cppOperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

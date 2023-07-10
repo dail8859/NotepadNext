@@ -26,13 +26,13 @@ L.styles = {
 	},
 	["PREPROCESSOR"] = {
 		id = 2,
-		fgColor = rgb(0x000080),
+		fgColor = rgb(cppOperatorColor),
 		bgColor = rgb(0xC0C0C0),
 		fontStyle = 1,
 	},
 	["IDENTIFIER"] = {
 		id = 3,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 	},
 	["OPERATOR"] = {

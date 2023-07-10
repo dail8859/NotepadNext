@@ -27,7 +27,7 @@ L.styles = {
 	},
 	["KEYWORDS"] = {
 		id = 2,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

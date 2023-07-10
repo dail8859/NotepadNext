@@ -19,7 +19,7 @@ L.styles = {
 	},
 	["TAG"] = {
 		id = 1,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 	},
 	["CLASS"] = {

@@ -56,7 +56,7 @@ L.styles = {
 	},
 	["CLASS NAME DEFINITION"] = {
 		id = 8,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

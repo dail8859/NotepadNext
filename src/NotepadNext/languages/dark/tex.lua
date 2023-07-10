@@ -26,7 +26,7 @@ L.styles = {
 	},
 	["GROUP"] = {
 		id = 2,
-		fgColor = rgb(0x8000FF),
+		fgColor = rgb(cppTypeColor),
 		bgColor = defaultBg,
 		fontStyle = 1,
 	},
@@ -37,7 +37,7 @@ L.styles = {
 	},
 	["COMMAND"] = {
 		id = 4,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = defaultBg,
 		fontStyle = 1,
 	},

@@ -34,18 +34,18 @@ L.styles = {
 	},
 	["INSTRUCTION WORD"] = {
 		id = 5,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["KEYWORD"] = {
 		id = 7,
-		fgColor = rgb(0x8000FF),
+		fgColor = rgb(cppTypeColor),
 		bgColor = darkBg,
 	},
 	["OPERATOR"] = {
 		id = 10,
-		fgColor = rgb(0x000080),
+		fgColor = rgb(cppOperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

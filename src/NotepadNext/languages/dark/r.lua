@@ -29,13 +29,13 @@ L.styles = {
 	},
 	["INSTRUCTION WORD"] = {
 		id = 2,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["BASE WORD"] = {
 		id = 3,
-		fgColor = rgb(0x8000FF),
+		fgColor = rgb(cppTypeColor),
 		bgColor = darkBg,
 	},
 	["KEYWORD"] = {
@@ -60,7 +60,7 @@ L.styles = {
 	},
 	["OPERATOR"] = {
 		id = 8,
-		fgColor = rgb(0x000080),
+		fgColor = rgb(cppOperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

@@ -33,19 +33,19 @@ L.styles = {
 	},
 	["FUNCTION WORD"] = {
 		id = 3,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["FUNCTION WORD2"] = {
 		id = 4,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["SYMBOL"] = {
 		id = 5,
-		fgColor = rgb(0x000080),
+		fgColor = rgb(cppOperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

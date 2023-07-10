@@ -22,7 +22,7 @@ L.styles = {
 	},
 	["INSTRUCTION WORD"] = {
 		id = 1,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

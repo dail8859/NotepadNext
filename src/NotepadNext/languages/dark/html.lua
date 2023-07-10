@@ -36,24 +36,24 @@ L.styles = {
 	},
 	["DOUBLESTRING"] = {
 		id = 6,
-		fgColor = rgb(0x8000FF),
+		fgColor = rgb(cppTypeColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["SINGLESTRING"] = {
 		id = 7,
-		fgColor = rgb(0x8000FF),
+		fgColor = rgb(cppTypeColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["TAG"] = {
 		id = 1,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 	},
 	["TAGEND"] = {
 		id = 11,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 	},
 	["TAGUNKNOWN"] = {
@@ -89,13 +89,13 @@ L.styles = {
 	},
 	["SGML_DEFAULT"] = {
 		id = 21,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["SGML_COMMAND"] = {
 		id = 22,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

@@ -34,7 +34,7 @@ L.styles = {
 	},
 	["STRING LEFT QUOTE"] = {
 		id = 3,
-		fgColor = rgb(0x000080),
+		fgColor = rgb(cppOperatorColor),
 		bgColor = rgb(0xC0C0C0),
 	},
 	["STRING RIGHT QUOTE"] = {
@@ -44,7 +44,7 @@ L.styles = {
 	},
 	["FUNCTION"] = {
 		id = 5,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 	},
 	["VARIABLE"] = {
@@ -65,7 +65,7 @@ L.styles = {
 	},
 	["SECTION"] = {
 		id = 9,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -98,19 +98,19 @@ L.styles = {
 	},
 	["SECTION GROUP"] = {
 		id = 15,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["PAGE EX"] = {
 		id = 16,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["FUNCTION DEFINITIONS"] = {
 		id = 17,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

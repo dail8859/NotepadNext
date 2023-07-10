@@ -97,7 +97,7 @@ L.styles = {
 	},
 	["FUNCTION"] = {
 		id = 15,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 	},
 	["STATIC BUILT-IN OBJECT"] = {

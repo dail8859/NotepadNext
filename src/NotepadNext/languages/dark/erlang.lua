@@ -121,7 +121,7 @@ L.styles = {
 	},
 	["BUILT-IN FUNCTIONS"] = {
 		id = 22,
-		fgColor = rgb(0x0000ff),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

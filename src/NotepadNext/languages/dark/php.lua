@@ -57,7 +57,7 @@ L.styles = {
 	},
 	["WORD"] = {
 		id = 121,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = rgb(0xFEFCF5),
 		fontStyle = 1,
 	},
@@ -68,7 +68,7 @@ L.styles = {
 	},
 	["VARIABLE"] = {
 		id = 123,
-		fgColor = rgb(0x000080),
+		fgColor = rgb(cppOperatorColor),
 		bgColor = rgb(0xFEFCF5),
 	},
 	["COMMENT"] = {
@@ -83,7 +83,7 @@ L.styles = {
 	},
 	["OPERATOR"] = {
 		id = 127,
-		fgColor = rgb(0x8000FF),
+		fgColor = rgb(cppTypeColor),
 		bgColor = rgb(0xFEFCF5),
 	},
 }

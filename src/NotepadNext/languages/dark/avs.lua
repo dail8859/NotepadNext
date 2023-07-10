@@ -99,7 +99,7 @@ L.styles = {
 	},
 	["USER DEFINED"] = {
 		id = 14,
-		fgColor = rgb(0x8000FF),
+		fgColor = rgb(cppTypeColor),
 		bgColor = darkBg,
 	},
 }

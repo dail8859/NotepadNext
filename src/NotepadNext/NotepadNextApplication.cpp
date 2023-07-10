@@ -142,6 +142,9 @@ bool NotepadNextApplication::init()
     // set language dark mode color
     luaState->execute(QString("darkFg=%1").arg(DARK_DEFAULT_FG).toLatin1().constData());
     luaState->execute(QString("darkBg=%1").arg(DARK_DEFAULT_BG).toLatin1().constData());
+    luaState->execute(QString("cppInstructionColor=%1").arg(DARK_CPP_INSTRUCTION).toLatin1().constData());
+    luaState->execute(QString("cppOperatorColor=%1").arg(DARK_CPP_OPERATOR).toLatin1().constData());
+    luaState->execute(QString("cppTypeColor=%1").arg(DARK_CPP_TYPE).toLatin1().constData());
 
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);

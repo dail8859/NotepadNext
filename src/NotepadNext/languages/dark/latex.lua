@@ -32,7 +32,7 @@ L.styles = {
 	},
 	["MATH INLINE"] = {
 		id = 3,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 	},
 	["COMMENT"] = {

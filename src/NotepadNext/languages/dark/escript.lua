@@ -63,7 +63,7 @@ L.styles = {
 	},
 	["BRACES"] = {
 		id = 9,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 	},
 	["KEYWORDS2"] = {

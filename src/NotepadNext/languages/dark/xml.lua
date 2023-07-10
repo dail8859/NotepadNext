@@ -66,29 +66,29 @@ L.styles = {
 	},
 	["DOUBLESTRING"] = {
 		id = 6,
-		fgColor = rgb(0x8000FF),
+		fgColor = rgb(cppTypeColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["SINGLESTRING"] = {
 		id = 7,
-		fgColor = rgb(0x8000FF),
+		fgColor = rgb(cppTypeColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["TAG"] = {
 		id = 1,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 	},
 	["TAGEND"] = {
 		id = 11,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 	},
 	["TAGUNKNOWN"] = {
 		id = 2,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 	},
 	["ATTRIBUTE"] = {

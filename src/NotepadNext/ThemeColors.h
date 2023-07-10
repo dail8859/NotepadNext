@@ -25,4 +25,13 @@
 #define LIGHT_DEFAULT_FG 0x000000
 #define LIGHT_DEFAULT_BG 0xFFFFFF
 
+#define LIGHT_CPP_INSTRUCTION 0x0000FF  // CPP family instruction color - blue 
+#define DARK_CPP_INSTRUCTION  0x00B4F0  // dark mode compensition color
+
+#define LIGHT_CPP_OPERATOR 0x800000     // CPP family operator color - dark blue 
+#define DARK_CPP_OPERATOR  0xFFFFFF     // dark mode compensition color
+
+#define LIGHT_CPP_TYPE 0x8000FF         // CPP family instruction color
+#define DARK_CPP_TYPE  0xF0B400 
+
 #endif

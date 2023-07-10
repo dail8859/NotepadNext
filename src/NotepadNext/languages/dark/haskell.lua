@@ -27,7 +27,7 @@ L.styles = {
 	},
 	["KEYWORD"] = {
 		id = 2,
-		fgColor = rgb(0x0000FF),
+		fgColor = rgb(cppInstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -74,7 +74,7 @@ L.styles = {
 	},
 	["OPERATOR"] = {
 		id = 11,
-		fgColor = rgb(0x000080),
+		fgColor = rgb(cppOperatorColor),
 		bgColor = darkBg,
 	},
 	["INSTANCE"] = {
