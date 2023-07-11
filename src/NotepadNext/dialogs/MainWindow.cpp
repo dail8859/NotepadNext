@@ -82,6 +82,8 @@
 #include "HtmlConverter.h"
 #include "RtfConverter.h"
 
+#include "ThemeColors.h"
+
 QString loadCssFile(const QString& cssFile)
 {
     QFile f(cssFile);
@@ -773,6 +775,7 @@ void MainWindow::setupLanguageMenu()
 
     QStringList language_names = app->getLanguages();
 
+    bool darkMode = app->getSettings()->darkMode();
     int i = 0;
     while (i < language_names.size()) {
         QList<QAction *> actions;
@@ -800,6 +803,11 @@ void MainWindow::setupLanguageMenu()
             QMenu *compactMenu = new QMenu(actions[0]->text().at(0).toUpper());
             compactMenu->addActions(actions);
             ui->menuLanguage->addMenu(compactMenu);
+            // Set background color of sub menu, QDarkStyleSheet css doesn't 
+            // impact sub menu for unkown reason
+            if(darkMode) {
+                compactMenu->setStyleSheet(QString("background-color:#%1").arg(DARK_DEFAULT_BG, 0, 16));
+            }
         }
         i = j;
     }
