@@ -804,7 +804,7 @@ void MainWindow::setupLanguageMenu()
             compactMenu->addActions(actions);
             ui->menuLanguage->addMenu(compactMenu);
             // Set background color of sub menu, QDarkStyleSheet css doesn't 
-            // impact sub menu for unkown reason
+            // impact sub menu for unknown reason
             if(darkMode) {
                 compactMenu->setStyleSheet(
                     QString("color:#%1; background-color:#%2")
