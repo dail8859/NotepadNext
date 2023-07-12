@@ -756,6 +756,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         // QDarkStyleSheet dark theme
         QString darkCss = loadCssFile(":/qdarkstyle/dark/style.qss");
         cssContent.append(darkCss);
+        
+        // further tweak
+        QString nppDark= loadCssFile(":/stylesheets/npp-dark.css");
+        cssContent.append(nppDark);
     }
     
     // Put the style sheet here for now
@@ -775,7 +779,14 @@ void MainWindow::setupLanguageMenu()
 
     QStringList language_names = app->getLanguages();
 
+    QString subMenuStyleSheet;  // sub menu style sheet, for dark mode only
     bool darkMode = app->getSettings()->darkMode();
+    if (darkMode) {
+        subMenuStyleSheet = QString("color:#%1; background-color:#%2")
+                    .arg(DARK_MENU_COLOR, 0, 16)
+                    .arg(DARK_MENU_BG_COLOR, 0, 16);
+    }
+
     int i = 0;
     while (i < language_names.size()) {
         QList<QAction *> actions;
@@ -803,14 +814,11 @@ void MainWindow::setupLanguageMenu()
             QMenu *compactMenu = new QMenu(actions[0]->text().at(0).toUpper());
             compactMenu->addActions(actions);
             ui->menuLanguage->addMenu(compactMenu);
-            // Set background color of sub menu, QDarkStyleSheet css doesn't 
-            // impact sub menu for unknown reason
+
+            // Set background color of sub menu, QDarkStyleSheet settings
+            // doesn't impact sub menu for unknown reason
             if(darkMode) {
-                compactMenu->setStyleSheet(
-                    QString("color:#%1; background-color:#%2")
-                    .arg(DARK_MENU_COLOR, 0, 16)
-                    .arg(DARK_MENU_BG_COLOR, 0, 16)
-                );
+                compactMenu->setStyleSheet(subMenuStyleSheet);
             }
         }
         i = j;

@@ -19,6 +19,7 @@
         <file>icons/wrap.png</file>
         <file>icons/find.png</file>
         <file>stylesheets/npp.css</file>
+        <file>stylesheets/npp-dark.css</file>
         <file>icons/findReplace.png</file>
         <file>icons/readonly.png</file>
         <file>icons/startRecord.png</file>
