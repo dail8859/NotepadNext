@@ -22,7 +22,8 @@ QDialogButtonBox QPushButton {
   /* min-width: 160px; */
 }
 
-QMessageBox::Discard {
+QMessageBox > QDialogButtonBox > QPushButton[text="Close without Saving"] {
+    /* Avoid save file dialog on Linux close button long text truncation */
     min-width: 160px;
 }
 
