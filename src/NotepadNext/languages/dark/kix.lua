@@ -45,23 +45,23 @@ L.styles = {
 	},
 	["MACRO"] = {
 		id = 6,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["INSTRUCTION WORD"] = {
 		id = 7,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["FUNCTION"] = {
 		id = 8,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["OPERATOR"] = {
 		id = 9,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

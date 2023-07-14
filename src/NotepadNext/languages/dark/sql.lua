@@ -17,13 +17,13 @@ L.keywords = {
 L.styles = {
 	["KEYWORD"] = {
 		id = 5,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["USER1"] = {
 		id = 16,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -49,7 +49,7 @@ L.styles = {
 	},
 	["OPERATOR"] = {
 		id = 10,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -71,6 +71,16 @@ L.styles = {
 	["Q OPERATOR"] = {
 		id = 24,
 		fgColor = rgb(0x808080),
+		bgColor = darkBg,
+	},
+	["WHITE SPACE"] = {
+		id = 0,
+		fgColor = darkFg,
+		bgColor = darkBg,
+	},
+	["DEFAULT"] = {
+		id = 11,
+		fgColor = darkFg,
 		bgColor = darkBg,
 	},
 }

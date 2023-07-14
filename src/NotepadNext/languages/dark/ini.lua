@@ -31,7 +31,7 @@ L.styles = {
 	},
 	["SECTION"] = {
 		id = 2,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = rgb(0xF2F4FF),
 		fontStyle = 9,
 	},
@@ -48,7 +48,7 @@ L.styles = {
 	},
 	["KEY"] = {
 		id = 5,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 2,
 	},

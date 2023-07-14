@@ -32,7 +32,7 @@ L.styles = {
 	},
 	["WORD"] = {
 		id = 3,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 	},
 	["STRING"] = {

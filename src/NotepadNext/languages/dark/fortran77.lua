@@ -43,7 +43,7 @@ L.styles = {
 	},
 	["OPERATOR"] = {
 		id = 6,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -54,13 +54,13 @@ L.styles = {
 	},
 	["INSTRUCTION WORD"] = {
 		id = 8,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["FUNCTION1"] = {
 		id = 9,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

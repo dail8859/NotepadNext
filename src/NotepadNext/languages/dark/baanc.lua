@@ -82,13 +82,13 @@ L.styles = {
 	},
 	["FUNCTIONS"] = {
 		id = 10,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["FUNCTIONS ABRIDGED"] = {
 		id = 11,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -118,7 +118,7 @@ L.styles = {
 	},
 	["ENUM DOMAINS"] = {
 		id = 16,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = rgb(0xFFFF80),
 		fontStyle = 1,
 	},
@@ -142,7 +142,7 @@ L.styles = {
 	},
 	["DLL FUNCTIONS"] = {
 		id = 20,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

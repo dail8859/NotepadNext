@@ -21,7 +21,7 @@ L.styles = {
 	},
 	["IDENTIFIER"] = {
 		id = 2,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -32,7 +32,7 @@ L.styles = {
 	},
 	["INSTRUCTION WORD"] = {
 		id = 3,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -48,7 +48,7 @@ L.styles = {
 	},
 	["DOCUMENT"] = {
 		id = 6,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 	},
 	["TEXT"] = {

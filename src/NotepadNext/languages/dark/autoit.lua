@@ -41,18 +41,18 @@ L.styles = {
 	},
 	["FUNCTION"] = {
 		id = 4,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["INSTRUCTION WORD"] = {
 		id = 5,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["MACRO"] = {
 		id = 6,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["STRING"] = {
@@ -62,7 +62,7 @@ L.styles = {
 	},
 	["OPERATOR"] = {
 		id = 8,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

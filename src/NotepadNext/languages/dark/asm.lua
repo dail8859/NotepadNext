@@ -40,7 +40,7 @@ L.styles = {
 	},
 	["OPERATOR"] = {
 		id = 4,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -51,7 +51,7 @@ L.styles = {
 	},
 	["CPU INSTRUCTION"] = {
 		id = 6,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -74,7 +74,7 @@ L.styles = {
 	},
 	["DIRECTIVE OPERAND"] = {
 		id = 10,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

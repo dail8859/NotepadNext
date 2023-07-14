@@ -40,10 +40,6 @@ function DialogFilters()
     return table.concat(filter, ";;")
 end
 
--- dark mode back ground color, shared by language lua scripts
---darkFg = 0xFFFFFF
---darkBg = 0x19232D
-
 languages = {}
 languages["ActionScript"] = require("actionscript")
 languages["ADA"] = require("ada")

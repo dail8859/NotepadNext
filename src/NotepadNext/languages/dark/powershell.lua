@@ -50,19 +50,19 @@ L.styles = {
 	},
 	["OPERATOR"] = {
 		id = 6,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["INSTRUCTION WORD"] = {
 		id = 8,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["CMDLET"] = {
 		id = 9,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["ALIAS"] = {

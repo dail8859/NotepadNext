@@ -121,12 +121,12 @@ L.styles = {
 	},
 	["DATE { 17-FEB-2004 1/3/99 }"] = {
 		id = 18,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["TIME { 12:30 11:22:59 01:59:59.123 }"] = {
 		id = 19,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["IDENTIFIERS"] = {

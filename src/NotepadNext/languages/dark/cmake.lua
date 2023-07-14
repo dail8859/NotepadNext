@@ -44,13 +44,13 @@ L.styles = {
 	},
 	["COMMAND"] = {
 		id = 5,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["PARAMETER"] = {
 		id = 6,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["VARIABLE"] = {
@@ -60,7 +60,7 @@ L.styles = {
 	},
 	["USER DEFINED"] = {
 		id = 8,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -78,7 +78,7 @@ L.styles = {
 	},
 	["IFDEF"] = {
 		id = 11,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

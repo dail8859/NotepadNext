@@ -39,12 +39,12 @@ L.styles = {
 	},
 	["BINARY"] = {
 		id = 5,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 	},
 	["BOOL"] = {
 		id = 6,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["SELF"] = {
@@ -71,7 +71,7 @@ L.styles = {
 	},
 	["RETURN"] = {
 		id = 11,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

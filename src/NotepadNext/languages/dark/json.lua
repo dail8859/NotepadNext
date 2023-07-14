@@ -43,12 +43,12 @@ L.styles = {
 	},
 	["PROPERTYNAME"] = {
 		id = 4,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["ESCAPESEQUENCE"] = {
 		id = 5,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -69,12 +69,12 @@ L.styles = {
 	},
 	["URI"] = {
 		id = 9,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 	},
 	["COMPACTIRI"] = {
 		id = 10,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

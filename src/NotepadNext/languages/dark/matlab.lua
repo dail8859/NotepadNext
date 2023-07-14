@@ -25,7 +25,7 @@ L.styles = {
 	},
 	["COMMAND"] = {
 		id = 2,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["NUMBER"] = {
@@ -35,7 +35,7 @@ L.styles = {
 	},
 	["INSTRUCTION WORD"] = {
 		id = 4,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -46,7 +46,7 @@ L.styles = {
 	},
 	["OPERATOR"] = {
 		id = 6,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

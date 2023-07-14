@@ -29,7 +29,7 @@ L.styles = {
 	},
 	["VALUE NAME"] = {
 		id = 2,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 	},
 	["STRING"] = {

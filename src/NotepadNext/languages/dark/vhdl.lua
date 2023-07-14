@@ -51,7 +51,7 @@ L.styles = {
 	},
 	["OPERATOR"] = {
 		id = 5,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -62,7 +62,7 @@ L.styles = {
 	},
 	["INSTRUCTION"] = {
 		id = 8,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -91,7 +91,7 @@ L.styles = {
 	},
 	["STD TYPE"] = {
 		id = 13,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["USER DEFINE"] = {

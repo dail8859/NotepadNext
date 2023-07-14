@@ -30,7 +30,7 @@ L.styles = {
 	},
 	["KEYWORD"] = {
 		id = 2,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -42,7 +42,7 @@ L.styles = {
 	},
 	["SECTION"] = {
 		id = 4,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
@@ -54,7 +54,7 @@ L.styles = {
 	},
 	["PREPROCESSOR INLINE"] = {
 		id = 6,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

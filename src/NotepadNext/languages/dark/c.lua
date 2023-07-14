@@ -15,7 +15,7 @@ L.keywords = {
 }
 
 L.styles = {
-	["WHITE SPACCE"] = {
+	["WHITE SPACE"] = {
 		id = 0,
 		fgColor = darkFg,
 		bgColor = darkBg,
@@ -32,13 +32,13 @@ L.styles = {
 	},
 	["INSTRUCTION WORD"] = {
 		id = 5,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
 	["TYPE WORD"] = {
 		id = 16,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = darkBg,
 	},
 	["NUMBER"] = {
@@ -58,7 +58,7 @@ L.styles = {
 	},
 	["OPERATOR"] = {
 		id = 10,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

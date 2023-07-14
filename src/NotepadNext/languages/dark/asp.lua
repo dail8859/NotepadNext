@@ -15,7 +15,7 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 81,
-		fgColor = rgb(cppTypeColor),
+		fgColor = rgb(TypeColor),
 		bgColor = rgb(0xC4F9FD),
 	},
 	["COMMENTLINE"] = {
@@ -30,7 +30,7 @@ L.styles = {
 	},
 	["WORD"] = {
 		id = 84,
-		fgColor = rgb(cppOperatorColor),
+		fgColor = rgb(OperatorColor),
 		bgColor = rgb(0xC4F9FD),
 		fontStyle = 1,
 	},

@@ -39,7 +39,7 @@ L.styles = {
 	},
 	["INSTRUCTION WORD"] = {
 		id = 4,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},

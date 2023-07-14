@@ -49,7 +49,7 @@ L.styles = {
 	},
 	["OPCODE"] = {
 		id = 6,
-		fgColor = rgb(cppInstructionColor),
+		fgColor = rgb(InstructionColor),
 		bgColor = darkBg,
 		fontStyle = 1,
 	},
