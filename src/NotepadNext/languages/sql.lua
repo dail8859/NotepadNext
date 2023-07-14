@@ -17,61 +17,71 @@ L.keywords = {
 L.styles = {
 	["KEYWORD"] = {
 		id = 5,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["USER1"] = {
 		id = 16,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["KEYWORD2"] = {
 		id = 19,
 		fgColor = rgb(0x800080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["NUMBER"] = {
 		id = 4,
 		fgColor = rgb(0xFF8000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["STRING"] = {
 		id = 6,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["STRING2"] = {
 		id = 7,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["OPERATOR"] = {
 		id = 10,
-		fgColor = rgb(0x000080),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(OperatorColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["COMMENT LINE"] = {
 		id = 2,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["COMMENT DOC"] = {
 		id = 3,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["Q OPERATOR"] = {
 		id = 24,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
+	},
+	["WHITE SPACE"] = {
+		id = 0,
+		fgColor = defaultFg,
+		bgColor = defaultBg,
+	},
+	["DEFAULT"] = {
+		id = 11,
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 }
 return L

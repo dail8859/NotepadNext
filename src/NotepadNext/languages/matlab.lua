@@ -15,50 +15,50 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["COMMAND"] = {
 		id = 2,
-		fgColor = rgb(0x8000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(TypeColor),
+		bgColor = defaultBg,
 	},
 	["NUMBER"] = {
 		id = 3,
 		fgColor = rgb(0xFF8000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["INSTRUCTION WORD"] = {
 		id = 4,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["STRING"] = {
 		id = 5,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["OPERATOR"] = {
 		id = 6,
-		fgColor = rgb(0x000080),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(OperatorColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["IDENTIFIER"] = {
 		id = 7,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["DOUBLE QUOTE STRING"] = {
 		id = 8,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 }
 return L

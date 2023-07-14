@@ -25,95 +25,100 @@ L.keywords = {
 }
 
 L.styles = {
+    ["WHITE SPACE"] = {
+        id = 0,
+        fgColor = defaultFg,
+        bgColor = defaultBg,
+    },
     ["DEFAULT"] = {
         id = 11,
-        fgColor = rgb(0x000000),
-        bgColor = rgb(0xFFFFFF),
+        fgColor = defaultFg,
+        bgColor = defaultBg,
     },
     ["INSTRUCTION WORD"] = {
         id = 5,
-        fgColor = rgb(0x0000FF),
-        bgColor = rgb(0xFFFFFF),
+        fgColor = rgb(InstructionColor),
+        bgColor = defaultBg,
         fontStyle = 1,
     },
     ["TYPE WORD"] = {
         id = 16,
-        fgColor = rgb(0x8000FF),
-        bgColor = rgb(0xFFFFFF),
+        fgColor = rgb(TypeColor),
+        bgColor = defaultBg,
     },
     ["WINDOW INSTRUCTION"] = {
         id = 19,
         fgColor = rgb(0x804000),
-        bgColor = rgb(0xFFFFFF),
+        bgColor = defaultBg,
         fontStyle = 1,
     },
     ["NUMBER"] = {
         id = 4,
         fgColor = rgb(0xFF8000),
-        bgColor = rgb(0xFFFFFF),
+        bgColor = defaultBg,
     },
     ["STRING"] = {
         id = 6,
         fgColor = rgb(0x808080),
-        bgColor = rgb(0xFFFFFF),
+        bgColor = defaultBg,
     },
     ["STRINGRAW"] = {
         id = 20,
-        fgColor = rgb(0x000080),
+        fgColor = rgb(OperatorColor),
         bgColor = rgb(0xC0C0C0),
     },
     ["CHARACTER"] = {
         id = 7,
         fgColor = rgb(0x808080),
-        bgColor = rgb(0xFFFFFF),
+        bgColor = defaultBg,
     },
     ["OPERATOR"] = {
         id = 10,
-        fgColor = rgb(0x000080),
-        bgColor = rgb(0xFFFFFF),
+        fgColor = rgb(OperatorColor),
+        bgColor = defaultBg,
         fontStyle = 1,
     },
     ["VERBATIM"] = {
         id = 13,
-        fgColor = rgb(0x000000),
-        bgColor = rgb(0xFFFFFF),
+        fgColor = defaultFg,
+        bgColor = defaultBg,
     },
     ["REGEX"] = {
         id = 14,
-        fgColor = rgb(0x000000),
-        bgColor = rgb(0xFFFFFF),
+        fgColor = defaultFg,
+        bgColor = defaultBg,
         fontStyle = 1,
     },
     ["COMMENT"] = {
         id = 1,
         fgColor = rgb(0x008000),
-        bgColor = rgb(0xFFFFFF),
+        bgColor = defaultBg,
     },
     ["COMMENT LINE"] = {
         id = 2,
         fgColor = rgb(0x008000),
-        bgColor = rgb(0xFFFFFF),
+        bgColor = defaultBg,
     },
     ["COMMENT DOC"] = {
         id = 3,
         fgColor = rgb(0x008080),
-        bgColor = rgb(0xFFFFFF),
+        bgColor = defaultBg,
     },
     ["COMMENT LINE DOC"] = {
         id = 15,
         fgColor = rgb(0x008080),
-        bgColor = rgb(0xFFFFFF),
+        bgColor = defaultBg,
     },
     ["COMMENT DOC KEYWORD"] = {
         id = 17,
         fgColor = rgb(0x008080),
-        bgColor = rgb(0xFFFFFF),
+        bgColor = defaultBg,
         fontStyle = 1,
     },
     ["COMMENT DOC KEYWORD ERROR"] = {
         id = 18,
         fgColor = rgb(0x008080),
-        bgColor = rgb(0xFFFFFF),
+        bgColor = defaultBg,
     },
 }
 return L

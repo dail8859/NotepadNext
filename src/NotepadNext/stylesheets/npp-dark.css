@@ -19,10 +19,10 @@ ads--CDockWidgetTab[activeTab="true"] QLabel {
     color: palette(dark);
 }
 
-QDialogButtonBox QPushButton {
-  /* changed for NotepadNext - 'Close without save' button */
-  /* min-width: 160px; */
-}
+/* changed for NotepadNext - 'Close without save' button */
+/*QDialogButtonBox QPushButton {
+   min-width: 160px; 
+}*/
 
 QMessageBox > QDialogButtonBox > QPushButton[text="Close without Saving"] {
     /* Avoid save file dialog on Linux close button long text truncation */

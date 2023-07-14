@@ -12,44 +12,46 @@ L.extensions = {
 L.keywords = {
 }
 
+
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["PREPROCESSOR"] = {
 		id = 2,
-		fgColor = rgb(0x000080),
+		fgColor = rgb(OperatorColor),
 		bgColor = rgb(0xC0C0C0),
 		fontStyle = 1,
 	},
 	["IDENTIFIER"] = {
 		id = 3,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = defaultBg,
 	},
 	["OPERATOR"] = {
 		id = 4,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["TARGET"] = {
 		id = 5,
 		fgColor = rgb(0xFF0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["IDEOL"] = {
 		id = 9,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 		fontStyle = 2,
 	},
 }
+
 return L

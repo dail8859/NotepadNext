@@ -21,35 +21,35 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["SECTION"] = {
 		id = 2,
-		fgColor = rgb(0x8000FF),
+		fgColor = rgb(TypeColor),
 		bgColor = rgb(0xF2F4FF),
 		fontStyle = 9,
 	},
 	["ASSIGNMENT"] = {
 		id = 3,
 		fgColor = rgb(0xFF0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["DEFVAL"] = {
 		id = 4,
 		fgColor = rgb(0xFF0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["KEY"] = {
 		id = 5,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = defaultBg,
 		fontStyle = 2,
 	},
 }

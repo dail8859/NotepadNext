@@ -12,29 +12,29 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["RECSTART"] = {
 		id = 1,
 		fgColor = rgb(0x7F0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["RECTYPE"] = {
 		id = 2,
 		fgColor = rgb(0x7F0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["RECTYPE_UNKNOWN"] = {
 		id = 3,
 		fgColor = rgb(0x7F0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 		fontStyle = 2,
 	},
 	["BYTECOUNT"] = {
 		id = 4,
 		fgColor = rgb(0x7F7F00),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["BYTECOUNT_WRONG"] = {
 		id = 5,
@@ -44,34 +44,34 @@ L.styles = {
 	["DATAADDRESS"] = {
 		id = 7,
 		fgColor = rgb(0x007FFF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["STARTADDRESS"] = {
 		id = 9,
 		fgColor = rgb(0x007FFF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["ADDRESSFIELD_UNKNOWN"] = {
 		id = 10,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 		fontStyle = 2,
 	},
 	["DATA_ODD"] = {
 		id = 12,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["DATA_EVEN"] = {
 		id = 13,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["CHECKSUM"] = {
 		id = 16,
 		fgColor = rgb(0x00BF00),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["CHECKSUM_WRONG"] = {
 		id = 17,
@@ -80,8 +80,8 @@ L.styles = {
 	},
 	["GARBAGE"] = {
 		id = 18,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 		fontStyle = 2,
 	},
 }

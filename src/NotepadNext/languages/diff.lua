@@ -13,39 +13,39 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["COMMAND"] = {
 		id = 2,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["HEADER"] = {
 		id = 3,
-		fgColor = rgb(0x8000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(TypeColor),
+		bgColor = defaultBg,
 	},
 	["POSITION"] = {
 		id = 4,
 		fgColor = rgb(0xFF8000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["DELETED"] = {
 		id = 5,
 		fgColor = rgb(0x808040),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["ADDED"] = {
 		id = 6,
 		fgColor = rgb(0x0080FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 }
 return L

@@ -19,13 +19,13 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["COMMENTLINE"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["STRING DOUBLE QUOTE"] = {
 		id = 2,
@@ -34,23 +34,23 @@ L.styles = {
 	},
 	["STRING LEFT QUOTE"] = {
 		id = 3,
-		fgColor = rgb(0x000080),
+		fgColor = rgb(OperatorColor),
 		bgColor = rgb(0xC0C0C0),
 	},
 	["STRING RIGHT QUOTE"] = {
 		id = 4,
-		fgColor = rgb(0x000000),
+		fgColor = defaultFg,
 		bgColor = rgb(0xC0C0C0),
 	},
 	["FUNCTION"] = {
 		id = 5,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = defaultBg,
 	},
 	["VARIABLE"] = {
 		id = 6,
 		fgColor = rgb(0xFF8000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["LABEL"] = {
 		id = 7,
@@ -65,25 +65,25 @@ L.styles = {
 	},
 	["SECTION"] = {
 		id = 9,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["SUBSECTION"] = {
 		id = 10,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["IF DEFINE"] = {
 		id = 11,
 		fgColor = rgb(0x808040),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["MACRO"] = {
 		id = 12,
 		fgColor = rgb(0x800000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["STRING VAR"] = {
@@ -94,30 +94,30 @@ L.styles = {
 	["NUMBER"] = {
 		id = 14,
 		fgColor = rgb(0xFF0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["SECTION GROUP"] = {
 		id = 15,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["PAGE EX"] = {
 		id = 16,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["FUNCTION DEFINITIONS"] = {
 		id = 17,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["COMMENT"] = {
 		id = 18,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 }
 return L

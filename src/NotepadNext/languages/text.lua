@@ -14,8 +14,8 @@ L.extensions = {
 L.styles = {
     ["DEFAULT"] = {
         id = 0,
-        fgColor = rgb(0x000000),
-        bgColor = rgb(0xFFFFFF),
+        fgColor = defaultFg,
+        bgColor = defaultBg,
         fontStyle = 0,
     },
 }

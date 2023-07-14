@@ -17,33 +17,33 @@ L.keywords = {
 L.styles = {
 	["DIVSION OF LEADING WHITESPACE IN LINE"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x007F00),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["LABEL"] = {
 		id = 2,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["OPCODE"] = {
 		id = 3,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["DIVISION BETWEEN LABEL AND OPCODE"] = {
 		id = 4,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["VALID OPCODE"] = {
 		id = 5,
 		fgColor = rgb(0x00007F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["UNKNOWN OPCODE"] = {
@@ -53,59 +53,59 @@ L.styles = {
 	},
 	["DIVISION BETWEEN OPCODE AND OPERANDS"] = {
 		id = 7,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["DIVISION OF OPERANDS"] = {
 		id = 8,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["NUMBER"] = {
 		id = 9,
 		fgColor = rgb(0x007F7F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["REFERENCE (TO A LABEL)"] = {
 		id = 10,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["CHAR"] = {
 		id = 11,
 		fgColor = rgb(0x7F007F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["STRING"] = {
 		id = 12,
 		fgColor = rgb(0x7F007F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["REGISTER"] = {
 		id = 13,
 		fgColor = rgb(0x7F007F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["HEXADECIMAL NUMBER"] = {
 		id = 14,
 		fgColor = rgb(0x7F0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["OPERATOR"] = {
 		id = 15,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["SYMBOL"] = {
 		id = 16,
 		fgColor = rgb(0xFF7777),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["COMMENT OTHERWISE"] = {
 		id = 17,
 		fgColor = rgb(0x007F00),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 }
 return L

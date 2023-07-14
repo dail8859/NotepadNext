@@ -19,49 +19,49 @@ L.styles = {
 	["DEFAULT"] = {
 		id = 0,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["IDENTIFIERS"] = {
 		id = 1,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["KEYWORD"] = {
 		id = 2,
 		fgColor = rgb(0x00007F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["KEYWORD2"] = {
 		id = 3,
 		fgColor = rgb(0x00007F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["KEYWORD3"] = {
 		id = 4,
 		fgColor = rgb(0x0040E0),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["NUMBER"] = {
 		id = 5,
 		fgColor = rgb(0x007F7F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["OPERATORS (DELIMITERS)"] = {
 		id = 6,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["VALUE"] = {
 		id = 7,
 		fgColor = rgb(0x7F007F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["COMMENT"] = {
 		id = 8,
 		fgColor = rgb(0x007F00),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 }
 return L

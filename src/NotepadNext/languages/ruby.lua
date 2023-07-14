@@ -16,18 +16,18 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["ERROR"] = {
 		id = 1,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["COMMENTLINE"] = {
 		id = 2,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["POD"] = {
 		id = 3,
@@ -37,28 +37,28 @@ L.styles = {
 	["NUMBER"] = {
 		id = 4,
 		fgColor = rgb(0xFF8000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["INSTRUCTION"] = {
 		id = 5,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["STRING"] = {
 		id = 6,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["CHARACTER"] = {
 		id = 7,
 		fgColor = rgb(0x808000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["CLASS NAME"] = {
 		id = 8,
 		fgColor = rgb(0x0080C0),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["DEF NAME"] = {
@@ -69,46 +69,46 @@ L.styles = {
 	},
 	["OPERATOR"] = {
 		id = 10,
-		fgColor = rgb(0x000080),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(OperatorColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["IDENTIFIER"] = {
 		id = 11,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["REGEX"] = {
 		id = 12,
 		fgColor = rgb(0x0080FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 	["GLOBAL"] = {
 		id = 13,
-		fgColor = rgb(0x000080),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(OperatorColor),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["SYMBOL"] = {
 		id = 14,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["MODULE NAME"] = {
 		id = 15,
 		fgColor = rgb(0x804000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 		fontStyle = 1,
 	},
 	["INSTANCE VAR"] = {
 		id = 16,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["CLASS VAR"] = {
 		id = 17,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = defaultFg,
+		bgColor = defaultBg,
 	},
 	["BACKTICKS"] = {
 		id = 18,
@@ -123,7 +123,7 @@ L.styles = {
 	["STRING Q"] = {
 		id = 24,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = defaultBg,
 	},
 }
 return L
