@@ -151,7 +151,7 @@ bool NotepadNextApplication::init()
 
     luaState->execute(QString("defaultFg=%1").arg(defaultFgColor).toLatin1().constData());
     luaState->execute(QString("defaultBg=%1").arg(defaultBgColor).toLatin1().constData());
-    luaState->execute(QString("InstructionColor=%1").arg().toLatin1().constData());
+    luaState->execute(QString("InstructionColor=%1").arg(instructionColor).toLatin1().constData());
     luaState->execute(QString("OperatorColor=%1").arg(operatorColor).toLatin1().constData());
     luaState->execute(QString("TypeColor=%1").arg(typeColor).toLatin1().constData());
 
