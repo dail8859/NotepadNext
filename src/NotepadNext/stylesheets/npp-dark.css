@@ -1,4 +1,6 @@
-/* dark mode tweak in addtion to qdarkstyle */
+/* Dark mode further tweak, in addition to qdarkstyle */
+/* Seperate from qdarkstyle so that qdarkstyle upgrade will not override it */
+
 /* NotepadNext tabbar configuration ----------------------------------------
 
 ----------------------------------------------------------------------------*/
@@ -18,7 +20,7 @@ ads--CDockWidgetTab[activeTab="true"] QLabel {
 }
 
 QDialogButtonBox QPushButton {
-  /* changed for NotepadNext - 'Close without save' button*/
+  /* changed for NotepadNext - 'Close without save' button */
   /* min-width: 160px; */
 }
 
