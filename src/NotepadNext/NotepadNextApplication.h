@@ -64,7 +64,8 @@ public:
     void loadTranslation(QLocale locale);
 
     void sendInfoToPrimaryInstance();
-
+    
+    // expose this method to make it possible to change theme without restart
     void setLanguageColors();
 
 protected:
