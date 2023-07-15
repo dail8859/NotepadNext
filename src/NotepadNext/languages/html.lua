@@ -21,60 +21,60 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg)
 	},
 	["COMMENT"] = {
 		id = 9,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["NUMBER"] = {
 		id = 5,
 		fgColor = rgb(0xFF0000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["DOUBLESTRING"] = {
 		id = 6,
 		fgColor = rgb(TypeColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["SINGLESTRING"] = {
 		id = 7,
 		fgColor = rgb(TypeColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["TAG"] = {
 		id = 1,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["TAGEND"] = {
 		id = 11,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["TAGUNKNOWN"] = {
 		id = 2,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["ATTRIBUTE"] = {
 		id = 3,
 		fgColor = rgb(0xFF0000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["ATTRIBUTEUNKNOWN"] = {
 		id = 4,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["CDATA"] = {
 		id = 17,
 		fgColor = rgb(0xFF8000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["VALUE"] = {
 		id = 19,
@@ -83,38 +83,38 @@ L.styles = {
 	},
 	["ENTITY"] = {
 		id = 10,
-		fgColor = defaultFg,
+		fgColor = rgb(defaultFg),
 		bgColor = rgb(0xFEFDE0),
 		fontStyle = 2,
 	},
 	["SGML_DEFAULT"] = {
 		id = 21,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["SGML_COMMAND"] = {
 		id = 22,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["SGML_PARAM"] = {
 		id = 23,
 		fgColor = rgb(0xFF0000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["SGML_DOUBLESTRING"] = {
 		id = 24,
 		fgColor = rgb(0x808080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["SGML_COMMENT"] = {
 		id = 29,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 }

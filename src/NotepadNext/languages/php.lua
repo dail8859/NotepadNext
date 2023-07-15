@@ -30,7 +30,7 @@ L.styles = {
 	},
 	["DEFAULT"] = {
 		id = 118,
-		fgColor = defaultFg,
+		fgColor = rgb(defaultFg),
 		bgColor = rgb(0xFEFCF5),
 	},
 	["STRING"] = {

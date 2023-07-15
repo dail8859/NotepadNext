@@ -17,56 +17,56 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["INSTRUCTION WORD"] = {
 		id = 1,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["IDENTIFIER"] = {
 		id = 2,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["NUMBER"] = {
 		id = 3,
 		fgColor = rgb(0xFF8000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["DELIMITER"] = {
 		id = 4,
 		fgColor = rgb(0xFF8080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["CHARACTER"] = {
 		id = 5,
 		fgColor = rgb(0x808080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["STRING"] = {
 		id = 7,
 		fgColor = rgb(0x808080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["LABEL"] = {
 		id = 9,
 		fgColor = rgb(0x804000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["COMMENT LINE"] = {
 		id = 10,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["ILLEGAL"] = {
 		id = 11,
 		fgColor = rgb(0xFF0000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 }
 return L

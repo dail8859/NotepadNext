@@ -17,75 +17,75 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["STRING D"] = {
 		id = 2,
 		fgColor = rgb(0x808080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["STRING L"] = {
 		id = 3,
 		fgColor = rgb(0x808080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 2,
 	},
 	["STRING R"] = {
 		id = 4,
 		fgColor = rgb(0x808080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 4,
 	},
 	["COMMAND"] = {
 		id = 5,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["PARAMETER"] = {
 		id = 6,
 		fgColor = rgb(TypeColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["VARIABLE"] = {
 		id = 7,
 		fgColor = rgb(0xFF8040),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["USER DEFINED"] = {
 		id = 8,
 		fgColor = rgb(OperatorColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["WHILEDEF"] = {
 		id = 9,
 		fgColor = rgb(0x0080FF),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["FOREACHDEF"] = {
 		id = 10,
 		fgColor = rgb(0x008080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["IFDEF"] = {
 		id = 11,
 		fgColor = rgb(TypeColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["MACRODEF"] = {
 		id = 12,
 		fgColor = rgb(0xFF0000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["STRING VARIABLE"] = {
@@ -97,7 +97,7 @@ L.styles = {
 	["NUMBER"] = {
 		id = 14,
 		fgColor = rgb(0x804040),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 }

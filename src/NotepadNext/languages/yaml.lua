@@ -16,51 +16,51 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["IDENTIFIER"] = {
 		id = 2,
 		fgColor = rgb(OperatorColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["INSTRUCTION WORD"] = {
 		id = 3,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["NUMBER"] = {
 		id = 4,
 		fgColor = rgb(0xFF8040),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["REFERENCE"] = {
 		id = 5,
 		fgColor = rgb(0x804000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["DOCUMENT"] = {
 		id = 6,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["TEXT"] = {
 		id = 7,
 		fgColor = rgb(0x808080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["ERROR"] = {
 		id = 8,
 		fgColor = rgb(0xFF0000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 }
 return L

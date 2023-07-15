@@ -143,17 +143,17 @@ bool NotepadNextApplication::init()
     ecad->setEnabled(true);
 
     // set language highlighting colors based on theme
-    int defaultFgColor  = darkMode ? DARK_DEFAULT_FG : LIGHT_DEFAULT_FG 
-    int defaultBgColor  = darkMode ? DARK_DEFAULT_BG : LIGHT_DEFAULT_BG;
-    int instructionColor= darkMode ? DARK_CPP_INSTRUCTION : LIGHT_CPP_INSTRUCTION;
-    int operatorColor   = darkMode ? DARK_CPP_OPERATOR : LIGHT_CPP_OPERATOR;
-    int typeColor       = darkMode ? DARK_CPP_TYPE : LIGHT_CPP_TYPE;
+    long defaultFgColor  = darkMode ? DARK_DEFAULT_FG : LIGHT_DEFAULT_FG;
+    long defaultBgColor  = darkMode ? DARK_DEFAULT_BG : LIGHT_DEFAULT_BG;
+    long instructionColor= darkMode ? DARK_CPP_INSTRUCTION : LIGHT_CPP_INSTRUCTION;
+    long operatorColor   = darkMode ? DARK_CPP_OPERATOR : LIGHT_CPP_OPERATOR;
+    long typeColor       = darkMode ? DARK_CPP_TYPE : LIGHT_CPP_TYPE;
 
-    luaState->execute(QString("defaultFg=%1").arg(defaultFgColor).toLatin1().constData());
-    luaState->execute(QString("defaultBg=%1").arg(defaultBgColor).toLatin1().constData());
-    luaState->execute(QString("InstructionColor=%1").arg(instructionColor).toLatin1().constData());
-    luaState->execute(QString("OperatorColor=%1").arg(operatorColor).toLatin1().constData());
-    luaState->execute(QString("TypeColor=%1").arg(typeColor).toLatin1().constData());
+    luaState->execute(QString("defaultFg=0x%1").arg(defaultFgColor,0,16).toLatin1().constData());
+    luaState->execute(QString("defaultBg=0x%1").arg(defaultBgColor,0,16).toLatin1().constData());
+    luaState->execute(QString("InstructionColor=0x%1").arg(instructionColor,0,16).toLatin1().constData());
+    luaState->execute(QString("OperatorColor=0x%1").arg(operatorColor,0,16).toLatin1().constData());
+    luaState->execute(QString("TypeColor=0x%1").arg(typeColor,0,16).toLatin1().constData());
 
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);

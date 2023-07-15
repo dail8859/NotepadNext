@@ -13,7 +13,7 @@ L.styles = {
 	["DEFAULT"] = {
 		id = 32,
 		fgColor = rgb(0x2E2E2E),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 }
 return L

@@ -19,70 +19,70 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["IDENTIFIER"] = {
 		id = 11,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["TAGNAME"] = {
 		id = 2,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["INSTRUCTION WORD"] = {
 		id = 5,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["KEYWORD"] = {
 		id = 7,
 		fgColor = rgb(TypeColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["OPERATOR"] = {
 		id = 10,
 		fgColor = rgb(OperatorColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["NUMBER"] = {
 		id = 4,
 		fgColor = rgb(0xFF8000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["PREPROCESSOR"] = {
 		id = 9,
 		fgColor = rgb(0x804000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["STRING"] = {
 		id = 6,
 		fgColor = rgb(0x808080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT LINE"] = {
 		id = 2,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT LINE BANG"] = {
 		id = 3,
 		fgColor = rgb(0x008080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["USER"] = {
 		id = 19,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 }
 return L

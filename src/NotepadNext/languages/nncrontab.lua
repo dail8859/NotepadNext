@@ -18,13 +18,13 @@ L.keywords = {
 L.styles = {
 	["WHITESPACE"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x007F00),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["TASK START/END"] = {
 		id = 2,
@@ -34,45 +34,45 @@ L.styles = {
 	["SECTION KEYWORDS"] = {
 		id = 3,
 		fgColor = rgb(0x00007F),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["KEYWORDS"] = {
 		id = 4,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["MODIFICATORS"] = {
 		id = 5,
 		fgColor = rgb(0x00007F),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 2,
 	},
 	["ASTERISK"] = {
 		id = 6,
-		fgColor = defaultFg,
+		fgColor = rgb(defaultFg),
 		bgColor = rgb(0xFFE0FF),
 		fontStyle = 1,
 	},
 	["NUMBER"] = {
 		id = 7,
 		fgColor = rgb(0x007F7F),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["DOUBLE QUOTED STRING"] = {
 		id = 8,
 		fgColor = rgb(0x7F007F),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["ENVIRONMENT VARIABLE"] = {
 		id = 9,
-		fgColor = defaultFg,
+		fgColor = rgb(defaultFg),
 		bgColor = rgb(0xFFFFE0),
 	},
 	["IDENTIFIER"] = {
 		id = 10,
-		fgColor = defaultFg,
+		fgColor = rgb(defaultFg),
 		bgColor = rgb(0xFF0000),
 	},
 }

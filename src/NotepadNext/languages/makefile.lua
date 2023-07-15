@@ -16,13 +16,13 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["PREPROCESSOR"] = {
 		id = 2,
@@ -33,23 +33,23 @@ L.styles = {
 	["IDENTIFIER"] = {
 		id = 3,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["OPERATOR"] = {
 		id = 4,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["TARGET"] = {
 		id = 5,
 		fgColor = rgb(0xFF0000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["IDEOL"] = {
 		id = 9,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 		fontStyle = 2,
 	},
 }

@@ -17,18 +17,18 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["KEYWORDS"] = {
 		id = 2,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["LABEL"] = {
@@ -40,12 +40,12 @@ L.styles = {
 	["HIDE SYMBOL"] = {
 		id = 4,
 		fgColor = rgb(0xFF00FF),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["COMMAND"] = {
 		id = 5,
 		fgColor = rgb(0x0080FF),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["VARIABLE"] = {
 		id = 6,
@@ -56,7 +56,7 @@ L.styles = {
 	["OPERATOR"] = {
 		id = 7,
 		fgColor = rgb(0xFF0000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 }

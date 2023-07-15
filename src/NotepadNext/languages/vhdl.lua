@@ -21,55 +21,55 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT LIne"] = {
 		id = 2,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT LINE BANG"] = {
 		id = 15,
 		fgColor = rgb(0x008080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["NUMBER"] = {
 		id = 3,
 		fgColor = rgb(0xFF8000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["STRING"] = {
 		id = 4,
 		fgColor = rgb(0x808080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["OPERATOR"] = {
 		id = 5,
 		fgColor = rgb(OperatorColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["IDENTIFIER"] = {
 		id = 6,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["INSTRUCTION"] = {
 		id = 8,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["STD OPERATOR"] = {
 		id = 9,
 		fgColor = rgb(0x0080C0),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["ATTRIBUTE"] = {
@@ -81,23 +81,23 @@ L.styles = {
 	["STD FUNCTION"] = {
 		id = 11,
 		fgColor = rgb(0x0080FF),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["STD PACKAGE"] = {
 		id = 12,
 		fgColor = rgb(0x800000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["STD TYPE"] = {
 		id = 13,
 		fgColor = rgb(TypeColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["USER DEFINE"] = {
 		id = 14,
 		fgColor = rgb(0xB5E71F),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 }
 return L

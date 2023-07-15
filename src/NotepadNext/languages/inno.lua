@@ -20,53 +20,53 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["KEYWORD"] = {
 		id = 2,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["PARAMETER"] = {
 		id = 3,
 		fgColor = rgb(0xFF8000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["SECTION"] = {
 		id = 4,
 		fgColor = rgb(OperatorColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["PREPROCESSOR"] = {
 		id = 5,
 		fgColor = rgb(0x800000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["PREPROCESSOR INLINE"] = {
 		id = 6,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["COMMENT PASCAL"] = {
 		id = 7,
 		fgColor = rgb(0x008080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["KEYWORD PASCAL"] = {
 		id = 8,
 		fgColor = rgb(0x0080C0),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["KEYWORD USER"] = {
@@ -78,17 +78,17 @@ L.styles = {
 	["STRING DOUBLE"] = {
 		id = 10,
 		fgColor = rgb(0x808080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["STRING SINGLE"] = {
 		id = 11,
 		fgColor = rgb(0x808080),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["IDENTIFIER"] = {
 		id = 12,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 }
 return L

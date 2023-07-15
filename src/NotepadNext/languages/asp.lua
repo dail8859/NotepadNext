@@ -41,18 +41,18 @@ L.styles = {
 	},
 	["IDENTIFIER"] = {
 		id = 86,
-		fgColor = defaultFg,
+		fgColor = rgb(defaultFg),
 		bgColor = rgb(0xC4F9FD),
 	},
 	["ASPSYMBOL"] = {
 		id = 15,
-		fgColor = defaultFg,
+		fgColor = rgb(defaultFg),
 		bgColor = rgb(0xFFFF00),
 		fontStyle = 1,
 	},
 	["SCRIPTTYPE"] = {
 		id = 16,
-		fgColor = defaultFg,
+		fgColor = rgb(defaultFg),
 		bgColor = rgb(0xFFC000),
 	},
 }

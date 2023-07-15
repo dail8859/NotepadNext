@@ -44,7 +44,7 @@ const int MARK_HIDELINESUNDERLINE = 21;
 static int invertColor(int color)
 {
     // implementation by XOR
-    return color ^ 0xFFFFFF;
+    return color ^ WHITE;
 }
 
 static int DefaultFontSize()
@@ -256,10 +256,10 @@ void EditorManager::setupEditorTheme(ScintillaNext *editor)
         editor->styleSetFore(STYLE_LINENUMBER, 0xE4E4E4);
         editor->styleSetBack(STYLE_LINENUMBER, 0x808080);
        
-        editor->styleSetFore(STYLE_BRACELIGHT, 0xFFFFFF);
+        editor->styleSetFore(STYLE_BRACELIGHT, DARK_DEFAULT_FG);
         editor->styleSetBack(STYLE_BRACELIGHT, 0x0000FF);
 
-        editor->styleSetFore(STYLE_BRACEBAD, 0xFFFFFF);
+        editor->styleSetFore(STYLE_BRACEBAD, DARK_DEFAULT_FG);
         editor->styleSetBack(STYLE_BRACEBAD, 0x000080);
 
         editor->styleSetFore(STYLE_INDENTGUIDE, 0xC0C0C0);
@@ -294,23 +294,23 @@ void EditorManager::setupEditorTheme(ScintillaNext *editor)
         editor->setElementColour(SC_ELEMENT_FOLD_LINE, 0xFFA0A0A0);
         // SC_ELEMENT_HIDDEN_LINE
 
-        editor->setFoldMarginColour(true, 0xFFFFFF);
+        editor->setFoldMarginColour(true, WHITE);
         editor->setFoldMarginHiColour(true, 0xE9E9E9);
 
-        editor->styleSetFore(STYLE_DEFAULT, 0x000000);
-        editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
+        editor->styleSetFore(STYLE_DEFAULT, LIGHT_DEFAULT_FG);
+        editor->styleSetBack(STYLE_DEFAULT, LIGHT_DEFAULT_BG);
 
         editor->styleSetFore(STYLE_LINENUMBER, 0x808080);
         editor->styleSetBack(STYLE_LINENUMBER, 0xE4E4E4);
        
         editor->styleSetFore(STYLE_BRACELIGHT, 0x0000FF);
-        editor->styleSetBack(STYLE_BRACELIGHT, 0xFFFFFF);
+        editor->styleSetBack(STYLE_BRACELIGHT, LIGHT_DEFAULT_BG);
 
         editor->styleSetFore(STYLE_BRACEBAD, 0x000080);
-        editor->styleSetBack(STYLE_BRACEBAD, 0xFFFFFF);
+        editor->styleSetBack(STYLE_BRACEBAD, LIGHT_DEFAULT_BG);
 
         editor->styleSetFore(STYLE_INDENTGUIDE, 0xC0C0C0);
-        editor->styleSetBack(STYLE_INDENTGUIDE, 0xFFFFFF);    
+        editor->styleSetBack(STYLE_INDENTGUIDE, LIGHT_DEFAULT_BG);    
     }
 }
 

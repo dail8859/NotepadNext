@@ -18,63 +18,63 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x007F00),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["LINE COMMENT"] = {
 		id = 2,
 		fgColor = rgb(0x007F00),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["DOC COMMENT"] = {
 		id = 3,
 		fgColor = rgb(0x3F703F),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["NUMBER"] = {
 		id = 4,
 		fgColor = rgb(0x007F7F),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["KEYWORD"] = {
 		id = 5,
 		fgColor = rgb(0xFF4000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["DOUBLE QUOTED STRING"] = {
 		id = 6,
 		fgColor = rgb(0xFF8000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["OPERATORS"] = {
 		id = 7,
 		fgColor = rgb(0xFF0000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["IDENTIFIERS"] = {
 		id = 8,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["BRACES"] = {
 		id = 9,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["KEYWORDS2"] = {
 		id = 10,
 		fgColor = rgb(0xB00040),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["KEYWORDS3"] = {
 		id = 11,
 		fgColor = rgb(0xB00040),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 }
 return L

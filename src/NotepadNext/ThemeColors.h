@@ -19,21 +19,24 @@
 #ifndef THEME_COLORS_H
 #define THEME_COLORS_H
 
-#define DARK_DEFAULT_FG 0xFFFFFF
-#define DARK_DEFAULT_BG 0x19232D
+#define WHITE   0xFFFFFF
+#define BLACK   0x000000
+
+#define DARK_DEFAULT_FG WHITE
+#define DARK_DEFAULT_BG 0x2D2319
+
+#define LIGHT_DEFAULT_FG BLACK
+#define LIGHT_DEFAULT_BG WHITE
 
 // dark theme menu colors
 #define DARK_MENU_COLOR 0xE0E1E3
 #define DARK_MENU_BG_COLOR 0x37414F
 
-#define LIGHT_DEFAULT_FG 0x000000
-#define LIGHT_DEFAULT_BG 0xFFFFFF
-
 #define LIGHT_CPP_INSTRUCTION 0x0000FF  // CPP family instruction color - blue 
 #define DARK_CPP_INSTRUCTION  0x00B4F0  // dark mode compensition color
 
 #define LIGHT_CPP_OPERATOR 0x800000     // CPP family operator color - dark blue 
-#define DARK_CPP_OPERATOR  0xFFFFFF     // dark mode compensition color
+#define DARK_CPP_OPERATOR  WHITE        // dark mode compensition color
 
 #define LIGHT_CPP_TYPE 0x8000FF         // CPP family instruction color
 #define DARK_CPP_TYPE  0xF0B400 

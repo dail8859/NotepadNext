@@ -19,13 +19,13 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENTLINE"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["STRING DOUBLE QUOTE"] = {
 		id = 2,
@@ -39,18 +39,18 @@ L.styles = {
 	},
 	["STRING RIGHT QUOTE"] = {
 		id = 4,
-		fgColor = defaultFg,
+		fgColor = rgb(defaultFg),
 		bgColor = rgb(0xC0C0C0),
 	},
 	["FUNCTION"] = {
 		id = 5,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["VARIABLE"] = {
 		id = 6,
 		fgColor = rgb(0xFF8000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["LABEL"] = {
 		id = 7,
@@ -66,24 +66,24 @@ L.styles = {
 	["SECTION"] = {
 		id = 9,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["SUBSECTION"] = {
 		id = 10,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["IF DEFINE"] = {
 		id = 11,
 		fgColor = rgb(0x808040),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["MACRO"] = {
 		id = 12,
 		fgColor = rgb(0x800000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["STRING VAR"] = {
@@ -94,30 +94,30 @@ L.styles = {
 	["NUMBER"] = {
 		id = 14,
 		fgColor = rgb(0xFF0000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["SECTION GROUP"] = {
 		id = 15,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["PAGE EX"] = {
 		id = 16,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["FUNCTION DEFINITIONS"] = {
 		id = 17,
 		fgColor = rgb(InstructionColor),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["COMMENT"] = {
 		id = 18,
 		fgColor = rgb(0x008000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 }
 return L

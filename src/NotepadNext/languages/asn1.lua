@@ -16,60 +16,60 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x007F00),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["IDENTIFIERS"] = {
 		id = 2,
-		fgColor = defaultFg,
-		bgColor = defaultBg,
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["DOUBLE QUOTED STRING"] = {
 		id = 3,
 		fgColor = rgb(0x7F007F),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["NUMERIC OID DEFINITION"] = {
 		id = 4,
 		fgColor = rgb(0x007F7F),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["NON OID NUMBERS"] = {
 		id = 5,
 		fgColor = rgb(0x7F0000),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["KEYWORDS"] = {
 		id = 6,
 		fgColor = rgb(0x00007F),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["ATTRIBUTES"] = {
 		id = 7,
 		fgColor = rgb(0xF07800),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["DESCRIPTORS"] = {
 		id = 8,
 		fgColor = rgb(0x00007F),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["TYPES"] = {
 		id = 9,
 		fgColor = rgb(0x00007F),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 	["OPERATORS"] = {
 		id = 10,
 		fgColor = rgb(0x222222),
-		bgColor = defaultBg,
+		bgColor = rgb(defaultBg),
 	},
 }
 return L
