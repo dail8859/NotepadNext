@@ -65,6 +65,8 @@ public:
 
     void sendInfoToPrimaryInstance();
 
+    void setLanguageColors();
+
 protected:
     bool event(QEvent *event) override;
 

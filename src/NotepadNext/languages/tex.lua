@@ -11,11 +11,10 @@ L.extensions = {
 L.keywords = {
 }
 
-rgb(defaultBg)=rgb(0x202020)
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(defaultBg),
+		fgColor = rgb(defaultFg),
 		bgColor = rgb(defaultBg),
 	},
 	["SPECIAL"] = {
@@ -43,7 +42,7 @@ L.styles = {
 	},
 	["TEXT"] = {
 		id = 5,
-		fgColor = rgb(defaultBg),
+		fgColor = rgb(defaultFg),
 		bgColor = rgb(defaultBg),
 	},
 }

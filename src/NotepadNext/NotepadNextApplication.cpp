@@ -131,7 +131,7 @@ bool NotepadNextApplication::init()
 
     bool darkMode = settings->darkMode();
 
-    // set language path based on theme,
+    // Set language path based on theme,
     // dark mode may have its own path
     //luaLanguagePath = darkMode ? "languages/dark" : "languages";
     luaLanguagePath = "languages";  // same language lua config for dark/light mode
@@ -142,18 +142,8 @@ bool NotepadNextApplication::init()
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
     ecad->setEnabled(true);
 
-    // set language highlighting colors based on theme
-    long defaultFgColor  = darkMode ? DARK_DEFAULT_FG : LIGHT_DEFAULT_FG;
-    long defaultBgColor  = darkMode ? DARK_DEFAULT_BG : LIGHT_DEFAULT_BG;
-    long instructionColor= darkMode ? DARK_CPP_INSTRUCTION : LIGHT_CPP_INSTRUCTION;
-    long operatorColor   = darkMode ? DARK_CPP_OPERATOR : LIGHT_CPP_OPERATOR;
-    long typeColor       = darkMode ? DARK_CPP_TYPE : LIGHT_CPP_TYPE;
-
-    luaState->execute(QString("defaultFg=0x%1").arg(defaultFgColor,0,16).toLatin1().constData());
-    luaState->execute(QString("defaultBg=0x%1").arg(defaultBgColor,0,16).toLatin1().constData());
-    luaState->execute(QString("InstructionColor=0x%1").arg(instructionColor,0,16).toLatin1().constData());
-    luaState->execute(QString("OperatorColor=0x%1").arg(operatorColor,0,16).toLatin1().constData());
-    luaState->execute(QString("TypeColor=0x%1").arg(typeColor,0,16).toLatin1().constData());
+    // Set up colors language lua scripts, based on dark/light theme
+    setLanguageColors();
 
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
@@ -519,4 +509,37 @@ MainWindow *NotepadNextApplication::createNewWindow()
     });
 
     return window;
+}
+
+static long rgb2bgr(long x)
+{
+    return ((x & 0x0000FF) << 16) | (x & 0x00FF00) | ((x & 0xFF0000) >> 16);
+}
+
+static QString bgrHexValue(long rgb)
+{
+    return QString("0x%1").arg(rgb2bgr(rgb), 0, 16);
+}
+
+static QString buildLuaExp(QString var, long rgb)
+{
+    return QString("%1=%2").arg(var).arg(bgrHexValue(rgb));
+}
+
+void NotepadNextApplication::setLanguageColors()
+{
+    bool darkMode = settings->darkMode();
+
+    // set language highlighting colors based on theme
+    long defaultFgColor  = darkMode ? DARK_DEFAULT_FG : LIGHT_DEFAULT_FG;
+    long defaultBgColor  = darkMode ? DARK_DEFAULT_BG : LIGHT_DEFAULT_BG;
+    long instructionColor= darkMode ? DARK_CPP_INSTRUCTION : LIGHT_CPP_INSTRUCTION;
+    long operatorColor   = darkMode ? DARK_CPP_OPERATOR : LIGHT_CPP_OPERATOR;
+    long typeColor       = darkMode ? DARK_CPP_TYPE : LIGHT_CPP_TYPE;
+
+    luaState->execute(buildLuaExp("defaultFg", defaultFgColor).toLatin1().constData());
+    luaState->execute(buildLuaExp("defaultBg", defaultBgColor).toLatin1().constData());
+    luaState->execute(buildLuaExp("InstructionColor", instructionColor).toLatin1().constData());
+    luaState->execute(buildLuaExp("OperatorColor", operatorColor).toLatin1().constData());
+    luaState->execute(buildLuaExp("TypeColor", typeColor).toLatin1().constData());
 }
