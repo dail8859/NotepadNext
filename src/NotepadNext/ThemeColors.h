@@ -1,6 +1,8 @@
 /*
  * This file is part of Notepad Next.
  * Copyright 2019 Justin Dailey
+ * 
+ * @author Wayne Zhang
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +21,23 @@
 #ifndef THEME_COLORS_H
 #define THEME_COLORS_H
 
+// ########## color utilities  ########## 
+
+/**
+ * Calculate 'negtive' color, that is, compensation color. 
+ * For example, back's compenstation color is white.
+ */
+#define invertColor(color) color ^ WHITE
+
+/**
+ * Covert RGB color value to BGR, as Lua do the samething, reason unknow.
+ * To make color RGB values passed from CPP/NotepadNext to Lua scripts the 
+ * same value, convert RGB to BGR: RBB->BGR->BRG = RGB
+ */
+#define rgb2bgr(x) ((x & 0x0000FF) << 16) | (x & 0x00FF00) | ((x & 0xFF0000) >> 16)
+
+// ######### color utilities #############
+
 #define WHITE   0xFFFFFF
 #define BLACK   0x000000
 
@@ -32,13 +51,13 @@
 #define DARK_MENU_COLOR 0xE0E1E3
 #define DARK_MENU_BG_COLOR 0x37414F
 
-#define LIGHT_CPP_INSTRUCTION 0x0000FF  // CPP family instruction color - blue 
-#define DARK_CPP_INSTRUCTION  0x00B4F0  // dark mode compensition color
+#define LIGHT_INTRUCTION_COLOR 0x0000FF   // instruction color - blue 
+#define DARK_INTRUCTION_COLOR  0x00B4F0   // dark mode compensation color
 
-#define LIGHT_CPP_OPERATOR 0x800000     // CPP family operator color - dark blue 
-#define DARK_CPP_OPERATOR  WHITE        // dark mode compensition color
+#define LIGHT_OPERATOR_COLOR 0x800000     // operator color - dark blue 
+#define DARK_OPERATOR_COLOR  WHITE        // dark mode compensation color
 
-#define LIGHT_CPP_TYPE 0x8000FF         // CPP family instruction color
-#define DARK_CPP_TYPE  0xF0B400 
+#define LIGHT_TYPE_COLOR 0x8000FF         // type color
+#define DARK_TYPE_COLOR  0xF0B400         // dark mode compenstation color
 
 #endif

@@ -36,6 +36,7 @@ public:
     ~LuaState();
 
     void execute(const char *statement, bool clear = true);
+    void execute(const QString& statement);
     void executeFile(const QString &fileName);
 
     template<typename T>

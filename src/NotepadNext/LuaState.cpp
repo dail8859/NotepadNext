@@ -144,6 +144,11 @@ void LuaState::execute(const char *statement, bool clear)
         lua_settop(L, stacktop);
 }
 
+void LuaState::execute(const QString &statement)
+{
+    execute(statement.toLatin1().constData());
+}
+
 void LuaState::executeFile(const QString &fileName)
 {
     QFile ff(fileName);

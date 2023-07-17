@@ -41,12 +41,6 @@ const int MARK_HIDELINESBEGIN = 23;
 const int MARK_HIDELINESEND = 22;
 const int MARK_HIDELINESUNDERLINE = 21;
 
-static int invertColor(int color)
-{
-    // implementation by XOR
-    return color ^ WHITE;
-}
-
 static int DefaultFontSize()
 {
     QFont font = QApplication::font();
