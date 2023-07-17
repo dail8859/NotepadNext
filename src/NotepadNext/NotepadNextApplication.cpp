@@ -289,7 +289,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 {
     LuaExtension::Instance().setEditor(editor);
 
-    getLuaState()->execute(QString("languageName = \"%1\"").arg(languageName).toLatin1().constData());
+    getLuaState()->execute(QString("languageName = \"%1\"").arg(languageName));
     const QString lexer = getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
 
     editor->languageName = languageName;
@@ -304,8 +304,8 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
     // Dynamic properties can be used to skip part of the default initialization. The value in the
     // property doesn't currently matter, but may be used at a later point.
-    getLuaState()->execute(QString("skip_tabs = %1").arg(editor->QObject::property("nn_skip_usetabs").isValid() ? "true" : "false").toLatin1().constData());
-    getLuaState()->execute(QString("skip_tabwidth = %1").arg(editor->QObject::property("nn_skip_tabwidth").isValid() ? "true" : "false").toLatin1().constData());
+    getLuaState()->execute(QString("skip_tabs = %1").arg(editor->QObject::property("nn_skip_usetabs").isValid() ? "true" : "false"));
+    getLuaState()->execute(QString("skip_tabwidth = %1").arg(editor->QObject::property("nn_skip_tabwidth").isValid() ? "true" : "false"));
 
     getLuaState()->execute(R"(
         local L = languages[languageName]
@@ -511,7 +511,10 @@ MainWindow *NotepadNextApplication::createNewWindow()
     return window;
 }
 
-static QString buildLuaExp(QString var, long rgb)
+/**
+ * Build a Lua assignment statement: var = rgb
+ */
+static QString buildLuaAssignment(QString var, long rgb)
 {
     return QString("%1=0x%2").arg(var).arg(rgb2bgr(rgb), 0, 16);
 }
@@ -530,9 +533,9 @@ void NotepadNextApplication::setLanguageColors()
     long operatorColor   = darkMode ? DARK_OPERATOR_COLOR : LIGHT_OPERATOR_COLOR;
     long typeColor       = darkMode ? DARK_TYPE_COLOR : LIGHT_TYPE_COLOR;
 
-    luaState->execute(buildLuaExp("defaultFg", defaultFgColor));
-    luaState->execute(buildLuaExp("defaultBg", defaultBgColor));
-    luaState->execute(buildLuaExp("InstructionColor", instructionColor));
-    luaState->execute(buildLuaExp("OperatorColor", operatorColor));
-    luaState->execute(buildLuaExp("TypeColor", typeColor));
+    luaState->execute(buildLuaAssignment("defaultFg", defaultFgColor));
+    luaState->execute(buildLuaAssignment("defaultBg", defaultBgColor));
+    luaState->execute(buildLuaAssignment("InstructionColor", instructionColor));
+    luaState->execute(buildLuaAssignment("OperatorColor", operatorColor));
+    luaState->execute(buildLuaAssignment("TypeColor", typeColor));
 }
