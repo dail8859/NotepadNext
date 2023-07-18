@@ -520,7 +520,7 @@ static QString buildLuaAssignment(QString var, long rgb)
 }
 
 /**
- * Set langueages colors based dark/light mode settings
+ * Set languages colors based dark/light mode settings
  */
 void NotepadNextApplication::setLanguageColors()
 {

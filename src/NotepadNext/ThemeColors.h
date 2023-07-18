@@ -30,7 +30,7 @@
 #define invertColor(color) color ^ WHITE
 
 /**
- * Covert RGB color value to BGR, as Lua do the samething, reason unknow.
+ * Convert RGB color value to BGR, as Lua do the samething, reason unknown.
  * To make color RGB values passed from CPP/NotepadNext to Lua scripts the 
  * same value, convert RGB to BGR: RBB->BGR->BRG = RGB
  */
