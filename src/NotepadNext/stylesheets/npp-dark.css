@@ -19,6 +19,20 @@ ads--CDockWidgetTab[activeTab="true"] QLabel {
     color: palette(dark);
 }
 
+ads--CDockWidgetTab {
+    qproperty-iconSize: 8px 8px;
+}
+
+#dockWidgetTabLabel {
+    padding: 0px;
+    margin:  0px;
+}
+
+#tabCloseButton {
+    margin:  0px;
+    padding: 0x;
+}
+
 /* changed for NotepadNext - 'Close without save' button */
 /*QDialogButtonBox QPushButton {
    min-width: 160px; 
