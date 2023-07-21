@@ -20,17 +20,20 @@ ads--CDockWidgetTab[activeTab="true"] QLabel {
 }
 
 ads--CDockWidgetTab {
+    /* Make tab icons smaller */
     qproperty-iconSize: 8px 8px;
 }
 
 #dockWidgetTabLabel {
+    margin: 0px;
+    /* Fix tiltle text truncation at header/tail */
     padding: 0px;
-    margin:  0px;
 }
 
 #tabCloseButton {
     margin:  0px;
     padding: 0x;
+    qproperty-iconSize: 8px 8px;
 }
 
 /* changed for NotepadNext - 'Close without save' button */
@@ -44,5 +47,8 @@ QMessageBox > QDialogButtonBox > QPushButton[text="Close without Saving"] {
 }
 
 QAbstractScrollArea {
-  margin-left: -2px;            /* fix NotepadNext editors first character cut-off issue */
+    /* Fix NotepadNext editor first character cut-off issue */
+    margin-left: -2px;
+    /* Fix NotepadNext editor first line cut-off issue on Linux */
+    margin-top:  -2px;
 }
