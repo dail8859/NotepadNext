@@ -23,6 +23,8 @@ TEMPLATE = subdirs
 
 SUBDIRS = NotepadNext
 
+# Statically link the runtime so the MSVC++ Redistributables are not required
+msvc:CONFIG += static_runtime
 
 # Extra Windows targets
 win32 {
