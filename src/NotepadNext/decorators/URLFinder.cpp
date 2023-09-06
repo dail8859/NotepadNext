@@ -142,3 +142,25 @@ void URLFinder::notify(const Scintilla::NotificationData *pscn)
         }
     }
 }
+
+bool URLFinder::isURL(int position) const
+{
+    const int indicators = editor->indicatorAllOnFor(position);
+    return indicators & (1 << indicator);
+}
+
+void URLFinder::copyURLToClipboard(int position) const
+{
+    const int indicatorStart = editor->indicatorStart(indicator, position);
+    const int indicatorEnd = editor->indicatorEnd(indicator, position);
+
+    QUrl url(editor->get_text_range(indicatorStart, indicatorEnd));
+
+    if (url.isValid()) {
+        qInfo("Copy URL to clipboard: \"%s\"", editor->get_text_range(indicatorStart, indicatorEnd).constData());
+        editor->copyRange(indicatorStart, indicatorEnd);
+    }
+    else {
+        qWarning("Invalid url \"%s\"", qUtf8Printable(url.errorString()));
+    }
+}
