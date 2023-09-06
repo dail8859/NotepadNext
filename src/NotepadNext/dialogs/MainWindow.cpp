@@ -1522,7 +1522,7 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
     ui->actionBase64Encode->setEnabled(hasAnySelections);
     ui->actionURLEncode->setEnabled(hasAnySelections);
     ui->actionBase64Decode->setEnabled(hasAnySelections);
-    ui->actionURLEncode->setEnabled(hasAnySelections);
+    ui->actionURLDecode->setEnabled(hasAnySelections);
 }
 
 void MainWindow::detectLanguage(ScintillaNext *editor)
