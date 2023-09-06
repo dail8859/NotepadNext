@@ -19,6 +19,7 @@
 
 #include "MainWindow.h"
 #include "BookMarkDecorator.h"
+#include "URLFinder.h"
 #include "SessionManager.h"
 #include "UndoAction.h"
 #include "ui_MainWindow.h"
@@ -166,6 +167,13 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ScintillaNext *editor = currentEditor();
         const QByteArray selection = editor->getSelText();
         editor->replaceSel(QByteArray::fromPercentEncoding(selection).constData());
+    });
+    connect(ui->actionCopyURL, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
+        if (urlFinder && urlFinder->isEnabled()) {
+            urlFinder->copyURLToClipboard(contextMenuPos);
+        }
     });
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
@@ -1745,9 +1753,15 @@ void MainWindow::addEditor(ScintillaNext *editor)
 
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(editor, &ScintillaNext::customContextMenuRequested, this, [=](const QPoint &pos) {
+        contextMenuPos = editor->send(SCI_POSITIONFROMPOINT, pos.x(), pos.y());
         QMenu *menu = new QMenu(this);
         menu->setAttribute(Qt::WA_DeleteOnClose);
 
+        URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
+        if (urlFinder && urlFinder->isEnabled() && urlFinder->isURL(contextMenuPos)) {
+            menu->addAction(ui->actionCopyURL);
+            menu->addSeparator();
+        }
         menu->addAction(ui->actionCut);
         menu->addAction(ui->actionCopy);
         menu->addAction(ui->actionPaste);

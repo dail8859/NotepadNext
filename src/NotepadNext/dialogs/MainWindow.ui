@@ -1080,6 +1080,11 @@
     <string>URL Decode</string>
    </property>
   </action>
+  <action name="actionCopyURL">
+   <property name="text">
+    <string>Copy URL</string>
+   </property>
+  </action>
   <action name="actionRemoveEmptyLines">
    <property name="text">
     <string>Remove Empty Lines</string>
