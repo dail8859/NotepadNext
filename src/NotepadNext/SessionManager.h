@@ -26,8 +26,8 @@
 
 
 class ScintillaNext;
-class EditorManager;
 class MainWindow;
+class NotepadNextApplication;
 
 class SessionManager
 {
@@ -41,14 +41,14 @@ public:
     Q_DECLARE_FLAGS(SessionFileTypes, SessionFileType)
 
 
-    SessionManager(SessionFileTypes types = SessionFileTypes());
+    SessionManager(NotepadNextApplication *app, SessionFileTypes types = SessionFileTypes());
 
     void setSessionFileTypes(SessionFileTypes types);
 
     void clear() const;
 
     void saveSession(MainWindow *window);
-    void loadSession(MainWindow *window, EditorManager *editorManager);
+    void loadSession(MainWindow *window);
 
     bool willFileGetStoredInSession(ScintillaNext *editor) const;
 
@@ -63,17 +63,18 @@ private:
     void clearDirectory() const;
 
     void storeFileDetails(ScintillaNext *editor, QSettings &settings);
-    ScintillaNext *loadFileDetails(QSettings &settings, EditorManager *editorManager);
+    ScintillaNext *loadFileDetails(QSettings &settings);
 
     void storeUnsavedFileDetails(ScintillaNext *editor, QSettings &settings);
-    ScintillaNext *loadUnsavedFileDetails(QSettings &settings, EditorManager *editorManager);
+    ScintillaNext *loadUnsavedFileDetails(QSettings &settings);
 
     void storeTempFile(ScintillaNext *editor, QSettings &settings);
-    ScintillaNext *loadTempFile(QSettings &settings, EditorManager *editorManager);
+    ScintillaNext *loadTempFile(QSettings &settings);
 
     void storeEditorViewDetails(ScintillaNext *editor, QSettings &settings);
     void loadEditorViewDetails(ScintillaNext *editor, QSettings &settings);
 
+    NotepadNextApplication *app;
     SessionFileTypes fileTypes;
 };
 
