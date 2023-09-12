@@ -109,7 +109,7 @@ bool NotepadNextApplication::init()
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(this);
     settings = new Settings(this);
-    sessionManager = new SessionManager();
+    sessionManager = new SessionManager(this);
 
     connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [=](ScintillaNext *editor) {
         if (editor->isFile()) {
@@ -211,7 +211,7 @@ bool NotepadNextApplication::init()
     if (settings->restorePreviousSession()) {
         qInfo("Restoring previous session");
 
-        sessionManager->loadSession(window, editorManager);
+        sessionManager->loadSession(window);
     }
 
     openFiles(parser.positionalArguments());
