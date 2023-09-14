@@ -588,14 +588,14 @@
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="145"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="331"/>
         <source>Replaced %Ln matches</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>已替换 %Ln 个匹配项</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="229"/>
         <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
-        <translation type="unfinished"></translation>
+        <translation>已经到达文档的末尾。从顶部找到第一个匹配项。</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="240"/>
@@ -615,8 +615,8 @@
     <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="342"/>
         <source>Found %Ln matches</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>找到 %Ln 个匹配项</numerusform>
         </translation>
     </message>
     <message>
@@ -666,23 +666,23 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="100"/>
         <source>Property</source>
-        <translation type="unfinished"></translation>
+        <translation>性质</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="105"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>类型</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="110"/>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="151"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>描述</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="115"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>值</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="123"/>
@@ -692,7 +692,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="146"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="159"/>
@@ -937,7 +937,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="193"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>书签</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="216"/>
@@ -1413,58 +1413,58 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1085"/>
         <source>Remove Empty Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>删除空行</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1094"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1097"/>
         <source>Show in Explorer</source>
-        <translation type="unfinished"></translation>
+        <translation>在资源管理器中查看</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1106"/>
         <source>Open Command Prompt Here</source>
-        <translation type="unfinished"></translation>
+        <translation>在此打开命令提示符</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1111"/>
         <source>Toggle Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>切换书签</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1114"/>
         <source>Ctrl+F2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1119"/>
         <source>Next Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>下一个书签</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1122"/>
         <source>F2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1127"/>
         <source>Previous Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>上一个书签</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1130"/>
         <source>Shift+F2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1135"/>
         <source>Clear Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>清除书签</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1140"/>
         <source>Invert Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>置顶书签</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="715"/>
@@ -1836,7 +1836,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
         <source>Combine search results</source>
-        <translation type="unfinished"></translation>
+        <translation>合并搜索结果</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="61"/>
