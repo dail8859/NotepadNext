@@ -30,6 +30,8 @@ else {
 
 CONFIG += c++1z
 CONFIG -= debug_and_release debug_and_release_target
+# Statically link the runtime so the MSVC++ Redistributables are not required
+msvc:CONFIG += static_runtime
 
 # Controls if we want to define our own regex engine using QRegularExpression
 DEFINES += SCI_OWNREGEX
