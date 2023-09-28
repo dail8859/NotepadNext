@@ -445,7 +445,9 @@ void NotepadNextApplication::openFiles(const QStringList &files)
     qInfo(Q_FUNC_INFO);
 
     for (const QString &file : files) {
-        window->openFile(file);
+        QUrl fileUrl(file);
+        QString filePath = fileUrl.isValid() && fileUrl.isLocalFile() ? fileUrl.toLocalFile() : file;
+        window->openFile(filePath);
     }
 }
 
