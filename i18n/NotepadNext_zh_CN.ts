@@ -1413,7 +1413,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1085"/>
         <source>Copy URL</source>
-        <translation type="unfinished"></translation>
+        <translation>复制 URL</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1090"/>
