@@ -172,6 +172,8 @@ void ScintillaNext::forEachMatchInRange(const QByteArray &text, Func callback, S
     int flags = searchFlags();
 
     while (send(SCI_FINDTEXT, flags, reinterpret_cast<sptr_t>(&ttf)) != -1) {
+        if(ttf.chrgText.cpMin == ttf.chrgText.cpMax)
+            break;
         ttf.chrg.cpMin = callback(ttf.chrgText.cpMin, ttf.chrgText.cpMax);
     }
 }
