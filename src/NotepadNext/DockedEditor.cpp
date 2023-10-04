@@ -22,7 +22,6 @@
 #include "DockWidgetTab.h"
 #include "DockComponentsFactory.h"
 #include "DockedEditorTitleBar.h"
-#include "DockAreaTabBar.h"
 
 #include "ScintillaNext.h"
 
@@ -54,7 +53,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     ads::CDockManager::setConfigFlag(ads::CDockManager::DragPreviewShowsContentPixmap, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasCloseButton, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasUndockButton, false);
-    // When tabs title/text elide disabled and lots of tabs opened, tabls menu button will not show
+    // When tabs title/text elide disabled and lots of tabs opened, tabs menu button will not show
     // as it only shows when tab title elided. 
     // So disable dynamic tabs menu visibility.
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaDynamicTabsMenuButtonVisibility, false);
