@@ -55,15 +55,17 @@ jobs:
         if: runner.os == 'Windows'
         run: choco install jom
 
-      - name: Setup
+      - name: Setup Linux
         if: runner.os == 'Linux'
-        run: sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev
+        run: |
+          echo "DISTRIBUTION=AppImage" >> "$GITHUB_ENV"
+          sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev
 
       - name: Run QMake
         run: |
           mkdir build
           cd build
-          qmake ../src/NotepadNext.pro
+          qmake ../src/NotepadNext.pro "DISTRIBUTION=$DISTRIBUTION"
 
       - name: Compile for Windows
         if: runner.os == 'Windows'
@@ -122,7 +124,7 @@ jobs:
           name: NotepadNext-macOS-Qt${{ matrix.config.qt_version }}
           path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.dmg
 
-      - name: Upload AppImage Artifact
+      - name: Upload Linux AppImage
         uses: actions/upload-artifact@v3
         if: runner.os == 'Linux'
         with:
