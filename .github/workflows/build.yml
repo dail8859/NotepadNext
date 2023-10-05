@@ -57,7 +57,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          qmake ..\src\NotepadNext.pro
+          qmake ../src/NotepadNext.pro
 
       - name: Compile for Windows
         if: runner.os == 'Windows'
