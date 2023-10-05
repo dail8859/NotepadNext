@@ -38,6 +38,7 @@ jobs:
         with:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
+          cache: true
 
       - name: Get number of CPU cores
         if: runner.os != 'Windows'
