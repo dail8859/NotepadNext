@@ -39,6 +39,11 @@ jobs:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
 
+      - name: Get number of CPU cores
+        if: runner.os != 'Windows'
+        uses: SimenB/github-actions-cpu-cores@v1
+        id: cpu-cores
+
       - name: Setup Visual Studio Tools
         if: runner.os == 'Windows'
         uses: egor-tensin/vs-shell@v2
@@ -69,7 +74,7 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           cd build
-          make
+          make -j${{ steps.cpu-cores.outputs.count }}
 
       - name: Create Windows zip Package
         if: runner.os == 'Windows'
