@@ -16,10 +16,10 @@ jobs:
         os: [ubuntu-20.04, windows-latest, macos-latest]
         config:
         - 
-          qt_version: "5.15.2"
+          qt_version: "5.15"
           modules: ""
         - 
-          qt_version: "6.2.4"
+          qt_version: "6.2"
           modules: "qt5compat"
         - 
           qt_version: "6.5"
