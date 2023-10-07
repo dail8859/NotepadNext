@@ -57,6 +57,7 @@ SetCompressor /SOLID lzma
 !insertmacro MUI_PAGE_LICENSE "..\LICENSE"
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_COMPONENTS
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE VerifyInstallDirEmpty
 !insertmacro MUI_PAGE_DIRECTORY # In which folder install page.
 !define MUI_PAGE_CUSTOMFUNCTION_SHOW "CheckIfRunning"
 !insertmacro MUI_PAGE_INSTFILES # Installing page.
@@ -100,6 +101,37 @@ Function PageWelcomeLicensePre
 	${endif}
 FunctionEnd
 
+Function VerifyInstallDirEmpty
+	Push $INSTDIR
+	Call isEmptyDir
+	Pop $0
+
+	${If} $0 == 0
+	${AndIf} ${FileExists} "$INSTDIR\*"
+		SetRegView 64
+
+		# The uninstaller will run prior to executing the installer (but has not been ran yet)
+		# so if it is getting installed to the same location as the prior version, it is fine.
+		ReadRegStr $R0 SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "InstallLocation"
+
+		# The directory is the same as the previous version, so no need to worry.
+		${If} $R0 == $INSTDIR
+			Goto done
+		${EndIf}
+
+		MessageBox MB_ICONEXCLAMATION|MB_YESNO \
+			`"$INSTDIR" already exists and is not empty! \
+			This installer will delete all files and folders in that directory before \
+			installing!$\n$\n\
+			Do you want to continue?` \
+			/SD IDYES \
+			IDYES done
+		Abort
+	${EndIf}
+	done:
+FunctionEnd
+
+
 Function .onInit
 	${ifnot} ${UAC_IsInnerInstance}
 		!insertmacro CheckSingleInstance "Setup" "Global" "NotepadNextSetupMutex"
@@ -142,6 +174,9 @@ SectionEnd
 Section "Notepad Next"
 	SectionIn RO
 	SetOutPath $INSTDIR
+
+	# Make sure it is empty
+	RMDir /r $INSTDIR
 
 	File /r /x libcrypto-1_1-x64.dll /x libssl-1_1-x64.dll ..\build\package\*
 
