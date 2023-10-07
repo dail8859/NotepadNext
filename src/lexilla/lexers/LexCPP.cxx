@@ -326,50 +326,27 @@ public:
 
 // Options used for LexerCPP
 struct OptionsCPP {
-	bool stylingWithinPreprocessor;
-	bool identifiersAllowDollars;
-	bool trackPreprocessor;
-	bool updatePreprocessor;
-	bool verbatimStringsAllowEscapes;
-	bool triplequotedStrings;
-	bool hashquotedStrings;
-	bool backQuotedStrings;
-	bool escapeSequence;
-	bool fold;
-	bool foldSyntaxBased;
-	bool foldComment;
-	bool foldCommentMultiline;
-	bool foldCommentExplicit;
+	bool stylingWithinPreprocessor = false;
+	bool identifiersAllowDollars = true;
+	bool trackPreprocessor = true;
+	bool updatePreprocessor = true;
+	bool verbatimStringsAllowEscapes = false;
+	bool triplequotedStrings = false;
+	bool hashquotedStrings = false;
+	bool backQuotedStrings = false;
+	bool escapeSequence = false;
+	bool fold = false;
+	bool foldSyntaxBased = true;
+	bool foldComment = false;
+	bool foldCommentMultiline = true;
+	bool foldCommentExplicit = true;
 	std::string foldExplicitStart;
 	std::string foldExplicitEnd;
-	bool foldExplicitAnywhere;
-	bool foldPreprocessor;
-	bool foldPreprocessorAtElse;
-	bool foldCompact;
-	bool foldAtElse;
-	OptionsCPP() {
-		stylingWithinPreprocessor = false;
-		identifiersAllowDollars = true;
-		trackPreprocessor = true;
-		updatePreprocessor = true;
-		verbatimStringsAllowEscapes = false;
-		triplequotedStrings = false;
-		hashquotedStrings = false;
-		backQuotedStrings = false;
-		escapeSequence = false;
-		fold = false;
-		foldSyntaxBased = true;
-		foldComment = false;
-		foldCommentMultiline = true;
-		foldCommentExplicit = true;
-		foldExplicitStart = "";
-		foldExplicitEnd = "";
-		foldExplicitAnywhere = false;
-		foldPreprocessor = false;
-		foldPreprocessorAtElse = false;
-		foldCompact = false;
-		foldAtElse = false;
-	}
+	bool foldExplicitAnywhere = false;
+	bool foldPreprocessor = false;
+	bool foldPreprocessorAtElse = false;
+	bool foldCompact = false;
+	bool foldAtElse = false;
 };
 
 const char *const cppWordLists[] = {
@@ -1076,7 +1053,7 @@ void SCI_METHOD LexerCPP::Lex(Sci_PositionU startPos, Sci_Position length, int i
 						assert(!currentText.empty());
 						std::string currentSuffix = currentText.substr(1);
 						if (!keywords3.InList(currentSuffix) && !keywords3.InList(currentText)) {
-							const int subStyleCDKW = classifierDocKeyWords.ValueFor(currentSuffix.c_str());
+							const int subStyleCDKW = classifierDocKeyWords.ValueFor(currentSuffix);
 							if (subStyleCDKW >= 0) {
 								sc.ChangeState(subStyleCDKW | activitySet);
 							} else {
