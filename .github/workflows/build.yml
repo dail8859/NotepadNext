@@ -8,24 +8,27 @@ on:
       - '*'
   pull_request:
 
+env:
+  QT_RELEASE_VER: 6.5
 
 jobs:
-  build-linux:
+  build:
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-20.04, windows-latest, macos-latest]
         config:
         - 
-          qt_version: "5.15.2"
+          qt_version: "5.15"
           modules: ""
         - 
-          qt_version: "6.2.4"
+          qt_version: "6.2"
           modules: "qt5compat"
         - 
           qt_version: "6.5"
           modules: "qt5compat"
 
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout Repository
@@ -38,149 +41,103 @@ jobs:
         with:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
-      
-      - name: Setup
-        run: sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev
+          cache: true
 
-      - name: Compile
-        run: |
-          mkdir build
-          cd build
-          qmake ../src/NotepadNext.pro "DISTRIBUTION=AppImage"
-          make -j$(nproc)
-
-      - name: Build AppImage
-        run: |
-          cd build
-          make appimage
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}-AppImage
-          path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.AppImage
-
-  build-mac:
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-        -
-          qt_version: "5.15.2"
-          modules: ""
-        -
-          qt_version: "6.2.4"
-          modules: "qt5compat"
-        - 
-          qt_version: "6.5"
-          modules: "qt5compat"
-
-    runs-on: macos-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: ${{ matrix.config.qt_version }}
-          modules: ${{ matrix.config.modules }}
-
-      - name: Compile
-        run: |
-          mkdir build
-          cd build
-          qmake ../src/NotepadNext.pro
-          make -j$(sysctl -n hw.ncpu)
-
-      - name: Build DMG
-        run: |
-          cd build
-          make dmg
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: NotepadNext-macOS-Qt${{ matrix.config.qt_version }}
-          path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.dmg
-
-  build-windows:
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-        - 
-          qt_version: "5.15.2"
-          modules: ""
-        - 
-          qt_version: "6.2.4"
-          modules: "qt5compat"
-        - 
-          qt_version: "6.5"
-          modules: "qt5compat"
-
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: ${{ matrix.config.qt_version }}
-          modules: ${{ matrix.config.modules }}
+      - name: Get number of CPU cores
+        if: runner.os != 'Windows'
+        uses: SimenB/github-actions-cpu-cores@v1
+        id: cpu-cores
 
       - name: Setup Visual Studio Tools
+        if: runner.os == 'Windows'
         uses: egor-tensin/vs-shell@v2
         with:
           arch: x64
 
       - name: Install jom
+        if: runner.os == 'Windows'
         run: choco install jom
+
+      - name: Setup Linux
+        if: runner.os == 'Linux'
+        run: |
+          echo "DISTRIBUTION=AppImage" >> "$GITHUB_ENV"
+          sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev
 
       - name: Run QMake
         run: |
           mkdir build
           cd build
-          qmake ..\src\NotepadNext.pro
+          qmake ../src/NotepadNext.pro "DISTRIBUTION=$DISTRIBUTION"
 
-      - name: Build
+      - name: Compile for Windows
+        if: runner.os == 'Windows'
         run: |
           cd build
           jom
 
-      - name: Create zip Package
+      - name: Compile for Linux/macOS
+        if: runner.os != 'Windows'
+        run: |
+          cd build
+          make -j${{ steps.cpu-cores.outputs.count }}
+
+      - name: Create Windows zip Package
+        if: runner.os == 'Windows'
         run: |
           cd build
           jom package
 
-      - name: Create Installer
+      - name: Create Windows Installer
+        if: runner.os == 'Windows'
         run: |
           cd build
           jom installer
 
-      - name: Upload zip Package
+      - name: Create DMG
+        if: runner.os == 'macOS'
+        run: |
+          cd build
+          make dmg
+
+      - name: Create AppImage
+        if: runner.os == 'Linux'
+        run: |
+          cd build
+          make appimage
+
+      - name: Upload Windows zip Package
         uses: actions/upload-artifact@v3
+        if: runner.os == 'Windows'
         with:
           name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Zip
           path: ${{ github.workspace }}/build/package/
 
-      - name: Upload Installer
+      - name: Upload Windows Installer
         uses: actions/upload-artifact@v3
+        if: runner.os == 'Windows'
         with:
           name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Installer
           path: ${{ github.workspace }}/installer/NotepadNext*.exe
 
+      - name: Upload macOS dmg
+        uses: actions/upload-artifact@v3
+        if: runner.os == 'macOS'
+        with:
+          name: NotepadNext-macOS-Qt${{ matrix.config.qt_version }}
+          path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.dmg
+
+      - name: Upload Linux AppImage
+        uses: actions/upload-artifact@v3
+        if: runner.os == 'Linux'
+        with:
+          name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}-AppImage
+          path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.AppImage
+
   github:
     name: Draft GitHub Release
     runs-on: ubuntu-latest
-    needs: [build-linux, build-mac, build-windows]
+    needs: [build]
 
     if: github.repository == 'dail8859/NotepadNext' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     
@@ -200,12 +157,12 @@ jobs:
 
       - name: Upload Windows Installer
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-Windows-Qt6.5-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe
+          gh release upload ${{ github.ref_name }} NotepadNext-Windows-Qt$QT_RELEASE_VER-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe
 
       # The artifact is unzipped, so need to zip it back up so it can be uploaded
       - name: Upload Windows Zip
         run: |
-          cd NotepadNext-Windows-Qt6.5-Zip/
+          cd NotepadNext-Windows-Qt$QT_RELEASE_VER-Zip/
           zip -r ../NotepadNext-${{ github.ref_name }}-win64.zip .
           cd ..
           gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}-win64.zip
@@ -213,9 +170,9 @@ jobs:
 
       - name: Upload Linux AppImage
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt6.5-AppImage/NotepadNext-${{ github.ref_name }}-x86_64.AppImage
+          gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt$QT_RELEASE_VER-AppImage/NotepadNext-${{ github.ref_name }}-x86_64.AppImage
 
       - name: Upload macOS App
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt6.5/NotepadNext-${{ github.ref_name }}.dmg
+          gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt$QT_RELEASE_VER/NotepadNext-${{ github.ref_name }}.dmg
 
