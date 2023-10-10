@@ -45,7 +45,7 @@ jobs:
 
       - name: Get number of CPU cores
         if: runner.os != 'Windows'
-        uses: SimenB/github-actions-cpu-cores@v1
+        uses: SimenB/github-actions-cpu-cores@v2
         id: cpu-cores
 
       - name: Setup Visual Studio Tools
