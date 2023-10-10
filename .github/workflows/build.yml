@@ -27,6 +27,9 @@ jobs:
         - 
           qt_version: "6.5"
           modules: "qt5compat"
+        - 
+          qt_version: "6.6"
+          modules: "qt5compat"
 
     runs-on: ${{ matrix.os }}
 
