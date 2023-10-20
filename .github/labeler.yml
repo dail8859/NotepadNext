@@ -1,2 +1,5 @@
 translation:
-  - i18n/*
+- i18n/**
+
+installer:
+- installer/**
