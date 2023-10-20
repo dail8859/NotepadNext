@@ -1,0 +1,5 @@
+translation:
+- i18n/**
+
+installer:
+- installer/**
