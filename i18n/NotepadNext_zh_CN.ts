@@ -34,7 +34,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/DebugLogDock.ui" line="14"/>
         <source>Debug Log</source>
-        <translation>Debug日志</translation>
+        <translation>调试日志</translation>
     </message>
 </context>
 <context>
@@ -107,7 +107,7 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="210"/>
         <source>Click &quot;OK&quot; to begin installing the update</source>
-        <translation>点击“确定”按钮开始安装更新</translation>
+        <translation>点击“OK”按钮开始安装更新</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="212"/>
@@ -666,7 +666,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="100"/>
         <source>Property</source>
-        <translation>性质</translation>
+        <translation>属性</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="105"/>
@@ -1113,7 +1113,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="501"/>
         <source>Close the current file</source>
-        <translation>关闭当前</translation>
+        <translation>关闭当前文件</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="504"/>
@@ -1469,7 +1469,8 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1145"/>
         <source>Invert Bookmarks</source>
-        <translation>置顶书签</translation>
+        <translatorcomment>书签顺序上下颠倒</translatorcomment>
+        <translation>反转书签</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="715"/>
