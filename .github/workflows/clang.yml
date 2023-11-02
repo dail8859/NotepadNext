@@ -12,6 +12,7 @@ jobs:
         id: linter
         with:
           style: file
+          version: '16'
           repo-root: './src/NotepadNext/widgets'
 
       - name: Fail fast?!
