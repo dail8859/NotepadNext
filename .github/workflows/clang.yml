@@ -13,7 +13,6 @@ jobs:
         with:
           style: file
           version: '16'
-          repo-root: './src/NotepadNext/widgets'
 
       - name: Fail fast?!
         if: steps.linter.outputs.checks-failed > 0
