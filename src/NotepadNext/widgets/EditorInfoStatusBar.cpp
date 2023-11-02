@@ -22,6 +22,7 @@
 #include "StatusLabel.h"
 
 
+
 EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
     QStatusBar(window)
 {
