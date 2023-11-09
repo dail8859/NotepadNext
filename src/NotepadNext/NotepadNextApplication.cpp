@@ -424,6 +424,32 @@ void NotepadNextApplication::sendInfoToPrimaryInstance()
     sendMessage(buffer);
 }
 
+bool NotepadNextApplication::isRunningAsAdmin() const
+{
+    static bool initialized = false;
+    static bool isAdmin = false;
+
+    if (!initialized) {
+        initialized = true;
+
+#ifdef Q_OS_WIN
+        BOOL isMember;
+        SID_IDENTIFIER_AUTHORITY ntAuthority = SECURITY_NT_AUTHORITY;
+        PSID administratorsGroupSid = NULL;
+
+        // Create a SID for the Administrators group
+        if (AllocateAndInitializeSid(&ntAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &administratorsGroupSid)) {
+            if (CheckTokenMembership(NULL, administratorsGroupSid, &isMember)) {
+                isAdmin = isMember;
+                FreeSid(administratorsGroupSid);
+            }
+        }
+#endif
+    }
+
+    return isAdmin;
+}
+
 bool NotepadNextApplication::event(QEvent *event)
 {
     // Handle the QFileOpenEvent to open files on MacOS X.
