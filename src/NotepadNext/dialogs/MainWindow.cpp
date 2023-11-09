@@ -1387,7 +1387,7 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
     if (app->isRunningAsAdmin()) {
         title += QStringLiteral(" - [%1]").arg(tr("Administrator"));
     }
-    setWindowTitle(title.arg(fileName));
+    setWindowTitle(title);
 
     ui->actionReload->setEnabled(isFile);
     ui->actionMoveToTrash->setEnabled(isFile);
