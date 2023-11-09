@@ -182,14 +182,15 @@ Section "Notepad Next"
 
 	SetRegView 64
 
-	# Register the application (e.g. cmd> start notepadnext)
+	# Register the application. https://learn.microsoft.com/en-us/windows/win32/shell/app-registration#registering-applications
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
 
-	# Register 'Open With' menu suggestion. No real good documentation for this. https://stackoverflow.com/a/62783311
-	WriteRegStr SHCTX "Software\Classes\NotepadNext\shell" "" "open"
-	WriteRegStr SHCTX "Software\Classes\NotepadNext\shell\open\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
-	WriteRegStr SHCTX "Software\Classes\.txt\OpenWithProgids" "NotepadNext" ""
-	# TODO: add more extensions
+	# Register verbs. https://learn.microsoft.com/en-us/windows/win32/shell/app-registration#registering-verbs-and-other-file-association-information
+	WriteRegStr SHCTX "Software\Classes\Applications\NotepadNext.exe\shell\open\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
+	WriteRegStr SHCTX "Software\Classes\Applications\NotepadNext.exe\shell\edit\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
+
+	# Register it the perceived type so that Windows will suggest it as a possible application to use
+	WriteRegStr SHCTX "Software\Classes\SystemFileAssociations\text\OpenWithList\NotepadNext.exe" "" ""
 
 	WriteUninstaller "$INSTDIR\uninstall.exe"
 	!insertmacro MULTIUSER_RegistryAddInstallInfo
@@ -304,12 +305,11 @@ Section "Uninstall"
 	# Remove application registration
 	DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
 
-	# Custom configurations
-	DeleteRegKey SHCTX "Software\NotepadNext\"
+	# Remove registered verbs
+	DeleteRegKey SHCTX "Software\Classes\Applications\NotepadNext.exe"
 
-	# Remove 'Open With' menu suggestion
-	DeleteRegValue SHCTX "Software\Classes\.txt\OpenWithProgids" "NotepadNext"
-	DeleteRegKey SHCTX "Software\Classes\NotepadNext"
-	
+	# Remove type registration
+	DeleteRegKey SHCTX "Software\Classes\SystemFileAssociations\text\OpenWithList\NotepadNext.exe"
+
 	!insertmacro MULTIUSER_RegistryRemoveInstallInfo 
 SectionEnd
