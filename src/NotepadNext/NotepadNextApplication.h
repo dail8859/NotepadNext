@@ -65,6 +65,8 @@ public:
 
     void sendInfoToPrimaryInstance();
 
+    bool isRunningAsAdmin() const;
+
 protected:
     bool event(QEvent *event) override;
 
