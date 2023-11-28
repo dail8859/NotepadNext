@@ -10,6 +10,11 @@ L.extensions = {
 	"xhtml",
 	"xht",
 	"hta",
+	"vue",
+}
+
+L.properties = {
+	["fold.html"] = "1",
 }
 
 L.keywords = {

@@ -18,6 +18,8 @@
 
 
 #include "MainWindow.h"
+#include "BookMarkDecorator.h"
+#include "URLFinder.h"
 #include "SessionManager.h"
 #include "UndoAction.h"
 #include "ui_MainWindow.h"
@@ -36,6 +38,7 @@
 #include <QPrinter>
 #include <QDirIterator>
 #include <QProcess>
+#include <QScreen>
 
 
 #ifdef Q_OS_WIN
@@ -109,6 +112,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionCloseAll, &QAction::triggered, this, &MainWindow::closeAllFiles);
     connect(ui->actionExit, &QAction::triggered, this, &MainWindow::close);
 
+#ifdef Q_OS_WIN
+    ui->actionExit->setShortcut(QKeySequence("Alt+F4"));
+#else
+    ui->actionExit->setShortcut(QKeySequence::Quit);
+#endif
+
     connect(ui->actionOpenFolderasWorkspace, &QAction::triggered, this, &MainWindow::openFolderAsWorkspaceDialog);
 
     connect(ui->actionCloseAllExceptActive, &QAction::triggered, this, &MainWindow::closeAllExceptActive);
@@ -158,6 +167,13 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ScintillaNext *editor = currentEditor();
         const QByteArray selection = editor->getSelText();
         editor->replaceSel(QByteArray::fromPercentEncoding(selection).constData());
+    });
+    connect(ui->actionCopyURL, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
+        if (urlFinder && urlFinder->isEnabled()) {
+            urlFinder->copyURLToClipboard(contextMenuPos);
+        }
     });
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
@@ -246,9 +262,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionPaste, &QAction::triggered, this, [=]() { currentEditor()->paste(); });
     connect(ui->actionSelectAll, &QAction::triggered, this, [=]() { currentEditor()->selectAll(); });
     connect(ui->actionSelectNext, &QAction::triggered, this, [=]() {
-        // Set search flags here?
-        currentEditor()->targetWholeDocument();
-        currentEditor()->multipleSelectAddNext();
+        ScintillaNext *editor = currentEditor();
+
+        editor->setSearchFlags(SCFIND_NONE);
+        editor->targetWholeDocument();
+        editor->multipleSelectAddNext();
     });
     connect(ui->actionCopyFullPath, &QAction::triggered, this, [=]() {
         auto editor = currentEditor();
@@ -338,16 +356,91 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             editor->verticalCentreCaret();
         }
     });
+
+    connect(ui->actionToggleBookmark, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            editor->forEachLineInSelection(editor->mainSelection(), [&](int line) {
+                bookMarkDecorator->toggleBookmark(line);
+            });
+        }
+    });
+
+    connect(ui->actionNextBookmark, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            int currentLine = editor->lineFromPosition(editor->currentPos());
+            int nextBookmarkedLine = bookMarkDecorator->nextBookmarkAfter(currentLine + 1);
+
+            if (nextBookmarkedLine != -1) {
+                editor->ensureVisibleEnforcePolicy(nextBookmarkedLine);
+                editor->gotoLine(nextBookmarkedLine);
+            }
+        }
+    });
+
+    connect(ui->actionClearBookmarks, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            bookMarkDecorator->clearBookmarks();
+        }
+    });
+
+    connect(ui->actionInvertBookmarks, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            for (int line = 0; line < editor->lineCount(); line++) {
+                bookMarkDecorator->toggleBookmark(line);
+            }
+        }
+    });
+
+    connect(ui->actionPreviousBookmark, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            int currentLine = editor->lineFromPosition(editor->currentPos());
+            int prevBookmarkedLine = bookMarkDecorator->previousBookMarkBefore(currentLine - 1);
+
+            if (prevBookmarkedLine != -1) {
+                editor->ensureVisibleEnforcePolicy(prevBookmarkedLine);
+                editor->gotoLine(prevBookmarkedLine);
+            }
+        }
+    });
+
+
     ui->pushExitFullScreen->setParent(this); // This is important
     ui->pushExitFullScreen->setVisible(false);
     connect(ui->pushExitFullScreen, &QPushButton::clicked, ui->actionFullScreen, &QAction::trigger);
     connect(ui->actionFullScreen, &QAction::triggered, this, [=](bool b) {
+        static bool wasMaximized;
+
         if (b) {
             // NOTE: don't hide() these as it will cancel their actions they hold
             ui->menuBar->setMaximumHeight(0);
             ui->mainToolBar->setMaximumHeight(0);
 
+            wasMaximized = isMaximized();
+            if (wasMaximized) {
+                // By default when calling showMaximized() from a full screen state, the window will resize
+                // to its "normal" size and then immediately resize to the "maximized" size which is very ugly.
+                // By calling setGeometry() to the size of the screen, it at least alleviates the ugly animation
+                // going from: fullscreen -> small "normal" size -> full size of screen
+                setGeometry(screen()->availableGeometry());
+            }
+
             showFullScreen();
+
             ui->pushExitFullScreen->setGeometry(width() - 20, 0, 20, 20);
             ui->pushExitFullScreen->show();
             ui->pushExitFullScreen->raise();
@@ -355,7 +448,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         else {
             ui->menuBar->setMaximumHeight(QWIDGETSIZE_MAX);
             ui->mainToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
-            showNormal();
+
+            if (wasMaximized)
+                showMaximized();
+            else
+                showNormal();
 
             ui->pushExitFullScreen->hide();
         }
@@ -1286,7 +1383,11 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
         fileName = editor->getName();
     }
 
-    setWindowTitle(QStringLiteral("[*]%1").arg(fileName));
+    QString title = QStringLiteral("[*]%1").arg(fileName);
+    if (app->isRunningAsAdmin()) {
+        title += QStringLiteral(" - [%1]").arg(tr("Administrator"));
+    }
+    setWindowTitle(title);
 
     ui->actionReload->setEnabled(isFile);
     ui->actionMoveToTrash->setEnabled(isFile);
@@ -1425,7 +1526,7 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
     ui->actionBase64Encode->setEnabled(hasAnySelections);
     ui->actionURLEncode->setEnabled(hasAnySelections);
     ui->actionBase64Decode->setEnabled(hasAnySelections);
-    ui->actionURLEncode->setEnabled(hasAnySelections);
+    ui->actionURLDecode->setEnabled(hasAnySelections);
 }
 
 void MainWindow::detectLanguage(ScintillaNext *editor)
@@ -1656,9 +1757,15 @@ void MainWindow::addEditor(ScintillaNext *editor)
 
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(editor, &ScintillaNext::customContextMenuRequested, this, [=](const QPoint &pos) {
+        contextMenuPos = editor->send(SCI_POSITIONFROMPOINT, pos.x(), pos.y());
         QMenu *menu = new QMenu(this);
         menu->setAttribute(Qt::WA_DeleteOnClose);
 
+        URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
+        if (urlFinder && urlFinder->isEnabled() && urlFinder->isURL(contextMenuPos)) {
+            menu->addAction(ui->actionCopyURL);
+            menu->addSeparator();
+        }
         menu->addAction(ui->actionCut);
         menu->addAction(ui->actionCopy);
         menu->addAction(ui->actionPaste);

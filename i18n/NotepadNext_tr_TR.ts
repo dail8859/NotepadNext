@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="sv_SE">
+<TS version="2.1" language="tr_TR">
 <context>
     <name>ColumnEditorDialog</name>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="20"/>
         <source>Column Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Sütun Modu</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="32"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="47"/>
         <source>Numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayılar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="59"/>
         <source>Start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="76"/>
         <source>Step:</source>
-        <translation type="unfinished"></translation>
+        <translation>Basamak:</translation>
     </message>
 </context>
 <context>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/DebugLogDock.ui" line="14"/>
         <source>Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata Ayıklama Günlüğü</translation>
     </message>
 </context>
 <context>
@@ -43,102 +43,102 @@
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="23"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="249"/>
         <source>Updater</source>
-        <translation>Uppdaterare</translation>
+        <translation>Güncelleyici</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="90"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="108"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
         <source>Downloading updates</source>
-        <translation>Laddar ner uppdateringar</translation>
+        <translation>Güncellemeler indiriliyor</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="113"/>
         <source>Time remaining: 0 minutes</source>
-        <translation>Återstående tid: 0 minuter</translation>
+        <translation>Kalan süre: 0 dakika</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="154"/>
         <source>Open</source>
-        <translation>Öppna</translation>
+        <translation>Aç</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="161"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="107"/>
         <source>Stop</source>
-        <translation>Stopp</translation>
+        <translation>Durdur</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="411"/>
         <source>Time remaining</source>
-        <translation>Återstående tid</translation>
+        <translation>Kalan Zaman</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
         <source>unknown</source>
-        <translation>okänd</translation>
+        <translation>bilinmiyor</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
         <source>Error</source>
-        <translation>Fel</translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
         <source>Cannot find downloaded update!</source>
-        <translation>Kan inte hitta nerladdad uppdatering!</translation>
+        <translation>İndirilen güncelleme bulunamıyor!</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="201"/>
         <source>Close</source>
-        <translation>Stäng</translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="202"/>
         <source>Download complete!</source>
-        <translation>Nerladdning slutförd!</translation>
+        <translation>İndirme tamamlandı!</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="203"/>
         <source>The installer will open separately</source>
-        <translation>Installeraren öppnas separat</translation>
+        <translation>Yükleyici ayrı olarak açılacak</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="210"/>
         <source>Click &quot;OK&quot; to begin installing the update</source>
-        <translation>Tryck &quot;OK&quot; för att installera uppdateringen</translation>
+        <translation>Güncellemeyi yüklemeye başlamak için &quot;Tamam &quot;a tıklayın</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="212"/>
         <source>In order to install the update, you may need to quit the application.</source>
-        <translation>Du kanske måste avsluta programmet för att installera uppdateringen.</translation>
+        <translation>Güncellemeyi yüklemek için uygulamadan çıkmanız gerekebilir.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="216"/>
         <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application</source>
-        <translation>Du kanske måste avsluta programmet för att installera uppdateringen. Detta är en obligatorisk uppdatering, avslutar du nu. stängs programmet</translation>
+        <translation>Güncellemeyi yüklemek için uygulamadan çıkmanız gerekebilir. Bu zorunlu bir güncellemedir, şimdi çıkmak uygulamayı kapatacaktır</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="235"/>
         <source>Click the &quot;Open&quot; button to apply the update</source>
-        <translation>Tryck på &quot;Öppna&quot; för att tillämpa uppdateringen</translation>
+        <translation>Güncellemeyi uygulamak için &quot;Aç&quot; düğmesine tıklayın</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="253"/>
         <source>Are you sure you want to cancel the download?</source>
-        <translation>Vill du verkligen avbryta nerladdningen?</translation>
+        <translation>İndirmeyi iptal etmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="256"/>
         <source>Are you sure you want to cancel the download? This is a mandatory update, exiting now will close the application</source>
-        <translation>Vill du verkligen avbryta nerladdningen? Detta är en obligatorisk uppdatering, avslutar du nu. stängs programmet</translation>
+        <translation>İndirmeyi iptal etmek istediğinizden emin misiniz? Bu zorunlu bir güncellemedir, şimdi çıkmak uygulamayı kapatacaktır</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="314"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="323"/>
         <source>%1 bytes</source>
-        <translation>%1 byte</translation>
+        <translation>%1 btye</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="317"/>
@@ -155,87 +155,76 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
         <source>of</source>
-        <translation>av</translation>
+        <translatorcomment>This thing is impossible to translate to Turkish without changing the whole scheme. It supposed to be &quot;totalSize + tr(&quot;of&quot;)+ receivedSize&quot; So I&apos;m justing living it blank</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="357"/>
         <source>Downloading Updates</source>
-        <translation>Laddar ner uppdateringar</translation>
+        <translation>Güncellemeler indiriliyor</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
         <source>Time Remaining</source>
-        <translation>Återstående tid</translation>
+        <translation>Kalan Zaman</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
         <source>Unknown</source>
-        <translation>Okänd</translation>
+        <translation>Bilinmiyor</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="385"/>
         <source>about %1 hours</source>
-        <translation>ca: %1 timmar</translation>
+        <translation>yaklaşık %1 saat</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="387"/>
         <source>about one hour</source>
-        <translation>ca: 1 timma</translation>
+        <translation>yaklaşık bir saat</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="396"/>
         <source>%1 minutes</source>
-        <translation>%1 minuter</translation>
+        <translation>%1 dakika</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="398"/>
         <source>1 minute</source>
-        <translation>1 minut</translation>
+        <translation>1 dakika</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="406"/>
         <source>%1 seconds</source>
-        <translation>%1 sekunder</translation>
+        <translation>%1 saniye</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="408"/>
         <source>1 second</source>
-        <translation>1 sekund</translation>
+        <translation>1 saniye</translation>
     </message>
 </context>
 <context>
     <name>EditorInfoStatusBar</name>
     <message>
-        <source>Length: %1    Lines: %2</source>
-        <translation type="vanished">Längd: %1    Rader: %2</translation>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="98"/>
+        <source>Length: %L1    Lines: %L2</source>
+        <translation>Uzunluk: %L1    Satır: %L2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="107"/>
         <source>Sel: N/A</source>
-        <translation>Markerat: Ej tillämpligt</translation>
-    </message>
-    <message>
-        <source>Sel: %1 | %2</source>
-        <translation type="vanished">Markerat: %1 | %2</translation>
-    </message>
-    <message>
-        <source>Ln: %1    Col: %2    </source>
-        <translation type="vanished">Rad: %1    Col: %2    </translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="98"/>
-        <source>Length: %L1    Lines: %L2</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçiml: N/A</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="117"/>
         <source>Sel: %L1 | %L2</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçim: %L1 | %L2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="121"/>
         <source>Ln: %L1    Col: %L2    </source>
-        <translation type="unfinished"></translation>
+        <translation>Satır: %L1    Sutun: %L2    </translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="137"/>
@@ -268,187 +257,187 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.ui" line="14"/>
         <source>Editor Inspector</source>
-        <translation>Redigeringsinspektör</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="39"/>
-        <source>Current Position</source>
-        <translation>Aktuell position</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="40"/>
-        <source>Current Position (x, y)</source>
-        <translation>Aktuell position (x, y)</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="41"/>
-        <source>Column</source>
-        <translation>Kolumn</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="43"/>
-        <source>Current Style</source>
-        <translation>Aktuell stil</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="44"/>
-        <source>Current Line</source>
-        <translation>Aktuell rad</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="45"/>
-        <source>Line Length</source>
-        <translation>Radlängd</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="46"/>
-        <source>Line End Position</source>
-        <translation>Radslutsposition</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="47"/>
-        <source>Line Indentation</source>
-        <translation>Radindrag</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="48"/>
-        <source>Line Indent Position</source>
-        <translation>Radindragsposition</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="52"/>
-        <source>Selection Information</source>
-        <translation>Markeringsinformation</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="69"/>
-        <source>Is Rectangle</source>
-        <translation>Är rektangel</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="70"/>
-        <source>Selection Empty</source>
-        <translation>Markering tom</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="71"/>
-        <source>Main Selection</source>
-        <translation>Huvudsaklig markering</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="72"/>
-        <source># of Selections</source>
-        <translation># av markerat</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="75"/>
-        <source>Multiple Selections</source>
-        <translation>Flera markeringar</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="80"/>
-        <source>Document Information</source>
-        <translation>Dokumentinformation</translation>
+        <translation>Düzenleyici Denetleyicisi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="36"/>
         <source>Position Information</source>
-        <translation>Positionsinformation</translation>
+        <translation>Konum Bilgisi</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="39"/>
+        <source>Current Position</source>
+        <translation>Mevcut Konum</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="40"/>
+        <source>Current Position (x, y)</source>
+        <translation>Mevcut Konum (x, y)</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="41"/>
+        <source>Column</source>
+        <translation>Sütun</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="43"/>
+        <source>Current Style</source>
+        <translation>Mevcut Stil</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="44"/>
+        <source>Current Line</source>
+        <translation>Mevcut Satır</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="45"/>
+        <source>Line Length</source>
+        <translation>Satır Uzunluğu</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="46"/>
+        <source>Line End Position</source>
+        <translation>Satır Sonu Konumu</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="47"/>
+        <source>Line Indentation</source>
+        <translation>Satır Girintisi</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="48"/>
+        <source>Line Indent Position</source>
+        <translation>Satır Girinti Konumu</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="52"/>
+        <source>Selection Information</source>
+        <translation>Seçim Bilgisi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="55"/>
         <source>Mode</source>
-        <translation>Läge</translation>
+        <translation>Mod</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="69"/>
+        <source>Is Rectangle</source>
+        <translation>Dikdörtgen Seçim</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="70"/>
+        <source>Selection Empty</source>
+        <translation>Seçim Boş</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="71"/>
+        <source>Main Selection</source>
+        <translation>Ana Seçim</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="72"/>
+        <source># of Selections</source>
+        <translation>Seçim Sayısı</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="75"/>
+        <source>Multiple Selections</source>
+        <translation>Birden Fazla Seçim</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="80"/>
+        <source>Document Information</source>
+        <translation>Belge Bilgisi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="83"/>
         <source>Length</source>
-        <translation>Längd</translation>
+        <translation>Uzunluk</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="84"/>
         <source>Line Count</source>
-        <translation>Radantal</translation>
+        <translation>Satır Sayısı</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="88"/>
         <source>View Information</source>
-        <translation>Visa information</translation>
+        <translation>Bilgileri Göster</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="91"/>
         <source>Lines on Screen</source>
-        <translation>Rader på skärmen</translation>
+        <translation>Ekrandaki Satırlar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="92"/>
         <source>First Visible Line</source>
-        <translation>Första synliga rad</translation>
+        <translation>İlk Görünen Satır</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="93"/>
         <source>X Offset</source>
-        <translation>X-förskjutning</translation>
+        <translation>X Offset</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="97"/>
         <source>Fold Information</source>
-        <translation>Radbrytningsinformation</translation>
+        <translation>Katlama Bilgisi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="100"/>
         <source>Visible From Doc Line</source>
-        <translation>Synlig från dokumentrad</translation>
+        <translation>Belge Satırından Görünen</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="101"/>
         <source>Doc Line From Visible</source>
-        <translation>Dokumentrad från synlig</translation>
+        <translation>Görünenden Belge Satırı</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="102"/>
         <source>Fold Level</source>
-        <translation>Radbrytningsnivå</translation>
+        <translation>Katlama Seviyesi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="103"/>
         <source>Is Fold Header</source>
-        <translation>Är radbrytningsrubrik</translation>
+        <translation>Is Fold Header</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="104"/>
         <source>Fold Parent</source>
-        <translation>Radbryt överordnad</translation>
+        <translation>Fold Parent</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="105"/>
         <source>Last Child</source>
-        <translation>Senast underordnad</translation>
+        <translation>Last Child</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="106"/>
         <source>Contracted Fold Next</source>
-        <translation>Kontrakterad radbryt nästa</translation>
+        <translation>Contracted Fold Next</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="175"/>
         <source>Caret</source>
-        <translation>Textmarkör</translation>
+        <translation>İmleç</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="179"/>
         <source>Anchor</source>
-        <translation>Ankare</translation>
+        <translation>Bağlantı Noktası (Anchor)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="183"/>
         <source>Caret Virtual Space</source>
-        <translation>Virtuellt avstånd för textmarkör</translation>
+        <translation>İmleç Sanal Boşluğu</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="187"/>
         <source>Anchor Virtual Space</source>
-        <translation>Virtuellt avstånd för ankare</translation>
+        <translation>Bağlantı Noktası (Anchor) Sanal Boşluğu</translation>
     </message>
 </context>
 <context>
@@ -456,7 +445,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/FileListDock.ui" line="14"/>
         <source>File List</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya Listesi</translation>
     </message>
 </context>
 <context>
@@ -466,12 +455,12 @@
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="259"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="60"/>
         <source>Find</source>
-        <translation>Sök</translation>
+        <translation>Bul</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="78"/>
         <source>Search Mode</source>
-        <translation>Sökläge</translation>
+        <translation>Arama Modu</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="102"/>
@@ -481,144 +470,137 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="118"/>
         <source>E&amp;xtended (\n, \r, \t, \0, \x...)</source>
-        <translation>&amp;Utökat (\n, \r, \t, \0, \x...)</translation>
+        <translation>G&amp;eliştirilmiş (\n, \r, \t, \0, \x..)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="136"/>
         <source>Re&amp;gular expression</source>
-        <translation>&amp;Regular expression</translation>
+        <translation>RE&amp;GEX</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="152"/>
         <source>&amp;. matches newline</source>
-        <translation>&amp;. matchar ny rad</translation>
+        <translation>&amp;. satırsonu satırıyla eşleşir</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="191"/>
         <source>Transparenc&amp;y</source>
-        <translation>&amp;Transparens</translation>
+        <translation>Şeffaflı&amp;k</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="212"/>
         <source>On losing focus</source>
-        <translation>Vid förlorat fokus</translation>
+        <translation>Fokus kaybolduğunda</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="222"/>
         <source>Always</source>
-        <translation>Alltid</translation>
+        <translation>Her Zaman</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="272"/>
         <source>Coun&amp;t</source>
-        <translation>&amp;Räkna</translation>
+        <translation>Sa&amp;y</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="282"/>
         <source>&amp;Replace</source>
-        <translation>&amp;Ersätt</translation>
+        <translation>&amp;Değiştir</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="289"/>
         <source>Replace &amp;All</source>
-        <translation>Ersätt &amp;alla</translation>
+        <translation>&amp;Tümünü Değiştir</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="296"/>
         <source>Replace All in &amp;Opened Documents</source>
-        <translation>Ersätt alla i &amp;öppna dokument</translation>
+        <translation>&amp;Açık Olan Tüm Dosyalardakileri Değiştir</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="303"/>
         <source>Find All in All &amp;Opened Documents</source>
-        <translation>Sök alla i &amp;öppna dokument</translation>
+        <translation>&amp;Açık Olan Tüm Dosyalardakileri Bul</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="313"/>
         <source>Find All in Current Document</source>
-        <translation>Sök alla i aktuellt dokument</translation>
+        <translation>Aktif Dosyadaki Hepsini Bul</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="323"/>
         <source>Close</source>
-        <translation>Stäng</translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="367"/>
         <source>&amp;Find:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Değiştir:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="399"/>
         <source>Replace:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Find what:</source>
-        <translation type="vanished">&amp;Sök vad:</translation>
-    </message>
-    <message>
-        <source>Replace with:</source>
-        <translation type="vanished">Ersätt med:</translation>
+        <translation>Değiştir:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="440"/>
         <source>Backward direction</source>
-        <translation>Bakåtriktning</translation>
+        <translation>Geriye doğru yön</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="447"/>
         <source>Match &amp;whole word only</source>
-        <translation>Matcha endast &amp;hela ord</translation>
+        <translation>Sadece &amp;tüm kelimeyi eşleştir</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="454"/>
         <source>Match &amp;case</source>
-        <translation>Matcha &amp;skiftläge</translation>
+        <translation>Eşleşme &amp;durumu</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="461"/>
         <source>Wra&amp;p Around</source>
-        <translation>&amp;Radbryt</translation>
+        <translation>E&amp;trafını Sat</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="61"/>
         <source>Replace</source>
-        <translation>Ersätt</translation>
+        <translation>Değiştir</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="145"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="331"/>
+        <source>Replaced %Ln matches</source>
+        <translation>
+            <numerusform>%Ln eşleşme değiştirildi</numerusform>
+        </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="147"/>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="325"/>
-        <source>Replaced %L1 matches</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="229"/>
+        <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
+        <translation>Belgenin sonuna ulaşıldı. Üstten 1. eşleşme bulundu.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="234"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="240"/>
         <source>No matches found.</source>
-        <translation>Inga träffar.</translation>
+        <translation>Eşleşme Bulunamadı.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="297"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="303"/>
         <source>1 occurrence was replaced</source>
-        <translation>1 förekomst ersattes</translation>
+        <translation>1 eşleşen değiştirildi</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="306"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="312"/>
         <source>No more occurrences were found</source>
-        <translation>Inga fler förekomster hittades</translation>
+        <translation>Başka eşleşen bulunamadı</translation>
     </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="336"/>
-        <source>Found %L1 matches</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replaced %1 matches</source>
-        <translation type="vanished">%1 ersattes</translation>
-    </message>
-    <message>
-        <source>Found %1 matches</source>
-        <translation type="vanished">%1 träff(ar)</translation>
+    <message numerus="yes">
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="342"/>
+        <source>Found %Ln matches</source>
+        <translation>
+            <numerusform>%Ln eşleşme bulundu</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -626,7 +608,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.ui" line="14"/>
         <source>Folder as Workspace</source>
-        <translation>Mapp som arbetsyta</translation>
+        <translation>Çalışma Alanı olarak Klasör</translation>
     </message>
 </context>
 <context>
@@ -634,7 +616,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/HexViewerDock.ui" line="14"/>
         <source>Hex Viewer</source>
-        <translation type="unfinished"></translation>
+        <translation>Hex Görüntüleyicisi</translation>
     </message>
 </context>
 <context>
@@ -642,12 +624,12 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="14"/>
         <source>Language Inspector</source>
-        <translation>Språkinspektör</translation>
+        <translation>Dil Kontrolcüsü</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="56"/>
         <source>Language:</source>
-        <translation>Språk:</translation>
+        <translation>Dil:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="70"/>
@@ -657,31 +639,53 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="86"/>
         <source>Properties:</source>
-        <translation>Egenskaper:</translation>
+        <translation>Özellikler:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="100"/>
-        <source>Keywords:</source>
-        <translation>Nyckelord:</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="114"/>
-        <source>Styles:</source>
-        <translation>Stilar:</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="121"/>
-        <source>TextLabel</source>
-        <translation>TextEtikett</translation>
-    </message>
-    <message>
-        <source>Postion %1 Style %2</source>
-        <translation type="vanished">Position %1 Stil %2</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.cpp" line="137"/>
-        <source>Position %1 Style %2</source>
+        <source>Property</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="105"/>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="110"/>
+        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="151"/>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="115"/>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="123"/>
+        <source>Keywords:</source>
+        <translation>Anahtar Kelimeler:</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="146"/>
+        <source>ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="159"/>
+        <source>Styles:</source>
+        <translation>Stiller:</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="166"/>
+        <source>TextLabel</source>
+        <translation>Metin</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/LanguageInspectorDock.cpp" line="146"/>
+        <source>Position %1 Style %2</source>
+        <translation>Pozisyon %1 Stil %2</translation>
     </message>
 </context>
 <context>
@@ -689,7 +693,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/LuaConsoleDock.ui" line="17"/>
         <source>Lua Console</source>
-        <translation>Lua-konsol</translation>
+        <translation>Lua Konsolu</translation>
     </message>
 </context>
 <context>
@@ -697,67 +701,67 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="14"/>
         <source>Macro Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Makro Düzenleyicisi</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="48"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>İsim</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="58"/>
         <source>Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Kısayol</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="67"/>
         <source>Steps:</source>
-        <translation type="unfinished"></translation>
+        <translation>Adımlar:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="95"/>
         <source>Insert Macro Step</source>
-        <translation type="unfinished"></translation>
+        <translation>Makro Adımları Ekle</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="110"/>
         <source>Delete Selected Macro Step</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen Makro Adımınıı Sil</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="125"/>
         <source>Move Selected Macro Step Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen Makro Adımını Yukarı Al</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="140"/>
         <source>Move Selected Macro Step Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen Makro Adımını Aşağı Al</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="176"/>
         <source>Copy Selected Macro</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen Makroyu Kopyala</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="191"/>
         <source>Delete Selected Macro</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen Makroyu Sil</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="125"/>
         <source>Delete Macro</source>
-        <translation type="unfinished"></translation>
+        <translation>Makroyu Sil</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="125"/>
         <source>Are you sure you want to delete &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;&apos;i silmek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="146"/>
         <source>(Copy)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Kopyala)</translation>
     </message>
 </context>
 <context>
@@ -765,7 +769,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="14"/>
         <source>Run a Macro Multiple Times</source>
-        <translation>Kör ett makro flera gånger</translation>
+        <translation>Makroyu bir çok kez çalıştır</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="31"/>
@@ -775,59 +779,55 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="56"/>
         <source>Run Until End of File</source>
-        <translation>Kör till slutet på filen</translation>
+        <translation>Dosya sonuna kadar çalıştır</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="63"/>
         <source>Execute...</source>
-        <translation>Exekvera...</translation>
+        <translation>Çalıştır...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="116"/>
         <source>times</source>
-        <translation>gånger</translation>
+        <translation>kez</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="166"/>
         <source>Run</source>
-        <translation>Kör</translation>
+        <translation>Başlat</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="173"/>
         <source>Cancel</source>
-        <translation>Avbryt</translation>
+        <translation>İptal</translation>
     </message>
 </context>
 <context>
     <name>MacroSaveDialog</name>
     <message>
-        <source>Dialog</source>
-        <translation type="vanished">Dialog</translation>
-    </message>
-    <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="14"/>
         <source>Save Macro</source>
-        <translation type="unfinished"></translation>
+        <translation>Makroyu Kaydet</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="25"/>
         <source>Name:</source>
-        <translation>Namn:</translation>
+        <translation>İsim:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="39"/>
         <source>Shortcut:</source>
-        <translation>Genväg:</translation>
+        <translation>Kısayol:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="82"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>TAMAM</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="89"/>
         <source>Cancel</source>
-        <translation>Avbryt</translation>
+        <translation>İptal</translation>
     </message>
 </context>
 <context>
@@ -835,12 +835,12 @@
     <message>
         <location filename="../src/NotepadNext/MacroStepTableModel.cpp" line="34"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>İsim</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/MacroStepTableModel.cpp" line="36"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin</translation>
     </message>
 </context>
 <context>
@@ -858,865 +858,917 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="48"/>
         <source>&amp;File</source>
-        <translation>&amp;Arkiv</translation>
+        <translation>&amp;Dosya</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="52"/>
         <source>Close More</source>
-        <translation>Stäng mer</translation>
+        <translation>Daha Fazlasını Kapat</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="60"/>
         <source>&amp;Recent Files</source>
-        <translation>&amp;Tidigare filer</translation>
+        <translation>&amp;Son Dosyalar</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1212"/>
+        <source>Export As</source>
+        <translation>... olarak Dışa Aktar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="97"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Redigera</translation>
+        <translation>&amp;Düzenle</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="101"/>
         <source>Copy More</source>
-        <translation>Kopiera mer</translation>
+        <translation>Daha Fazlasını Kopyala</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="109"/>
         <source>Indent</source>
-        <translation>Indrag</translation>
+        <translation>Girinti</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="116"/>
         <source>EOL Conversion</source>
-        <translation>EOL-konvertering</translation>
+        <translation>Satır Sonu Dönüşümü</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="124"/>
         <source>Convert Case</source>
-        <translation>Konvertera skiftläge</translation>
+        <translation>Büyük/Küçük Harf Dönüştür</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="131"/>
         <source>Line Operations</source>
-        <translation>Radoperationer</translation>
+        <translation>Satır İşlemleri</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="141"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="143"/>
         <source>Comment/Uncomment</source>
-        <translation type="unfinished"></translation>
+        <translation>Yorum Ekle/Kaldır</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="187"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="151"/>
+        <source>Copy As</source>
+        <translation>... olarak Kopyala</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="158"/>
+        <source>Encoding/Decoding</source>
+        <translation>Kodlama/Çözme</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="189"/>
         <source>Search</source>
-        <translation>Sök</translation>
+        <translation>Ara</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="200"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="193"/>
+        <source>Bookmarks</source>
+        <translation>Yer İmleri</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="216"/>
         <source>&amp;View</source>
-        <translation>&amp;Visa</translation>
+        <translation>&amp;Görüntü</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="204"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="220"/>
         <source>&amp;Zoom</source>
-        <translation>&amp;Zoom</translation>
+        <translation>&amp;Yakınlaştırma</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="213"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="229"/>
         <source>Show Symbol</source>
-        <translation>Visa symbol</translation>
+        <translation>Sembolu Göster</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="231"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="247"/>
         <source>Language</source>
-        <translation>Språk</translation>
+        <translation>Dil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="236"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="252"/>
         <source>Settings</source>
-        <translation>Inställningar</translation>
+        <translation>Ayarlar</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="242"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="258"/>
         <source>Macro</source>
         <translation>Makro</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="253"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="269"/>
         <source>Help</source>
-        <translation>Hjälp</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="263"/>
-        <source>Encoding</source>
-        <translation>Kodning</translation>
-    </message>
-    <message>
-        <source>Run</source>
-        <translation type="vanished">Kör</translation>
+        <translation>Yardım</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="279"/>
+        <source>Encoding</source>
+        <translation>Kodlama</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="295"/>
         <source>Main Tool Bar</source>
-        <translation>Verktygsfält</translation>
+        <translation>Ana Araç Çubuğu</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="339"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="355"/>
         <source>&amp;New</source>
-        <translation>&amp;Nytt</translation>
+        <translation>&amp;Yeni</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="342"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="358"/>
         <source>Create a new file</source>
-        <translation>Skapa en ny fil</translation>
+        <translation>Yeni bir dosya oluştur</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="345"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="361"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="355"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="371"/>
         <source>&amp;Open...</source>
-        <translation>&amp;Öppna...</translation>
+        <translation>&amp;Aç...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="358"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="374"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="371"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="387"/>
         <source>&amp;Save</source>
-        <translation>&amp;Spara</translation>
+        <translation>&amp;Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="374"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="390"/>
         <source>Save</source>
-        <translation>Spara</translation>
+        <translation>Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="377"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="393"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="382"/>
-        <source>E&amp;xit</source>
-        <translation>A&amp;vsluta</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="385"/>
-        <source>Alt+F4</source>
-        <translation>Alt+F4</translation>
-    </message>
-    <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="398"/>
-        <source>&amp;Undo</source>
-        <translation>&amp;Ångra</translation>
+        <source>E&amp;xit</source>
+        <translation>Ç&amp;ıkış</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="401"/>
+        <source>Alt+F4</source>
+        <translation type="vanished">Alt+F4</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="411"/>
+        <source>&amp;Undo</source>
+        <translation>&amp;Geri Al</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="414"/>
         <source>Ctrl+Z</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="411"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="424"/>
         <source>&amp;Redo</source>
-        <translation>&amp;Upprepa</translation>
+        <translation>&amp;Yinele</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="414"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="427"/>
         <source>Ctrl+Y</source>
         <translation>Ctrl+Y</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="424"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="437"/>
         <source>Cu&amp;t</source>
-        <translation>Kli&amp;pp ut</translation>
+        <translation>Ke&amp;s</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="427"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="440"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="437"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="450"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Kopiera</translation>
+        <translation>&amp;Kopyala</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="440"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="453"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="450"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="463"/>
         <source>&amp;Paste</source>
-        <translation>Klistra &amp;in</translation>
+        <translation>&amp;Yapıştır</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="453"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="466"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="458"/>
-        <source>&amp;Delete</source>
-        <translation>&amp;Ta bort</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="461"/>
-        <source>Del</source>
-        <translation>Del</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="466"/>
-        <source>Copy Full Path</source>
-        <translation>Kopiera fullständig sökväg</translation>
-    </message>
-    <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="471"/>
+        <source>&amp;Delete</source>
+        <translation>&amp;Sil</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="474"/>
+        <source>Del</source>
+        <translation>Sil</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="479"/>
+        <source>Copy Full Path</source>
+        <translation>Tam Yolu Kopyala</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="484"/>
         <source>Copy File Name</source>
-        <translation>Kopiera filnamn</translation>
+        <translation>Dosya Adını Kopyala</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="476"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="489"/>
         <source>Copy File Directory</source>
-        <translation>Kopiera filens mappnamn</translation>
+        <translation>Dosya Dizinini Kopyala</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="485"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="498"/>
         <source>&amp;Close</source>
-        <translation>St&amp;äng</translation>
+        <translation>&amp;Kapat</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="488"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="501"/>
         <source>Close the current file</source>
-        <translation>Stäng aktuell fil</translation>
+        <translation>Mevcut dosyayı kapat</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="491"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="504"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="496"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="509"/>
         <source>Save &amp;As...</source>
-        <translation>Spara s&amp;om...</translation>
+        <translation>&amp;Farklı olarak kaydet...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="499"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="512"/>
         <source>Ctrl+Alt+S</source>
         <translation>Ctrl+Alt+S</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="504"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="517"/>
         <source>Save a Copy As...</source>
-        <translation>Spara en kopia som...</translation>
+        <translation>Bir Kopyayı Farklı Kaydet...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="513"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="526"/>
         <source>Sav&amp;e All</source>
-        <translation>Spa&amp;ra alla</translation>
+        <translation>Hep&amp;sini Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="516"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="529"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="521"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="534"/>
         <source>Select A&amp;ll</source>
-        <translation>&amp;Markera alla</translation>
+        <translation>H&amp;epsini Seç</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="524"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="537"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="533"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="546"/>
         <source>Increase Indent</source>
-        <translation>Öka indrag</translation>
+        <translation>Girintiyi Artır</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="542"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="555"/>
         <source>Decrease Indent</source>
-        <translation>Minska indrag</translation>
+        <translation>Girintiyi Azalt</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="547"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="560"/>
         <source>Rename...</source>
-        <translation>Byt namn...</translation>
+        <translation>Yeniden Adlandır...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="556"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="569"/>
         <source>Re&amp;load</source>
-        <translation>&amp;Läs om från disk</translation>
+        <translation>Ye&amp;niden Yükle</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="564"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="577"/>
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="572"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="585"/>
         <source>Unix (LF)</source>
         <translation>Unix (LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="580"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="593"/>
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="585"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="598"/>
         <source>UPPER CASE</source>
-        <translation>VERSALER</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="588"/>
-        <source>Convert text to upper case</source>
-        <translation>Konvertera text till VERSALER</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="593"/>
-        <source>lower case</source>
-        <translation>gemener</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="596"/>
-        <source>Convert text to lower case</source>
-        <translation>Konvertera text till gemener</translation>
+        <translation>BÜYÜK HARF</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="601"/>
-        <source>Duplicate Current Line</source>
-        <translation>Duplicera aktuell rad</translation>
+        <source>Convert text to upper case</source>
+        <translation>Metni büyük harfe dönüştür</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="604"/>
-        <source>Alt+Down</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="606"/>
+        <source>lower case</source>
+        <translation>küçük harf</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="609"/>
-        <source>Split Lines</source>
-        <translation>Dela rader</translation>
+        <source>Convert text to lower case</source>
+        <translation>Metni küçük harfe dönüştür</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="614"/>
-        <source>Join Lines</source>
-        <translation>Sammanfoga rader</translation>
+        <source>Duplicate Current Line</source>
+        <translation>Mevcut Satırı Çoğalt</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="617"/>
+        <source>Alt+Down</source>
+        <translation>Alt+Down</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="622"/>
+        <source>Split Lines</source>
+        <translation>Satırları Böl</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="627"/>
+        <source>Join Lines</source>
+        <translation>Satırları Birleştir</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="630"/>
         <source>Ctrl+J</source>
         <translation>Ctrl+J</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="622"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="635"/>
         <source>Move Selected Lines Up</source>
-        <translation>Flytta markerade rader uppåt</translation>
+        <translation>Seçili Satırları Yukarı Taşı</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="625"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="638"/>
         <source>Ctrl+Shift+Up</source>
         <translation>Ctrl+Shift+Up</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="630"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="643"/>
         <source>Move Selected Lines Down</source>
-        <translation>Flytta markerade rader neråt</translation>
+        <translation>Seçili Satırları Aşağı Taşı</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="633"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="646"/>
         <source>Ctrl+Shift+Down</source>
         <translation>Ctrl+Shift+Down</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="642"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="655"/>
         <source>Clos&amp;e All</source>
-        <translation>S&amp;täng alla</translation>
+        <translation>Heps&amp;ini Kapat</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="645"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="658"/>
         <source>Close All files</source>
-        <translation>Stäng alla filer</translation>
+        <translation>Tüm dosyaları kapat</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="648"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="661"/>
         <source>Ctrl+Shift+W</source>
         <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="653"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="666"/>
         <source>Close All Except Active Document</source>
-        <translation>Stäng alla utom aktivt dokument</translation>
+        <translation>Aktif Belge Hariç Tümünü Kapat</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="658"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="671"/>
         <source>Close All to the Left</source>
-        <translation>Stäng alla till vänster</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="663"/>
-        <source>Close All to the Right</source>
-        <translation>Stäng alla till höger</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="673"/>
-        <source>Zoom &amp;In</source>
-        <translation>Zooma &amp;in</translation>
+        <translation>Soldakileri Hepsini Kapat</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="676"/>
+        <source>Close All to the Right</source>
+        <translation>Sağdakileri Hepsini Kapat</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="686"/>
+        <source>Zoom &amp;In</source>
+        <translation>&amp;Yakınlaştır</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="689"/>
         <source>Ctrl++</source>
         <translation>Ctrl++</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="686"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="699"/>
         <source>Zoom &amp;Out</source>
-        <translation>Zooma &amp;ut</translation>
+        <translation>&amp;Uzaklaştıor</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="689"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="702"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="694"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="707"/>
         <source>Reset Zoom</source>
-        <translation>Återställ zoom</translation>
+        <translation>Yakınlaştırmayı Sıfırla</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="697"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="710"/>
         <source>Ctrl+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+0</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="985"/>
-        <source>Toggle Single Line Comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="988"/>
-        <source>Ctrl+/</source>
-        <translation>Ctrl+/</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="993"/>
-        <source>Single Line Comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="996"/>
-        <source>Ctrl+K</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1001"/>
-        <source>Single Line Uncomment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1004"/>
-        <source>Ctrl+Shift+K</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1016"/>
-        <source>Edit Macros...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1024"/>
-        <source>This is not currently implemented</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1029"/>
-        <source>Column Mode...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1032"/>
-        <source>Alt+C</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1037"/>
-        <source>Export as HTML...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1042"/>
-        <source>Export as RTF...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1047"/>
-        <source>Copy as HTML</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1052"/>
-        <source>Copy as RTF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1057"/>
-        <source>Base 64 Encode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1062"/>
-        <source>URL Encode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1067"/>
-        <source>Base 64 Decode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1072"/>
-        <source>URL Decode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="702"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="715"/>
         <source>About Qt</source>
-        <translation>Om Qt</translation>
+        <translation>Qt Hakkında</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1093"/>
-        <source>Export As</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="149"/>
-        <source>Copy As</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="156"/>
-        <source>Encoding/Decoding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="714"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="727"/>
         <source>About Notepad Next</source>
-        <translation>Om Notepad Next</translation>
+        <translation>Notepad Next Hakkında</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="725"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="738"/>
         <source>Show Whitespace</source>
-        <translation>Visa blanksteg</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="733"/>
-        <source>Show End of Line</source>
-        <translation>Visa radslut</translation>
+        <translation>Boşlukları Göster</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="746"/>
-        <source>Show All Characters</source>
-        <translation>Visa alla tecken</translation>
+        <source>Show End of Line</source>
+        <translation>Satır sonunu Göster</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="759"/>
-        <source>Show Indent Guide</source>
-        <translation>Visa indragsguide</translation>
+        <source>Show All Characters</source>
+        <translation>Tüm Karakterleri Göster</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="767"/>
-        <source>Show Wrap Symbol</source>
-        <translation>Visa radbrytningssymbol</translation>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="772"/>
+        <source>Show Indent Guide</source>
+        <translation>Girinti Kılavuzunu Göster</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="780"/>
+        <source>Show Wrap Symbol</source>
+        <translation>Satır Kaydırma Sembolünü Göster</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="793"/>
         <source>Word Wrap</source>
-        <translation>Ordbrytning</translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="785"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="798"/>
         <source>Restore Recently Closed File</source>
-        <translation>Återställ tidigare stängda filer</translation>
+        <translation>Son Kapatılan Dosyayı Geri Yükle</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="788"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="801"/>
         <source>Ctrl+Shift+T</source>
         <translation>Ctrl+Shift+T</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="793"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="806"/>
         <source>Open All Recent Files</source>
-        <translation>Öppna alla tidigare filer</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="798"/>
-        <source>Clear Recent Files List</source>
-        <translation>Rensa listan</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="808"/>
-        <source>&amp;Find...</source>
-        <translation>&amp;Sök...</translation>
+        <translation>Tüm Son Dosyaları Aç</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="811"/>
+        <source>Clear Recent Files List</source>
+        <translation>Son Dosyalar Listesini Temizle</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="821"/>
+        <source>&amp;Find...</source>
+        <translation>&amp;Bul...</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="824"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="816"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="829"/>
         <source>Find in Files...</source>
-        <translation>Sök i filer...</translation>
+        <translation>Dosyalarda Ara...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="821"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="834"/>
         <source>Find &amp;Next</source>
-        <translation>Sök &amp;nästa</translation>
+        <translation>&amp;Sıradakini Bul</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="824"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="837"/>
         <source>F3</source>
         <translation>F3</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="829"/>
-        <source>Find &amp;Previous</source>
-        <translation>Sök &amp;föregående</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="839"/>
-        <source>&amp;Replace...</source>
-        <translation>&amp;Ersätt...</translation>
-    </message>
-    <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="842"/>
+        <source>Find &amp;Previous</source>
+        <translation>&amp;Öncekini Bul</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="852"/>
+        <source>&amp;Replace...</source>
+        <translation>&amp;Değiştir...</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="855"/>
         <source>Ctrl+H</source>
         <translation>Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="850"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="863"/>
         <source>Full Screen</source>
-        <translation>Helskärm</translation>
+        <translation>Tam Ekran</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="853"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="866"/>
         <source>F11</source>
         <translation>F11</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="866"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="469"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="879"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="573"/>
         <source>Start Recording</source>
-        <translation>Starta inspelning</translation>
+        <translation>Kaydetmeye Başla</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="878"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="891"/>
         <source>Playback</source>
-        <translation>Uppspelning</translation>
+        <translation>Oynatma</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="881"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="894"/>
         <source>Ctrl+Shift+P</source>
         <translation>Ctrl+Shift+P</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="893"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="906"/>
         <source>Save Current Recorded Macro...</source>
-        <translation>Spara inspelat makro...</translation>
+        <translation>Mevcut Kaydedilen Makroyu Kaydet...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="905"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="918"/>
         <source>Run a Macro Multiple Times...</source>
-        <translation>Kör ett makro flera gånger...</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="910"/>
-        <source>Windows...</source>
-        <translation>Fönster...</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="919"/>
-        <source>Preferences...</source>
-        <translation>Preferenser...</translation>
+        <translation>Bir Makroyu Birden Fazla Kez Çalıştır...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="927"/>
-        <source>Quick Find</source>
-        <translation>Snabbsök</translation>
+        <source>Preferences...</source>
+        <translation>Tercihler...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="930"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="935"/>
+        <source>Quick Find</source>
+        <translation>Hızlıca Bul</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="938"/>
         <source>Ctrl+Alt+I</source>
         <translation>Ctrl+Alt+I</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="935"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="943"/>
         <source>Select Next Instance</source>
-        <translation>Välj nästa instans</translation>
+        <translation>Sonraki Örneği Seç</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="938"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="946"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="947"/>
-        <source>Move to Trash...</source>
-        <translation>Flytta till papperskorgen...</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="950"/>
-        <source>Move to Trash</source>
-        <translation>Flytta till papperskorgen</translation>
-    </message>
-    <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="955"/>
-        <source>Check for Updates...</source>
-        <translation>Sök efter uppdateringar...</translation>
+        <source>Move to Trash...</source>
+        <translation>Çöp Kutusuna Taşı...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="960"/>
-        <source>&amp;Go to Line...</source>
-        <translation>&amp;Gå till rad...</translation>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="958"/>
+        <source>Move to Trash</source>
+        <translation>Çöp Kutusuna Taşı</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="963"/>
+        <source>Check for Updates...</source>
+        <translation>Güncellemeleri Kontrol Et...</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="968"/>
+        <source>&amp;Go to Line...</source>
+        <translation>&amp;Satıra Git...</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="971"/>
         <source>Ctrl+G</source>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="972"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="980"/>
         <source>Print...</source>
-        <translation>Skriv ut...</translation>
+        <translation>Yazdır...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="975"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="983"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="980"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="988"/>
         <source>Open Folder as Workspace...</source>
-        <translation>Öppen mapp som arbetsyta...</translation>
+        <translation>Klasörü Çalışma Alanı Olarak Aç...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="326"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="993"/>
+        <source>Toggle Single Line Comment</source>
+        <translation>Tek Satırlı Yorumu Aç/Kapa</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="996"/>
+        <source>Ctrl+/</source>
+        <translation>Ctrl+/</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1001"/>
+        <source>Single Line Comment</source>
+        <translation>Tek Satır Yorumu</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1004"/>
+        <source>Ctrl+K</source>
+        <translation>Ctrl+K</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1009"/>
+        <source>Single Line Uncomment</source>
+        <translation>Tek Satır Yorumunu Kaldır</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1012"/>
+        <source>Ctrl+Shift+K</source>
+        <translation>Ctrl+Shift+K</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1024"/>
+        <source>Edit Macros...</source>
+        <translation>Makroları Düzenle...</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1032"/>
+        <source>This is not currently implemented</source>
+        <translation>Bu şu anda uygulanmamaktadır</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1037"/>
+        <source>Column Mode...</source>
+        <translation>Sütun Modu...</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1040"/>
+        <source>Alt+C</source>
+        <translation>Alt+C</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1045"/>
+        <source>Export as HTML...</source>
+        <translation>HTML Olarak Dışa Aktar...</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1050"/>
+        <source>Export as RTF...</source>
+        <translation>RTF Olarak Dışa Aktar...</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1055"/>
+        <source>Copy as HTML</source>
+        <translation>HTML olarak kopyala</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1060"/>
+        <source>Copy as RTF</source>
+        <translation>RTF olarak kopyala</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1065"/>
+        <source>Base 64 Encode</source>
+        <translation>Base 64 Kodla</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1070"/>
+        <source>URL Encode</source>
+        <translation>URL Kodla</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1075"/>
+        <source>Base 64 Decode</source>
+        <translation>Base 64 Çözümle</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1080"/>
+        <source>URL Decode</source>
+        <translation>URL Çözümle</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1085"/>
+        <source>Copy URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1090"/>
+        <source>Remove Empty Lines</source>
+        <translation>Boş Satırları Sil</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1099"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1102"/>
+        <source>Show in Explorer</source>
+        <translation>Dosya Gezgininde Göster</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1111"/>
+        <source>Open Command Prompt Here</source>
+        <translation>Komut İstemi&apos;ni Burada Aç</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1116"/>
+        <source>Toggle Bookmark</source>
+        <translation>Yer İmlerini Aç/Kapat</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1119"/>
+        <source>Ctrl+F2</source>
+        <translation>Ctrl+F2</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1124"/>
+        <source>Next Bookmark</source>
+        <translation>Sonraki Yer İmi</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1127"/>
+        <source>F2</source>
+        <translation>F2</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1132"/>
+        <source>Previous Bookmark</source>
+        <translation>Önceki Yer İmi</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1135"/>
+        <source>Shift+F2</source>
+        <translation>Shift+F2</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1140"/>
+        <source>Clear Bookmarks</source>
+        <translation>Yer İmlerini Temizle</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1145"/>
+        <source>Invert Bookmarks</source>
+        <translation>Yer İmlerini Tersine Çevir</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="351"/>
         <source>Go to line</source>
-        <translation>Gå till rad</translation>
+        <translation>Satıra Git</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="326"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="351"/>
         <source>Line Number (1 - %1)</source>
-        <translation>Radnummer (1 - %1)</translation>
+        <translation>Satır Numarası (1 - %1)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="460"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="564"/>
         <source>Stop Recording</source>
-        <translation>Stoppa inspelning</translation>
+        <translation>Kaydetmeyi Durdur</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="701"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="818"/>
         <source>New %1</source>
-        <translation>Ny %1</translation>
+        <translation>Yeni %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="749"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="866"/>
         <source>Create File</source>
-        <translation>Skapa fil</translation>
+        <translation>Dosya Oluştur</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="749"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="866"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; finns inte. Vill du skapa den?</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; mevcut değil. Oluşturmak istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="798"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="896"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="917"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1015"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>Vill du spara &lt;b&gt;%1&lt;/b&gt;?</translation>
+        <translation>Dosyayı kaydetmek istiyor musunuz: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="799"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="897"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="918"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1016"/>
         <source>Save File</source>
-        <translation>Spara fil</translation>
+        <translation>Dosyayı Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="852"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="971"/>
         <source>Open Folder as Workspace</source>
-        <translation>Öppen mapp som arbetsyta</translation>
+        <translation>Klasörü Çalışma Alanı Olarak Aç</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="870"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="989"/>
         <source>Reload File</source>
-        <translation>Läs om fil</translation>
+        <translation>Dosyayı Yeniden Yükle</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="870"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="989"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
-        <translation>Vill du verkligen läsa om &lt;b&gt;%1&lt;/b&gt; från disk? Alla osparade ändringar kommer att förloras.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;&apos;i yeniden yüklemek istediğinizden emin misiniz? Kaydedilmemiş değişiklikler kaybolacak.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1508"/>
-        <source>Error Saving File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1064"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1183"/>
         <source>Save a Copy As</source>
-        <translation>Spara en kopia som</translation>
+        <translation>Bir Kopyayı Farklı Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1127"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1142"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1246"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1261"/>
         <source>Rename</source>
-        <translation>Byt namn</translation>
+        <translation>Yeniden Adlandır</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1142"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1261"/>
         <source>Name:</source>
-        <translation type="unfinished">Namn:</translation>
+        <translation>İsim:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1162"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1281"/>
         <source>Delete File</source>
-        <translation>Ta bort fil</translation>
+        <translation>Dosyayı Sil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1162"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1281"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
-        <translation>Vill du verkligen flytta &lt;b&gt;%1&lt;/b&gt; till papperskorgen?</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;&apos;i çöp kutusuna taşımak istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1172"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1291"/>
         <source>Error Deleting File</source>
-        <translation>Kunde inte ta bort fil</translation>
+        <translation>Dosya Silme Hatası</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1172"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1291"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>Gick något fel vid borttagning av &lt;b&gt;%1&lt;/b&gt;?</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; silinirken bir hata oluştu?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1508"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <source>Error Saving File</source>
+        <translation>Dosyayı Kaydetme Hatası</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir hata oluştu. &lt;b&gt;%1&lt;/b&gt; kaydedilirken hata oluştu. &lt;br&gt;&lt;br&gt;Hata: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1663"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1810"/>
         <source>No updates are available at this time.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No updates are availale at this time.</source>
-        <translation type="vanished">Inga uppdateringar tillgängliga den här gången.</translation>
+        <translation>Şu anda kullanılabilir güncellemeler bulunmuyor.</translation>
     </message>
 </context>
 <context>
@@ -1724,47 +1776,52 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="14"/>
         <source>Preferences</source>
-        <translation>Preferenser</translation>
+        <translation>Tercihler</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="22"/>
         <source>Menu Bar</source>
-        <translation>Menyfält</translation>
+        <translation>Menü Çubuğu</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="29"/>
         <source>Tool Bar</source>
-        <translation>Verktygsfält</translation>
+        <translation>Araç Çubuğu</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="36"/>
         <source>Status Bar</source>
-        <translation>Statusfält</translation>
+        <translation>Durum Çubuğu</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="43"/>
         <source>Restore Previous Session</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceki Oturumu Geri Yükle</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="55"/>
         <source>Unsaved changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydedilmemiş değişiklikler</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="62"/>
         <source>Temp Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçici Dosyalar</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
+        <source>Combine search results</source>
+        <translation>Arama sonuçlarını birleştir</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="61"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="61"/>
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu özellik deneyseldir ve kritik öneme sahip işler için güvenli olduğu düşünülmemelidir. Olası veri kaybına yol açabilir. Kendi sorumluluğunuzda kullanın.</translation>
     </message>
 </context>
 <context>
@@ -1772,27 +1829,27 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="159"/>
         <source>List All Tabs</source>
-        <translation>Lista alla flikar</translation>
+        <translation>Tüm Sekmeleri Listele</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="169"/>
         <source>Detach Group</source>
-        <translation>Koppla från grupp</translation>
+        <translation>Grubu Ayır</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="182"/>
         <source>Close Active Tab</source>
-        <translation>Stäng aktiv flik</translation>
+        <translation>Aktif Sekmeyi Kapat</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="186"/>
         <source>Close Group</source>
-        <translation>Stäng grupp</translation>
+        <translation>Grubu Kapat</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="248"/>
         <source>Close Tab</source>
-        <translation>Stäng flik</translation>
+        <translation>Sekmeyi Kapat</translation>
     </message>
 </context>
 <context>
@@ -1800,12 +1857,12 @@
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="17"/>
         <source>Frame</source>
-        <translation>Ram</translation>
+        <translation>Çerçeve</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="40"/>
         <source>Match case</source>
-        <translation>Matcha skiftläge</translation>
+        <translation>Eşleşme durumu</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="43"/>
@@ -1815,7 +1872,7 @@
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="53"/>
         <source>Match whole word</source>
-        <translation>Matcha hela ord</translation>
+        <translation>Tüm kelimeyi eşleştir</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="56"/>
@@ -1825,7 +1882,7 @@
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="66"/>
         <source>Use regular expression</source>
-        <translation>Använd regular expression</translation>
+        <translation>Regex</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="69"/>
@@ -1840,7 +1897,7 @@
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.ui" line="97"/>
         <source>Find...</source>
-        <translation>Sök...</translation>
+        <translation>Bul...</translation>
     </message>
 </context>
 <context>
@@ -1848,27 +1905,27 @@
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.ui" line="14"/>
         <source>Search Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Arama Sonuçları</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="56"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="63"/>
         <source>Collapse All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Daralt</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="57"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="64"/>
         <source>Expand All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Genişlet</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="59"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
         <source>Delete Entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Girdiyi Sil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="61"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="68"/>
         <source>Delete All</source>
-        <translation type="unfinished"></translation>
+        <translation>Hepsini Sil</translation>
     </message>
 </context>
 <context>
@@ -1876,27 +1933,27 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="430"/>
         <source>Would you like to download the update now?</source>
-        <translation>Vill du ladda ner uppdateringen nu?</translation>
+        <translation>Güncellemeyi şimdi indirmek ister misiniz?</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="433"/>
         <source>Would you like to download the update now? This is a mandatory update, exiting now will close the application</source>
-        <translation>Vill du ladda ner uppdateringen nu? Detta är en obligatorisk uppdatering, avslutar du nu. stängs programmet</translation>
+        <translation>Güncellemeyi şimdi indirmek ister misiniz? Bu zorunlu bir güncellemedir, şimdi çıkmak uygulamayı kapatacaktır</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="438"/>
         <source>Version %1 of %2 has been released!</source>
-        <translation>Version %1 av %2 har publicerats!</translation>
+        <translation>%2&apos;nin %1 sürümü yayınlandı!</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="473"/>
         <source>No updates are available for the moment</source>
-        <translation>Inga uppdateringar tillgängliga för tillfället</translation>
+        <translation>Şu an için herhangi bir güncelleme mevcut değil</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="475"/>
         <source>Congratulations! You are running the latest version of %1</source>
-        <translation>Grattis! Du kör den senaste versionen av %1</translation>
+        <translation>Tebrikler! %1&apos;in en son sürümünü çalıştırıyorsunuz</translation>
     </message>
 </context>
 <context>
@@ -1904,17 +1961,17 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="584"/>
         <source>Detach Group</source>
-        <translation>Koppla från grupp</translation>
+        <translation>Grubu Ayır</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="587"/>
         <source>Close Group</source>
-        <translation>Stäng grupp</translation>
+        <translation>Grubu Kapat</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="589"/>
         <source>Close Other Groups</source>
-        <translation>Stäng andra grupper</translation>
+        <translation>Diğer Grupları Kapat</translation>
     </message>
 </context>
 <context>
@@ -1922,7 +1979,7 @@
     <message>
         <location filename="../src/ads/src/DockManager.cpp" line="490"/>
         <source>Show View</source>
-        <translation>Visningsvy</translation>
+        <translation>Göster</translation>
     </message>
 </context>
 <context>
@@ -1930,17 +1987,17 @@
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="519"/>
         <source>Detach</source>
-        <translation>Koppla från</translation>
+        <translation>Ayır</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="522"/>
         <source>Close</source>
-        <translation>Stäng</translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="524"/>
         <source>Close Others</source>
-        <translation>Stäng andra</translation>
+        <translation>Diğerlerini Kapat</translation>
     </message>
 </context>
 </TS>

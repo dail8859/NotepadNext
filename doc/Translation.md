@@ -18,7 +18,7 @@ For developers:
 
 ## Translation Process for Developers
 
-Follow the [Writing Source Code for Translation](https://doc.qt.io/qt-5/i18n-source-translation.html) guide to properly expose string to be translated. Once strings are ready to be released to translators, use the `lupdate` tool. If you use Qt creator, you can execute the lupdate command from the menu `Tools > External > Qt linguist > lupdate` or from the console/terminal:
+Follow the [Writing Source Code for Translation](https://doc.qt.io/qt-6/i18n-source-translation.html) guide to properly expose string to be translated. Once strings are ready to be released to translators, use the `lupdate` tool. If you use Qt creator, you can execute the lupdate command from the menu `Tools > External > Qt linguist > lupdate` or from the console/terminal:
 
 ```
 $ lupdate NotepadNext.pro
@@ -32,12 +32,12 @@ The included .ts files are listed `i18n.pri`. New translations file names can be
 
 ## Translation Process for Translators
 
-If you want to help with translations but the target language is not supported yet, please open an issue and a new .ts file will be added you can use. If one already exists, open the appropriate .ts file with Qt Linguist and follow the [Qt Linguist Manual](https://doc.qt.io/qt-5/linguist-translators.html). Once changes have been made to the .ts file you can create a pull request so new translated strings can be included in the application.
+If you want to help with translations but the target language is not supported yet, please open an issue and a new .ts file will be added you can use. If one already exists, open the appropriate .ts file with Qt Linguist and follow the [Qt Linguist Manual](https://doc.qt.io/qt-6/linguist-translators.html). Once changes have been made to the .ts file you can create a pull request so new translated strings can be included in the application.
 
-Qt Linguist is contained in the Qt SDK that you can download [here](https://www.qt.io/download-qt-installer). If you don't want to download the whole SDK, there is a community made a standalone version for Qt Linguist[here](https://github.com/lelegard/qtlinguist-installers/releases).
+Qt Linguist is contained in the Qt SDK that you can download [here](https://www.qt.io/download-qt-installer). If you don't want to download the whole SDK, there is a community made a standalone version for Qt Linguist [here](https://github.com/lelegard/qtlinguist-installers/releases).
 
 ## Reference and Detailed Info
 
-[Internationalization with Qt](https://doc.qt.io/qt-5/internationalization.html)
-[Writing Source Code for Translation](https://doc.qt.io/qt-5/i18n-source-translation.html)
-[Qt Linguist Manual](https://doc.qt.io/qt-5/linguist-translators.html)
+- [Internationalization with Qt](https://doc.qt.io/qt-6/internationalization.html)
+- [Writing Source Code for Translation](https://doc.qt.io/qt-6/i18n-source-translation.html)
+- [Qt Linguist Manual](https://doc.qt.io/qt-6/linguist-translators.html)

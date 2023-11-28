@@ -167,6 +167,7 @@ private:
 
     ZoomEventWatcher *zoomEventWatcher;
     int zoomLevel = 0;
+    int contextMenuPos = 0;
 };
 
 #endif // MAINWINDOW_H

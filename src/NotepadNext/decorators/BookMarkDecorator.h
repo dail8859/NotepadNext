@@ -29,6 +29,11 @@ class BookMarkDecorator : public EditorDecorator
 public:
     BookMarkDecorator(ScintillaNext *editor);
 
+    void toggleBookmark(int line);
+    int nextBookmarkAfter(int line);
+    int previousBookMarkBefore(int line);
+    void clearBookmarks();
+
 public slots:
     void notify(const Scintilla::NotificationData *pscn) override;
 };

@@ -15,6 +15,7 @@
 **.html text
 **.bat text
 **.bsh text
+**.zsh text
 **.mak text
 **.def text
 **.manifest text
@@ -25,10 +26,12 @@
 **.folded text
 **.adoc text
 **.asp text
+**.aspx text
 **.php text
 **.vb text
 **.cmake text
 **.d text
+**.diff text
 **.erl text
 **.gd text
 **.gui text
@@ -36,6 +39,7 @@
 **.jl text
 **.json text
 **.lua text
+**.m3 text
 **.matlab text
 **.ml text
 **.nim text
@@ -53,6 +57,7 @@
 **.mms text
 **.tex text
 **.fs text
+**.vh text
 **.vhd text
 **.x12 text
 **.yaml text

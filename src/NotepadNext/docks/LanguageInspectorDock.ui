@@ -88,10 +88,33 @@
          </widget>
         </item>
         <item>
-         <widget class="QTableView" name="tblProperties">
+         <widget class="QTableWidget" name="tblProperties">
+          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+           <bool>false</bool>
+          </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
+          <column>
+           <property name="text">
+            <string>Property</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Description</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Value</string>
+           </property>
+          </column>
          </widget>
         </item>
         <item>
@@ -102,10 +125,32 @@
          </widget>
         </item>
         <item>
-         <widget class="QTableView" name="tblKeywords">
+         <widget class="QTableWidget" name="tblKeywords">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="columnCount">
+           <number>2</number>
+          </property>
+          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="horizontalHeaderStretchLastSection">
+           <bool>true</bool>
+          </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
+          <column>
+           <property name="text">
+            <string>ID</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Description</string>
+           </property>
+          </column>
          </widget>
         </item>
         <item>

@@ -53,7 +53,10 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     ads::CDockManager::setConfigFlag(ads::CDockManager::DragPreviewShowsContentPixmap, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasCloseButton, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaHasUndockButton, false);
-    ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaDynamicTabsMenuButtonVisibility, true);
+    // When tabs title/text elide disabled and lots of tabs opened, tabs menu button will not show
+    // as it only shows when tab title elided. 
+    // So disable dynamic tabs menu visibility.
+    ads::CDockManager::setConfigFlag(ads::CDockManager::DockAreaDynamicTabsMenuButtonVisibility, false);
     ads::CDockManager::setConfigFlag(ads::CDockManager::FocusHighlighting, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::EqualSplitOnInsertion, true);
     ads::CDockManager::setConfigFlag(ads::CDockManager::MiddleMouseButtonClosesTab, true);
@@ -153,6 +156,9 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     // Create the dock widget for the editor
     ads::CDockWidget *dockWidget = new ads::CDockWidget(editor->getName());
+
+    // Disable elide, elided file names not readable when lots of files opened
+    dockWidget->tabWidget()->setElideMode(Qt::ElideNone);
 
     // We need a unique object name. Can't use the name or file path so use a uuid
     dockWidget->setObjectName(QUuid::createUuid().toString());

@@ -65,6 +65,8 @@ public:
 
     void sendInfoToPrimaryInstance();
 
+    bool isRunningAsAdmin() const;
+
 protected:
     bool event(QEvent *event) override;
 
@@ -83,7 +85,7 @@ private:
 
     LuaState *luaState = Q_NULLPTR;
 
-    QList<MainWindow *> windows;
+    MainWindow *window = Q_NULLPTR;
     QPointer<QWidget> currentlyFocusedWidget; // Keep a weak pointer to the QWidget since we don't own it
 
     MainWindow *createNewWindow();

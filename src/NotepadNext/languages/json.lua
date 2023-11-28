@@ -2,8 +2,17 @@ local L = {}
 
 L.lexer = "json"
 
+L.first_line = {
+	"^{[\r\n]",
+}
+
 L.extensions = {
 	"json",
+}
+
+L.properties = {
+	["lexer.json.escape.sequence"] = "1",
+	["lexer.json.allow.comments"] = "1",
 }
 
 L.keywords = {

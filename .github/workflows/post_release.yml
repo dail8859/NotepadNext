@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - run: |
           gh issue create --title "Publish Windows Release for $RELEASE_TAG" --body "Update json file in root of project."
@@ -22,7 +22,7 @@ jobs:
 
   winget:
     name: Publish to WinGet
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: vedantmgoyal2009/winget-releaser@v2
         with:

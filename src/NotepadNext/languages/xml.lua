@@ -34,6 +34,10 @@ L.extensions = {
 	"dbproj",
 }
 
+L.properties = {
+	["fold.html"] = "1",
+}
+
 L.keywords = {
 }
 

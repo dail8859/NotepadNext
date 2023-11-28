@@ -57,9 +57,12 @@ SetCompressor /SOLID lzma
 !insertmacro MUI_PAGE_LICENSE "..\LICENSE"
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 !insertmacro MUI_PAGE_COMPONENTS
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE VerifyInstallDirEmpty
 !insertmacro MUI_PAGE_DIRECTORY # In which folder install page.
 !define MUI_PAGE_CUSTOMFUNCTION_SHOW "CheckIfRunning"
 !insertmacro MUI_PAGE_INSTFILES # Installing page.
+# After installation, run Notepad Next by default
+!define MUI_FINISHPAGE_RUN "$INSTDIR\NotepadNext.exe"
 !insertmacro MUI_PAGE_FINISH # Finished installation page.
 
 
@@ -97,6 +100,37 @@ Function PageWelcomeLicensePre
 		Abort ; don't display the Welcome and License pages for the inner instance 
 	${endif}
 FunctionEnd
+
+Function VerifyInstallDirEmpty
+	Push $INSTDIR
+	Call isEmptyDir
+	Pop $0
+
+	${If} $0 == 0
+	${AndIf} ${FileExists} "$INSTDIR\*"
+		SetRegView 64
+
+		# The uninstaller will run prior to executing the installer (but has not been ran yet)
+		# so if it is getting installed to the same location as the prior version, it is fine.
+		ReadRegStr $R0 SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\NotepadNext" "InstallLocation"
+
+		# The directory is the same as the previous version, so no need to worry.
+		${If} $R0 == $INSTDIR
+			Goto done
+		${EndIf}
+
+		MessageBox MB_ICONEXCLAMATION|MB_YESNO \
+			`"$INSTDIR" already exists and is not empty! \
+			This installer will delete all files and folders in that directory before \
+			installing!$\n$\n\
+			Do you want to continue?` \
+			/SD IDYES \
+			IDYES done
+		Abort
+	${EndIf}
+	done:
+FunctionEnd
+
 
 Function .onInit
 	${ifnot} ${UAC_IsInnerInstance}
@@ -141,18 +175,22 @@ Section "Notepad Next"
 	SectionIn RO
 	SetOutPath $INSTDIR
 
+	# Make sure it is empty
+	RMDir /r $INSTDIR
+
 	File /r /x libcrypto-1_1-x64.dll /x libssl-1_1-x64.dll ..\build\package\*
 
 	SetRegView 64
 
-	# Register the application (e.g. cmd> start notepadnext)
+	# Register the application. https://learn.microsoft.com/en-us/windows/win32/shell/app-registration#registering-applications
 	WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
 
-	# Register 'Open With' menu suggestion. No real good documentation for this. https://stackoverflow.com/a/62783311
-	WriteRegStr SHCTX "Software\Classes\NotepadNext\shell" "" "open"
-	WriteRegStr SHCTX "Software\Classes\NotepadNext\shell\open\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
-	WriteRegStr SHCTX "Software\Classes\.txt\OpenWithProgids" "NotepadNext" ""
-	# TODO: add more extensions
+	# Register verbs. https://learn.microsoft.com/en-us/windows/win32/shell/app-registration#registering-verbs-and-other-file-association-information
+	WriteRegStr SHCTX "Software\Classes\Applications\NotepadNext.exe\shell\open\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
+	WriteRegStr SHCTX "Software\Classes\Applications\NotepadNext.exe\shell\edit\command" "" "$\"$INSTDIR\NotepadNext.exe$\" $\"%1$\""
+
+	# Register it the perceived type so that Windows will suggest it as a possible application to use
+	WriteRegStr SHCTX "Software\Classes\SystemFileAssociations\text\OpenWithList\NotepadNext.exe" "" ""
 
 	WriteUninstaller "$INSTDIR\uninstall.exe"
 	!insertmacro MULTIUSER_RegistryAddInstallInfo
@@ -267,12 +305,11 @@ Section "Uninstall"
 	# Remove application registration
 	DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
 
-	# Custom configurations
-	DeleteRegKey SHCTX "Software\NotepadNext\"
+	# Remove registered verbs
+	DeleteRegKey SHCTX "Software\Classes\Applications\NotepadNext.exe"
 
-	# Remove 'Open With' menu suggestion
-	DeleteRegValue SHCTX "Software\Classes\.txt\OpenWithProgids" "NotepadNext"
-	DeleteRegKey SHCTX "Software\Classes\NotepadNext"
-	
+	# Remove type registration
+	DeleteRegKey SHCTX "Software\Classes\SystemFileAssociations\text\OpenWithList\NotepadNext.exe"
+
 	!insertmacro MULTIUSER_RegistryRemoveInstallInfo 
 SectionEnd

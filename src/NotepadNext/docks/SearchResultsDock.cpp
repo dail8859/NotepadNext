@@ -39,10 +39,17 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
 {
     ui->setupUi(this);
 
+#ifdef Q_OS_MACOS
+    // Set a slightly larger font on MacOS
+    QFont font("Courier New", 14);
+    ui->treeWidget->setFont(font);
+#endif
+
     // Close the results when escape is pressed
     new QShortcut(QKeySequence::Cancel, this, this, &SearchResultsDock::close, Qt::WidgetWithChildrenShortcut);
 
     connect(ui->treeWidget, &QTreeWidget::itemActivated, this, &SearchResultsDock::itemActivated);
+    connect(ui->treeWidget, &QTreeWidget::itemExpanded, this, &SearchResultsDock::itemExpanded);
 
     connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
         QTreeWidgetItem *item = ui->treeWidget->itemAt(pos);
@@ -75,7 +82,11 @@ void SearchResultsDock::newSearch(const QString searchTerm)
 
     this->searchTerm = searchTerm;
 
-    ui->treeWidget->collapseAll();
+    for (int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i)
+    {
+        const QTreeWidgetItem* topLevelItem = ui->treeWidget->topLevelItem(i);
+        ui->treeWidget->collapseItem(topLevelItem);
+    }
 
     currentSearch = new QTreeWidgetItem(ui->treeWidget);
     currentSearch->setBackground(0, QColor(232, 232, 255));
@@ -135,6 +146,7 @@ void SearchResultsDock::completeSearch()
     totalHitCount = 0;
 
     ui->treeWidget->resizeColumnToContents(0);
+    ui->treeWidget->resizeColumnToContents(1);
 }
 
 void SearchResultsDock::collapseAll() const
@@ -184,6 +196,11 @@ void SearchResultsDock::itemActivated(QTreeWidgetItem *item, int column)
             emit searchResultActivated(editor, lineNumber, startPositionFromBeginning, endPositionFromBeginning);
         }
     }
+}
+
+void SearchResultsDock::itemExpanded(QTreeWidgetItem *)
+{
+    ui->treeWidget->resizeColumnToContents(1);
 }
 
 void SearchResultsDock::updateSearchStatus()

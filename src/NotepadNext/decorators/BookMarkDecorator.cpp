@@ -36,21 +36,54 @@ BookMarkDecorator::BookMarkDecorator(ScintillaNext *editor) :
     editor->setMarginSensitiveN(MARGIN, true);
 }
 
+void BookMarkDecorator::toggleBookmark(int line)
+{
+    if (editor->markerGet(line) & (1 << MARK_BOOKMARK)) {
+        // The marker can be set multiple times, so keep deleting it till it is no longer set
+        while (editor->markerGet(line) & (1 << MARK_BOOKMARK)) {
+            editor->markerDelete(line, MARK_BOOKMARK);
+        }
+    }
+    else {
+        editor->markerAdd(line, MARK_BOOKMARK);
+    }
+}
+
+int BookMarkDecorator::nextBookmarkAfter(int line)
+{
+    int nextMarkedLine = editor->markerNext(line, 1 << MARK_BOOKMARK);
+
+    if (nextMarkedLine == -1) {
+        return editor->markerNext(0, 1 << MARK_BOOKMARK);
+    }
+    else {
+        return nextMarkedLine;
+    }
+}
+
+int BookMarkDecorator::previousBookMarkBefore(int line)
+{
+    int prevMarkedLine = editor->markerPrevious(line, 1 << MARK_BOOKMARK);
+
+    if (prevMarkedLine == -1) {
+        return editor->markerPrevious(editor->lineCount(), 1 << MARK_BOOKMARK);
+    }
+    else {
+        return prevMarkedLine;
+    }
+}
+
+void BookMarkDecorator::clearBookmarks()
+{
+    editor->markerDeleteAll(MARK_BOOKMARK);
+}
+
 void BookMarkDecorator::notify(const Scintilla::NotificationData *pscn)
 {
     if (pscn->nmhdr.code == Scintilla::Notification::MarginClick) {
         if (pscn->margin == MARGIN) {
             int line = editor->lineFromPosition(pscn->position);
-
-            if (editor->markerGet(line) & (1 << MARK_BOOKMARK)) {
-                // The marker can be set multiple times, so keep deleting it till it is no longer set
-                while (editor->markerGet(line) & (1 << MARK_BOOKMARK)) {
-                    editor->markerDelete(line, MARK_BOOKMARK);
-                }
-            }
-            else {
-                editor->markerAdd(line, MARK_BOOKMARK);
-            }
+            toggleBookmark(line);
         }
     }
 }

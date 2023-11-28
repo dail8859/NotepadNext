@@ -28,6 +28,8 @@ class URLFinder : public EditorDecorator
 
 public:
     URLFinder(ScintillaNext *editor);
+    bool isURL(int position) const;
+    void copyURLToClipboard(int position) const;
 
 private slots:
     void findURLs();

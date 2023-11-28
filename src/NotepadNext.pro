@@ -31,8 +31,7 @@ win32 {
     package.commands = \
         xcopy $$shell_path($${OUT_PWD}/NotepadNext/NotepadNext.exe) $$shell_path($${OUT_PWD}/package/) /Y && \
         xcopy $$shell_path($${OUT_PWD}/NotepadNext/*.dll) $$shell_path($${OUT_PWD}/package/) /Y && \
-        xcopy $$shell_path($${OUT_PWD}/NotepadNext/LICENSE) $$shell_path($${OUT_PWD}/package/) /Y && \
-        xcopy $$shell_path($${OUT_PWD}/NotepadNext/i18n/*.qm) $$shell_path($${OUT_PWD}/package/i18n/) /Y &&
+        xcopy $$shell_path($${OUT_PWD}/NotepadNext/LICENSE) $$shell_path($${OUT_PWD}/package/) /Y &&
 
     equals(QT_MAJOR_VERSION, 6) {
         package.commands += windeployqt --release --no-translations --no-system-d3d-compiler --no-compiler-runtime --no-opengl-sw $$shell_path($${OUT_PWD}/package/NotepadNext.exe)
@@ -52,4 +51,28 @@ win32 {
     installer.commands = makensis /V4 $$shell_path($${OUT_PWD}/../installer/installer.nsi)
 
     QMAKE_EXTRA_TARGETS += package zip installer
+}
+
+macos {
+    dmg.target = dmg
+    dmg.commands = \
+        cd NotepadNext && \
+        macdeployqt "NotepadNext.app" -dmg && \
+        mv NotepadNext.dmg NotepadNext-v$${APP_VERSION}.dmg
+
+    QMAKE_EXTRA_TARGETS += dmg
+}
+
+linux {
+    appimage.target = appimage
+    appimage.commands = \
+        make install INSTALL_ROOT=AppDir && \
+        cd NotepadNext && \
+        wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" && \
+        wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" && \
+        chmod +x linuxdeploy*.AppImage && \
+        export OUTPUT=NotepadNext-v$${APP_VERSION}-x86_64.AppImage && \
+        ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage
+
+    QMAKE_EXTRA_TARGETS += appimage
 }

@@ -142,7 +142,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
         setEditor(current_editor);
 
-        showMessage(tr("Replaced %L1 matches").arg(count), "green");
+        showMessage(tr("Replaced %Ln matches", "", count), "green");
     });
     connect(ui->buttonClose, &QPushButton::clicked, this, &FindReplaceDialog::close);
 
@@ -225,7 +225,15 @@ void FindReplaceDialog::find()
     Sci_CharacterRange range = finder->findNext();
 
     if (ScintillaNext::isRangeValid(range)) {
-        // TODO: determine if search wrapped around and show message
+        if (finder->didLatestSearchWrapAround()) {
+            showMessage(tr("The end of the document has been reached. Found 1st occurrence from the top."), "green");
+        }
+
+        // TODO: Handle zero length matches better
+        if (range.cpMin == range.cpMax) {
+            qWarning() << "0 length match at" << range.cpMin;
+        }
+
         editor->goToRange(range);
     }
     else {
@@ -320,7 +328,7 @@ void FindReplaceDialog::replaceAll()
     }
 
     int count = finder->replaceAll(replaceText);
-    showMessage(tr("Replaced %L1 matches").arg(count), "green");
+    showMessage(tr("Replaced %Ln matches", "", count), "green");
 }
 
 void FindReplaceDialog::count()
@@ -331,7 +339,7 @@ void FindReplaceDialog::count()
 
     int total = finder->count();
 
-    showMessage(tr("Found %L1 matches").arg(total), "green");
+    showMessage(tr("Found %Ln matches", "", total), "green");
 }
 
 void FindReplaceDialog::setEditor(ScintillaNext *editor)

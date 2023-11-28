@@ -322,6 +322,10 @@ void ScintillaGTK::RealizeThis(GtkWidget *widget) {
 			 G_CALLBACK(Commit), this);
 	g_signal_connect(G_OBJECT(im_context.get()), "preedit_changed",
 			 G_CALLBACK(PreeditChanged), this);
+	g_signal_connect(G_OBJECT(im_context.get()), "retrieve-surrounding",
+			 G_CALLBACK(RetrieveSurrounding), this);
+	g_signal_connect(G_OBJECT(im_context.get()), "delete-surrounding",
+			 G_CALLBACK(DeleteSurrounding), this);
 	gtk_im_context_set_client_window(im_context.get(), WindowFromWidget(widget));
 
 	GtkWidget *widtxt = PWidget(wText);	//	// No code inside the G_OBJECT macro
@@ -398,6 +402,7 @@ void ScintillaGTK::MapThis() {
 		wMain.SetCursor(Window::Cursor::arrow);
 		scrollbarv.SetCursor(Window::Cursor::arrow);
 		scrollbarh.SetCursor(Window::Cursor::arrow);
+		SetClientRectangle();
 		ChangeSize();
 		gdk_window_show(PWindow(wMain));
 	} catch (...) {
@@ -536,7 +541,7 @@ gint ScintillaGTK::FocusOut(GtkWidget *widget, GdkEventFocus * /*event*/) {
 }
 
 void ScintillaGTK::SizeRequest(GtkWidget *widget, GtkRequisition *requisition) {
-	ScintillaGTK *sciThis = FromWidget(widget);
+	const ScintillaGTK *sciThis = FromWidget(widget);
 	requisition->width = 1;
 	requisition->height = 1;
 	GtkRequisition child_requisition;
@@ -668,6 +673,7 @@ void ScintillaGTK::Init() {
 
 	/* create pre-edit window */
 	wPreedit = gtk_window_new(GTK_WINDOW_POPUP);
+	gtk_window_set_type_hint(GTK_WINDOW(PWidget(wPreedit)), GDK_WINDOW_TYPE_HINT_POPUP_MENU);
 	wPreeditDraw = gtk_drawing_area_new();
 	GtkWidget *predrw = PWidget(wPreeditDraw);      // No code inside the G_OBJECT macro
 #if GTK_CHECK_VERSION(3,0,0)
@@ -1057,8 +1063,12 @@ void ScintillaGTK::FullPaint() {
 	wText.InvalidateAll();
 }
 
+void ScintillaGTK::SetClientRectangle() {
+	rectangleClient = wMain.GetClientPosition();
+}
+
 PRectangle ScintillaGTK::GetClientRectangle() const {
-	PRectangle rc = wMain.GetClientPosition();
+	PRectangle rc = rectangleClient;
 	if (verticalScrollBarVisible)
 		rc.right -= verticalScrollBarWidth;
 	if (horizontalScrollBarVisible && !Wrapping())
@@ -1159,7 +1169,7 @@ void ScintillaGTK::SetScrollBars() {
 	// On GTK, unlike other platforms, modifying scrollbars inside some events including
 	// resizes causes problems. Deferring the modification to a lower priority (125) idle
 	// event avoids the problems. This code did not always work when the priority was
-	// higher than GTK's resize (GTK_PRIORITY_RESIZE=110) or redraw 
+	// higher than GTK's resize (GTK_PRIORITY_RESIZE=110) or redraw
 	// (GDK_PRIORITY_REDRAW=120) idle tasks.
 	scrollBarIdleID = gdk_threads_add_idle_full(priorityScrollBar,
 		[](gpointer pSci) -> gboolean {
@@ -1397,6 +1407,7 @@ void ScintillaGTK::Paste() {
 void ScintillaGTK::CreateCallTipWindow(PRectangle rc) {
 	if (!ct.wCallTip.Created()) {
 		ct.wCallTip = gtk_window_new(GTK_WINDOW_POPUP);
+		gtk_window_set_type_hint(GTK_WINDOW(PWidget(ct.wCallTip)), GDK_WINDOW_TYPE_HINT_TOOLTIP);
 		ct.wDraw = gtk_drawing_area_new();
 		GtkWidget *widcdrw = PWidget(ct.wDraw);	//	// No code inside the G_OBJECT macro
 		gtk_container_add(GTK_CONTAINER(PWidget(ct.wCallTip)), widcdrw);
@@ -1784,6 +1795,7 @@ void ScintillaGTK::Resize(int width, int height) {
 		gtk_widget_hide(GTK_WIDGET(PWidget(scrollbarv)));
 		verticalScrollBarWidth = 0;
 	}
+	SetClientRectangle();
 	if (IS_WIDGET_MAPPED(PWidget(wMain))) {
 		ChangeSize();
 	} else {
@@ -2000,7 +2012,7 @@ gint ScintillaGTK::ScrollEvent(GtkWidget *widget, GdkEventScroll *event) {
 		// where the X11 server already has an adaptive scrolling algorithm
 		// that fights with this one
 		int cLineScroll;
-#if defined(__APPLE__) && !defined(GDK_WINDOWING_QUARTZ)
+#if (defined(__APPLE__) || defined(PLAT_GTK_WIN32)) && !defined(GDK_WINDOWING_QUARTZ)
 		cLineScroll = sciThis->linesPerScroll;
 		if (cLineScroll == 0)
 			cLineScroll = 4;
@@ -2603,6 +2615,65 @@ void ScintillaGTK::PreeditChanged(GtkIMContext *, ScintillaGTK *sciThis) {
 	} else {
 		sciThis->PreeditChangedWindowedThis();
 	}
+}
+
+bool ScintillaGTK::RetrieveSurroundingThis(GtkIMContext *context) {
+	try {
+		const Sci::Position pos = CurrentPosition();
+		const int line = pdoc->LineFromPosition(pos);
+		const Sci::Position startByte = pdoc->LineStart(line);
+		const Sci::Position endByte = pdoc->LineEnd(line);
+
+		std::string utf8Text;
+		gint cursorIndex; // index of the cursor inside utf8Text, in bytes
+		const char *charSetBuffer;
+
+		if (IsUnicodeMode() || ! *(charSetBuffer = CharacterSetID())) {
+			utf8Text = RangeText(startByte, endByte);
+			cursorIndex = pos - startByte;
+		} else {
+			// Need to convert
+			std::string tmpbuf = RangeText(startByte, pos);
+			utf8Text = ConvertText(&tmpbuf[0], tmpbuf.length(), "UTF-8", charSetBuffer, false);
+			cursorIndex = utf8Text.length();
+			if (endByte > pos) {
+				tmpbuf = RangeText(pos, endByte);
+				utf8Text += ConvertText(&tmpbuf[0], tmpbuf.length(), "UTF-8", charSetBuffer, false);
+			}
+		}
+
+		gtk_im_context_set_surrounding(context, &utf8Text[0], utf8Text.length(), cursorIndex);
+
+		return true;
+	} catch (...) {
+		errorStatus = Status::Failure;
+	}
+	return false;
+}
+
+gboolean ScintillaGTK::RetrieveSurrounding(GtkIMContext *context, ScintillaGTK *sciThis) {
+	return sciThis->RetrieveSurroundingThis(context);
+}
+
+bool ScintillaGTK::DeleteSurroundingThis(GtkIMContext *, gint characterOffset, gint characterCount) {
+	try {
+		const Sci::Position startByte = pdoc->GetRelativePosition(CurrentPosition(), characterOffset);
+		if (startByte == INVALID_POSITION)
+			return false;
+
+		const Sci::Position endByte = pdoc->GetRelativePosition(startByte, characterCount);
+		if (endByte == INVALID_POSITION)
+			return false;
+
+		return pdoc->DeleteChars(startByte, endByte - startByte);
+	} catch (...) {
+		errorStatus = Status::Failure;
+	}
+	return false;
+}
+
+gboolean ScintillaGTK::DeleteSurrounding(GtkIMContext *context, gint characterOffset, gint characterCount, ScintillaGTK *sciThis) {
+	return sciThis->DeleteSurroundingThis(context, characterOffset, characterCount);
 }
 
 void ScintillaGTK::StyleSetText(GtkWidget *widget, GtkStyle *, void *) {

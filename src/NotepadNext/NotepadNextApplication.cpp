@@ -121,7 +121,7 @@ bool NotepadNextApplication::init()
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(this);
     settings = new Settings(this);
-    sessionManager = new SessionManager();
+    sessionManager = new SessionManager(this);
 
     connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [=](ScintillaNext *editor) {
         if (editor->isFile()) {
@@ -160,7 +160,7 @@ bool NotepadNextApplication::init()
     luabridge::setGlobal(luaState->L, settings, "settings");
 
     createNewWindow();
-    connect(editorManager, &EditorManager::editorCreated, windows.first(), &MainWindow::addEditor);
+    connect(editorManager, &EditorManager::editorCreated, window, &MainWindow::addEditor);
 
     luabridge::getGlobalNamespace(luaState->L)
         .beginNamespace("nn")
@@ -177,7 +177,7 @@ bool NotepadNextApplication::init()
                 .addFunction("closeFile", &MainWindow::closeCurrentFile)
             .endClass()
         .endNamespace();
-    luabridge::setGlobal(luaState->L, windows.first(), "window");
+    luabridge::setGlobal(luaState->L, window, "window");
 
     // If the application is activated (e.g. user switching to another program and them back) the focus
     // needs to be reset on whatever object previously had focus (e.g. the find dialog)
@@ -188,7 +188,7 @@ bool NotepadNextApplication::init()
         }
     });
 
-    connect(this, &SingleApplication::instanceStarted, windows.first(), &MainWindow::bringWindowToForeground);
+    connect(this, &SingleApplication::instanceStarted, window, &MainWindow::bringWindowToForeground);
 
     connect(this, &SingleApplication::receivedMessage, this, [&](quint32 instanceId, QByteArray message) {
         Q_UNUSED(instanceId)
@@ -210,8 +210,8 @@ bool NotepadNextApplication::init()
             // Make sure it is active...
             // The application can be active without the main window being show e.g. if there is a
             // message box that pops up before the main window
-            if (windows.first()->isActiveWindow()) {
-                windows.first()->focusIn();
+            if (window->isActiveWindow()) {
+                window->focusIn();
             }
 
             if (!currentlyFocusedWidget.isNull()) {
@@ -223,21 +223,21 @@ bool NotepadNextApplication::init()
     if (settings->restorePreviousSession()) {
         qInfo("Restoring previous session");
 
-        sessionManager->loadSession(windows.first(), editorManager);
+        sessionManager->loadSession(window);
     }
 
     openFiles(parser.positionalArguments());
 
     // If the window does not have any editors (meaning the no files were
     // specified on the command line) then create a new empty file
-    if (windows.first()->editorCount() == 0) {
-        windows.first()->newFile();
+    if (window->editorCount() == 0) {
+        window->newFile();
     }
 
     // Everything should be ready at this point
 
-    windows.first()->restoreWindowState();
-    windows.first()->show();
+    window->restoreWindowState();
+    window->show();
 
     DebugManager::resumeDebugOutput();
 
@@ -301,8 +301,8 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
     // Dynamic properties can be used to skip part of the default initialization. The value in the
     // property doesn't currently matter, but may be used at a later point.
-    getLuaState()->execute(QString("skip_tabs = \"%1\"").arg(editor->QObject::property("nn_skip_usetabs").isValid() ? "true" : "false").toLatin1().constData());
-    getLuaState()->execute(QString("skip_tabwidth = \"%1\"").arg(editor->QObject::property("nn_skip_tabwidth").isValid() ? "true" : "false").toLatin1().constData());
+    getLuaState()->execute(QString("skip_tabs = %1").arg(editor->QObject::property("nn_skip_usetabs").isValid() ? "true" : "false").toLatin1().constData());
+    getLuaState()->execute(QString("skip_tabwidth = %1").arg(editor->QObject::property("nn_skip_tabwidth").isValid() ? "true" : "false").toLatin1().constData());
 
     getLuaState()->execute(R"(
         local L = languages[languageName]
@@ -399,30 +399,29 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
 
 void NotepadNextApplication::loadSystemDefaultTranslation()
 {
-    loadTranslation(QLocale::system());
+    // The wrong translation file may be loaded when passing Locale::system() to loadTranslation function, e.g. "zh_CN" translation file will be loaded when the locale is "en_US". It's probably a Qt bug.
+    loadTranslation(QLocale(QLocale::system().name()));
 }
 
 void NotepadNextApplication::loadTranslation(QLocale locale)
 {
     qInfo(Q_FUNC_INFO);
 
-    // TODO: look into QLibraryInfo::location(QLibraryInfo::TranslationsPath)?
-    const QString languagePath = QApplication::applicationDirPath() + "/i18n";
+    // Translation files are stored as a qresource
+    const QString languagePath = QStringLiteral(":/i18n/");
 
-    // Load translation for NotepadNext
-    //  e.g. `i18n/NotepadNext.en.qm`
-    if (translatorNpn.load(locale, QApplication::applicationName(), QString("."), languagePath)) {
+    // Load translation for NotepadNext e.g. "i18n/NotepadNext.en.qm"
+    if (translatorNpn.load(locale, QApplication::applicationName(), QString("_"), languagePath)) {
         installTranslator(&translatorNpn);
-        qInfo("Loaded %s translation for Notepad Next", qUtf8Printable(locale.name()));
+        qInfo("Loaded %s translation %s for Notepad Next", qUtf8Printable(locale.name()), qUtf8Printable(translatorNpn.filePath()));
     } else {
         qInfo("%s translation not found for Notepad Next", qUtf8Printable(locale.name()));
     }
 
-    // Load translation for Qt components
-    //  e.g. `i18n/qt_en.qm`
+    // Load translation for Qt components e.g. "i18n/qt_en.qm"
     if (translatorQt.load(locale, QString("qt"), QString("_"), languagePath)) {
         installTranslator(&translatorQt);
-        qInfo("Loaded %s translation for Qt components", qUtf8Printable(locale.name()));
+        qInfo("Loaded %s translation %s for Qt components", qUtf8Printable(locale.name()), qUtf8Printable(translatorQt.filePath()));
     } else {
         qInfo("%s translation not found for Qt components", qUtf8Printable(locale.name()));
     }
@@ -435,6 +434,32 @@ void NotepadNextApplication::sendInfoToPrimaryInstance()
 
     stream << arguments();
     sendMessage(buffer);
+}
+
+bool NotepadNextApplication::isRunningAsAdmin() const
+{
+    static bool initialized = false;
+    static bool isAdmin = false;
+
+    if (!initialized) {
+        initialized = true;
+
+#ifdef Q_OS_WIN
+        BOOL isMember;
+        SID_IDENTIFIER_AUTHORITY ntAuthority = SECURITY_NT_AUTHORITY;
+        PSID administratorsGroupSid = NULL;
+
+        // Create a SID for the Administrators group
+        if (AllocateAndInitializeSid(&ntAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &administratorsGroupSid)) {
+            if (CheckTokenMembership(NULL, administratorsGroupSid, &isMember)) {
+                isAdmin = isMember;
+                FreeSid(administratorsGroupSid);
+            }
+        }
+#endif
+    }
+
+    return isAdmin;
 }
 
 bool NotepadNextApplication::event(QEvent *event)
@@ -458,7 +483,9 @@ void NotepadNextApplication::openFiles(const QStringList &files)
     qInfo(Q_FUNC_INFO);
 
     for (const QString &file : files) {
-        windows.first()->openFile(file);
+        QUrl fileUrl(file);
+        QString filePath = fileUrl.isValid() && fileUrl.isLocalFile() ? fileUrl.toLocalFile() : file;
+        window->openFile(filePath);
     }
 }
 
@@ -484,25 +511,25 @@ void NotepadNextApplication::saveSettings()
 
 MainWindow *NotepadNextApplication::createNewWindow()
 {
-    MainWindow *w = new MainWindow(this);
+    Q_ASSERT(window == Q_NULLPTR);
 
-    windows.append(w);
+    window = new MainWindow(this);
 
     // Keep Lua's editor reference up to date
-    connect(w, &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
+    connect(window, &MainWindow::editorActivated, this, [](ScintillaNext *editor) {
         LuaExtension::Instance().setEditor(editor);
     });
 
     // Since these editors don't actually get "closed" go ahead and add them to the recent file list
-    connect(w, &MainWindow::aboutToClose, this, [=]() {
-        for (const auto &editor : w->editors()) {
+    connect(window, &MainWindow::aboutToClose, this, [=]() {
+        for (const auto &editor : window->editors()) {
             if (editor->isFile()) {
                 recentFilesListManager->addFile(editor->getFilePath());
             }
         }
 
-        getSessionManager()->saveSession(w);
+        getSessionManager()->saveSession(window);
     });
 
-    return w;
+    return window;
 }
