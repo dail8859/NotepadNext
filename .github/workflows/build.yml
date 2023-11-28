@@ -18,15 +18,15 @@ jobs:
       matrix:
         config:
         -
-          qt_version: "6.4.2"
+          qt_version: "6.6.1"
           modules: "qt5compat"
           os: ubuntu-20.04
         -
-          qt_version: "6.4.2"
+          qt_version: "6.6.1"
           modules: "qt5compat"
           os: windows-latest
         -
-          qt_version: "6.4.2"
+          qt_version: "6.6.1"
           modules: "qt5compat"
           os: macos-latest
 
@@ -43,13 +43,14 @@ jobs:
           version: ${{ matrix.config.qt_version }}
           modules: ${{ matrix.config.modules }}
 
-      # disable meanwhile, until I understand how to fix the install prefix with ninja
       - name: Install Ninja
         uses: seanmiddleditch/gha-setup-ninja@master
 
       - name: Setup (Linux)
         if: startsWith (matrix.config.os, 'ubuntu')
-        run: sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse
+        run: |
+          echo "DISTRIBUTION=AppImage" >> "$GITHUB_ENV"
+          sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev
 
       - name: Setup VS tools (Windows)
         if: startsWith (matrix.config.os, 'windows')

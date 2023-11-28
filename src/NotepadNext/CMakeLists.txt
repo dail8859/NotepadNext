@@ -222,4 +222,5 @@ install(FILES ${CMAKE_SOURCE_DIR}/deploy/linux/NotepadNext.desktop
     DESTINATION share/applications)
 install(FILES ${CMAKE_SOURCE_DIR}/icon/NotepadNext.svg
     DESTINATION share/icons/hicolor/scalable/mimetypes)
-
+install(FILES ${CMAKE_SOURCE_DIR}/icon/NotepadNext.svg
+    DESTINATION share/icons/hicolor/scalable/apps/)
