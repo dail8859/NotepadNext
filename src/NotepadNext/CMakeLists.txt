@@ -39,10 +39,6 @@ add_executable(NotepadNext
     IFaceTableMixer.cpp
     IFaceTableMixer.h
     ISearchResultsHandler.h
-    LanguageKeywordsModel.h
-    LanguageKeywordsModel.cpp
-    LanguagePropertiesModel.cpp
-    LanguagePropertiesModel.h
     LanguageStylesModel.cpp
     LanguageStylesModel.h
     LuaExtension.cpp
@@ -177,7 +173,7 @@ target_link_libraries(NotepadNext Qt::Widgets Qt::PrintSupport
     libuchardet
     lua
     LuaBridge
-    qtadvanceddocking
+    qt6advanceddocking
     SingleApplication
     QSimpleUpdater
     editorconfig-core-qt

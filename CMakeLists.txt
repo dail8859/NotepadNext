@@ -20,11 +20,13 @@ set(BUILD_SHARED_LIBS OFF)
 
 
 # an commit after v0.0.8
-CPMAddPackage("gh:freedesktop/uchardet#2f5c24006ebc7f005040358f58f22a61a3c92522")
-CPMAddPackage("gh:vinniefalco/LuaBridge#6580b18755a0fdbf87820aa16a3bc63d24b5bf31")
-CPMAddPackage("gh:githubuser0xFFFF/Qt-Advanced-Docking-System#54c2bd0c304505f9c5abffdd9eaa29ecfd691054")
-CPMAddPackage("gh:itay-grudev/SingleApplication#f1e15081dc57a9c03f7f4f165677f18802e1437a")
-CPMAddPackage("gh:editorconfig/editorconfig-core-qt#b87e96f0e1ca38cdb49fe5a7771df746808bf156")
+CPMAddPackage(NAME uchardet
+    GIT_REPOSITORY https://gitlab.freedesktop.org/uchardet/uchardet
+    GIT_TAG 2f5c24006ebc7f005040358f58f22a61a3c92522)
+CPMAddPackage("gh:vinniefalco/LuaBridge#5d21e35633a1f87ed08af115b07d3386096f792b")
+CPMAddPackage("gh:githubuser0xFFFF/Qt-Advanced-Docking-System#4.1.1")
+CPMAddPackage("gh:itay-grudev/SingleApplication#v3.5.1")
+CPMAddPackage("gh:editorconfig/editorconfig-core-qt#bf86460fe29b53731bba650d2a59d4c47eb25de9")
 
 # the following libraries have no upstream cmake support,
 # so we do own own locally (internally they clone the upstream repo)
