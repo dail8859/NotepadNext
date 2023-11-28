@@ -27,6 +27,7 @@
 #include <QFile>
 #include <QFileInfo>
 
+#include "tinyexpr.h"
 
 
 
@@ -137,6 +138,7 @@ signals:
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
     QString name;
@@ -144,6 +146,7 @@ private:
     QFileInfo fileInfo;
     QDateTime modifiedTime;
     RangeAllocator indicatorResources;
+    te_parser m_tinyEpr;
 
     bool temporary = false; // Temporary file loaded from a session. It can either be a 'New' file or actual 'File'
 
@@ -151,6 +154,15 @@ private:
     QDateTime fileTimestamp();
     void updateTimestamp();
 
+    enum evltype {EVAL_ENTER, EVAL_QUESTION, EVAL_JIT};
+    bool tinyexprCalc(evltype evt);
+
+public:
+    inline QString getEditText(int line);
+    inline void position(int &line, int &index);
+    inline void insertAt(const QString &text, int line, int index);
+    inline int getPos(int line, int index);
+    inline void setCursor(int line, int index);
 };
 
 template<typename Func>

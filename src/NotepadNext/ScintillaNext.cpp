@@ -26,7 +26,9 @@
 #include <QDir>
 #include <QMouseEvent>
 #include <QSaveFile>
+#include <QSettings>
 #include <QTextCodec>
+#include <QRegularExpression>
 
 
 const int CHUNK_SIZE = 1024 * 1024 * 4; // Not sure what is best
@@ -596,4 +598,270 @@ void ScintillaNext::setTemporary(bool temp)
 
     // Fake this signal
     emit savePointChanged(temporary);
+}
+
+void ScintillaNext::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+    case Qt::Key_Return:
+    case Qt::Key_Enter:
+        tinyexprCalc(EVAL_ENTER);
+        break;
+    case Qt::Key_Question:
+        if(tinyexprCalc(EVAL_QUESTION))
+        return;
+    case Qt::Key_0 :case Qt::Key_1 :case Qt::Key_2 :case Qt::Key_3 :case Qt::Key_4:
+    case Qt::Key_5 :case Qt::Key_6 :case Qt::Key_7 :case Qt::Key_8 :case Qt::Key_9:
+    case Qt::Key_ParenRight :case Qt::Key_Backspace :case Qt::Key_End:
+        ScintillaEdit::keyPressEvent(event);
+        tinyexprCalc(EVAL_JIT);
+        return;
+    default:
+        break;
+    }
+
+    ScintillaEdit::keyPressEvent(event);
+}
+
+inline void ScintillaNext::position(int &line, int &index)
+{
+    int curpos = currentPos();
+    int li = lineFromPosition(curpos);
+    int lipos = positionFromLine(li);
+    int indx = 0;
+    while (lipos < curpos)
+    {
+        int new_pos = positionAfter(lipos);
+        if (new_pos == lipos)
+            break;
+        lipos = new_pos;
+        ++indx;
+    }
+    line = li;
+    index = indx;
+}
+
+inline QString ScintillaNext::getEditText(int line)
+{
+    if (line < 0 || line >= lineCount())
+        return QString();
+    return QString::fromUtf8(getLine(line));
+}
+
+inline int ScintillaNext::getPos(int line, int index){
+    int pos = positionFromLine(line);
+    for (int i = 0; i < index; i++)
+        pos = positionAfter(pos);
+    return pos;
+}
+
+inline void ScintillaNext::insertAt(const QString &text, int line, int index)
+{
+    const bool isr = readOnly();
+    if (isr) setReadOnly(false);
+    beginUndoAction();
+    insertText(getPos(line, index), text.toUtf8().constData());
+    endUndoAction();
+    if (isr) setReadOnly(true);
+}
+
+inline void ScintillaNext::setCursor(int line, int index) {
+    gotoPos(getPos(line, index));
+}
+
+inline QString& removeTail0andDot(QString& s)
+{
+    if (s.contains(".")) {
+        while (s.back() == '0') s.chop(1);
+        if (s.back() == '.') s.chop(1);
+    }
+    return s;
+}
+
+static inline bool timeExprCalc(const QString& expr, QString& retstr) {
+    QString tmstr = expr;
+    tmstr.replace(" ", "");
+    static const auto reTimefilter = QRegularExpression(R"(^\d[:hms][\d:hms\.]*[+\-]\d[\d:hms\.]*$)");
+    auto mtf = reTimefilter.match(tmstr);
+    if (!mtf.hasMatch())
+        return false;
+    static const auto reTimeformat = QRegularExpression(
+        R"(^(((\d+)[h:])?((\d+)[m:])?((\d+(\.\d+)?)s?)?)([+\-])(((\d+)[h:])?((\d+)[m:])?((\d+(\.\d+)?)s?)?)$)");
+    auto re = reTimeformat.match(tmstr);
+    if (!re.hasMatch())
+        return false;
+
+    bool tmadd = bool(re.captured(9) == "+");
+    auto tm1 = re.captured(1);
+    auto tm2 = re.captured(10);
+    static const auto exl = QRegularExpression(R"(^(?!.*[hms].*:)(?!.*:.*[hms]).*$)");
+    if (!(exl.match(tm1).hasMatch() && exl.match(tm2).hasMatch()))
+        return false; // [hms] and colon cannot be mixed in the same time string, "10:32m11" or "2h33:14" invalid.
+    int tm_type = 0;
+    QString tmfmt1;
+    if (tm1.contains(':')) {
+        tm_type = 1;
+        tmfmt1 = "s"; // h:m:s.z 01:02:03.4 format
+        if (re.captured(7).contains('.'))
+            tmfmt1 += ".z";
+        if (re.capturedLength(5)) {
+            tmfmt1 = "m:" + tmfmt1;
+            if (re.capturedLength(3)) {
+                tmfmt1 = "h:" + tmfmt1;
+            }
+        } else if (re.capturedLength(3)) {
+            tmfmt1 = "m:" + tmfmt1;
+        }
+    } else {         // h'h'm'm's.z's' 01h02m03.4s format
+        if (re.capturedLength(3))
+            tmfmt1 = "h'h'";
+        if (re.capturedLength(5))
+            tmfmt1 += "m'm'";
+        if (re.capturedLength(7))
+            tmfmt1 += "s";
+        if (re.capturedLength(8))
+            tmfmt1 += ".z";
+        if (re.captured(6).contains('s'))
+            tmfmt1 += "'s'";
+    }
+    QString tmfmt2;
+    if (tm2.contains(':')) {
+        tmfmt2 = "s"; // h:m:s.z 01:02:03.4 format
+        if (re.captured(16).contains('.'))
+            tmfmt2 += ".z";
+        if (re.capturedLength(14)) {
+            tmfmt2 = "h:m:" + tmfmt2;
+        } else if (re.capturedLength(12)) {
+            tmfmt2 = "m:" + tmfmt2;
+        }
+    } else {          // h'h'm'm's.z's' 01h02m03.4s format
+        if (re.capturedLength(12))
+            tmfmt2 = "h'h'";
+        if (re.capturedLength(14))
+            tmfmt2 += "m'm'";
+        if (re.capturedLength(16))
+            tmfmt2 += "s";
+        if (re.capturedLength(17))
+            tmfmt2 += ".z";
+        if (re.captured(15).contains('s'))
+            tmfmt2 += "'s'";
+    }
+    auto qtm1 = QTime::fromString(tm1, tmfmt1);
+    auto qtm2 = QTime::fromString(tm2, tmfmt2);
+
+    //for (int i = 1; i <= 17; ++i)
+    //    qDebug() << i << re.captured(i);
+    qDebug() << qtm1.msecsSinceStartOfDay() << qtm2.msecsSinceStartOfDay();
+    QTime res;
+    bool neg = false;
+    if (tmadd) {
+        res = QTime::fromMSecsSinceStartOfDay(qtm1.msecsSinceStartOfDay() + qtm2.msecsSinceStartOfDay());
+    } else {
+        if (qtm1 >= qtm2) {
+            res = QTime::fromMSecsSinceStartOfDay(qtm1.msecsSinceStartOfDay() - qtm2.msecsSinceStartOfDay());
+        } else {
+            res = QTime::fromMSecsSinceStartOfDay(qtm2.msecsSinceStartOfDay() - qtm1.msecsSinceStartOfDay());
+            neg = true;
+        }
+    }
+    retstr = neg? "-": "";
+    retstr += res.toString(res.msecsSinceStartOfDay() > 3600*1000 ?
+        (tm_type ? "hh:mm:ss.z" : "h'h'm'm's.z's'"):
+        (tm_type ? "mm:ss.z" : "m'm's.z's'")
+    );
+    removeTail0andDot(retstr);
+    return true;
+}
+
+bool ScintillaNext::tinyexprCalc(evltype evt) {
+    int line, index;
+    position(line, index);
+    if (index <= 0)
+        return false;
+    int idx = index - 1;
+    QString linetxt = getLine(line);
+    if (linetxt.length() < 1)
+        return false;
+    QSettings settings;
+    switch(evt)
+    {
+    case EVAL_QUESTION:
+        if (!settings.value("TinyExpr/Question", true).toBool())
+            return false;
+        if (linetxt.at(idx) != '=') // =?
+            return false;
+        break;
+    case EVAL_ENTER:
+        if (!settings.value("TinyExpr/Enter", true).toBool())
+            return false;
+        if (linetxt.at(idx) != '=') // =ENTER
+            return false;
+        break;
+    case EVAL_JIT:
+    default:
+        if (!settings.value("TinyExpr/JIT", true).toBool())
+            return false;
+        ++idx; // JIT no =
+        break;
+    }
+    const int eval_accuracy = settings.value("TinyExpr/Accuracy", 6).toInt();
+    if (eval_accuracy <= 0 || eval_accuracy >= 15)
+        return false;
+    QString exprline = linetxt.left(idx);
+    bool is_eq = false;
+    int i = 0;
+    for (int ii = idx - 1; ii > -1; --ii) {
+        auto c = exprline.at(ii);
+        if (c == '=') {    // mark =, accept ==
+            is_eq = !is_eq;
+        }
+        else if (c == '<' || c == '>') { // accept <= and >=
+            is_eq = false;
+        }
+        else if (is_eq) {  // find left bound
+            i = ii + 2;
+            break;
+        }
+    }
+    while (i < idx) {
+        auto expr = exprline.mid(i);
+        if (evt != EVAL_JIT) {
+            QString retstr;
+            if (timeExprCalc(expr, retstr)) {
+                insertAt(retstr, line, idx + 1);
+                setCursor(line, idx + 1 + retstr.length());
+                return true;
+            }
+        }
+        auto v = m_tinyEpr.evaluate(expr.toStdString());
+        if (!std::isnan(v)) {
+            QString res = QString::number(v, 'g', eval_accuracy);
+            removeTail0andDot(res);
+            if(evt == EVAL_JIT) {
+                res = expr + "=" + res;
+#if 0
+                // TODO: call MainWnd set status, still no idea howto visit MainWnd from editor.
+                MainWnd.updateEvalStatus(res);
+#endif
+            } else {
+                insertAt(res, line, idx + 1);
+                setCursor(line, idx + 1 + res.length());
+            }
+            //qDebug() << "tinyexpr: " << expr << " = " << res;
+            return true;
+        }
+        static const QSet<QChar> s_teSymbols = {
+            '+','-','*','/',':','^','%','!','<','>','(',')',
+            ',',' ','\t','m','h','s',
+            '0','1','2','3','4','5','6','7','8','9'
+        };
+        static const QSet<QChar> s_teLookfwdSymbols = {'|','&'};
+        while (++i && i < idx - 1 &&
+               !s_teSymbols.contains(exprline.at(i)) &&
+               !(s_teLookfwdSymbols.contains(exprline.at(i)) &&
+                 exprline.at(i) == exprline.at(i+1))
+               ) {}
+    }
+    return false;
 }

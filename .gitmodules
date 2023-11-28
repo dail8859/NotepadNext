@@ -13,3 +13,6 @@
 [submodule "src/QSimpleUpdater"]
 	path = src/QSimpleUpdater
 	url = https://github.com/alex-spataru/QSimpleUpdater
+[submodule "src/tinyexpr-plusplus"]
+	path = src/tinyexpr-plusplus
+	url = https://github.com/Blake-Madden/tinyexpr-plusplus.git

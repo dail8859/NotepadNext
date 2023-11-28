@@ -132,7 +132,8 @@ SOURCES += \
     decorators/LineNumbers.cpp \
     decorators/SmartHighlighter.cpp \
     widgets/EditorInfoStatusBar.cpp \
-    widgets/StatusLabel.cpp
+    widgets/StatusLabel.cpp \
+    ../tinyexpr-plusplus/tinyexpr.cpp
 
 HEADERS += \
     ColorPickerDelegate.h \
@@ -208,7 +209,8 @@ HEADERS += \
     decorators/SmartHighlighter.h \
     docks/SearchResultsDock.h \
     widgets/EditorInfoStatusBar.h \
-    widgets/StatusLabel.h
+    widgets/StatusLabel.h \
+    ../tinyexpr-plusplus/tinyexpr.h
 
 FORMS += \
     QuickFindWidget.ui \
@@ -243,6 +245,7 @@ INCLUDEPATH += $$PWD/../
 DEFINES += LUA_VERSION_NUM=503
 
 INCLUDEPATH += $$PWD/../lexilla/include
+INCLUDEPATH += $$PWD/../tinyexpr-plusplus
 
 win32-g++:LIBS += libUser32
 win32-msvc*:LIBS += User32.lib
