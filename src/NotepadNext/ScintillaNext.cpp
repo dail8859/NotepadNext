@@ -23,6 +23,7 @@
 #include "uchardet.h"
 #include <cinttypes>
 
+#include <QDebug>
 #include <QDir>
 #include <QMouseEvent>
 #include <QSaveFile>
@@ -610,7 +611,8 @@ void ScintillaNext::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_Question:
         if(tinyexprCalc(EVAL_QUESTION))
-        return;
+            return;
+        break;
     case Qt::Key_0 :case Qt::Key_1 :case Qt::Key_2 :case Qt::Key_3 :case Qt::Key_4:
     case Qt::Key_5 :case Qt::Key_6 :case Qt::Key_7 :case Qt::Key_8 :case Qt::Key_9:
     case Qt::Key_ParenRight :case Qt::Key_Backspace :case Qt::Key_End:
@@ -752,7 +754,7 @@ static inline bool timeExprCalc(const QString& expr, QString& retstr) {
 
     //for (int i = 1; i <= 17; ++i)
     //    qDebug() << i << re.captured(i);
-    qDebug() << qtm1.msecsSinceStartOfDay() << qtm2.msecsSinceStartOfDay();
+    //qDebug() << qtm1.msecsSinceStartOfDay() << qtm2.msecsSinceStartOfDay();
     QTime res;
     bool neg = false;
     if (tmadd) {
@@ -806,7 +808,7 @@ bool ScintillaNext::tinyexprCalc(evltype evt) {
         break;
     }
     const int eval_accuracy = settings.value("TinyExpr/Accuracy", 6).toInt();
-    if (eval_accuracy <= 0 || eval_accuracy >= 15)
+    if (eval_accuracy <= 0 || eval_accuracy > 15)
         return false;
     QString exprline = linetxt.left(idx);
     bool is_eq = false;
@@ -844,6 +846,7 @@ bool ScintillaNext::tinyexprCalc(evltype evt) {
                 // TODO: call MainWnd set status, still no idea howto visit MainWnd from editor.
                 MainWnd.updateEvalStatus(res);
 #endif
+                qDebug() << "tinyexpr: " << res;
             } else {
                 insertAt(res, line, idx + 1);
                 setCursor(line, idx + 1 + res.length());
