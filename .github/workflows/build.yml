@@ -60,7 +60,7 @@ jobs:
 
       - name: Compile
         run: |
-          cmake -S . -B cbuild -G Ninja -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_STATIC=ON
+          cmake -S . -B cbuild -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_STATIC=ON
           cmake --build cbuild
 
       - name: Create App Image
