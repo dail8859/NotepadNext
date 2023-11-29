@@ -19,7 +19,6 @@
 
 #include "Settings.h"
 
-
 Settings::Settings(QObject *parent) : QObject(parent)
 {
 }
@@ -36,6 +35,10 @@ bool Settings::restoreUnsavedFiles() const { return m_restoreUnsavedFiles; }
 bool Settings::restoreTempFiles() const { return m_restoreTempFiles; }
 
 bool Settings::combineSearchResults() const { return m_combineSearchResults; }
+bool Settings::useEnter() const { return m_useEnter; }
+bool Settings::useQuestion() const { return m_useQuestion; }
+bool Settings::useJITEval() const { return m_useJITEval; }
+int Settings::accuracy() const { return m_accuracy; }
 
 void Settings::setShowMenuBar(bool showMenuBar)
 {
@@ -116,4 +119,32 @@ void Settings::setCombineSearchResults(bool combineSearchResults)
 
     m_combineSearchResults = combineSearchResults;
     emit combineSearchResultsChanged(m_combineSearchResults);
+}
+
+void Settings::setUseEnter(bool useEnter)
+{
+    m_useEnter = useEnter;
+}
+
+void Settings::setUseQuestion(bool useQuestion)
+{
+    m_useQuestion = useQuestion;
+}
+
+void Settings::setUseJITEval(bool useJITEval)
+{
+    if (m_useJITEval == useJITEval)
+        return;
+
+    m_useJITEval = useJITEval;
+    emit useJITEvalChanged(useJITEval);
+}
+
+void Settings::setAccuracy(const QString &strAccuracy)
+{
+    int accuracy = strAccuracy.toInt();
+    if (m_accuracy == accuracy || accuracy <= 0 || accuracy > 15)
+        return;
+
+    m_accuracy = accuracy;
 }

@@ -71,6 +71,18 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
     ui->checkBoxCombineSearchResults->setChecked(settings->combineSearchResults());
     connect(settings, &Settings::combineSearchResultsChanged, ui->checkBoxCombineSearchResults, &QCheckBox::setChecked);
     connect(ui->checkBoxCombineSearchResults, &QCheckBox::toggled, settings, &Settings::setCombineSearchResults);
+
+    for (int i=1; i <= 15; ++i) {
+        ui->comboBox_Accuracy->addItem(QString::number(i));
+    }
+    ui->checkBox_Enter->setChecked(settings->useEnter());
+    ui->checkBox_Question->setChecked(settings->useQuestion());
+    ui->checkBox_JITEval->setChecked(settings->useJITEval());
+    ui->comboBox_Accuracy->setCurrentIndex(settings->accuracy()-1);
+    connect(ui->checkBox_Enter, &QCheckBox::toggled, settings, &Settings::setUseEnter);
+    connect(ui->checkBox_Question, &QCheckBox::toggled, settings, &Settings::setUseQuestion);
+    connect(ui->checkBox_JITEval, &QCheckBox::toggled, settings, &Settings::setUseJITEval);
+    connect(ui->comboBox_Accuracy, &QComboBox::currentTextChanged, settings, &Settings::setAccuracy);
 }
 
 PreferencesDialog::~PreferencesDialog()

@@ -1661,12 +1661,10 @@ void MainWindow::saveSettings() const
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     settings.setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
 
-#if 0
-    settings.setValue("TinyExpr/Enter", ui->actionTeEnableEnter->isChecked());
-    settings.setValue("TinyExpr/Question", ui->actionTeEnableQuestion->isChecked());
-    settings.setValue("TinyExpr/JIT", ui->actionTeEnableJIT->isChecked());
-    settings.setValue("TinyExpr/Accuracy", m_TeAccuracy);
-#endif
+    settings.setValue("TinyExpr/Enter", app->getSettings()->useEnter());
+    settings.setValue("TinyExpr/Question", app->getSettings()->useQuestion());
+    settings.setValue("TinyExpr/JIT", app->getSettings()->useJITEval());
+    settings.setValue("TinyExpr/Accuracy", app->getSettings()->accuracy());
 }
 
 void MainWindow::restoreSettings()
@@ -1688,12 +1686,10 @@ void MainWindow::restoreSettings()
     ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
     zoomLevel = settings.value("Editor/ZoomLevel", 0).toInt();
 
-#if 0
-    ui->actionTeEnableEnter->setChecked(settings.value("TinyExpr/Enter", true);
-    ui->actionTeEnableQuestion->setChecked(settings.value("TinyExpr/Question", true);
-    ui->actionTeEnableJIT->setChecked(settings.value("TinyExpr/JIT", true);
-    m_TeAccuracy = settings.value("TinyExpr/Accuracy", 6);
-#endif
+    app->getSettings()->setUseEnter(settings.value("TinyExpr/Enter", true).toBool());
+    app->getSettings()->setUseQuestion(settings.value("TinyExpr/Question", true).toBool());
+    app->getSettings()->setUseJITEval(settings.value("TinyExpr/JIT", true).toBool());
+    app->getSettings()->setAccuracy(settings.value("TinyExpr/Accuracy", 6).toString());
 }
 
 ISearchResultsHandler *MainWindow::determineSearchResultsHandler()

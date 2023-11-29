@@ -32,6 +32,7 @@
 #include <QRegularExpression>
 
 #include "NotepadNextApplication.h"
+#include "MainWindow.h"
 
 const int CHUNK_SIZE = 1024 * 1024 * 4; // Not sure what is best
 
@@ -773,13 +774,21 @@ static inline bool timeExprCalc(const QString& expr, QString& retstr) {
 }
 
 bool ScintillaNext::tinyexprCalc(evltype evt) {
-    QSettings settings;
-    if ((evt == EVAL_QUESTION && !settings.value("TinyExpr/Question", true).toBool()) ||
-        (evt == EVAL_ENTER && !settings.value("TinyExpr/Enter", true).toBool()) ||
-        (evt == EVAL_JIT && !settings.value("TinyExpr/JIT", true).toBool())
+    const NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
+    if (app == Q_NULLPTR)
+        return false;
+    const auto settings = app->getSettings();
+    if (settings == Q_NULLPTR)
+        return false;
+    if ((evt == EVAL_ENTER && !settings->useEnter()) ||
+        (evt == EVAL_QUESTION && !settings->useQuestion()) ||
+        (evt == EVAL_JIT && !settings->useJITEval())
     )
         return false;
-    const int eval_accuracy = settings.value("TinyExpr/Accuracy", 6).toInt();
+    const auto mainWnd = app->getMainWindow();
+    if (mainWnd == Q_NULLPTR)
+        return false;
+    const int eval_accuracy = settings->accuracy();
     if (eval_accuracy <= 0 || eval_accuracy > 15) {
         qDebug() << "Bad eval_accuracy value" << eval_accuracy << "in config file";
         return false;
@@ -840,14 +849,13 @@ bool ScintillaNext::tinyexprCalc(evltype evt) {
             removeTail0andDot(res);
             if(evt == EVAL_JIT) {
                 res = expr + "=" + res;
-                NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
-                if (app) {
-                    app->updateEvalStatus(res);
-                }
-                //qDebug() << "tinyexpr: " << res;
+                mainWnd->updateEvalStatus(res);
             } else {
                 insertAt(res, line, idx + 1);
                 setCursor(line, idx + 1 + res.length());
+                if (settings->useJITEval()) {
+                    mainWnd->updateEvalStatus(expr);
+                }
             }
             //qDebug() << "tinyexpr: " << expr << " = " << res;
             return true;

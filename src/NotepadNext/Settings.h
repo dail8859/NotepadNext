@@ -40,6 +40,11 @@ class Settings : public QObject
 
     Q_PROPERTY(bool combineSearchResults READ combineSearchResults WRITE setCombineSearchResults NOTIFY combineSearchResultsChanged)
 
+    Q_PROPERTY(bool useEnter READ useEnter WRITE setUseEnter NOTIFY useEnterChanged)
+    Q_PROPERTY(bool useQuestion READ useQuestion WRITE setUseQuestion NOTIFY useQuestionChanged)
+    Q_PROPERTY(bool useJITEval READ useJITEval WRITE setUseJITEval NOTIFY useJITEval)
+    Q_PROPERTY(const QString & accuracy READ accuracy WRITE setAccuracy NOTIFY accuracyChanged)
+
     bool m_showMenuBar = true;
     bool m_showToolBar = true;
     bool m_showTabBar = true;
@@ -52,6 +57,11 @@ class Settings : public QObject
     bool m_restoreTempFiles = false;
 
     bool m_combineSearchResults = false;
+
+    bool m_useEnter = true;
+    bool m_useQuestion = true;
+    bool m_useJITEval = true;
+    int m_accuracy = 6;
 
 public:
     explicit Settings(QObject *parent = nullptr);
@@ -69,6 +79,11 @@ public:
 
     bool combineSearchResults() const;
 
+    bool useEnter() const;
+    bool useQuestion() const;
+    bool useJITEval() const;
+    int accuracy() const;
+
 signals:
     void showMenuBarChanged(bool showMenuBar);
     void showToolBarChanged(bool showToolBar);
@@ -83,6 +98,11 @@ signals:
 
     void combineSearchResultsChanged(bool combineSearchResults);
 
+    void useEnterChanged(bool);
+    void useQuestionChanged(bool);
+    void useJITEvalChanged(bool);
+    void accuracyChanged(int);
+
 public slots:
     void setShowMenuBar(bool showMenuBar);
     void setShowToolBar(bool showToolBar);
@@ -96,6 +116,11 @@ public slots:
     void setRestoreTempFiles(bool restoreTempFiles);
 
     void setCombineSearchResults(bool combineSearchResults);
+
+    void setUseEnter(bool);
+    void setUseQuestion(bool);
+    void setUseJITEval(bool);
+    void setAccuracy(const QString &);
 };
 
 #endif // SETTINGS_H

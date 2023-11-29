@@ -521,9 +521,3 @@ MainWindow *NotepadNextApplication::createNewWindow()
 
     return window;
 }
-
-void NotepadNextApplication::updateEvalStatus(const QString &res)
-{
-    if (window != Q_NULLPTR)
-        window->updateEvalStatus(res);
-}

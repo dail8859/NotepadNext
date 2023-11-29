@@ -18,8 +18,10 @@
 
 
 #include "EditorInfoStatusBar.h"
+#include "NotepadNextApplication.h"
 #include "MainWindow.h"
 #include "StatusLabel.h"
+#include "Settings.h"
 
 
 EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
@@ -29,8 +31,8 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
     teEval = new StatusLabel();
     addWidget(teEval, 1);
 
-    docType = new StatusLabel(125);
-    addPermanentWidget(docType, 0);
+    docType = new StatusLabel(100);
+    addWidget(docType, 0);
 
     docSize = new StatusLabel(125);
     addPermanentWidget(docSize, 0);
@@ -59,6 +61,10 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
     MainWindow *w = qobject_cast<MainWindow *>(window);
 
     connect(w, &MainWindow::editorActivated, this, &EditorInfoStatusBar::connectToEditor);
+
+    NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
+
+    connect(app->getSettings(), &Settings::useJITEvalChanged, this, &EditorInfoStatusBar::handleJITEvalChanged);
 }
 
 void EditorInfoStatusBar::refresh(ScintillaNext *editor)
@@ -166,4 +172,15 @@ void EditorInfoStatusBar::updateEncoding(ScintillaNext *editor)
 void EditorInfoStatusBar::updateEvalStatus(const QString &res)
 {
     teEval->setText(res);
+}
+
+void EditorInfoStatusBar::handleJITEvalChanged(bool show)
+{
+    if (show) {
+        docType->setScaledContents(false);
+        teEval->setVisible(true);
+    } else {
+        teEval->setVisible(false);
+        docType->setScaledContents(true);
+    }
 }

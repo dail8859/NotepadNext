@@ -49,6 +49,7 @@ private slots:
     void updateLanguage(ScintillaNext *editor);
     void updateEol(ScintillaNext *editor);
     void updateEncoding(ScintillaNext *editor);
+    void handleJITEvalChanged(bool);
 
 private:
     QLabel *docType;
