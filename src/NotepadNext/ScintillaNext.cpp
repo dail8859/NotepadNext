@@ -840,6 +840,9 @@ bool ScintillaNext::tinyexprCalc(evltype evt) {
             if (timeExprCalc(expr, retstr)) {
                 insertAt(retstr, line, idx + 1);
                 setCursor(line, idx + 1 + retstr.length());
+                if (settings->useJITEval()) {
+                    mainWnd->updateEvalStatus(expr);
+                }
                 return true;
             }
         }
