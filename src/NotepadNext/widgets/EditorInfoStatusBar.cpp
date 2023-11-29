@@ -26,10 +26,13 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
     QStatusBar(window)
 {
     // Set up the status bar
-    docType = new StatusLabel();
-    addWidget(docType, 1);
+    teEval = new StatusLabel();
+    addWidget(teEval, 1);
 
-    docSize = new StatusLabel(200);
+    docType = new StatusLabel(125);
+    addPermanentWidget(docType, 0);
+
+    docSize = new StatusLabel(125);
     addPermanentWidget(docSize, 0);
 
     docPos = new StatusLabel(250);
@@ -160,3 +163,7 @@ void EditorInfoStatusBar::updateEncoding(ScintillaNext *editor)
     }
 }
 
+void EditorInfoStatusBar::updateEvalStatus(const QString &res)
+{
+    teEval->setText(res);
+}

@@ -67,6 +67,8 @@ public:
 
     bool isRunningAsAdmin() const;
 
+    void updateEvalStatus(const QString &res);
+
 protected:
     bool event(QEvent *event) override;
 

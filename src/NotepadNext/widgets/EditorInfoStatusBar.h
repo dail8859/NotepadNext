@@ -37,6 +37,7 @@ public:
     explicit EditorInfoStatusBar(QMainWindow *window);
 
     void refresh(ScintillaNext *editor);
+    void updateEvalStatus(const QString &res);
 
 private slots:
     void connectToEditor(ScintillaNext *editor);
@@ -55,6 +56,7 @@ private:
     QLabel *docPos;
     QLabel *unicodeType;
     QLabel *eolFormat;
+    QLabel *teEval;
 
     QMetaObject::Connection editorUiUpdated;
     QMetaObject::Connection documentLexerChanged;

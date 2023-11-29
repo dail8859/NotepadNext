@@ -1660,6 +1660,13 @@ void MainWindow::saveSettings() const
 
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
     settings.setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
+
+#if 0
+    settings.setValue("TinyExpr/Enter", ui->actionTeEnableEnter->isChecked());
+    settings.setValue("TinyExpr/Question", ui->actionTeEnableQuestion->isChecked());
+    settings.setValue("TinyExpr/JIT", ui->actionTeEnableJIT->isChecked());
+    settings.setValue("TinyExpr/Accuracy", m_TeAccuracy);
+#endif
 }
 
 void MainWindow::restoreSettings()
@@ -1680,6 +1687,13 @@ void MainWindow::restoreSettings()
     ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
     ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
     zoomLevel = settings.value("Editor/ZoomLevel", 0).toInt();
+
+#if 0
+    ui->actionTeEnableEnter->setChecked(settings.value("TinyExpr/Enter", true);
+    ui->actionTeEnableQuestion->setChecked(settings.value("TinyExpr/Question", true);
+    ui->actionTeEnableJIT->setChecked(settings.value("TinyExpr/JIT", true);
+    m_TeAccuracy = settings.value("TinyExpr/Accuracy", 6);
+#endif
 }
 
 ISearchResultsHandler *MainWindow::determineSearchResultsHandler()
@@ -1986,4 +2000,10 @@ void MainWindow::languageMenuTriggered()
     QVariant v = act->data();
 
     setLanguage(editor, v.toString());
+}
+
+void MainWindow::updateEvalStatus(const QString &res)
+{
+    if(ui->statusBar != Q_NULLPTR)
+        ui->statusBar->updateEvalStatus(res);
 }

@@ -31,6 +31,7 @@
 #include <QTextCodec>
 #include <QRegularExpression>
 
+#include "NotepadNextApplication.h"
 
 const int CHUNK_SIZE = 1024 * 1024 * 4; // Not sure what is best
 
@@ -693,7 +694,8 @@ static inline bool timeExprCalc(const QString& expr, QString& retstr) {
     auto re = reTimeformat.match(tmstr);
     if (!re.hasMatch())
         return false;
-
+    //for (int i = 1; i <= 17; ++i)
+    //    qDebug() << i << re.captured(i);
     bool tmadd = bool(re.captured(9) == "+");
     auto tm1 = re.captured(1);
     auto tm2 = re.captured(10);
@@ -708,10 +710,7 @@ static inline bool timeExprCalc(const QString& expr, QString& retstr) {
         if (re.captured(7).contains('.'))
             tmfmt1 += ".z";
         if (re.capturedLength(5)) {
-            tmfmt1 = "m:" + tmfmt1;
-            if (re.capturedLength(3)) {
-                tmfmt1 = "h:" + tmfmt1;
-            }
+            tmfmt1 = "h:m:" + tmfmt1;
         } else if (re.capturedLength(3)) {
             tmfmt1 = "m:" + tmfmt1;
         }
@@ -749,11 +748,8 @@ static inline bool timeExprCalc(const QString& expr, QString& retstr) {
         if (re.captured(15).contains('s'))
             tmfmt2 += "'s'";
     }
-    auto qtm1 = QTime::fromString(tm1, tmfmt1);
-    auto qtm2 = QTime::fromString(tm2, tmfmt2);
-
-    //for (int i = 1; i <= 17; ++i)
-    //    qDebug() << i << re.captured(i);
+    const auto qtm1 = QTime::fromString(tm1, tmfmt1);
+    const auto qtm2 = QTime::fromString(tm2, tmfmt2);
     //qDebug() << qtm1.msecsSinceStartOfDay() << qtm2.msecsSinceStartOfDay();
     QTime res;
     bool neg = false;
@@ -777,6 +773,17 @@ static inline bool timeExprCalc(const QString& expr, QString& retstr) {
 }
 
 bool ScintillaNext::tinyexprCalc(evltype evt) {
+    QSettings settings;
+    if ((evt == EVAL_QUESTION && !settings.value("TinyExpr/Question", true).toBool()) ||
+        (evt == EVAL_ENTER && !settings.value("TinyExpr/Enter", true).toBool()) ||
+        (evt == EVAL_JIT && !settings.value("TinyExpr/JIT", true).toBool())
+    )
+        return false;
+    const int eval_accuracy = settings.value("TinyExpr/Accuracy", 6).toInt();
+    if (eval_accuracy <= 0 || eval_accuracy > 15) {
+        qDebug() << "Bad eval_accuracy value" << eval_accuracy << "in config file";
+        return false;
+    }
     int line, index;
     position(line, index);
     if (index <= 0)
@@ -785,31 +792,22 @@ bool ScintillaNext::tinyexprCalc(evltype evt) {
     QString linetxt = getLine(line);
     if (linetxt.length() < 1)
         return false;
-    QSettings settings;
+
     switch(evt)
     {
-    case EVAL_QUESTION:
-        if (!settings.value("TinyExpr/Question", true).toBool())
-            return false;
-        if (linetxt.at(idx) != '=') // =?
+    case EVAL_QUESTION:             // =?
+        if (linetxt.at(idx) != '=')
             return false;
         break;
-    case EVAL_ENTER:
-        if (!settings.value("TinyExpr/Enter", true).toBool())
-            return false;
-        if (linetxt.at(idx) != '=') // =ENTER
+    case EVAL_ENTER:                // =ENTER
+        if (linetxt.at(idx) != '=')
             return false;
         break;
     case EVAL_JIT:
     default:
-        if (!settings.value("TinyExpr/JIT", true).toBool())
-            return false;
         ++idx; // JIT no =
         break;
     }
-    const int eval_accuracy = settings.value("TinyExpr/Accuracy", 6).toInt();
-    if (eval_accuracy <= 0 || eval_accuracy > 15)
-        return false;
     QString exprline = linetxt.left(idx);
     bool is_eq = false;
     int i = 0;
@@ -842,11 +840,11 @@ bool ScintillaNext::tinyexprCalc(evltype evt) {
             removeTail0andDot(res);
             if(evt == EVAL_JIT) {
                 res = expr + "=" + res;
-#if 0
-                // TODO: call MainWnd set status, still no idea howto visit MainWnd from editor.
-                MainWnd.updateEvalStatus(res);
-#endif
-                qDebug() << "tinyexpr: " << res;
+                NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
+                if (app) {
+                    app->updateEvalStatus(res);
+                }
+                //qDebug() << "tinyexpr: " << res;
             } else {
                 insertAt(res, line, idx + 1);
                 setCursor(line, idx + 1 + res.length());
