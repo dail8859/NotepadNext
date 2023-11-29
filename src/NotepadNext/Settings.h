@@ -40,10 +40,7 @@ class Settings : public QObject
 
     Q_PROPERTY(bool combineSearchResults READ combineSearchResults WRITE setCombineSearchResults NOTIFY combineSearchResultsChanged)
 
-    Q_PROPERTY(bool useEnter READ useEnter WRITE setUseEnter NOTIFY useEnterChanged)
-    Q_PROPERTY(bool useQuestion READ useQuestion WRITE setUseQuestion NOTIFY useQuestionChanged)
     Q_PROPERTY(bool useJITEval READ useJITEval WRITE setUseJITEval NOTIFY useJITEval)
-    Q_PROPERTY(const QString & accuracy READ accuracy WRITE setAccuracy NOTIFY accuracyChanged)
 
     bool m_showMenuBar = true;
     bool m_showToolBar = true;
