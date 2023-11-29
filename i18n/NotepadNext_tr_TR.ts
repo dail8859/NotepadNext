@@ -40,214 +40,170 @@
 <context>
     <name>Downloader</name>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="23"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="249"/>
         <source>Updater</source>
-        <translation>Güncelleyici</translation>
+        <translation type="vanished">Güncelleyici</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="90"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="108"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
         <source>Downloading updates</source>
-        <translation>Güncellemeler indiriliyor</translation>
+        <translation type="vanished">Güncellemeler indiriliyor</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="113"/>
         <source>Time remaining: 0 minutes</source>
-        <translation>Kalan süre: 0 dakika</translation>
+        <translation type="vanished">Kalan süre: 0 dakika</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="154"/>
         <source>Open</source>
-        <translation>Aç</translation>
+        <translation type="vanished">Aç</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="161"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="107"/>
         <source>Stop</source>
-        <translation>Durdur</translation>
+        <translation type="vanished">Durdur</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="411"/>
         <source>Time remaining</source>
-        <translation>Kalan Zaman</translation>
+        <translation type="vanished">Kalan Zaman</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
         <source>unknown</source>
-        <translation>bilinmiyor</translation>
+        <translation type="vanished">bilinmiyor</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation type="vanished">Hata</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
         <source>Cannot find downloaded update!</source>
-        <translation>İndirilen güncelleme bulunamıyor!</translation>
+        <translation type="vanished">İndirilen güncelleme bulunamıyor!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="201"/>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation type="vanished">Kapat</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="202"/>
         <source>Download complete!</source>
-        <translation>İndirme tamamlandı!</translation>
+        <translation type="vanished">İndirme tamamlandı!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="203"/>
         <source>The installer will open separately</source>
-        <translation>Yükleyici ayrı olarak açılacak</translation>
+        <translation type="vanished">Yükleyici ayrı olarak açılacak</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="210"/>
         <source>Click &quot;OK&quot; to begin installing the update</source>
-        <translation>Güncellemeyi yüklemeye başlamak için &quot;Tamam &quot;a tıklayın</translation>
+        <translation type="vanished">Güncellemeyi yüklemeye başlamak için &quot;Tamam &quot;a tıklayın</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="212"/>
         <source>In order to install the update, you may need to quit the application.</source>
-        <translation>Güncellemeyi yüklemek için uygulamadan çıkmanız gerekebilir.</translation>
+        <translation type="vanished">Güncellemeyi yüklemek için uygulamadan çıkmanız gerekebilir.</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="216"/>
         <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application</source>
-        <translation>Güncellemeyi yüklemek için uygulamadan çıkmanız gerekebilir. Bu zorunlu bir güncellemedir, şimdi çıkmak uygulamayı kapatacaktır</translation>
+        <translation type="vanished">Güncellemeyi yüklemek için uygulamadan çıkmanız gerekebilir. Bu zorunlu bir güncellemedir, şimdi çıkmak uygulamayı kapatacaktır</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="235"/>
         <source>Click the &quot;Open&quot; button to apply the update</source>
-        <translation>Güncellemeyi uygulamak için &quot;Aç&quot; düğmesine tıklayın</translation>
+        <translation type="vanished">Güncellemeyi uygulamak için &quot;Aç&quot; düğmesine tıklayın</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="253"/>
         <source>Are you sure you want to cancel the download?</source>
-        <translation>İndirmeyi iptal etmek istediğinizden emin misiniz?</translation>
+        <translation type="vanished">İndirmeyi iptal etmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="256"/>
         <source>Are you sure you want to cancel the download? This is a mandatory update, exiting now will close the application</source>
-        <translation>İndirmeyi iptal etmek istediğinizden emin misiniz? Bu zorunlu bir güncellemedir, şimdi çıkmak uygulamayı kapatacaktır</translation>
+        <translation type="vanished">İndirmeyi iptal etmek istediğinizden emin misiniz? Bu zorunlu bir güncellemedir, şimdi çıkmak uygulamayı kapatacaktır</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="314"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="323"/>
         <source>%1 bytes</source>
-        <translation>%1 btye</translation>
+        <translation type="vanished">%1 btye</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="317"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="326"/>
         <source>%1 KB</source>
-        <translation>%1 KB</translation>
+        <translation type="vanished">%1 KB</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="320"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="329"/>
         <source>%1 MB</source>
-        <translation>%1 MB</translation>
+        <translation type="vanished">%1 MB</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
-        <source>of</source>
-        <translatorcomment>This thing is impossible to translate to Turkish without changing the whole scheme. It supposed to be &quot;totalSize + tr(&quot;of&quot;)+ receivedSize&quot; So I&apos;m justing living it blank</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="357"/>
         <source>Downloading Updates</source>
-        <translation>Güncellemeler indiriliyor</translation>
+        <translation type="vanished">Güncellemeler indiriliyor</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
         <source>Time Remaining</source>
-        <translation>Kalan Zaman</translation>
+        <translation type="vanished">Kalan Zaman</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
         <source>Unknown</source>
-        <translation>Bilinmiyor</translation>
+        <translation type="vanished">Bilinmiyor</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="385"/>
         <source>about %1 hours</source>
-        <translation>yaklaşık %1 saat</translation>
+        <translation type="vanished">yaklaşık %1 saat</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="387"/>
         <source>about one hour</source>
-        <translation>yaklaşık bir saat</translation>
+        <translation type="vanished">yaklaşık bir saat</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="396"/>
         <source>%1 minutes</source>
-        <translation>%1 dakika</translation>
+        <translation type="vanished">%1 dakika</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="398"/>
         <source>1 minute</source>
-        <translation>1 dakika</translation>
+        <translation type="vanished">1 dakika</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="406"/>
         <source>%1 seconds</source>
-        <translation>%1 saniye</translation>
+        <translation type="vanished">%1 saniye</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="408"/>
         <source>1 second</source>
-        <translation>1 saniye</translation>
+        <translation type="vanished">1 saniye</translation>
     </message>
 </context>
 <context>
     <name>EditorInfoStatusBar</name>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="98"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="107"/>
         <source>Length: %L1    Lines: %L2</source>
         <translation>Uzunluk: %L1    Satır: %L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="107"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="116"/>
         <source>Sel: N/A</source>
         <translation>Seçiml: N/A</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="117"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="126"/>
         <source>Sel: %L1 | %L2</source>
         <translation>Seçim: %L1 | %L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="121"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="130"/>
         <source>Ln: %L1    Col: %L2    </source>
         <translation>Satır: %L1    Sutun: %L2    </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="137"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="146"/>
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="140"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="149"/>
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="143"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="152"/>
         <source>Unix (LF)</source>
         <translation>Unix (LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="152"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="161"/>
         <source>ANSI</source>
         <translation>ANSI</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="155"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="164"/>
         <source>UTF-8</source>
         <translation>UTF-8</translation>
     </message>
@@ -1756,17 +1712,22 @@
         <translation>&lt;b&gt;%1&lt;/b&gt; silinirken bir hata oluştu?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1388"/>
+        <source>Administrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1636"/>
         <source>Error Saving File</source>
         <translation>Dosyayı Kaydetme Hatası</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1636"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Bir hata oluştu. &lt;b&gt;%1&lt;/b&gt; kaydedilirken hata oluştu. &lt;br&gt;&lt;br&gt;Hata: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1810"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1824"/>
         <source>No updates are available at this time.</source>
         <translation>Şu anda kullanılabilir güncellemeler bulunmuyor.</translation>
     </message>
@@ -1812,6 +1773,31 @@
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
         <source>Combine search results</source>
         <translation>Arama sonuçlarını birleştir</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="86"/>
+        <source>Expression evaluation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="93"/>
+        <source>Use Enter after =</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="100"/>
+        <source>Use ? after =</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="107"/>
+        <source>Just-in-time evaluation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="114"/>
+        <source>Accuracy</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="61"/>
@@ -1931,29 +1917,24 @@
 <context>
     <name>Updater</name>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="430"/>
         <source>Would you like to download the update now?</source>
-        <translation>Güncellemeyi şimdi indirmek ister misiniz?</translation>
+        <translation type="vanished">Güncellemeyi şimdi indirmek ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="433"/>
         <source>Would you like to download the update now? This is a mandatory update, exiting now will close the application</source>
-        <translation>Güncellemeyi şimdi indirmek ister misiniz? Bu zorunlu bir güncellemedir, şimdi çıkmak uygulamayı kapatacaktır</translation>
+        <translation type="vanished">Güncellemeyi şimdi indirmek ister misiniz? Bu zorunlu bir güncellemedir, şimdi çıkmak uygulamayı kapatacaktır</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="438"/>
         <source>Version %1 of %2 has been released!</source>
-        <translation>%2&apos;nin %1 sürümü yayınlandı!</translation>
+        <translation type="vanished">%2&apos;nin %1 sürümü yayınlandı!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="473"/>
         <source>No updates are available for the moment</source>
-        <translation>Şu an için herhangi bir güncelleme mevcut değil</translation>
+        <translation type="vanished">Şu an için herhangi bir güncelleme mevcut değil</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="475"/>
         <source>Congratulations! You are running the latest version of %1</source>
-        <translation>Tebrikler! %1&apos;in en son sürümünü çalıştırıyorsunuz</translation>
+        <translation type="vanished">Tebrikler! %1&apos;in en son sürümünü çalıştırıyorsunuz</translation>
     </message>
 </context>
 <context>

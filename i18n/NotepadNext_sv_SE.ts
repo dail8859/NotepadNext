@@ -40,167 +40,128 @@
 <context>
     <name>Downloader</name>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="23"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="249"/>
         <source>Updater</source>
-        <translation>Uppdaterare</translation>
+        <translation type="vanished">Uppdaterare</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="90"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="108"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
         <source>Downloading updates</source>
-        <translation>Laddar ner uppdateringar</translation>
+        <translation type="vanished">Laddar ner uppdateringar</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="113"/>
         <source>Time remaining: 0 minutes</source>
-        <translation>Återstående tid: 0 minuter</translation>
+        <translation type="vanished">Återstående tid: 0 minuter</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="154"/>
         <source>Open</source>
-        <translation>Öppna</translation>
+        <translation type="vanished">Öppna</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="161"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="107"/>
         <source>Stop</source>
-        <translation>Stopp</translation>
+        <translation type="vanished">Stopp</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="411"/>
         <source>Time remaining</source>
-        <translation>Återstående tid</translation>
+        <translation type="vanished">Återstående tid</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
         <source>unknown</source>
-        <translation>okänd</translation>
+        <translation type="vanished">okänd</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
         <source>Error</source>
-        <translation>Fel</translation>
+        <translation type="vanished">Fel</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
         <source>Cannot find downloaded update!</source>
-        <translation>Kan inte hitta nerladdad uppdatering!</translation>
+        <translation type="vanished">Kan inte hitta nerladdad uppdatering!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="201"/>
         <source>Close</source>
-        <translation>Stäng</translation>
+        <translation type="vanished">Stäng</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="202"/>
         <source>Download complete!</source>
-        <translation>Nerladdning slutförd!</translation>
+        <translation type="vanished">Nerladdning slutförd!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="203"/>
         <source>The installer will open separately</source>
-        <translation>Installeraren öppnas separat</translation>
+        <translation type="vanished">Installeraren öppnas separat</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="210"/>
         <source>Click &quot;OK&quot; to begin installing the update</source>
-        <translation>Tryck &quot;OK&quot; för att installera uppdateringen</translation>
+        <translation type="vanished">Tryck &quot;OK&quot; för att installera uppdateringen</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="212"/>
         <source>In order to install the update, you may need to quit the application.</source>
-        <translation>Du kanske måste avsluta programmet för att installera uppdateringen.</translation>
+        <translation type="vanished">Du kanske måste avsluta programmet för att installera uppdateringen.</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="216"/>
         <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application</source>
-        <translation>Du kanske måste avsluta programmet för att installera uppdateringen. Detta är en obligatorisk uppdatering, avslutar du nu. stängs programmet</translation>
+        <translation type="vanished">Du kanske måste avsluta programmet för att installera uppdateringen. Detta är en obligatorisk uppdatering, avslutar du nu. stängs programmet</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="235"/>
         <source>Click the &quot;Open&quot; button to apply the update</source>
-        <translation>Tryck på &quot;Öppna&quot; för att tillämpa uppdateringen</translation>
+        <translation type="vanished">Tryck på &quot;Öppna&quot; för att tillämpa uppdateringen</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="253"/>
         <source>Are you sure you want to cancel the download?</source>
-        <translation>Vill du verkligen avbryta nerladdningen?</translation>
+        <translation type="vanished">Vill du verkligen avbryta nerladdningen?</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="256"/>
         <source>Are you sure you want to cancel the download? This is a mandatory update, exiting now will close the application</source>
-        <translation>Vill du verkligen avbryta nerladdningen? Detta är en obligatorisk uppdatering, avslutar du nu. stängs programmet</translation>
+        <translation type="vanished">Vill du verkligen avbryta nerladdningen? Detta är en obligatorisk uppdatering, avslutar du nu. stängs programmet</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="314"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="323"/>
         <source>%1 bytes</source>
-        <translation>%1 byte</translation>
+        <translation type="vanished">%1 byte</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="317"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="326"/>
         <source>%1 KB</source>
-        <translation>%1 KB</translation>
+        <translation type="vanished">%1 KB</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="320"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="329"/>
         <source>%1 MB</source>
-        <translation>%1 MB</translation>
+        <translation type="vanished">%1 MB</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
         <source>of</source>
-        <translation>av</translation>
+        <translation type="vanished">av</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="357"/>
         <source>Downloading Updates</source>
-        <translation>Laddar ner uppdateringar</translation>
+        <translation type="vanished">Laddar ner uppdateringar</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
         <source>Time Remaining</source>
-        <translation>Återstående tid</translation>
+        <translation type="vanished">Återstående tid</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
         <source>Unknown</source>
-        <translation>Okänd</translation>
+        <translation type="vanished">Okänd</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="385"/>
         <source>about %1 hours</source>
-        <translation>ca: %1 timmar</translation>
+        <translation type="vanished">ca: %1 timmar</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="387"/>
         <source>about one hour</source>
-        <translation>ca: 1 timma</translation>
+        <translation type="vanished">ca: 1 timma</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="396"/>
         <source>%1 minutes</source>
-        <translation>%1 minuter</translation>
+        <translation type="vanished">%1 minuter</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="398"/>
         <source>1 minute</source>
-        <translation>1 minut</translation>
+        <translation type="vanished">1 minut</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="406"/>
         <source>%1 seconds</source>
-        <translation>%1 sekunder</translation>
+        <translation type="vanished">%1 sekunder</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="408"/>
         <source>1 second</source>
-        <translation>1 sekund</translation>
+        <translation type="vanished">1 sekund</translation>
     </message>
 </context>
 <context>
@@ -210,7 +171,7 @@
         <translation type="vanished">Längd: %1    Rader: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="107"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="116"/>
         <source>Sel: N/A</source>
         <translation>Markerat: Ej tillämpligt</translation>
     </message>
@@ -223,42 +184,42 @@
         <translation type="vanished">Rad: %1    Col: %2    </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="98"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="107"/>
         <source>Length: %L1    Lines: %L2</source>
         <translation>Längd: %L1    Rader: %L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="117"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="126"/>
         <source>Sel: %L1 | %L2</source>
         <translation>Mark: %L1 | %L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="121"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="130"/>
         <source>Ln: %L1    Col: %L2    </source>
         <translation>Rad: %L1    Kol: %L2    </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="137"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="146"/>
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="140"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="149"/>
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="143"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="152"/>
         <source>Unix (LF)</source>
         <translation>Unix (LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="152"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="161"/>
         <source>ANSI</source>
         <translation>ANSI</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="155"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="164"/>
         <source>UTF-8</source>
         <translation>UTF-8</translation>
     </message>
@@ -1773,7 +1734,12 @@
         <translation>Vill du verkligen läsa om &lt;b&gt;%1&lt;/b&gt; från disk? Alla osparade ändringar kommer att förloras.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1388"/>
+        <source>Administrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1636"/>
         <source>Error Saving File</source>
         <translation>Kunde inte spara fil</translation>
     </message>
@@ -1814,12 +1780,12 @@
         <translation>Gick något fel vid borttagning av &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1636"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Ett fel uppstod när &lt;b&gt;%1&lt;/b&gt; skulle sparas.&lt;br&gt;&lt;br&gt;Fel: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1810"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1824"/>
         <source>No updates are available at this time.</source>
         <translation>Inga uppdateringar tillgängliga den här gången.</translation>
     </message>
@@ -1868,6 +1834,31 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
         <source>Combine search results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="86"/>
+        <source>Expression evaluation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="93"/>
+        <source>Use Enter after =</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="100"/>
+        <source>Use ? after =</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="107"/>
+        <source>Just-in-time evaluation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="114"/>
+        <source>Accuracy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1988,29 +1979,24 @@
 <context>
     <name>Updater</name>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="430"/>
         <source>Would you like to download the update now?</source>
-        <translation>Vill du ladda ner uppdateringen nu?</translation>
+        <translation type="vanished">Vill du ladda ner uppdateringen nu?</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="433"/>
         <source>Would you like to download the update now? This is a mandatory update, exiting now will close the application</source>
-        <translation>Vill du ladda ner uppdateringen nu? Detta är en obligatorisk uppdatering, avslutar du nu. stängs programmet</translation>
+        <translation type="vanished">Vill du ladda ner uppdateringen nu? Detta är en obligatorisk uppdatering, avslutar du nu. stängs programmet</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="438"/>
         <source>Version %1 of %2 has been released!</source>
-        <translation>Version %1 av %2 har publicerats!</translation>
+        <translation type="vanished">Version %1 av %2 har publicerats!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="473"/>
         <source>No updates are available for the moment</source>
-        <translation>Inga uppdateringar tillgängliga för tillfället</translation>
+        <translation type="vanished">Inga uppdateringar tillgängliga för tillfället</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="475"/>
         <source>Congratulations! You are running the latest version of %1</source>
-        <translation>Grattis! Du kör den senaste versionen av %1</translation>
+        <translation type="vanished">Grattis! Du kör den senaste versionen av %1</translation>
     </message>
 </context>
 <context>

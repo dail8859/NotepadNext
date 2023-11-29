@@ -40,213 +40,162 @@
 <context>
     <name>Downloader</name>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="23"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="249"/>
-        <source>Updater</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="90"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="108"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
         <source>Downloading updates</source>
-        <translation>Завантаження оновлень</translation>
+        <translation type="vanished">Завантаження оновлень</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="113"/>
         <source>Time remaining: 0 minutes</source>
-        <translation>Часу залишилось: 0 хвилин</translation>
+        <translation type="vanished">Часу залишилось: 0 хвилин</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="154"/>
         <source>Open</source>
-        <translation>Відкрити</translation>
+        <translation type="vanished">Відкрити</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="161"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="107"/>
         <source>Stop</source>
-        <translation>Зупинити</translation>
+        <translation type="vanished">Зупинити</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="411"/>
         <source>Time remaining</source>
-        <translation>Часу залишилось</translation>
+        <translation type="vanished">Часу залишилось</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
         <source>unknown</source>
-        <translation>невідомо</translation>
+        <translation type="vanished">невідомо</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
         <source>Error</source>
-        <translation>Помилка</translation>
+        <translation type="vanished">Помилка</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
         <source>Cannot find downloaded update!</source>
-        <translation>Завантажене оновлення не знайдено!</translation>
+        <translation type="vanished">Завантажене оновлення не знайдено!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="201"/>
         <source>Close</source>
-        <translation>Закрити</translation>
+        <translation type="vanished">Закрити</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="202"/>
         <source>Download complete!</source>
-        <translation>Завантаження завершено!</translation>
+        <translation type="vanished">Завантаження завершено!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="203"/>
-        <source>The installer will open separately</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="210"/>
         <source>Click &quot;OK&quot; to begin installing the update</source>
-        <translation>Натисніть &quot;ОК&quot; для встановлення оновлення</translation>
+        <translation type="vanished">Натисніть &quot;ОК&quot; для встановлення оновлення</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="212"/>
         <source>In order to install the update, you may need to quit the application.</source>
-        <translation>Щоб інсталювати оновлення, вам може знадобитися вийти з програми.</translation>
+        <translation type="vanished">Щоб інсталювати оновлення, вам може знадобитися вийти з програми.</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="216"/>
-        <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="235"/>
         <source>Click the &quot;Open&quot; button to apply the update</source>
-        <translation>Натисніть кнопку &quot;Відкрити&quot; для застосування оновлень</translation>
+        <translation type="vanished">Натисніть кнопку &quot;Відкрити&quot; для застосування оновлень</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="253"/>
         <source>Are you sure you want to cancel the download?</source>
-        <translation>Ви дійсно хочете скасувати завантаження ?</translation>
+        <translation type="vanished">Ви дійсно хочете скасувати завантаження ?</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="256"/>
         <source>Are you sure you want to cancel the download? This is a mandatory update, exiting now will close the application</source>
-        <translation>Ви дійсно хочете скасувати завантаження ? Це важливе оновлення, тому роботу програми буде завершено.</translation>
+        <translation type="vanished">Ви дійсно хочете скасувати завантаження ? Це важливе оновлення, тому роботу програми буде завершено.</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="314"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="323"/>
         <source>%1 bytes</source>
-        <translation>%1 байт</translation>
+        <translation type="vanished">%1 байт</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="317"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="326"/>
         <source>%1 KB</source>
-        <translation>%1 КБ</translation>
+        <translation type="vanished">%1 КБ</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="320"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="329"/>
         <source>%1 MB</source>
-        <translation>%1 МБ</translation>
+        <translation type="vanished">%1 МБ</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
         <source>of</source>
-        <translation>з</translation>
+        <translation type="vanished">з</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="357"/>
         <source>Downloading Updates</source>
-        <translation>Завантаження оновлень</translation>
+        <translation type="vanished">Завантаження оновлень</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
         <source>Time Remaining</source>
-        <translation>Часу залишилось</translation>
+        <translation type="vanished">Часу залишилось</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
         <source>Unknown</source>
-        <translation>Невідомо</translation>
+        <translation type="vanished">Невідомо</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="385"/>
         <source>about %1 hours</source>
-        <translation>близько %1 годин</translation>
+        <translation type="vanished">близько %1 годин</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="387"/>
         <source>about one hour</source>
-        <translation>близько години</translation>
+        <translation type="vanished">близько години</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="396"/>
         <source>%1 minutes</source>
-        <translation>%1 хвилин</translation>
+        <translation type="vanished">%1 хвилин</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="398"/>
         <source>1 minute</source>
-        <translation>1 хвилина</translation>
+        <translation type="vanished">1 хвилина</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="406"/>
         <source>%1 seconds</source>
-        <translation>%1 секунд</translation>
+        <translation type="vanished">%1 секунд</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="408"/>
         <source>1 second</source>
-        <translation>1 секунда</translation>
+        <translation type="vanished">1 секунда</translation>
     </message>
 </context>
 <context>
     <name>EditorInfoStatusBar</name>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="98"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="107"/>
         <source>Length: %L1    Lines: %L2</source>
         <translation>Розмір: %L1    Рядків: %L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="107"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="116"/>
         <source>Sel: N/A</source>
         <translation>Обрано: N/A</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="117"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="126"/>
         <source>Sel: %L1 | %L2</source>
         <translation>Обрано: %L1 | %L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="121"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="130"/>
         <source>Ln: %L1    Col: %L2    </source>
         <translation>Рядок: %L1    Стовпець: %L2    </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="137"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="146"/>
         <source>Macintosh (CR)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="140"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="149"/>
         <source>Windows (CR LF)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="143"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="152"/>
         <source>Unix (LF)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="152"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="161"/>
         <source>ANSI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="155"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="164"/>
         <source>UTF-8</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1763,17 +1712,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1388"/>
+        <source>Administrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1636"/>
         <source>Error Saving File</source>
         <translation>Помилка збереження файлу</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1636"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Під час збереження виникла помилка&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Помилка: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1810"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1824"/>
         <source>No updates are available at this time.</source>
         <translation>На даний момент не має ніяких оновлень.</translation>
     </message>
@@ -1818,6 +1772,31 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
         <source>Combine search results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="86"/>
+        <source>Expression evaluation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="93"/>
+        <source>Use Enter after =</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="100"/>
+        <source>Use ? after =</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="107"/>
+        <source>Just-in-time evaluation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="114"/>
+        <source>Accuracy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1938,29 +1917,24 @@
 <context>
     <name>Updater</name>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="430"/>
         <source>Would you like to download the update now?</source>
-        <translation>Ви бажаєте завантажити оновлення зараз ?</translation>
+        <translation type="vanished">Ви бажаєте завантажити оновлення зараз ?</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="433"/>
         <source>Would you like to download the update now? This is a mandatory update, exiting now will close the application</source>
-        <translation>Ви бажаєте завантажити оновлення зараз ? Це важливе оновлення, тому роботу програми буде завершено.</translation>
+        <translation type="vanished">Ви бажаєте завантажити оновлення зараз ? Це важливе оновлення, тому роботу програми буде завершено.</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="438"/>
         <source>Version %1 of %2 has been released!</source>
-        <translation>Версія %1 з %2 була опублікована!</translation>
+        <translation type="vanished">Версія %1 з %2 була опублікована!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="473"/>
         <source>No updates are available for the moment</source>
-        <translation>На даний момент жодні оновлення не доступні</translation>
+        <translation type="vanished">На даний момент жодні оновлення не доступні</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="475"/>
         <source>Congratulations! You are running the latest version of %1</source>
-        <translation>Вітаємо! Ви використовуєте останню версію %1</translation>
+        <translation type="vanished">Вітаємо! Ви використовуєте останню версію %1</translation>
     </message>
 </context>
 <context>
