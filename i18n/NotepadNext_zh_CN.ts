@@ -1845,6 +1845,31 @@
         <translation>结合搜索结果</translation>
     </message>
     <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="86"/>
+        <source>Expression evaluation</source>
+        <translation>正文计算器</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="93"/>
+        <source>Use Enter after =</source>
+        <translation>=号后按回车键计算</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="100"/>
+        <source>Use ? after =</source>
+        <translation>=号后按?问号键计算</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="107"/>
+        <source>Just-in-time evaluation</source>
+        <translation>即时计算(状态栏显示)</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="114"/>
+        <source>Accuracy</source>
+        <translation>精度</translation>
+    </message>
+    <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="61"/>
         <source>Warning</source>
         <translation>警告</translation>
