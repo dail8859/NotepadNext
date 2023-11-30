@@ -40,6 +40,7 @@ bool Settings::useEnter() const { return m_useEnter; }
 bool Settings::useQuestion() const { return m_useQuestion; }
 bool Settings::useJITEval() const { return m_useJITEval; }
 int Settings::accuracy() const { return m_accuracy; }
+const QString &Settings::strAccuracy() const { return m_strAccuracy; }
 
 void Settings::setShowMenuBar(bool showMenuBar)
 {
@@ -149,21 +150,13 @@ void Settings::setUseJITEval(bool useJITEval)
     emit useJITEvalChanged(useJITEval);
 }
 
-void Settings::setAccuracyIdx(int index)
+void Settings::setAccuracy(const QString &strAccuracy)
 {
-    const int accuracy = index + 1;
+    int accuracy = strAccuracy.toInt();
     if (m_accuracy == accuracy || accuracy <= 0 || accuracy > 15)
         return;
 
     m_accuracy = accuracy;
-    emit accuracyChanged(accuracy);
-}
-
-void Settings::setAccuracy(int accuracy)
-{
-    if (m_accuracy == accuracy || accuracy <= 0 || accuracy > 15)
-        return;
-
-    m_accuracy = accuracy;
+    m_strAccuracy = strAccuracy;
     emit accuracyChanged(accuracy);
 }

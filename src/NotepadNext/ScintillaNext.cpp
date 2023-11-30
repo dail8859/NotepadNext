@@ -27,6 +27,7 @@
 #include <QDir>
 #include <QMouseEvent>
 #include <QSaveFile>
+#include <QSettings>
 #include <QTextCodec>
 #include <QRegularExpression>
 
