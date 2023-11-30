@@ -82,7 +82,7 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
     connect(ui->checkBox_Enter, &QCheckBox::toggled, settings, &Settings::setUseEnter);
     connect(ui->checkBox_Question, &QCheckBox::toggled, settings, &Settings::setUseQuestion);
     connect(ui->checkBox_JITEval, &QCheckBox::toggled, settings, &Settings::setUseJITEval);
-    connect(ui->comboBox_Accuracy, &QComboBox::currentTextChanged, settings, &Settings::setAccuracy);
+    connect(ui->comboBox_Accuracy, &QComboBox::currentIndexChanged, settings, &Settings::setAccuracyIdx);
 }
 
 PreferencesDialog::~PreferencesDialog()

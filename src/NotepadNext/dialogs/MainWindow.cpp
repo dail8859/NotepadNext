@@ -1711,7 +1711,7 @@ void MainWindow::restoreSettings()
     app->getSettings()->setUseEnter(settings.value("TinyExpr/Enter", true).toBool());
     app->getSettings()->setUseQuestion(settings.value("TinyExpr/Question", true).toBool());
     app->getSettings()->setUseJITEval(settings.value("TinyExpr/JIT", true).toBool());
-    app->getSettings()->setAccuracy(settings.value("TinyExpr/Accuracy", 6).toString());
+    app->getSettings()->setAccuracy(settings.value("TinyExpr/Accuracy", 6).toInt());
 }
 
 ISearchResultsHandler *MainWindow::determineSearchResultsHandler()
