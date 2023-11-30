@@ -40,166 +40,213 @@
 <context>
     <name>Downloader</name>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="23"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="249"/>
         <source>Updater</source>
-        <translation type="vanished">更新器</translation>
+        <translation>更新器</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="90"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="108"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
         <source>Downloading updates</source>
-        <translation type="vanished">正在下载更新</translation>
+        <translation>正在下载更新</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="113"/>
         <source>Time remaining: 0 minutes</source>
-        <translation type="vanished">剩余时间：0 分钟</translation>
+        <translation>剩余时间：0 分钟</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="154"/>
         <source>Open</source>
-        <translation type="vanished">开始</translation>
+        <translation>开始</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="161"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="107"/>
         <source>Stop</source>
-        <translation type="vanished">停止</translation>
+        <translation>停止</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="411"/>
         <source>Time remaining</source>
-        <translation type="vanished">剩余时间</translation>
+        <translation>剩余时间</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
         <source>unknown</source>
-        <translation type="vanished">未知</translation>
+        <translation>未知</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
         <source>Error</source>
-        <translation type="vanished">错误</translation>
+        <translation>错误</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
         <source>Cannot find downloaded update!</source>
-        <translation type="vanished">无法找到可下载更新！</translation>
+        <translation>无法找到可下载更新！</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="201"/>
         <source>Close</source>
-        <translation type="vanished">关闭</translation>
+        <translation>关闭</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="202"/>
         <source>Download complete!</source>
-        <translation type="vanished">下载完成！</translation>
+        <translation>下载完成！</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="203"/>
         <source>The installer will open separately</source>
-        <translation type="vanished">安装程序会在单独的窗口打开</translation>
+        <translation>安装程序会在单独的窗口打开</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="210"/>
         <source>Click &quot;OK&quot; to begin installing the update</source>
-        <translation type="vanished">点击“OK”按钮开始安装更新</translation>
+        <translation>点击“OK”按钮开始安装更新</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="212"/>
         <source>In order to install the update, you may need to quit the application.</source>
-        <translation type="vanished">为了安装更新，你可能需要退出已打开的程序。</translation>
+        <translation>为了安装更新，你可能需要退出已打开的程序。</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="216"/>
         <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application</source>
-        <translation type="vanished">为了安装更新，你可能需要退出已打开的程序。这是一个强制更新，现在退出将关闭应用程序</translation>
+        <translation>为了安装更新，你可能需要退出已打开的程序。这是一个强制更新，现在退出将关闭应用程序</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="235"/>
         <source>Click the &quot;Open&quot; button to apply the update</source>
-        <translation type="vanished">点击“Open”按钮开始应用更新</translation>
+        <translation>点击“Open”按钮开始应用更新</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="253"/>
         <source>Are you sure you want to cancel the download?</source>
-        <translation type="vanished">你确定要取消下载吗？</translation>
+        <translation>你确定要取消下载吗？</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="256"/>
         <source>Are you sure you want to cancel the download? This is a mandatory update, exiting now will close the application</source>
-        <translation type="vanished">你确定要取消下载吗？这是一个强制更新，现在退出将关闭应用程序</translation>
+        <translation>你确定要取消下载吗？这是一个强制更新，现在退出将关闭应用程序</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="314"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="323"/>
         <source>%1 bytes</source>
-        <translation type="vanished">%1 字节</translation>
+        <translation>%1 字节</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="317"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="326"/>
+        <source>%1 KB</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="320"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="329"/>
+        <source>%1 MB</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
         <source>of</source>
-        <translation type="vanished">/</translation>
+        <translation>/</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="357"/>
         <source>Downloading Updates</source>
-        <translation type="vanished">下载更新中</translation>
+        <translation>下载更新中</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
         <source>Time Remaining</source>
-        <translation type="vanished">剩余时间</translation>
+        <translation>剩余时间</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
         <source>Unknown</source>
-        <translation type="vanished">未知</translation>
+        <translation>未知</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="385"/>
         <source>about %1 hours</source>
-        <translation type="vanished">约 %1 小时</translation>
+        <translation>约 %1 小时</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="387"/>
         <source>about one hour</source>
-        <translation type="vanished">约 1 小时</translation>
+        <translation>约 1 小时</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="396"/>
         <source>%1 minutes</source>
-        <translation type="vanished">%1 分钟</translation>
+        <translation>%1 分钟</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="398"/>
         <source>1 minute</source>
-        <translation type="vanished">1 分钟</translation>
+        <translation>1 分钟</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="406"/>
         <source>%1 seconds</source>
-        <translation type="vanished">%1 秒</translation>
+        <translation>%1 秒</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="408"/>
         <source>1 second</source>
-        <translation type="vanished">1 秒</translation>
+        <translation>1 秒</translation>
     </message>
 </context>
 <context>
     <name>EditorInfoStatusBar</name>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="116"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="107"/>
         <source>Sel: N/A</source>
         <translation>选择：N/A</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="107"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="98"/>
         <source>Length: %L1    Lines: %L2</source>
         <translation>长度：%L1    行数：%L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="126"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="117"/>
         <source>Sel: %L1 | %L2</source>
         <translation>选择：%L1 | %L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="130"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="121"/>
         <source>Ln: %L1    Col: %L2    </source>
         <translation>行：%L1    列：%L2    </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="146"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="137"/>
         <source>Macintosh (CR)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="149"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="140"/>
         <source>Windows (CR LF)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="152"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="143"/>
         <source>Unix (LF)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="161"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="152"/>
         <source>ANSI</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="164"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="155"/>
         <source>UTF-8</source>
         <translation></translation>
     </message>
@@ -1704,12 +1751,7 @@
         <translation>你确定要重新加载 &lt;b&gt;%1&lt;/b&gt;？任何未保存的修改都会丢失。</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1388"/>
-        <source>Administrator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1636"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
         <source>Error Saving File</source>
         <translation>保存文件时出错</translation>
     </message>
@@ -1750,12 +1792,12 @@
         <translation>删除  &lt;b&gt;%1&lt;/b&gt; 时出错了？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1636"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>保存 &lt;b&gt;%1&lt;/b&gt; 时发生了错误&lt;br&gt;&lt;br&gt;错误：%2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1824"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1810"/>
         <source>No updates are available at this time.</source>
         <translation>本次无可用更新。</translation>
     </message>
@@ -1801,31 +1843,6 @@
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
         <source>Combine search results</source>
         <translation>结合搜索结果</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="86"/>
-        <source>Expression evaluation</source>
-        <translation>正文计算器</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="93"/>
-        <source>Use Enter after =</source>
-        <translation>=号后按回车键计算</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="100"/>
-        <source>Use ? after =</source>
-        <translation>=号后按?问号键计算</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="107"/>
-        <source>Just-in-time evaluation</source>
-        <translation>即时计算(状态栏显示)</translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="114"/>
-        <source>Accuracy</source>
-        <translation>精度</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="61"/>
@@ -1949,24 +1966,29 @@
 <context>
     <name>Updater</name>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="430"/>
         <source>Would you like to download the update now?</source>
-        <translation type="vanished">你想要现在下载更新吗？</translation>
+        <translation>你想要现在下载更新吗？</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="433"/>
         <source>Would you like to download the update now? This is a mandatory update, exiting now will close the application</source>
-        <translation type="vanished">你想要现在下载更新吗？这是一个强制性的更新，现在退出将关闭应用程序</translation>
+        <translation>你想要现在下载更新吗？这是一个强制性的更新，现在退出将关闭应用程序</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="438"/>
         <source>Version %1 of %2 has been released!</source>
-        <translation type="vanished">%1 版本的 %2 已经发布了！</translation>
+        <translation>%1 版本的 %2 已经发布了！</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="473"/>
         <source>No updates are available for the moment</source>
-        <translation type="vanished">暂时没有可用的更新</translation>
+        <translation>暂时没有可用的更新</translation>
     </message>
     <message>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="475"/>
         <source>Congratulations! You are running the latest version of %1</source>
-        <translation type="vanished">恭喜！你已经在使用最新版本的 %1</translation>
+        <translation>恭喜！你已经在使用最新版本的 %1</translation>
     </message>
 </context>
 <context>
