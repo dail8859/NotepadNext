@@ -733,6 +733,28 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(app->getSettings(), &Settings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
     connect(app->getSettings(), &Settings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
 
+    connect(app->getSettings(), &Settings::useEnterChanged, this, [=](bool bv) {
+        for (ScintillaNext *editor : editors()) {
+            editor->setEvalEnter(bv);
+        }
+    });
+    connect(app->getSettings(), &Settings::useQuestionChanged, this, [=](bool bv) {
+        for (ScintillaNext *editor : editors()) {
+            editor->setEvalQuestion(bv);
+        }
+    });
+    connect(app->getSettings(), &Settings::useJITEvalChanged, this, [=](bool bv) {
+        for (ScintillaNext *editor : editors()) {
+            editor->setEvalJIT(bv);
+        }
+        ui->statusBar->showJITEval(bv);
+    });
+    connect(app->getSettings(), &Settings::accuracyChanged, this, [=](int v) {
+        for (ScintillaNext *editor : editors()) {
+            editor->setEvalAccuracy(v);
+        }
+    });
+
     setupLanguageMenu();
 
     // Put the style sheet here for now
@@ -1748,6 +1770,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
     connect(editor, &ScintillaNext::renamed, this, [=]() { detectLanguage(editor); });
     connect(editor, &ScintillaNext::renamed, this, [=]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
+    connect(editor, &ScintillaNext::updateEvalStatusLine, this, [=](const QString &s) { ui->statusBar->updateEvalStatus(s); });
 
     // Watch for any zoom events (Ctrl+Scroll or pinch-to-zoom (Qt translates it as Ctrl+Scroll)) so that the event
     // can be handled before the ScintillaEditBase widget, so that it can be applied to all editors to keep zoom level equal.
@@ -1996,10 +2019,4 @@ void MainWindow::languageMenuTriggered()
     QVariant v = act->data();
 
     setLanguage(editor, v.toString());
-}
-
-void MainWindow::updateEvalStatus(const QString &res)
-{
-    if(ui->statusBar != Q_NULLPTR)
-        ui->statusBar->updateEvalStatus(res);
 }

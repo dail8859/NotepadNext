@@ -38,6 +38,7 @@ public:
 
     void refresh(ScintillaNext *editor);
     void updateEvalStatus(const QString &res);
+    void showJITEval(bool show);
 
 private slots:
     void connectToEditor(ScintillaNext *editor);
@@ -49,7 +50,6 @@ private slots:
     void updateLanguage(ScintillaNext *editor);
     void updateEol(ScintillaNext *editor);
     void updateEncoding(ScintillaNext *editor);
-    void handleJITEvalChanged(bool);
 
 private:
     QLabel *docType;

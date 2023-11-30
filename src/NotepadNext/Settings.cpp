@@ -19,6 +19,7 @@
 
 #include "Settings.h"
 
+
 Settings::Settings(QObject *parent) : QObject(parent)
 {
 }
@@ -39,6 +40,7 @@ bool Settings::useEnter() const { return m_useEnter; }
 bool Settings::useQuestion() const { return m_useQuestion; }
 bool Settings::useJITEval() const { return m_useJITEval; }
 int Settings::accuracy() const { return m_accuracy; }
+const QString &Settings::strAccuracy() const { return m_strAccuracy; }
 
 void Settings::setShowMenuBar(bool showMenuBar)
 {
@@ -123,12 +125,20 @@ void Settings::setCombineSearchResults(bool combineSearchResults)
 
 void Settings::setUseEnter(bool useEnter)
 {
+    if (m_useEnter == useEnter)
+        return;
+
     m_useEnter = useEnter;
+    emit useEnterChanged(useEnter);
 }
 
 void Settings::setUseQuestion(bool useQuestion)
 {
+    if (m_useQuestion == useQuestion)
+        return;
+
     m_useQuestion = useQuestion;
+    emit useQuestionChanged(useQuestion);
 }
 
 void Settings::setUseJITEval(bool useJITEval)
@@ -147,4 +157,6 @@ void Settings::setAccuracy(const QString &strAccuracy)
         return;
 
     m_accuracy = accuracy;
+    m_strAccuracy = strAccuracy;
+    emit accuracyChanged(accuracy);
 }

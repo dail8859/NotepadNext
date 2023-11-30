@@ -134,6 +134,7 @@ signals:
     void renamed();
 
     void lexerChanged();
+    void updateEvalStatusLine(const QString res);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -147,6 +148,10 @@ private:
     QDateTime modifiedTime;
     RangeAllocator indicatorResources;
     te_parser m_tinyEpr;
+    bool m_evalEnter = true;
+    bool m_evalQuestion = true;
+    bool m_evalJIT = true;
+    int m_evalAccuracy = 6;
 
     bool temporary = false; // Temporary file loaded from a session. It can either be a 'New' file or actual 'File'
 
@@ -154,13 +159,17 @@ private:
     QDateTime fileTimestamp();
     void updateTimestamp();
 
-    enum evltype {EVAL_ENTER, EVAL_QUESTION, EVAL_JIT};
-    bool tinyexprCalc(evltype evt);
+    enum evaltype {EVAL_ENTER, EVAL_QUESTION, EVAL_JIT};
+    bool tinyexprCalc(evaltype evt);
 
 public:
+    void setEvalEnter(bool bv) { m_evalEnter = bv; };
+    void setEvalQuestion(bool bv) { m_evalQuestion = bv; };
+    void setEvalJIT(bool bv) { m_evalJIT = bv; };
+    void setEvalAccuracy(int v) { m_evalAccuracy = v; };
     inline QString getEditText(int line);
     inline void position(int &line, int &index);
-    inline void insertAt(const QString &text, int line, int index);
+    inline bool insertAt(const QString &text, int line, int index);
     inline int getPos(int line, int index);
     inline void setCursor(int line, int index);
 };

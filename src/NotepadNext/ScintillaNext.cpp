@@ -31,8 +31,6 @@
 #include <QTextCodec>
 #include <QRegularExpression>
 
-#include "NotepadNextApplication.h"
-#include "MainWindow.h"
 
 const int CHUNK_SIZE = 1024 * 1024 * 4; // Not sure what is best
 
@@ -660,14 +658,15 @@ inline int ScintillaNext::getPos(int line, int index){
     return pos;
 }
 
-inline void ScintillaNext::insertAt(const QString &text, int line, int index)
+inline bool ScintillaNext::insertAt(const QString &text, int line, int index)
 {
     const bool isr = readOnly();
-    if (isr) setReadOnly(false);
+    if (isr)
+        return false;
     beginUndoAction();
     insertText(getPos(line, index), text.toUtf8().constData());
     endUndoAction();
-    if (isr) setReadOnly(true);
+    return true;
 }
 
 inline void ScintillaNext::setCursor(int line, int index) {
@@ -706,7 +705,6 @@ static inline bool timeExprCalc(const QString& expr, QString& retstr) {
     int tm_type = 0;
     QString tmfmt1;
     if (tm1.contains(':')) {
-        tm_type = 1;
         tmfmt1 = "s"; // h:m:s.z 01:02:03.4 format
         if (re.captured(7).contains('.'))
             tmfmt1 += ".z";
@@ -729,6 +727,7 @@ static inline bool timeExprCalc(const QString& expr, QString& retstr) {
     }
     QString tmfmt2;
     if (tm2.contains(':')) {
+        tm_type = 1;
         tmfmt2 = "s"; // h:m:s.z 01:02:03.4 format
         if (re.captured(16).contains('.'))
             tmfmt2 += ".z";
@@ -773,22 +772,13 @@ static inline bool timeExprCalc(const QString& expr, QString& retstr) {
     return true;
 }
 
-bool ScintillaNext::tinyexprCalc(evltype evt) {
-    const NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
-    if (app == Q_NULLPTR)
-        return false;
-    const auto settings = app->getSettings();
-    if (settings == Q_NULLPTR)
-        return false;
-    if ((evt == EVAL_ENTER && !settings->useEnter()) ||
-        (evt == EVAL_QUESTION && !settings->useQuestion()) ||
-        (evt == EVAL_JIT && !settings->useJITEval())
+bool ScintillaNext::tinyexprCalc(evaltype evt) {
+    if ((evt == EVAL_ENTER && !m_evalEnter) ||
+        (evt == EVAL_QUESTION && !m_evalQuestion) ||
+        (evt == EVAL_JIT && !m_evalJIT)
     )
         return false;
-    const auto mainWnd = app->getMainWindow();
-    if (mainWnd == Q_NULLPTR)
-        return false;
-    const int eval_accuracy = settings->accuracy();
+    const int eval_accuracy = m_evalAccuracy;
     if (eval_accuracy <= 0 || eval_accuracy > 15) {
         qDebug() << "Bad eval_accuracy value" << eval_accuracy << "in config file";
         return false;
@@ -801,21 +791,11 @@ bool ScintillaNext::tinyexprCalc(evltype evt) {
     QString linetxt = getLine(line);
     if (linetxt.length() < 1)
         return false;
-
-    switch(evt)
-    {
-    case EVAL_QUESTION:             // =?
+    if(evt == EVAL_QUESTION || evt == EVAL_ENTER) {
         if (linetxt.at(idx) != '=')
             return false;
-        break;
-    case EVAL_ENTER:                // =ENTER
-        if (linetxt.at(idx) != '=')
-            return false;
-        break;
-    case EVAL_JIT:
-    default:
+    } else { // EVAL_JIT
         ++idx; // JIT no =
-        break;
     }
     QString exprline = linetxt.left(idx);
     bool is_eq = false;
@@ -838,10 +818,10 @@ bool ScintillaNext::tinyexprCalc(evltype evt) {
         if (evt != EVAL_JIT) {
             QString retstr;
             if (timeExprCalc(expr, retstr)) {
-                insertAt(retstr, line, idx + 1);
-                setCursor(line, idx + 1 + retstr.length());
-                if (settings->useJITEval()) {
-                    mainWnd->updateEvalStatus(expr);
+                if (insertAt(retstr, line, idx + 1))
+                    setCursor(line, idx + 1 + retstr.length());
+                if (m_evalJIT) {
+                    emit updateEvalStatusLine(expr);
                 }
                 return true;
             }
@@ -852,12 +832,12 @@ bool ScintillaNext::tinyexprCalc(evltype evt) {
             removeTail0andDot(res);
             if(evt == EVAL_JIT) {
                 res = expr + "=" + res;
-                mainWnd->updateEvalStatus(res);
+                emit updateEvalStatusLine(res);
             } else {
-                insertAt(res, line, idx + 1);
-                setCursor(line, idx + 1 + res.length());
-                if (settings->useJITEval()) {
-                    mainWnd->updateEvalStatus(expr);
+                if (insertAt(res, line, idx + 1))
+                    setCursor(line, idx + 1 + res.length());
+                if (m_evalJIT) {
+                    emit updateEvalStatusLine(expr);
                 }
             }
             //qDebug() << "tinyexpr: " << expr << " = " << res;

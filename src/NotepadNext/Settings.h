@@ -40,7 +40,10 @@ class Settings : public QObject
 
     Q_PROPERTY(bool combineSearchResults READ combineSearchResults WRITE setCombineSearchResults NOTIFY combineSearchResultsChanged)
 
+    Q_PROPERTY(bool useEnter READ useEnter WRITE setUseEnter NOTIFY useEnter)
+    Q_PROPERTY(bool useQuestion READ useQuestion WRITE setUseQuestion NOTIFY useQuestion)
     Q_PROPERTY(bool useJITEval READ useJITEval WRITE setUseJITEval NOTIFY useJITEval)
+    Q_PROPERTY(QString strAccuracy READ strAccuracy WRITE setAccuracy NOTIFY strAccuracy)
 
     bool m_showMenuBar = true;
     bool m_showToolBar = true;
@@ -59,6 +62,7 @@ class Settings : public QObject
     bool m_useQuestion = true;
     bool m_useJITEval = true;
     int m_accuracy = 6;
+    QString m_strAccuracy = "6";
 
 public:
     explicit Settings(QObject *parent = nullptr);
@@ -80,6 +84,7 @@ public:
     bool useQuestion() const;
     bool useJITEval() const;
     int accuracy() const;
+    const QString &strAccuracy() const;
 
 signals:
     void showMenuBarChanged(bool showMenuBar);
@@ -114,9 +119,9 @@ public slots:
 
     void setCombineSearchResults(bool combineSearchResults);
 
-    void setUseEnter(bool);
-    void setUseQuestion(bool);
-    void setUseJITEval(bool);
+    void setUseEnter(bool useEnter);
+    void setUseQuestion(bool useQuestion);
+    void setUseJITEval(bool useJITEval);
     void setAccuracy(const QString &);
 };
 

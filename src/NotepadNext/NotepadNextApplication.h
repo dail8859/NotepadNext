@@ -52,7 +52,6 @@ public:
     LuaState *getLuaState() const { return luaState; }
     QString getFileDialogFilter() const;
     Settings *getSettings() const { return settings; }
-    MainWindow *getMainWindow() const { return window; };
 
     QStringList getLanguages() const;
     void setEditorLanguage(ScintillaNext *editor, const QString &languageName) const;
