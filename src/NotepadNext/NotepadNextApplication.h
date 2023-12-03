@@ -68,6 +68,8 @@ public:
     // expose this method to make it possible to change theme without restart
     void setLanguageColors();
 
+    bool isRunningAsAdmin() const;
+
 protected:
     bool event(QEvent *event) override;
 

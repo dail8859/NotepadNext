@@ -112,7 +112,7 @@ bool NotepadNextApplication::init()
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(this);
     settings = new Settings(this);
-    sessionManager = new SessionManager();
+    sessionManager = new SessionManager(this);
 
     connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [=](ScintillaNext *editor) {
         if (editor->isFile()) {
@@ -226,7 +226,7 @@ bool NotepadNextApplication::init()
     if (settings->restorePreviousSession()) {
         qInfo("Restoring previous session");
 
-        sessionManager->loadSession(window, editorManager);
+        sessionManager->loadSession(window);
     }
 
     openFiles(parser.positionalArguments());
@@ -439,6 +439,32 @@ void NotepadNextApplication::sendInfoToPrimaryInstance()
     sendMessage(buffer);
 }
 
+bool NotepadNextApplication::isRunningAsAdmin() const
+{
+    static bool initialized = false;
+    static bool isAdmin = false;
+
+    if (!initialized) {
+        initialized = true;
+
+#ifdef Q_OS_WIN
+        BOOL isMember;
+        SID_IDENTIFIER_AUTHORITY ntAuthority = SECURITY_NT_AUTHORITY;
+        PSID administratorsGroupSid = NULL;
+
+        // Create a SID for the Administrators group
+        if (AllocateAndInitializeSid(&ntAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &administratorsGroupSid)) {
+            if (CheckTokenMembership(NULL, administratorsGroupSid, &isMember)) {
+                isAdmin = isMember;
+                FreeSid(administratorsGroupSid);
+            }
+        }
+#endif
+    }
+
+    return isAdmin;
+}
+
 bool NotepadNextApplication::event(QEvent *event)
 {
     // Handle the QFileOpenEvent to open files on MacOS X.
@@ -460,7 +486,9 @@ void NotepadNextApplication::openFiles(const QStringList &files)
     qInfo(Q_FUNC_INFO);
 
     for (const QString &file : files) {
-        window->openFile(file);
+        QUrl fileUrl(file);
+        QString filePath = fileUrl.isValid() && fileUrl.isLocalFile() ? fileUrl.toLocalFile() : file;
+        window->openFile(filePath);
     }
 }
 

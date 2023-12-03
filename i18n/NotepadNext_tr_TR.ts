@@ -872,7 +872,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1204"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1212"/>
         <source>Export As</source>
         <translation>... olarak Dışa Aktar</translation>
     </message>
@@ -1422,7 +1422,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="879"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="565"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="573"/>
         <source>Start Recording</source>
         <translation>Kaydetmeye Başla</translation>
     </message>
@@ -1603,165 +1603,170 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1085"/>
+        <source>Copy URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1090"/>
         <source>Remove Empty Lines</source>
         <translation>Boş Satırları Sil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1094"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1097"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1099"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1102"/>
         <source>Show in Explorer</source>
         <translation>Dosya Gezgininde Göster</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1106"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1111"/>
         <source>Open Command Prompt Here</source>
         <translation>Komut İstemi&apos;ni Burada Aç</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1111"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1116"/>
         <source>Toggle Bookmark</source>
         <translation>Yer İmlerini Aç/Kapat</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1114"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1119"/>
         <source>Ctrl+F2</source>
         <translation>Ctrl+F2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1119"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1124"/>
         <source>Next Bookmark</source>
         <translation>Sonraki Yer İmi</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1122"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1127"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1127"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1132"/>
         <source>Previous Bookmark</source>
         <translation>Önceki Yer İmi</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1130"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1135"/>
         <source>Shift+F2</source>
         <translation>Shift+F2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1135"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1140"/>
         <source>Clear Bookmarks</source>
         <translation>Yer İmlerini Temizle</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1140"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1145"/>
         <source>Invert Bookmarks</source>
         <translation>Yer İmlerini Tersine Çevir</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="343"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="351"/>
         <source>Go to line</source>
         <translation>Satıra Git</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="343"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="351"/>
         <source>Line Number (1 - %1)</source>
         <translation>Satır Numarası (1 - %1)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="556"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="564"/>
         <source>Stop Recording</source>
         <translation>Kaydetmeyi Durdur</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="810"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="818"/>
         <source>New %1</source>
         <translation>Yeni %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="858"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="866"/>
         <source>Create File</source>
         <translation>Dosya Oluştur</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="858"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="866"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; mevcut değil. Oluşturmak istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="909"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1007"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="917"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1015"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Dosyayı kaydetmek istiyor musunuz: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="910"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1008"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="918"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1016"/>
         <source>Save File</source>
         <translation>Dosyayı Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="963"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="971"/>
         <source>Open Folder as Workspace</source>
         <translation>Klasörü Çalışma Alanı Olarak Aç</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="981"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="989"/>
         <source>Reload File</source>
         <translation>Dosyayı Yeniden Yükle</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="981"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="989"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;&apos;i yeniden yüklemek istediğinizden emin misiniz? Kaydedilmemiş değişiklikler kaybolacak.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1175"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1183"/>
         <source>Save a Copy As</source>
         <translation>Bir Kopyayı Farklı Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1238"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1253"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1246"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1261"/>
         <source>Rename</source>
         <translation>Yeniden Adlandır</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1253"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1261"/>
         <source>Name:</source>
         <translation>İsim:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1273"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1281"/>
         <source>Delete File</source>
         <translation>Dosyayı Sil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1273"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1281"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;&apos;i çöp kutusuna taşımak istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1283"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1291"/>
         <source>Error Deleting File</source>
         <translation>Dosya Silme Hatası</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1283"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1291"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; silinirken bir hata oluştu?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1624"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
         <source>Error Saving File</source>
         <translation>Dosyayı Kaydetme Hatası</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1624"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Bir hata oluştu. &lt;b&gt;%1&lt;/b&gt; kaydedilirken hata oluştu. &lt;br&gt;&lt;br&gt;Hata: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1796"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1810"/>
         <source>No updates are available at this time.</source>
         <translation>Şu anda kullanılabilir güncellemeler bulunmuyor.</translation>
     </message>

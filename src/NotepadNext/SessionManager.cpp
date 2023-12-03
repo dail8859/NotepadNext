@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "SessionManager.h"
 #include "EditorManager.h"
+#include "NotepadNextApplication.h"
 
 #include <QDir>
 #include <QStandardPaths>
@@ -32,7 +33,8 @@ static QString RandomSessionFileName()
     return QUuid::createUuid().toString(QUuid::WithoutBraces);
 }
 
-SessionManager::SessionManager(SessionFileTypes types)
+SessionManager::SessionManager(NotepadNextApplication *app, SessionFileTypes types)
+    : app(app)
 {
     setSessionFileTypes(types);
 }
@@ -168,7 +170,7 @@ void SessionManager::saveSession(MainWindow *window)
     settings.endGroup();
 }
 
-void SessionManager::loadSession(MainWindow *window, EditorManager *editorManager)
+void SessionManager::loadSession(MainWindow *window)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -193,13 +195,13 @@ void SessionManager::loadSession(MainWindow *window, EditorManager *editorManage
             const QString type = settings.value("Type").toString();
 
             if (type == QStringLiteral("File")) {
-                editor = loadFileDetails(settings, editorManager);
+                editor = loadFileDetails(settings);
             }
             else if (type == QStringLiteral("UnsavedFile")) {
-                editor = loadUnsavedFileDetails(settings, editorManager);
+                editor = loadUnsavedFileDetails(settings);
             }
             else if (type == QStringLiteral("Temp")) {
-                editor = loadTempFile(settings, editorManager);
+                editor = loadTempFile(settings);
             }
             else {
                 qDebug("Unknown session entry type: %s", qUtf8Printable(type));
@@ -241,7 +243,7 @@ void SessionManager::storeFileDetails(ScintillaNext *editor, QSettings &settings
     storeEditorViewDetails(editor, settings);
 }
 
-ScintillaNext* SessionManager::loadFileDetails(QSettings &settings, EditorManager *editorManager)
+ScintillaNext* SessionManager::loadFileDetails(QSettings &settings)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -249,7 +251,7 @@ ScintillaNext* SessionManager::loadFileDetails(QSettings &settings, EditorManage
 
     qDebug("Session file: \"%s\"", qUtf8Printable(filePath));
 
-    ScintillaNext *editor = editorManager->getEditorByFilePath(filePath);
+    ScintillaNext *editor = app->getEditorManager()->getEditorByFilePath(filePath);
     if (editor != Q_NULLPTR) {
         qDebug("  file is already open, ignoring");
         return Q_NULLPTR;
@@ -260,7 +262,7 @@ ScintillaNext* SessionManager::loadFileDetails(QSettings &settings, EditorManage
 
         loadEditorViewDetails(editor, settings);
 
-        editorManager->manageEditor(editor);
+        app->getEditorManager()->manageEditor(editor);
 
         return editor;
     }
@@ -283,7 +285,7 @@ void SessionManager::storeUnsavedFileDetails(ScintillaNext *editor, QSettings &s
     saveIntoSessionDirectory(editor, sessionFileName);
 }
 
-ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings, EditorManager *editorManager)
+ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -294,7 +296,7 @@ ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings, Edito
     qDebug("Session file: \"%s\"", qUtf8Printable(filePath));
     qDebug("  temp loc: \"%s\"", qUtf8Printable(sessionFilePath));
 
-    ScintillaNext *editor = editorManager->getEditorByFilePath(filePath);
+    ScintillaNext *editor = app->getEditorManager()->getEditorByFilePath(filePath);
     if (editor != Q_NULLPTR) {
         qDebug("  file is already open, ignoring");
         return Q_NULLPTR;
@@ -309,7 +311,7 @@ ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings, Edito
 
         loadEditorViewDetails(editor, settings);
 
-        editorManager->manageEditor(editor);
+        app->getEditorManager()->manageEditor(editor);
 
         return editor;
     }
@@ -327,18 +329,20 @@ void SessionManager::storeTempFile(ScintillaNext *editor, QSettings &settings)
     settings.setValue("Type", "Temp");
     settings.setValue("FileName", editor->getName());
     settings.setValue("SessionFileName", sessionFileName);
+    settings.setValue("Language", editor->languageName);
 
     storeEditorViewDetails(editor, settings);
 
     saveIntoSessionDirectory(editor, sessionFileName);
 }
 
-ScintillaNext *SessionManager::loadTempFile(QSettings &settings, EditorManager *editorManager)
+ScintillaNext *SessionManager::loadTempFile(QSettings &settings)
 {
     qInfo(Q_FUNC_INFO);
 
     const QString fileName = settings.value("FileName").toString();
     const QString sessionFileName = settings.value("SessionFileName").toString();
+    const QString languageName = settings.value("Language", QString()).toString();
     const QString fullFilePath = sessionDirectory().filePath(sessionFileName);
 
     qDebug("Session temp file: \"%s\"", qUtf8Printable(fullFilePath));
@@ -351,7 +355,12 @@ ScintillaNext *SessionManager::loadTempFile(QSettings &settings, EditorManager *
 
         loadEditorViewDetails(editor, settings);
 
-        editorManager->manageEditor(editor);
+        app->getEditorManager()->manageEditor(editor);
+
+        if (!languageName.isEmpty()) {
+            qDebug("Setting session file language to \"%s\"", qUtf8Printable(languageName));
+            app->setEditorLanguage(editor, languageName);
+        }
 
         return editor;
     }

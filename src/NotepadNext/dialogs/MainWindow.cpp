@@ -19,6 +19,7 @@
 
 #include "MainWindow.h"
 #include "BookMarkDecorator.h"
+#include "URLFinder.h"
 #include "SessionManager.h"
 #include "UndoAction.h"
 #include "ui_MainWindow.h"
@@ -187,6 +188,13 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ScintillaNext *editor = currentEditor();
         const QByteArray selection = editor->getSelText();
         editor->replaceSel(QByteArray::fromPercentEncoding(selection).constData());
+    });
+    connect(ui->actionCopyURL, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
+        if (urlFinder && urlFinder->isEnabled()) {
+            urlFinder->copyURLToClipboard(contextMenuPos);
+        }
     });
 
     connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
@@ -1419,7 +1427,11 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
         fileName = editor->getName();
     }
 
-    setWindowTitle(QStringLiteral("[*]%1").arg(fileName));
+    QString title = QStringLiteral("[*]%1").arg(fileName);
+    if (app->isRunningAsAdmin()) {
+        title += QStringLiteral(" - [%1]").arg(tr("Administrator"));
+    }
+    setWindowTitle(title);
 
     ui->actionReload->setEnabled(isFile);
     ui->actionMoveToTrash->setEnabled(isFile);
@@ -1558,7 +1570,7 @@ void MainWindow::updateContentBasedUi(ScintillaNext *editor)
     ui->actionBase64Encode->setEnabled(hasAnySelections);
     ui->actionURLEncode->setEnabled(hasAnySelections);
     ui->actionBase64Decode->setEnabled(hasAnySelections);
-    ui->actionURLEncode->setEnabled(hasAnySelections);
+    ui->actionURLDecode->setEnabled(hasAnySelections);
 }
 
 void MainWindow::detectLanguage(ScintillaNext *editor)
@@ -1791,9 +1803,15 @@ void MainWindow::addEditor(ScintillaNext *editor)
 
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(editor, &ScintillaNext::customContextMenuRequested, this, [=](const QPoint &pos) {
+        contextMenuPos = editor->send(SCI_POSITIONFROMPOINT, pos.x(), pos.y());
         QMenu *menu = new QMenu(this);
         menu->setAttribute(Qt::WA_DeleteOnClose);
 
+        URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
+        if (urlFinder && urlFinder->isEnabled() && urlFinder->isURL(contextMenuPos)) {
+            menu->addAction(ui->actionCopyURL);
+            menu->addSeparator();
+        }
         menu->addAction(ui->actionCut);
         menu->addAction(ui->actionCopy);
         menu->addAction(ui->actionPaste);

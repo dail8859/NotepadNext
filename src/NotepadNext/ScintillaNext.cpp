@@ -36,14 +36,12 @@ static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString 
 {
     qInfo(Q_FUNC_INFO);
 
-    QSaveFile file(path);
-    file.setDirectWriteFallback(true);
+    QFile file(path);
 
     if (file.open(QIODevice::WriteOnly)) {
         if (file.write(data) != -1) {
-            if (file.commit()) {
-                return QFileDevice::NoError;
-            }
+            file.close();
+            return QFileDevice::NoError;
         }
     }
 
