@@ -153,7 +153,7 @@ jobs:
           gh release create ${{ github.ref_name }} --title ${{ github.ref_name }} --generate-notes --draft
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
 
       - name: Upload Windows Installer
         run: |
