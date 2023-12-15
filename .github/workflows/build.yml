@@ -107,28 +107,28 @@ jobs:
           make appimage
 
       - name: Upload Windows zip Package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: runner.os == 'Windows'
         with:
           name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Zip
           path: ${{ github.workspace }}/build/package/
 
       - name: Upload Windows Installer
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: runner.os == 'Windows'
         with:
           name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Installer
           path: ${{ github.workspace }}/installer/NotepadNext*.exe
 
       - name: Upload macOS dmg
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: runner.os == 'macOS'
         with:
           name: NotepadNext-macOS-Qt${{ matrix.config.qt_version }}
           path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.dmg
 
       - name: Upload Linux AppImage
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: runner.os == 'Linux'
         with:
           name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}-AppImage
