@@ -441,8 +441,8 @@ bool NotepadNextApplication::isRunningAsAdmin() const
         if (AllocateAndInitializeSid(&ntAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &administratorsGroupSid)) {
             if (CheckTokenMembership(NULL, administratorsGroupSid, &isMember)) {
                 isAdmin = isMember;
-                FreeSid(administratorsGroupSid);
             }
+            FreeSid(administratorsGroupSid);
         }
 #endif
     }
