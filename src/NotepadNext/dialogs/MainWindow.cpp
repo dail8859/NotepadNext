@@ -83,6 +83,27 @@
 #include "HtmlConverter.h"
 #include "RtfConverter.h"
 
+#include "ThemeColors.h"
+
+QString loadCssFile(const QString& cssFile)
+{
+    QFile f(cssFile);
+    if (!f.exists()) {
+        qInfo("Stylesheet resource file '%s' not found, no style sheet set", qUtf8Printable(cssFile));
+
+        return "";
+    }
+    else { 
+        qInfo("Stylesheet resource file '%s' loaded", qUtf8Printable(cssFile));
+        
+        f.open(QFile::ReadOnly);
+        QTextStream ts(&f);
+        QString cssContent = ts.readAll();
+        f.close();
+
+        return cssContent;
+    }
+}
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
@@ -734,15 +755,24 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(app->getSettings(), &Settings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
 
     setupLanguageMenu();
-
-    // Put the style sheet here for now
-    QFile f(":/stylesheets/npp.css");
-    f.open(QFile::ReadOnly);
-    setStyleSheet(f.readAll());
-    f.close();
-
+    
     restoreSettings();
 
+    // Notepad next default style sheet
+    QString cssContent = loadCssFile(":/stylesheets/npp.css");
+    if (app->getSettings()->darkMode()) {
+        // QDarkStyleSheet dark theme
+        QString darkCss = loadCssFile(":/qdarkstyle/dark/style.qss");
+        cssContent.append(darkCss);
+        
+        // further tweak
+        QString nppDark= loadCssFile(":/stylesheets/npp-dark.css");
+        cssContent.append(nppDark);
+    }
+    
+    // Put the style sheet here for now
+    setStyleSheet(cssContent);
+    
     initUpdateCheck();
 }
 
@@ -756,6 +786,14 @@ void MainWindow::setupLanguageMenu()
     qInfo(Q_FUNC_INFO);
 
     QStringList language_names = app->getLanguages();
+
+    QString subMenuStyleSheet;  // sub menu style sheet, for dark mode only
+    bool darkMode = app->getSettings()->darkMode();
+    if (darkMode) {
+        subMenuStyleSheet = QString("color:#%1; background-color:#%2")
+                    .arg(DARK_MENU_COLOR, 0, 16)
+                    .arg(DARK_MENU_BG_COLOR, 0, 16);
+    }
 
     int i = 0;
     while (i < language_names.size()) {
@@ -784,6 +822,12 @@ void MainWindow::setupLanguageMenu()
             QMenu *compactMenu = new QMenu(actions[0]->text().at(0).toUpper());
             compactMenu->addActions(actions);
             ui->menuLanguage->addMenu(compactMenu);
+
+            // Set background color of sub menu, QDarkStyleSheet settings
+            // doesn't impact sub menu for unknown reason
+            if(darkMode) {
+                compactMenu->setStyleSheet(subMenuStyleSheet);
+            }
         }
         i = j;
     }
@@ -1649,6 +1693,7 @@ void MainWindow::saveSettings() const
     settings.setValue("Gui/ShowToolBar", app->getSettings()->showToolBar());
     settings.setValue("Gui/ShowStatusBar", app->getSettings()->showStatusBar());
     settings.setValue("Gui/CombineSearchResults", app->getSettings()->combineSearchResults());
+    settings.setValue("Gui/DarkMode", app->getSettings()->darkMode());
 
     settings.setValue("Editor/ShowWhitespace", ui->actionShowWhitespace->isChecked());
     settings.setValue("Editor/ShowEndOfLine", ui->actionShowEndofLine->isChecked());
@@ -1672,6 +1717,7 @@ void MainWindow::restoreSettings()
     app->getSettings()->setShowToolBar(settings.value("Gui/ShowToolBar", true).toBool());
     app->getSettings()->setShowStatusBar(settings.value("Gui/ShowStatusBar", true).toBool());
     app->getSettings()->setCombineSearchResults(settings.value("Gui/CombineSearchResults", false).toBool());
+    app->getSettings()->setDarkMode(settings.value("Gui/DarkMode", true).toBool());
 
     ui->actionShowWhitespace->setChecked(settings.value("Editor/ShowWhitespace", false).toBool());
     ui->actionShowEndofLine->setChecked(settings.value("Editor/ShowEndOfLine", false).toBool());
@@ -1986,4 +2032,9 @@ void MainWindow::languageMenuTriggered()
     QVariant v = act->data();
 
     setLanguage(editor, v.toString());
+}
+
+Settings* MainWindow::getSettings()
+{
+    return app->getSettings();
 }

@@ -23,8 +23,8 @@
 #include <QObject>
 #include <QPointer>
 
-
 class ScintillaNext;
+class Settings;
 
 class EditorManager : public QObject
 {
@@ -46,7 +46,9 @@ signals:
 
 private:
     void setupEditor(ScintillaNext *editor);
+    void setupEditorTheme(ScintillaNext *editor);
     void purgeOldEditorPointers();
+    Settings* getSettings();
 
     QList<QPointer<ScintillaNext>> editors;
 };

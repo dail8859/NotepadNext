@@ -43,6 +43,10 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
     connect(settings, &Settings::showStatusBarChanged, ui->checkBoxStatusBar, &QCheckBox::setChecked);
     connect(ui->checkBoxStatusBar, &QCheckBox::toggled, settings, &Settings::setShowStatusBar);
 
+    ui->checkBoxDarkMode->setChecked(settings->darkMode());
+    connect(settings, &Settings::darkModeChanged, ui->checkBoxDarkMode, &QCheckBox::setChecked);
+    connect(ui->checkBoxDarkMode, &QCheckBox::toggled, settings, &Settings::setDarkMode);
+
     ui->gbxRestorePreviousSession->setChecked(settings->restorePreviousSession());
     connect(settings, &Settings::restorePreviousSessionChanged, ui->gbxRestorePreviousSession, &QGroupBox::setChecked);
     connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, settings, &Settings::setRestorePreviousSession);

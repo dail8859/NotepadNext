@@ -30,6 +30,7 @@
 #include "ScintillaNext.h"
 #include "NppImporter.h"
 #include "SearchResultsCollector.h"
+#include "Settings.h"
 
 namespace Ui {
 class MainWindow;
@@ -124,6 +125,8 @@ public slots:
     void restoreWindowState();
 
     void switchToEditor(const ScintillaNext *editor);
+
+    Settings* getSettings();
 
 signals:
     void editorActivated(ScintillaNext *editor);

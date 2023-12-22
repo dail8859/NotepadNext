@@ -22,6 +22,7 @@
 #include "DockWidgetTab.h"
 #include "DockComponentsFactory.h"
 #include "DockedEditorTitleBar.h"
+#include "DockAreaTabBar.h"
 
 #include "ScintillaNext.h"
 
