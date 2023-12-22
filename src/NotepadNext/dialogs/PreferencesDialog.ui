@@ -19,28 +19,28 @@
      <item>
       <widget class="QCheckBox" name="checkBoxMenuBar">
        <property name="text">
-        <string>Menu Bar</string>
+        <string>Show menu bar</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxToolBar">
        <property name="text">
-        <string>Tool Bar</string>
+        <string>Show toolbar</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QCheckBox" name="checkBoxStatusBar">
        <property name="text">
-        <string>Status Bar</string>
+        <string>Show status bar</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QGroupBox" name="gbxRestorePreviousSession">
        <property name="title">
-        <string>Restore Previous Session</string>
+        <string>Restore previous session</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -59,7 +59,7 @@
         <item>
          <widget class="QCheckBox" name="checkBoxRestoreTempFiles">
           <property name="text">
-           <string>Temp Files</string>
+           <string>Temporary files</string>
           </property>
          </widget>
         </item>
