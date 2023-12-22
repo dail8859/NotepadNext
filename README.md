@@ -28,6 +28,15 @@ flatpak install flathub com.github.dail8859.NotepadNext
 
 MacOS disk images can be downloaded from the [release](https://github.com/dail8859/NotepadNext/releases) page.
 
+## MacOS Tweaks
+
+By default, MacOS enables font smoothing which causes text to appear quite differently from the Windows version. This can be disabled system-wide using the following command:
+
+```bash
+defaults -currentHost write -g AppleFontSmoothing -int 0
+```
+
+A restart is required for this to take effect.
 
 # Development
 Current development is done using Visual Studio 2022 and Qt v6.2+ on Windows. This is also known to build successfully on various Linux distributions and macOS. Other platforms/compilers should be usable with minor modifications.
