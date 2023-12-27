@@ -18,7 +18,8 @@ L.extensions = {
 }
 
 L.properties = {
-    ["lexer.python.keywords2.no.sub.identifiers"] = "1"
+    ["lexer.python.keywords2.no.sub.identifiers"] = "1",
+    ["lexer.python.decorator.attributes"] = "1"
 }
 
 L.keywords = {
