@@ -18,10 +18,12 @@
 
 
 #include "DockedEditor.h"
+#include "DockAreaTabBar.h"
 #include "DockAreaWidget.h"
 #include "DockWidgetTab.h"
 #include "DockComponentsFactory.h"
 #include "DockedEditorTitleBar.h"
+#include "DockAreaTitleBar.h"
 
 #include "ScintillaNext.h"
 
@@ -77,6 +79,18 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     connect(dockManager, &ads::CDockManager::dockAreaCreated, this, [=](ads::CDockAreaWidget* DockArea) {
         DockedEditorTitleBar *titleBar = qobject_cast<DockedEditorTitleBar *>(DockArea->titleBar());
         connect(titleBar, &DockedEditorTitleBar::doubleClicked, this, &DockedEditor::titleBarDoubleClicked);
+
+        connect(DockArea->titleBar()->tabBar(), &ads::CDockAreaTabBar::tabMoved, this, [=](int from, int to) {
+            Q_UNUSED(from);
+            Q_UNUSED(to);
+
+            emit editorOrderChanged();
+        });
+
+        // In theory the order changes when a new dock area is created (e.g. editor is dragged and droped),
+        // but the dockAreaCreated() signal is triggered before it is actually added to the CDockManager,
+        // so interrogating the dock manager during the signal doesn't help.
+        //emit editorOrderChanged();
     });
 }
 
@@ -152,8 +166,6 @@ void DockedEditor::addEditor(ScintillaNext *editor)
         currentEditor = editor;
     }
 
-    emit editorAdded(editor);
-
     // Create the dock widget for the editor
     ads::CDockWidget *dockWidget = new ads::CDockWidget(editor->getName());
 
@@ -203,6 +215,8 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     connect(dockWidget, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
 
     dockManager->addDockWidget(ads::CenterDockWidgetArea, dockWidget, currentDockArea());
+
+    emit editorAdded(editor);
 }
 
 void DockedEditor::editorRenamed(ScintillaNext *editor)

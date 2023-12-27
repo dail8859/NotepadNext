@@ -34,9 +34,15 @@ FileListDock::FileListDock(MainWindow *parent) :
     connect(this, &QDockWidget::visibilityChanged, this, [=](bool visible) {
         if (visible) {
             // Only get events when the dock is visible
-            connect(window->getDockedEditor(), &DockedEditor::editorAdded, this, &FileListDock::addEditor);
+            connect(window->getDockedEditor(), &DockedEditor::editorAdded, this, [=](ScintillaNext *editor) {
+                Q_UNUSED(editor);
+
+                // The editor could get added on any DockArea and doesn't necessarily get appended to the end of the FileList, so refresh everything
+                refreshList();
+            });
             connect(window->getDockedEditor(), &DockedEditor::editorActivated, this, &FileListDock::selectCurrentEditor);
             connect(window->getDockedEditor(), &DockedEditor::editorClosed, this, &FileListDock::removeEditor);
+            connect(window->getDockedEditor(), &DockedEditor::editorOrderChanged, this, &FileListDock::refreshList);
 
             refreshList();
             selectCurrentEditor();
@@ -75,6 +81,8 @@ void FileListDock::refreshList()
     for (ScintillaNext *editor : window->getDockedEditor()->editors()) {
         addEditor(editor);
     }
+
+    selectCurrentEditor();
 }
 
 void FileListDock::addEditor(ScintillaNext *editor)
