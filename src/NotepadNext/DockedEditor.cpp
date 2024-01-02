@@ -87,7 +87,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
             emit editorOrderChanged();
         });
 
-        // In theory the order changes when a new dock area is created (e.g. editor is dragged and droped),
+        // In theory the order changes when a new dock area is created (e.g. editor is dragged and dropped),
         // but the dockAreaCreated() signal is triggered before it is actually added to the CDockManager,
         // so interrogating the dock manager during the signal doesn't help.
         //emit editorOrderChanged();
