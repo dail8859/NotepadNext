@@ -1036,9 +1036,6 @@
    <property name="text">
     <string>Column Mode...</string>
    </property>
-   <property name="shortcut">
-    <string>Alt+C</string>
-   </property>
   </action>
   <action name="actionExportHtml">
    <property name="text">
