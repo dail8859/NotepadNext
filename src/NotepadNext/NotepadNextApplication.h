@@ -26,7 +26,6 @@
 
 #include <QCommandLineParser>
 #include <QPointer>
-#include <QTranslator>
 
 
 class MainWindow;
@@ -35,6 +34,8 @@ class EditorManager;
 class RecentFilesListManager;
 class ScintillaNext;
 class SessionManager;
+class TranslationManager;
+
 
 class NotepadNextApplication : public SingleApplication
 {
@@ -60,9 +61,6 @@ public:
     QString detectLanguageFromExtension(const QString &extension) const;
     QString detectLanguageFromContents(ScintillaNext *editor) const;
 
-    void loadSystemDefaultTranslation();
-    void loadTranslation(QLocale locale);
-
     void sendInfoToPrimaryInstance();
 
     bool isRunningAsAdmin() const;
@@ -82,6 +80,7 @@ private:
     RecentFilesListManager *recentFilesListManager;
     Settings *settings;
     SessionManager *sessionManager;
+    TranslationManager *translationManager;
 
     LuaState *luaState = Q_NULLPTR;
 
@@ -89,9 +88,6 @@ private:
     QPointer<QWidget> currentlyFocusedWidget; // Keep a weak pointer to the QWidget since we don't own it
 
     MainWindow *createNewWindow();
-
-    QTranslator translatorNpn;
-    QTranslator translatorQt;
 
     QCommandLineParser parser;
 };
