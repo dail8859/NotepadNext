@@ -100,6 +100,7 @@ SOURCES += \
     SessionManager.cpp \
     Settings.cpp \
     SpinBoxDelegate.cpp \
+    TranslationManager.cpp \
     UndoAction.cpp \
     ZoomEventWatcher.cpp \
     decorators/ApplicationDecorator.cpp \
@@ -177,6 +178,7 @@ HEADERS += \
     SessionManager.h \
     Settings.h \
     SpinBoxDelegate.h \
+    TranslationManager.h \
     UndoAction.h \
     ZoomEventWatcher.h \
     decorators/ApplicationDecorator.h \

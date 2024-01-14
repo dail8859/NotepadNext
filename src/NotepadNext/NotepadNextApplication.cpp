@@ -24,6 +24,7 @@
 #include "LuaExtension.h"
 #include "DebugManager.h"
 #include "SessionManager.h"
+#include "TranslationManager.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
@@ -36,6 +37,8 @@
 
 #include <QCommandLineParser>
 #include <QSettings>
+
+#include <QDirIterator>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -97,11 +100,14 @@ bool NotepadNextApplication::init()
         settings.clear();
     }
 
+    // Translation files are stored as a qresource
+    translationManager = new TranslationManager(this, QStringLiteral(":/i18n/"));
+
     if (!parser.value("translation").isEmpty()) {
-        loadTranslation(QLocale(parser.value("translation")));
+        translationManager->loadTranslation(QLocale(parser.value("translation")));
     }
     else {
-        loadSystemDefaultTranslation();
+        translationManager->loadSystemDefaultTranslation();
     }
 
     luaState = new LuaState();
@@ -383,36 +389,6 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
 
     return "Text"
     )").toLatin1().constData());
-}
-
-void NotepadNextApplication::loadSystemDefaultTranslation()
-{
-    // The wrong translation file may be loaded when passing Locale::system() to loadTranslation function, e.g. "zh_CN" translation file will be loaded when the locale is "en_US". It's probably a Qt bug.
-    loadTranslation(QLocale(QLocale::system().name()));
-}
-
-void NotepadNextApplication::loadTranslation(QLocale locale)
-{
-    qInfo(Q_FUNC_INFO);
-
-    // Translation files are stored as a qresource
-    const QString languagePath = QStringLiteral(":/i18n/");
-
-    // Load translation for NotepadNext e.g. "i18n/NotepadNext.en.qm"
-    if (translatorNpn.load(locale, QApplication::applicationName(), QString("_"), languagePath)) {
-        installTranslator(&translatorNpn);
-        qInfo("Loaded %s translation %s for Notepad Next", qUtf8Printable(locale.name()), qUtf8Printable(translatorNpn.filePath()));
-    } else {
-        qInfo("%s translation not found for Notepad Next", qUtf8Printable(locale.name()));
-    }
-
-    // Load translation for Qt components e.g. "i18n/qt_en.qm"
-    if (translatorQt.load(locale, QString("qt"), QString("_"), languagePath)) {
-        installTranslator(&translatorQt);
-        qInfo("Loaded %s translation %s for Qt components", qUtf8Printable(locale.name()), qUtf8Printable(translatorQt.filePath()));
-    } else {
-        qInfo("%s translation not found for Qt components", qUtf8Printable(locale.name()));
-    }
 }
 
 void NotepadNextApplication::sendInfoToPrimaryInstance()
