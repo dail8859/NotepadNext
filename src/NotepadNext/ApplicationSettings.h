@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QSettings>
+#include <QString>
 
 
 template<typename T>
@@ -43,7 +44,7 @@ private:
 
 #define DEFINE_SETTING(name, lname, type)\
 public:\
-    bool lname() const;\
+    type lname() const;\
 public slots:\
     void set##name(type lname);\
 Q_SIGNAL\
@@ -84,4 +85,6 @@ public:
     DEFINE_SETTING(RestorePreviousSession, restorePreviousSession, bool)
     DEFINE_SETTING(RestoreUnsavedFiles, restoreUnsavedFiles, bool)
     DEFINE_SETTING(RestoreTempFiles, restoreTempFiles, bool)
+
+    DEFINE_SETTING(Translation, translation, QString)
 };

@@ -104,12 +104,17 @@ bool NotepadNextApplication::init()
     // Translation files are stored as a qresource
     translationManager = new TranslationManager(this, QStringLiteral(":/i18n/"));
 
+    // The command line overrides the settings
     if (!parser.value("translation").isEmpty()) {
-        translationManager->loadTranslation(QLocale(parser.value("translation")));
+        translationManager->loadTranslationByName(parser.value("translation"));
     }
     else {
-        translationManager->loadSystemDefaultTranslation();
+        // Normally the setting is "" which will load the default system translation
+        translationManager->loadTranslationByName(settings->translation());
     }
+
+    connect(settings, &ApplicationSettings::translationChanged, translationManager, &TranslationManager::loadTranslationByName);
+
 
     luaState = new LuaState();
 

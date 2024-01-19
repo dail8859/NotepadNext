@@ -20,15 +20,25 @@
 
 #include <QCoreApplication>
 #include <QTranslator>
+#include <QObject>
+#include <QLocale>
 
 
-class TranslationManager
+class TranslationManager : public QObject
 {
+    Q_OBJECT
+
 public:
     TranslationManager(QCoreApplication *app, const QString &path);
 
+    QStringList availableTranslations() const;
+
+    static QString FormatLocaleTerritoryAndLanguage(QLocale &locale);
+
+public slots:
     void loadSystemDefaultTranslation();
     void loadTranslation(QLocale locale);
+    void loadTranslationByName(QString localeName);
 
 private:
     const QString path;

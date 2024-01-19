@@ -49,6 +49,7 @@ public:
     RecentFilesListManager *getRecentFilesListManager() const { return recentFilesListManager; }
     EditorManager *getEditorManager() const { return editorManager; }
     SessionManager *getSessionManager() const;
+    TranslationManager *getTranslationManager() const { return translationManager; };
 
     LuaState *getLuaState() const { return luaState; }
     QString getFileDialogFilter() const;
