@@ -21,10 +21,42 @@
 #include <QApplication>
 #include <QDirIterator>
 
+QString TranslationFileNameToLocaleName(const QString &baseName)
+{
+    // return "zh_CN" from "NotepadNext_zh_CN"
+    return baseName.mid(QApplication::applicationName().length() + 1); // +1 for the underscore
+}
+
 
 TranslationManager::TranslationManager(QCoreApplication *app, const QString &path)
-    : path(path), app(app)
+    : QObject(app), path(path), app(app)
 {
+    availableTranslations();
+}
+
+QStringList TranslationManager::availableTranslations() const
+{
+    QStringList translations;
+    QDirIterator it(path);
+
+    while (it.hasNext()) {
+        it.next();
+
+        if (it.fileName().startsWith(QApplication::applicationName())) { // Some are Qt translation files, not for the application
+            QString localeName = TranslationFileNameToLocaleName(it.fileInfo().baseName());
+
+            translations.append(localeName);
+        }
+    }
+
+    return translations;
+}
+
+QString TranslationManager::FormatLocaleTerritoryAndLanguage(QLocale &locale)
+{
+    const QString territory = QLocale::territoryToString(locale.territory());
+    const QString language = QLocale::languageToString(locale.language());
+    return QStringLiteral("%1 / %2").arg(language, territory);
 }
 
 void TranslationManager::loadSystemDefaultTranslation()
@@ -51,5 +83,15 @@ void TranslationManager::loadTranslation(QLocale locale)
         qInfo("Loaded %s translation %s for Qt components", qUtf8Printable(locale.name()), qUtf8Printable(translatorQt.filePath()));
     } else {
         qInfo("%s translation not found for Qt components", qUtf8Printable(locale.name()));
+    }
+}
+
+void TranslationManager::loadTranslationByName(QString localeName)
+{
+    if (localeName.isEmpty()) {
+        loadSystemDefaultTranslation();
+    }
+    else {
+        loadTranslation(QLocale(localeName));
     }
 }
