@@ -25,7 +25,7 @@ ApplicationSetting<type> name{#group "/" #name, default};\
 {\
         return get(name);\
 }\
-    void ApplicationSettings::set##name(bool lname)\
+    void ApplicationSettings::set##name(type lname)\
 {\
         set(name, lname);\
         emit lname##Changed(lname);\
@@ -50,3 +50,5 @@ CREATE_SETTING(Gui, CombineSearchResults, combineSearchResults, bool, false)
 CREATE_SETTING(App, RestorePreviousSession, restorePreviousSession, bool, false)
 CREATE_SETTING(App, RestoreUnsavedFiles, restoreUnsavedFiles, bool, false)
 CREATE_SETTING(App, RestoreTempFiles, restoreTempFiles, bool, false)
+
+CREATE_SETTING(App, Translation, translation, QString, "")

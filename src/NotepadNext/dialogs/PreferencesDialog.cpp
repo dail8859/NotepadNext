@@ -18,6 +18,8 @@
 
 
 #include "PreferencesDialog.h"
+#include "NotepadNextApplication.h"
+#include "TranslationManager.h"
 #include "ui_PreferencesDialog.h"
 
 #include <QMessageBox>
@@ -49,6 +51,11 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     MapSettingToCheckBox(ui->checkBoxRestoreTempFiles, &ApplicationSettings::restoreTempFiles, &ApplicationSettings::setRestoreTempFiles, &ApplicationSettings::restoreTempFilesChanged);
 
     MapSettingToCheckBox(ui->checkBoxCombineSearchResults, &ApplicationSettings::combineSearchResults, &ApplicationSettings::setCombineSearchResults, &ApplicationSettings::combineSearchResultsChanged);
+
+    populateTranslationComboBox();
+    connect(ui->comboBoxTranslation, &QComboBox::currentIndexChanged, this, [=](int index) {
+        settings->setTranslation(ui->comboBoxTranslation->itemData(index).toString());
+    });
 }
 
 PreferencesDialog::~PreferencesDialog()
@@ -76,4 +83,26 @@ void PreferencesDialog::MapSettingToGroupBox(QGroupBox *groupBox, Func1 getter, 
     // Set up two way connection
     connect(settings, notifier, groupBox, &QGroupBox::setChecked);
     connect(groupBox, &QGroupBox::toggled, settings, setter);
+}
+
+void PreferencesDialog::populateTranslationComboBox()
+{
+    NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
+
+    // Add the system default at the top
+    ui->comboBoxTranslation->addItem(QStringLiteral("%1 (%2)").arg(tr("<System Default>"), QLocale::system().name()), QStringLiteral(""));
+
+    // TODO: sort this list and keep the system default at the top
+    for (const auto &localeName : app->getTranslationManager()->availableTranslations())
+    {
+        QLocale locale(localeName);
+        const QString localeDisplay = TranslationManager::FormatLocaleTerritoryAndLanguage(locale);
+        ui->comboBoxTranslation->addItem(QStringLiteral("%1 (%2)").arg(localeDisplay, localeName), localeName);
+    }
+
+    // Select the current one
+    int index = ui->comboBoxTranslation->findData(settings->translation());
+    if (index != -1) {
+        ui->comboBoxTranslation->setCurrentIndex(index);
+    }
 }
