@@ -20,7 +20,7 @@
 #ifndef NOTEPADNEXTAPPLICATION_H
 #define NOTEPADNEXTAPPLICATION_H
 
-#include "Settings.h"
+#include "ApplicationSettings.h"
 
 #include "SingleApplication"
 
@@ -52,7 +52,7 @@ public:
 
     LuaState *getLuaState() const { return luaState; }
     QString getFileDialogFilter() const;
-    Settings *getSettings() const { return settings; }
+    ApplicationSettings *getSettings() const { return settings; }
 
     QStringList getLanguages() const;
     void setEditorLanguage(ScintillaNext *editor, const QString &languageName) const;
@@ -78,7 +78,7 @@ private:
 
     EditorManager *editorManager;
     RecentFilesListManager *recentFilesListManager;
-    Settings *settings;
+    ApplicationSettings *settings;
     SessionManager *sessionManager;
     TranslationManager *translationManager;
 

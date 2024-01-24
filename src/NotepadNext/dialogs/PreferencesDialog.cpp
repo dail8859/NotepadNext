@@ -20,38 +20,21 @@
 #include "PreferencesDialog.h"
 #include "ui_PreferencesDialog.h"
 
-#include "Settings.h"
-
 #include <QMessageBox>
 
-PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
+
+PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *parent) :
     QDialog(parent, Qt::Tool),
     ui(new Ui::PreferencesDialog),
     settings(settings)
 {
     ui->setupUi(this);
 
-    ui->checkBoxMenuBar->setChecked(settings->showMenuBar());
-    connect(settings, &Settings::showMenuBarChanged, ui->checkBoxMenuBar, &QCheckBox::setChecked);
-    connect(ui->checkBoxMenuBar, &QCheckBox::toggled, settings, &Settings::setShowMenuBar);
+    MapSettingToCheckBox(ui->checkBoxMenuBar, &ApplicationSettings::showMenuBar, &ApplicationSettings::setShowMenuBar, &ApplicationSettings::showMenuBarChanged);
+    MapSettingToCheckBox(ui->checkBoxToolBar, &ApplicationSettings::showToolBar, &ApplicationSettings::setShowToolBar, &ApplicationSettings::showToolBarChanged);
+    MapSettingToCheckBox(ui->checkBoxStatusBar, &ApplicationSettings::showStatusBar, &ApplicationSettings::setShowStatusBar, &ApplicationSettings::showStatusBarChanged);
 
-    ui->checkBoxToolBar->setChecked(settings->showToolBar());
-    connect(settings, &Settings::showToolBarChanged, ui->checkBoxToolBar, &QCheckBox::setChecked);
-    connect(ui->checkBoxToolBar, &QCheckBox::toggled, settings, &Settings::setShowToolBar);
-
-    ui->checkBoxStatusBar->setChecked(settings->showStatusBar());
-    connect(settings, &Settings::showStatusBarChanged, ui->checkBoxStatusBar, &QCheckBox::setChecked);
-    connect(ui->checkBoxStatusBar, &QCheckBox::toggled, settings, &Settings::setShowStatusBar);
-
-    ui->gbxRestorePreviousSession->setChecked(settings->restorePreviousSession());
-    connect(settings, &Settings::restorePreviousSessionChanged, ui->gbxRestorePreviousSession, &QGroupBox::setChecked);
-    connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, settings, &Settings::setRestorePreviousSession);
-
-    ui->checkBoxUnsavedFiles->setChecked(settings->restoreUnsavedFiles());
-    ui->checkBoxRestoreTempFiles->setChecked(settings->restoreTempFiles());
-
-    connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, ui->checkBoxRestoreTempFiles, &QCheckBox::setEnabled);
-
+    MapSettingToGroupBox(ui->gbxRestorePreviousSession, &ApplicationSettings::restorePreviousSession, &ApplicationSettings::setRestorePreviousSession, &ApplicationSettings::restorePreviousSessionChanged);
     connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, this, [=](bool checked) {
         if (!checked) {
             ui->checkBoxUnsavedFiles->setChecked(false);
@@ -62,18 +45,35 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
         }
     });
 
-    connect(settings, &Settings::restoreUnsavedFilesChanged, ui->checkBoxUnsavedFiles, &QCheckBox::setChecked);
-    connect(ui->checkBoxUnsavedFiles, &QCheckBox::toggled, settings, &Settings::setRestoreUnsavedFiles);
+    MapSettingToCheckBox(ui->checkBoxUnsavedFiles, &ApplicationSettings::restoreUnsavedFiles, &ApplicationSettings::setRestoreUnsavedFiles, &ApplicationSettings::restoreUnsavedFilesChanged);
+    MapSettingToCheckBox(ui->checkBoxRestoreTempFiles, &ApplicationSettings::restoreTempFiles, &ApplicationSettings::setRestoreTempFiles, &ApplicationSettings::restoreTempFilesChanged);
 
-    connect(settings, &Settings::restoreTempFilesChanged, ui->checkBoxRestoreTempFiles, &QCheckBox::setChecked);
-    connect(ui->checkBoxRestoreTempFiles, &QCheckBox::toggled, settings, &Settings::setRestoreTempFiles);
-
-    ui->checkBoxCombineSearchResults->setChecked(settings->combineSearchResults());
-    connect(settings, &Settings::combineSearchResultsChanged, ui->checkBoxCombineSearchResults, &QCheckBox::setChecked);
-    connect(ui->checkBoxCombineSearchResults, &QCheckBox::toggled, settings, &Settings::setCombineSearchResults);
+    MapSettingToCheckBox(ui->checkBoxCombineSearchResults, &ApplicationSettings::combineSearchResults, &ApplicationSettings::setCombineSearchResults, &ApplicationSettings::combineSearchResultsChanged);
 }
 
 PreferencesDialog::~PreferencesDialog()
 {
     delete ui;
+}
+
+template<typename Func1, typename Func2, typename Func3>
+void PreferencesDialog::MapSettingToCheckBox(QCheckBox *checkBox, Func1 getter, Func2 setter, Func3 notifier) const
+{
+    // Get the value and set the checkbox state
+    checkBox->setChecked(std::bind(getter, settings)());
+
+    // Set up two way connection
+    connect(settings, notifier, checkBox, &QCheckBox::setChecked);
+    connect(checkBox, &QCheckBox::toggled, settings, setter);
+}
+
+template<typename Func1, typename Func2, typename Func3>
+void PreferencesDialog::MapSettingToGroupBox(QGroupBox *groupBox, Func1 getter, Func2 setter, Func3 notifier) const
+{
+    // Get the value and set the checkbox state
+    groupBox->setChecked(std::bind(getter, settings)());
+
+    // Set up two way connection
+    connect(settings, notifier, groupBox, &QGroupBox::setChecked);
+    connect(groupBox, &QGroupBox::toggled, settings, setter);
 }

@@ -25,6 +25,7 @@
 #include "DebugManager.h"
 #include "SessionManager.h"
 #include "TranslationManager.h"
+#include "ApplicationSettings.h"
 
 #include "LuaState.h"
 #include "lua.hpp"
@@ -36,7 +37,6 @@
 #include "Lexilla.h"
 
 #include <QCommandLineParser>
-#include <QSettings>
 
 #include <QDirIterator>
 
@@ -95,9 +95,10 @@ bool NotepadNextApplication::init()
 
     setWindowIcon(QIcon(QStringLiteral(":/icons/NotepadNext.png")));
 
+    settings = new ApplicationSettings(this);
+
     if (parser.isSet("reset-settings")) {
-        QSettings settings;
-        settings.clear();
+        settings->clear();
     }
 
     // Translation files are stored as a qresource
@@ -114,7 +115,6 @@ bool NotepadNextApplication::init()
 
     recentFilesListManager = new RecentFilesListManager(this);
     editorManager = new EditorManager(this);
-    settings = new Settings(this);
     sessionManager = new SessionManager(this);
 
     connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [=](ScintillaNext *editor) {
@@ -144,11 +144,11 @@ bool NotepadNextApplication::init()
     luabridge::setHideMetatables(false);
     luabridge::getGlobalNamespace(luaState->L)
         .beginNamespace("nn")
-            .beginClass<Settings>("Settings")
-                .addFunction("showMenuBar", &Settings::setShowMenuBar)
-                .addFunction("showToolBar", &Settings::setShowToolBar)
-                .addFunction("showTabBar", &Settings::setShowTabBar)
-                .addFunction("showStatusBar", &Settings::setShowStatusBar)
+            .beginClass<ApplicationSettings>("Settings")
+                .addFunction("showMenuBar", &ApplicationSettings::setShowMenuBar)
+                .addFunction("showToolBar", &ApplicationSettings::setShowToolBar)
+                .addFunction("showTabBar", &ApplicationSettings::setShowTabBar)
+                .addFunction("showStatusBar", &ApplicationSettings::setShowStatusBar)
             .endClass()
         .endNamespace();
     luabridge::setGlobal(luaState->L, settings, "settings");
@@ -455,22 +455,12 @@ void NotepadNextApplication::openFiles(const QStringList &files)
 
 void NotepadNextApplication::loadSettings()
 {
-    QSettings qsettings;
-
-    settings->setRestorePreviousSession(qsettings.value("App/RestorePreviousSession", false).toBool());
-    settings->setRestoreUnsavedFiles(qsettings.value("App/RestoreUnsavedFiles", false).toBool());
-    settings->setRestoreTempFiles(qsettings.value("App/RestoreTempFiles", false).toBool());
-    recentFilesListManager->setFileList(qsettings.value("App/RecentFilesList").toStringList());
+    recentFilesListManager->setFileList(getSettings()->value("App/RecentFilesList").toStringList());
 }
 
 void NotepadNextApplication::saveSettings()
 {
-    QSettings qsettings;
-
-    qsettings.setValue("App/RestorePreviousSession", settings->restorePreviousSession());
-    qsettings.setValue("App/RestoreUnsavedFiles", settings->restoreUnsavedFiles());
-    qsettings.setValue("App/RestoreTempFiles", settings->restoreTempFiles());
-    qsettings.setValue("App/RecentFilesList", recentFilesListManager->fileList());
+    getSettings()->setValue("App/RecentFilesList", recentFilesListManager->fileList());
 }
 
 MainWindow *NotepadNextApplication::createNewWindow()
