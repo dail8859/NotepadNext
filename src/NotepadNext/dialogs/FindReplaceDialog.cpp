@@ -18,9 +18,9 @@
 
 
 #include "FindReplaceDialog.h"
+#include "ApplicationSettings.h"
 #include "ui_FindReplaceDialog.h"
 
-#include <QSettings>
 #include <QStatusBar>
 #include <QLineEdit>
 #include <QKeyEvent>
@@ -491,7 +491,7 @@ void FindReplaceDialog::loadSettings()
 {
     qInfo(Q_FUNC_INFO);
 
-    QSettings settings;
+    ApplicationSettings settings;
 
     settings.beginGroup("FindReplaceDialog");
 
@@ -533,7 +533,7 @@ void FindReplaceDialog::saveSettings()
 {
     qInfo(Q_FUNC_INFO);
 
-    QSettings settings;
+    ApplicationSettings settings;
 
     settings.beginGroup("FindReplaceDialog");
     settings.remove(""); // clear out any previous keys

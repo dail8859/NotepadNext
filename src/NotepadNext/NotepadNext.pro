@@ -62,6 +62,7 @@ license.files = ../../LICENSE
 license.path = $$OUT_PWD
 
 SOURCES += \
+    ApplicationSettings.cpp \
     ColorPickerDelegate.cpp \
     ComboBoxDelegate.cpp \
     Converter.cpp \
@@ -98,7 +99,6 @@ SOURCES += \
     SearchResultsCollector.cpp \
     SelectionTracker.cpp \
     SessionManager.cpp \
-    Settings.cpp \
     SpinBoxDelegate.cpp \
     TranslationManager.cpp \
     UndoAction.cpp \
@@ -136,6 +136,7 @@ SOURCES += \
     widgets/StatusLabel.cpp
 
 HEADERS += \
+    ApplicationSettings.h \
     ColorPickerDelegate.h \
     ComboBoxDelegate.h \
     Converter.h \
@@ -176,7 +177,6 @@ HEADERS += \
     SearchResultsCollector.h \
     SelectionTracker.h \
     SessionManager.h \
-    Settings.h \
     SpinBoxDelegate.h \
     TranslationManager.h \
     UndoAction.h \

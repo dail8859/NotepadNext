@@ -87,7 +87,7 @@ void SessionManager::clear() const
 
 void SessionManager::clearSettings() const
 {
-    QSettings settings;
+    ApplicationSettings settings;;
 
     // Clear everything out. There can be left over entries that are no longer needed
     settings.beginGroup("CurrentSession");
@@ -116,7 +116,7 @@ void SessionManager::saveSession(MainWindow *window)
 
     const ScintillaNext *currentEditor = window->currentEditor();
     int currentEditorIndex = 0;
-    QSettings settings;
+    ApplicationSettings settings;;
 
     settings.beginGroup("CurrentSession");
 
@@ -174,7 +174,7 @@ void SessionManager::loadSession(MainWindow *window)
 {
     qInfo(Q_FUNC_INFO);
 
-    QSettings settings;
+    ApplicationSettings settings;;
 
     settings.beginGroup("CurrentSession");
 

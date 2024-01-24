@@ -28,7 +28,6 @@
 #include <QMessageBox>
 #include <QStringList>
 #include <QClipboard>
-#include <QSettings>
 #include <QStandardPaths>
 #include <QWindow>
 #include <QPushButton>
@@ -49,7 +48,7 @@
 #include "DockAreaWidget.h"
 
 #include "NotepadNextApplication.h"
-#include "Settings.h"
+#include "ApplicationSettings.h"
 
 #include "ScintillaNext.h"
 
@@ -726,12 +725,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     addDockWidget(Qt::LeftDockWidgetArea, fileListDock);
     ui->menuView->addAction(fileListDock->toggleViewAction());
 
-    connect(app->getSettings(), &Settings::showMenuBarChanged, this, [=](bool showMenuBar) {
+    connect(app->getSettings(), &ApplicationSettings::showMenuBarChanged, this, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
     });
-    connect(app->getSettings(), &Settings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
-    connect(app->getSettings(), &Settings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
+    connect(app->getSettings(), &ApplicationSettings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
+    connect(app->getSettings(), &ApplicationSettings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
 
     setupLanguageMenu();
 
@@ -1640,46 +1639,36 @@ void MainWindow::saveSettings() const
 {
     qInfo(Q_FUNC_INFO);
 
-    QSettings settings;
+    ApplicationSettings *settings = app->getSettings();
 
-    settings.setValue("MainWindow/geometry", saveGeometry());
-    settings.setValue("MainWindow/windowState", saveState());
+    settings->setValue("MainWindow/geometry", saveGeometry());
+    settings->setValue("MainWindow/windowState", saveState());
 
-    settings.setValue("Gui/ShowMenuBar", app->getSettings()->showMenuBar());
-    settings.setValue("Gui/ShowToolBar", app->getSettings()->showToolBar());
-    settings.setValue("Gui/ShowStatusBar", app->getSettings()->showStatusBar());
-    settings.setValue("Gui/CombineSearchResults", app->getSettings()->combineSearchResults());
+    settings->setValue("Editor/ShowWhitespace", ui->actionShowWhitespace->isChecked());
+    settings->setValue("Editor/ShowEndOfLine", ui->actionShowEndofLine->isChecked());
+    settings->setValue("Editor/ShowWrapSymbol", ui->actionShowWrapSymbol->isChecked());
 
-    settings.setValue("Editor/ShowWhitespace", ui->actionShowWhitespace->isChecked());
-    settings.setValue("Editor/ShowEndOfLine", ui->actionShowEndofLine->isChecked());
-    settings.setValue("Editor/ShowWrapSymbol", ui->actionShowWrapSymbol->isChecked());
-
-    settings.setValue("Editor/WordWrap", ui->actionWordWrap->isChecked());
-    settings.setValue("Editor/IndentGuide", ui->actionShowIndentGuide->isChecked());
-    settings.setValue("Editor/ZoomLevel", zoomLevel);
+    settings->setValue("Editor/WordWrap", ui->actionWordWrap->isChecked());
+    settings->setValue("Editor/IndentGuide", ui->actionShowIndentGuide->isChecked());
+    settings->setValue("Editor/ZoomLevel", zoomLevel);
 
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
-    settings.setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
+    settings->setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
 }
 
 void MainWindow::restoreSettings()
 {
     qInfo(Q_FUNC_INFO);
 
-    QSettings settings;
+    ApplicationSettings *settings = app->getSettings();
 
-    app->getSettings()->setShowMenuBar(settings.value("Gui/ShowMenuBar", true).toBool());
-    app->getSettings()->setShowToolBar(settings.value("Gui/ShowToolBar", true).toBool());
-    app->getSettings()->setShowStatusBar(settings.value("Gui/ShowStatusBar", true).toBool());
-    app->getSettings()->setCombineSearchResults(settings.value("Gui/CombineSearchResults", false).toBool());
+    ui->actionShowWhitespace->setChecked(settings->value("Editor/ShowWhitespace", false).toBool());
+    ui->actionShowEndofLine->setChecked(settings->value("Editor/ShowEndOfLine", false).toBool());
+    ui->actionShowWrapSymbol->setChecked(settings->value("Editor/ShowWrapSymbol", false).toBool());
 
-    ui->actionShowWhitespace->setChecked(settings.value("Editor/ShowWhitespace", false).toBool());
-    ui->actionShowEndofLine->setChecked(settings.value("Editor/ShowEndOfLine", false).toBool());
-    ui->actionShowWrapSymbol->setChecked(settings.value("Editor/ShowWrapSymbol", false).toBool());
-
-    ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
-    ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
-    zoomLevel = settings.value("Editor/ZoomLevel", 0).toInt();
+    ui->actionWordWrap->setChecked(settings->value("Editor/WordWrap", false).toBool());
+    ui->actionShowIndentGuide->setChecked(settings->value("Editor/IndentGuide", true).toBool());
+    zoomLevel = settings->value("Editor/ZoomLevel", 0).toInt();
 }
 
 ISearchResultsHandler *MainWindow::determineSearchResultsHandler()
@@ -1697,14 +1686,14 @@ ISearchResultsHandler *MainWindow::determineSearchResultsHandler()
 
 void MainWindow::restoreWindowState()
 {
-    QSettings settings;
+    ApplicationSettings *settings = app->getSettings();
 
-    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
-    restoreState(settings.value("MainWindow/windowState").toByteArray());
+    restoreGeometry(settings->value("MainWindow/geometry").toByteArray());
+    restoreState(settings->value("MainWindow/windowState").toByteArray());
 
     // Restore the path if it has one
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
-    fawDock->setRootPath(settings.value("FolderAsWorkspace/RootPath").toString());
+    fawDock->setRootPath(settings->value("FolderAsWorkspace/RootPath").toString());
 
     // Always hide the dock no matter how the application was closed
     SearchResultsDock *srDock = findChild<SearchResultsDock *>();
@@ -1800,8 +1789,8 @@ void MainWindow::checkForUpdates(bool silent)
         disconnect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinished);
     }
 
-    QSettings settings;
-    settings.setValue("App/LastUpdateCheck", QDateTime::currentDateTime());
+
+    app->getSettings()->setValue("App/LastUpdateCheck", QDateTime::currentDateTime());
 #else
     Q_UNUSED(silent);
 #endif
@@ -1832,7 +1821,7 @@ void MainWindow::initUpdateCheck()
 
         // A bit after startup, see if we need to automatically check for an update
         QTimer::singleShot(15000, this, [=]() {
-            QSettings settings;
+            ApplicationSettings settings;
             QDateTime dt = settings.value("App/LastUpdateCheck", QDateTime::currentDateTime()).toDateTime();
 
             if (dt.isValid()) {
