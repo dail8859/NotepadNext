@@ -70,9 +70,9 @@ void TranslationManager::loadTranslation(QLocale locale)
     qInfo(Q_FUNC_INFO);
 
     // Load translation for NotepadNext e.g. ":/i18n/NotepadNext_en.qm"
-    if (translatorNpn.load(locale, QApplication::applicationName(), QString("_"), path)) {
-        app->installTranslator(&translatorNpn);
-        qInfo("Loaded %s translation %s for Notepad Next", qUtf8Printable(locale.name()), qUtf8Printable(translatorNpn.filePath()));
+    if (translatorApp.load(locale, QApplication::applicationName(), QString("_"), path)) {
+        app->installTranslator(&translatorApp);
+        qInfo("Loaded %s translation %s for Notepad Next", qUtf8Printable(locale.name()), qUtf8Printable(translatorApp.filePath()));
     } else {
         qInfo("%s translation not found for Notepad Next", qUtf8Printable(locale.name()));
     }
