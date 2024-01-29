@@ -44,6 +44,6 @@ private:
     const QString path;
     QCoreApplication *app;
 
-    QTranslator translatorNpn;
+    QTranslator translatorApp;
     QTranslator translatorQt;
 };
