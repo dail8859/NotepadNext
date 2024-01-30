@@ -54,7 +54,11 @@ QStringList TranslationManager::availableTranslations() const
 
 QString TranslationManager::FormatLocaleTerritoryAndLanguage(QLocale &locale)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 2, 0)
+    const QString territory = QLocale::countryToString(locale.country());
+#else
     const QString territory = QLocale::territoryToString(locale.territory());
+#endif
     const QString language = QLocale::languageToString(locale.language());
     return QStringLiteral("%1 / %2").arg(language, territory);
 }

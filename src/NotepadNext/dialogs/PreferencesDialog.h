@@ -40,6 +40,8 @@ public:
     PreferencesDialog(ApplicationSettings *settings, QWidget *parent = 0);
     ~PreferencesDialog();
 
+    void showApplicationRestartRequired() const;
+
 private:
     Ui::PreferencesDialog *ui;
     ApplicationSettings *settings;
