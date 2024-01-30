@@ -153,6 +153,7 @@ private:
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     bool checkFileForModification(ScintillaNext *editor);
     void showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileError error);
+    void showEditorZoomLevelIndicator();
 
     void saveSettings() const;
     void restoreSettings();

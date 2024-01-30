@@ -82,6 +82,8 @@
 #include "HtmlConverter.h"
 #include "RtfConverter.h"
 
+#include "FadingIndicator.h"
+
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
@@ -513,18 +515,24 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             editor->zoomIn();
         }
         zoomLevel = currentEditor()->zoom();
+
+        showEditorZoomLevelIndicator();
     });
     connect(ui->actionZoomOut, &QAction::triggered, this, [=]() {
         for (ScintillaNext *editor : editors()) {
             editor->zoomOut();
         }
         zoomLevel = currentEditor()->zoom();
+
+        showEditorZoomLevelIndicator();
     });
     connect(ui->actionZoomReset, &QAction::triggered, this, [=]() {
         for (ScintillaNext *editor : editors()) {
             editor->setZoom(0);
         }
         zoomLevel = 0;
+
+        showEditorZoomLevelIndicator();
     });
 
     // Zoom watcher has detected a zoom event, so just trigger the UI action
@@ -1633,6 +1641,12 @@ void MainWindow::showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileEr
 {
     const QString name = editor->isFile() ? editor->getFilePath() : editor->getName();
     QMessageBox::warning(this, tr("Error Saving File"), tr("An error occurred when saving <b>%1</b><br><br>Error: %2").arg(name, qt_error_string(error)));
+}
+
+void MainWindow::showEditorZoomLevelIndicator()
+{
+    // Not sure if Scintilla's zoom level matches up to an exact percentage, but visibily this is close
+    FadingIndicator::showText(currentEditor(), QStringLiteral("Zoom: %1%").arg(zoomLevel * 10 + 100));
 }
 
 void MainWindow::saveSettings() const
