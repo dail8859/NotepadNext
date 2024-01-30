@@ -71,6 +71,7 @@ SOURCES += \
     EditorHexViewerTableModel.cpp \
     EditorManager.cpp \
     EditorPrintPreviewRenderer.cpp \
+    FadingIndicator.cpp \
     FileDialogHelpers.cpp \
     Finder.cpp \
     HtmlConverter.cpp \
@@ -146,6 +147,7 @@ HEADERS += \
     EditorHexViewerTableModel.h \
     EditorManager.h \
     EditorPrintPreviewRenderer.h \
+    FadingIndicator.h \
     FileDialogHelpers.h \
     Finder.h \
     FocusWatcher.h \
