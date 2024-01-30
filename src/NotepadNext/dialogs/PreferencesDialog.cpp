@@ -32,6 +32,12 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
 {
     ui->setupUi(this);
 
+    QIcon icon = style()->standardIcon(QStyle::SP_MessageBoxInformation);
+    QPixmap pixmap = icon.pixmap(QSize(16, 16));
+    ui->labelAppRestartIcon->setPixmap(pixmap);
+    ui->labelAppRestartIcon->hide();
+    ui->labelAppRestart->hide();
+
     MapSettingToCheckBox(ui->checkBoxMenuBar, &ApplicationSettings::showMenuBar, &ApplicationSettings::setShowMenuBar, &ApplicationSettings::showMenuBarChanged);
     MapSettingToCheckBox(ui->checkBoxToolBar, &ApplicationSettings::showToolBar, &ApplicationSettings::setShowToolBar, &ApplicationSettings::showToolBarChanged);
     MapSettingToCheckBox(ui->checkBoxStatusBar, &ApplicationSettings::showStatusBar, &ApplicationSettings::setShowStatusBar, &ApplicationSettings::showStatusBarChanged);
@@ -53,14 +59,21 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     MapSettingToCheckBox(ui->checkBoxCombineSearchResults, &ApplicationSettings::combineSearchResults, &ApplicationSettings::setCombineSearchResults, &ApplicationSettings::combineSearchResultsChanged);
 
     populateTranslationComboBox();
-    connect(ui->comboBoxTranslation, &QComboBox::currentIndexChanged, this, [=](int index) {
+    connect(ui->comboBoxTranslation, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
         settings->setTranslation(ui->comboBoxTranslation->itemData(index).toString());
+        showApplicationRestartRequired();
     });
 }
 
 PreferencesDialog::~PreferencesDialog()
 {
     delete ui;
+}
+
+void PreferencesDialog::showApplicationRestartRequired() const
+{
+    ui->labelAppRestartIcon->show();
+    ui->labelAppRestart->show();
 }
 
 template<typename Func1, typename Func2, typename Func3>
