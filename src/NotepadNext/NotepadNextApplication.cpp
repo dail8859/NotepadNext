@@ -113,8 +113,8 @@ bool NotepadNextApplication::init()
         translationManager->loadTranslationByName(settings->translation());
     }
 
-    connect(settings, &ApplicationSettings::translationChanged, translationManager, &TranslationManager::loadTranslationByName);
-
+    // This connection isn't needed since the application can not appropriately retranslate the UI at runtime
+    //connect(settings, &ApplicationSettings::translationChanged, translationManager, &TranslationManager::loadTranslationByName);
 
     luaState = new LuaState();
 
