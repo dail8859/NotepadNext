@@ -22,9 +22,6 @@ jobs:
           qt_version: "5.15"
           modules: ""
         - 
-          qt_version: "6.2"
-          modules: "qt5compat"
-        - 
           qt_version: "6.5"
           modules: "qt5compat"
         - 
