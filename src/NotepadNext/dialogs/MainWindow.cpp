@@ -1646,7 +1646,7 @@ void MainWindow::showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileEr
 void MainWindow::showEditorZoomLevelIndicator()
 {
     // Not sure if Scintilla's zoom level matches up to an exact percentage, but visibly this is close
-    FadingIndicator::showText(currentEditor(), QStringLiteral("Zoom: %1%").arg(zoomLevel * 10 + 100));
+    FadingIndicator::showText(currentEditor(), tr("Zoom: %1%").arg(zoomLevel * 10 + 100));
 }
 
 void MainWindow::saveSettings() const
