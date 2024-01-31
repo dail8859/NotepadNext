@@ -36,7 +36,7 @@ HEADERS += \
     $$PWD/ads/src/DockContainerWidget.h \
     $$PWD/ads/src/DockManager.h \
     $$PWD/ads/src/DockWidget.h \
-    $$PWD/ads/src/DockWidgetTab.h \ 
+    $$PWD/ads/src/DockWidgetTab.h \
     $$PWD/ads/src/DockingStateReader.h \
     $$PWD/ads/src/FloatingDockContainer.h \
     $$PWD/ads/src/FloatingDragPreview.h \
@@ -47,27 +47,37 @@ HEADERS += \
     $$PWD/ads/src/ElidingLabel.h \
     $$PWD/ads/src/IconProvider.h \
     $$PWD/ads/src/DockComponentsFactory.h  \
-    $$PWD/ads/src/DockFocusController.h
+    $$PWD/ads/src/DockFocusController.h \
+    $$PWD/ads/src/AutoHideDockContainer.h \
+    $$PWD/ads/src/AutoHideSideBar.h \
+    $$PWD/ads/src/AutoHideTab.h \
+    $$PWD/ads/src/PushButton.h \
+    $$PWD/ads/src/ResizeHandle.h
 
 
 SOURCES += \
-	$$PWD/ads/src/ads_globals.cpp \
-	$$PWD/ads/src/DockAreaWidget.cpp \
-	$$PWD/ads/src/DockAreaTabBar.cpp \
-	$$PWD/ads/src/DockContainerWidget.cpp \
-	$$PWD/ads/src/DockManager.cpp \
-	$$PWD/ads/src/DockWidget.cpp \
-	$$PWD/ads/src/DockingStateReader.cpp \
-	$$PWD/ads/src/DockWidgetTab.cpp \
-	$$PWD/ads/src/FloatingDockContainer.cpp \
-	$$PWD/ads/src/FloatingDragPreview.cpp \
-	$$PWD/ads/src/DockOverlay.cpp \
-	$$PWD/ads/src/DockSplitter.cpp \
-	$$PWD/ads/src/DockAreaTitleBar.cpp \
-	$$PWD/ads/src/ElidingLabel.cpp \
-	$$PWD/ads/src/IconProvider.cpp \
-	$$PWD/ads/src/DockComponentsFactory.cpp \
-	$$PWD/ads/src/DockFocusController.cpp
+    $$PWD/ads/src/ads_globals.cpp \
+    $$PWD/ads/src/DockAreaWidget.cpp \
+    $$PWD/ads/src/DockAreaTabBar.cpp \
+    $$PWD/ads/src/DockContainerWidget.cpp \
+    $$PWD/ads/src/DockManager.cpp \
+    $$PWD/ads/src/DockWidget.cpp \
+    $$PWD/ads/src/DockingStateReader.cpp \
+    $$PWD/ads/src/DockWidgetTab.cpp \
+    $$PWD/ads/src/FloatingDockContainer.cpp \
+    $$PWD/ads/src/FloatingDragPreview.cpp \
+    $$PWD/ads/src/DockOverlay.cpp \
+    $$PWD/ads/src/DockSplitter.cpp \
+    $$PWD/ads/src/DockAreaTitleBar.cpp \
+    $$PWD/ads/src/ElidingLabel.cpp \
+    $$PWD/ads/src/IconProvider.cpp \
+    $$PWD/ads/src/DockComponentsFactory.cpp \
+    $$PWD/ads/src/DockFocusController.cpp \
+    $$PWD/ads/src/AutoHideDockContainer.cpp \
+    $$PWD/ads/src/AutoHideSideBar.cpp \
+    $$PWD/ads/src/AutoHideTab.cpp \
+    $$PWD/ads/src/PushButton.cpp \
+    $$PWD/ads/src/ResizeHandle.cpp
 
 
 unix:!macx {
