@@ -259,7 +259,7 @@ struct CharacterExtracted {
 
 /**
  */
-class Document : PerLine, public Scintilla::IDocument, public Scintilla::ILoader {
+class Document : PerLine, public Scintilla::IDocument, public Scintilla::ILoader, public Scintilla::IDocumentEditable {
 
 public:
 	/** Used to pair watcher pointer with user data. */
@@ -329,7 +329,7 @@ public:
 	Document &operator=(Document &&) = delete;
 	~Document() override;
 
-	int AddRef();
+	int SCI_METHOD AddRef() noexcept override;
 	int SCI_METHOD Release() override;
 
 	// From PerLine
@@ -347,6 +347,7 @@ public:
 	int SCI_METHOD Version() const override {
 		return Scintilla::dvRelease4;
 	}
+	int SCI_METHOD DEVersion() const noexcept override;
 
 	void SCI_METHOD SetErrorStatus(int status) override;
 
@@ -383,6 +384,7 @@ public:
 	Sci::Position InsertString(Sci::Position position, std::string_view sv);
 	void ChangeInsertion(const char *s, Sci::Position length);
 	int SCI_METHOD AddData(const char *data, Sci_Position length) override;
+	IDocumentEditable *AsDocumentEditable() noexcept;
 	void * SCI_METHOD ConvertToDocument() override;
 	Sci::Position Undo();
 	Sci::Position Redo();
@@ -455,11 +457,12 @@ public:
 	int MarkerHandleFromLine(Sci::Line line, int which) const noexcept;
 	Sci_Position SCI_METHOD LineStart(Sci_Position line) const override;
 	[[nodiscard]] Range LineRange(Sci::Line line) const noexcept;
-	bool IsLineStartPosition(Sci::Position position) const;
+	bool IsLineStartPosition(Sci::Position position) const noexcept;
 	Sci_Position SCI_METHOD LineEnd(Sci_Position line) const override;
-	Sci::Position LineEndPosition(Sci::Position position) const;
-	bool IsLineEndPosition(Sci::Position position) const;
-	bool IsPositionInLineEnd(Sci::Position position) const;
+	Sci::Position LineStartPosition(Sci::Position position) const noexcept;
+	Sci::Position LineEndPosition(Sci::Position position) const noexcept;
+	bool IsLineEndPosition(Sci::Position position) const noexcept;
+	bool IsPositionInLineEnd(Sci::Position position) const noexcept;
 	Sci::Position VCHomePosition(Sci::Position position) const;
 	Sci::Position IndexLineStart(Sci::Line line, Scintilla::LineCharacterIndexType lineCharacterIndex) const noexcept;
 	Sci::Line LineFromPositionIndex(Sci::Position pos, Scintilla::LineCharacterIndexType lineCharacterIndex) const noexcept;

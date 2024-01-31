@@ -491,9 +491,12 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void ParaUpOrDown(int direction, Selection::SelTypes selt);
 	Range RangeDisplayLine(Sci::Line lineVisible);
 	Sci::Position StartEndDisplayLine(Sci::Position pos, bool start);
+	Sci::Position HomeWrapPosition(Sci::Position position);
 	Sci::Position VCHomeDisplayPosition(Sci::Position position);
 	Sci::Position VCHomeWrapPosition(Sci::Position position);
 	Sci::Position LineEndWrapPosition(Sci::Position position);
+	SelectionPosition PositionMove(Scintilla::Message iMessage, SelectionPosition spCaretNow);
+	SelectionRange SelectionMove(Scintilla::Message iMessage, size_t r);
 	int HorizontalMove(Scintilla::Message iMessage);
 	int DelWordOrLine(Scintilla::Message iMessage);
 	virtual int KeyCommand(Scintilla::Message iMessage);
@@ -524,8 +527,10 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	/** PositionInSelection returns true if position in selection. */
 	bool PositionInSelection(Sci::Position pos);
 	bool PointInSelection(Point pt);
+	ptrdiff_t SelectionFromPoint(Point pt);
 	bool PointInSelMargin(Point pt) const;
 	Window::Cursor GetMarginCursor(Point pt) const noexcept;
+	void DropSelection(size_t part);
 	void TrimAndSetSelection(Sci::Position currentPos_, Sci::Position anchor_);
 	void LineSelection(Sci::Position lineCurrentPos_, Sci::Position lineAnchorPos_, bool wholeLine);
 	void WordSelection(Sci::Position pos);
@@ -543,6 +548,7 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	virtual void FineTickerStart(TickReason reason, int millis, int tolerance);
 	virtual void FineTickerCancel(TickReason reason);
 	virtual bool SetIdle(bool) { return false; }
+	void ChangeMouseCapture(bool on);
 	virtual void SetMouseCapture(bool on) = 0;
 	virtual bool HaveMouseCapture() = 0;
 	void SetFocusState(bool focusState);
@@ -609,6 +615,7 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void StyleSetMessage(Scintilla::Message iMessage, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
 	Scintilla::sptr_t StyleGetMessage(Scintilla::Message iMessage, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
 	void SetSelectionNMessage(Scintilla::Message iMessage, Scintilla::uptr_t wParam, Scintilla::sptr_t lParam);
+	void SetSelectionMode(uptr_t wParam, bool setMoveExtends);
 
 	// Coercion functions for transforming WndProc parameters into pointers
 	static void *PtrFromSPtr(Scintilla::sptr_t lParam) noexcept {

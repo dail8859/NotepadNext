@@ -37,6 +37,22 @@ size_t Chunk::Length() const noexcept {
 	return end - start;
 }
 
+namespace {
+
+#ifdef __APPLE__
+// Archaic macOS colours for the default: black on light yellow
+constexpr ColourRGBA colourTextAndArrow(black);
+constexpr ColourRGBA colourBackground(0xff, 0xff, 0xc6);
+#else
+// Grey on white
+constexpr ColourRGBA colourTextAndArrow(0x80, 0x80, 0x80);
+constexpr ColourRGBA colourBackground(white);
+#endif
+
+constexpr ColourRGBA silver(0xc0, 0xc0, 0xc0);
+
+}
+
 CallTip::CallTip() noexcept {
 	wCallTip = {};
 	inCallTipMode = false;
@@ -54,17 +70,12 @@ CallTip::CallTip() noexcept {
 	borderHeight = 2; // Extra line for border and an empty line at top and bottom.
 	verticalOffset = 1;
 
-#ifdef __APPLE__
-	// proper apple colours for the default
-	colourBG = ColourRGBA(0xff, 0xff, 0xc6);
-	colourUnSel = ColourRGBA(0, 0, 0);
-#else
-	colourBG = ColourRGBA(0xff, 0xff, 0xff);
-	colourUnSel = ColourRGBA(0x80, 0x80, 0x80);
-#endif
+	colourBG = colourBackground;
+	colourUnSel = colourTextAndArrow;
+
 	colourSel = ColourRGBA(0, 0, 0x80);
-	colourShade = ColourRGBA(0, 0, 0);
-	colourLight = ColourRGBA(0xc0, 0xc0, 0xc0);
+	colourShade = black;
+	colourLight = silver;
 	codePage = 0;
 	clickPlace = 0;
 }
@@ -153,7 +164,7 @@ int CallTip::DrawChunk(Surface *surface, int x, std::string_view sv,
 	size_t startSeg = 0;
 	for (const size_t endSeg : ends) {
 		assert(endSeg > 0);
-		int xEnd;
+		int xEnd = 0;
 		if (IsArrowCharacter(sv[startSeg])) {
 			xEnd = x + widthArrow;
 			const bool upArrow = sv[startSeg] == '\001';
@@ -217,7 +228,8 @@ int CallTip::PaintContents(Surface *surfaceWindow, bool draw) {
 		chunkHighlight.start -= lineStart;
 		chunkHighlight.end -= lineStart;
 
-		rcClient.top = static_cast<XYPOSITION>(ytext - ascent - 1);
+		const int top = ytext - ascent - 1;
+		rcClient.top = top;
 
 		int x = insetX;     // start each line at this inset
 
@@ -272,7 +284,7 @@ void CallTip::MouseClick(Point pt) noexcept {
 }
 
 PRectangle CallTip::CallTipStart(Sci::Position pos, Point pt, int textHeight, const char *defn,
-                                 int codePage_, Surface *surfaceMeasure, std::shared_ptr<Font> font_) {
+                                 int codePage_, Surface *surfaceMeasure, const std::shared_ptr<Font> &font_) {
 	clickPlace = 0;
 	val = defn;
 	codePage = codePage_;

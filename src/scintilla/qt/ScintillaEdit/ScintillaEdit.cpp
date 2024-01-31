@@ -2212,8 +2212,16 @@ void ScintillaEdit::setSelectionMode(sptr_t selectionMode) {
     send(SCI_SETSELECTIONMODE, selectionMode, 0);
 }
 
+void ScintillaEdit::changeSelectionMode(sptr_t selectionMode) {
+    send(SCI_CHANGESELECTIONMODE, selectionMode, 0);
+}
+
 sptr_t ScintillaEdit::selectionMode() const {
     return send(SCI_GETSELECTIONMODE, 0, 0);
+}
+
+void ScintillaEdit::setMoveExtendsSelection(bool moveExtendsSelection) {
+    send(SCI_SETMOVEEXTENDSSELECTION, moveExtendsSelection, 0);
 }
 
 bool ScintillaEdit::moveExtendsSelection() const {
@@ -2690,6 +2698,10 @@ void ScintillaEdit::setSelection(sptr_t caret, sptr_t anchor) {
 
 void ScintillaEdit::addSelection(sptr_t caret, sptr_t anchor) {
     send(SCI_ADDSELECTION, caret, anchor);
+}
+
+sptr_t ScintillaEdit::selectionFromPoint(sptr_t x, sptr_t y) {
+    return send(SCI_SELECTIONFROMPOINT, x, y);
 }
 
 void ScintillaEdit::dropSelectionN(sptr_t selection) {

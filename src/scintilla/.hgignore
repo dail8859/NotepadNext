@@ -41,6 +41,7 @@ win32/*.plist
 *.mode1v3
 *.pbxuser
 *.pbproj
+*.tgz
 *.log
 *.xcbkptlist
 *.xcuserstate
@@ -50,6 +51,8 @@ xcschememanagement.plist
 .DS_Store
 Release
 Debug
+x64
+ARM64
 cocoa/build
 cocoa/ScintillaFramework/build
 cocoa/ScintillaTest/build
