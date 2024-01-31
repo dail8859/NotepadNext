@@ -5,8 +5,10 @@
 #include <cstddef>
 #include <cstring>
 #include <stdexcept>
+#include <string>
 #include <string_view>
 #include <vector>
+#include <array>
 #include <optional>
 #include <algorithm>
 #include <memory>
@@ -39,6 +41,12 @@ public:
 	char CharAt(Sci::Position index) const override {
 		return s.at(index);
 	}
+	Sci::Position MovePositionOutsideChar(Sci::Position pos, [[maybe_unused]] Sci::Position moveDir) const noexcept override {
+		return pos;
+	}
+	std::string GetCharRange(Sci::Position position, Sci::Position lengthRetrieve) const {
+		return s.substr(position, lengthRetrieve);
+	}
 };
 
 // Test RESearch.
@@ -46,18 +54,29 @@ public:
 TEST_CASE("RESearch") {
 
 	CharClassify cc;
-	const char sTextSpace[] = "Scintilla ";
-	const char pattern[] = "[a-z]+";
+	constexpr std::string_view sTextSpace = "Scintilla ";
+	constexpr std::string_view pattern = "[a-z]+";
 
 	SECTION("Compile") {
 		std::unique_ptr<RESearch> re = std::make_unique<RESearch>(&cc);
-		const char *msg = re->Compile(pattern, strlen(pattern), true, false);
+		const char *msg = re->Compile(pattern.data(), pattern.length(), true, false);
+		REQUIRE(nullptr == msg);
+	}
+
+	SECTION("Bug2413") {
+		// Check for https://sourceforge.net/p/scintilla/bugs/2413/
+		std::unique_ptr<RESearch> re = std::make_unique<RESearch>(&cc);
+		constexpr std::string_view BOW = "\\<";
+		constexpr std::string_view EOW = "\\>";
+		const char *msg = re->Compile(BOW.data(), BOW.length(), true, false);
+		REQUIRE(nullptr == msg);
+		msg = re->Compile(EOW.data(), EOW.length(), true, false);
 		REQUIRE(nullptr == msg);
 	}
 
 	SECTION("Execute") {
 		std::unique_ptr<RESearch> re = std::make_unique<RESearch>(&cc);
-		re->Compile(pattern, strlen(pattern), true, false);
+		re->Compile(pattern.data(), pattern.length(), true, false);
 		StringCI sci(sTextSpace);
 		const int x = re->Execute(sci, 0, sci.Length());
 		REQUIRE(x == 1);
@@ -67,11 +86,11 @@ TEST_CASE("RESearch") {
 
 	SECTION("Grab") {
 		std::unique_ptr<RESearch> re = std::make_unique<RESearch>(&cc);
-		re->Compile(pattern, strlen(pattern), true, false);
+		re->Compile(pattern.data(), pattern.length(), true, false);
 		StringCI sci(sTextSpace);
 		re->Execute(sci, 0, sci.Length());
-		re->GrabMatches(sci);
-		REQUIRE(re->pat[0] == "cintilla");
+		std::string pat = sci.GetCharRange(re->bopat[0], re->eopat[0] - re->bopat[0]);
+		REQUIRE(pat == "cintilla");
 	}
 
 }
