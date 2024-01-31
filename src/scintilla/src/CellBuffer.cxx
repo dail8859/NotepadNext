@@ -11,6 +11,7 @@
 #include <cstring>
 #include <cstdio>
 #include <cstdarg>
+#include <climits>
 
 #include <stdexcept>
 #include <string>
@@ -405,7 +406,7 @@ const char *UndoHistory::AppendAction(ActionType at, Sci::Position position, con
 	} else if (detach && (*detach > currentAction)) {
 		detach = currentAction;
 	}
-	int oldCurrentAction = currentAction;
+	const int oldCurrentAction = currentAction;
 	if (currentAction >= 1) {
 		if (0 == undoSequenceDepth) {
 			// Top level actions may not always be coalesced
@@ -646,7 +647,7 @@ void CellBuffer::GetCharRange(char *buffer, Sci::Position position, Sci::Positio
 }
 
 char CellBuffer::StyleAt(Sci::Position position) const noexcept {
-	return hasStyles ? style.ValueAt(position) : 0;
+	return hasStyles ? style.ValueAt(position) : '\0';
 }
 
 void CellBuffer::GetStyleRange(unsigned char *buffer, Sci::Position position, Sci::Position lengthRetrieve) const {
@@ -773,6 +774,9 @@ Sci::Position CellBuffer::Length() const noexcept {
 }
 
 void CellBuffer::Allocate(Sci::Position newSize) {
+	if (!largeDocument && (newSize > INT32_MAX)) {
+		throw std::runtime_error("CellBuffer::Allocate: size of standard document limited to 2G.");
+	}
 	substance.ReAllocate(newSize);
 	if (hasStyles) {
 		style.ReAllocate(newSize);
@@ -846,6 +850,33 @@ Sci::Position CellBuffer::LineStart(Sci::Line line) const noexcept {
 		return Length();
 	else
 		return plv->LineStart(line);
+}
+
+Sci::Position CellBuffer::LineEnd(Sci::Line line) const noexcept {
+	if (line >= Lines() - 1) {
+		return LineStart(line + 1);
+	} else {
+		Sci::Position position = LineStart(line + 1);
+		if (LineEndType::Unicode == GetLineEndTypes()) {
+			const unsigned char bytes[] = {
+				UCharAt(position - 3),
+				UCharAt(position - 2),
+				UCharAt(position - 1),
+			};
+			if (UTF8IsSeparator(bytes)) {
+				return position - UTF8SeparatorLength;
+			}
+			if (UTF8IsNEL(bytes + 1)) {
+				return position - UTF8NELLength;
+			}
+		}
+		position--; // Back over CR or LF
+		// When line terminator is CR+LF, may need to go back one more
+		if ((position > LineStart(line)) && (CharAt(position - 1) == '\r')) {
+			position--;
+		}
+		return position;
+	}
 }
 
 Sci::Line CellBuffer::LineFromPosition(Sci::Position pos) const noexcept {

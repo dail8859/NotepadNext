@@ -591,7 +591,9 @@ public:
 	void copyRange(sptr_t start, sptr_t end);
 	void copyText(sptr_t length, const char * text);
 	void setSelectionMode(sptr_t selectionMode);
+	void changeSelectionMode(sptr_t selectionMode);
 	sptr_t selectionMode() const;
+	void setMoveExtendsSelection(bool moveExtendsSelection);
 	bool moveExtendsSelection() const;
 	sptr_t getLineSelStartPosition(sptr_t line);
 	sptr_t getLineSelEndPosition(sptr_t line);
@@ -711,6 +713,7 @@ public:
 	void clearSelections();
 	void setSelection(sptr_t caret, sptr_t anchor);
 	void addSelection(sptr_t caret, sptr_t anchor);
+	sptr_t selectionFromPoint(sptr_t x, sptr_t y);
 	void dropSelectionN(sptr_t selection);
 	void setMainSelection(sptr_t selection);
 	sptr_t mainSelection() const;
