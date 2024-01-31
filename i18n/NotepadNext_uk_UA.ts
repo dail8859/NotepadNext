@@ -41,14 +41,14 @@
     <name>Downloader</name>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="23"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="249"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="263"/>
         <source>Updater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="90"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="108"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="110"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="345"/>
         <source>Downloading updates</source>
         <translation>Завантаження оновлень</translation>
     </message>
@@ -64,141 +64,141 @@
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="161"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="107"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
         <source>Stop</source>
         <translation>Зупинити</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="411"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="111"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="445"/>
         <source>Time remaining</source>
         <translation>Часу залишилось</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="111"/>
         <source>unknown</source>
         <translation>невідомо</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="197"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="197"/>
         <source>Cannot find downloaded update!</source>
         <translation>Завантажене оновлення не знайдено!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="201"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="215"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="202"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="216"/>
         <source>Download complete!</source>
         <translation>Завантаження завершено!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="203"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="217"/>
         <source>The installer will open separately</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="210"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="224"/>
         <source>Click &quot;OK&quot; to begin installing the update</source>
         <translation>Натисніть &quot;ОК&quot; для встановлення оновлення</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="212"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="226"/>
         <source>In order to install the update, you may need to quit the application.</source>
         <translation>Щоб інсталювати оновлення, вам може знадобитися вийти з програми.</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="216"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="230"/>
         <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="235"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="249"/>
         <source>Click the &quot;Open&quot; button to apply the update</source>
         <translation>Натисніть кнопку &quot;Відкрити&quot; для застосування оновлень</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="253"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="267"/>
         <source>Are you sure you want to cancel the download?</source>
         <translation>Ви дійсно хочете скасувати завантаження ?</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="256"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="270"/>
         <source>Are you sure you want to cancel the download? This is a mandatory update, exiting now will close the application</source>
         <translation>Ви дійсно хочете скасувати завантаження ? Це важливе оновлення, тому роботу програми буде завершено.</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="314"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="323"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="328"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="337"/>
         <source>%1 bytes</source>
         <translation>%1 байт</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="317"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="326"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="340"/>
         <source>%1 KB</source>
         <translation>%1 КБ</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="320"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="329"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="334"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="343"/>
         <source>%1 MB</source>
         <translation>%1 МБ</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="345"/>
         <source>of</source>
         <translation>з</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="357"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="391"/>
         <source>Downloading Updates</source>
         <translation>Завантаження оновлень</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="392"/>
         <source>Time Remaining</source>
         <translation>Часу залишилось</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="392"/>
         <source>Unknown</source>
         <translation>Невідомо</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="385"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="419"/>
         <source>about %1 hours</source>
         <translation>близько %1 годин</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="387"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="421"/>
         <source>about one hour</source>
         <translation>близько години</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="396"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="430"/>
         <source>%1 minutes</source>
         <translation>%1 хвилин</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="398"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="432"/>
         <source>1 minute</source>
         <translation>1 хвилина</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="406"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="440"/>
         <source>%1 seconds</source>
         <translation>%1 секунд</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="408"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="442"/>
         <source>1 second</source>
         <translation>1 секунда</translation>
     </message>
@@ -883,7 +883,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1212"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1219"/>
         <source>Export As</source>
         <translation>Експортувати як</translation>
     </message>
@@ -1429,7 +1429,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="879"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="573"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="580"/>
         <source>Start Recording</source>
         <translation>Почати запис</translation>
     </message>
@@ -1564,216 +1564,221 @@
         <translation>Створити стовпець...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1040"/>
-        <source>Alt+C</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1045"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1042"/>
         <source>Export as HTML...</source>
         <translation>Експортувати як HTML...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1050"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1047"/>
         <source>Export as RTF...</source>
         <translation>Експортувати як RTF...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1055"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1052"/>
         <source>Copy as HTML</source>
         <translation>Копіювати як HTML</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1060"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1057"/>
         <source>Copy as RTF</source>
         <translation>Копіювати як RTF</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1065"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1062"/>
         <source>Base 64 Encode</source>
         <translation>Зашифрувати Base 64</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1070"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1067"/>
         <source>URL Encode</source>
         <translation>Зашифрувати URL</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1075"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1072"/>
         <source>Base 64 Decode</source>
         <translation>Розшифрувати Base 64</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1080"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1077"/>
         <source>URL Decode</source>
         <translation>Розшифрувати URL</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1085"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1082"/>
         <source>Copy URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1090"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1087"/>
         <source>Remove Empty Lines</source>
         <translation>Видалити пусті рядки</translation>
     </message>
     <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1096"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1099"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1102"/>
         <source>Show in Explorer</source>
         <translation>Показати в файловому менеджері</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1111"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1108"/>
         <source>Open Command Prompt Here</source>
         <translation>Відкрити командний рядок тут</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1116"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1113"/>
         <source>Toggle Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1119"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1116"/>
         <source>Ctrl+F2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1124"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1121"/>
         <source>Next Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1127"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1124"/>
         <source>F2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1132"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1129"/>
         <source>Previous Bookmark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1135"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1132"/>
         <source>Shift+F2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1140"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1137"/>
         <source>Clear Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1145"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1142"/>
         <source>Invert Bookmarks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="351"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="352"/>
         <source>Go to line</source>
         <translation>Перейти до рядку</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="351"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="352"/>
         <source>Line Number (1 - %1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="564"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="571"/>
         <source>Stop Recording</source>
         <translation>Зупинити запис</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="818"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="825"/>
         <source>New %1</source>
         <translation>Новий %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="866"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="873"/>
         <source>Create File</source>
         <translation>Створити файл</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="866"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="873"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; не існує. Бажаєте створити його ?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="917"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1015"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="924"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1022"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Зберегти файл &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="918"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1016"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="925"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1023"/>
         <source>Save File</source>
         <translation>Зберегти файл</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="971"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="978"/>
         <source>Open Folder as Workspace</source>
         <translation>Відкрити каталог як робочий простір</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="989"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="996"/>
         <source>Reload File</source>
         <translation>Перезавантажити файл</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="989"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="996"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>Ви дійсно хочете перезавантажити файл&lt;b&gt;%1&lt;/b&gt;? Всі не збережені зміни будут втрачені.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1183"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1190"/>
         <source>Save a Copy As</source>
         <translation>Зберегти копію як</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1246"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1261"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1253"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1268"/>
         <source>Rename</source>
         <translation>Перейменувати</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1261"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1268"/>
         <source>Name:</source>
         <translation>Назва:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1281"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1288"/>
         <source>Delete File</source>
         <translation>Видалити файл</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1281"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1288"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>Ви дійсно хочете перемістити файл &lt;b&gt;%1&lt;/b&gt; до смітника ?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1291"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1298"/>
         <source>Error Deleting File</source>
         <translation>Помилка видалення файлу</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1291"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1298"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1395"/>
+        <source>Administrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1643"/>
         <source>Error Saving File</source>
         <translation>Помилка збереження файлу</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1643"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Під час збереження виникла помилка&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Помилка: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1810"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1649"/>
+        <source>Zoom: %1%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1817"/>
         <source>No updates are available at this time.</source>
         <translation>На даний момент не має ніяких оновлень.</translation>
     </message>
@@ -1787,23 +1792,59 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="22"/>
-        <source>Menu Bar</source>
-        <translation>Панель меню</translation>
+        <source>Show menu bar</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="29"/>
-        <source>Tool Bar</source>
-        <translation>Панель інструментів</translation>
+        <source>Show toolbar</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="36"/>
-        <source>Status Bar</source>
-        <translation>Панель стану</translation>
+        <source>Show status bar</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="43"/>
+        <source>Restore previous session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="62"/>
+        <source>Temporary files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="86"/>
+        <source>Translation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="110"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="122"/>
+        <source>An application restart is required to apply certain settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Menu Bar</source>
+        <translation type="vanished">Панель меню</translation>
+    </message>
+    <message>
+        <source>Tool Bar</source>
+        <translation type="vanished">Панель інструментів</translation>
+    </message>
+    <message>
+        <source>Status Bar</source>
+        <translation type="vanished">Панель стану</translation>
+    </message>
+    <message>
         <source>Restore Previous Session</source>
-        <translation>Відновлювати попередню сесію</translation>
+        <translation type="vanished">Відновлювати попередню сесію</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="55"/>
@@ -1811,9 +1852,8 @@
         <translation>Не збережені зміни</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="62"/>
         <source>Temp Files</source>
-        <translation>Тимчасові файли</translation>
+        <translation type="vanished">Тимчасові файли</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
@@ -1821,40 +1861,48 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="61"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="52"/>
         <source>Warning</source>
         <translation>Попередження</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="61"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="52"/>
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
         <translation>Ця функція є експериментальною, тому її не можна вважати безпечною. Її використання може призвести до втрати даних. Використовуйте цю опцію на власний розсуд.</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="106"/>
+        <source>&lt;System Default&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="159"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="193"/>
         <source>List All Tabs</source>
         <translation>Список всіх вкладок</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="169"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="203"/>
         <source>Detach Group</source>
         <translation>Відокремити групу</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="182"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="228"/>
+        <source>Minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Close Active Tab</source>
-        <translation>Закрити поточну вкладку</translation>
+        <translation type="vanished">Закрити поточну вкладку</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="186"/>
         <source>Close Group</source>
-        <translation>Закрити групу</translation>
+        <translation type="vanished">Закрити групу</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="248"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="268"/>
         <source>Close Tab</source>
         <translation>Закрити вкладку</translation>
     </message>
@@ -1938,53 +1986,162 @@
 <context>
     <name>Updater</name>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="430"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="435"/>
         <source>Would you like to download the update now?</source>
         <translation>Ви бажаєте завантажити оновлення зараз ?</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="433"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="438"/>
         <source>Would you like to download the update now? This is a mandatory update, exiting now will close the application</source>
         <translation>Ви бажаєте завантажити оновлення зараз ? Це важливе оновлення, тому роботу програми буде завершено.</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="438"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="443"/>
         <source>Version %1 of %2 has been released!</source>
         <translation>Версія %1 з %2 була опублікована!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="473"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="478"/>
         <source>No updates are available for the moment</source>
         <translation>На даний момент жодні оновлення не доступні</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="475"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="480"/>
         <source>Congratulations! You are running the latest version of %1</source>
         <translation>Вітаємо! Ви використовуєте останню версію %1</translation>
     </message>
 </context>
 <context>
+    <name>ads::CAutoHideTab</name>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="384"/>
+        <source>Detach</source>
+        <translation type="unfinished">Відокремити</translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="389"/>
+        <source>Pin To...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="391"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="392"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="393"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="394"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="396"/>
+        <source>Unpin (Dock)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="398"/>
+        <source>Close</source>
+        <translation type="unfinished">Закрити</translation>
+    </message>
+</context>
+<context>
     <name>ads::CDockAreaTitleBar</name>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="584"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="749"/>
         <source>Detach Group</source>
         <translation>Відокремити групу</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="587"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="749"/>
+        <source>Detach</source>
+        <translation type="unfinished">Відокремити</translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="754"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="811"/>
+        <source>Unpin (Dock)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="754"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="816"/>
+        <source>Pin Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="760"/>
+        <source>Pin Group To...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="762"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="763"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="764"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="765"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="773"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="828"/>
+        <source>Minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="778"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="828"/>
+        <source>Close</source>
+        <translation type="unfinished">Закрити</translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="778"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="837"/>
         <source>Close Group</source>
         <translation>Закрити групу</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="589"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="784"/>
         <source>Close Other Groups</source>
         <translation>Закрити інші групи</translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="820"/>
+        <source>Pin Active Tab (Press Ctrl to Pin Group)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="833"/>
+        <source>Close Active Tab</source>
+        <translation type="unfinished">Закрити поточну вкладку</translation>
     </message>
 </context>
 <context>
     <name>ads::CDockManager</name>
     <message>
-        <location filename="../src/ads/src/DockManager.cpp" line="490"/>
+        <location filename="../src/ads/src/DockManager.cpp" line="508"/>
         <source>Show View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1992,17 +2149,47 @@
 <context>
     <name>ads::CDockWidgetTab</name>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="519"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="544"/>
         <source>Detach</source>
         <translation>Відокремити</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="522"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="548"/>
+        <source>Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="552"/>
+        <source>Pin To...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="554"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="556"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="557"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="562"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="524"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="566"/>
         <source>Close Others</source>
         <translation type="unfinished"></translation>
     </message>
