@@ -333,7 +333,7 @@ public:
 	}
 	bool CountDown(StyleContext &sc, CmdState &cmdState) {
 		Current.Count--;
-		if (Current.Count == 1 && sc.Match(')', ')')) {
+		while (Current.Count > 0 && sc.chNext == Current.Down) {
 			Current.Count--;
 			sc.Forward();
 		}
@@ -379,10 +379,6 @@ public:
 					style = QuoteStyle::Command;
 					sc.ChangeState(SCE_SH_BACKTICKS);
 				}
-			}
-			if (current == CmdState::Body && sc.Match('(', '(') && state == SCE_SH_DEFAULT && Depth == 0) {
-				// optimized to avoid track nested delimiter pairs
-				style = QuoteStyle::Literal;
 			}
 		} else {
 			// scalar has no delimiter pair
@@ -470,7 +466,7 @@ const LexicalClass lexicalClasses[] = {
 	10, "SCE_SH_PARAM", "identifier", "Parameter",
 	11, "SCE_SH_BACKTICKS", "literal string", "Backtick quoted command",
 	12, "SCE_SH_HERE_DELIM", "operator", "Heredoc delimiter",
-	13, "SCE_SH_HERE_Q", "literal string", "Heredoc quoted string",
+	13, "SCE_SH_HERE_Q", "here-doc literal string", "Heredoc quoted string",
 };
 
 }
@@ -488,7 +484,7 @@ class LexerBash final : public DefaultLexer {
 	SubStyles subStyles;
 public:
 	LexerBash() :
-		DefaultLexer("bash", SCLEX_BASH, lexicalClasses, ELEMENTS(lexicalClasses)),
+		DefaultLexer("bash", SCLEX_BASH, lexicalClasses, std::size(lexicalClasses)),
 		setParamStart(CharacterSet::setAlphaNum, "_" BASH_SPECIAL_PARAMETER),
 		subStyles(styleSubable, 0x80, 0x40, 0) {
 		cmdDelimiter.Set("| || |& & && ; ;; ( ) { }");
@@ -939,7 +935,9 @@ void SCI_METHOD LexerBash::Lex(Sci_PositionU startPos, Sci_Position length, int 
 						continue;
 					}
 				} else if (sc.ch == QuoteStack.Current.Up) {
-					QuoteStack.Current.Count++;
+					if (QuoteStack.Current.Style != QuoteStyle::Parameter) {
+						QuoteStack.Current.Count++;
+					}
 				} else {
 					if (QuoteStack.Current.Style == QuoteStyle::String ||
 						QuoteStack.Current.Style == QuoteStyle::HereDoc ||

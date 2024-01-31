@@ -369,11 +369,11 @@ EXPORT_FUNCTION const char * CALLING_CONVENTION GetNameSpace() {
 	return "lexilla";
 }
 
+}
+
 // Not exported from binary as LexerModule must be built exactly the same as
 // modules listed above
 void AddStaticLexerModule(LexerModule *plm) {
 	AddEachLexer();
 	catalogueLexilla.AddLexerModule(plm);
-}
-
 }
