@@ -41,14 +41,14 @@
     <name>Downloader</name>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="23"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="249"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="263"/>
         <source>Updater</source>
         <translation>更新器</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="90"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="108"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="110"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="345"/>
         <source>Downloading updates</source>
         <translation>正在下载更新</translation>
     </message>
@@ -64,141 +64,141 @@
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="161"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="107"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="411"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="111"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="445"/>
         <source>Time remaining</source>
         <translation>剩余时间</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="111"/>
         <source>unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="197"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="197"/>
         <source>Cannot find downloaded update!</source>
         <translation>无法找到可下载更新！</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="201"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="215"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="202"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="216"/>
         <source>Download complete!</source>
         <translation>下载完成！</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="203"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="217"/>
         <source>The installer will open separately</source>
         <translation>安装程序会在单独的窗口打开</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="210"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="224"/>
         <source>Click &quot;OK&quot; to begin installing the update</source>
         <translation>点击“OK”按钮开始安装更新</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="212"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="226"/>
         <source>In order to install the update, you may need to quit the application.</source>
         <translation>为了安装更新，你可能需要退出已打开的程序。</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="216"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="230"/>
         <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application</source>
         <translation>为了安装更新，你可能需要退出已打开的程序。这是一个强制更新，现在退出将关闭应用程序</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="235"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="249"/>
         <source>Click the &quot;Open&quot; button to apply the update</source>
         <translation>点击“Open”按钮开始应用更新</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="253"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="267"/>
         <source>Are you sure you want to cancel the download?</source>
         <translation>你确定要取消下载吗？</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="256"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="270"/>
         <source>Are you sure you want to cancel the download? This is a mandatory update, exiting now will close the application</source>
         <translation>你确定要取消下载吗？这是一个强制更新，现在退出将关闭应用程序</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="314"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="323"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="328"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="337"/>
         <source>%1 bytes</source>
         <translation>%1 字节</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="317"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="326"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="340"/>
         <source>%1 KB</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="320"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="329"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="334"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="343"/>
         <source>%1 MB</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="345"/>
         <source>of</source>
         <translation>/</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="357"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="391"/>
         <source>Downloading Updates</source>
         <translation>下载更新中</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="392"/>
         <source>Time Remaining</source>
         <translation>剩余时间</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="392"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="385"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="419"/>
         <source>about %1 hours</source>
         <translation>约 %1 小时</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="387"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="421"/>
         <source>about one hour</source>
         <translation>约 1 小时</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="396"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="430"/>
         <source>%1 minutes</source>
         <translation>%1 分钟</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="398"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="432"/>
         <source>1 minute</source>
         <translation>1 分钟</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="406"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="440"/>
         <source>%1 seconds</source>
         <translation>%1 秒</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="408"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="442"/>
         <source>1 second</source>
         <translation>1 秒</translation>
     </message>
@@ -1366,108 +1366,103 @@
         <translation>列编辑模式...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1040"/>
-        <source>Alt+C</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1045"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1042"/>
         <source>Export as HTML...</source>
         <translation>导出为 HTML...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1050"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1047"/>
         <source>Export as RTF...</source>
         <translation>导出为 RTF...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1055"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1052"/>
         <source>Copy as HTML</source>
         <translation>复制为 HTML</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1060"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1057"/>
         <source>Copy as RTF</source>
         <translation>复制为 RTF</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1065"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1062"/>
         <source>Base 64 Encode</source>
         <translation>Base 64 编码</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1070"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1067"/>
         <source>URL Encode</source>
         <translation>URL 编码</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1075"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1072"/>
         <source>Base 64 Decode</source>
         <translation>Base 64 解码</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1080"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1077"/>
         <source>URL Decode</source>
         <translation>URL 解码</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1085"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1082"/>
         <source>Copy URL</source>
         <translation>复制 URL</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1090"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1087"/>
         <source>Remove Empty Lines</source>
         <translation>删除空行</translation>
     </message>
     <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1096"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1099"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1102"/>
         <source>Show in Explorer</source>
         <translation>在资源管理器中查看</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1111"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1108"/>
         <source>Open Command Prompt Here</source>
         <translation>在此打开命令提示符</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1116"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1113"/>
         <source>Toggle Bookmark</source>
         <translation>切换书签</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1119"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1116"/>
         <source>Ctrl+F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1124"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1121"/>
         <source>Next Bookmark</source>
         <translation>下一个书签</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1127"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1124"/>
         <source>F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1132"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1129"/>
         <source>Previous Bookmark</source>
         <translation>上一个书签</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1135"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1132"/>
         <source>Shift+F2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1140"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1137"/>
         <source>Clear Bookmarks</source>
         <translation>清除书签</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1145"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1142"/>
         <source>Invert Bookmarks</source>
         <translatorcomment>书签顺序上下颠倒</translatorcomment>
         <translation>反转书签</translation>
@@ -1479,7 +1474,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1212"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1219"/>
         <source>Export As</source>
         <translation>导出为</translation>
     </message>
@@ -1602,7 +1597,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="879"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="573"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="580"/>
         <source>Start Recording</source>
         <translation>开始录制</translation>
     </message>
@@ -1693,111 +1688,121 @@
         <translation>打开文件夹为工作区...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="351"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="352"/>
         <source>Go to line</source>
         <translation>转跳到行</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="351"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="352"/>
         <source>Line Number (1 - %1)</source>
         <translation>行号（1 - %1）</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="564"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="571"/>
         <source>Stop Recording</source>
         <translation>停止录制</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="818"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="825"/>
         <source>New %1</source>
         <translatorcomment>用作新建空白文件的标题</translatorcomment>
         <translation>新文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="866"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="873"/>
         <source>Create File</source>
         <translation>新建文件</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="866"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="873"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; 尚不存在，你想要新建一个吗？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="917"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1015"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="924"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1022"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>保存文件 &lt;b&gt;%1&lt;/b&gt;？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="918"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1016"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="925"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1023"/>
         <source>Save File</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="971"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="978"/>
         <source>Open Folder as Workspace</source>
         <translation>打开文件夹作为工作区</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="989"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="996"/>
         <source>Reload File</source>
         <translation>重新加载文件</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="989"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="996"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>你确定要重新加载 &lt;b&gt;%1&lt;/b&gt;？任何未保存的修改都会丢失。</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1395"/>
+        <source>Administrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1643"/>
         <source>Error Saving File</source>
         <translation>保存文件时出错</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1183"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1190"/>
         <source>Save a Copy As</source>
         <translation>副本另存为</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1246"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1261"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1253"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1268"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1261"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1268"/>
         <source>Name:</source>
         <translation>宏名：</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1281"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1288"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1281"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1288"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>你确定要将 &lt;b&gt;%1&lt;/b&gt; 移至回收站？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1291"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1298"/>
         <source>Error Deleting File</source>
         <translation>删除文件时出错</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1291"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1298"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>删除  &lt;b&gt;%1&lt;/b&gt; 时出错了？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1643"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>保存 &lt;b&gt;%1&lt;/b&gt; 时发生了错误&lt;br&gt;&lt;br&gt;错误：%2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1810"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1649"/>
+        <source>Zoom: %1%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1817"/>
         <source>No updates are available at this time.</source>
         <translation>本次无可用更新。</translation>
     </message>
@@ -1811,23 +1816,59 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="22"/>
-        <source>Menu Bar</source>
-        <translation>菜单栏</translation>
+        <source>Show menu bar</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="29"/>
-        <source>Tool Bar</source>
-        <translation>工具栏</translation>
+        <source>Show toolbar</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="36"/>
-        <source>Status Bar</source>
-        <translation>状态栏</translation>
+        <source>Show status bar</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="43"/>
+        <source>Restore previous session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="62"/>
+        <source>Temporary files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="86"/>
+        <source>Translation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="110"/>
+        <source>TextLabel</source>
+        <translation type="unfinished">文本标签</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="122"/>
+        <source>An application restart is required to apply certain settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Menu Bar</source>
+        <translation type="vanished">菜单栏</translation>
+    </message>
+    <message>
+        <source>Tool Bar</source>
+        <translation type="vanished">工具栏</translation>
+    </message>
+    <message>
+        <source>Status Bar</source>
+        <translation type="vanished">状态栏</translation>
+    </message>
+    <message>
         <source>Restore Previous Session</source>
-        <translation>还原之前的会话</translation>
+        <translation type="vanished">还原之前的会话</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="55"/>
@@ -1835,9 +1876,8 @@
         <translation>未保存的更改</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="62"/>
         <source>Temp Files</source>
-        <translation>临时文件们</translation>
+        <translation type="vanished">临时文件们</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
@@ -1845,40 +1885,48 @@
         <translation>结合搜索结果</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="61"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="52"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="61"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="52"/>
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
         <translation>本功能是实验性的。对于关键性的重要工作开启本功能并不安全，可能导致数据丢失，使用时风险自负。</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="106"/>
+        <source>&lt;System Default&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="159"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="193"/>
         <source>List All Tabs</source>
         <translation>列出所有标签页</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="169"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="203"/>
         <source>Detach Group</source>
         <translation>脱离分组</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="182"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="228"/>
+        <source>Minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Close Active Tab</source>
-        <translation>关闭活动的标签页</translation>
+        <translation type="vanished">关闭活动的标签页</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="186"/>
         <source>Close Group</source>
-        <translation>关闭分组</translation>
+        <translation type="vanished">关闭分组</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="248"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="268"/>
         <source>Close Tab</source>
         <translation>关闭标签页</translation>
     </message>
@@ -1966,53 +2014,162 @@
 <context>
     <name>Updater</name>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="430"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="435"/>
         <source>Would you like to download the update now?</source>
         <translation>你想要现在下载更新吗？</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="433"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="438"/>
         <source>Would you like to download the update now? This is a mandatory update, exiting now will close the application</source>
         <translation>你想要现在下载更新吗？这是一个强制性的更新，现在退出将关闭应用程序</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="438"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="443"/>
         <source>Version %1 of %2 has been released!</source>
         <translation>%1 版本的 %2 已经发布了！</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="473"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="478"/>
         <source>No updates are available for the moment</source>
         <translation>暂时没有可用的更新</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="475"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="480"/>
         <source>Congratulations! You are running the latest version of %1</source>
         <translation>恭喜！你已经在使用最新版本的 %1</translation>
     </message>
 </context>
 <context>
+    <name>ads::CAutoHideTab</name>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="384"/>
+        <source>Detach</source>
+        <translation type="unfinished">脱离</translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="389"/>
+        <source>Pin To...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="391"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="392"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="393"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="394"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="396"/>
+        <source>Unpin (Dock)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="398"/>
+        <source>Close</source>
+        <translation type="unfinished">关闭</translation>
+    </message>
+</context>
+<context>
     <name>ads::CDockAreaTitleBar</name>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="584"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="749"/>
         <source>Detach Group</source>
         <translation>脱离分组</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="587"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="749"/>
+        <source>Detach</source>
+        <translation type="unfinished">脱离</translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="754"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="811"/>
+        <source>Unpin (Dock)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="754"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="816"/>
+        <source>Pin Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="760"/>
+        <source>Pin Group To...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="762"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="763"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="764"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="765"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="773"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="828"/>
+        <source>Minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="778"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="828"/>
+        <source>Close</source>
+        <translation type="unfinished">关闭</translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="778"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="837"/>
         <source>Close Group</source>
         <translation>关闭分组</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="589"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="784"/>
         <source>Close Other Groups</source>
         <translation>关闭其他分组</translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="820"/>
+        <source>Pin Active Tab (Press Ctrl to Pin Group)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="833"/>
+        <source>Close Active Tab</source>
+        <translation type="unfinished">关闭活动的标签页</translation>
     </message>
 </context>
 <context>
     <name>ads::CDockManager</name>
     <message>
-        <location filename="../src/ads/src/DockManager.cpp" line="490"/>
+        <location filename="../src/ads/src/DockManager.cpp" line="508"/>
         <source>Show View</source>
         <translation>显示视图</translation>
     </message>
@@ -2020,17 +2177,47 @@
 <context>
     <name>ads::CDockWidgetTab</name>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="519"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="544"/>
         <source>Detach</source>
         <translation>脱离</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="522"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="548"/>
+        <source>Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="552"/>
+        <source>Pin To...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="554"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="556"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="557"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="562"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="524"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="566"/>
         <source>Close Others</source>
         <translation>关闭其他</translation>
     </message>

@@ -41,14 +41,14 @@
     <name>Downloader</name>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="23"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="249"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="263"/>
         <source>Updater</source>
         <translation>Güncelleyici</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="90"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="108"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="110"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="345"/>
         <source>Downloading updates</source>
         <translation>Güncellemeler indiriliyor</translation>
     </message>
@@ -64,142 +64,142 @@
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="161"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="107"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
         <source>Stop</source>
         <translation>Durdur</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="411"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="111"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="445"/>
         <source>Time remaining</source>
         <translation>Kalan Zaman</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="109"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="111"/>
         <source>unknown</source>
         <translation>bilinmiyor</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="197"/>
         <source>Error</source>
         <translation>Hata</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="183"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="197"/>
         <source>Cannot find downloaded update!</source>
         <translation>İndirilen güncelleme bulunamıyor!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="201"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="215"/>
         <source>Close</source>
         <translation>Kapat</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="202"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="216"/>
         <source>Download complete!</source>
         <translation>İndirme tamamlandı!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="203"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="217"/>
         <source>The installer will open separately</source>
         <translation>Yükleyici ayrı olarak açılacak</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="210"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="224"/>
         <source>Click &quot;OK&quot; to begin installing the update</source>
         <translation>Güncellemeyi yüklemeye başlamak için &quot;Tamam &quot;a tıklayın</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="212"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="226"/>
         <source>In order to install the update, you may need to quit the application.</source>
         <translation>Güncellemeyi yüklemek için uygulamadan çıkmanız gerekebilir.</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="216"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="230"/>
         <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application</source>
         <translation>Güncellemeyi yüklemek için uygulamadan çıkmanız gerekebilir. Bu zorunlu bir güncellemedir, şimdi çıkmak uygulamayı kapatacaktır</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="235"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="249"/>
         <source>Click the &quot;Open&quot; button to apply the update</source>
         <translation>Güncellemeyi uygulamak için &quot;Aç&quot; düğmesine tıklayın</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="253"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="267"/>
         <source>Are you sure you want to cancel the download?</source>
         <translation>İndirmeyi iptal etmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="256"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="270"/>
         <source>Are you sure you want to cancel the download? This is a mandatory update, exiting now will close the application</source>
         <translation>İndirmeyi iptal etmek istediğinizden emin misiniz? Bu zorunlu bir güncellemedir, şimdi çıkmak uygulamayı kapatacaktır</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="314"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="323"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="328"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="337"/>
         <source>%1 bytes</source>
         <translation>%1 btye</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="317"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="326"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="340"/>
         <source>%1 KB</source>
         <translation>%1 KB</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="320"/>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="329"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="334"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="343"/>
         <source>%1 MB</source>
         <translation>%1 MB</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="331"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="345"/>
         <source>of</source>
         <translatorcomment>This thing is impossible to translate to Turkish without changing the whole scheme. It supposed to be &quot;totalSize + tr(&quot;of&quot;)+ receivedSize&quot; So I&apos;m justing living it blank</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="357"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="391"/>
         <source>Downloading Updates</source>
         <translation>Güncellemeler indiriliyor</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="392"/>
         <source>Time Remaining</source>
         <translation>Kalan Zaman</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="358"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="392"/>
         <source>Unknown</source>
         <translation>Bilinmiyor</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="385"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="419"/>
         <source>about %1 hours</source>
         <translation>yaklaşık %1 saat</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="387"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="421"/>
         <source>about one hour</source>
         <translation>yaklaşık bir saat</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="396"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="430"/>
         <source>%1 minutes</source>
         <translation>%1 dakika</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="398"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="432"/>
         <source>1 minute</source>
         <translation>1 dakika</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="406"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="440"/>
         <source>%1 seconds</source>
         <translation>%1 saniye</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="408"/>
+        <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="442"/>
         <source>1 second</source>
         <translation>1 saniye</translation>
     </message>
@@ -872,7 +872,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1212"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1219"/>
         <source>Export As</source>
         <translation>... olarak Dışa Aktar</translation>
     </message>
@@ -1422,7 +1422,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="879"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="573"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="580"/>
         <source>Start Recording</source>
         <translation>Kaydetmeye Başla</translation>
     </message>
@@ -1557,216 +1557,225 @@
         <translation>Sütun Modu...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1040"/>
         <source>Alt+C</source>
-        <translation>Alt+C</translation>
+        <translation type="vanished">Alt+C</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1045"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1042"/>
         <source>Export as HTML...</source>
         <translation>HTML Olarak Dışa Aktar...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1050"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1047"/>
         <source>Export as RTF...</source>
         <translation>RTF Olarak Dışa Aktar...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1055"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1052"/>
         <source>Copy as HTML</source>
         <translation>HTML olarak kopyala</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1060"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1057"/>
         <source>Copy as RTF</source>
         <translation>RTF olarak kopyala</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1065"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1062"/>
         <source>Base 64 Encode</source>
         <translation>Base 64 Kodla</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1070"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1067"/>
         <source>URL Encode</source>
         <translation>URL Kodla</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1075"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1072"/>
         <source>Base 64 Decode</source>
         <translation>Base 64 Çözümle</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1080"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1077"/>
         <source>URL Decode</source>
         <translation>URL Çözümle</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1085"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1082"/>
         <source>Copy URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1090"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1087"/>
         <source>Remove Empty Lines</source>
         <translation>Boş Satırları Sil</translation>
     </message>
     <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1096"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1099"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1102"/>
         <source>Show in Explorer</source>
         <translation>Dosya Gezgininde Göster</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1111"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1108"/>
         <source>Open Command Prompt Here</source>
         <translation>Komut İstemi&apos;ni Burada Aç</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1116"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1113"/>
         <source>Toggle Bookmark</source>
         <translation>Yer İmlerini Aç/Kapat</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1119"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1116"/>
         <source>Ctrl+F2</source>
         <translation>Ctrl+F2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1124"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1121"/>
         <source>Next Bookmark</source>
         <translation>Sonraki Yer İmi</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1127"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1124"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1132"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1129"/>
         <source>Previous Bookmark</source>
         <translation>Önceki Yer İmi</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1135"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1132"/>
         <source>Shift+F2</source>
         <translation>Shift+F2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1140"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1137"/>
         <source>Clear Bookmarks</source>
         <translation>Yer İmlerini Temizle</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1145"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1142"/>
         <source>Invert Bookmarks</source>
         <translation>Yer İmlerini Tersine Çevir</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="351"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="352"/>
         <source>Go to line</source>
         <translation>Satıra Git</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="351"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="352"/>
         <source>Line Number (1 - %1)</source>
         <translation>Satır Numarası (1 - %1)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="564"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="571"/>
         <source>Stop Recording</source>
         <translation>Kaydetmeyi Durdur</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="818"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="825"/>
         <source>New %1</source>
         <translation>Yeni %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="866"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="873"/>
         <source>Create File</source>
         <translation>Dosya Oluştur</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="866"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="873"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; mevcut değil. Oluşturmak istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="917"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1015"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="924"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1022"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Dosyayı kaydetmek istiyor musunuz: &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="918"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1016"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="925"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1023"/>
         <source>Save File</source>
         <translation>Dosyayı Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="971"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="978"/>
         <source>Open Folder as Workspace</source>
         <translation>Klasörü Çalışma Alanı Olarak Aç</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="989"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="996"/>
         <source>Reload File</source>
         <translation>Dosyayı Yeniden Yükle</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="989"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="996"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;&apos;i yeniden yüklemek istediğinizden emin misiniz? Kaydedilmemiş değişiklikler kaybolacak.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1183"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1190"/>
         <source>Save a Copy As</source>
         <translation>Bir Kopyayı Farklı Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1246"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1261"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1253"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1268"/>
         <source>Rename</source>
         <translation>Yeniden Adlandır</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1261"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1268"/>
         <source>Name:</source>
         <translation>İsim:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1281"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1288"/>
         <source>Delete File</source>
         <translation>Dosyayı Sil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1281"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1288"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt;&apos;i çöp kutusuna taşımak istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1291"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1298"/>
         <source>Error Deleting File</source>
         <translation>Dosya Silme Hatası</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1291"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1298"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; silinirken bir hata oluştu?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1395"/>
+        <source>Administrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1643"/>
         <source>Error Saving File</source>
         <translation>Dosyayı Kaydetme Hatası</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1632"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1643"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Bir hata oluştu. &lt;b&gt;%1&lt;/b&gt; kaydedilirken hata oluştu. &lt;br&gt;&lt;br&gt;Hata: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1810"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1649"/>
+        <source>Zoom: %1%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1817"/>
         <source>No updates are available at this time.</source>
         <translation>Şu anda kullanılabilir güncellemeler bulunmuyor.</translation>
     </message>
@@ -1780,23 +1789,59 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="22"/>
-        <source>Menu Bar</source>
-        <translation>Menü Çubuğu</translation>
+        <source>Show menu bar</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="29"/>
-        <source>Tool Bar</source>
-        <translation>Araç Çubuğu</translation>
+        <source>Show toolbar</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="36"/>
-        <source>Status Bar</source>
-        <translation>Durum Çubuğu</translation>
+        <source>Show status bar</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="43"/>
+        <source>Restore previous session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="62"/>
+        <source>Temporary files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="86"/>
+        <source>Translation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="110"/>
+        <source>TextLabel</source>
+        <translation type="unfinished">Metin</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="122"/>
+        <source>An application restart is required to apply certain settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Menu Bar</source>
+        <translation type="vanished">Menü Çubuğu</translation>
+    </message>
+    <message>
+        <source>Tool Bar</source>
+        <translation type="vanished">Araç Çubuğu</translation>
+    </message>
+    <message>
+        <source>Status Bar</source>
+        <translation type="vanished">Durum Çubuğu</translation>
+    </message>
+    <message>
         <source>Restore Previous Session</source>
-        <translation>Önceki Oturumu Geri Yükle</translation>
+        <translation type="vanished">Önceki Oturumu Geri Yükle</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="55"/>
@@ -1804,9 +1849,8 @@
         <translation>Kaydedilmemiş değişiklikler</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="62"/>
         <source>Temp Files</source>
-        <translation>Geçici Dosyalar</translation>
+        <translation type="vanished">Geçici Dosyalar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
@@ -1814,40 +1858,48 @@
         <translation>Arama sonuçlarını birleştir</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="61"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="52"/>
         <source>Warning</source>
         <translation>Uyarı</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="61"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="52"/>
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
         <translation>Bu özellik deneyseldir ve kritik öneme sahip işler için güvenli olduğu düşünülmemelidir. Olası veri kaybına yol açabilir. Kendi sorumluluğunuzda kullanın.</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="106"/>
+        <source>&lt;System Default&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="159"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="193"/>
         <source>List All Tabs</source>
         <translation>Tüm Sekmeleri Listele</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="169"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="203"/>
         <source>Detach Group</source>
         <translation>Grubu Ayır</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="182"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="228"/>
+        <source>Minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Close Active Tab</source>
-        <translation>Aktif Sekmeyi Kapat</translation>
+        <translation type="vanished">Aktif Sekmeyi Kapat</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="186"/>
         <source>Close Group</source>
-        <translation>Grubu Kapat</translation>
+        <translation type="vanished">Grubu Kapat</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="248"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="268"/>
         <source>Close Tab</source>
         <translation>Sekmeyi Kapat</translation>
     </message>
@@ -1931,53 +1983,162 @@
 <context>
     <name>Updater</name>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="430"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="435"/>
         <source>Would you like to download the update now?</source>
         <translation>Güncellemeyi şimdi indirmek ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="433"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="438"/>
         <source>Would you like to download the update now? This is a mandatory update, exiting now will close the application</source>
         <translation>Güncellemeyi şimdi indirmek ister misiniz? Bu zorunlu bir güncellemedir, şimdi çıkmak uygulamayı kapatacaktır</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="438"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="443"/>
         <source>Version %1 of %2 has been released!</source>
         <translation>%2&apos;nin %1 sürümü yayınlandı!</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="473"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="478"/>
         <source>No updates are available for the moment</source>
         <translation>Şu an için herhangi bir güncelleme mevcut değil</translation>
     </message>
     <message>
-        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="475"/>
+        <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="480"/>
         <source>Congratulations! You are running the latest version of %1</source>
         <translation>Tebrikler! %1&apos;in en son sürümünü çalıştırıyorsunuz</translation>
     </message>
 </context>
 <context>
+    <name>ads::CAutoHideTab</name>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="384"/>
+        <source>Detach</source>
+        <translation type="unfinished">Ayır</translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="389"/>
+        <source>Pin To...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="391"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="392"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="393"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="394"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="396"/>
+        <source>Unpin (Dock)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="398"/>
+        <source>Close</source>
+        <translation type="unfinished">Kapat</translation>
+    </message>
+</context>
+<context>
     <name>ads::CDockAreaTitleBar</name>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="584"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="749"/>
         <source>Detach Group</source>
         <translation>Grubu Ayır</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="587"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="749"/>
+        <source>Detach</source>
+        <translation type="unfinished">Ayır</translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="754"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="811"/>
+        <source>Unpin (Dock)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="754"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="816"/>
+        <source>Pin Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="760"/>
+        <source>Pin Group To...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="762"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="763"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="764"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="765"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="773"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="828"/>
+        <source>Minimize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="778"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="828"/>
+        <source>Close</source>
+        <translation type="unfinished">Kapat</translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="778"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="837"/>
         <source>Close Group</source>
         <translation>Grubu Kapat</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="589"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="784"/>
         <source>Close Other Groups</source>
         <translation>Diğer Grupları Kapat</translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="820"/>
+        <source>Pin Active Tab (Press Ctrl to Pin Group)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="833"/>
+        <source>Close Active Tab</source>
+        <translation type="unfinished">Aktif Sekmeyi Kapat</translation>
     </message>
 </context>
 <context>
     <name>ads::CDockManager</name>
     <message>
-        <location filename="../src/ads/src/DockManager.cpp" line="490"/>
+        <location filename="../src/ads/src/DockManager.cpp" line="508"/>
         <source>Show View</source>
         <translation>Göster</translation>
     </message>
@@ -1985,17 +2146,47 @@
 <context>
     <name>ads::CDockWidgetTab</name>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="519"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="544"/>
         <source>Detach</source>
         <translation>Ayır</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="522"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="548"/>
+        <source>Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="552"/>
+        <source>Pin To...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="554"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="556"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="557"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="562"/>
         <source>Close</source>
         <translation>Kapat</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="524"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="566"/>
         <source>Close Others</source>
         <translation>Diğerlerini Kapat</translation>
     </message>
