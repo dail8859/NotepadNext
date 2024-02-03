@@ -78,6 +78,33 @@ void BookMarkDecorator::clearBookmarks()
     editor->markerDeleteAll(MARK_BOOKMARK);
 }
 
+QList<int> BookMarkDecorator::bookMarkedLines() const
+{
+    QList<int> bookMarkedLines;
+
+    int line = 0;
+    forever {
+        line = editor->markerNext(line, 1 << MARK_BOOKMARK);
+
+        if (line != -1) {
+            bookMarkedLines.append(line);
+            line++;
+        }
+        else {
+            break;
+        }
+    }
+
+    return bookMarkedLines;
+}
+
+void BookMarkDecorator::setBookMarkedLines(QList<int> &lines)
+{
+    for(const int i : lines) {
+        editor->markerAdd(i, MARK_BOOKMARK);
+    }
+}
+
 void BookMarkDecorator::notify(const Scintilla::NotificationData *pscn)
 {
     if (pscn->nmhdr.code == Scintilla::Notification::MarginClick) {
