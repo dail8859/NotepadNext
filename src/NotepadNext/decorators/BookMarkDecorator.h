@@ -33,6 +33,8 @@ public:
     int nextBookmarkAfter(int line);
     int previousBookMarkBefore(int line);
     void clearBookmarks();
+    QList<int> bookMarkedLines() const;
+    void setBookMarkedLines(QList<int> &lines);
 
 public slots:
     void notify(const Scintilla::NotificationData *pscn) override;

@@ -17,6 +17,7 @@
  */
 
 
+#include "BookMarkDecorator.h"
 #include "ScintillaNext.h"
 #include "MainWindow.h"
 #include "SessionManager.h"
@@ -31,6 +32,25 @@
 static QString RandomSessionFileName()
 {
     return QUuid::createUuid().toString(QUuid::WithoutBraces);
+}
+
+// QList<int> cannot be automatically serialized to/from QSettings (i.e. QVariant) so turn it to a QVariantList
+static QVariantList QListToQVariantList(const QList<int> intList)
+{
+    QVariantList vl;
+    for (const int i : intList){
+        vl.append(i);
+    }
+    return vl;
+}
+
+// Do the opposite of the function above
+static QList<int> QVariantListToQList(const QVariantList &variantList) {
+    QList<int> intList;
+    for (const QVariant &variant : variantList) {
+        intList.append(variant.toInt());
+    }
+    return intList;
 }
 
 SessionManager::SessionManager(NotepadNextApplication *app, SessionFileTypes types)
@@ -260,9 +280,9 @@ ScintillaNext* SessionManager::loadFileDetails(QSettings &settings)
     if (QFileInfo::exists(filePath)) {
         editor = ScintillaNext::fromFile(filePath);
 
-        loadEditorViewDetails(editor, settings);
-
         app->getEditorManager()->manageEditor(editor);
+
+        loadEditorViewDetails(editor, settings);
 
         return editor;
     }
@@ -353,9 +373,9 @@ ScintillaNext *SessionManager::loadTempFile(QSettings &settings)
         editor->detachFileInfo(fileName);
         editor->setTemporary(true);
 
-        loadEditorViewDetails(editor, settings);
-
         app->getEditorManager()->manageEditor(editor);
+
+        loadEditorViewDetails(editor, settings);
 
         if (!languageName.isEmpty()) {
             qDebug("Setting session file language to \"%s\"", qUtf8Printable(languageName));
@@ -374,6 +394,11 @@ void SessionManager::storeEditorViewDetails(ScintillaNext *editor, QSettings &se
 {
     settings.setValue("FirstVisibleLine", static_cast<int>(editor->firstVisibleLine() + 1)); // Keep it 1-based in the settings just for human-readability
     settings.setValue("CurrentPosition", static_cast<int>(editor->currentPos()));
+
+    BookMarkDecorator *decorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+    QList<int> bookMarkedLines = decorator->bookMarkedLines();
+    if (bookMarkedLines.length() > 0)
+        settings.setValue("BookMarks", QListToQVariantList(bookMarkedLines));
 }
 
 void SessionManager::loadEditorViewDetails(ScintillaNext *editor, QSettings &settings)
@@ -383,4 +408,12 @@ void SessionManager::loadEditorViewDetails(ScintillaNext *editor, QSettings &set
 
     editor->setFirstVisibleLine(firstVisibleLine);
     editor->setEmptySelection(currentPosition);
+
+    if (settings.contains("BookMarks"))
+    {
+        QList<int> bookMarkedLines = QVariantListToQList(settings.value("BookMarks").toList()); // just using .value<QList<int>>() does not work...possibly a Qt bug?
+
+        BookMarkDecorator *decorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+        decorator->setBookMarkedLines(bookMarkedLines);
+    }
 }
