@@ -18,6 +18,8 @@
 
 #include <QApplication>
 
+#include "ApplicationSettings.h"
+
 #include "EditorManager.h"
 #include "ScintillaNext.h"
 #include "Scintilla.h"
@@ -49,12 +51,56 @@ static int DefaultFontSize()
 }
 
 
-EditorManager::EditorManager(QObject *parent) : QObject(parent)
+EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
+    : QObject(parent), settings(settings)
 {
     connect(this, &EditorManager::editorCreated, this, [=](ScintillaNext *editor) {
         connect(editor, &ScintillaNext::closed, this, [=]() {
             emit editorClosed(editor);
         });
+    });
+
+    connect(settings, &ApplicationSettings::showWrapSymbolChanged, this, [=](bool b) {
+        for (auto &editor : getEditors()) {
+            editor->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+        }
+    });
+
+
+    connect(settings, &ApplicationSettings::showWhitespaceChanged, this, [=](bool b) {
+        // TODO: could make SCWS_VISIBLEALWAYS configurable via settings. Probably not worth
+        // taking up menu space e.g. show all, show leading, show trailing
+        for (auto &editor : getEditors()) {
+            editor->setViewWS(b ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
+        }
+    });
+
+    connect(settings, &ApplicationSettings::showEndOfLineChanged, this, [=](bool b) {
+        for (auto &editor : getEditors()) {
+            editor->setViewEOL(b);
+        }
+    });
+
+    connect(settings, &ApplicationSettings::showIndentGuideChanged, this, [=](bool b) {
+        for (auto &editor : getEditors()) {
+            editor->setIndentationGuides(b ? SC_IV_LOOKBOTH : SC_IV_NONE);
+        }
+    });
+
+    connect(settings, &ApplicationSettings::wordWrapChanged, this, [=](bool b) {
+        if (b) {
+            for (auto &editor : getEditors()) {
+                editor->setWrapMode(SC_WRAP_WORD);
+            }
+        }
+        else {
+            for (auto &editor : getEditors()) {
+                // Store the top line and restore it after the lines have been unwrapped
+                int topLine = editor->docLineFromVisible(editor->firstVisibleLine());
+                editor->setWrapMode(SC_WRAP_NONE);
+                editor->setFirstVisibleLine(topLine);
+            }
+        }
     });
 }
 
@@ -177,8 +223,6 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setFoldMarginColour(true, 0xFFFFFF);
     editor->setFoldMarginHiColour(true, 0xE9E9E9);
 
-    editor->setIndentationGuides(SC_IV_LOOKBOTH);
-
     editor->setAutomaticFold(SC_AUTOMATICFOLD_SHOW | SC_AUTOMATICFOLD_CLICK | SC_AUTOMATICFOLD_CHANGE);
     editor->markerEnableHighlight(true);
 
@@ -206,6 +250,12 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     // STYLE_CONTROLCHAR
     // STYLE_CALLTIP
     // STYLE_FOLDDISPLAYTEXT
+
+    editor->setViewWS(settings->showWhitespace() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
+    editor->setViewEOL(settings->showEndOfLine());
+    editor->setWrapVisualFlags(settings->showWrapSymbol() ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
+    editor->setIndentationGuides(settings->showIndentGuide() ? SC_IV_LOOKBOTH : SC_IV_NONE);
+    editor->setWrapMode(settings->wordWrap() ? SC_WRAP_WORD : SC_WRAP_NONE);
 
     // Decorators
     SmartHighlighter *s = new SmartHighlighter(editor);
@@ -248,4 +298,10 @@ void EditorManager::purgeOldEditorPointers()
         if (pointer.isNull())
             it.remove();
     }
+}
+
+QList<QPointer<ScintillaNext> > EditorManager::getEditors()
+{
+    purgeOldEditorPointers();
+    return editors;
 }

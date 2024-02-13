@@ -46,8 +46,6 @@ BraceMatch::BraceMatch(ScintillaNext *editor) :
     editor->indicSetUnder(braceBadlight, true);
     editor->braceBadLightIndicator(true, braceBadlight);
 
-    editor->setIndentationGuides(SC_IV_LOOKBOTH);
-
     connect(this, &EditorDecorator::stateChanged, [=](bool b) {
         if (b) {
             doHighlighting();

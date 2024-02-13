@@ -87,4 +87,10 @@ public:
     DEFINE_SETTING(RestoreTempFiles, restoreTempFiles, bool)
 
     DEFINE_SETTING(Translation, translation, QString)
+
+    DEFINE_SETTING(ShowWhitespace, showWhitespace, bool);
+    DEFINE_SETTING(ShowEndOfLine, showEndOfLine, bool);
+    DEFINE_SETTING(ShowWrapSymbol, showWrapSymbol, bool)
+    DEFINE_SETTING(ShowIndentGuide, showIndentGuide, bool)
+    DEFINE_SETTING(WordWrap, wordWrap, bool);
 };
