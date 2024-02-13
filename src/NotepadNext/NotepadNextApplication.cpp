@@ -119,7 +119,7 @@ bool NotepadNextApplication::init()
     luaState = new LuaState();
 
     recentFilesListManager = new RecentFilesListManager(this);
-    editorManager = new EditorManager(this);
+    editorManager = new EditorManager(settings, this);
     sessionManager = new SessionManager(this);
 
     connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [=](ScintillaNext *editor) {

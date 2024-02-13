@@ -52,3 +52,9 @@ CREATE_SETTING(App, RestoreUnsavedFiles, restoreUnsavedFiles, bool, false)
 CREATE_SETTING(App, RestoreTempFiles, restoreTempFiles, bool, false)
 
 CREATE_SETTING(App, Translation, translation, QString, "")
+
+CREATE_SETTING(Editor, ShowWhitespace, showWhitespace, bool, false);
+CREATE_SETTING(Editor, ShowEndOfLine, showEndOfLine, bool, false);
+CREATE_SETTING(Editor, ShowWrapSymbol, showWrapSymbol, bool, false);
+CREATE_SETTING(Editor, ShowIndentGuide, showIndentGuide, bool, true);
+CREATE_SETTING(Editor, WordWrap, wordWrap, bool, false)

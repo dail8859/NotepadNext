@@ -459,55 +459,44 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionShowAllCharacters, &QAction::triggered, this, [=](bool b) {
-        ui->actionShowWhitespace->setChecked(b);
-        ui->actionShowEndofLine->setChecked(b);
-    });
 
+    // Show All Characters is just a short cut to toggle whitespace and EOL on
+    ui->actionShowAllCharacters->setChecked(app->getSettings()->showWhitespace() && app->getSettings()->showEndOfLine());
+    connect(ui->actionShowAllCharacters, &QAction::triggered, app->getSettings(), &ApplicationSettings::setShowWhitespace);
+    connect(ui->actionShowAllCharacters, &QAction::triggered, app->getSettings(), &ApplicationSettings::setShowEndOfLine);
+
+    // Show White Space
+    ui->actionShowWhitespace->setChecked(app->getSettings()->showWhitespace());
+    connect(app->getSettings(), &ApplicationSettings::showWhitespaceChanged, ui->actionShowWhitespace, &QAction::setChecked);
+    connect(ui->actionShowWhitespace, &QAction::toggled, app->getSettings(), &ApplicationSettings::setShowWhitespace);
+    // Update the "Show All Character" action
     connect(ui->actionShowWhitespace, &QAction::toggled, this, [=](bool b) {
-        // TODO: could make SCWS_VISIBLEALWAYS configurable via settings. Probably not worth
-        // taking up menu space e.g. show all, show leading, show trailing
-        for (auto &editor : editors()) {
-            editor->setViewWS(b ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
-        }
-
         ui->actionShowAllCharacters->setChecked(b && ui->actionShowEndofLine->isChecked());
     });
 
+    // Show EOL
+    ui->actionShowEndofLine->setChecked(app->getSettings()->showEndOfLine());
+    connect(app->getSettings(), &ApplicationSettings::showEndOfLineChanged, ui->actionShowEndofLine, &QAction::setChecked);
+    connect(ui->actionShowEndofLine, &QAction::toggled, app->getSettings(), &ApplicationSettings::setShowEndOfLine);
+    // Update the "Show All Character" action
     connect(ui->actionShowEndofLine, &QAction::toggled, this, [=](bool b) {
-        for (auto &editor : editors()) {
-            editor->setViewEOL(b);
-        }
-
         ui->actionShowAllCharacters->setChecked(b && ui->actionShowWhitespace->isChecked());
     });
 
-    connect(ui->actionShowWrapSymbol, &QAction::triggered, this, [=](bool b) {
-        for (auto &editor : editors()) {
-            editor->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
-        }
-    });
+    // Show Wrap Symbol
+    ui->actionShowWrapSymbol->setChecked(app->getSettings()->showWrapSymbol());
+    connect(app->getSettings(), &ApplicationSettings::showWrapSymbolChanged, ui->actionShowWrapSymbol, &QAction::setChecked);
+    connect(ui->actionShowWrapSymbol, &QAction::toggled, app->getSettings(), &ApplicationSettings::setShowWrapSymbol);
 
-    connect(ui->actionShowIndentGuide, &QAction::triggered, this, [=](bool b) {
-        currentEditor()->setIndentationGuides(b ? SC_IV_LOOKBOTH : SC_IV_NONE);
-    });
-    ui->actionShowIndentGuide->setChecked(true);
+    // Show Indentation Guide
+    ui->actionShowIndentGuide->setChecked(app->getSettings()->showIndentGuide());
+    connect(app->getSettings(), &ApplicationSettings::showIndentGuideChanged, ui->actionShowIndentGuide, &QAction::setChecked);
+    connect(ui->actionShowIndentGuide, &QAction::toggled, app->getSettings(), &ApplicationSettings::setShowIndentGuide);
 
-    connect(ui->actionWordWrap, &QAction::triggered, this, [=](bool b) {
-        if (b) {
-            for (auto &editor : editors()) {
-                editor->setWrapMode(SC_WRAP_WORD);
-            }
-        }
-        else {
-            for (auto &editor : editors()) {
-                // Store the top line and restore it after the lines have been unwrapped
-                int topLine = editor->docLineFromVisible(editor->firstVisibleLine());
-                editor->setWrapMode(SC_WRAP_NONE);
-                editor->setFirstVisibleLine(topLine);
-            }
-        }
-    });
+    // Word Wrap
+    ui->actionWordWrap->setChecked(app->getSettings()->wordWrap());
+    connect(app->getSettings(), &ApplicationSettings::wordWrapChanged, ui->actionWordWrap, &QAction::setChecked);
+    connect(ui->actionWordWrap, &QAction::toggled, app->getSettings(), &ApplicationSettings::setWordWrap);
 
     // Zooming controls all editors simulaneously
     connect(ui->actionZoomIn, &QAction::triggered, this, [=]() {
@@ -1658,12 +1647,6 @@ void MainWindow::saveSettings() const
     settings->setValue("MainWindow/geometry", saveGeometry());
     settings->setValue("MainWindow/windowState", saveState());
 
-    settings->setValue("Editor/ShowWhitespace", ui->actionShowWhitespace->isChecked());
-    settings->setValue("Editor/ShowEndOfLine", ui->actionShowEndofLine->isChecked());
-    settings->setValue("Editor/ShowWrapSymbol", ui->actionShowWrapSymbol->isChecked());
-
-    settings->setValue("Editor/WordWrap", ui->actionWordWrap->isChecked());
-    settings->setValue("Editor/IndentGuide", ui->actionShowIndentGuide->isChecked());
     settings->setValue("Editor/ZoomLevel", zoomLevel);
 
     FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
@@ -1676,12 +1659,6 @@ void MainWindow::restoreSettings()
 
     ApplicationSettings *settings = app->getSettings();
 
-    ui->actionShowWhitespace->setChecked(settings->value("Editor/ShowWhitespace", false).toBool());
-    ui->actionShowEndofLine->setChecked(settings->value("Editor/ShowEndOfLine", false).toBool());
-    ui->actionShowWrapSymbol->setChecked(settings->value("Editor/ShowWrapSymbol", false).toBool());
-
-    ui->actionWordWrap->setChecked(settings->value("Editor/WordWrap", false).toBool());
-    ui->actionShowIndentGuide->setChecked(settings->value("Editor/IndentGuide", true).toBool());
     zoomLevel = settings->value("Editor/ZoomLevel", 0).toInt();
 }
 
@@ -1747,15 +1724,6 @@ void MainWindow::addEditor(ScintillaNext *editor)
     // NOTE: Need to install this on the scroll area's viewport, not on the editor widget itself...that was painful to learn
     editor->viewport()->installEventFilter(zoomEventWatcher);
 
-    if (ui->actionWordWrap->isChecked())
-        editor->setWrapMode(SC_WRAP_WHITESPACE);
-
-    if (ui->actionShowIndentGuide->isChecked())
-        editor->setIndentationGuides(SC_IV_LOOKBOTH);
-
-    editor->setViewWS(ui->actionShowWhitespace->isChecked() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
-    editor->setViewEOL(ui->actionShowEndofLine->isChecked());
-    editor->setWrapVisualFlags(ui->actionShowWrapSymbol->isChecked() ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
     editor->setZoom(zoomLevel);
 
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
