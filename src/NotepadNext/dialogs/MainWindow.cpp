@@ -1648,9 +1648,6 @@ void MainWindow::saveSettings() const
     settings->setValue("MainWindow/windowState", saveState());
 
     settings->setValue("Editor/ZoomLevel", zoomLevel);
-
-    FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
-    settings->setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
 }
 
 void MainWindow::restoreSettings()
@@ -1681,10 +1678,6 @@ void MainWindow::restoreWindowState()
 
     restoreGeometry(settings->value("MainWindow/geometry").toByteArray());
     restoreState(settings->value("MainWindow/windowState").toByteArray());
-
-    // Restore the path if it has one
-    FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
-    fawDock->setRootPath(settings->value("FolderAsWorkspace/RootPath").toString());
 
     // Always hide the dock no matter how the application was closed
     SearchResultsDock *srDock = findChild<SearchResultsDock *>();
