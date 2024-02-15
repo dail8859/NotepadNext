@@ -27,7 +27,9 @@ function DialogFilters()
 
         if L.extensions then
             for _, ext in ipairs(L.extensions) do
-                extensions[#extensions + 1] = "*." .. ext
+                if #ext > 0 then
+                    extensions[#extensions + 1] = "*." .. ext
+                end
             end
 
             filter[#filter + 1] = name .. " Files (" .. table.concat(extensions, " ") .. ")"
