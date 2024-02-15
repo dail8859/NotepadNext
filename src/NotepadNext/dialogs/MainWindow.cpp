@@ -1133,7 +1133,8 @@ bool MainWindow::saveCurrentFileAsDialog()
         dialogDir = editor->getFilePath();
     }
 
-    QString fileName = FileDialogHelpers::getSaveFileName(this, QString(), dialogDir, filter);
+    QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
+    QString fileName = FileDialogHelpers::getSaveFileName(this, QString(), dialogDir, filter, &selectedFilter);
 
     if (fileName.size() == 0) {
         return false;
@@ -1176,7 +1177,8 @@ bool MainWindow::saveCopyAsDialog()
         dialogDir = editor->getFilePath();
     }
 
-    QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Save a Copy As"), dialogDir, filter);
+    QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
+    QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Save a Copy As"), dialogDir, filter, &selectedFilter);
 
     return saveCopyAs(fileName);
 }
@@ -1239,7 +1241,9 @@ void MainWindow::renameFile()
     ScintillaNext *editor = currentEditor();
 
     if (editor->isFile()) {
-        QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath());
+        const QString filter = app->getFileDialogFilter();
+        QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
+        QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath(), filter, &selectedFilter);
 
         if (fileName.size() == 0) {
             return;

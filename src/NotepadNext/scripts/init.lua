@@ -19,27 +19,37 @@ function detectLanguageFromContents(contents)
     return "Text"
 end
 
-function DialogFilters()
-    local filter = {}
+function FilterForLanguage(name)
+    local extensions = {}
+    local language_definition = languages[name]
 
-    for name, L in pairs(languages) do
-        local extensions = {}
+    if not language_definition.extensions then
+        return nil
+    end
 
-        if L.extensions then
-            for _, ext in ipairs(L.extensions) do
-                if #ext > 0 then
-                    extensions[#extensions + 1] = "*." .. ext
-                end
-            end
-
-            filter[#filter + 1] = name .. " Files (" .. table.concat(extensions, " ") .. ")"
+    for _, ext in ipairs(language_definition.extensions) do
+        if #ext > 0 then
+            extensions[#extensions + 1] = "*." .. ext
         end
     end
 
-    table.sort(filter, function (a, b) return a:lower() < b:lower() end)
-    table.insert(filter, 1, "All files (*)")
+    return  name .. " Files (" .. table.concat(extensions, " ") .. ")"
+end
 
-    return table.concat(filter, ";;")
+function DialogFilters()
+    local filters = {}
+
+    for name, L in pairs(languages) do
+        local filter = FilterForLanguage(name)
+        if filter then
+            filters[#filters + 1] = filter
+        end
+    end
+
+    table.sort(filters, function (a, b) return a:lower() < b:lower() end)
+    table.insert(filters, 1, "All Files (*)")
+
+    return table.concat(filters, ";;")
 end
 
 languages = {}

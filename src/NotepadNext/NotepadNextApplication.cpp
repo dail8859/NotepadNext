@@ -270,6 +270,11 @@ QString NotepadNextApplication::getFileDialogFilter() const
     return getLuaState()->executeAndReturn<QString>("return DialogFilters()");
 }
 
+QString NotepadNextApplication::getFileDialogFilterForLanguage(const QString &language) const
+{
+    return getLuaState()->executeAndReturn<QString>(QString("return FilterForLanguage(\"%1\")").arg(language).toLatin1().constData());
+}
+
 QStringList NotepadNextApplication::getLanguages() const
 {
     return getLuaState()->executeAndReturn<QStringList>(
