@@ -53,6 +53,7 @@ public:
 
     LuaState *getLuaState() const { return luaState; }
     QString getFileDialogFilter() const;
+    QString getFileDialogFilterForLanguage(const QString &language) const;
     ApplicationSettings *getSettings() const { return settings; }
 
     QStringList getLanguages() const;
