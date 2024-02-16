@@ -92,6 +92,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 {
     qInfo(Q_FUNC_INFO);
 
+    setAttribute(Qt::WA_DeleteOnClose);
+
     ui->setupUi(this);
 
     qInfo("setupUi Completed");
@@ -744,7 +746,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
 MainWindow::~MainWindow()
 {
-    Q_ASSERT(dockedEditor->count() == 0);
+    delete ui;
 }
 
 void MainWindow::setupLanguageMenu()
