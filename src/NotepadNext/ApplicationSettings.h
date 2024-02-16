@@ -67,7 +67,6 @@ public:
     T get(const ApplicationSetting<T> &setting) const
     { return get(setting.key(), setting.getDefault()); }
 
-private:
     template <typename T>
     void set(const ApplicationSetting<T> &setting, const T &value)
     { setValue(QLatin1String(setting.key()), value); }
