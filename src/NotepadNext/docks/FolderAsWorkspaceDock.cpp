@@ -23,6 +23,8 @@
 
 #include <QFileSystemModel>
 
+ApplicationSetting<QString> rootPathSetting{"FolderAsWorkspace/RootPath"};
+
 FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::FolderAsWorkspaceDock),
@@ -42,13 +44,13 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
     });
 
     ApplicationSettings settings;
-    setRootPath(settings.value("FolderAsWorkspace/RootPath").toString());
+    setRootPath(settings.get(rootPathSetting));
 }
 
 FolderAsWorkspaceDock::~FolderAsWorkspaceDock()
 {
     ApplicationSettings settings;
-    settings.setValue("FolderAsWorkspace/RootPath", rootPath());
+    settings.set(rootPathSetting, rootPath());
 
     delete ui;
 }
