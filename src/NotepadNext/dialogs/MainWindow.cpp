@@ -799,6 +799,10 @@ int MainWindow::editorCount() const
 
 QVector<ScintillaNext *> MainWindow::editors() const
 {
+    // NOTE: this will need re-evaluated in the future.
+    // So far it has been assumed 1 ScintillaNext instance is 1 DockedEditor widget instance.
+    // If in the future a ScintillaNext can be cloned then the DockedEditor could return
+    // the same ScintillaNext instance multiple times since 1 ScintillaNext could mean >= 1 DockedEditor widget instance
     return dockedEditor->editors();
 }
 
