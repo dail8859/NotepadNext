@@ -153,8 +153,6 @@ void EditorInspectorDock::editorUIUpdated(Scintilla::Update updated)
 
 void EditorInspectorDock::updateEditorInfo(ScintillaNext *editor)
 {
-    qInfo(Q_FUNC_INFO);
-
     for (const QPair<QTreeWidgetItem *, EditorFunction> &pair : qAsConst(items)) {
         QTreeWidgetItem *item = pair.first;
 
