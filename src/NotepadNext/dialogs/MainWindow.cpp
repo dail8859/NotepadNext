@@ -1214,6 +1214,11 @@ void MainWindow::saveAll()
 void MainWindow::exportAsFormat(Converter *converter, const QString &filter)
 {
     const QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Export As"), QString(), filter + ";;All files (*)");
+
+    if (fileName.isEmpty()) {
+        return;
+    }
+
     QFile f(fileName);
 
     f.open(QIODevice::WriteOnly);
