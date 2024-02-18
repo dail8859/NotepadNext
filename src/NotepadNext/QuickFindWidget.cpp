@@ -20,6 +20,7 @@
 #include "FocusWatcher.h"
 #include "QuickFindWidget.h"
 #include "ScintillaNext.h"
+#include "FadingIndicator.h"
 #include "ui_QuickFindWidget.h"
 
 #include <QKeyEvent>
@@ -159,6 +160,10 @@ void QuickFindWidget::navigateToNextMatch(bool skipCurrent)
 
     editor->setSel(range.cpMin, range.cpMax);
     editor->verticalCentreCaret();
+
+    if (finder->didLatestSearchWrapAround()) {
+        FadingIndicator::showPixmap(editor, QStringLiteral(":/icons/wrapindicator.png"));
+    }
 }
 
 void QuickFindWidget::navigateToPrevMatch()
