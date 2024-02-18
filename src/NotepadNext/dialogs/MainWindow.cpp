@@ -1256,7 +1256,7 @@ void MainWindow::renameFile()
         QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
         QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath(), filter, &selectedFilter);
 
-        if (fileName.size() == 0) {
+        if (fileName.isEmpty()) {
             return;
         }
 
