@@ -34,6 +34,10 @@ const int CHUNK_SIZE = 1024 * 1024 * 4; // Not sure what is best
 
 static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString &path)
 {
+    if(path.isEmpty()) {
+        return QFileDevice::NoError;
+    }
+
     qInfo(Q_FUNC_INFO);
 
     QFile file(path);
