@@ -16,4 +16,4 @@
 
 
 APP_VERSION = "0.6.4"
-APP_COPYRIGHT = "Copyright 2019-2023 Justin Dailey"
+APP_COPYRIGHT = "Copyright 2019-2024 Justin Dailey"
