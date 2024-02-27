@@ -23,7 +23,8 @@ TRANSLATIONS = \
     ../../i18n/NotepadNext_zh_TW.ts \
     ../../i18n/NotepadNext_sv_SE.ts \
     ../../i18n/NotepadNext_uk_UA.ts \
-    ../../i18n/NotepadNext_tr_TR.ts
+    ../../i18n/NotepadNext_tr_TR.ts \
+    ../../i18n/NotepadNext_pl_PL.ts
 
 EXTRA_TRANSLATIONS = \
     $$[QT_INSTALL_TRANSLATIONS]/qt_zh_CN.qm \

@@ -419,22 +419,22 @@
         <translation>下一個已折疊項</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="175"/>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="173"/>
         <source>Caret</source>
         <translation>游標位置</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="179"/>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="177"/>
         <source>Anchor</source>
         <translation>錨點位置</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="183"/>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="181"/>
         <source>Caret Virtual Space</source>
         <translation>插入虛擬空格</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="187"/>
+        <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="185"/>
         <source>Anchor Virtual Space</source>
         <translation>定位虛擬空格</translation>
     </message>
@@ -1446,7 +1446,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1219"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1217"/>
         <source>Export As</source>
         <translation>匯出為</translation>
     </message>
@@ -1567,7 +1567,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="879"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="580"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="572"/>
         <source>Start Recording</source>
         <translation>開始錄製</translation>
     </message>
@@ -1657,120 +1657,120 @@
         <translation>以工作區方式開啟資料夾...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="352"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="355"/>
         <source>Go to line</source>
         <translation>跳轉到行</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="352"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="355"/>
         <source>Line Number (1 - %1)</source>
         <translation>行號（1 - %1）</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="571"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="563"/>
         <source>Stop Recording</source>
         <translation>停止錄製</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="825"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="821"/>
         <source>New %1</source>
         <translation>新檔案 %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="873"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="869"/>
         <source>Create File</source>
         <translation>建立檔案</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="873"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="869"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; 尚不存在，你想要建立一個嗎？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="924"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1022"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="920"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1018"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>儲存檔案 &lt;b&gt;%1&lt;/b&gt;？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="925"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1023"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="921"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1019"/>
         <source>Save File</source>
         <translation>儲存檔案</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="978"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="974"/>
         <source>Open Folder as Workspace</source>
         <translation>以工作區方式開啟資料夾</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="996"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="992"/>
         <source>Reload File</source>
         <translation>重新載入檔案</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="996"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="992"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>你確定要重新載入 &lt;b&gt;%1&lt;/b&gt;？任何未儲存的修改都會遺失。</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1395"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1400"/>
         <source>Administrator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1643"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1648"/>
         <source>Error Saving File</source>
         <translation>儲存檔案時出錯</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1190"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1188"/>
         <source>Save a Copy As</source>
         <translation>副本另存為</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1253"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1268"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1258"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1273"/>
         <source>Rename</source>
         <translation>重新命名</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1268"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1273"/>
         <source>Name:</source>
         <translation>巨集名稱：</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1288"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1293"/>
         <source>Delete File</source>
         <translation>刪除檔案</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1288"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1293"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>你確定要將 &lt;b&gt;%1&lt;/b&gt; 移至垃圾桶？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1298"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1303"/>
         <source>Error Deleting File</source>
         <translation>刪除檔案時出錯</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1298"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1303"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>刪除 &lt;b&gt;%1&lt;/b&gt; 時出錯了？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1643"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1648"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>儲存 &lt;b&gt;%1&lt;/b&gt; 時發生了錯誤&lt;br&gt;&lt;br&gt;錯誤：%2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1649"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1654"/>
         <source>Zoom: %1%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1817"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1794"/>
         <source>No updates are available at this time.</source>
         <translation>目前沒有可用的更新。</translation>
     </message>
