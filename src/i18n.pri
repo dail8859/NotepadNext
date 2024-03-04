@@ -24,11 +24,13 @@ TRANSLATIONS = \
     ../../i18n/NotepadNext_sv_SE.ts \
     ../../i18n/NotepadNext_uk_UA.ts \
     ../../i18n/NotepadNext_tr_TR.ts \
-    ../../i18n/NotepadNext_pl_PL.ts
+    ../../i18n/NotepadNext_pl_PL.ts \
+    ../../i18n/NotepadNext_ru_RU.ts
 
 EXTRA_TRANSLATIONS = \
     $$[QT_INSTALL_TRANSLATIONS]/qt_zh_CN.qm \
     $$[QT_INSTALL_TRANSLATIONS]/qt_zh_TW.qm \
     $$[QT_INSTALL_TRANSLATIONS]/qt_sv.qm \
     $$[QT_INSTALL_TRANSLATIONS]/qt_uk.qm \
-    $$[QT_INSTALL_TRANSLATIONS]/qt_tr.qm
+    $$[QT_INSTALL_TRANSLATIONS]/qt_tr.qm \
+    $$[QT_INSTALL_TRANSLATIONS]/qtbase_ru.qm
