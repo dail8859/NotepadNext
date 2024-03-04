@@ -144,43 +144,30 @@ void SessionManager::saveSession(MainWindow *window)
 
     int index = 0;
     for (const auto &editor : window->editors()) {
-        settings.setArrayIndex(index);
-
         SessionFileType editorType = determineType(editor);
 
-        if (editorType == SessionManager::SavedFile) {
-            if (fileTypes.testFlag(SessionManager::SavedFile)) {
+        if (fileTypes.testFlag(editorType)) {
+            settings.setArrayIndex(index);
+
+            if (editorType == SessionManager::SavedFile) {
                 storeFileDetails(editor, settings);
             }
-            else {
-                continue;
-            }
-        }
-        else if (editorType == SessionManager::UnsavedFile) {
-            if (fileTypes.testFlag(SessionManager::UnsavedFile)) {
+            else if (editorType == SessionManager::UnsavedFile) {
                 storeUnsavedFileDetails(editor, settings);
             }
-            else {
-                continue;
-            }
-        }
-        else if (editorType == SessionManager::TempFile) {
-            if (fileTypes.testFlag(SessionManager::TempFile)) {
+            else if (editorType == SessionManager::TempFile) {
                 storeTempFile(editor, settings);
             }
             else {
-                continue;
+                qWarning("Unknown SessionFileType %d", editorType);
             }
-        }
-        else {
-            continue;
-        }
 
-        if (currentEditor == editor) {
-            currentEditorIndex = index;
-        }
+            if (currentEditor == editor) {
+                currentEditorIndex = index;
+            }
 
-        ++index;
+            ++index;
+        }
     }
 
     settings.endArray();
