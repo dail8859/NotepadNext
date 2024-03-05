@@ -31,7 +31,6 @@ QString TranslationFileNameToLocaleName(const QString &baseName)
 TranslationManager::TranslationManager(QCoreApplication *app, const QString &path)
     : QObject(app), path(path), app(app)
 {
-    availableTranslations();
 }
 
 QStringList TranslationManager::availableTranslations() const
