@@ -29,7 +29,7 @@ class TranslationManager : public QObject
     Q_OBJECT
 
 public:
-    TranslationManager(QCoreApplication *app, const QString &path);
+    TranslationManager(QObject *parent, const QString &path);
 
     QStringList availableTranslations() const;
 
@@ -42,8 +42,6 @@ public slots:
 
 private:
     const QString path;
-    QCoreApplication *app;
 
-    QTranslator translatorApp;
-    QTranslator translatorQt;
+    QList<QTranslator*> translators;
 };

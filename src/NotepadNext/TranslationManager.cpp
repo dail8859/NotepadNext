@@ -28,8 +28,8 @@ QString TranslationFileNameToLocaleName(const QString &baseName)
 }
 
 
-TranslationManager::TranslationManager(QCoreApplication *app, const QString &path)
-    : QObject(app), path(path), app(app)
+TranslationManager::TranslationManager(QObject *parent, const QString &path)
+    : QObject(parent), path(path)
 {
 }
 
@@ -72,20 +72,17 @@ void TranslationManager::loadTranslation(QLocale locale)
 {
     qInfo(Q_FUNC_INFO);
 
-    // Load translation for NotepadNext e.g. ":/i18n/NotepadNext_en.qm"
-    if (translatorApp.load(locale, QApplication::applicationName(), QString("_"), path)) {
-        app->installTranslator(&translatorApp);
-        qInfo("Loaded %s translation %s for Notepad Next", qUtf8Printable(locale.name()), qUtf8Printable(translatorApp.filePath()));
-    } else {
-        qInfo("%s translation not found for Notepad Next", qUtf8Printable(locale.name()));
-    }
+    const QStringList filenames{QStringList{QApplication::applicationName(), "qt", "qtbase"}};
 
-    // Load translation for Qt components e.g. ":/i18n/qt_en.qm"
-    if (translatorQt.load(locale, QString("qt"), QString("_"), path)) {
-        app->installTranslator(&translatorQt);
-        qInfo("Loaded %s translation %s for Qt components", qUtf8Printable(locale.name()), qUtf8Printable(translatorQt.filePath()));
-    } else {
-        qInfo("%s translation not found for Qt components", qUtf8Printable(locale.name()));
+    for (const auto& filename : filenames) {
+        std::unique_ptr<QTranslator> translator = std::make_unique<QTranslator>();
+
+        if (translator->load(locale, filename, QStringLiteral("_"), path)) {
+            if (QCoreApplication::installTranslator(translator.get())) {
+                qInfo() << "Loaded translation" << translator.get()->filePath();
+                translators.append(translator.release());
+            }
+        }
     }
 }
 
