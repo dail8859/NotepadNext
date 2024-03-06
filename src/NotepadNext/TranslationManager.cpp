@@ -20,6 +20,9 @@
 
 #include <QApplication>
 #include <QDirIterator>
+#include <QDebug>
+
+#include <memory>
 
 QString TranslationFileNameToLocaleName(const QString &baseName)
 {
