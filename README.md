@@ -47,4 +47,4 @@ If you are new to building C++ Qt desktop applications, there is a more detailed
 
 
 # License
-This code is released under the [GNU General Public License version 3](http://www.gnu.org/licenses/gpl-3.0.txt).
+This code is released under the [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.txt).
