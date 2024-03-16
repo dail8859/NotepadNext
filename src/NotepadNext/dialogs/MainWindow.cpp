@@ -421,6 +421,25 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
+    // The action needs added to the window so it can be triggered via the keyboard
+    addAction(ui->actionNextTab);
+    connect(ui->actionNextTab, &QAction::triggered, this, [=]() {
+        int index = dockedEditor->currentDockArea()->currentIndex();
+        int total = dockedEditor->currentDockArea()->dockWidgetsCount();
+
+        index++;
+        dockedEditor->currentDockArea()->setCurrentIndex(index < total ? index : 0);
+    });
+
+    // The action needs added to the window so it can be triggered via the keyboard
+    addAction(ui->actionPreviousTab);
+    connect(ui->actionPreviousTab, &QAction::triggered, this, [=]() {
+        int index = dockedEditor->currentDockArea()->currentIndex();
+        int total = dockedEditor->currentDockArea()->dockWidgetsCount();
+
+        index--;
+        dockedEditor->currentDockArea()->setCurrentIndex(index >= 0 ? index : total - 1);
+    });
 
     ui->pushExitFullScreen->setParent(this); // This is important
     ui->pushExitFullScreen->setVisible(false);
