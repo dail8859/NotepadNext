@@ -39,7 +39,7 @@ defaults -currentHost write -g AppleFontSmoothing -int 0
 A restart is required for this to take effect.
 
 # Development
-Current development is done using Visual Studio 2022 and Qt v6.2+ on Windows. This is also known to build successfully on various Linux distributions and macOS. Other platforms/compilers should be usable with minor modifications.
+Current development is done using QtCreator with the Microsft Visual C++ (msvc) compiler. Qt 6.5 is the prefered Qt version but this can also be built with Qt 5.15. This is also known to build successfully on various Linux distributions and macOS. Other platforms/compilers should be usable with minor modifications.
 
 If you are familiar with building C++ Qt desktop applications with Qt Creator, then this should be as simple as opening `src/NotepadNext.pro` and build/run the project.
 
