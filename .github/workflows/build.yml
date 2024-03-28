@@ -12,6 +12,79 @@ env:
   QT_RELEASE_VER: 6.5
 
 jobs:
+  cmake-build:
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        -
+          qt_version: "6.6.1"
+          modules: "qt5compat"
+          os: ubuntu-20.04
+        -
+          qt_version: "6.6.1"
+          modules: "qt5compat"
+          os: windows-latest
+        -
+          qt_version: "6.6.1"
+          modules: "qt5compat"
+          os: macos-latest
+
+    runs-on: ${{ matrix.config.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: ${{ matrix.config.qt_version }}
+          modules: ${{ matrix.config.modules }}
+
+      - name: Install Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+
+      - name: Setup (Linux)
+        if: startsWith (matrix.config.os, 'ubuntu')
+        run: |
+          echo "DISTRIBUTION=AppImage" >> "$GITHUB_ENV"
+          sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev
+
+      - name: Setup VS tools (Windows)
+        if: startsWith (matrix.config.os, 'windows')
+        uses: egor-tensin/vs-shell@v2
+        with:
+          arch: x64
+
+      - name: Compile
+        run: |
+          cmake -S . -B cbuild -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_STATIC=ON
+          cmake --build cbuild
+
+      - name: Create App Image
+        if: startsWith (matrix.config.os, 'ubuntu')
+        run: |
+            cmake --install cbuild --prefix=${{ github.workspace }}/cbuild/AppDir/usr/
+            cd cbuild
+
+            wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
+            wget --no-verbose "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
+            chmod +x linuxdeploy*.AppImage
+
+            export OUTPUT=NotepadNext-x86_64.AppImage
+            export LD_LIBRARY_PATH=AppDir/usr/lib/:$LD_LIBRARY_PATH
+            export DEBUG=1
+            ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin qt --output appimage
+
+      - name: Upload AppImage
+        if: startsWith (matrix.config.os, 'ubuntu')
+        uses: actions/upload-artifact@v3
+        with:
+          name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}-cmake-AppImage
+          path: ${{ github.workspace }}/cbuild/NotepadNext-x86_64.AppImage
+
   build:
     strategy:
       fail-fast: false
