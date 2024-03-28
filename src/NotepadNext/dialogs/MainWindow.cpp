@@ -1205,6 +1205,10 @@ bool MainWindow::saveCopyAsDialog()
     QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
     QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Save a Copy As"), dialogDir, filter, &selectedFilter);
 
+    if (fileName.size() == 0) {
+        return false;
+    }
+
     return saveCopyAs(fileName);
 }
 
