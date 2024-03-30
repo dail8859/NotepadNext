@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>NotepadNext.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.NotepadNext</string>
+	<string>io.github.dail8859.NotepadNext</string>
 	<key>CFBundleShortVersionString</key>
 	<string>${QMAKE_FULL_VERSION}</string>
 	<key>CFBundlePackageType</key>
