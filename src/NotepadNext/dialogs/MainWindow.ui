@@ -235,11 +235,44 @@
      <addaction name="actionShowIndentGuide"/>
      <addaction name="actionShowWrapSymbol"/>
     </widget>
+    <widget class="QMenu" name="menuFold_Level">
+     <property name="title">
+      <string>Fold Level</string>
+     </property>
+     <addaction name="actionFoldLevel1"/>
+     <addaction name="actionFoldLevel2"/>
+     <addaction name="actionFoldLevel3"/>
+     <addaction name="actionFoldLevel4"/>
+     <addaction name="actionFoldLevel5"/>
+     <addaction name="actionFoldLevel6"/>
+     <addaction name="actionFoldLevel7"/>
+     <addaction name="actionFoldLevel8"/>
+     <addaction name="actionFoldLevel9"/>
+    </widget>
+    <widget class="QMenu" name="menuUnfold_Level">
+     <property name="title">
+      <string>Unfold Level</string>
+     </property>
+     <addaction name="actionUnfoldLevel1"/>
+     <addaction name="actionUnfoldLevel2"/>
+     <addaction name="actionUnfoldLevel3"/>
+     <addaction name="actionUnfoldLevel4"/>
+     <addaction name="actionUnfoldLevel5"/>
+     <addaction name="actionUnfoldLevel6"/>
+     <addaction name="actionUnfoldLevel7"/>
+     <addaction name="actionUnfoldLevel8"/>
+     <addaction name="actionUnfoldLevel9"/>
+    </widget>
     <addaction name="actionFullScreen"/>
     <addaction name="separator"/>
     <addaction name="menuShowSymbol"/>
     <addaction name="menuZoom"/>
     <addaction name="actionWordWrap"/>
+    <addaction name="separator"/>
+    <addaction name="actionFoldAll"/>
+    <addaction name="actionUnfoldAll"/>
+    <addaction name="menuFold_Level"/>
+    <addaction name="menuUnfold_Level"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuLanguage">
@@ -1162,6 +1195,166 @@
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionFoldLevel1">
+   <property name="text">
+    <string>Fold Level 1</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+1</string>
+   </property>
+  </action>
+  <action name="actionFoldLevel2">
+   <property name="text">
+    <string>Fold Level 2</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+2</string>
+   </property>
+  </action>
+  <action name="actionFoldLevel3">
+   <property name="text">
+    <string>Fold Level 3</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+3</string>
+   </property>
+  </action>
+  <action name="actionFoldLevel4">
+   <property name="text">
+    <string>Fold Level 4</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+4</string>
+   </property>
+  </action>
+  <action name="actionUnfoldLevel1">
+   <property name="text">
+    <string>Unfold Level 1</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+1</string>
+   </property>
+  </action>
+  <action name="actionUnfoldLevel2">
+   <property name="text">
+    <string>Unfold Level 2</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+2</string>
+   </property>
+  </action>
+  <action name="actionUnfoldLevel3">
+   <property name="text">
+    <string>Unfold Level 3</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+3</string>
+   </property>
+  </action>
+  <action name="actionUnfoldLevel4">
+   <property name="text">
+    <string>Unfold Level 4</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+4</string>
+   </property>
+  </action>
+  <action name="actionFoldAll">
+   <property name="text">
+    <string>Fold All</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+0</string>
+   </property>
+  </action>
+  <action name="actionUnfoldAll">
+   <property name="text">
+    <string>Unfold All</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+0</string>
+   </property>
+  </action>
+  <action name="actionFoldLevel5">
+   <property name="text">
+    <string>Fold Level 5</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+5</string>
+   </property>
+  </action>
+  <action name="actionFoldLevel6">
+   <property name="text">
+    <string>Fold Level 6</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+6</string>
+   </property>
+  </action>
+  <action name="actionFoldLevel7">
+   <property name="text">
+    <string>Fold Level 7</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+7</string>
+   </property>
+  </action>
+  <action name="actionFoldLevel8">
+   <property name="text">
+    <string>Fold Level 8</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+8</string>
+   </property>
+  </action>
+  <action name="actionFoldLevel9">
+   <property name="text">
+    <string>Fold Level 9</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+9</string>
+   </property>
+  </action>
+  <action name="actionUnfoldLevel5">
+   <property name="text">
+    <string>Unfold Level 5</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+5</string>
+   </property>
+  </action>
+  <action name="actionUnfoldLevel6">
+   <property name="text">
+    <string>Unfold Level 6</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+6</string>
+   </property>
+  </action>
+  <action name="actionUnfoldLevel7">
+   <property name="text">
+    <string>Unfold Level 7</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+7</string>
+   </property>
+  </action>
+  <action name="actionUnfoldLevel8">
+   <property name="text">
+    <string>Unfold Level 8</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+8</string>
+   </property>
+  </action>
+  <action name="actionUnfoldLevel9">
+   <property name="text">
+    <string>Unfold Level 9</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+9</string>
    </property>
   </action>
  </widget>

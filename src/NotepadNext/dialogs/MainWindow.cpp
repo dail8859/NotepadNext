@@ -549,6 +549,29 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(zoomEventWatcher, &ZoomEventWatcher::zoomIn, ui->actionZoomIn, &QAction::trigger);
     connect(zoomEventWatcher, &ZoomEventWatcher::zoomOut, ui->actionZoomOut, &QAction::trigger);
 
+    connect(ui->actionFoldAll, &QAction::triggered, this, [=]() { currentEditor()->foldAll(SC_FOLDACTION_CONTRACT | SC_FOLDACTION_CONTRACT_EVERY_LEVEL); });
+    connect(ui->actionUnfoldAll, &QAction::triggered, this, [=]() { currentEditor()->foldAll(SC_FOLDACTION_EXPAND | SC_FOLDACTION_CONTRACT_EVERY_LEVEL); });
+
+    connect(ui->actionFoldLevel1, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(0); });
+    connect(ui->actionFoldLevel2, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(1); });
+    connect(ui->actionFoldLevel3, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(2); });
+    connect(ui->actionFoldLevel4, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(3); });
+    connect(ui->actionFoldLevel5, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(4); });
+    connect(ui->actionFoldLevel6, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(5); });
+    connect(ui->actionFoldLevel7, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(6); });
+    connect(ui->actionFoldLevel8, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(7); });
+    connect(ui->actionFoldLevel9, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(8); });
+
+    connect(ui->actionUnfoldLevel1, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(0); });
+    connect(ui->actionUnfoldLevel2, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(1); });
+    connect(ui->actionUnfoldLevel3, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(2); });
+    connect(ui->actionUnfoldLevel4, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(3); });
+    connect(ui->actionUnfoldLevel5, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(4); });
+    connect(ui->actionUnfoldLevel6, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(5); });
+    connect(ui->actionUnfoldLevel7, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(6); });
+    connect(ui->actionUnfoldLevel8, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(7); });
+    connect(ui->actionUnfoldLevel9, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(8); });
+
     languageActionGroup = new QActionGroup(this);
     languageActionGroup->setExclusive(true);
 
