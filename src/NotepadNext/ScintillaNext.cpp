@@ -146,6 +146,36 @@ void ScintillaNext::cutAllowLine()
     }
 }
 
+void ScintillaNext::modifyFoldLevels(int level, int action)
+{
+    const int totalLines = lineCount();
+
+    int line = 0;
+    while (line < totalLines) {
+        int foldFlags = foldLevel(line); // Even though its called fold level it contains several other flags
+        bool isHeader = foldFlags & SC_FOLDLEVELHEADERFLAG;
+        int actualLevel = (foldFlags & SC_FOLDLEVELNUMBERMASK) - SC_FOLDLEVELBASE;
+
+        if (isHeader && actualLevel == level) {
+            foldLine(line, action);
+            line = lastChild(line, -1) + 1;
+        }
+        else {
+            ++line;
+        }
+    }
+}
+
+void ScintillaNext::foldAllLevels(int level)
+{
+    modifyFoldLevels(level, SC_FOLDACTION_CONTRACT);
+}
+
+void ScintillaNext::unFoldAllLevels(int level)
+{
+    modifyFoldLevels(level, SC_FOLDACTION_EXPAND);
+}
+
 void ScintillaNext::deleteLeadingEmptyLines()
 {
     while (lineCount() > 1 && lineIsEmpty(0)) {

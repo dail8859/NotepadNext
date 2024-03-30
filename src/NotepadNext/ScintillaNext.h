@@ -69,6 +69,10 @@ public:
 
     void cutAllowLine();
 
+    void modifyFoldLevels(int level, int action);
+    void foldAllLevels(int level);
+    void unFoldAllLevels(int level);
+
     void deleteLeadingEmptyLines();
     void deleteTrailingEmptyLines();
 
