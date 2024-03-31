@@ -22,13 +22,6 @@ Windows packages are available as an installer or a stand-alone zip file on the 
 winget install dail8859.NotepadNext
 ```
 
-or `Scoop`:
-
-```bash
-scoop bucket add extras
-scoop install extras/notepadnext
-```
-
 ## Linux
 
 Linux packages can be obtained by downloading the stand-alone AppImage on the [release](https://github.com/dail8859/NotepadNext/releases) page or by installing the [flatpak](https://flathub.org/apps/details/com.github.dail8859.NotepadNext) by executing:
