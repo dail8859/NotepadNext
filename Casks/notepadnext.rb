@@ -1,4 +1,4 @@
-cask "notepad-next" do
+cask "notepadnext" do
   version "0.7"
   sha256 "50db724e698ec0756fbbf4f5cd17aaed48d9b089a333a9820603729da32ff166"
 
