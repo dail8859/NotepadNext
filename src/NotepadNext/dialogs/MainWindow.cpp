@@ -773,6 +773,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(app->getSettings(), &ApplicationSettings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
     connect(app->getSettings(), &ApplicationSettings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
 
+    // It seems restoreState() does not affect the status bar so set it manually
+    ui->statusBar->setVisible(app->getSettings()->showStatusBar());
+
     setupLanguageMenu();
 
     // Put the style sheet here for now
