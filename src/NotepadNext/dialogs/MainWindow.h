@@ -148,7 +148,7 @@ private:
     QScopedPointer<SearchResultsCollector> searchResults;
 
     void initUpdateCheck();
-    bool isInInitialState();
+    ScintillaNext *getInitialEditor();
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     bool checkFileForModification(ScintillaNext *editor);
