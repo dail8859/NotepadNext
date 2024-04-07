@@ -78,6 +78,7 @@ public:
     DEFINE_SETTING(ShowStatusBar, showStatusBar, bool)
 
     DEFINE_SETTING(TabsClosable, tabsClosable, bool)
+    DEFINE_SETTING(ExitOnLastTabClosed, exitOnLastTabClosed, bool)
 
     DEFINE_SETTING(CombineSearchResults, combineSearchResults, bool)
 

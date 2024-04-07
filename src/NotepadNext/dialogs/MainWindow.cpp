@@ -1041,8 +1041,8 @@ void MainWindow::closeCurrentFile()
 
 void MainWindow::closeFile(ScintillaNext *editor)
 {
-    if (getInitialEditor() != Q_NULLPTR) {
-        // Don't close the last file
+    // Early out. If we aren't exiting on last tab closed, and it exists, there's no point in continuing
+    if (!app->getSettings()->exitOnLastTabClosed() && getInitialEditor() != Q_NULLPTR) {
         return;
     }
 
@@ -1071,9 +1071,14 @@ void MainWindow::closeFile(ScintillaNext *editor)
         editor->close();
     }
 
-    // If the last document was closed, start with a new one
+    // If the last document was closed, figure out what to do next
     if (editorCount() == 0) {
-        newFile();
+        if (app->getSettings()->exitOnLastTabClosed()) {
+            close();
+        }
+        else {
+            newFile();
+        }
     }
 }
 

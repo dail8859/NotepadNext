@@ -63,6 +63,8 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
         settings->setTranslation(ui->comboBoxTranslation->itemData(index).toString());
         showApplicationRestartRequired();
     });
+
+    MapSettingToCheckBox(ui->checkBoxExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosed, &ApplicationSettings::setExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosedChanged);
 }
 
 PreferencesDialog::~PreferencesDialog()
