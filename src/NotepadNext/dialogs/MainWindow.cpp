@@ -880,14 +880,18 @@ void MainWindow::newFile()
 }
 
 // One unedited, new blank document
-bool MainWindow::isInInitialState()
+ScintillaNext *MainWindow::getInitialEditor()
 {
     if (editorCount() == 1) {
         ScintillaNext *editor = currentEditor();
-        return !editor->isFile() && editor->isSavedToDisk();
+
+        // If the editor has had ANY modifications, then don't call it an initial editor
+        if (!editor->isFile() && !editor->canUndo() && !editor->canRedo()) {
+            return editor;
+        }
     }
 
-    return false;
+    return Q_NULLPTR;
 }
 
 void MainWindow::openFileList(const QStringList &fileNames)
@@ -897,7 +901,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
     if (fileNames.size() == 0)
         return;
 
-    bool wasInitialState = isInInitialState();
+    ScintillaNext *initialEditor = getInitialEditor();
     const ScintillaNext *mostRecentEditor = Q_NULLPTR;
 
     for (const QString &filePath : fileNames) {
@@ -938,19 +942,9 @@ void MainWindow::openFileList(const QStringList &fileNames)
         dockedEditor->switchToEditor(mostRecentEditor);
     }
 
-    // TODO: reevaluate this now that the MainWindows doesn't deal with buffers any more
-    /* This code breaks things on start up. During initial launch of the application, if a file is
-     * specified via the command line, then the default new file would be closed. But if a buffer is closed
-     * then the DockedEditor doesn't know about it, since focusedDockWidgetChanged is not emitted
-     * leaving the currentEditor pointer pointing to a widget that is set to be deleted. Then during focusIn()
-     * it needs the currentEditor pointer to check if the document has been modified
-     *
-     * if (wasInitialState) {
-     *     QVector<ScintillaBuffer *> buffers = dockedEditor->buffers();
-     *     ScintillaBuffer *bufferToClose = buffers.first();
-     *     app->getBufferManager()->closeBuffer(bufferToClose);
-     * }
-    */
+    if (initialEditor) {
+        initialEditor->close();
+    }
 }
 
 bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
@@ -1047,7 +1041,7 @@ void MainWindow::closeCurrentFile()
 
 void MainWindow::closeFile(ScintillaNext *editor)
 {
-    if (isInInitialState()) {
+    if (getInitialEditor() != Q_NULLPTR) {
         // Don't close the last file
         return;
     }
