@@ -72,6 +72,7 @@ protected:
 
 private slots:
     void saveSettings();
+    void receiveInfoFromSecondaryInstance(quint32 instanceId, QByteArray message);
 
 private:
     void openFiles(const QStringList &files);
