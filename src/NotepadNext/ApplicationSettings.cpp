@@ -44,6 +44,7 @@ CREATE_SETTING(Gui, ShowTabBar, showTabBar, bool, true)
 CREATE_SETTING(Gui, ShowStatusBar, showStatusBar, bool, true)
 
 CREATE_SETTING(Gui, TabsClosable, tabsClosable, bool, true)
+CREATE_SETTING(Gui, ExitOnLastTabClosed, exitOnLastTabClosed, bool, false)
 
 CREATE_SETTING(Gui, CombineSearchResults, combineSearchResults, bool, false)
 

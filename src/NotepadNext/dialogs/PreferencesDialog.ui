@@ -96,6 +96,13 @@
     </layout>
    </item>
    <item>
+    <widget class="QCheckBox" name="checkBoxExitOnLastTabClosed">
+     <property name="text">
+      <string>Exit on last tab closed</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
