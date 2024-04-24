@@ -1,0 +1,38 @@
+name: Bug report
+description: Report a bug
+body:
+  - type: input
+    attributes:
+      label: Operating System and Version
+      placeholder: e.g. Win11, Ubuntu 22.03, macOS Big Sur
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Distribution
+      description: How did you install the application?
+      placeholder: e.g. installer, flathub, snap, dmg
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Description
+      description: Clear and concise description of the problem
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: Exact steps to reproduce the problem
+      value: |-
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional Details
+      description: Anything else that may be relavent
+      value: e.g. screenshots, logs, etc
+
