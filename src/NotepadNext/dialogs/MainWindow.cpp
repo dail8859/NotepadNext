@@ -1980,29 +1980,57 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
     // Focus on the correct tab
     dockedEditor->switchToEditor(editor);
 
-    // Create the menu and show it
+    // Create the menu
     QMenu *menu = new QMenu(this);
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
-    menu->addAction(ui->actionClose);
-    menu->addAction(ui->actionCloseAllExceptActive);
-    menu->addAction(ui->actionCloseAllToLeft);
-    menu->addAction(ui->actionCloseAllToRight);
-    menu->addSeparator();
-    menu->addAction(ui->actionSave);
-    menu->addAction(ui->actionSaveAs);
-    menu->addAction(ui->actionRename);
-    menu->addSeparator();
-    menu->addAction(ui->actionReload);
-    menu->addSeparator();
+    // Default actions
+    QStringList actionNames{
+        "actionClose",
+        "actionCloseAllExceptActive",
+        "actionCloseAllToLeft",
+        "actionCloseAllToRight",
+        "",
+        "actionSave",
+        "actionSaveAs",
+        "actionRename",
+        "",
+        "actionReload",
+        "",
 #ifdef Q_OS_WIN
-    menu->addAction(ui->actionShowInExplorer);
-    menu->addAction(ui->actionOpenCommandPromptHere);
-    menu->addSeparator();
+        "actionShowInExplorer",
+        "actionOpenCommandPromptHere",
+        "",
 #endif
-    menu->addAction(ui->actionCopyFullPath);
-    menu->addAction(ui->actionCopyFileName);
-    menu->addAction(ui->actionCopyFileDirectory);
+        "actionCopyFullPath",
+        "actionCopyFileName",
+        "actionCopyFileDirectory"
+    };
+
+    // If the entry exists in the settings, use that
+    ApplicationSettings *settings = app->getSettings();
+    if (settings->contains("Gui/TabBarContextMenu")) {
+        actionNames = settings->value("Gui/TabBarContextMenu").toStringList();
+    }
+
+    // Populate the menu
+    for (const QString &actionName : actionNames) {
+        if (actionName.isEmpty()) {
+            menu->addSeparator();
+        }
+        else {
+            QAction *a = findChild<QAction *>(actionName, Qt::FindDirectChildrenOnly);
+
+            if (a != Q_NULLPTR) {
+                menu->addAction(a);
+            }
+            else {
+                qWarning() << "Cannot locate menu named" << actionName;
+            }
+        }
+    }
+
+    // Show it
     menu->popup(QCursor::pos());
 }
 
