@@ -229,8 +229,10 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     editor->styleSetFore(STYLE_DEFAULT, 0x000000);
     editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
-    editor->styleSetSize(STYLE_DEFAULT, DefaultFontSize());
-    editor->styleSetFont(STYLE_DEFAULT, "Courier New");
+    const int fontSize = settings->value("Editor/FontSize", DefaultFontSize()).toInt();
+    editor->styleSetSize(STYLE_DEFAULT, fontSize);
+    const QString fontName = settings->value("Editor/FontName", QStringLiteral("Courier New")).toString();
+    editor->styleSetFont(STYLE_DEFAULT, fontName.toUtf8().data());
 
     editor->styleClearAll();
 
