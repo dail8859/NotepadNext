@@ -63,6 +63,15 @@
      <addaction name="actionExportHtml"/>
      <addaction name="actionExportRtf"/>
     </widget>
+    <widget class="QMenu" name="menuSessions">
+     <property name="title">
+      <string>Sessions</string>
+     </property>
+     <addaction name="actionSaveSession"/>
+     <addaction name="actionOpenSessionFile"/>
+     <addaction name="separator"/>
+     <addaction name="actionNoRecentSessions"/>
+    </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionOpenFolderasWorkspace"/>
@@ -81,6 +90,8 @@
     <addaction name="actionPrint"/>
     <addaction name="separator"/>
     <addaction name="menuRecentFiles"/>
+    <addaction name="separator"/>
+    <addaction name="menuSessions"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -1347,6 +1358,24 @@
    </property>
    <property name="shortcut">
     <string>Alt+Shift+9</string>
+   </property>
+  </action>
+  <action name="actionSaveSession">
+   <property name="text">
+    <string>Save Session</string>
+   </property>
+  </action>
+  <action name="actionOpenSessionFile">
+   <property name="text">
+    <string>Open Session File</string>
+   </property>
+  </action>
+  <action name="actionNoRecentSessions">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>No Recent Sessions</string>
    </property>
   </action>
  </widget>

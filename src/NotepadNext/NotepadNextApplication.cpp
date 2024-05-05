@@ -19,7 +19,7 @@
 
 #include "MainWindow.h"
 #include "NotepadNextApplication.h"
-#include "RecentFilesListManager.h"
+#include "RecentListManager.h"
 #include "EditorManager.h"
 #include "LuaExtension.h"
 #include "DebugManager.h"
@@ -125,7 +125,8 @@ bool NotepadNextApplication::init()
 
     luaState = new LuaState();
 
-    recentFilesListManager = new RecentFilesListManager(this);
+    recentFilesListManager = new RecentListManager(this);
+    recentSessionsListManager = new RecentListManager(this);
     editorManager = new EditorManager(settings, this);
     sessionManager = new SessionManager(this);
 
@@ -517,7 +518,7 @@ MainWindow *NotepadNextApplication::createNewWindow()
             }
         }
 
-        getSessionManager()->saveSession(window);
+        getSessionManager()->saveDefaultSession(window);
     });
 
     return window;

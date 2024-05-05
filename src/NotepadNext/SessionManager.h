@@ -47,19 +47,23 @@ public:
 
     void clear() const;
 
-    void saveSession(MainWindow *window);
+    bool saveSessionTo(MainWindow *window, QString &path);
+    void saveDefaultSession(MainWindow *window);
     void loadSession(MainWindow *window);
 
     bool willFileGetStoredInSession(ScintillaNext *editor) const;
 
-private:
     QDir sessionDirectory() const;
+    bool isCustomSessionFolder() const { return useCustomSessionFolder; }
+
+private:
+    void saveSession(MainWindow *window, QSettings *settings);
 
     void saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName) const;
 
     SessionFileType determineType(ScintillaNext *editor) const;
 
-    void clearSettings() const;
+    void clearSettings(QSettings *settings) const;
     void clearDirectory() const;
 
     void storeFileDetails(ScintillaNext *editor, QSettings &settings);
@@ -76,6 +80,9 @@ private:
 
     NotepadNextApplication *app;
     SessionFileTypes fileTypes;
+
+    bool useCustomSessionFolder;
+    QString customSessionPath;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(SessionManager::SessionFileTypes)

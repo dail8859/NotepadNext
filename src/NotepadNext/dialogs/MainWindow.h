@@ -139,6 +139,8 @@ private slots:
     void languageMenuTriggered();
     void checkForUpdatesFinished(QString url);
     void activateEditor(ScintillaNext *editor);
+    void on_actionSaveSession_triggered();
+    void loadSession(const QString &filePath);
 
 private:
     Ui::MainWindow *ui = Q_NULLPTR;
