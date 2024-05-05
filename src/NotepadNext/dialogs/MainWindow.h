@@ -140,6 +140,7 @@ private slots:
     void checkForUpdatesFinished(QString url);
     void activateEditor(ScintillaNext *editor);
     void on_actionSaveSession_triggered();
+    void on_actionOpenSessionFile_triggered();
     void loadSession(const QString &filePath);
 
 private:

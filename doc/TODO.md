@@ -2,6 +2,7 @@
 
  - Sessions
     - [ ] Save/Load sessions
+    - [ ] Remove tabs on session load
     - [ ] Store Bookmarks
     - [ ] Store Tab settings
 

@@ -47,9 +47,10 @@ public:
 
     void clear() const;
 
-    bool saveSessionTo(MainWindow *window, QString &path);
+    bool saveSessionTo(MainWindow *window, const QString &path);
     void saveDefaultSession(MainWindow *window);
-    void loadSession(MainWindow *window);
+    void loadDefaultSession(MainWindow *window);
+    bool loadSessionFrom(MainWindow *window, const QString &path);
 
     bool willFileGetStoredInSession(ScintillaNext *editor) const;
 
@@ -58,6 +59,7 @@ public:
 
 private:
     void saveSession(MainWindow *window, QSettings *settings);
+    ScintillaNext *loadSession(MainWindow *window, QSettings *settings);
 
     void saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName) const;
 

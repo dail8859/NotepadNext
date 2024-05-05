@@ -220,7 +220,7 @@ bool NotepadNextApplication::init()
     if (settings->restorePreviousSession()) {
         qInfo("Restoring previous session");
 
-        sessionManager->loadSession(window);
+        sessionManager->loadDefaultSession(window);
     }
 
     openFiles(parser.positionalArguments());

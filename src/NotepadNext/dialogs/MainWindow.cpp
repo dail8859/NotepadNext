@@ -895,8 +895,28 @@ ScintillaNext *MainWindow::getInitialEditor()
     return Q_NULLPTR;
 }
 
+void MainWindow::on_actionOpenSessionFile_triggered()
+{
+    FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
+    // TODO: if there is active session - use it
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Load Session From Folder"), fawDock->rootPath(), QFileDialog::ShowDirsOnly);
+    if (!dir.isEmpty()) {
+        if (!app->getSessionManager()->loadSessionFrom(this, dir))
+        {
+            qCritical("Unable to load from %s", dir.toUtf8().constData());
+            QMessageBox::critical(this, "Error", tr("Unable to load from %1").arg(dir));
+        }
+        else {
+            app->getRecentSessionsListManager()->addFile(dir);
+        }
+    }
+}
+
 void MainWindow::loadSession(const QString &filePath)
 {
+    if (!app->getSessionManager()->loadSessionFrom(this, filePath)) {
+        app->getRecentSessionsListManager()->removeFile(filePath);
+    }
 }
 
 void MainWindow::on_actionSaveSession_triggered()
@@ -905,8 +925,7 @@ void MainWindow::on_actionSaveSession_triggered()
     // TODO: if there is active session - use it
     SessionManager *sessionManager = app->getSessionManager();
     QString dir = QFileDialog::getExistingDirectory(this, tr("Save Session To Folder"), fawDock->rootPath(), QFileDialog::ShowDirsOnly);
-    if (!dir.isEmpty())
-    {
+    if (!dir.isEmpty()) {
         // TODO: save active session if any
         if (!sessionManager->saveSessionTo(this, dir)) {
             qCritical("Unable to save to %s", dir.toUtf8().constData());
