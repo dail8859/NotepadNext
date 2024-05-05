@@ -908,10 +908,12 @@ void MainWindow::on_actionSaveSession_triggered()
     if (!dir.isEmpty())
     {
         // TODO: save active session if any
-        app->getRecentSessionsListManager()->addFile(dir);
         if (!sessionManager->saveSessionTo(this, dir)) {
             qCritical("Unable to save to %s", dir.toUtf8().constData());
             QMessageBox::critical(this, "Error", tr("Unable to save to %1").arg(dir));
+        }
+        else {
+            app->getRecentSessionsListManager()->addFile(dir);
         }
     }
 }

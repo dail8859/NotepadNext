@@ -44,6 +44,9 @@
 #include <Windows.h>
 #endif
 
+#define RECENT_SESSIONS_KEY "App/RecentSessionsList"
+#define RECENT_FILES_KEY "App/RecentFilesList"
+
 const SingleApplication::Options opts = SingleApplication::ExcludeAppPath | SingleApplication::ExcludeAppVersion | SingleApplication::SecondaryNotification;
 
 template <>
@@ -491,12 +494,14 @@ void NotepadNextApplication::openFiles(const QStringList &files)
 
 void NotepadNextApplication::loadSettings()
 {
-    recentFilesListManager->setFileList(getSettings()->value("App/RecentFilesList").toStringList());
+    recentFilesListManager->setFileList(getSettings()->value(RECENT_FILES_KEY).toStringList());
+    recentSessionsListManager->setFileList(getSettings()->value(RECENT_SESSIONS_KEY).toStringList());
 }
 
 void NotepadNextApplication::saveSettings()
 {
-    getSettings()->setValue("App/RecentFilesList", recentFilesListManager->fileList());
+    getSettings()->setValue(RECENT_FILES_KEY, recentFilesListManager->fileList());
+    getSettings()->setValue(RECENT_SESSIONS_KEY, recentSessionsListManager->fileList());
 }
 
 MainWindow *NotepadNextApplication::createNewWindow()
