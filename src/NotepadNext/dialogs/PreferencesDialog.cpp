@@ -75,7 +75,7 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     });
 
     ui->spbDefaultFontSize->setValue(settings->fontSize());
-    connect(ui->spbDefaultFontSize, &QSpinBox::valueChanged, settings, &ApplicationSettings::setFontSize);
+    connect(ui->spbDefaultFontSize, QOverload<int>::of(&QSpinBox::valueChanged), settings, &ApplicationSettings::setFontSize);
     connect(settings, &ApplicationSettings::fontSizeChanged, ui->spbDefaultFontSize, &QSpinBox::setValue);
 }
 
