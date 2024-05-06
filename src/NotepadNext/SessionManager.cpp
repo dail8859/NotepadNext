@@ -287,6 +287,19 @@ ScintillaNext *SessionManager::loadSession(MainWindow *window, QSettings &settin
     const int currentEditorIndex = settings.value("CurrentEditorIndex").toInt();
     const int size = settings.beginReadArray("OpenedFiles");
 
+    for (auto &editor : window->editors()) {
+        if (editor->isFile()) {
+            if (editor->isSavedToDisk()) {
+                editor->close();
+            }
+        }
+        else {
+            if (!editor->modify()) {
+                editor->close();
+            }
+        }
+    }
+
     // NOTE: In theory the fileTypes should determine what is loaded, however if the session fileTypes
     // change from the last time it was saved then it means the settings were manually altered outside of the app,
     // which is non-standard behavior, so just load anything in the file
