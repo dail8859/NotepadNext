@@ -103,6 +103,22 @@
     </widget>
    </item>
    <item>
+    <widget class="QFontComboBox" name="fcbDefaultFont"/>
+   </item>
+   <item>
+    <widget class="QSpinBox" name="spbDefaultFontSize">
+     <property name="suffix">
+      <string>pt</string>
+     </property>
+     <property name="minimum">
+      <number>2</number>
+     </property>
+     <property name="maximum">
+      <number>48</number>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -159,8 +175,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>266</x>
-     <y>440</y>
+     <x>641</x>
+     <y>439</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -175,8 +191,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>334</x>
-     <y>440</y>
+     <x>709</x>
+     <y>439</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
