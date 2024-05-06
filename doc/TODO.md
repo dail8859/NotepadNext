@@ -1,10 +1,10 @@
 ## TODO
 
  - Sessions
-    - [ ] Save/Load sessions
-    - [ ] Remove tabs on session load
-    - [ ] Store Bookmarks
-    - [ ] Store Tab settings
+    - [v] Save/Load sessions
+    - [ ] Remove old tabs on session load
+    - [v] Store Bookmarks
+    - [ ] Store per session settings
 
  - Editor
     - [ ] Auto Tabs/Spaces

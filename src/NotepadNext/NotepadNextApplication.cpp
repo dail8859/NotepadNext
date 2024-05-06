@@ -523,7 +523,7 @@ MainWindow *NotepadNextApplication::createNewWindow()
             }
         }
 
-        getSessionManager()->saveDefaultSession(window);
+        getSessionManager()->saveCurrentSession(window);
     });
 
     return window;

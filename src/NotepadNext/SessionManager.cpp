@@ -157,19 +157,28 @@ bool SessionManager::saveSessionTo(MainWindow *window, const QString &path)
         return false;
     }
 
-    QSettings *settings = new QSettings(sessionDirectory().absolutePath() + QDir::separator() + SETTINGS_FILE, QSettings::IniFormat);
+    QSettings settings(sessionDirectory().absolutePath() + QDir::separator() + SETTINGS_FILE, QSettings::IniFormat);
 
-    settings->beginGroup("Session");
+    settings.beginGroup("Session");
 
     setSessionFileTypes(tmp | SavedFile);
     saveSession(window, settings);
     setSessionFileTypes(tmp);
 
-    settings->endGroup();
-    settings->sync();
+    settings.endGroup();
+    settings.sync();
 
-    delete settings;
     return true;
+}
+
+void SessionManager::saveCurrentSession(MainWindow *window)
+{
+    if (useCustomSessionFolder) {
+        saveSessionTo(window, customSessionPath);
+    }
+    else {
+        saveDefaultSession(window);
+    }
 }
 
 void SessionManager::saveDefaultSession(MainWindow *window)
@@ -177,11 +186,11 @@ void SessionManager::saveDefaultSession(MainWindow *window)
     useCustomSessionFolder = false;
     ApplicationSettings appSettings;
     appSettings.beginGroup("CurrentSession");
-    saveSession(window, &appSettings);
+    saveSession(window, appSettings);
     appSettings.endGroup();
 }
 
-void SessionManager::saveSession(MainWindow *window, QSettings* settings)
+void SessionManager::saveSession(MainWindow *window, QSettings &settings)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -196,23 +205,23 @@ void SessionManager::saveSession(MainWindow *window, QSettings* settings)
     int currentEditorIndex = 0;
     ApplicationSettings appSettings;
 
-    settings->beginWriteArray("OpenedFiles");
+    settings.beginWriteArray("OpenedFiles");
 
     int index = 0;
     for (const auto &editor : window->editors()) {
         SessionFileType editorType = determineType(editor);
 
         if (fileTypes.testFlag(editorType)) {
-            settings->setArrayIndex(index);
+            settings.setArrayIndex(index);
 
             if (editorType == SessionManager::SavedFile) {
-                storeFileDetails(editor, *settings);
+                storeFileDetails(editor, settings);
             }
             else if (editorType == SessionManager::UnsavedFile) {
-                storeUnsavedFileDetails(editor, *settings);
+                storeUnsavedFileDetails(editor, settings);
             }
             else if (editorType == SessionManager::TempFile) {
-                storeTempFile(editor, *settings);
+                storeTempFile(editor, settings);
             }
             else {
                 qWarning("Unknown SessionFileType %d", editorType);
@@ -226,9 +235,9 @@ void SessionManager::saveSession(MainWindow *window, QSettings* settings)
         }
     }
 
-    settings->endArray();
+    settings.endArray();
 
-    settings->setValue("CurrentEditorIndex", currentEditorIndex);
+    settings.setValue("CurrentEditorIndex", currentEditorIndex);
 }
 
 void SessionManager::loadDefaultSession(MainWindow *window)
@@ -236,7 +245,7 @@ void SessionManager::loadDefaultSession(MainWindow *window)
     ApplicationSettings settings;
 
     settings.beginGroup("CurrentSession");
-    ScintillaNext *currentEditor = loadSession(window, &settings);
+    ScintillaNext *currentEditor = loadSession(window, settings);
     settings.endGroup();
 
     if (currentEditor) {
@@ -258,12 +267,11 @@ bool SessionManager::loadSessionFrom(MainWindow *window, const QString &path)
     {
         return false;
     }
-    QSettings *settings = new QSettings(sessionDirectory().absolutePath() + QDir::separator() + SETTINGS_FILE, QSettings::IniFormat);
+    QSettings settings(sessionDirectory().absolutePath() + QDir::separator() + SETTINGS_FILE, QSettings::IniFormat);
 
-    settings->beginGroup("Session");
+    settings.beginGroup("Session");
     ScintillaNext *currentEditor = loadSession(window, settings);
-    settings->endGroup();
-    delete settings;
+    settings.endGroup();
 
     if (currentEditor) {
         window->switchToEditor(currentEditor);
@@ -271,34 +279,34 @@ bool SessionManager::loadSessionFrom(MainWindow *window, const QString &path)
     return true;
 }
 
-ScintillaNext *SessionManager::loadSession(MainWindow *window, QSettings *settings)
+ScintillaNext *SessionManager::loadSession(MainWindow *window, QSettings &settings)
 {
     qInfo(Q_FUNC_INFO);
 
     ScintillaNext *currentEditor = Q_NULLPTR;
-    const int currentEditorIndex = settings->value("CurrentEditorIndex").toInt();
-    const int size = settings->beginReadArray("OpenedFiles");
+    const int currentEditorIndex = settings.value("CurrentEditorIndex").toInt();
+    const int size = settings.beginReadArray("OpenedFiles");
 
     // NOTE: In theory the fileTypes should determine what is loaded, however if the session fileTypes
     // change from the last time it was saved then it means the settings were manually altered outside of the app,
     // which is non-standard behavior, so just load anything in the file
 
     for (int index = 0; index < size; ++index) {
-        settings->setArrayIndex(index);
+        settings.setArrayIndex(index);
 
         ScintillaNext *editor = Q_NULLPTR;
 
-        if (settings->contains("Type")) {
-            const QString type = settings->value("Type").toString();
+        if (settings.contains("Type")) {
+            const QString type = settings.value("Type").toString();
 
             if (type == QStringLiteral("File")) {
-                editor = loadFileDetails(*settings);
+                editor = loadFileDetails(settings);
             }
             else if (type == QStringLiteral("UnsavedFile")) {
-                editor = loadUnsavedFileDetails(*settings);
+                editor = loadUnsavedFileDetails(settings);
             }
             else if (type == QStringLiteral("Temp")) {
-                editor = loadTempFile(*settings);
+                editor = loadTempFile(settings);
             }
             else {
                 qDebug("Unknown session entry type: %s", qUtf8Printable(type));
@@ -315,8 +323,8 @@ ScintillaNext *SessionManager::loadSession(MainWindow *window, QSettings *settin
         }
     }
 
-    settings->endArray();
-	return currentEditor;
+    settings.endArray();
+    return currentEditor;
 }
 
 bool SessionManager::willFileGetStoredInSession(ScintillaNext *editor) const

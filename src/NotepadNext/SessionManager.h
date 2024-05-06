@@ -48,7 +48,7 @@ public:
     void clear() const;
 
     bool saveSessionTo(MainWindow *window, const QString &path);
-    void saveDefaultSession(MainWindow *window);
+    void saveCurrentSession(MainWindow *window);
     void loadDefaultSession(MainWindow *window);
     bool loadSessionFrom(MainWindow *window, const QString &path);
 
@@ -58,8 +58,9 @@ public:
     bool isCustomSessionFolder() const { return useCustomSessionFolder; }
 
 private:
-    void saveSession(MainWindow *window, QSettings *settings);
-    ScintillaNext *loadSession(MainWindow *window, QSettings *settings);
+    void saveSession(MainWindow *window, QSettings &settings);
+    void saveDefaultSession(MainWindow *window);
+    ScintillaNext *loadSession(MainWindow *window, QSettings &settings);
 
     void saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName) const;
 
