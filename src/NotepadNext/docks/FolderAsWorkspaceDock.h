@@ -51,6 +51,7 @@ private slots:
     void on_actionDelete_triggered();
 
     void onCustomContextMenu(const QPoint &point);
+    void onFileRenamed(const QString &path, const QString &oldName, const QString &newName);
 
 private:
     Ui::FolderAsWorkspaceDock *ui;
