@@ -154,20 +154,13 @@ void FolderAsWorkspaceDock::onFileRenamed(const QString &path, const QString &ol
 
 void FolderAsWorkspaceDock::on_actionDelete_triggered()
 {
-    bool ret;
     QString path(model->filePath(lastSelectedItem));
     QMessageBox::StandardButton reply = QMessageBox::question(this, tr("Delete Item"),
         tr("Are you sure you want to delete <b>%1</b>?").arg(path));
 
     if (reply == QMessageBox::Yes)
     {
-        if (model->isDir(lastSelectedItem)) {
-            ret = model->rmdir(lastSelectedItem);
-        }
-        else {
-            ret = model->remove(lastSelectedItem);
-        }
-        if (!ret)
+        if (!model->remove(lastSelectedItem))
         {
             qWarning("Unable to delete %s", path.toUtf8().constData());
         }
