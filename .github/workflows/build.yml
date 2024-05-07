@@ -18,6 +18,9 @@ jobs:
       matrix:
         os: [ubuntu-20.04, windows-latest, macos-latest]
         qt_version: ["5.15", "6.5", "6.6"]
+        exclude:
+        - os: macos-latest
+          qt_version: "5.15"
 
     runs-on: ${{ matrix.os }}
 
