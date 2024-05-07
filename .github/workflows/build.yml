@@ -17,16 +17,10 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-20.04, windows-latest, macos-latest]
-        config:
-        - 
+        qt_version: ["5.15", "6.5", "6.6"]
+        exclude:
+        - os: macos-latest
           qt_version: "5.15"
-          modules: ""
-        - 
-          qt_version: "6.5"
-          modules: "qt5compat"
-        - 
-          qt_version: "6.6"
-          modules: "qt5compat"
 
     runs-on: ${{ matrix.os }}
 
@@ -39,8 +33,8 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          version: ${{ matrix.config.qt_version }}
-          modules: ${{ matrix.config.modules }}
+          version: ${{ matrix.qt_version }}
+          modules: ${{ matrix.qt_version != '5.15' && 'qt5compat' || '' }}
           cache: true
 
       - name: Get number of CPU cores
@@ -110,28 +104,28 @@ jobs:
         uses: actions/upload-artifact@v4
         if: runner.os == 'Windows'
         with:
-          name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Zip
+          name: NotepadNext-Windows-Qt${{ matrix.qt_version }}-Zip
           path: ${{ github.workspace }}/build/package/
 
       - name: Upload Windows Installer
         uses: actions/upload-artifact@v4
         if: runner.os == 'Windows'
         with:
-          name: NotepadNext-Windows-Qt${{ matrix.config.qt_version }}-Installer
+          name: NotepadNext-Windows-Qt${{ matrix.qt_version }}-Installer
           path: ${{ github.workspace }}/installer/NotepadNext*.exe
 
       - name: Upload macOS dmg
         uses: actions/upload-artifact@v4
         if: runner.os == 'macOS'
         with:
-          name: NotepadNext-macOS-Qt${{ matrix.config.qt_version }}
+          name: NotepadNext-macOS-Qt${{ matrix.qt_version }}
           path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.dmg
 
       - name: Upload Linux AppImage
         uses: actions/upload-artifact@v4
         if: runner.os == 'Linux'
         with:
-          name: NotepadNext-Linux-Qt${{ matrix.config.qt_version }}-AppImage
+          name: NotepadNext-Linux-Qt${{ matrix.qt_version }}-AppImage
           path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.AppImage
 
   github:
