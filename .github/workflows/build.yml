@@ -17,16 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-20.04, windows-latest, macos-latest]
-        config:
-        - 
-          qt_version: "5.15"
-          modules: ""
-        - 
-          qt_version: "6.5"
-          modules: "qt5compat"
-        - 
-          qt_version: "6.6"
-          modules: "qt5compat"
+        qt_version: ["5.15", "6.5", "6.6"]
 
     runs-on: ${{ matrix.os }}
 
@@ -39,8 +30,8 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          version: ${{ matrix.config.qt_version }}
-          modules: ${{ matrix.config.modules }}
+          version: ${{ matrix.qt_version }}
+          modules: ${{ matrix.qt_version == '5.15' && '' || 'qt5_compat' }}
           cache: true
 
       - name: Get number of CPU cores
