@@ -32,6 +32,7 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    model->setReadOnly(false);
     ui->treeView->setModel(model);
     ui->treeView->header()->hideSection(1);
     ui->treeView->header()->hideSection(2);
@@ -42,6 +43,7 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
             emit fileDoubleClicked(model->filePath(index));
         }
     });
+    connect(ui->treeView, &QTreeView::customContextMenuRequested, this, &FolderAsWorkspaceDock::onCustomContextMenu);
 
     ApplicationSettings settings;
     setRootPath(settings.get(rootPathSetting));
@@ -64,4 +66,42 @@ void FolderAsWorkspaceDock::setRootPath(const QString dir)
 QString FolderAsWorkspaceDock::rootPath() const
 {
     return model->rootPath();
+}
+
+void FolderAsWorkspaceDock::onCustomContextMenu(const QPoint &point)
+{
+    QModelIndex index = ui->treeView->indexAt(point);
+    if (!index.isValid()) {
+        lastSelectedItem = model->index(0, 0);
+        ui->menuEmpty->exec(ui->treeView->viewport()->mapToGlobal(point));
+        return;
+    }
+    lastSelectedItem = index;
+    if (model->isDir(index)) {
+        ui->menuDirectory->exec(ui->treeView->viewport()->mapToGlobal(point));
+    }
+    else {
+        ui->menuFile->exec(ui->treeView->viewport()->mapToGlobal(point));
+    }
+}
+
+void FolderAsWorkspaceDock::on_actionNewFile_triggered()
+{
+    qInfo(Q_FUNC_INFO);
+}
+
+void FolderAsWorkspaceDock::on_actionNewFolder_triggered()
+{
+    qInfo(Q_FUNC_INFO);
+}
+
+void FolderAsWorkspaceDock::on_actionRename_triggered()
+{
+    ui->treeView->setCurrentIndex(lastSelectedItem);
+    ui->treeView->edit(lastSelectedItem);
+}
+
+void FolderAsWorkspaceDock::on_actionDelete_triggered()
+{
+    qInfo(Q_FUNC_INFO);
 }
