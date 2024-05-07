@@ -45,7 +45,7 @@
       <addaction name="actionDelete"/>
       <addaction name="separator"/>
       <addaction name="actionNewFolder"/>
-      <addaction name="actionNewFile"/>
+      <addaction name="actionSaveHere"/>
      </widget>
     </item>
     <item>
@@ -54,7 +54,7 @@
        <string>Space Menu</string>
       </property>
       <addaction name="actionNewFolder"/>
-      <addaction name="actionNewFile"/>
+      <addaction name="actionSaveHere"/>
      </widget>
     </item>
     <item>
@@ -75,13 +75,9 @@
     </item>
    </layout>
   </widget>
-  <action name="actionNewFile">
-   <property name="icon">
-    <iconset resource="../resources.qrc">
-     <normaloff>:/icons/newfile.png</normaloff>:/icons/newfile.png</iconset>
-   </property>
+  <action name="actionSaveHere">
    <property name="text">
-    <string>&amp;New File</string>
+    <string>&amp;Save Here</string>
    </property>
   </action>
   <action name="actionNewFolder">

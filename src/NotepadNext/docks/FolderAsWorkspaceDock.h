@@ -28,13 +28,14 @@ class FolderAsWorkspaceDock;
 }
 
 class QFileSystemModel;
+class MainWindow;
 
 class FolderAsWorkspaceDock : public QDockWidget
 {
     Q_OBJECT
 
 public:
-    explicit FolderAsWorkspaceDock(QWidget *parent = nullptr);
+    explicit FolderAsWorkspaceDock(MainWindow *parent = nullptr);
     ~FolderAsWorkspaceDock();
 
     void setRootPath(const QString dir);
@@ -44,7 +45,7 @@ signals:
     void fileDoubleClicked(const QString &filePath);
 
 private slots:
-    void on_actionNewFile_triggered();
+    void on_actionSaveHere_triggered();
     void on_actionNewFolder_triggered();
     void on_actionRename_triggered();
     void on_actionDelete_triggered();
@@ -54,7 +55,9 @@ private slots:
 private:
     Ui::FolderAsWorkspaceDock *ui;
 
+    MainWindow *window;
     QFileSystemModel *model;
+
     QModelIndex lastSelectedItem;
 };
 

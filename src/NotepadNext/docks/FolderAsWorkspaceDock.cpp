@@ -18,18 +18,24 @@
 
 
 #include "FolderAsWorkspaceDock.h"
-#include "ApplicationSettings.h"
-#include "ui_FolderAsWorkspaceDock.h"
 
 #include <QFileSystemModel>
+#include <QMessageBox>
+
+#include "ApplicationSettings.h"
+#include "MainWindow.h"
+#include "ui_FolderAsWorkspaceDock.h"
+
+QString NEW_DIR_TEMPLATE("dir_%1");
 
 ApplicationSetting<QString> rootPathSetting{"FolderAsWorkspace/RootPath"};
 
-FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
+FolderAsWorkspaceDock::FolderAsWorkspaceDock(MainWindow *parent) :
     QDockWidget(parent),
-    ui(new Ui::FolderAsWorkspaceDock),
-    model(new QFileSystemModel(this))
+    window(parent)
 {
+    ui = new Ui::FolderAsWorkspaceDock;
+    model = new QFileSystemModel(this);
     ui->setupUi(this);
 
     model->setReadOnly(false);
@@ -72,7 +78,7 @@ void FolderAsWorkspaceDock::onCustomContextMenu(const QPoint &point)
 {
     QModelIndex index = ui->treeView->indexAt(point);
     if (!index.isValid()) {
-        lastSelectedItem = model->index(0, 0);
+        lastSelectedItem = model->index(rootPath());
         ui->menuEmpty->exec(ui->treeView->viewport()->mapToGlobal(point));
         return;
     }
@@ -85,14 +91,45 @@ void FolderAsWorkspaceDock::onCustomContextMenu(const QPoint &point)
     }
 }
 
-void FolderAsWorkspaceDock::on_actionNewFile_triggered()
+void FolderAsWorkspaceDock::on_actionSaveHere_triggered()
 {
-    qInfo(Q_FUNC_INFO);
+    QDir parentDir(model->filePath(lastSelectedItem));
+    auto doc = window->currentEditor();
+    QString dstName(parentDir.absoluteFilePath(doc->getName()));
+
+    if (doc->saveAs(dstName) != QFileDevice::NoError)
+    {
+        qWarning("Unable to save %s", dstName.toUtf8().constData());
+    }
+    else
+    {
+        auto newItem = model->index(dstName);
+        if (!doc->isFile()) {
+            doc->setFileInfo(dstName);
+        }
+        ui->treeView->setCurrentIndex(newItem);
+        ui->treeView->edit(newItem);
+    }
 }
 
 void FolderAsWorkspaceDock::on_actionNewFolder_triggered()
 {
-    qInfo(Q_FUNC_INFO);
+    QDir parentDir(model->filePath(lastSelectedItem));
+    int i = 1;
+
+    for (;parentDir.exists(NEW_DIR_TEMPLATE.arg(i)); i++) {
+    // Intentional
+    }
+    QString dstName = NEW_DIR_TEMPLATE.arg(i);
+
+    auto newItem = model->mkdir(lastSelectedItem, dstName);
+    if (!newItem.isValid()) {
+        qWarning("Unable to create %s", dstName.toUtf8().constData());
+    }
+    else {
+        ui->treeView->setCurrentIndex(newItem);
+        ui->treeView->edit(newItem);
+    }
 }
 
 void FolderAsWorkspaceDock::on_actionRename_triggered()
@@ -103,5 +140,22 @@ void FolderAsWorkspaceDock::on_actionRename_triggered()
 
 void FolderAsWorkspaceDock::on_actionDelete_triggered()
 {
-    qInfo(Q_FUNC_INFO);
+    bool ret;
+    QString path(model->filePath(lastSelectedItem));
+    QMessageBox::StandardButton reply = QMessageBox::question(this, tr("Delete Item"),
+        tr("Are you sure you want to delete <b>%1</b>?").arg(path));
+
+    if (reply == QMessageBox::Yes)
+    {
+        if (model->isDir(lastSelectedItem)) {
+            ret = model->rmdir(lastSelectedItem);
+        }
+        else {
+            ret = model->remove(lastSelectedItem);
+        }
+        if (!ret)
+        {
+            qWarning("Unable to delete %s", path.toUtf8().constData());
+        }
+    }
 }
