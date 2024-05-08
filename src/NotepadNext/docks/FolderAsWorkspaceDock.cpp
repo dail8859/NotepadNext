@@ -26,7 +26,6 @@
 #include "MainWindow.h"
 #include "ui_FolderAsWorkspaceDock.h"
 
-QString NEW_DIR_TEMPLATE("dir_%1");
 
 ApplicationSetting<QString> rootPathSetting{"FolderAsWorkspace/RootPath"};
 
@@ -34,6 +33,7 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(MainWindow *parent) :
     QDockWidget(parent),
     window(parent)
 {
+    newDirTemplate = tr("dir_%1");
     ui = new Ui::FolderAsWorkspaceDock;
     model = new QFileSystemModel(this);
     ui->setupUi(this);
@@ -116,10 +116,10 @@ void FolderAsWorkspaceDock::on_actionNewFolder_triggered()
     QDir parentDir(model->filePath(lastSelectedItem));
     int i = 1;
 
-    for (;parentDir.exists(NEW_DIR_TEMPLATE.arg(i)); i++) {
+    for (;parentDir.exists(newDirTemplate.arg(i)); i++) {
     // Intentional
     }
-    QString dstName = NEW_DIR_TEMPLATE.arg(i);
+    QString dstName = newDirTemplate.arg(i);
 
     auto newItem = model->mkdir(lastSelectedItem, dstName);
     if (newItem.isValid()) {

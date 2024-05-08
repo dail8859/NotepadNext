@@ -61,6 +61,8 @@ private:
     QFileSystemModel *model;
 
     QModelIndex lastSelectedItem;
+
+    QString newDirTemplate;
 };
 
 #endif // FOLDERASWORKSPACEDOCK_H
