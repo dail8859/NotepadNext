@@ -1332,19 +1332,44 @@ void MainWindow::moveCurrentFileToTrash()
     moveFileToTrash(editor);
 }
 
+bool MainWindow::askMoveToTrash(const QString &path)
+{
+    auto reply = QMessageBox::question(this, tr("Delete File"), tr("Are you sure you want to move <b>%1</b> to the trash?").arg(path));
+
+    if (reply == QMessageBox::Yes) {
+        return true;
+    }
+    return false;
+}
+
+bool MainWindow::askDeletePermanent(const QString &path)
+{
+    auto reply = QMessageBox::question(this, tr("Delete File"), tr("Are you sure you want to <b>delete</b> <b>%1</b>?").arg(path));
+
+    if (reply == QMessageBox::Yes) {
+        return true;
+    }
+    return false;
+}
+
+void MainWindow::closeByPath(const QString &path)
+{
+    forEachEditorByPath(path, [=](ScintillaNext* editor) {
+        closeFile(editor);
+    });
+    // Since the file no longer exists, specifically remove it from the recent files list
+    app->getRecentFilesListManager()->removeFile(path);
+}
+
 void MainWindow::moveFileToTrash(ScintillaNext *editor)
 {
     Q_ASSERT(editor->isFile());
 
     const QString filePath = editor->getFilePath();
-    auto reply = QMessageBox::question(this, tr("Delete File"), tr("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));
 
-    if (reply == QMessageBox::Yes) {
+    if (askMoveToTrash(filePath)) {
         if (editor->moveToTrash()) {
-            closeCurrentFile();
-
-            // Since the file no longer exists, specifically remove it from the recent files list
-            app->getRecentFilesListManager()->removeFile(editor->getFilePath());
+            closeByPath(filePath);
         }
         else {
             QMessageBox::warning(this, tr("Error Deleting File"),  tr("Something went wrong deleting <b>%1</b>?").arg(filePath));

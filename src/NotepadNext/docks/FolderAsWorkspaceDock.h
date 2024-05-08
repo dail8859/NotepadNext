@@ -49,6 +49,7 @@ private slots:
     void on_actionNewFolder_triggered();
     void on_actionRename_triggered();
     void on_actionDelete_triggered();
+    void on_actionMoveToTrash_triggered();
 
     void onCustomContextMenu(const QPoint &point);
     void onFileRenamed(const QString &path, const QString &oldName, const QString &newName);

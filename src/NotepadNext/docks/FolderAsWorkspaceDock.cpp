@@ -95,21 +95,19 @@ void FolderAsWorkspaceDock::onCustomContextMenu(const QPoint &point)
 void FolderAsWorkspaceDock::on_actionSaveHere_triggered()
 {
     QDir parentDir(model->filePath(lastSelectedItem));
-    auto doc = window->currentEditor();
-    QString dstName(parentDir.absoluteFilePath(doc->getName()));
+    auto editor = window->currentEditor();
+    QString dstName(parentDir.absoluteFilePath(editor->getName()));
 
-    if (doc->saveAs(dstName) != QFileDevice::NoError)
-    {
-        qWarning("Unable to save %s", dstName.toUtf8().constData());
-    }
-    else
-    {
+    if (editor->saveAs(dstName) == QFileDevice::NoError) {
         auto newItem = model->index(dstName);
-        if (!doc->isFile()) {
-            doc->setFileInfo(dstName);
+        if (!editor->isFile()) {
+            editor->setFileInfo(dstName);
         }
         ui->treeView->setCurrentIndex(newItem);
         ui->treeView->edit(newItem);
+    }
+    else {
+        qWarning("Unable to save %s", dstName.toUtf8().constData());
     }
 }
 
@@ -124,12 +122,12 @@ void FolderAsWorkspaceDock::on_actionNewFolder_triggered()
     QString dstName = NEW_DIR_TEMPLATE.arg(i);
 
     auto newItem = model->mkdir(lastSelectedItem, dstName);
-    if (!newItem.isValid()) {
-        qWarning("Unable to create %s", dstName.toUtf8().constData());
-    }
-    else {
+    if (newItem.isValid()) {
         ui->treeView->setCurrentIndex(newItem);
         ui->treeView->edit(newItem);
+    }
+    else {
+        qWarning("Unable to create %s", dstName.toUtf8().constData());
     }
 }
 
@@ -139,30 +137,42 @@ void FolderAsWorkspaceDock::on_actionRename_triggered()
     ui->treeView->edit(lastSelectedItem);
 }
 
-void FolderAsWorkspaceDock::onFileRenamed(const QString &path, const QString &oldName, const QString &newName)
+void FolderAsWorkspaceDock::onFileRenamed(const QString &parentPath, const QString &oldName, const QString &newName)
 {
-    QDir dir(path);
-    QString fileName = dir.absoluteFilePath(oldName);
-    for(auto &&editor : window->editors())
-    {
-        if (editor->isFile() && (editor->getFilePath() == fileName))
-        {
-            editor->setName(newName);
-        }
-    }
+    QDir parentDir(parentPath);
+    QString oldPath = parentDir.absoluteFilePath(oldName);
+    QString newPath = parentDir.absoluteFilePath(newName);
+
+    window->forEachEditorByPath(oldPath, [=](ScintillaNext* editor) {
+            editor->renameEditorPath(newPath);
+        });
 }
 
 void FolderAsWorkspaceDock::on_actionDelete_triggered()
 {
     QString path(model->filePath(lastSelectedItem));
-    QMessageBox::StandardButton reply = QMessageBox::question(this, tr("Delete Item"),
-        tr("Are you sure you want to delete <b>%1</b>?").arg(path));
 
-    if (reply == QMessageBox::Yes)
+    if (window->askDeletePermanent(path))
     {
-        if (!model->remove(lastSelectedItem))
-        {
+        if (model->remove(lastSelectedItem)) {
+            window->closeByPath(path);
+        }
+        else {
             qWarning("Unable to delete %s", path.toUtf8().constData());
+        }
+    }
+}
+
+void FolderAsWorkspaceDock::on_actionMoveToTrash_triggered()
+{
+    QString path(model->filePath(lastSelectedItem));
+
+    if (window->askMoveToTrash(path)) {
+        if (QFile::moveToTrash(path)) {
+            window->closeByPath(path);
+        }
+        else {
+            qWarning("Unable to remove %s", path.toUtf8().constData());
         }
     }
 }

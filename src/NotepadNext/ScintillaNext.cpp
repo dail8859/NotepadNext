@@ -369,20 +369,25 @@ bool ScintillaNext::rename(const QString &newFilePath)
         QFile::remove(oldPath);
 
         // Everything worked fine, so update the buffer's info
-        setFileInfo(newFilePath);
-        setSavePoint();
-
-        // If this was a temporary file, make sure it is not any more
-        setTemporary(false);
-
-        emit saved();
-
-        emit renamed();
+        renameEditorPath(newFilePath);
 
         return true;
     }
 
     return false;
+}
+
+void ScintillaNext::renameEditorPath(const QString &newFilePath)
+{
+    setFileInfo(newFilePath);
+    setSavePoint();
+
+    // If this was a temporary file, make sure it is not any more
+    setTemporary(false);
+
+    emit saved();
+
+    emit renamed();
 }
 
 ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()

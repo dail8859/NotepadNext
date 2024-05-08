@@ -122,7 +122,8 @@ public slots:
     void reload();
     QFileDevice::FileError saveAs(const QString &newFilePath);
     QFileDevice::FileError saveCopyAs(const QString &filePath);
-    bool rename(const QString &newFilePath);
+    bool rename(const QString &newFilePath); // update FS then update representation
+    void renameEditorPath(const QString &newFilePath); // update representation only
     ScintillaNext::FileStateChange checkFileForStateChange();
     bool moveToTrash();
 

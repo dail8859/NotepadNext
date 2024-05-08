@@ -33,6 +33,7 @@
        <string>File Menu</string>
       </property>
       <addaction name="actionRename"/>
+      <addaction name="actionMoveToTrash"/>
       <addaction name="actionDelete"/>
      </widget>
     </item>
@@ -42,6 +43,7 @@
        <string>Folder Menu</string>
       </property>
       <addaction name="actionRename"/>
+      <addaction name="actionMoveToTrash"/>
       <addaction name="actionDelete"/>
       <addaction name="separator"/>
       <addaction name="actionNewFolder"/>
@@ -93,6 +95,11 @@
   <action name="actionDelete">
    <property name="text">
     <string>&amp;Delete</string>
+   </property>
+  </action>
+  <action name="actionMoveToTrash">
+   <property name="text">
+    <string>Move to &amp;Trash</string>
    </property>
   </action>
  </widget>

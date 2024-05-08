@@ -58,6 +58,14 @@ public:
     QVector<ScintillaNext *> editors() const;
     DockedEditor *getDockedEditor() const { return dockedEditor; }
 
+    template<typename Func>
+    void forEachEditorByPath(const QString &path, Func callback);
+
+    bool askMoveToTrash(const QString &path);
+    bool askDeletePermanent(const QString &path);
+
+    void closeByPath(const QString &path);
+
 public slots:
     void newFile();
 
@@ -170,5 +178,17 @@ private:
     int zoomLevel = 0;
     int contextMenuPos = 0;
 };
+
+template<typename Func>
+void MainWindow::forEachEditorByPath(const QString &path, Func callback)
+{
+    for(auto &&editor : editors())
+    {
+        if (editor->getFilePath() == path)
+        {
+            callback(editor);
+        }
+    }
+}
 
 #endif // MAINWINDOW_H
