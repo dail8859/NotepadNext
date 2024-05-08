@@ -901,6 +901,7 @@ void MainWindow::on_actionOpenSessionFile_triggered()
     // TODO: if there is active session - use it
     QString dir = QFileDialog::getExistingDirectory(this, tr("Load Session From Folder"), fawDock->rootPath(), QFileDialog::ShowDirsOnly);
     if (!dir.isEmpty()) {
+        app->getSessionManager()->saveCurrentSession(this);
         if (!app->getSessionManager()->loadSessionFrom(this, dir))
         {
             qCritical("Unable to load from %s", dir.toUtf8().constData());
@@ -914,6 +915,7 @@ void MainWindow::on_actionOpenSessionFile_triggered()
 
 void MainWindow::loadSession(const QString &filePath)
 {
+    app->getSessionManager()->saveCurrentSession(this);
     if (!app->getSessionManager()->loadSessionFrom(this, filePath)) {
         app->getRecentSessionsListManager()->removeFile(filePath);
     }
