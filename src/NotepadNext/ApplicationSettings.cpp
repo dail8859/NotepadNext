@@ -18,6 +18,8 @@
 
 #include "ApplicationSettings.h"
 
+#include <QApplication>
+#include <QFont>
 
 #define CREATE_SETTING(group, name, lname, type, default) \
 ApplicationSetting<type> name{#group "/" #name, default};\
@@ -59,3 +61,5 @@ CREATE_SETTING(Editor, ShowEndOfLine, showEndOfLine, bool, false);
 CREATE_SETTING(Editor, ShowWrapSymbol, showWrapSymbol, bool, false);
 CREATE_SETTING(Editor, ShowIndentGuide, showIndentGuide, bool, true);
 CREATE_SETTING(Editor, WordWrap, wordWrap, bool, false)
+CREATE_SETTING(Editor, FontName, fontName, QString, QStringLiteral("Courier New"))
+CREATE_SETTING(Editor, FontSize, fontSize, int, []() { return qApp->font().pointSize() + 2; })
