@@ -65,6 +65,18 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     });
 
     MapSettingToCheckBox(ui->checkBoxExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosed, &ApplicationSettings::setExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosedChanged);
+
+    ui->fcbDefaultFont->setCurrentFont(QFont(settings->fontName()));
+    connect(ui->fcbDefaultFont, &QFontComboBox::currentFontChanged, this, [=](const QFont &f) {
+        settings->setFontName(f.family());
+    });
+    connect(settings, &ApplicationSettings::fontNameChanged, this, [=](QString fontName){
+        ui->fcbDefaultFont->setCurrentFont(QFont(fontName));
+    });
+
+    ui->spbDefaultFontSize->setValue(settings->fontSize());
+    connect(ui->spbDefaultFontSize, QOverload<int>::of(&QSpinBox::valueChanged), settings, &ApplicationSettings::setFontSize);
+    connect(settings, &ApplicationSettings::fontSizeChanged, ui->spbDefaultFontSize, &QSpinBox::setValue);
 }
 
 PreferencesDialog::~PreferencesDialog()
