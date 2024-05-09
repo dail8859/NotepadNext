@@ -31,11 +31,10 @@ ApplicationSetting<QString> rootPathSetting{"FolderAsWorkspace/RootPath"};
 
 FolderAsWorkspaceDock::FolderAsWorkspaceDock(MainWindow *parent) :
     QDockWidget(parent),
-    window(parent)
+    ui(new Ui::FolderAsWorkspaceDock),
+    window(parent),
+    model(new QFileSystemModel(this))
 {
-    newDirTemplate = tr("dir_%1");
-    ui = new Ui::FolderAsWorkspaceDock;
-    model = new QFileSystemModel(this);
     ui->setupUi(this);
 
     model->setReadOnly(false);
@@ -49,6 +48,7 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(MainWindow *parent) :
             emit fileDoubleClicked(model->filePath(index));
         }
     });
+
     connect(ui->treeView, &QTreeView::customContextMenuRequested, this, &FolderAsWorkspaceDock::onCustomContextMenu);
     connect(model, &QFileSystemModel::fileRenamed, this, &FolderAsWorkspaceDock::onFileRenamed);
 
@@ -78,12 +78,17 @@ QString FolderAsWorkspaceDock::rootPath() const
 void FolderAsWorkspaceDock::onCustomContextMenu(const QPoint &point)
 {
     QModelIndex index = ui->treeView->indexAt(point);
+
+    // Nothing was selected
     if (!index.isValid()) {
         lastSelectedItem = model->index(rootPath());
         ui->menuEmpty->exec(ui->treeView->viewport()->mapToGlobal(point));
         return;
     }
+
     lastSelectedItem = index;
+
+    // Decide which menu to show if it is a directory or not
     if (model->isDir(index)) {
         ui->menuDirectory->exec(ui->treeView->viewport()->mapToGlobal(point));
     }
@@ -96,38 +101,39 @@ void FolderAsWorkspaceDock::on_actionSaveHere_triggered()
 {
     QDir parentDir(model->filePath(lastSelectedItem));
     auto editor = window->currentEditor();
-    QString dstName(parentDir.absoluteFilePath(editor->getName()));
+    QString destinationName(parentDir.absoluteFilePath(editor->getName()));
 
-    if (editor->saveAs(dstName) == QFileDevice::NoError) {
-        auto newItem = model->index(dstName);
-        if (!editor->isFile()) {
-            editor->setFileInfo(dstName);
-        }
+    if (window->saveFileAs(editor, destinationName)) {
+        auto newItem = model->index(destinationName);
         ui->treeView->setCurrentIndex(newItem);
         ui->treeView->edit(newItem);
     }
     else {
-        qWarning("Unable to save %s", dstName.toUtf8().constData());
+        qWarning("Unable to save %s", qUtf8Printable(destinationName));
     }
 }
 
 void FolderAsWorkspaceDock::on_actionNewFolder_triggered()
 {
-    QDir parentDir(model->filePath(lastSelectedItem));
+    QDir parentDirectory(model->filePath(lastSelectedItem));
+    QString destinationName;
     int i = 1;
 
-    for (;parentDir.exists(newDirTemplate.arg(i)); i++) {
-    // Intentional
-    }
-    QString dstName = newDirTemplate.arg(i);
+    // Find the next valid folder name
+    do {
+        destinationName = tr("New Folder %1").arg(i);
+        ++i;
+    } while (parentDirectory.exists(destinationName));
 
-    auto newItem = model->mkdir(lastSelectedItem, dstName);
+    // Try to create it
+    auto newItem = model->mkdir(lastSelectedItem, destinationName);
+
     if (newItem.isValid()) {
         ui->treeView->setCurrentIndex(newItem);
         ui->treeView->edit(newItem);
     }
     else {
-        qWarning("Unable to create %s", dstName.toUtf8().constData());
+        qWarning("Unable to create %s", qUtf8Printable(destinationName));
     }
 }
 
@@ -144,23 +150,8 @@ void FolderAsWorkspaceDock::onFileRenamed(const QString &parentPath, const QStri
     QString newPath = parentDir.absoluteFilePath(newName);
 
     window->forEachEditorByPath(oldPath, [=](ScintillaNext* editor) {
-            editor->renameEditorPath(newPath);
-        });
-}
-
-void FolderAsWorkspaceDock::on_actionDelete_triggered()
-{
-    QString path(model->filePath(lastSelectedItem));
-
-    if (window->askDeletePermanent(path))
-    {
-        if (model->remove(lastSelectedItem)) {
-            window->closeByPath(path);
-        }
-        else {
-            qWarning("Unable to delete %s", path.toUtf8().constData());
-        }
-    }
+        editor->renameEditorPath(newPath);
+    });
 }
 
 void FolderAsWorkspaceDock::on_actionMoveToTrash_triggered()

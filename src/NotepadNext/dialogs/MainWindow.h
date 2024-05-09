@@ -62,7 +62,6 @@ public:
     void forEachEditorByPath(const QString &path, Func callback);
 
     bool askMoveToTrash(const QString &path);
-    bool askDeletePermanent(const QString &path);
 
     void closeByPath(const QString &path);
 
@@ -182,8 +181,10 @@ private:
 template<typename Func>
 void MainWindow::forEachEditorByPath(const QString &path, Func callback)
 {
+    qInfo() << path;
     for(auto &&editor : editors())
     {
+        qInfo() << editor->getFilePath();
         if (editor->getFilePath() == path)
         {
             callback(editor);

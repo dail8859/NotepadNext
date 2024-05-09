@@ -48,7 +48,6 @@ private slots:
     void on_actionSaveHere_triggered();
     void on_actionNewFolder_triggered();
     void on_actionRename_triggered();
-    void on_actionDelete_triggered();
     void on_actionMoveToTrash_triggered();
 
     void onCustomContextMenu(const QPoint &point);
@@ -61,8 +60,6 @@ private:
     QFileSystemModel *model;
 
     QModelIndex lastSelectedItem;
-
-    QString newDirTemplate;
 };
 
 #endif // FOLDERASWORKSPACEDOCK_H
