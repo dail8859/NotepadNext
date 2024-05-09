@@ -756,7 +756,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                                     hexViewerDock->toggleViewAction()
                                 });
 
-    FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
+    FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(app, this);
     fawDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, fawDock);
     ui->menuView->addAction(fawDock->toggleViewAction());
@@ -917,6 +917,7 @@ void MainWindow::loadSession(const QString &filePath)
 {
     app->getSessionManager()->saveCurrentSession(this);
     if (!app->getSessionManager()->loadSessionFrom(this, filePath)) {
+        qCritical("Unable to load from %s", filePath.toUtf8().constData());
         app->getRecentSessionsListManager()->removeFile(filePath);
     }
 }

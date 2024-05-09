@@ -21,19 +21,23 @@
 #define FOLDERASWORKSPACEDOCK_H
 
 #include <QDockWidget>
+#include "ApplicationSettings.h"
 
 namespace Ui {
 class FolderAsWorkspaceDock;
 }
 
 class QFileSystemModel;
+class NotepadNextApplication;
 
 class FolderAsWorkspaceDock : public QDockWidget
 {
     Q_OBJECT
 
+    USE_SESSION_SETTINGS
+
 public:
-    explicit FolderAsWorkspaceDock(QWidget *parent = nullptr);
+    explicit FolderAsWorkspaceDock(NotepadNextApplication* app, QWidget *parent = nullptr);
     ~FolderAsWorkspaceDock();
 
     void setRootPath(const QString dir);

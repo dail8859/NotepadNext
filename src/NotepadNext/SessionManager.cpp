@@ -157,15 +157,17 @@ bool SessionManager::saveSessionTo(MainWindow *window, const QString &path)
         return false;
     }
 
-    QSettings settings(sessionDirectory().absolutePath() + QDir::separator() + SETTINGS_FILE, QSettings::IniFormat);
+    Settings settings(sessionDirectory().absolutePath() + QDir::separator() + SETTINGS_FILE, QSettings::IniFormat);
 
     settings.beginGroup("Session");
 
     setSessionFileTypes(tmp | SavedFile);
     saveSession(window, settings);
     setSessionFileTypes(tmp);
-
     settings.endGroup();
+
+    emit onSessionSaved(settings);
+
     settings.sync();
 
     return true;
@@ -188,6 +190,9 @@ void SessionManager::saveDefaultSession(MainWindow *window)
     appSettings.beginGroup("CurrentSession");
     saveSession(window, appSettings);
     appSettings.endGroup();
+
+
+    emit onSessionSaved(appSettings);
 }
 
 void SessionManager::saveSession(MainWindow *window, QSettings &settings)
@@ -247,6 +252,7 @@ void SessionManager::loadDefaultSession(MainWindow *window)
     settings.beginGroup("CurrentSession");
     ScintillaNext *currentEditor = loadSession(window, settings);
     settings.endGroup();
+    emit onSessionLoaded(settings);
 
     if (currentEditor) {
         window->switchToEditor(currentEditor);
@@ -267,11 +273,17 @@ bool SessionManager::loadSessionFrom(MainWindow *window, const QString &path)
     {
         return false;
     }
-    QSettings settings(sessionDirectory().absolutePath() + QDir::separator() + SETTINGS_FILE, QSettings::IniFormat);
+    Settings settings(sessionDirectory().absolutePath() + QDir::separator() + SETTINGS_FILE, QSettings::IniFormat);
 
     settings.beginGroup("Session");
     ScintillaNext *currentEditor = loadSession(window, settings);
     settings.endGroup();
+
+    settings.beginGroup("FolderAsWorkspace");
+    settings.value("RootPath");
+    settings.endGroup();
+
+    emit onSessionLoaded(settings);
 
     if (currentEditor) {
         window->switchToEditor(currentEditor);

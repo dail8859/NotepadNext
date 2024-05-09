@@ -18,14 +18,16 @@
 
 
 #include "FolderAsWorkspaceDock.h"
-#include "ApplicationSettings.h"
 #include "ui_FolderAsWorkspaceDock.h"
+
+#include "ApplicationSettings.h"
+#include "NotepadNextApplication.h"
 
 #include <QFileSystemModel>
 
-ApplicationSetting<QString> rootPathSetting{"FolderAsWorkspace/RootPath"};
+SessionSetting<QString> rootPathSetting{"FolderAsWorkspace/RootPath"};
 
-FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
+FolderAsWorkspaceDock::FolderAsWorkspaceDock(NotepadNextApplication* app, QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::FolderAsWorkspaceDock),
     model(new QFileSystemModel(this))
@@ -43,15 +45,24 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
         }
     });
 
+    initSettingsListener(this, app->getSessionManager());
+
     ApplicationSettings settings;
+    setRootPath(settings.get(rootPathSetting));
+}
+
+void FolderAsWorkspaceDock::onSettingsSaved(Settings &settings)
+{
+    settings.set(rootPathSetting, rootPath());
+}
+
+void FolderAsWorkspaceDock::onSettingsLoaded(const Settings &settings)
+{
     setRootPath(settings.get(rootPathSetting));
 }
 
 FolderAsWorkspaceDock::~FolderAsWorkspaceDock()
 {
-    ApplicationSettings settings;
-    settings.set(rootPathSetting, rootPath());
-
     delete ui;
 }
 

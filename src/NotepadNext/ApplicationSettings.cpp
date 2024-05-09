@@ -32,9 +32,18 @@ ApplicationSetting<type> name{#group "/" #name, default};\
 }
 
 
+Settings::Settings(QObject *parent)
+    : QSettings{parent}
+{
+}
+
+Settings::Settings(const QString &path, QSettings::Format format)
+	: QSettings(path, format)
+{
+}
 
 ApplicationSettings::ApplicationSettings(QObject *parent)
-    : QSettings{parent}
+    : Settings{parent}
 {
 }
 

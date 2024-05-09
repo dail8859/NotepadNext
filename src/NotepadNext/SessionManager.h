@@ -28,9 +28,12 @@
 class ScintillaNext;
 class MainWindow;
 class NotepadNextApplication;
+class Settings;
 
-class SessionManager
+class SessionManager: public QObject
 {
+    Q_OBJECT
+
 public:
     enum SessionFileType {
         None = 0,
@@ -56,6 +59,10 @@ public:
 
     QDir sessionDirectory() const;
     bool isCustomSessionFolder() const { return useCustomSessionFolder; }
+
+signals:
+    void onSessionSaved(Settings &settings);
+    void onSessionLoaded(Settings &settings);
 
 private:
     void saveSession(MainWindow *window, QSettings &settings);
