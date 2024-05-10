@@ -132,6 +132,8 @@ public slots:
 
     void switchToEditor(const ScintillaNext *editor);
 
+    void onNodeRenamed(const QString &parentPath, const QString &oldName, const QString &newName);
+
 signals:
     void editorActivated(ScintillaNext *editor);
     void aboutToClose();
@@ -181,10 +183,10 @@ private:
 template<typename Func>
 void MainWindow::forEachEditorByPath(const QString &path, Func callback)
 {
-    qInfo() << path;
+    qDebug() << Q_FUNC_INFO << path;
     for(auto &&editor : editors())
     {
-        qInfo() << editor->getFilePath();
+        qDebug() << editor->getFilePath();
         if (editor->getFilePath() == path)
         {
             callback(editor);

@@ -245,7 +245,7 @@ bool SessionManager::willFileGetStoredInSession(ScintillaNext *editor) const
 void SessionManager::storeFileDetails(ScintillaNext *editor, QSettings &settings)
 {
     settings.setValue("Type", "File");
-    settings.setValue("FilePath", editor->getFilePath());
+    settings.setValue("FilePath", QDir::toNativeSeparators(editor->getFilePath()));
 
     storeEditorViewDetails(editor, settings);
 }
@@ -254,7 +254,7 @@ ScintillaNext* SessionManager::loadFileDetails(QSettings &settings)
 {
     qInfo(Q_FUNC_INFO);
 
-    const QString filePath = settings.value("FilePath").toString();
+    const QString filePath = QDir::fromNativeSeparators(settings.value("FilePath").toString());
 
     qDebug("Session file: \"%s\"", qUtf8Printable(filePath));
 
@@ -284,7 +284,7 @@ void SessionManager::storeUnsavedFileDetails(ScintillaNext *editor, QSettings &s
     const QString sessionFileName = RandomSessionFileName();
 
     settings.setValue("Type", "UnsavedFile");
-    settings.setValue("FilePath", editor->getFilePath());
+    settings.setValue("FilePath", QDir::toNativeSeparators(editor->getFilePath()));
     settings.setValue("SessionFileName", sessionFileName);
 
     storeEditorViewDetails(editor, settings);

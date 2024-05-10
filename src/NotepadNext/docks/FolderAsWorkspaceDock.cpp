@@ -50,7 +50,7 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(MainWindow *parent) :
     });
 
     connect(ui->treeView, &QTreeView::customContextMenuRequested, this, &FolderAsWorkspaceDock::onCustomContextMenu);
-    connect(model, &QFileSystemModel::fileRenamed, this, &FolderAsWorkspaceDock::onFileRenamed);
+    connect(model, &QFileSystemModel::fileRenamed, window, &MainWindow::onNodeRenamed);
 
     ApplicationSettings settings;
     setRootPath(settings.get(rootPathSetting));
@@ -141,17 +141,6 @@ void FolderAsWorkspaceDock::on_actionRename_triggered()
 {
     ui->treeView->setCurrentIndex(lastSelectedItem);
     ui->treeView->edit(lastSelectedItem);
-}
-
-void FolderAsWorkspaceDock::onFileRenamed(const QString &parentPath, const QString &oldName, const QString &newName)
-{
-    QDir parentDir(parentPath);
-    QString oldPath = parentDir.absoluteFilePath(oldName);
-    QString newPath = parentDir.absoluteFilePath(newName);
-
-    window->forEachEditorByPath(oldPath, [=](ScintillaNext* editor) {
-        editor->renameEditorPath(newPath);
-    });
 }
 
 void FolderAsWorkspaceDock::on_actionMoveToTrash_triggered()
