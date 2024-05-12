@@ -5,7 +5,7 @@
     <name>ColumnEditorDialog</name>
     <message>
         <source>Column Mode</source>
-        <translation>Режим колонок</translation>
+        <translation>Режим столбцов</translation>
     </message>
     <message>
         <source>Text</source>
@@ -28,7 +28,7 @@
     <name>DebugLogDock</name>
     <message>
         <source>Debug Log</source>
-        <translation>Отладочный лог</translation>
+        <translation>Журнал отладки</translation>
     </message>
 </context>
 <context>
@@ -39,35 +39,35 @@
     </message>
     <message>
         <source>Sel: N/A</source>
-        <translation></translation>
+        <translation>Выб: Н/Д</translation>
     </message>
     <message>
         <source>Sel: %L1 | %L2</source>
-        <translation></translation>
+        <translation>Выб: %L1 | %L2</translation>
     </message>
     <message>
         <source>Ln: %L1    Col: %L2    </source>
-        <translation></translation>
+        <translation>Стр: %L1   Стл: %L2    </translation>
     </message>
     <message>
         <source>Macintosh (CR)</source>
-        <translation></translation>
+        <translation>Macintosh (CR)</translation>
     </message>
     <message>
         <source>Windows (CR LF)</source>
-        <translation></translation>
+        <translation>Windows (CR LF)</translation>
     </message>
     <message>
         <source>Unix (LF)</source>
-        <translation></translation>
+        <translation>Unix (LF)</translation>
     </message>
     <message>
         <source>ANSI</source>
-        <translation></translation>
+        <translation>ANSI</translation>
     </message>
     <message>
         <source>UTF-8</source>
-        <translation></translation>
+        <translation>UTF-8</translation>
     </message>
 </context>
 <context>
@@ -90,7 +90,7 @@
     </message>
     <message>
         <source>Column</source>
-        <translation>Колонка</translation>
+        <translation>Столбец</translation>
     </message>
     <message>
         <source>Current Style</source>
@@ -158,7 +158,7 @@
     </message>
     <message>
         <source>View Information</source>
-        <translation>Информация об области просмотра</translation>
+        <translation>Сведения об области просмотра</translation>
     </message>
     <message>
         <source>Lines on Screen</source>
@@ -533,7 +533,7 @@
     </message>
     <message>
         <source>OK</source>
-        <translation></translation>
+        <translation>ОК</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -555,11 +555,11 @@
     <name>MainWindow</name>
     <message>
         <source>Notepad Next[*]</source>
-        <translation></translation>
+        <translation>Notepad Next[*]</translation>
     </message>
     <message>
         <source>+</source>
-        <translation></translation>
+        <translation>+</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -647,7 +647,7 @@
     </message>
     <message>
         <source>Help</source>
-        <translation>Помощь</translation>
+        <translation>Справка</translation>
     </message>
     <message>
         <source>Encoding</source>
@@ -687,7 +687,7 @@
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
@@ -699,7 +699,7 @@
     </message>
     <message>
         <source>Ctrl+Z</source>
-        <translation></translation>
+        <translation>Ctrl+Z</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -739,7 +739,7 @@
     </message>
     <message>
         <source>Del</source>
-        <translation></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <source>Copy Full Path</source>
@@ -763,7 +763,7 @@
     </message>
     <message>
         <source>Ctrl+W</source>
-        <translation></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <source>Save &amp;As...</source>
@@ -771,7 +771,7 @@
     </message>
     <message>
         <source>Ctrl+Alt+S</source>
-        <translation></translation>
+        <translation>Ctrl+Alt+S</translation>
     </message>
     <message>
         <source>Save a Copy As...</source>
@@ -783,7 +783,7 @@
     </message>
     <message>
         <source>Ctrl+Shift+S</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <source>Select A&amp;ll</source>
@@ -791,7 +791,7 @@
     </message>
     <message>
         <source>Ctrl+A</source>
-        <translation></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <source>Increase Indent</source>
@@ -811,15 +811,15 @@
     </message>
     <message>
         <source>Windows (CR LF)</source>
-        <translation></translation>
+        <translation>Windows (CR LF)</translation>
     </message>
     <message>
         <source>Unix (LF)</source>
-        <translation></translation>
+        <translation>Unix (LF)</translation>
     </message>
     <message>
         <source>Macintosh (CR)</source>
-        <translation></translation>
+        <translation>Macintosh (CR)</translation>
     </message>
     <message>
         <source>UPPER CASE</source>
@@ -855,7 +855,7 @@
     </message>
     <message>
         <source>Ctrl+J</source>
-        <translation></translation>
+        <translation>Ctrl+J</translation>
     </message>
     <message>
         <source>Move Selected Lines Up</source>
@@ -863,7 +863,7 @@
     </message>
     <message>
         <source>Ctrl+Shift+Up</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+Up</translation>
     </message>
     <message>
         <source>Move Selected Lines Down</source>
@@ -871,7 +871,7 @@
     </message>
     <message>
         <source>Ctrl+Shift+Down</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+Down</translation>
     </message>
     <message>
         <source>Clos&amp;e All</source>
@@ -883,7 +883,7 @@
     </message>
     <message>
         <source>Ctrl+Shift+W</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
         <source>Close All Except Active Document</source>
@@ -903,7 +903,7 @@
     </message>
     <message>
         <source>Ctrl++</source>
-        <translation></translation>
+        <translation>Ctrl++</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
@@ -911,7 +911,7 @@
     </message>
     <message>
         <source>Ctrl+-</source>
-        <translation></translation>
+        <translation>Ctrl+-</translation>
     </message>
     <message>
         <source>Reset Zoom</source>
@@ -919,7 +919,7 @@
     </message>
     <message>
         <source>Ctrl+0</source>
-        <translation></translation>
+        <translation>Ctrl+0</translation>
     </message>
     <message>
         <source>About Qt</source>
@@ -967,7 +967,7 @@
     </message>
     <message>
         <source>Clear Recent Files List</source>
-        <translation>Очистить список недевних файлов</translation>
+        <translation>Очистить список недавних файлов</translation>
     </message>
     <message>
         <source>&amp;Find...</source>
@@ -975,7 +975,7 @@
     </message>
     <message>
         <source>Ctrl+F</source>
-        <translation></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <source>Find in Files...</source>
@@ -987,7 +987,7 @@
     </message>
     <message>
         <source>F3</source>
-        <translation></translation>
+        <translation>F3</translation>
     </message>
     <message>
         <source>Find &amp;Previous</source>
@@ -999,7 +999,7 @@
     </message>
     <message>
         <source>Ctrl+H</source>
-        <translation></translation>
+        <translation>Ctrl+H</translation>
     </message>
     <message>
         <source>Full Screen</source>
@@ -1007,7 +1007,7 @@
     </message>
     <message>
         <source>F11</source>
-        <translation></translation>
+        <translation>F11</translation>
     </message>
     <message>
         <source>Start Recording</source>
@@ -1019,7 +1019,7 @@
     </message>
     <message>
         <source>Ctrl+Shift+P</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+</translation>
     </message>
     <message>
         <source>Save Current Recorded Macro...</source>
@@ -1039,7 +1039,7 @@
     </message>
     <message>
         <source>Ctrl+Alt+I</source>
-        <translation></translation>
+        <translation>Ctrl+Alt+I</translation>
     </message>
     <message>
         <source>Select Next Instance</source>
@@ -1047,15 +1047,15 @@
     </message>
     <message>
         <source>Ctrl+D</source>
-        <translation></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <source>Move to Trash...</source>
-        <translation>Переместить в корзину...</translation>
+        <translation>Убрать в корзину...</translation>
     </message>
     <message>
         <source>Move to Trash</source>
-        <translation>Переместить в корзину</translation>
+        <translation>Убрать в корзину</translation>
     </message>
     <message>
         <source>Check for Updates...</source>
@@ -1067,7 +1067,7 @@
     </message>
     <message>
         <source>Ctrl+G</source>
-        <translation></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <source>Print...</source>
@@ -1075,11 +1075,11 @@
     </message>
     <message>
         <source>Ctrl+P</source>
-        <translation></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <source>Open Folder as Workspace...</source>
-        <translation>Открыть Папку как Проект...</translation>
+        <translation>Открыть папку как Проект...</translation>
     </message>
     <message>
         <source>Toggle Single Line Comment</source>
@@ -1087,7 +1087,7 @@
     </message>
     <message>
         <source>Ctrl+/</source>
-        <translation></translation>
+        <translation>Ctrl+/</translation>
     </message>
     <message>
         <source>Single Line Comment</source>
@@ -1095,7 +1095,7 @@
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation></translation>
+        <translation>Ctrl+K</translation>
     </message>
     <message>
         <source>Single Line Uncomment</source>
@@ -1103,7 +1103,7 @@
     </message>
     <message>
         <source>Ctrl+Shift+K</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+K</translation>
     </message>
     <message>
         <source>Edit Macros...</source>
@@ -1115,7 +1115,7 @@
     </message>
     <message>
         <source>Column Mode...</source>
-        <translation>Режим колонок...</translation>
+        <translation>Режим столбцов...</translation>
     </message>
     <message>
         <source>Export as HTML...</source>
@@ -1147,7 +1147,7 @@
     </message>
     <message>
         <source>URL Decode</source>
-        <translation>Докодирование URL</translation>
+        <translation>Декодирование URL</translation>
     </message>
     <message>
         <source>Copy URL</source>
@@ -1171,7 +1171,7 @@
     </message>
     <message>
         <source>Ctrl+F2</source>
-        <translation></translation>
+        <translation>Ctrl+F2</translation>
     </message>
     <message>
         <source>Next Bookmark</source>
@@ -1179,7 +1179,7 @@
     </message>
     <message>
         <source>F2</source>
-        <translation></translation>
+        <translation>F2</translation>
     </message>
     <message>
         <source>Previous Bookmark</source>
@@ -1187,7 +1187,7 @@
     </message>
     <message>
         <source>Shift+F2</source>
-        <translation></translation>
+        <translation>Shift+F2</translation>
     </message>
     <message>
         <source>Clear Bookmarks</source>
@@ -1219,7 +1219,7 @@
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; не существует. Вы хотите создать его?</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; не существует. Хотите создать его?</translation>
     </message>
     <message>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
@@ -1231,7 +1231,7 @@
     </message>
     <message>
         <source>Open Folder as Workspace</source>
-        <translation>Открыть Папку как Проект</translation>
+        <translation>Открыть папку как Проект</translation>
     </message>
     <message>
         <source>Reload File</source>
@@ -1239,7 +1239,7 @@
     </message>
     <message>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
-        <translation>Вы действительно хотите перезагрузить &lt;b&gt;%1&lt;/b&gt;? Все несохраненные изменения будут потеряны.</translation>
+        <translation>Уверены, что хотите перезагрузить &lt;b&gt;%1&lt;/b&gt;? Все несохраненные изменения будут потеряны.</translation>
     </message>
     <message>
         <source>Save a Copy As</source>
@@ -1259,7 +1259,7 @@
     </message>
     <message>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
-        <translation>Вы действительно хотите перестить &lt;b&gt;%1&lt;/b&gt; в корзину?</translation>
+        <translation>Вы действительно хотите переместить &lt;b&gt;%1&lt;/b&gt; в корзину?</translation>
     </message>
     <message>
         <source>Error Deleting File</source>
@@ -1330,7 +1330,7 @@
     </message>
     <message>
         <source>TextLabel</source>
-        <translation></translation>
+        <translation>TextLabel</translation>
     </message>
     <message>
         <source>An application restart is required to apply certain settings.</source>
@@ -1342,7 +1342,7 @@
     </message>
     <message>
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
-        <translation>Эта функция является экспериментальной и ее не следует считать безопасной для критически важной работы. Это может привести к возможной потере данных. Используйте на свой риск.</translation>
+        <translation>Эта функция является экспериментальной, и ее не следует считать безопасной для критически важной работы. Это может привести к возможной потере данных. Используйте на свой риск.</translation>
     </message>
     <message>
         <source>&lt;System Default&gt;</source>
@@ -1361,7 +1361,7 @@
     </message>
     <message>
         <source>Aa</source>
-        <translation></translation>
+        <translation>Aa</translation>
     </message>
     <message>
         <source>Match whole word</source>
@@ -1369,7 +1369,7 @@
     </message>
     <message>
         <source>|A|</source>
-        <translation></translation>
+        <translation>|A|</translation>
     </message>
     <message>
         <source>Use regular expression</source>
@@ -1377,11 +1377,11 @@
     </message>
     <message>
         <source>. *</source>
-        <translation></translation>
+        <translation>. *</translation>
     </message>
     <message>
         <source>Alt+E</source>
-        <translation></translation>
+        <translation>Alt+E</translation>
     </message>
     <message>
         <source>Find...</source>
