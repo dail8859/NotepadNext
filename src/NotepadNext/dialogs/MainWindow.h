@@ -63,7 +63,7 @@ public:
 
     bool askMoveToTrash(const QString &path);
 
-    void closeByPath(const QString &path);
+    void closeByPath(const QString &path, bool isDirectory);
 
 public slots:
     void newFile();

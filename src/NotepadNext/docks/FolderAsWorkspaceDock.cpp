@@ -148,8 +148,10 @@ void FolderAsWorkspaceDock::on_actionMoveToTrash_triggered()
     QString path(model->filePath(lastSelectedItem));
 
     if (window->askMoveToTrash(path)) {
+        QFileInfo fileInfo(path);
+        bool isDirectory = fileInfo.isDir();
         if (QFile::moveToTrash(path)) {
-            window->closeByPath(path);
+            window->closeByPath(path, isDirectory);
         }
         else {
             qWarning("Unable to remove %s", path.toUtf8().constData());

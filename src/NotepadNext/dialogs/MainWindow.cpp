@@ -1342,13 +1342,32 @@ bool MainWindow::askMoveToTrash(const QString &path)
     return reply == QMessageBox::Yes;
 }
 
-void MainWindow::closeByPath(const QString &path)
+void MainWindow::closeByPath(const QString &path, bool isDirectory)
 {
-    forEachEditorByPath(path, [=](ScintillaNext* editor) {
-        closeFile(editor);
-    });
-    // Since the file no longer exists, specifically remove it from the recent files list
-    app->getRecentFilesListManager()->removeFile(path);
+    qInfo(Q_FUNC_INFO);
+
+    if (isDirectory) {
+        for (ScintillaNext *editor: editors()) {
+            if (editor->isFile() && editor->getFilePath().startsWith(path)) {
+                qInfo() << "->" << editor->getFilePath();
+
+                app->getRecentFilesListManager()->removeFile(path);
+                if (editor->isSavedToDisk()) {
+                    editor->close();
+                }
+                else {
+                    editor->detachFileInfo(editor->getName());
+                }
+            }
+        }
+    }
+    else {
+        forEachEditorByPath(path, [=](ScintillaNext* editor) {
+            closeFile(editor);
+        });
+        // Since the file no longer exists, specifically remove it from the recent files list
+        app->getRecentFilesListManager()->removeFile(path);
+    }
 }
 
 void MainWindow::moveFileToTrash(ScintillaNext *editor)
