@@ -25,7 +25,8 @@ LOCALES = \
     uk_UA \
     tr_TR \
     pl_PL \
-    ru_RU
+    ru_RU \
+    pt_PT
 
 for(LOCALE, LOCALES) {
     # The application translation file
