@@ -1986,25 +1986,25 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
 
     // Default actions
     QStringList actionNames{
-        "actionClose",
-        "actionCloseAllExceptActive",
-        "actionCloseAllToLeft",
-        "actionCloseAllToRight",
+        "Close",
+        "CloseAllExceptActive",
+        "CloseAllToLeft",
+        "CloseAllToRight",
         "",
-        "actionSave",
-        "actionSaveAs",
-        "actionRename",
+        "Save",
+        "SaveAs",
+        "Rename",
         "",
-        "actionReload",
+        "Reload",
         "",
 #ifdef Q_OS_WIN
-        "actionShowInExplorer",
-        "actionOpenCommandPromptHere",
+        "ShowInExplorer",
+        "OpenCommandPromptHere",
         "",
 #endif
-        "actionCopyFullPath",
-        "actionCopyFileName",
-        "actionCopyFileDirectory"
+        "CopyFullPath",
+        "CopyFileName",
+        "CopyFileDirectory"
     };
 
     // If the entry exists in the settings, use that
@@ -2019,7 +2019,7 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
             menu->addSeparator();
         }
         else {
-            QAction *a = findChild<QAction *>(actionName, Qt::FindDirectChildrenOnly);
+            QAction *a = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
 
             if (a != Q_NULLPTR) {
                 menu->addAction(a);
