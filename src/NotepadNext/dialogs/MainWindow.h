@@ -147,6 +147,7 @@ private:
 
     QScopedPointer<SearchResultsCollector> searchResults;
 
+    void applyCustomShortcuts();
     void initUpdateCheck();
     ScintillaNext *getInitialEditor();
     void openFileList(const QStringList &fileNames);

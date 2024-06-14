@@ -96,6 +96,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     ui->setupUi(this);
 
+    applyCustomShortcuts();
+
     qInfo("setupUi Completed");
 
     connect(this, &MainWindow::aboutToClose, this, &MainWindow::saveSettings);
@@ -792,6 +794,27 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::applyCustomShortcuts()
+{
+    ApplicationSettings *settings = app->getSettings();
+
+    settings->beginGroup("Shortcuts");
+
+    for (const QString &actionName : settings->childKeys()) {
+        QAction *action = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
+        const QString shortcutString = settings->value(actionName).toString();
+
+        if (action != Q_NULLPTR) {
+            action->setShortcut(QKeySequence(shortcutString));
+        }
+        else {
+            qWarning() << "Cannot find action" << actionName;
+        }
+    }
+
+    settings->endGroup();
 }
 
 void MainWindow::setupLanguageMenu()
