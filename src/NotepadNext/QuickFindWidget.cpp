@@ -217,7 +217,7 @@ void QuickFindWidget::navigateToPrevMatch()
         }
     }
     else {
-        qWarning() << "navigateToPrevMatch() with no valid index yet";
+        qWarning("navigateToPrevMatch() with no valid index yet");
         return;
     }
 
