@@ -48,14 +48,11 @@ protected:
    bool eventFilter(QObject *obj, QEvent *event) override;
 
 private slots:
-    void highlightMatches();
+    void performNewSearch();
     void navigateToNextMatch(bool skipCurrent = true);
     void navigateToPrevMatch();
-    void highlightAndNavigateToNextMatch();
 
     void positionWidget();
-
-    void prepareSearch();
 
     void focusIn();
     void focusOut();
@@ -63,16 +60,29 @@ private slots:
     void returnPressed();
 
 private:
+    void highlightMatches();
     void clearHighlights();
+    void clearCachedMatches();
+
+    void prepareSearch();
     int computeSearchFlags() const;
-    void setSearchContextColor(QString color);
+
+    void setSearchContextColorBad();
+    void setSearchContextColorGood();
+    void setSearchContextColor(const QString &color);
+
     void initializeEditorIndicator();
     QString searchText() const;
+    void goToCurrentMatch();
+    void showWrapIndicator();
 
     Ui::QuickFindWidget *ui;
     ScintillaNext *editor = Q_NULLPTR;
     Finder *finder = Q_NULLPTR;
     int indicator;
+
+    QList<QPair<int, int>> matches;
+    qsizetype currentMatchIndex = -1;
 };
 
 #endif // QUICKFINDWIDGET_H
