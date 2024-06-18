@@ -46,10 +46,10 @@ QuickFindWidget::QuickFindWidget(QWidget *parent) :
     connect(ui->lineEdit, &QLineEdit::returnPressed, this, &QuickFindWidget::returnPressed);
 
     // Any changes need to trigger a new search
-    connect(ui->lineEdit, &QLineEdit::textChanged, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
-    connect(ui->buttonMatchCase, &QToolButton::toggled, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
-    connect(ui->buttonWholeWord, &QToolButton::toggled, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
-    connect(ui->buttonRegexp, &QToolButton::toggled, this, &QuickFindWidget::highlightAndNavigateToNextMatch);
+    connect(ui->lineEdit, &QLineEdit::textChanged, this, &QuickFindWidget::performNewSearch);
+    connect(ui->buttonMatchCase, &QToolButton::toggled, this, &QuickFindWidget::performNewSearch);
+    connect(ui->buttonWholeWord, &QToolButton::toggled, this, &QuickFindWidget::performNewSearch);
+    connect(ui->buttonRegexp, &QToolButton::toggled, this, &QuickFindWidget::performNewSearch);
 }
 
 QuickFindWidget::~QuickFindWidget()
@@ -92,6 +92,7 @@ bool QuickFindWidget::eventFilter(QObject *obj, QEvent *event)
         // Use escape key to close the quick find widget
         if (keyEvent->key() == Qt::Key_Escape) {
             clearHighlights();
+            clearCachedMatches();
             hide();
             editor->grabFocus();
         }
@@ -100,94 +101,141 @@ bool QuickFindWidget::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
-void QuickFindWidget::highlightMatches()
+void QuickFindWidget::setSearchContextColorBad()
 {
-    qInfo(Q_FUNC_INFO);
+    setSearchContextColor(QStringLiteral("red"));
+}
 
+void QuickFindWidget::setSearchContextColorGood()
+{
+    setSearchContextColor(QStringLiteral("blue"));
+}
+
+void QuickFindWidget::performNewSearch()
+{
     clearHighlights();
+    clearCachedMatches();
+    ui->lblInfo->hide();
 
+    // Early out
     if (searchText().isEmpty()) {
-        setSearchContextColor("blue");
+        setSearchContextColorGood();
         return;
     }
 
     prepareSearch();
-    editor->setIndicatorCurrent(indicator);
-
-    bool foundOne = false;
     finder->forEachMatch([&](int start, int end) {
-        foundOne = true;
-
-        const int length = end - start;
-
-        // Don't highlight 0 length matches
-        if (length > 0)
-            editor->indicatorFillRange(start, length);
-
-        // Advance at least 1 character to prevent infinite loop
+        matches.append(qMakePair(start, end));
         return qMax(start + 1, end);
     });
 
-    if (foundOne == false) {
-        setSearchContextColor("red");
+    if (matches.empty()) {
+        setSearchContextColorBad();
     }
     else {
-        setSearchContextColor("blue");
+        setSearchContextColorGood();
     }
+
+    highlightMatches();
+    navigateToNextMatch(false);
+}
+
+void QuickFindWidget::highlightMatches()
+{
+    qInfo(Q_FUNC_INFO);
+
+    editor->setIndicatorCurrent(indicator);
+    for (const auto &range : matches) {
+        editor->indicatorFillRange(range.first, range.second - range.first);
+    }
+}
+
+void QuickFindWidget::showWrapIndicator()
+{
+    FadingIndicator::showPixmap(editor, QStringLiteral(":/icons/wrapindicator.png"));
 }
 
 void QuickFindWidget::navigateToNextMatch(bool skipCurrent)
 {
     qInfo(Q_FUNC_INFO);
 
-    if (searchText().isEmpty()) {
+    // Early out if there are no matches
+    if (matches.length() == 0) {
+        ui->lblInfo->hide();
         return;
     }
 
-    int startPos = INVALID_POSITION;
-    if (skipCurrent) {
-        startPos = editor->selectionEnd();
+    if (currentMatchIndex != -1) {
+        currentMatchIndex++;
+        if (currentMatchIndex >= matches.length()) {
+            currentMatchIndex = 0;
+        }
     }
     else {
-        startPos = editor->selectionStart();
+        int startPos = INVALID_POSITION;
+        if (skipCurrent) {
+            startPos = editor->selectionEnd();
+        }
+        else {
+            startPos = editor->selectionStart();
+        }
+
+        auto it = std::lower_bound(matches.begin(), matches.end(), startPos, [](const QPair<int, int>& pair, int value) {
+            return pair.first < value;
+        });
+
+        if (it != matches.end()) {
+            currentMatchIndex = std::distance(matches.begin(), it);
+        } else {
+            // Wrap back around
+            currentMatchIndex = 0;
+        }
     }
 
-    prepareSearch();
-
-    auto range = finder->findNext(startPos);
-    if (range.cpMin == INVALID_POSITION)
-        return;
-
-    editor->setSel(range.cpMin, range.cpMax);
-    editor->verticalCentreCaret();
-
-    if (finder->didLatestSearchWrapAround()) {
-        FadingIndicator::showPixmap(editor, QStringLiteral(":/icons/wrapindicator.png"));
+    // Search wrapped around
+    if (currentMatchIndex == 0) {
+        showWrapIndicator();
     }
+
+    goToCurrentMatch();
 }
 
 void QuickFindWidget::navigateToPrevMatch()
 {
     qInfo(Q_FUNC_INFO);
 
-    if (searchText().isEmpty()) {
+    // Early out if there are no matches
+    if (matches.length() == 0) {
+        ui->lblInfo->hide();
         return;
     }
 
-    prepareSearch();
-
-    auto range = finder->findPrev();
-    if (range.cpMin == INVALID_POSITION)
+    if (currentMatchIndex != -1) {
+        currentMatchIndex--;
+        if (currentMatchIndex < 0) {
+            currentMatchIndex = matches.length() - 1;
+        }
+    }
+    else {
+        qWarning("navigateToPrevMatch() with no valid index yet");
         return;
+    }
 
-    editor->setSel(range.cpMin, range.cpMax);
-    editor->verticalCentreCaret();
+    // Search wrapped around
+    if (currentMatchIndex == matches.length() - 1) {
+        showWrapIndicator();
+    }
+
+    goToCurrentMatch();
 }
 
-void QuickFindWidget::highlightAndNavigateToNextMatch()
+void QuickFindWidget::goToCurrentMatch()
 {
-    highlightMatches();
-    navigateToNextMatch(false);
+    editor->setSel(matches[currentMatchIndex].first, matches[currentMatchIndex].second);
+    editor->verticalCentreCaret();
+
+    ui->lblInfo->show();
+    ui->lblInfo->setText(tr("%L1/%L2").arg(currentMatchIndex + 1).arg(matches.length()));
 }
 
 int QuickFindWidget::computeSearchFlags() const
@@ -209,7 +257,7 @@ int QuickFindWidget::computeSearchFlags() const
     return searchFlags;
 }
 
-void QuickFindWidget::setSearchContextColor(QString color)
+void QuickFindWidget::setSearchContextColor(const QString &color)
 {
     ui->lineEdit->setStyleSheet(QStringLiteral("border: 1px solid %1; padding: 2px;").arg(color));
 }
@@ -253,12 +301,14 @@ void QuickFindWidget::prepareSearch()
 void QuickFindWidget::focusIn()
 {
     ui->lineEdit->selectAll();
-    highlightAndNavigateToNextMatch();
+    ui->lblInfo->hide();
+    performNewSearch();
 }
 
 void QuickFindWidget::focusOut()
 {
     clearHighlights();
+    clearCachedMatches();
     hide();
 }
 
@@ -276,4 +326,10 @@ void QuickFindWidget::clearHighlights()
 {
     editor->setIndicatorCurrent(indicator);
     editor->indicatorClearRange(0, editor->length());
+}
+
+void QuickFindWidget::clearCachedMatches()
+{
+    matches.clear();
+    currentMatchIndex = -1;
 }
