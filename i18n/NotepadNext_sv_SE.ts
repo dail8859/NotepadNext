@@ -1715,7 +1715,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="61"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1264"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1287"/>
         <source>Export As</source>
         <translation>Exportera som</translation>
     </message>
@@ -1851,7 +1851,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="904"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="613"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="615"/>
         <source>Start Recording</source>
         <translation>Starta inspelning</translation>
     </message>
@@ -1945,120 +1945,120 @@
         <translation>Öppen mapp som arbetsyta...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="354"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="356"/>
         <source>Go to line</source>
         <translation>Gå till rad</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="354"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="356"/>
         <source>Line Number (1 - %1)</source>
         <translation>Radnummer (1 - %1)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="604"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="606"/>
         <source>Stop Recording</source>
         <translation>Stoppa inspelning</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="865"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="888"/>
         <source>New %1</source>
         <translation>Ny %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="917"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="940"/>
         <source>Create File</source>
         <translation>Skapa fil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="917"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="940"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; finns inte. Vill du skapa den?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="958"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1056"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="981"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1079"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Vill du spara &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="959"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1057"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="982"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1080"/>
         <source>Save File</source>
         <translation>Spara fil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1012"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1035"/>
         <source>Open Folder as Workspace</source>
         <translation>Öppen mapp som arbetsyta</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1030"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1053"/>
         <source>Reload File</source>
         <translation>Läs om fil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1030"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1053"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>Vill du verkligen läsa om &lt;b&gt;%1&lt;/b&gt; från disk? Alla osparade ändringar kommer att förloras.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1447"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1470"/>
         <source>Administrator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1695"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1718"/>
         <source>Error Saving File</source>
         <translation>Kunde inte spara fil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1231"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1254"/>
         <source>Save a Copy As</source>
         <translation>Spara en kopia som</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1305"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1320"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1328"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1343"/>
         <source>Rename</source>
         <translation>Byt namn</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1320"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1343"/>
         <source>Name:</source>
         <translation>Namn:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1340"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1363"/>
         <source>Delete File</source>
         <translation>Ta bort fil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1340"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1363"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>Vill du verkligen flytta &lt;b&gt;%1&lt;/b&gt; till papperskorgen?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1350"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1373"/>
         <source>Error Deleting File</source>
         <translation>Kunde inte ta bort fil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1350"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1373"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Gick något fel vid borttagning av &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1695"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1718"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Ett fel uppstod när &lt;b&gt;%1&lt;/b&gt; skulle sparas.&lt;br&gt;&lt;br&gt;Fel: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1701"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1724"/>
         <source>Zoom: %1%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1841"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1864"/>
         <source>No updates are available at this time.</source>
         <translation>Inga uppdateringar tillgängliga den här gången.</translation>
     </message>
@@ -2224,44 +2224,49 @@
         <translation>Ram</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="40"/>
+        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="44"/>
         <source>Match case</source>
         <translation>Matcha skiftläge</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="43"/>
+        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="47"/>
         <source>Aa</source>
         <translation>Aa</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="53"/>
+        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="57"/>
         <source>Match whole word</source>
         <translation>Matcha hela ord</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="56"/>
+        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="60"/>
         <source>|A|</source>
         <translation>|A|</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="66"/>
+        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="70"/>
         <source>Use regular expression</source>
         <translation>Använd regular expression</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="69"/>
+        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="73"/>
         <source>. *</source>
         <translation>. *</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="72"/>
+        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="76"/>
         <source>Alt+E</source>
         <translation>Alt+E</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="97"/>
+        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="32"/>
         <source>Find...</source>
         <translation>Sök...</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/QuickFindWidget.cpp" line="238"/>
+        <source>%L1/%L2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
