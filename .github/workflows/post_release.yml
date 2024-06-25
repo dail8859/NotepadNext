@@ -15,6 +15,7 @@ jobs:
       - run: |
           gh issue create --title "Publish Windows Release for $RELEASE_TAG" --body "Update json file in root of project."
           gh issue create --title "Publish Flatpak Release for $RELEASE_TAG" --body "Update https://github.com/flathub/com.github.dail8859.NotepadNext"
+          gh issue create --title "Publish Homebrew Release for $RELEASE_TAG" --body "Update https://github.com/dail8859/homebrew-notepadnext/blob/master/Casks/notepadnext.rb with release number and DMG sha256"
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
