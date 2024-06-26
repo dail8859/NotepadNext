@@ -925,8 +925,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="181"/>
         <source>Search</source>
-        <translatorcomment>Procurar</translatorcomment>
-        <translation></translation>
+        <translation>Procurar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="185"/>
@@ -1261,7 +1260,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="680"/>
         <source>Clos&amp;e All</source>
-        <translation>Fec&amp;har tudo</translation>
+        <translation>Fechar &amp;tudo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="683"/>
@@ -1276,7 +1275,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="691"/>
         <source>Close All Except Active Document</source>
-        <translation></translation>
+        <translation>Fechar tudo exceto o documento ativo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="696"/>
@@ -2177,7 +2176,7 @@
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.cpp" line="238"/>
         <source>%L1/%L2</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1/%L2</translation>
     </message>
 </context>
 <context>
