@@ -98,8 +98,8 @@ void LoadD2DOnce() noexcept {
 	hDLLD2D = ::LoadLibraryEx(TEXT("D2D1.DLL"), 0, loadLibraryFlags);
 	D2D1CFSig fnD2DCF = DLLFunction<D2D1CFSig>(hDLLD2D, "D2D1CreateFactory");
 	if (fnD2DCF) {
-		// A single threaded factory as Scintilla always draw on the GUI thread
-		fnD2DCF(D2D1_FACTORY_TYPE_SINGLE_THREADED,
+		// A multi threaded factory in case Scintilla is used with multiple GUI threads
+		fnD2DCF(D2D1_FACTORY_TYPE_MULTI_THREADED,
 			__uuidof(ID2D1Factory),
 			nullptr,
 			reinterpret_cast<IUnknown**>(&pD2DFactory));
@@ -405,7 +405,7 @@ float GetDeviceScaleFactorWhenGdiScalingActive(HWND hWnd) noexcept {
 			const HMONITOR hMonitor = MonitorFromWindowHandleScaling(hRootWnd);
 			DEVICE_SCALE_FACTOR deviceScaleFactor;
 			if (S_OK == fnGetScaleFactorForMonitor(hMonitor, &deviceScaleFactor))
-				return deviceScaleFactor / 100.f;
+				return static_cast<int>(deviceScaleFactor) / 100.f;
 		}
 	}
 	return 1.f;
@@ -2782,7 +2782,7 @@ void Window::InvalidateRectangle(PRectangle rc) {
 	::InvalidateRect(HwndFromWindowID(wid), &rcw, FALSE);
 }
 
-HCURSOR LoadReverseArrowCursor(UINT dpi) noexcept {
+HCURSOR LoadReverseArrowCursor(UINT dpi, int cursorBaseSize) noexcept {
 	class CursorHelper {
 	public:
 		ICONINFO info{};
@@ -2848,8 +2848,15 @@ HCURSOR LoadReverseArrowCursor(UINT dpi) noexcept {
 
 	HCURSOR reverseArrowCursor {};
 
-	const int width = SystemMetricsForDpi(SM_CXCURSOR, dpi);
-	const int height = SystemMetricsForDpi(SM_CYCURSOR, dpi);
+	int width;
+	int height;
+	if (cursorBaseSize > defaultCursorBaseSize) {
+		width = ::MulDiv(cursorBaseSize, dpi, USER_DEFAULT_SCREEN_DPI);
+		height = width;
+	} else {
+		width = SystemMetricsForDpi(SM_CXCURSOR, dpi);
+		height = SystemMetricsForDpi(SM_CYCURSOR, dpi);
+	}
 
 	DPI_AWARENESS_CONTEXT oldContext = nullptr;
 	if (fnAreDpiAwarenessContextsEqual && fnAreDpiAwarenessContextsEqual(fnGetThreadDpiAwarenessContext(), DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED)) {
@@ -3358,7 +3365,7 @@ void ListBoxX::SetList(const char *list, char separator, char typesep) {
 	Clear();
 	const size_t size = strlen(list);
 	char *words = lti.SetWords(list);
-	char *startword = words;
+	const char *startword = words;
 	char *numword = nullptr;
 	for (size_t i=0; i < size; i++) {
 		if (words[i] == separator) {
