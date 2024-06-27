@@ -53,7 +53,8 @@ SOURCES += \
     $$PWD/scintilla/src/CaseConvert.cxx \
     $$PWD/scintilla/src/CallTip.cxx \
     $$PWD/scintilla/src/AutoComplete.cxx \
-    $$PWD/scintilla/src/ChangeHistory.cxx
+    $$PWD/scintilla/src/ChangeHistory.cxx \
+    $$PWD/scintilla/src/UndoHistory.cxx
 
 HEADERS  += \
     $$PWD/scintilla/qt/ScintillaEdit/ScintillaEdit.h \

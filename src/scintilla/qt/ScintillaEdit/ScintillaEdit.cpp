@@ -696,6 +696,62 @@ void ScintillaEdit::endUndoAction() {
     send(SCI_ENDUNDOACTION, 0, 0);
 }
 
+sptr_t ScintillaEdit::undoActions() const {
+    return send(SCI_GETUNDOACTIONS, 0, 0);
+}
+
+void ScintillaEdit::setUndoSavePoint(sptr_t action) {
+    send(SCI_SETUNDOSAVEPOINT, action, 0);
+}
+
+sptr_t ScintillaEdit::undoSavePoint() const {
+    return send(SCI_GETUNDOSAVEPOINT, 0, 0);
+}
+
+void ScintillaEdit::setUndoDetach(sptr_t action) {
+    send(SCI_SETUNDODETACH, action, 0);
+}
+
+sptr_t ScintillaEdit::undoDetach() const {
+    return send(SCI_GETUNDODETACH, 0, 0);
+}
+
+void ScintillaEdit::setUndoTentative(sptr_t action) {
+    send(SCI_SETUNDOTENTATIVE, action, 0);
+}
+
+sptr_t ScintillaEdit::undoTentative() const {
+    return send(SCI_GETUNDOTENTATIVE, 0, 0);
+}
+
+void ScintillaEdit::setUndoCurrent(sptr_t action) {
+    send(SCI_SETUNDOCURRENT, action, 0);
+}
+
+sptr_t ScintillaEdit::undoCurrent() const {
+    return send(SCI_GETUNDOCURRENT, 0, 0);
+}
+
+void ScintillaEdit::pushUndoActionType(sptr_t type, sptr_t pos) {
+    send(SCI_PUSHUNDOACTIONTYPE, type, pos);
+}
+
+void ScintillaEdit::changeLastUndoActionText(sptr_t length, const char * text) {
+    send(SCI_CHANGELASTUNDOACTIONTEXT, length, (sptr_t)text);
+}
+
+sptr_t ScintillaEdit::undoActionType(sptr_t action) const {
+    return send(SCI_GETUNDOACTIONTYPE, action, 0);
+}
+
+sptr_t ScintillaEdit::undoActionPosition(sptr_t action) const {
+    return send(SCI_GETUNDOACTIONPOSITION, action, 0);
+}
+
+QByteArray ScintillaEdit::undoActionText(sptr_t action) const {
+    return TextReturner(SCI_GETUNDOACTIONTEXT, action);
+}
+
 void ScintillaEdit::indicSetStyle(sptr_t indicator, sptr_t indicatorStyle) {
     send(SCI_INDICSETSTYLE, indicator, indicatorStyle);
 }

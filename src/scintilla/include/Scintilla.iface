@@ -717,6 +717,8 @@ val SC_ELEMENT_SELECTION_SECONDARY_TEXT=14
 val SC_ELEMENT_SELECTION_SECONDARY_BACK=15
 val SC_ELEMENT_SELECTION_INACTIVE_TEXT=16
 val SC_ELEMENT_SELECTION_INACTIVE_BACK=17
+val SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_TEXT=18
+val SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_BACK=19
 val SC_ELEMENT_CARET=40
 val SC_ELEMENT_CARET_ADDITIONAL=41
 val SC_ELEMENT_CARET_LINE_BACK=50
@@ -832,6 +834,48 @@ fun void BeginUndoAction=2078(,)
 
 # End a sequence of actions that is undone and redone as a unit.
 fun void EndUndoAction=2079(,)
+
+# How many undo actions are in the history?
+get int GetUndoActions=2790(,)
+
+# Set action as the save point
+set void SetUndoSavePoint=2791(int action,)
+
+# Which action is the save point?
+get int GetUndoSavePoint=2792(,)
+
+# Set action as the detach point
+set void SetUndoDetach=2793(int action,)
+
+# Which action is the detach point?
+get int GetUndoDetach=2794(,)
+
+# Set action as the tentative point
+set void SetUndoTentative=2795(int action,)
+
+# Which action is the tentative point?
+get int GetUndoTentative=2796(,)
+
+# Set action as the current point
+set void SetUndoCurrent=2797(int action,)
+
+# Which action is the current point?
+get int GetUndoCurrent=2798(,)
+
+# Push one action onto undo history with no text
+fun void PushUndoActionType=2800(int type, position pos)
+
+# Set the text and length of the most recently pushed action
+fun void ChangeLastUndoActionText=2801(position length, string text)
+
+# What is the type of an action?
+get int GetUndoActionType=2802(int action,)
+
+# What is the position of an action?
+get position GetUndoActionPosition=2803(int action,)
+
+# What is the text of an action?
+get int GetUndoActionText=2804(int action, stringresult text)
 
 # Indicator style enumeration and some constants
 enu IndicatorStyle=INDIC_
@@ -1058,6 +1102,8 @@ enu AutoCompleteOption=SC_AUTOCOMPLETE_
 val SC_AUTOCOMPLETE_NORMAL=0
 # Win32 specific:
 val SC_AUTOCOMPLETE_FIXED_SIZE=1
+# Always select the first item in the autocompletion list:
+val SC_AUTOCOMPLETE_SELECT_FIRST_ITEM=2
 
 # Set autocompletion options.
 set void AutoCSetOptions=2638(AutoCompleteOption options,)
