@@ -302,6 +302,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionIncrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->tab(); });
     connect(ui->actionDecrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->backTab(); });
 
+    addAction(ui->actionToggleOverType);
+    connect(ui->actionToggleOverType, &QAction::triggered, this, [=]() {
+        currentEditor()->editToggleOvertype();
+        ui->statusBar->refresh(currentEditor());
+    });
+
     SearchResultsDock *srDock = new SearchResultsDock(this);
     addDockWidget(Qt::BottomDockWidgetArea, srDock);
     srDock->toggleViewAction()->setShortcut(Qt::Key_F7);
