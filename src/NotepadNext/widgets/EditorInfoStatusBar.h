@@ -48,6 +48,7 @@ private slots:
     void updateLanguage(ScintillaNext *editor);
     void updateEol(ScintillaNext *editor);
     void updateEncoding(ScintillaNext *editor);
+    void updateOverType(ScintillaNext *editor);
 
 private:
     QLabel *docType;
@@ -55,6 +56,7 @@ private:
     QLabel *docPos;
     QLabel *unicodeType;
     QLabel *eolFormat;
+    QLabel *overType;
 
     QMetaObject::Connection editorUiUpdated;
     QMetaObject::Connection documentLexerChanged;
