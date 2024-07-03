@@ -50,7 +50,7 @@ static void ColouriseDMAPDoc(Sci_PositionU startPos, Sci_Position length, int in
     WordList &keywords2 = *keywordlists[1];
     WordList &keywords3 = *keywordlists[2];
     /***************************************/
-    Sci_Position posLineStart = 0, numNonBlank = 0;
+    Sci_Position posLineStart = 0; //, numNonBlank = 0;
     Sci_Position endPos = startPos + length;
     /***************************************/
     // backtrack to the nearest keyword
@@ -65,10 +65,10 @@ static void ColouriseDMAPDoc(Sci_PositionU startPos, Sci_Position length, int in
         // remember the start position of the line
         if (sc.atLineStart) {
             posLineStart = sc.currentPos;
-            numNonBlank = 0;
+            //numNonBlank = 0;
             sc.SetState(SCE_DMAP_DEFAULT);
         }
-        if (!IsASpaceOrTab(sc.ch)) numNonBlank ++;
+        //if (!IsASpaceOrTab(sc.ch)) numNonBlank ++;
         /***********************************************/
         // Handle data appearing after column 72; it is ignored
         Sci_Position toLineStart = sc.currentPos - posLineStart;
@@ -198,7 +198,7 @@ static void FoldDMAPDoc(Sci_PositionU startPos, Sci_Position length, int initSty
                 }
                 s[k] = '\0';
                 levelCurrent += classifyFoldPointDMAP(s, prevWord);
-                strcpy(prevWord, s);
+                strlcpy(prevWord, s,k+1);
             }
         }
         if (atEOL) {
