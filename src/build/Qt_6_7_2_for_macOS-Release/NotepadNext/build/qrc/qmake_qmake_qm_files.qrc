@@ -1,0 +1,26 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="i18n">
+<file alias="NotepadNext_zh_CN.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/NotepadNext_zh_CN.qm</file>
+<file alias="NotepadNext_zh_TW.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/NotepadNext_zh_TW.qm</file>
+<file alias="NotepadNext_sv_SE.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/NotepadNext_sv_SE.qm</file>
+<file alias="NotepadNext_uk_UA.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/NotepadNext_uk_UA.qm</file>
+<file alias="NotepadNext_tr_TR.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/NotepadNext_tr_TR.qm</file>
+<file alias="NotepadNext_pl_PL.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/NotepadNext_pl_PL.qm</file>
+<file alias="NotepadNext_ru_RU.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/NotepadNext_ru_RU.qm</file>
+<file alias="NotepadNext_pt_PT.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/NotepadNext_pt_PT.qm</file>
+<file alias="qt_zh_CN.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qt_zh_CN.qm</file>
+<file alias="qtbase_zh_CN.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qtbase_zh_CN.qm</file>
+<file alias="qt_zh_TW.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qt_zh_TW.qm</file>
+<file alias="qtbase_zh_TW.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qtbase_zh_TW.qm</file>
+<file alias="qt_sv.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qt_sv.qm</file>
+<file alias="qt_uk.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qt_uk.qm</file>
+<file alias="qtbase_uk.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qtbase_uk.qm</file>
+<file alias="qt_tr.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qt_tr.qm</file>
+<file alias="qtbase_tr.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qtbase_tr.qm</file>
+<file alias="qt_pl.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qt_pl.qm</file>
+<file alias="qtbase_pl.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qtbase_pl.qm</file>
+<file alias="qt_ru.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qt_ru.qm</file>
+<file alias="qtbase_ru.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qtbase_ru.qm</file>
+<file alias="qt_pt_PT.qm">/Users/davem/Projects/NotepadNext/src/build/Qt_6_7_2_for_macOS-Release/NotepadNext/.qm/qt_pt_PT.qm</file>
+</qresource>
+</RCC>

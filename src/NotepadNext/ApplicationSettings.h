@@ -86,6 +86,7 @@ public:
     DEFINE_SETTING(ShowToolBar, showToolBar, bool)
     DEFINE_SETTING(ShowTabBar, showTabBar, bool)
     DEFINE_SETTING(ShowStatusBar, showStatusBar, bool)
+    DEFINE_SETTING(CenterSearchDialog, centerSearchDialog, bool)
 
     DEFINE_SETTING(TabsClosable, tabsClosable, bool)
     DEFINE_SETTING(ExitOnLastTabClosed, exitOnLastTabClosed, bool)
