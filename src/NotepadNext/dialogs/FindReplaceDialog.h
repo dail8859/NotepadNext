@@ -108,7 +108,7 @@ private:
     ScintillaNext *editor;
     QStatusBar *statusBar;
     QTabBar *tabBar;
-
+    MainWindow *mainWindow ;
     ISearchResultsHandler *searchResultsHandler;
     Finder *finder;
 };
