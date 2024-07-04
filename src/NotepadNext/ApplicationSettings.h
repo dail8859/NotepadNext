@@ -55,9 +55,9 @@ private:
 #define DEFINE_SETTING(name, lname, type)\
 public:\
     type lname() const;\
-    public slots:\
+public slots:\
     void set##name(type lname);\
-    Q_SIGNAL\
+Q_SIGNAL\
     void lname##Changed(type lname);\
 
 
