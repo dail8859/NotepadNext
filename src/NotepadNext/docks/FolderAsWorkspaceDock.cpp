@@ -49,14 +49,14 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
 
 FolderAsWorkspaceDock::~FolderAsWorkspaceDock()
 {
-    ApplicationSettings settings;
-    settings.set(rootPathSetting, rootPath());
-
     delete ui;
 }
 
 void FolderAsWorkspaceDock::setRootPath(const QString dir)
 {
+    ApplicationSettings settings;
+    settings.set(rootPathSetting, dir);
+
     model->setRootPath(dir);
     ui->treeView->setRootIndex(model->index(dir));
 }
