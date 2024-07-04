@@ -576,7 +576,7 @@ void FindReplaceDialog::savePosition()
 {
     qInfo(Q_FUNC_INFO);
 
-    position = pos();
+    lastClosedPosition = pos();
 }
 
 void FindReplaceDialog::restorePosition()
@@ -586,7 +586,7 @@ void FindReplaceDialog::restorePosition()
     ApplicationSettings settings;
 
     if (!settings.centerSearchDialog())
-        move(position);
+        move(lastClosedPosition);
     else {
         QPoint centerPoint = parentWidget()->geometry().center();
         move(centerPoint - rect().center());
