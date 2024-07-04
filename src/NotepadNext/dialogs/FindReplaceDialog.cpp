@@ -49,7 +49,6 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
     // Turn off the help button on the dialog
     setWindowFlag(Qt::WindowContextHelpButtonHint, false);
-    mainWindow = window ;
     ui->setupUi(this);
 
     // Get the current editor, and keep up the reference
@@ -590,7 +589,7 @@ void FindReplaceDialog::restorePosition()
         move(position);
     else {
         QRect box = this->geometry();
-        QRect win = mainWindow->geometry();
+        QRect win = parentWidget()->geometry();
         int x,y ;
 
         if (win.height() < box.height())
