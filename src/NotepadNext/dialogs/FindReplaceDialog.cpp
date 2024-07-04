@@ -588,21 +588,8 @@ void FindReplaceDialog::restorePosition()
     if (!settings.centerSearchDialog())
         move(position);
     else {
-        QRect box = this->geometry();
-        QRect win = parentWidget()->geometry();
-        int x,y ;
-
-        if (win.height() < box.height())
-            x = win.x() ;
-        else
-            x = win.x() + ((win.height() - box.height())/2);
-
-        if (win.width() < box.width())
-            y = win.y() ;
-        else
-            y = win.y() + ((win.width() - box.width())/2) ;
-
-        this->setGeometry(x,y,box.width(),box.height());
+        QPoint centerPoint = parentWidget()->geometry().center();
+        move(centerPoint - rect().center());
     }
 }
 
