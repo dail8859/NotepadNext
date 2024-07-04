@@ -585,11 +585,12 @@ void FindReplaceDialog::restorePosition()
 
     ApplicationSettings settings;
 
-    if (!settings.centerSearchDialog())
-        move(lastClosedPosition);
-    else {
-        QPoint centerPoint = parentWidget()->geometry().center();
+    if (settings.centerSearchDialog()) {
+        const QPoint centerPoint = parentWidget()->geometry().center();
         move(centerPoint - rect().center());
+    }
+    else {
+        move(lastClosedPosition);
     }
 }
 
