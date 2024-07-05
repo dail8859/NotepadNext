@@ -31,6 +31,13 @@
      <number>0</number>
     </property>
     <item>
+     <widget class="QPushButton" name="pb_copyResults">
+      <property name="text">
+       <string>Copy Results to Clipboard</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QTreeWidget" name="treeWidget">
       <property name="font">
        <font>
