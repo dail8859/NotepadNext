@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>838</width>
-    <height>450</height>
+    <height>469</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,6 +67,13 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBoxRecenterSearchDialog">
+     <property name="text">
+      <string>Recenter find/replace dialog when opened</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="checkBoxCombineSearchResults">
