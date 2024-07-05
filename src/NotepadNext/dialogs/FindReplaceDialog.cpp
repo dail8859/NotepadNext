@@ -49,7 +49,6 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
     // Turn off the help button on the dialog
     setWindowFlag(Qt::WindowContextHelpButtonHint, false);
-
     ui->setupUi(this);
 
     // Get the current editor, and keep up the reference
@@ -151,6 +150,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     connect(qApp, &QApplication::aboutToQuit, this, &FindReplaceDialog::saveSettings);
 
     changeTab(tabBar->currentIndex());
+
 }
 
 FindReplaceDialog::~FindReplaceDialog()
@@ -367,8 +367,8 @@ void FindReplaceDialog::transparencyToggled(bool on)
 
     if (on) {
         if (ui->radioOnLosingFocus->isChecked()) {
-           adjustOpacityWhenLosingFocus(true);
-           adjustOpacityAlways(false);
+            adjustOpacityWhenLosingFocus(true);
+            adjustOpacityAlways(false);
         }
         else {
             adjustOpacityWhenLosingFocus(false);
@@ -576,14 +576,22 @@ void FindReplaceDialog::savePosition()
 {
     qInfo(Q_FUNC_INFO);
 
-    position = pos();
+    lastClosedPosition = pos();
 }
 
 void FindReplaceDialog::restorePosition()
 {
     qInfo(Q_FUNC_INFO);
 
-    move(position);
+    ApplicationSettings settings;
+
+    if (settings.centerSearchDialog()) {
+        const QPoint centerPoint = parentWidget()->geometry().center();
+        move(centerPoint - rect().center());
+    }
+    else {
+        move(lastClosedPosition);
+    }
 }
 
 int FindReplaceDialog::computeSearchFlags()

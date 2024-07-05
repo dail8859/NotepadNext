@@ -102,13 +102,12 @@ private:
     void updateReplaceList(const QString &text);
 
     bool isFirstTime = true;
-    QPoint position;
+    QPoint lastClosedPosition;
     Ui::FindReplaceDialog *ui;
 
     ScintillaNext *editor;
     QStatusBar *statusBar;
     QTabBar *tabBar;
-
     ISearchResultsHandler *searchResultsHandler;
     Finder *finder;
 };
