@@ -25,6 +25,7 @@
 #include <QPointer>
 #include <QMenu>
 #include <QShortcut>
+#include <QClipboard>
 
 enum SearchResultData
 {
@@ -210,3 +211,18 @@ void SearchResultsDock::updateSearchStatus()
     if (currentFile)
         currentFile->setText(0, QStringLiteral("%1 (%L2 hits)").arg(currentFilePath).arg(totalFileHitCount));
 }
+
+void SearchResultsDock::on_pb_copyResults_released()
+{
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    QString string;
+
+    QTreeWidgetItemIterator it(ui->treeWidget);
+    while (*it) {
+        string.append((*it)->text(0) + ' ' + (*it)->text(1) + '\n');
+        ++it;
+    }
+
+    clipboard->setText(string) ;
+}
+
