@@ -35,14 +35,6 @@
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>855</width>
-     <height>22</height>
-    </rect>
-   </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>&amp;File</string>
@@ -1355,6 +1347,20 @@
    </property>
    <property name="shortcut">
     <string>Alt+Shift+9</string>
+   </property>
+  </action>
+  <action name="actionToggleOverType">
+   <property name="text">
+    <string>Toggle Overtype</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle Overtype</string>
+   </property>
+   <property name="shortcut">
+    <string>Ins</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
  </widget>

@@ -71,9 +71,16 @@ void parseCommandLine(QCommandLineParser &parser, const QStringList &args)
     parser.addOptions({
         {"translation", "Overrides the system default translation.", "translation"},
         {"reset-settings", "Resets all application settings."},
+        {"n", "Places the cursor on the line number for the first file specified", "line number"}
     });
 
     parser.process(args);
+}
+
+static QString toLocalFileName(const QString file)
+{
+    QUrl fileUrl(file);
+    return fileUrl.isValid() && fileUrl.isLocalFile() ? fileUrl.toLocalFile() : file;
 }
 
 NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
@@ -188,20 +195,7 @@ bool NotepadNextApplication::init()
     });
 
     connect(this, &SingleApplication::instanceStarted, window, &MainWindow::bringWindowToForeground);
-
-    connect(this, &SingleApplication::receivedMessage, this, [&](quint32 instanceId, QByteArray message) {
-        Q_UNUSED(instanceId)
-
-        QDataStream stream(&message, QIODevice::ReadOnly);
-        QStringList args;
-
-        stream >> args;
-
-        QCommandLineParser parser;
-        parseCommandLine(parser, args);
-
-        openFiles(parser.positionalArguments());
-    }, Qt::QueuedConnection);
+    connect(this, &SingleApplication::receivedMessage, this, &NotepadNextApplication::receiveInfoFromSecondaryInstance, Qt::QueuedConnection);
 
     connect(this, &NotepadNextApplication::applicationStateChanged, this, [&](Qt::ApplicationState state) {
         if (state == Qt::ApplicationActive) {
@@ -226,6 +220,16 @@ bool NotepadNextApplication::init()
     }
 
     openFiles(parser.positionalArguments());
+
+    if (parser.isSet("n") && parser.positionalArguments().length() > 0) {
+        QString firstFile = parser.positionalArguments()[0];
+        ScintillaNext *editor = editorManager->getEditorByFilePath(toLocalFileName(firstFile));
+
+        if (editor) {
+            int n = parser.value("n").toInt();
+            editor->gotoLine(n - 1);
+        }
+    }
 
     // If the window does not have any editors (meaning the no files were
     // specified on the command line) then create a new empty file
@@ -403,11 +407,34 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
 
 void NotepadNextApplication::sendInfoToPrimaryInstance()
 {
+    qInfo(Q_FUNC_INFO);
+
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::WriteOnly);
 
     stream << arguments();
-    sendMessage(buffer);
+    const bool success = sendMessage(buffer);
+
+    if (!success) {
+        qWarning("sendMessage() unsuccessful");
+    }
+}
+
+void NotepadNextApplication::receiveInfoFromSecondaryInstance(quint32 instanceId, QByteArray message)
+{
+    qInfo(Q_FUNC_INFO);
+
+    Q_UNUSED(instanceId)
+
+    QDataStream stream(&message, QIODevice::ReadOnly);
+    QStringList args;
+
+    stream >> args;
+
+    QCommandLineParser parser;
+    parseCommandLine(parser, args);
+
+    openFiles(parser.positionalArguments());
 }
 
 bool NotepadNextApplication::isRunningAsAdmin() const
@@ -457,9 +484,7 @@ void NotepadNextApplication::openFiles(const QStringList &files)
     qInfo(Q_FUNC_INFO);
 
     for (const QString &file : files) {
-        QUrl fileUrl(file);
-        QString filePath = fileUrl.isValid() && fileUrl.isLocalFile() ? fileUrl.toLocalFile() : file;
-        window->openFile(filePath);
+        window->openFile(toLocalFileName(file));
     }
 }
 

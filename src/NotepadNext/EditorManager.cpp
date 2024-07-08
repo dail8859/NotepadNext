@@ -42,15 +42,6 @@ const int MARK_HIDELINESEND = 22;
 const int MARK_HIDELINESUNDERLINE = 21;
 
 
-static int DefaultFontSize()
-{
-    QFont font = QApplication::font();
-
-    // Make it slightly larger than the UI font
-    return font.pointSize() + 2;
-}
-
-
 EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
     : QObject(parent), settings(settings)
 {
@@ -99,6 +90,22 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
                 int topLine = editor->docLineFromVisible(editor->firstVisibleLine());
                 editor->setWrapMode(SC_WRAP_NONE);
                 editor->setFirstVisibleLine(topLine);
+            }
+        }
+    });
+
+    connect(settings, &ApplicationSettings::fontNameChanged, this, [=](QString fontName){
+        for (auto &editor : getEditors()) {
+            for (int i = 0; i <= STYLE_MAX; ++i) {
+                editor->styleSetFont(i, fontName.toUtf8().data());
+            }
+        }
+    });
+
+    connect(settings, &ApplicationSettings::fontSizeChanged, this, [=](int fontSize){
+        for (auto &editor : getEditors()) {
+            for (int i = 0; i <= STYLE_MAX; ++i) {
+                editor->styleSetSize(i, fontSize);
             }
         }
     });
@@ -229,9 +236,8 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     editor->styleSetFore(STYLE_DEFAULT, 0x000000);
     editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
-    editor->styleSetSize(STYLE_DEFAULT, DefaultFontSize());
-    editor->styleSetFont(STYLE_DEFAULT, "Courier New");
-
+    editor->styleSetSize(STYLE_DEFAULT, settings->fontSize());
+    editor->styleSetFont(STYLE_DEFAULT, settings->fontName().toUtf8().data());
     editor->styleClearAll();
 
     editor->styleSetFore(STYLE_LINENUMBER, 0x808080);

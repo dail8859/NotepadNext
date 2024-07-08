@@ -96,6 +96,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     ui->setupUi(this);
 
+    applyCustomShortcuts();
+
     qInfo("setupUi Completed");
 
     connect(this, &MainWindow::aboutToClose, this, &MainWindow::saveSettings);
@@ -299,6 +301,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     connect(ui->actionIncrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->tab(); });
     connect(ui->actionDecrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->backTab(); });
+
+    addAction(ui->actionToggleOverType);
+    connect(ui->actionToggleOverType, &QAction::triggered, this, [=]() {
+        currentEditor()->editToggleOvertype();
+        ui->statusBar->refresh(currentEditor());
+    });
 
     SearchResultsDock *srDock = new SearchResultsDock(this);
     addDockWidget(Qt::BottomDockWidgetArea, srDock);
@@ -773,6 +781,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(app->getSettings(), &ApplicationSettings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
     connect(app->getSettings(), &ApplicationSettings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
 
+    // It seems restoreState() does not affect the status bar so set it manually
+    ui->statusBar->setVisible(app->getSettings()->showStatusBar());
+
     setupLanguageMenu();
 
     // Put the style sheet here for now
@@ -789,6 +800,27 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::applyCustomShortcuts()
+{
+    ApplicationSettings *settings = app->getSettings();
+
+    settings->beginGroup("Shortcuts");
+
+    for (const QString &actionName : settings->childKeys()) {
+        QAction *action = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
+        const QString shortcutString = settings->value(actionName).toString();
+
+        if (action != Q_NULLPTR) {
+            action->setShortcut(QKeySequence(shortcutString));
+        }
+        else {
+            qWarning() << "Cannot find action" << actionName;
+        }
+    }
+
+    settings->endGroup();
 }
 
 void MainWindow::setupLanguageMenu()
@@ -877,14 +909,18 @@ void MainWindow::newFile()
 }
 
 // One unedited, new blank document
-bool MainWindow::isInInitialState()
+ScintillaNext *MainWindow::getInitialEditor()
 {
     if (editorCount() == 1) {
         ScintillaNext *editor = currentEditor();
-        return !editor->isFile() && editor->isSavedToDisk();
+
+        // If the editor has had ANY modifications, then don't call it an initial editor
+        if (!editor->isFile() && !editor->canUndo() && !editor->canRedo()) {
+            return editor;
+        }
     }
 
-    return false;
+    return Q_NULLPTR;
 }
 
 void MainWindow::openFileList(const QStringList &fileNames)
@@ -894,7 +930,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
     if (fileNames.size() == 0)
         return;
 
-    bool wasInitialState = isInInitialState();
+    ScintillaNext *initialEditor = getInitialEditor();
     const ScintillaNext *mostRecentEditor = Q_NULLPTR;
 
     for (const QString &filePath : fileNames) {
@@ -935,19 +971,9 @@ void MainWindow::openFileList(const QStringList &fileNames)
         dockedEditor->switchToEditor(mostRecentEditor);
     }
 
-    // TODO: reevaluate this now that the MainWindows doesn't deal with buffers any more
-    /* This code breaks things on start up. During initial launch of the application, if a file is
-     * specified via the command line, then the default new file would be closed. But if a buffer is closed
-     * then the DockedEditor doesn't know about it, since focusedDockWidgetChanged is not emitted
-     * leaving the currentEditor pointer pointing to a widget that is set to be deleted. Then during focusIn()
-     * it needs the currentEditor pointer to check if the document has been modified
-     *
-     * if (wasInitialState) {
-     *     QVector<ScintillaBuffer *> buffers = dockedEditor->buffers();
-     *     ScintillaBuffer *bufferToClose = buffers.first();
-     *     app->getBufferManager()->closeBuffer(bufferToClose);
-     * }
-    */
+    if (initialEditor) {
+        initialEditor->close();
+    }
 }
 
 bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
@@ -1044,8 +1070,8 @@ void MainWindow::closeCurrentFile()
 
 void MainWindow::closeFile(ScintillaNext *editor)
 {
-    if (isInInitialState()) {
-        // Don't close the last file
+    // Early out. If we aren't exiting on last tab closed, and it exists, there's no point in continuing
+    if (!app->getSettings()->exitOnLastTabClosed() && getInitialEditor() != Q_NULLPTR) {
         return;
     }
 
@@ -1074,9 +1100,14 @@ void MainWindow::closeFile(ScintillaNext *editor)
         editor->close();
     }
 
-    // If the last document was closed, start with a new one
+    // If the last document was closed, figure out what to do next
     if (editorCount() == 0) {
-        newFile();
+        if (app->getSettings()->exitOnLastTabClosed()) {
+            close();
+        }
+        else {
+            newFile();
+        }
     }
 }
 
@@ -1978,29 +2009,57 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
     // Focus on the correct tab
     dockedEditor->switchToEditor(editor);
 
-    // Create the menu and show it
+    // Create the menu
     QMenu *menu = new QMenu(this);
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
-    menu->addAction(ui->actionClose);
-    menu->addAction(ui->actionCloseAllExceptActive);
-    menu->addAction(ui->actionCloseAllToLeft);
-    menu->addAction(ui->actionCloseAllToRight);
-    menu->addSeparator();
-    menu->addAction(ui->actionSave);
-    menu->addAction(ui->actionSaveAs);
-    menu->addAction(ui->actionRename);
-    menu->addSeparator();
-    menu->addAction(ui->actionReload);
-    menu->addSeparator();
+    // Default actions
+    QStringList actionNames{
+        "Close",
+        "CloseAllExceptActive",
+        "CloseAllToLeft",
+        "CloseAllToRight",
+        "",
+        "Save",
+        "SaveAs",
+        "Rename",
+        "",
+        "Reload",
+        "",
 #ifdef Q_OS_WIN
-    menu->addAction(ui->actionShowInExplorer);
-    menu->addAction(ui->actionOpenCommandPromptHere);
-    menu->addSeparator();
+        "ShowInExplorer",
+        "OpenCommandPromptHere",
+        "",
 #endif
-    menu->addAction(ui->actionCopyFullPath);
-    menu->addAction(ui->actionCopyFileName);
-    menu->addAction(ui->actionCopyFileDirectory);
+        "CopyFullPath",
+        "CopyFileName",
+        "CopyFileDirectory"
+    };
+
+    // If the entry exists in the settings, use that
+    ApplicationSettings *settings = app->getSettings();
+    if (settings->contains("Gui/TabBarContextMenu")) {
+        actionNames = settings->value("Gui/TabBarContextMenu").toStringList();
+    }
+
+    // Populate the menu
+    for (const QString &actionName : actionNames) {
+        if (actionName.isEmpty()) {
+            menu->addSeparator();
+        }
+        else {
+            QAction *a = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
+
+            if (a != Q_NULLPTR) {
+                menu->addAction(a);
+            }
+            else {
+                qWarning() << "Cannot locate menu named" << actionName;
+            }
+        }
+    }
+
+    // Show it
     menu->popup(QCursor::pos());
 }
 
