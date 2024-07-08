@@ -172,8 +172,8 @@ void EditorInfoStatusBar::updateEncoding(ScintillaNext *editor)
 
 void EditorInfoStatusBar::updateOverType(ScintillaNext *editor)
 {
-    bool ot = editor->overtype();
-    if (ot) {
+    bool overtype = editor->overtype();
+    if (overtype) {
         //: This is a short abbreviation to indicate characters will be replaced when typing
         overType->setText(tr("OVR"));
     }
