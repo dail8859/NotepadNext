@@ -53,8 +53,8 @@ public slots:
 private slots:
     void itemActivated(QTreeWidgetItem *item, int column);
     void itemExpanded(QTreeWidgetItem *item);
+    void copySearchResultsToClipboard() ;
 
-    void on_pb_copyResults_released();
 
 signals:
     void searchResultActivated(ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning);

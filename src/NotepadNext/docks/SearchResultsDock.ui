@@ -31,7 +31,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QPushButton" name="pb_copyResults">
+     <widget class="QPushButton" name="btnCopyResults">
       <property name="text">
        <string>Copy Results to Clipboard</string>
       </property>

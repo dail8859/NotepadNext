@@ -51,6 +51,7 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
 
     connect(ui->treeWidget, &QTreeWidget::itemActivated, this, &SearchResultsDock::itemActivated);
     connect(ui->treeWidget, &QTreeWidget::itemExpanded, this, &SearchResultsDock::itemExpanded);
+    connect(ui->btnCopyResults, &QPushButton::released,this, &SearchResultsDock::copySearchResultsToClipboard);
 
     connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
         QTreeWidgetItem *item = ui->treeWidget->itemAt(pos);
@@ -212,7 +213,7 @@ void SearchResultsDock::updateSearchStatus()
         currentFile->setText(0, QStringLiteral("%1 (%L2 hits)").arg(currentFilePath).arg(totalFileHitCount));
 }
 
-void SearchResultsDock::on_pb_copyResults_released()
+void SearchResultsDock::copySearchResultsToClipboard()
 {
     QClipboard *clipboard = QGuiApplication::clipboard();
     QString string;
