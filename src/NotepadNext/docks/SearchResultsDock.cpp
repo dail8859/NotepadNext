@@ -215,15 +215,15 @@ void SearchResultsDock::updateSearchStatus()
 
 void SearchResultsDock::copySearchResultsToClipboard()
 {
-    QClipboard *clipboard = QGuiApplication::clipboard();
-    QString string;
-
+    QStringList results;
     QTreeWidgetItemIterator it(ui->treeWidget);
+
     while (*it) {
-        string.append((*it)->text(0) + ' ' + (*it)->text(1) + '\n');
+        const QTreeWidgetItem *item = *it;
+        results.append(QStringLiteral("%1 %2").arg(item->text(0)).arg(item->text(1)));
         ++it;
     }
 
-    clipboard->setText(string) ;
+    QGuiApplication::clipboard()->setText(results.join('\n'));
 }
 
