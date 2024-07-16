@@ -12,7 +12,7 @@ on:
 jobs:
   analyze:
     name: Analyze
-    runs-on: 'ubuntu-20.04'
+    runs-on: 'ubuntu-latest'
     timeout-minutes: 360
     permissions:
       actions: read
@@ -38,8 +38,8 @@ jobs:
         
     - name: Setup
       run: |
-        sudo apt-get -y update
-        sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev gdb build-essential
+        echo "DISTRIBUTION=AppImage" >> "$GITHUB_ENV"
+        sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -51,7 +51,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        qmake "../src/NotepadNext.pro" "DISTRIBUTION=AppImage"
+        qmake ../src/NotepadNext.pro "DISTRIBUTION=$DISTRIBUTION"
         make -j$(nproc)
 
     - name: Perform CodeQL Analysis
