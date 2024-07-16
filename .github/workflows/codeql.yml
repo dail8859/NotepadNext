@@ -51,7 +51,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        qmake ../src/NotepadNext.pro "DISTRIBUTION=$DISTRIBUTION"
+        qmake ../src/NotepadNext.pro "DISTRIBUTION=$DISTRIBUTION" -r -spec linux-g++
         make -j$(nproc)
 
     - name: Perform CodeQL Analysis
