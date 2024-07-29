@@ -594,15 +594,15 @@
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="145"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="331"/>
         <source>Replaced %Ln matches</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Ersatte %Ln träff</numerusform>
+            <numerusform>Ersatte %Ln träffar</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="229"/>
         <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
-        <translation type="unfinished"></translation>
+        <translation>Slutet på dokumentet har nåtts. Hittade 1:a förekomsten från toppen.</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="240"/>
@@ -622,9 +622,9 @@
     <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="342"/>
         <source>Found %Ln matches</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Hittade %Ln träff</numerusform>
+            <numerusform>Hittade %Ln träffar</numerusform>
         </translation>
     </message>
     <message>
@@ -681,23 +681,23 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="100"/>
         <source>Property</source>
-        <translation type="unfinished"></translation>
+        <translation>Egenskap</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="105"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="110"/>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="151"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Beskrivning</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="115"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Värde</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="123"/>
@@ -707,7 +707,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="146"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="159"/>
@@ -1386,222 +1386,222 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1172"/>
         <source>Next Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Nästa flik</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1175"/>
         <source>Ctrl+Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Tab</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1183"/>
         <source>Previous Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Föregående flik</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1186"/>
         <source>Ctrl+Shift+Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+Tab</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1194"/>
         <source>Fold Level 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Komprimera nivå 1</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1197"/>
         <source>Alt+1</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+1</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1202"/>
         <source>Fold Level 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Komprimera nivå 2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1205"/>
         <source>Alt+2</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1210"/>
         <source>Fold Level 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Komprimera nivå 3</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1213"/>
         <source>Alt+3</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+3</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1218"/>
         <source>Fold Level 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Komprimera nivå 4</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1221"/>
         <source>Alt+4</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+4</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1226"/>
         <source>Unfold Level 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Expandera nivå 1</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1229"/>
         <source>Alt+Shift+1</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Shift+1</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1234"/>
         <source>Unfold Level 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Expandera nivå 2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1237"/>
         <source>Alt+Shift+2</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Shift+2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1242"/>
         <source>Unfold Level 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Expandera nivå 3</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1245"/>
         <source>Alt+Shift+3</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Shift+3</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1250"/>
         <source>Unfold Level 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Expandera nivå 4</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1253"/>
         <source>Alt+Shift+4</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Shift+4</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1258"/>
         <source>Fold All</source>
-        <translation type="unfinished"></translation>
+        <translation>Komprimera alla</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1261"/>
         <source>Alt+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+0</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1266"/>
         <source>Unfold All</source>
-        <translation type="unfinished"></translation>
+        <translation>Expandera alla</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1269"/>
         <source>Alt+Shift+0</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Shift+0</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1274"/>
         <source>Fold Level 5</source>
-        <translation type="unfinished"></translation>
+        <translation>Komprimera nivå 5</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1277"/>
         <source>Alt+5</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+5</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1282"/>
         <source>Fold Level 6</source>
-        <translation type="unfinished"></translation>
+        <translation>Komprimera nivå 6</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1285"/>
         <source>Alt+6</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+6</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1290"/>
         <source>Fold Level 7</source>
-        <translation type="unfinished"></translation>
+        <translation>Komprimera nivå 7</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1293"/>
         <source>Alt+7</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+7</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1298"/>
         <source>Fold Level 8</source>
-        <translation type="unfinished"></translation>
+        <translation>Komprimera nivå 8</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1301"/>
         <source>Alt+8</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+8</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1306"/>
         <source>Fold Level 9</source>
-        <translation type="unfinished"></translation>
+        <translation>Komprimera nivå 9</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1309"/>
         <source>Alt+9</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+9</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1314"/>
         <source>Unfold Level 5</source>
-        <translation type="unfinished"></translation>
+        <translation>Expandera nivå 5</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1317"/>
         <source>Alt+Shift+5</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Shift+5</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1322"/>
         <source>Unfold Level 6</source>
-        <translation type="unfinished"></translation>
+        <translation>Expandera nivå 6</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1325"/>
         <source>Alt+Shift+6</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Shift+6</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1330"/>
         <source>Unfold Level 7</source>
-        <translation type="unfinished"></translation>
+        <translation>Expandera nivå 7</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1333"/>
         <source>Alt+Shift+7</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Shift+7</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1338"/>
         <source>Unfold Level 8</source>
-        <translation type="unfinished"></translation>
+        <translation>Expandera nivå 8</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1341"/>
         <source>Alt+Shift+8</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Shift+8</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1346"/>
         <source>Unfold Level 9</source>
-        <translation type="unfinished"></translation>
+        <translation>Expandera nivå 9</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1349"/>
         <source>Alt+Shift+9</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Shift+9</translation>
     </message>
     <message>
         <source>Alt+C</source>
@@ -1650,63 +1650,63 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1107"/>
         <source>Copy URL</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera URL</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1112"/>
         <source>Remove Empty Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort tomma rader</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1121"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1124"/>
         <source>Show in Explorer</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa i filhanteraren</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1133"/>
         <source>Open Command Prompt Here</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna kommandotolken här</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1138"/>
         <source>Toggle Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Bokmärke på/av</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1141"/>
         <source>Ctrl+F2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1146"/>
         <source>Next Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Nästa bokmärke</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1149"/>
         <source>F2</source>
-        <translation type="unfinished">F2</translation>
+        <translation>F2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1154"/>
         <source>Previous Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Föregående bokmärke</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1157"/>
         <source>Shift+F2</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+F2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1162"/>
         <source>Clear Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort bokmärken</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1167"/>
         <source>Invert Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Invertera bokmärken</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="740"/>
@@ -1732,17 +1732,17 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="185"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Bokmärken</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="232"/>
         <source>Fold Level</source>
-        <translation type="unfinished">Radbrytningsnivå</translation>
+        <translation>Komprimeringsnivå</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="246"/>
         <source>Unfold Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Expansionsnivå</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="752"/>
@@ -2004,7 +2004,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1470"/>
         <source>Administrator</source>
-        <translation type="unfinished"></translation>
+        <translation>Administratör</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1718"/>
@@ -2055,7 +2055,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1724"/>
         <source>Zoom: %1%</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom: %1%</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1864"/>
@@ -2077,67 +2077,67 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="22"/>
         <source>Show menu bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa menyfält</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="29"/>
         <source>Show toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa verktygsfält</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="36"/>
         <source>Show status bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa statusfält</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="43"/>
         <source>Restore previous session</source>
-        <translation type="unfinished"></translation>
+        <translation>Återställ föregående session</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="62"/>
         <source>Temporary files</source>
-        <translation type="unfinished"></translation>
+        <translation>Temporära filer</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="92"/>
         <source>Translation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Översättning:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="101"/>
         <source>Exit on last tab closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Avsluta när sista fliken stängs</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="110"/>
         <source>Default Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardteckensnitt</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="116"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Teckensnitt</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="126"/>
         <source>Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Teckenstorlek</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="133"/>
         <source>pt</source>
-        <translation type="unfinished"></translation>
+        <translation>pt</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="179"/>
         <source>TextLabel</source>
-        <translation type="unfinished">TextEtikett</translation>
+        <translation>TextEtikett</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="191"/>
         <source>An application restart is required to apply certain settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>En programomstart krävs för att tillämpa vissa inställningar.</translation>
     </message>
     <message>
         <source>Menu Bar</source>
@@ -2167,7 +2167,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
         <source>Combine search results</source>
-        <translation type="unfinished"></translation>
+        <translation>Kombinera sökresultat</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="52"/>
@@ -2182,7 +2182,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="120"/>
         <source>&lt;System Default&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Systemstandard&gt;</translation>
     </message>
 </context>
 <context>
@@ -2200,7 +2200,7 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="228"/>
         <source>Minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimera</translation>
     </message>
     <message>
         <source>Close Active Tab</source>
@@ -2266,7 +2266,7 @@
     <message>
         <location filename="../src/NotepadNext/QuickFindWidget.cpp" line="238"/>
         <source>%L1/%L2</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1/%L2</translation>
     </message>
 </context>
 <context>
@@ -2330,42 +2330,42 @@
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="384"/>
         <source>Detach</source>
-        <translation type="unfinished">Koppla från</translation>
+        <translation>Koppla ifrån</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="389"/>
         <source>Pin To...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fäst vid...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="391"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Överkant</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="392"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänsterkant</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="393"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Högerkant</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="394"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Underkant</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="396"/>
         <source>Unpin (Dock)</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösgör (Docka)</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="398"/>
         <source>Close</source>
-        <translation type="unfinished">Stäng</translation>
+        <translation>Stäng</translation>
     </message>
 </context>
 <context>
@@ -2378,57 +2378,57 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="749"/>
         <source>Detach</source>
-        <translation type="unfinished">Koppla från</translation>
+        <translation>Koppla från</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="754"/>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="811"/>
         <source>Unpin (Dock)</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösgör (Docka)</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="754"/>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="816"/>
         <source>Pin Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Fäst grupp</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="760"/>
         <source>Pin Group To...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fäst grupp vid...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="762"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Överkant</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="763"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänsterkant</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="764"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Högerkant</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="765"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Underkant</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="773"/>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="828"/>
         <source>Minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimera</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="778"/>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="828"/>
         <source>Close</source>
-        <translation type="unfinished">Stäng</translation>
+        <translation>Stäng</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="778"/>
@@ -2444,12 +2444,12 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="820"/>
         <source>Pin Active Tab (Press Ctrl to Pin Group)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fäst aktiv flik (Tryck Ctrl för att fäst grupp)</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="833"/>
         <source>Close Active Tab</source>
-        <translation type="unfinished">Stäng aktiv flik</translation>
+        <translation>Stäng aktiv flik</translation>
     </message>
 </context>
 <context>
@@ -2470,32 +2470,32 @@
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="548"/>
         <source>Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>Fäst</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="552"/>
         <source>Pin To...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fäst vid...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="554"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Överkant</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänsterkant</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="556"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Högerkant</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="557"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Underkant</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="562"/>
