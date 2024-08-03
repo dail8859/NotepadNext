@@ -696,7 +696,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.cpp" line="146"/>
         <source>Position %1 Style %2</source>
-        <translation>Позиція %1 Код стилю %2</translation>
+        <translation>Позиція: %1 Стиль: %2</translation>
     </message>
 </context>
 <context>
@@ -742,12 +742,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="125"/>
         <source>Move Selected Macro Step Up</source>
-        <translation>Перемістити макрос вверх</translation>
+        <translation>Перемістити операцію вгору</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="140"/>
         <source>Move Selected Macro Step Down</source>
-        <translation>Перемістити макрос вниз</translation>
+        <translation>Перемістити операцію вниз</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="176"/>
@@ -2128,7 +2128,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="120"/>
         <source>&lt;System Default&gt;</source>
-        <translation>&lt;Система&gt;</translation>
+        <translation>&lt;Мова системи&gt;</translation>
     </message>
 </context>
 <context>
