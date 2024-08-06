@@ -19,8 +19,6 @@
 #include "MacroManager.h"
 #include "ApplicationSettings.h"
 
-#include <QCoreApplication>
-
 MacroManager::MacroManager(QObject *parent) :
     QObject{parent}
 {
@@ -35,8 +33,11 @@ MacroManager::MacroManager(QObject *parent) :
 #endif
 
     loadSettings();
+}
 
-    connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &MacroManager::saveSettings);
+MacroManager::~MacroManager()
+{
+    saveSettings();
 }
 
 void MacroManager::startRecording(ScintillaNext *editor)
