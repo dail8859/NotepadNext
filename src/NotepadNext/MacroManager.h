@@ -30,6 +30,7 @@ class MacroManager : public QObject
 
 public:
     explicit MacroManager(QObject *parent = nullptr);
+    virtual ~MacroManager();
 
     bool isRecording() const;
     QVector<Macro *> &availableMacros() { return macros; };
