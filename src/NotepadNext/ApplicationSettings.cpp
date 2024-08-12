@@ -55,7 +55,7 @@ CREATE_SETTING(App, RestorePreviousSession, restorePreviousSession, bool, false)
 CREATE_SETTING(App, RestoreUnsavedFiles, restoreUnsavedFiles, bool, false)
 CREATE_SETTING(App, RestoreTempFiles, restoreTempFiles, bool, false)
 
-CREATE_SETTING(App, Translation, translation, QString, "")
+CREATE_SETTING(App, Translation, translation, QString, QStringLiteral(""))
 
 CREATE_SETTING(Editor, ShowWhitespace, showWhitespace, bool, false);
 CREATE_SETTING(Editor, ShowEndOfLine, showEndOfLine, bool, false);
@@ -64,3 +64,4 @@ CREATE_SETTING(Editor, ShowIndentGuide, showIndentGuide, bool, true);
 CREATE_SETTING(Editor, WordWrap, wordWrap, bool, false)
 CREATE_SETTING(Editor, FontName, fontName, QString, QStringLiteral("Courier New"))
 CREATE_SETTING(Editor, FontSize, fontSize, int, []() { return qApp->font().pointSize() + 2; })
+CREATE_SETTING(Editor, AdditionalWordChars, additionalWordChars, QString, QStringLiteral(""));

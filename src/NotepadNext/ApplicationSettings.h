@@ -106,4 +106,5 @@ public:
     DEFINE_SETTING(WordWrap, wordWrap, bool);
     DEFINE_SETTING(FontName, fontName, QString);
     DEFINE_SETTING(FontSize, fontSize, int);
+    DEFINE_SETTING(AdditionalWordChars, additionalWordChars, QString);
 };
