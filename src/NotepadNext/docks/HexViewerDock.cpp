@@ -56,7 +56,9 @@ HexViewerDock::~HexViewerDock()
 
 void HexViewerDock::connectToEditor(ScintillaNext *editor)
 {
-    ui->tblHexView->model()->deleteLater();
+    if (auto model = ui->tblHexView->model()) {
+        model->deleteLater();
+    }
 
     EditorHexViewerTableModel *model = new EditorHexViewerTableModel(this);
     model->setEditor(editor);
