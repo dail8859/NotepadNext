@@ -233,6 +233,8 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setAutomaticFold(SC_AUTOMATICFOLD_SHOW | SC_AUTOMATICFOLD_CLICK | SC_AUTOMATICFOLD_CHANGE);
     editor->markerEnableHighlight(true);
 
+    editor->setCharsDefault();
+    editor->setWordChars(editor->wordChars() + settings->additionalWordChars().toLatin1());
 
     editor->styleSetFore(STYLE_DEFAULT, 0x000000);
     editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
