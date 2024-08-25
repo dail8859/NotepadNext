@@ -222,7 +222,13 @@ void FindReplaceDialog::find()
 
     prepareToPerformSearch();
 
-    Sci_CharacterRange range = finder->findNext();
+    Sci_CharacterRange range;
+    if(!ui->checkBoxBackwardsDirection->isChecked()) {
+        range = finder->findNext();
+    }
+    else{
+         range = finder->findPrev();
+    }
 
     if (ScintillaNext::isRangeValid(range)) {
         if (finder->didLatestSearchWrapAround()) {
