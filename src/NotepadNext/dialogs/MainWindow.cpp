@@ -786,11 +786,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     setupLanguageMenu();
 
-    // Put the style sheet here for now
-    QFile f(":/stylesheets/npp.css");
-    f.open(QFile::ReadOnly);
-    setStyleSheet(f.readAll());
-    f.close();
+    applyStyleSheet();
 
     restoreSettings();
 
@@ -1643,6 +1639,33 @@ void MainWindow::activateEditor(ScintillaNext *editor)
     updateGui(editor);
 
     emit editorActivated(editor);
+}
+
+void MainWindow::applyStyleSheet()
+{
+    qInfo(Q_FUNC_INFO);
+
+    QString sheet;
+    QFile f(":/stylesheets/npp.css");
+    qInfo() << "Loading stylesheet: " << f.fileName();
+
+    f.open(QFile::ReadOnly);
+    sheet = f.readAll();
+    f.close();
+
+    // If there is a "custom.css" file where the ini is located, load it as a style sheet addition
+    QString directoryPath = QFileInfo(app->getSettings()->fileName()).absolutePath();
+    QString fullPath = QDir(directoryPath).filePath("custom.css");
+    if (QFile::exists(fullPath)) {
+        QFile custom(fullPath);
+        qInfo() << "Loading stylesheet: " << custom.fileName();
+
+        custom.open(QFile::ReadOnly);
+        sheet += custom.readAll();
+        custom.close();
+    }
+
+    setStyleSheet(sheet);
 }
 
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
