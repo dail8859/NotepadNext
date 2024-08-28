@@ -93,7 +93,7 @@ void FileListDock::refreshList()
 
     ui->listWidget->clear();
 
-    QList<ScintillaNext*> editors = window->getDockedEditor()->editors();
+    QVector<ScintillaNext*> editors = window->getDockedEditor()->editors();
     ApplicationSettings settings;
 
     if (settings.get(sortByName)) {
