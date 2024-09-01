@@ -178,6 +178,8 @@ public:
 	void styleSetHotSpot(sptr_t style, bool hotspot);
 	void styleSetCheckMonospaced(sptr_t style, bool checkMonospaced);
 	bool styleCheckMonospaced(sptr_t style) const;
+	void styleSetStretch(sptr_t style, sptr_t stretch);
+	sptr_t styleStretch(sptr_t style) const;
 	void styleSetInvisibleRepresentation(sptr_t style, const char * representation);
 	QByteArray styleInvisibleRepresentation(sptr_t style) const;
 	void setElementColour(sptr_t element, sptr_t colourElement);
@@ -212,6 +214,7 @@ public:
 	sptr_t characterCategoryOptimization() const;
 	void beginUndoAction();
 	void endUndoAction();
+	sptr_t undoSequence() const;
 	sptr_t undoActions() const;
 	void setUndoSavePoint(sptr_t action);
 	sptr_t undoSavePoint() const;
@@ -285,6 +288,8 @@ public:
 	sptr_t autoCMaxWidth() const;
 	void autoCSetMaxHeight(sptr_t rowCount);
 	sptr_t autoCMaxHeight() const;
+	void autoCSetStyle(sptr_t style);
+	sptr_t autoCStyle() const;
 	void setIndent(sptr_t indentSize);
 	sptr_t indent() const;
 	void setUseTabs(bool useTabs);
@@ -491,7 +496,9 @@ public:
 	void cancel();
 	void deleteBack();
 	void tab();
+	void lineIndent();
 	void backTab();
+	void lineDedent();
 	void newLine();
 	void formFeed();
 	void vCHome();
@@ -672,6 +679,9 @@ public:
 	void setLayoutThreads(sptr_t threads);
 	sptr_t layoutThreads() const;
 	void copyAllowLine();
+	void cutAllowLine();
+	void setCopySeparator(const char * separator);
+	QByteArray copySeparator() const;
 	sptr_t characterPointer() const;
 	sptr_t rangePointer(sptr_t start, sptr_t lengthRange) const;
 	sptr_t gapPosition() const;

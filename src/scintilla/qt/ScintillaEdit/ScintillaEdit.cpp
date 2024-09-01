@@ -560,6 +560,14 @@ bool ScintillaEdit::styleCheckMonospaced(sptr_t style) const {
     return send(SCI_STYLEGETCHECKMONOSPACED, style, 0);
 }
 
+void ScintillaEdit::styleSetStretch(sptr_t style, sptr_t stretch) {
+    send(SCI_STYLESETSTRETCH, style, stretch);
+}
+
+sptr_t ScintillaEdit::styleStretch(sptr_t style) const {
+    return send(SCI_STYLEGETSTRETCH, style, 0);
+}
+
 void ScintillaEdit::styleSetInvisibleRepresentation(sptr_t style, const char * representation) {
     send(SCI_STYLESETINVISIBLEREPRESENTATION, style, (sptr_t)representation);
 }
@@ -694,6 +702,10 @@ void ScintillaEdit::beginUndoAction() {
 
 void ScintillaEdit::endUndoAction() {
     send(SCI_ENDUNDOACTION, 0, 0);
+}
+
+sptr_t ScintillaEdit::undoSequence() const {
+    return send(SCI_GETUNDOSEQUENCE, 0, 0);
 }
 
 sptr_t ScintillaEdit::undoActions() const {
@@ -986,6 +998,14 @@ void ScintillaEdit::autoCSetMaxHeight(sptr_t rowCount) {
 
 sptr_t ScintillaEdit::autoCMaxHeight() const {
     return send(SCI_AUTOCGETMAXHEIGHT, 0, 0);
+}
+
+void ScintillaEdit::autoCSetStyle(sptr_t style) {
+    send(SCI_AUTOCSETSTYLE, style, 0);
+}
+
+sptr_t ScintillaEdit::autoCStyle() const {
+    return send(SCI_AUTOCGETSTYLE, 0, 0);
 }
 
 void ScintillaEdit::setIndent(sptr_t indentSize) {
@@ -1812,8 +1832,16 @@ void ScintillaEdit::tab() {
     send(SCI_TAB, 0, 0);
 }
 
+void ScintillaEdit::lineIndent() {
+    send(SCI_LINEINDENT, 0, 0);
+}
+
 void ScintillaEdit::backTab() {
     send(SCI_BACKTAB, 0, 0);
+}
+
+void ScintillaEdit::lineDedent() {
+    send(SCI_LINEDEDENT, 0, 0);
 }
 
 void ScintillaEdit::newLine() {
@@ -2534,6 +2562,18 @@ sptr_t ScintillaEdit::layoutThreads() const {
 
 void ScintillaEdit::copyAllowLine() {
     send(SCI_COPYALLOWLINE, 0, 0);
+}
+
+void ScintillaEdit::cutAllowLine() {
+    send(SCI_CUTALLOWLINE, 0, 0);
+}
+
+void ScintillaEdit::setCopySeparator(const char * separator) {
+    send(SCI_SETCOPYSEPARATOR, 0, (sptr_t)separator);
+}
+
+QByteArray ScintillaEdit::copySeparator() const {
+    return TextReturner(SCI_GETCOPYSEPARATOR, 0);
 }
 
 sptr_t ScintillaEdit::characterPointer() const {
