@@ -18,6 +18,8 @@
 
 #include "ApplicationSettings.h"
 
+#include <QApplication>
+#include <QFont>
 
 #define CREATE_SETTING(group, name, lname, type, default) \
 ApplicationSetting<type> name{#group "/" #name, default};\
@@ -51,6 +53,7 @@ CREATE_SETTING(Gui, ShowMenuBar, showMenuBar, bool, true)
 CREATE_SETTING(Gui, ShowToolBar, showToolBar, bool, true)
 CREATE_SETTING(Gui, ShowTabBar, showTabBar, bool, true)
 CREATE_SETTING(Gui, ShowStatusBar, showStatusBar, bool, true)
+CREATE_SETTING(Gui, CenterSearchDialog, centerSearchDialog, bool, true)
 
 CREATE_SETTING(Gui, TabsClosable, tabsClosable, bool, true)
 CREATE_SETTING(Gui, ExitOnLastTabClosed, exitOnLastTabClosed, bool, false)
@@ -61,10 +64,13 @@ CREATE_SETTING(App, RestorePreviousSession, restorePreviousSession, bool, false)
 CREATE_SETTING(App, RestoreUnsavedFiles, restoreUnsavedFiles, bool, false)
 CREATE_SETTING(App, RestoreTempFiles, restoreTempFiles, bool, false)
 
-CREATE_SETTING(App, Translation, translation, QString, "")
+CREATE_SETTING(App, Translation, translation, QString, QStringLiteral(""))
 
 CREATE_SETTING(Editor, ShowWhitespace, showWhitespace, bool, false);
 CREATE_SETTING(Editor, ShowEndOfLine, showEndOfLine, bool, false);
 CREATE_SETTING(Editor, ShowWrapSymbol, showWrapSymbol, bool, false);
 CREATE_SETTING(Editor, ShowIndentGuide, showIndentGuide, bool, true);
 CREATE_SETTING(Editor, WordWrap, wordWrap, bool, false)
+CREATE_SETTING(Editor, FontName, fontName, QString, QStringLiteral("Courier New"))
+CREATE_SETTING(Editor, FontSize, fontSize, int, []() { return qApp->font().pointSize() + 2; })
+CREATE_SETTING(Editor, AdditionalWordChars, additionalWordChars, QString, QStringLiteral(""));

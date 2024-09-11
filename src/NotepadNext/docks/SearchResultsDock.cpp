@@ -25,6 +25,7 @@
 #include <QPointer>
 #include <QMenu>
 #include <QShortcut>
+#include <QClipboard>
 
 enum SearchResultData
 {
@@ -50,6 +51,7 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
 
     connect(ui->treeWidget, &QTreeWidget::itemActivated, this, &SearchResultsDock::itemActivated);
     connect(ui->treeWidget, &QTreeWidget::itemExpanded, this, &SearchResultsDock::itemExpanded);
+    connect(ui->btnCopyResults, &QPushButton::released,this, &SearchResultsDock::copySearchResultsToClipboard);
 
     connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
         QTreeWidgetItem *item = ui->treeWidget->itemAt(pos);
@@ -210,3 +212,18 @@ void SearchResultsDock::updateSearchStatus()
     if (currentFile)
         currentFile->setText(0, QStringLiteral("%1 (%L2 hits)").arg(currentFilePath).arg(totalFileHitCount));
 }
+
+void SearchResultsDock::copySearchResultsToClipboard()
+{
+    QStringList results;
+    QTreeWidgetItemIterator it(ui->treeWidget);
+
+    while (*it) {
+        const QTreeWidgetItem *item = *it;
+        results.append(QStringLiteral("%1 %2").arg(item->text(0)).arg(item->text(1)));
+        ++it;
+    }
+
+    QGuiApplication::clipboard()->setText(results.join('\n'));
+}
+

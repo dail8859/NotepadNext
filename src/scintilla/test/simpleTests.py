@@ -221,6 +221,25 @@ class TestSimple(unittest.TestCase):
 		self.assertEqual(self.ed.CanRedo(), 0)
 		self.assertEqual(self.ed.CanUndo(), 1)
 
+	def testUndoSequence(self):
+		data = b"xy"
+		self.assertEqual(self.ed.UndoSequence, 0)
+		self.ed.InsertText(0, data)
+		self.assertEqual(self.ed.UndoSequence, 0)
+		# Check that actions between BeginUndoAction and EndUndoAction are undone together
+		self.ed.BeginUndoAction()
+		self.assertEqual(self.ed.UndoSequence, 1)
+		self.ed.InsertText(0, data)
+		self.ed.InsertText(1, data)
+		# xxyyxy
+		self.assertEqual(self.ed.Length, 6)
+		self.ed.EndUndoAction()
+		self.assertEqual(self.ed.UndoSequence, 0)
+		self.ed.Undo()
+		# xy as 2 inserts removed
+		self.assertEqual(self.ed.Length, 2)
+		self.assertEqual(self.ed.UndoSequence, 0)
+
 	def testUndoSavePoint(self):
 		data = b"xy"
 		self.assertEqual(self.ed.Modify, 0)
@@ -581,6 +600,19 @@ class TestSimple(unittest.TestCase):
 		self.ed.EOLMode = lineEndType
 		self.assertEqual(self.ed.Contents(), b"a1\na1\nb2")
 
+	def testCutAllowLine(self):
+		lineEndType = self.ed.EOLMode
+		self.ed.EOLMode = self.ed.SC_EOL_LF
+		self.ed.AddText(5, b"a1\nb2")
+		self.ed.SetSel(1,1)
+		self.ed.CutAllowLine()
+		# Clipboard = "a1\n"
+		self.assertEqual(self.ed.CanPaste(), 1)
+		self.ed.SetSel(0, 0)
+		self.ed.Paste()
+		self.ed.EOLMode = lineEndType
+		self.assertEqual(self.ed.Contents(), b"a1\nb2")
+
 	def testDuplicate(self):
 		self.ed.AddText(3, b"1b2")
 		self.ed.SetSel(1,2)
@@ -886,6 +918,82 @@ class TestSimple(unittest.TestCase):
 		self.assertEqual(self.ed.IsRangeWord(0, 5), 1)
 		self.assertEqual(self.ed.IsRangeWord(6, 7), 0)
 		self.assertEqual(self.ed.IsRangeWord(6, 8), 1)
+
+atInsertion = 0
+atDeletion = 1
+actMayCoalesce = 0x100
+
+class TestUndoSaveRestore(unittest.TestCase):
+
+	def setUp(self):
+		self.xite = Xite.xiteFrame
+		self.ed = self.xite.ed
+		self.ed.ClearAll()
+		self.ed.EmptyUndoBuffer()
+		self.data = b"xy"
+
+	def testSave(self):
+		self.ed.InsertText(0, self.data)
+		self.assertEqual(self.ed.Contents(), b"xy")
+		self.ed.SetSavePoint()
+		self.ed.InsertText(0, self.data)
+		self.assertEqual(self.ed.Contents(), b"xyxy")
+		self.ed.DeleteRange(1, 2)
+		self.assertEqual(self.ed.Contents(), b"xy")
+		self.ed.DeleteRange(1, 1)
+		self.assertEqual(self.ed.Contents(), b"x")
+
+		self.assertEqual(self.ed.UndoActions, 4)
+		self.assertEqual(self.ed.UndoCurrent, 4)
+		self.assertEqual(self.ed.UndoSavePoint, 1)
+		self.assertEqual(self.ed.UndoTentative, -1)
+		self.assertEqual(self.ed.GetUndoActionType(0), atInsertion)
+		self.assertEqual(self.ed.GetUndoActionPosition(0), 0)
+		self.assertEqual(bytes(self.ed.GetUndoActionText(0)), self.data)
+		self.assertEqual(self.ed.GetUndoActionType(1), atInsertion)
+		self.assertEqual(self.ed.GetUndoActionPosition(1), 0)
+		self.assertEqual(bytes(self.ed.GetUndoActionText(1)), self.data)
+		self.assertEqual(self.ed.GetUndoActionType(2), atDeletion + actMayCoalesce)
+		self.assertEqual(self.ed.GetUndoActionPosition(2), 1)
+		self.assertEqual(bytes(self.ed.GetUndoActionText(2)), b'yx')
+		self.assertEqual(self.ed.GetUndoActionType(3), atDeletion + actMayCoalesce)
+		self.assertEqual(self.ed.GetUndoActionPosition(3), 1)
+		self.assertEqual(bytes(self.ed.GetUndoActionText(3)), b'y')
+
+	def testRestore(self):
+		self.ed.InsertText(0, self.data)
+		self.assertEqual(self.ed.Contents(), b"xy")
+		self.ed.EmptyUndoBuffer()
+
+		self.ed.PushUndoActionType(atInsertion, 0)
+		self.ed.ChangeLastUndoActionText(2, b'xy')
+		self.ed.PushUndoActionType(atInsertion, 0)
+		self.ed.ChangeLastUndoActionText(2, b'xy')
+		self.ed.PushUndoActionType(atDeletion + actMayCoalesce, 1)
+		self.ed.ChangeLastUndoActionText(2, b'yx')
+		self.ed.PushUndoActionType(atDeletion + actMayCoalesce, 1)
+		self.ed.ChangeLastUndoActionText(1, b'y')
+		
+		self.assertEqual(self.ed.UndoActions, 4)
+		self.ed.SetUndoCurrent(1)
+		self.ed.SetUndoSavePoint(1)
+		self.ed.SetUndoTentative(-1)
+		
+		self.ed.Undo()
+		self.assertEqual(self.ed.UndoCurrent, 0)
+		self.assertEqual(self.ed.Contents(), b"")
+		self.ed.Redo()
+		self.assertEqual(self.ed.UndoCurrent, 1)
+		self.assertEqual(self.ed.Contents(), b"xy")
+		self.ed.Redo()
+		self.assertEqual(self.ed.UndoCurrent, 2)
+		self.assertEqual(self.ed.Contents(), b"xyxy")
+		self.ed.Redo()	# Does 2 actions due to mayCoalesce
+		self.assertEqual(self.ed.UndoCurrent, 4)
+		self.assertEqual(self.ed.Contents(), b"x")
+
+		# No more redo actions
+		self.assertEqual(self.ed.CanRedo(), 0)
 
 class TestChangeHistory(unittest.TestCase):
 
@@ -1792,6 +1900,7 @@ class TestMultiSelection(unittest.TestCase):
 		self.ed.ClearAll()
 		self.ed.EmptyUndoBuffer()
 		# 3 lines of 3 characters
+		self.ed.EOLMode = self.ed.SC_EOL_CRLF
 		t = b"xxx\nxxx\nxxx"
 		self.ed.AddText(len(t), t)
 
@@ -1869,6 +1978,65 @@ class TestMultiSelection(unittest.TestCase):
 		self.assertEqual(self.ed.GetSelectionNCaret(1), 6)
 		self.assertEqual(self.ed.GetSelectionNAnchor(2), 9)
 		self.assertEqual(self.ed.GetSelectionNCaret(2), 10)
+
+	def testRectangularCopy(self):
+		self.ed.RectangularSelectionAnchor = 1
+		self.assertEqual(self.ed.RectangularSelectionAnchor, 1)
+		self.ed.RectangularSelectionCaret = 10
+		self.assertEqual(self.ed.RectangularSelectionCaret, 10)
+		self.assertEqual(self.ed.Selections, 3)
+		self.ed.Copy()
+		self.ed.ClearAll()
+		self.ed.Paste()
+		# Single character slice with current line ends
+		result = b"x\r\nx\r\nx"
+		self.assertEqual(self.ed.Contents(), result)
+
+	def testMultipleCopy(self):
+		self.ed.SetContents(b"abc\n123\nxyz")
+		self.ed.SetSelection(4, 5)	# 1
+		self.ed.AddSelection(1, 3) 	# bc
+		self.ed.AddSelection(10, 11)	# z
+		self.ed.Copy()
+		# 1,bc,z
+		self.ed.ClearAll()
+		self.ed.Paste()
+		self.assertEqual(self.ed.Contents(), b"1bcz")
+
+	def testCopySeparator(self):
+		self.assertEqual(self.ed.GetCopySeparator(), b"")
+		self.ed.CopySeparator = b"_"
+		self.assertEqual(self.ed.GetCopySeparator(), b"_")
+		self.ed.SetContents(b"abc\n123\nxyz")
+		self.ed.SetSelection(4, 5)	# 1
+		self.ed.AddSelection(1, 3) 	# bc
+		self.ed.AddSelection(10, 11)	# z
+		self.ed.Copy()
+		self.ed.ClearAll()
+		self.ed.Paste()
+		# 1,bc,z separated by _
+		self.assertEqual(self.ed.Contents(), b"1_bc_z")
+		self.ed.CopySeparator = b""
+
+	def testPasteConversion(self):
+		# Test that line ends are converted to current mode
+		self.ed.SetSelection(0, 11)
+		self.ed.Copy()
+
+		self.ed.ClearAll()
+		self.ed.EOLMode = self.ed.SC_EOL_CRLF
+		self.ed.Paste()
+		self.assertEqual(self.ed.Contents(), b"xxx\r\nxxx\r\nxxx")
+
+		self.ed.ClearAll()
+		self.ed.EOLMode = self.ed.SC_EOL_CR
+		self.ed.Paste()
+		self.assertEqual(self.ed.Contents(), b"xxx\rxxx\rxxx")
+
+		self.ed.ClearAll()
+		self.ed.EOLMode = self.ed.SC_EOL_LF
+		self.ed.Paste()
+		self.assertEqual(self.ed.Contents(), b"xxx\nxxx\nxxx")
 
 	def testVirtualSpace(self):
 		self.ed.SetSelection(3, 7)
@@ -3017,6 +3185,10 @@ class TestAutoComplete(unittest.TestCase):
 		self.assertEqual(self.ed.AutoCGetDropRestOfWord(), 1)
 		self.ed.AutoCSetDropRestOfWord(0)
 
+		self.ed.AutoCSetStyle(13)
+		self.assertEqual(self.ed.AutoCGetStyle(), 13)
+		self.ed.AutoCSetStyle(self.ed.STYLE_DEFAULT)
+
 	def testAutoShow(self):
 		self.assertEqual(self.ed.AutoCActive(), 0)
 		self.ed.SetSel(0, 0)
@@ -3050,6 +3222,28 @@ class TestAutoComplete(unittest.TestCase):
 		self.ed.AutoCSelect(0, b"d")
 		self.ed.AutoCComplete()
 		self.assertEqual(self.ed.Contents(), b"defnxxx\n")
+
+		self.assertEqual(self.ed.AutoCActive(), 0)
+
+	def testAutoSelectFirstItem(self):
+		self.assertEqual(self.ed.AutoCActive(), 0)
+
+		self.ed.AutoCSetOrder(self.ed.SC_ORDER_CUSTOM)
+
+		# without SC_AUTOCOMPLETE_SELECT_FIRST_ITEM option
+		self.ed.SetSel(3, 3)
+		self.ed.AutoCShow(3, b"aaa1 bbb1 xxx1")
+		# automatically selects the item with the entered prefix xxx
+		self.ed.AutoCComplete()
+		self.assertEqual(self.ed.Contents(), b"xxx1\n")
+
+		# with SC_AUTOCOMPLETE_SELECT_FIRST_ITEM option
+		self.ed.AutoCSetOptions(2, 0)
+		self.ed.SetSel(3, 3)
+		self.ed.AutoCShow(3, b"aaa1 bbb1 xxx1")
+		# selects the first item regardless of the entered prefix and replaces the entered xxx
+		self.ed.AutoCComplete()
+		self.assertEqual(self.ed.Contents(), b"aaa11\n")
 
 		self.assertEqual(self.ed.AutoCActive(), 0)
 

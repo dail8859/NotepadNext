@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>294</width>
-    <height>64</height>
+    <height>67</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -19,20 +19,24 @@
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <property name="leftMargin">
-    <number>6</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="topMargin">
-    <number>6</number>
-   </property>
-   <property name="rightMargin">
     <number>6</number>
    </property>
    <property name="bottomMargin">
     <number>6</number>
    </property>
-   <item row="1" column="0">
+   <item>
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="placeholderText">
+      <string>Find...</string>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QToolButton" name="buttonMatchCase">
@@ -89,17 +93,23 @@
        </property>
       </spacer>
      </item>
+     <item>
+      <widget class="QLabel" name="lblInfo">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string notr="true">Placeholder</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::PlainText</enum>
+       </property>
+       <property name="textInteractionFlags">
+        <set>Qt::NoTextInteraction</set>
+       </property>
+      </widget>
+     </item>
     </layout>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLineEdit" name="lineEdit">
-     <property name="placeholderText">
-      <string>Find...</string>
-     </property>
-     <property name="clearButtonEnabled">
-      <bool>true</bool>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>

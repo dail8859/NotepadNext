@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <functional>
+
 #include <QObject>
 #include <QSettings>
 #include <QString>
@@ -32,14 +34,22 @@ public:
     ApplicationSetting(const char * const key, T defaultValue = T())
         : mKey(key)
         , mDefault(defaultValue)
+        , mCallable(Q_NULLPTR)
     {}
 
-    inline T getDefault() const { return mDefault; }
+    ApplicationSetting(const char * const key, std::function<T()> callable)
+        : mKey(key)
+        , mDefault(T())
+        , mCallable(callable)
+    {}
+
+    inline T getDefault() const { return mCallable ? mCallable() : mDefault ; }
     inline const char * const key() const { return mKey; }
 
 protected:
     const char * const mKey;
     const T mDefault;
+    std::function<T()> mCallable;
 };
 
 template<typename T>
@@ -104,6 +114,7 @@ public:
     DEFINE_SETTING(ShowToolBar, showToolBar, bool)
     DEFINE_SETTING(ShowTabBar, showTabBar, bool)
     DEFINE_SETTING(ShowStatusBar, showStatusBar, bool)
+    DEFINE_SETTING(CenterSearchDialog, centerSearchDialog, bool)
 
     DEFINE_SETTING(TabsClosable, tabsClosable, bool)
     DEFINE_SETTING(ExitOnLastTabClosed, exitOnLastTabClosed, bool)
@@ -121,4 +132,7 @@ public:
     DEFINE_SETTING(ShowWrapSymbol, showWrapSymbol, bool)
     DEFINE_SETTING(ShowIndentGuide, showIndentGuide, bool)
     DEFINE_SETTING(WordWrap, wordWrap, bool);
+    DEFINE_SETTING(FontName, fontName, QString);
+    DEFINE_SETTING(FontSize, fontSize, int);
+    DEFINE_SETTING(AdditionalWordChars, additionalWordChars, QString);
 };

@@ -1378,6 +1378,20 @@
     <string>No Recent Sessions</string>
    </property>
   </action>
+  <action name="actionToggleOverType">
+   <property name="text">
+    <string>Toggle Overtype</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle Overtype</string>
+   </property>
+   <property name="shortcut">
+    <string>Ins</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

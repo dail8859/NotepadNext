@@ -655,6 +655,14 @@ bool ScintillaCall::StyleGetCheckMonospaced(int style) {
 	return Call(Message::StyleGetCheckMonospaced, style);
 }
 
+void ScintillaCall::StyleSetStretch(int style, Scintilla::FontStretch stretch) {
+	Call(Message::StyleSetStretch, style, static_cast<intptr_t>(stretch));
+}
+
+FontStretch ScintillaCall::StyleGetStretch(int style) {
+	return static_cast<Scintilla::FontStretch>(Call(Message::StyleGetStretch, style));
+}
+
 void ScintillaCall::StyleSetInvisibleRepresentation(int style, const char *representation) {
 	CallString(Message::StyleSetInvisibleRepresentation, style, representation);
 }
@@ -797,6 +805,70 @@ void ScintillaCall::BeginUndoAction() {
 
 void ScintillaCall::EndUndoAction() {
 	Call(Message::EndUndoAction);
+}
+
+int ScintillaCall::UndoSequence() {
+	return static_cast<int>(Call(Message::GetUndoSequence));
+}
+
+int ScintillaCall::UndoActions() {
+	return static_cast<int>(Call(Message::GetUndoActions));
+}
+
+void ScintillaCall::SetUndoSavePoint(int action) {
+	Call(Message::SetUndoSavePoint, action);
+}
+
+int ScintillaCall::UndoSavePoint() {
+	return static_cast<int>(Call(Message::GetUndoSavePoint));
+}
+
+void ScintillaCall::SetUndoDetach(int action) {
+	Call(Message::SetUndoDetach, action);
+}
+
+int ScintillaCall::UndoDetach() {
+	return static_cast<int>(Call(Message::GetUndoDetach));
+}
+
+void ScintillaCall::SetUndoTentative(int action) {
+	Call(Message::SetUndoTentative, action);
+}
+
+int ScintillaCall::UndoTentative() {
+	return static_cast<int>(Call(Message::GetUndoTentative));
+}
+
+void ScintillaCall::SetUndoCurrent(int action) {
+	Call(Message::SetUndoCurrent, action);
+}
+
+int ScintillaCall::UndoCurrent() {
+	return static_cast<int>(Call(Message::GetUndoCurrent));
+}
+
+void ScintillaCall::PushUndoActionType(int type, Position pos) {
+	Call(Message::PushUndoActionType, type, pos);
+}
+
+void ScintillaCall::ChangeLastUndoActionText(Position length, const char *text) {
+	CallString(Message::ChangeLastUndoActionText, length, text);
+}
+
+int ScintillaCall::UndoActionType(int action) {
+	return static_cast<int>(Call(Message::GetUndoActionType, action));
+}
+
+Position ScintillaCall::UndoActionPosition(int action) {
+	return Call(Message::GetUndoActionPosition, action);
+}
+
+int ScintillaCall::UndoActionText(int action, char *text) {
+	return static_cast<int>(CallPointer(Message::GetUndoActionText, action, text));
+}
+
+std::string ScintillaCall::UndoActionText(int action) {
+	return CallReturnString(Message::GetUndoActionText, action);
 }
 
 void ScintillaCall::IndicSetStyle(int indicator, Scintilla::IndicatorStyle indicatorStyle) {
@@ -1033,6 +1105,14 @@ void ScintillaCall::AutoCSetMaxHeight(int rowCount) {
 
 int ScintillaCall::AutoCGetMaxHeight() {
 	return static_cast<int>(Call(Message::AutoCGetMaxHeight));
+}
+
+void ScintillaCall::AutoCSetStyle(int style) {
+	Call(Message::AutoCSetStyle, style);
+}
+
+int ScintillaCall::AutoCGetStyle() {
+	return static_cast<int>(Call(Message::AutoCGetStyle));
 }
 
 void ScintillaCall::SetIndent(int indentSize) {
@@ -1907,8 +1987,16 @@ void ScintillaCall::Tab() {
 	Call(Message::Tab);
 }
 
+void ScintillaCall::LineIndent() {
+	Call(Message::LineIndent);
+}
+
 void ScintillaCall::BackTab() {
 	Call(Message::BackTab);
+}
+
+void ScintillaCall::LineDedent() {
+	Call(Message::LineDedent);
 }
 
 void ScintillaCall::NewLine() {
@@ -2649,6 +2737,22 @@ int ScintillaCall::LayoutThreads() {
 
 void ScintillaCall::CopyAllowLine() {
 	Call(Message::CopyAllowLine);
+}
+
+void ScintillaCall::CutAllowLine() {
+	Call(Message::CutAllowLine);
+}
+
+void ScintillaCall::SetCopySeparator(const char *separator) {
+	CallString(Message::SetCopySeparator, 0, separator);
+}
+
+int ScintillaCall::CopySeparator(char *separator) {
+	return static_cast<int>(CallPointer(Message::GetCopySeparator, 0, separator));
+}
+
+std::string ScintillaCall::CopySeparator() {
+	return CallReturnString(Message::GetCopySeparator, 0);
 }
 
 void *ScintillaCall::CharacterPointer() {

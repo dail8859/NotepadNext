@@ -246,7 +246,9 @@ void LanguageInspectorDock::updateKeywordInfo(ScintillaNext *editor)
 
 void LanguageInspectorDock::updateStyleInfo(ScintillaNext *editor)
 {
-    ui->tblStyles->model()->deleteLater();
+    if (auto model = ui->tblStyles->model()) {
+        model->deleteLater();
+    }
     ui->tblStyles->setModel(new LanguageStylesModel(editor));
 
     ui->tblStyles->resizeColumnToContents(0);

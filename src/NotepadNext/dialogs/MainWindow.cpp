@@ -96,6 +96,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     ui->setupUi(this);
 
+    applyCustomShortcuts();
+
     qInfo("setupUi Completed");
 
     connect(this, &MainWindow::aboutToClose, this, &MainWindow::saveSettings);
@@ -300,6 +302,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     connect(ui->actionIncrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->tab(); });
     connect(ui->actionDecrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->backTab(); });
+
+    addAction(ui->actionToggleOverType);
+    connect(ui->actionToggleOverType, &QAction::triggered, this, [=]() {
+        currentEditor()->editToggleOvertype();
+        ui->statusBar->refresh(currentEditor());
+    });
 
     SearchResultsDock *srDock = new SearchResultsDock(this);
     addDockWidget(Qt::BottomDockWidgetArea, srDock);
@@ -779,11 +787,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     setupLanguageMenu();
 
-    // Put the style sheet here for now
-    QFile f(":/stylesheets/npp.css");
-    f.open(QFile::ReadOnly);
-    setStyleSheet(f.readAll());
-    f.close();
+    applyStyleSheet();
 
     restoreSettings();
 
@@ -793,6 +797,27 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::applyCustomShortcuts()
+{
+    ApplicationSettings *settings = app->getSettings();
+
+    settings->beginGroup("Shortcuts");
+
+    for (const QString &actionName : settings->childKeys()) {
+        QAction *action = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
+        const QString shortcutString = settings->value(actionName).toString();
+
+        if (action != Q_NULLPTR) {
+            action->setShortcut(QKeySequence(shortcutString));
+        }
+        else {
+            qWarning() << "Cannot find action" << actionName;
+        }
+    }
+
+    settings->endGroup();
 }
 
 void MainWindow::setupLanguageMenu()
@@ -1662,6 +1687,33 @@ void MainWindow::activateEditor(ScintillaNext *editor)
     emit editorActivated(editor);
 }
 
+void MainWindow::applyStyleSheet()
+{
+    qInfo(Q_FUNC_INFO);
+
+    QString sheet;
+    QFile f(":/stylesheets/npp.css");
+    qInfo() << "Loading stylesheet: " << f.fileName();
+
+    f.open(QFile::ReadOnly);
+    sheet = f.readAll();
+    f.close();
+
+    // If there is a "custom.css" file where the ini is located, load it as a style sheet addition
+    QString directoryPath = QFileInfo(app->getSettings()->fileName()).absolutePath();
+    QString fullPath = QDir(directoryPath).filePath("custom.css");
+    if (QFile::exists(fullPath)) {
+        QFile custom(fullPath);
+        qInfo() << "Loading stylesheet: " << custom.fileName();
+
+        custom.open(QFile::ReadOnly);
+        sheet += custom.readAll();
+        custom.close();
+    }
+
+    setStyleSheet(sheet);
+}
+
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 {
     qInfo(Q_FUNC_INFO);
@@ -2032,25 +2084,25 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
 
     // Default actions
     QStringList actionNames{
-        "actionClose",
-        "actionCloseAllExceptActive",
-        "actionCloseAllToLeft",
-        "actionCloseAllToRight",
+        "Close",
+        "CloseAllExceptActive",
+        "CloseAllToLeft",
+        "CloseAllToRight",
         "",
-        "actionSave",
-        "actionSaveAs",
-        "actionRename",
+        "Save",
+        "SaveAs",
+        "Rename",
         "",
-        "actionReload",
+        "Reload",
         "",
 #ifdef Q_OS_WIN
-        "actionShowInExplorer",
-        "actionOpenCommandPromptHere",
+        "ShowInExplorer",
+        "OpenCommandPromptHere",
         "",
 #endif
-        "actionCopyFullPath",
-        "actionCopyFileName",
-        "actionCopyFileDirectory"
+        "CopyFullPath",
+        "CopyFileName",
+        "CopyFileDirectory"
     };
 
     // If the entry exists in the settings, use that
@@ -2065,7 +2117,7 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
             menu->addSeparator();
         }
         else {
-            QAction *a = findChild<QAction *>(actionName, Qt::FindDirectChildrenOnly);
+            QAction *a = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
 
             if (a != Q_NULLPTR) {
                 menu->addAction(a);
