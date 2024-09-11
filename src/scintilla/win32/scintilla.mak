@@ -42,7 +42,7 @@ CXXNDEBUG=-O2 -MT -DNDEBUG -GL
 NAME=-Fo
 LDFLAGS=-OPT:REF -LTCG -IGNORE:4197 -DEBUG $(SUBSYSTEM) $(CETCOMPAT)
 LDDEBUG=
-LIBS=KERNEL32.lib USER32.lib GDI32.lib IMM32.lib OLE32.lib OLEAUT32.lib
+LIBS=KERNEL32.lib USER32.lib GDI32.lib IMM32.lib OLE32.lib OLEAUT32.lib ADVAPI32.lib
 NOLOGO=-nologo
 
 !IFDEF QUIET
@@ -104,6 +104,7 @@ SRC_OBJS=\
 	$(DIR_O)\RunStyles.obj \
 	$(DIR_O)\Selection.obj \
 	$(DIR_O)\Style.obj \
+	$(DIR_O)\UndoHistory.obj \
 	$(DIR_O)\UniConversion.obj \
 	$(DIR_O)\UniqueString.obj \
 	$(DIR_O)\ViewStyle.obj \

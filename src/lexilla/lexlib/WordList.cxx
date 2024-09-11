@@ -15,6 +15,7 @@
 #include <memory>
 
 #include "WordList.h"
+#include "CharacterSet.h"
 
 using namespace Lexilla;
 
@@ -107,10 +108,15 @@ void WordList::Clear() noexcept {
 	len = 0;
 }
 
-bool WordList::Set(const char *s) {
+bool WordList::Set(const char *s, bool lowerCase) {
 	const size_t lenS = strlen(s) + 1;
 	std::unique_ptr<char[]> listTemp = std::make_unique<char[]>(lenS);
 	memcpy(listTemp.get(), s, lenS);
+	if (lowerCase) {
+		for (size_t i = 0; i < lenS; i++) {
+			listTemp[i] = MakeLowerCase(listTemp[i]);
+		}
+	}
 	size_t lenTemp = 0;
 	std::unique_ptr<char *[]> wordsTemp = ArrayFromWordList(listTemp.get(), lenS - 1, &lenTemp, onlyLineEnds);
 	std::sort(wordsTemp.get(), wordsTemp.get() + lenTemp, cmpWords);
@@ -242,7 +248,7 @@ bool WordList::InListAbbreviated(const char *s, const char marker) const noexcep
 	return false;
 }
 
-/** similar to InListAbbreviated, but word s can be a abridged version of a keyword.
+/** similar to InListAbbreviated, but word s can be an abridged version of a keyword.
 * eg. the keyword is defined as "after.~:". This means the word must have a prefix (begins with) of
 * "after." and suffix (ends with) of ":" to be a keyword, Hence "after.field:" , "after.form.item:" are valid.
 * Similarly "~.is.valid" keyword is suffix only... hence "field.is.valid" , "form.is.valid" are valid.

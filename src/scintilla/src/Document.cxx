@@ -52,6 +52,11 @@
 using namespace Scintilla;
 using namespace Scintilla::Internal;
 
+#if defined(__GNUC__) && !defined(__clang__)
+// False warnings from g++ 14.1 for UTF-8 accumulation code where UTF8MaxBytes allocated.
+#pragma GCC diagnostic ignored "-Wstringop-overflow"
+#endif
+
 LexInterface::LexInterface(Document *pdoc_) noexcept : pdoc(pdoc_), performingStyle(false) {
 }
 
@@ -303,7 +308,7 @@ void Document::TentativeUndo() {
 			//Platform::DebugPrintf("Steps=%d\n", steps);
 			for (int step = 0; step < steps; step++) {
 				const Sci::Line prevLinesTotal = LinesTotal();
-				const Action &action = cb.GetUndoStep();
+				const Action action = cb.GetUndoStep();
 				if (action.at == ActionType::remove) {
 					NotifyModified(DocModification(
 									ModificationFlags::BeforeInsert | ModificationFlags::Undo, action));
@@ -338,7 +343,7 @@ void Document::TentativeUndo() {
 						modFlags |= ModificationFlags::MultilineUndoRedo;
 				}
 				NotifyModified(DocModification(modFlags, action.position, action.lenData,
-											   linesAdded, action.data.get()));
+											   linesAdded, action.data));
 			}
 
 			const bool endSavePoint = cb.IsSavePoint();
@@ -349,6 +354,62 @@ void Document::TentativeUndo() {
 		}
 		enteredModification--;
 	}
+}
+
+int Document::UndoActions() const noexcept {
+	return cb.UndoActions();
+}
+
+void Document::SetUndoSavePoint(int action) noexcept {
+	cb.SetUndoSavePoint(action);
+}
+
+int Document::UndoSavePoint() const noexcept {
+	return cb.UndoSavePoint();
+}
+
+void Document::SetUndoDetach(int action) noexcept {
+	cb.SetUndoDetach(action);
+}
+
+int Document::UndoDetach() const noexcept {
+	return cb.UndoDetach();
+}
+
+void Document::SetUndoTentative(int action) noexcept {
+	cb.SetUndoTentative(action);
+}
+
+int Document::UndoTentative() const noexcept {
+	return cb.UndoTentative();
+}
+
+void Document::SetUndoCurrent(int action) {
+	cb.SetUndoCurrent(action);
+}
+
+int Document::UndoCurrent() const noexcept {
+	return cb.UndoCurrent();
+}
+
+int Document::UndoActionType(int action) const noexcept {
+	return cb.UndoActionType(action);
+}
+
+Sci::Position Document::UndoActionPosition(int action) const noexcept {
+	return cb.UndoActionPosition(action);
+}
+
+std::string_view Document::UndoActionText(int action) const noexcept {
+	return cb.UndoActionText(action);
+}
+
+void Document::PushUndoActionType(int type, Sci::Position position) {
+	cb.PushUndoActionType(type, position);
+}
+
+void Document::ChangeLastUndoActionText(size_t length, const char *text) {
+	cb.ChangeLastUndoActionText(length, text);
 }
 
 int Document::GetMark(Sci::Line line, bool includeChangeHistory) const {
@@ -1349,7 +1410,7 @@ IDocumentEditable *Document::AsDocumentEditable() noexcept {
 	return static_cast<IDocumentEditable *>(this);
 }
 
-void * SCI_METHOD Document::ConvertToDocument() {
+void *SCI_METHOD Document::ConvertToDocument() {
 	return AsDocumentEditable();
 }
 
@@ -1363,13 +1424,10 @@ Sci::Position Document::Undo() {
 			bool multiLine = false;
 			const int steps = cb.StartUndo();
 			//Platform::DebugPrintf("Steps=%d\n", steps);
-			Sci::Position coalescedRemovePos = -1;
-			Sci::Position coalescedRemoveLen = 0;
-			Sci::Position prevRemoveActionPos = -1;
-			Sci::Position prevRemoveActionLen = 0;
+			Range coalescedRemove;	// Default is empty at 0
 			for (int step = 0; step < steps; step++) {
 				const Sci::Line prevLinesTotal = LinesTotal();
-				const Action &action = cb.GetUndoStep();
+				const Action action = cb.GetUndoStep();
 				if (action.at == ActionType::remove) {
 					NotifyModified(DocModification(
 									ModificationFlags::BeforeInsert | ModificationFlags::Undo, action));
@@ -1377,12 +1435,6 @@ Sci::Position Document::Undo() {
 					DocModification dm(ModificationFlags::Container | ModificationFlags::Undo);
 					dm.token = action.position;
 					NotifyModified(dm);
-					if (!action.mayCoalesce) {
-						coalescedRemovePos = -1;
-						coalescedRemoveLen = 0;
-						prevRemoveActionPos = -1;
-						prevRemoveActionLen = 0;
-					}
 				} else {
 					NotifyModified(DocModification(
 									ModificationFlags::BeforeDelete | ModificationFlags::Undo, action));
@@ -1398,22 +1450,15 @@ Sci::Position Document::Undo() {
 				if (action.at == ActionType::remove) {
 					newPos += action.lenData;
 					modFlags |= ModificationFlags::InsertText;
-					if ((coalescedRemoveLen > 0) &&
-						(action.position == prevRemoveActionPos || action.position == (prevRemoveActionPos + prevRemoveActionLen))) {
-						coalescedRemoveLen += action.lenData;
-						newPos = coalescedRemovePos + coalescedRemoveLen;
+					if (coalescedRemove.Contains(action.position)) {
+						coalescedRemove.end += action.lenData;
+						newPos = coalescedRemove.end;
 					} else {
-						coalescedRemovePos = action.position;
-						coalescedRemoveLen = action.lenData;
+						coalescedRemove = Range(action.position, action.position + action.lenData);
 					}
-					prevRemoveActionPos = action.position;
-					prevRemoveActionLen = action.lenData;
 				} else if (action.at == ActionType::insert) {
 					modFlags |= ModificationFlags::DeleteText;
-					coalescedRemovePos = -1;
-					coalescedRemoveLen = 0;
-					prevRemoveActionPos = -1;
-					prevRemoveActionLen = 0;
+					coalescedRemove = Range();
 				}
 				if (steps > 1)
 					modFlags |= ModificationFlags::MultiStepUndoRedo;
@@ -1426,7 +1471,7 @@ Sci::Position Document::Undo() {
 						modFlags |= ModificationFlags::MultilineUndoRedo;
 				}
 				NotifyModified(DocModification(modFlags, action.position, action.lenData,
-											   linesAdded, action.data.get()));
+											   linesAdded, action.data));
 			}
 
 			const bool endSavePoint = cb.IsSavePoint();
@@ -1449,7 +1494,7 @@ Sci::Position Document::Redo() {
 			const int steps = cb.StartRedo();
 			for (int step = 0; step < steps; step++) {
 				const Sci::Line prevLinesTotal = LinesTotal();
-				const Action &action = cb.GetRedoStep();
+				const Action action = cb.GetRedoStep();
 				if (action.at == ActionType::insert) {
 					NotifyModified(DocModification(
 									ModificationFlags::BeforeInsert | ModificationFlags::Redo, action));
@@ -1486,7 +1531,7 @@ Sci::Position Document::Redo() {
 				}
 				NotifyModified(
 					DocModification(modFlags, action.position, action.lenData,
-									linesAdded, action.data.get()));
+									linesAdded, action.data));
 			}
 
 			const bool endSavePoint = cb.IsSavePoint();
@@ -1496,6 +1541,10 @@ Sci::Position Document::Redo() {
 		enteredModification--;
 	}
 	return newPos;
+}
+
+int Document::UndoSequenceDepth() const noexcept {
+	return cb.UndoSequenceDepth();
 }
 
 void Document::DelChar(Sci::Position pos) {
@@ -1671,20 +1720,29 @@ void Document::Indent(bool forwards, Sci::Line lineBottom, Sci::Line lineTop) {
 	}
 }
 
+namespace {
+
+constexpr std::string_view EOLForMode(EndOfLine eolMode) noexcept {
+	switch (eolMode) {
+	case EndOfLine::CrLf:
+		return "\r\n";
+	case EndOfLine::Cr:
+		return "\r";
+	default:
+		return "\n";
+	}
+}
+
+}
+
 // Convert line endings for a piece of text to a particular mode.
 // Stop at len or when a NUL is found.
 std::string Document::TransformLineEnds(const char *s, size_t len, EndOfLine eolModeWanted) {
 	std::string dest;
+	const std::string_view eol = EOLForMode(eolModeWanted);
 	for (size_t i = 0; (i < len) && (s[i]); i++) {
 		if (s[i] == '\n' || s[i] == '\r') {
-			if (eolModeWanted == EndOfLine::Cr) {
-				dest.push_back('\r');
-			} else if (eolModeWanted == EndOfLine::Lf) {
-				dest.push_back('\n');
-			} else { // eolModeWanted == EndOfLine::CrLf
-				dest.push_back('\r');
-				dest.push_back('\n');
-			}
+			dest.append(eol);
 			if ((s[i] == '\r') && (i+1 < len) && (s[i+1] == '\n')) {
 				i++;
 			}
@@ -1735,13 +1793,7 @@ void Document::ConvertLineEnds(EndOfLine eolModeSet) {
 }
 
 std::string_view Document::EOLString() const noexcept {
-	if (eolMode == EndOfLine::CrLf) {
-		return "\r\n";
-	} else if (eolMode == EndOfLine::Cr) {
-		return "\r";
-	} else {
-		return "\n";
-	}
+	return EOLForMode(eolMode);
 }
 
 DocumentOption Document::Options() const noexcept {
@@ -2195,7 +2247,7 @@ Sci::Position Document::FindText(Sci::Position minPos, Sci::Position maxPos, con
 						for (int b = 1; b < widthCharBytes; b++) {
 							bytes[b] = cbView.CharAt(posIndexDocument + b);
 						}
-						widthChar = UTF8Classify(reinterpret_cast<const unsigned char *>(bytes), widthCharBytes) & UTF8MaskWidth;
+						widthChar = UTF8Classify(bytes, widthCharBytes) & UTF8MaskWidth;
 						if (!indexSearch) {	// First character
 							widthFirstCharacter = widthChar;
 						}
@@ -2340,15 +2392,15 @@ void Document::AllocateLines(Sci::Line lines) {
 }
 
 void Document::SetDefaultCharClasses(bool includeWordClass) {
-    charClass.SetDefaultCharClasses(includeWordClass);
+	charClass.SetDefaultCharClasses(includeWordClass);
 }
 
 void Document::SetCharClasses(const unsigned char *chars, CharacterClass newCharClass) {
-    charClass.SetCharClasses(chars, newCharClass);
+	charClass.SetCharClasses(chars, newCharClass);
 }
 
 int Document::GetCharsOfClass(CharacterClass characterClass, unsigned char *buffer) const {
-    return charClass.GetCharsOfClass(characterClass, buffer);
+	return charClass.GetCharsOfClass(characterClass, buffer);
 }
 
 void Document::SetCharacterCategoryOptimization(int countCharacters) {
