@@ -20,7 +20,11 @@
 #ifndef PREFERENCESDIALOG_H
 #define PREFERENCESDIALOG_H
 
+#include "ApplicationSettings.h"
+
 #include <QDialog>
+#include <QCheckBox>
+#include <QGroupBox>
 
 namespace Ui {
 class PreferencesDialog;
@@ -33,12 +37,22 @@ class PreferencesDialog : public QDialog
     Q_OBJECT
 
 public:
-    PreferencesDialog(Settings *settings, QWidget *parent = 0);
+    PreferencesDialog(ApplicationSettings *settings, QWidget *parent = 0);
     ~PreferencesDialog();
+
+    void showApplicationRestartRequired() const;
 
 private:
     Ui::PreferencesDialog *ui;
-    Settings *settings;
+    ApplicationSettings *settings;
+
+    template <typename Func1, typename Func2, typename Func3>
+    void MapSettingToCheckBox(QCheckBox *checkBox, Func1 getter, Func2 setter, Func3 notifier) const;
+
+    template <typename Func1, typename Func2, typename Func3>
+    void MapSettingToGroupBox(QGroupBox *groupBox, Func1 getter, Func2 setter, Func3 notifier) const;
+
+    void populateTranslationComboBox();
 };
 
 #endif // PREFERENCESDIALOG_H

@@ -16,6 +16,7 @@
 #include <string_view>
 #include <vector>
 #include <map>
+#include <initializer_list>
 #include <functional>
 
 #include "ILexer.h"
@@ -23,6 +24,7 @@
 #include "SciLexer.h"
 
 #include "StringCopy.h"
+#include "InList.h"
 #include "WordList.h"
 #include "LexAccessor.h"
 #include "StyleContext.h"
@@ -63,7 +65,7 @@ enum class CmdState {
 	Delimiter,
 };
 
-enum class CommandSubstitution {
+enum class CommandSubstitution : int {
 	Backtick,
 	Inside,
 	InsideTrack,
@@ -181,7 +183,7 @@ struct OptionsBash {
 	bool stylingInsideParameter = false;
 	bool stylingInsideHeredoc = false;
 	bool nestedBackticks = true;
-	int commandSubstitution = static_cast<int>(CommandSubstitution::Backtick);
+	CommandSubstitution commandSubstitution = CommandSubstitution::Backtick;
 	std::string specialParameter = BASH_SPECIAL_PARAMETER;
 
 	[[nodiscard]] bool stylingInside(int state) const noexcept {
@@ -333,7 +335,7 @@ public:
 	}
 	bool CountDown(StyleContext &sc, CmdState &cmdState) {
 		Current.Count--;
-		if (Current.Count == 1 && sc.Match(')', ')')) {
+		while (Current.Count > 0 && sc.chNext == Current.Down) {
 			Current.Count--;
 			sc.Forward();
 		}
@@ -379,10 +381,6 @@ public:
 					style = QuoteStyle::Command;
 					sc.ChangeState(SCE_SH_BACKTICKS);
 				}
-			}
-			if (current == CmdState::Body && sc.Match('(', '(') && state == SCE_SH_DEFAULT && Depth == 0) {
-				// optimized to avoid track nested delimiter pairs
-				style = QuoteStyle::Literal;
 			}
 		} else {
 			// scalar has no delimiter pair
@@ -470,7 +468,7 @@ const LexicalClass lexicalClasses[] = {
 	10, "SCE_SH_PARAM", "identifier", "Parameter",
 	11, "SCE_SH_BACKTICKS", "literal string", "Backtick quoted command",
 	12, "SCE_SH_HERE_DELIM", "operator", "Heredoc delimiter",
-	13, "SCE_SH_HERE_Q", "literal string", "Heredoc quoted string",
+	13, "SCE_SH_HERE_Q", "here-doc literal string", "Heredoc quoted string",
 };
 
 }
@@ -485,12 +483,11 @@ class LexerBash final : public DefaultLexer {
 	OptionSetBash osBash;
 	CharacterSet setParamStart;
 	enum { ssIdentifier, ssScalar };
-	SubStyles subStyles;
+	SubStyles subStyles{styleSubable};
 public:
 	LexerBash() :
-		DefaultLexer("bash", SCLEX_BASH, lexicalClasses, ELEMENTS(lexicalClasses)),
-		setParamStart(CharacterSet::setAlphaNum, "_" BASH_SPECIAL_PARAMETER),
-		subStyles(styleSubable, 0x80, 0x40, 0) {
+		DefaultLexer("bash", SCLEX_BASH, lexicalClasses, std::size(lexicalClasses)),
+		setParamStart(CharacterSet::setAlphaNum, "_" BASH_SPECIAL_PARAMETER) {
 		cmdDelimiter.Set("| || |& & && ; ;; ( ) { }");
 		bashStruct.Set("if elif fi while until else then do done esac eval");
 		bashStruct_in.Set("for case select");
@@ -614,6 +611,7 @@ void SCI_METHOD LexerBash::Lex(Sci_PositionU startPos, Sci_Position length, int 
 		bool Quoted = false;		// true if Quote in ('\'','"','`')
 		bool Escaped = false;		// backslash in delimiter, common in configure script
 		bool Indent = false;		// indented delimiter (for <<-)
+		int BackslashCount = 0;
 		int DelimiterLength = 0;	// strlen(Delimiter)
 		char Delimiter[HERE_DELIM_MAX]{};	// the Delimiter
 		HereDocCls() noexcept = default;
@@ -626,7 +624,7 @@ void SCI_METHOD LexerBash::Lex(Sci_PositionU startPos, Sci_Position length, int 
 
 	QuoteStackCls QuoteStack(setParamStart);
 	QuoteStack.nestedBackticks = options.nestedBackticks;
-	QuoteStack.commandSubstitution = static_cast<CommandSubstitution>(options.commandSubstitution);
+	QuoteStack.commandSubstitution = options.commandSubstitution;
 
 	const WordClassifier &classifierIdentifiers = subStyles.Classifier(SCE_SH_IDENTIFIER);
 	const WordClassifier &classifierScalars = subStyles.Classifier(SCE_SH_SCALAR);
@@ -834,6 +832,7 @@ void SCI_METHOD LexerBash::Lex(Sci_PositionU startPos, Sci_Position length, int 
 					HereDoc.Quote = sc.chNext;
 					HereDoc.Quoted = false;
 					HereDoc.Escaped = false;
+					HereDoc.BackslashCount = 0;
 					HereDoc.DelimiterLength = 0;
 					HereDoc.Delimiter[HereDoc.DelimiterLength] = '\0';
 					if (sc.chNext == '\'' || sc.chNext == '\"') {	// a quoted here-doc delimiter (' or ")
@@ -861,22 +860,21 @@ void SCI_METHOD LexerBash::Lex(Sci_PositionU startPos, Sci_Position length, int 
 				} else if (HereDoc.State == 1) { // collect the delimiter
 					// * if single quoted, there's no escape
 					// * if double quoted, there are \\ and \" escapes
-					if ((HereDoc.Quote == '\'' && sc.ch != HereDoc.Quote) ||
-					    (HereDoc.Quoted && sc.ch != HereDoc.Quote && sc.ch != '\\') ||
-					    (HereDoc.Quote != '\'' && sc.chPrev == '\\') ||
-					    (setHereDoc2.Contains(sc.ch))) {
-						HereDoc.Append(sc.ch);
-					} else if (HereDoc.Quoted && sc.ch == HereDoc.Quote) {	// closing quote => end of delimiter
-						sc.ForwardSetState(SCE_SH_DEFAULT);
-					} else if (sc.ch == '\\') {
+					if (HereDoc.Quoted && sc.ch == HereDoc.Quote && (HereDoc.BackslashCount & 1) == 0) { // closing quote => end of delimiter
+						sc.ForwardSetState(SCE_SH_DEFAULT | insideCommand);
+					} else if (sc.ch == '\\' && HereDoc.Quote != '\'') {
 						HereDoc.Escaped = true;
-						if (HereDoc.Quoted && sc.chNext != HereDoc.Quote && sc.chNext != '\\') {
+						HereDoc.BackslashCount += 1;
+						if ((HereDoc.BackslashCount & 1) == 0 || (HereDoc.Quoted && !AnyOf(sc.chNext, '\"', '\\'))) {
 							// in quoted prefixes only \ and the quote eat the escape
 							HereDoc.Append(sc.ch);
 						} else {
 							// skip escape prefix
 						}
-					} else if (!HereDoc.Quoted) {
+					} else if (HereDoc.Quoted || setHereDoc2.Contains(sc.ch) || (sc.ch > 32 && sc.ch < 127 && (HereDoc.BackslashCount & 1) != 0)) {
+						HereDoc.BackslashCount = 0;
+						HereDoc.Append(sc.ch);
+					} else {
 						sc.SetState(SCE_SH_DEFAULT | insideCommand);
 					}
 					if (HereDoc.DelimiterLength >= HERE_DELIM_MAX - 1) {	// force blowup
@@ -939,7 +937,9 @@ void SCI_METHOD LexerBash::Lex(Sci_PositionU startPos, Sci_Position length, int 
 						continue;
 					}
 				} else if (sc.ch == QuoteStack.Current.Up) {
-					QuoteStack.Current.Count++;
+					if (QuoteStack.Current.Style != QuoteStyle::Parameter) {
+						QuoteStack.Current.Count++;
+					}
 				} else {
 					if (QuoteStack.Current.Style == QuoteStyle::String ||
 						QuoteStack.Current.Style == QuoteStyle::HereDoc ||
@@ -1189,10 +1189,17 @@ void SCI_METHOD LexerBash::Fold(Sci_PositionU startPos_, Sci_Position length, in
 
 	LexAccessor styler(pAccess);
 
-	const Sci_Position startPos = startPos_;
+	Sci_Position startPos = startPos_;
 	const Sci_Position endPos = startPos + length;
 	int visibleChars = 0;
 	Sci_Position lineCurrent = styler.GetLine(startPos);
+	// Backtrack to previous line in case need to fix its fold status
+	if (lineCurrent > 0) {
+		lineCurrent--;
+		startPos = styler.LineStart(lineCurrent);
+		initStyle = (startPos > 0) ? styler.StyleIndexAt(startPos - 1) : 0;
+	}
+
 	int levelPrev = styler.LevelAt(lineCurrent) & SC_FOLDLEVELNUMBERMASK;
 	int levelCurrent = levelPrev;
 	char chNext = styler[startPos];
@@ -1217,28 +1224,32 @@ void SCI_METHOD LexerBash::Fold(Sci_PositionU startPos_, Sci_Position length, in
 					 && !IsCommentLine(lineCurrent + 1, styler))
 				levelCurrent--;
 		}
-		if (style == SCE_SH_WORD) {
+
+		switch (style) {
+		case SCE_SH_WORD:
 			if ((wordlen + 1) < sizeof(word))
 				word[wordlen++] = ch;
 			if (styleNext != style) {
 				word[wordlen] = '\0';
 				wordlen = 0;
-				if (strcmp(word, "if") == 0 || strcmp(word, "case") == 0 || strcmp(word, "do") == 0) {
+				if (InList(word, {"if", "case", "do"})) {
 					levelCurrent++;
-				} else if (strcmp(word, "fi") == 0 || strcmp(word, "esac") == 0 || strcmp(word, "done") == 0) {
+				} else if (InList(word, {"fi", "esac", "done"})) {
 					levelCurrent--;
 				}
 			}
-		}
-		if (style == SCE_SH_OPERATOR) {
+			break;
+
+		case SCE_SH_OPERATOR:
 			if (ch == '{') {
 				levelCurrent++;
 			} else if (ch == '}') {
 				levelCurrent--;
 			}
-		}
+			break;
+
 		// Here Document folding
-		if (style == SCE_SH_HERE_DELIM) {
+		case SCE_SH_HERE_DELIM:
 			if (stylePrev == SCE_SH_HERE_Q) {
 				levelCurrent--;
 			} else if (stylePrev != SCE_SH_HERE_DELIM) {
@@ -1248,9 +1259,14 @@ void SCI_METHOD LexerBash::Fold(Sci_PositionU startPos_, Sci_Position length, in
 					}
 				}
 			}
-		} else if (style == SCE_SH_HERE_Q && styleNext == SCE_SH_DEFAULT) {
-			levelCurrent--;
+			break;
+		case SCE_SH_HERE_Q:
+			if (styleNext == SCE_SH_DEFAULT) {
+				levelCurrent--;
+			}
+			break;
 		}
+
 		if (atEOL) {
 			int lev = levelPrev;
 			if (visibleChars == 0 && options.foldCompact)
@@ -1272,4 +1288,4 @@ void SCI_METHOD LexerBash::Fold(Sci_PositionU startPos_, Sci_Position length, in
 	styler.SetLevel(lineCurrent, levelPrev | flagsNext);
 }
 
-LexerModule lmBash(SCLEX_BASH, LexerBash::LexerFactoryBash, "bash", bashWordListDesc);
+extern const LexerModule lmBash(SCLEX_BASH, LexerBash::LexerFactoryBash, "bash", bashWordListDesc);

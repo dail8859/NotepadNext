@@ -22,9 +22,6 @@
 
 using namespace Scintilla::Internal;
 
-constexpr int lengthTestArray = 8;
-static const int testArray[lengthTestArray] = {3, 4, 5, 6, 7, 8, 9, 10};
-
 // Test Partitioning.
 
 TEST_CASE("CompileCopying Partitioning") {
@@ -37,13 +34,13 @@ TEST_CASE("CompileCopying Partitioning") {
 		Partitioning<int> s2;
 
 		// Copy constructor
-		Partitioning<int> sa(s);
+		const Partitioning<int> sa(s);
 		// Copy assignment
 		Partitioning<int> sb;
 		sb = s;
 
 		// Move constructor
-		Partitioning<int> sc(std::move(s));
+		const Partitioning<int> sc(std::move(s));
 		// Move assignment
 		Partitioning<int> sd;
 		sd = (std::move(s2));

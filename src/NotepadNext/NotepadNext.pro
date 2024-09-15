@@ -62,6 +62,7 @@ license.files = ../../LICENSE
 license.path = $$OUT_PWD
 
 SOURCES += \
+    ApplicationSettings.cpp \
     ColorPickerDelegate.cpp \
     ComboBoxDelegate.cpp \
     Converter.cpp \
@@ -70,6 +71,7 @@ SOURCES += \
     EditorHexViewerTableModel.cpp \
     EditorManager.cpp \
     EditorPrintPreviewRenderer.cpp \
+    FadingIndicator.cpp \
     FileDialogHelpers.cpp \
     Finder.cpp \
     HtmlConverter.cpp \
@@ -98,8 +100,8 @@ SOURCES += \
     SearchResultsCollector.cpp \
     SelectionTracker.cpp \
     SessionManager.cpp \
-    Settings.cpp \
     SpinBoxDelegate.cpp \
+    TranslationManager.cpp \
     UndoAction.cpp \
     ZoomEventWatcher.cpp \
     decorators/ApplicationDecorator.cpp \
@@ -135,6 +137,7 @@ SOURCES += \
     widgets/StatusLabel.cpp
 
 HEADERS += \
+    ApplicationSettings.h \
     ColorPickerDelegate.h \
     ComboBoxDelegate.h \
     Converter.h \
@@ -144,6 +147,7 @@ HEADERS += \
     EditorHexViewerTableModel.h \
     EditorManager.h \
     EditorPrintPreviewRenderer.h \
+    FadingIndicator.h \
     FileDialogHelpers.h \
     Finder.h \
     FocusWatcher.h \
@@ -175,8 +179,8 @@ HEADERS += \
     SearchResultsCollector.h \
     SelectionTracker.h \
     SessionManager.h \
-    Settings.h \
     SpinBoxDelegate.h \
+    TranslationManager.h \
     UndoAction.h \
     ZoomEventWatcher.h \
     decorators/ApplicationDecorator.h \

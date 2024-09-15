@@ -18,9 +18,12 @@
 
 
 #include "FolderAsWorkspaceDock.h"
+#include "ApplicationSettings.h"
 #include "ui_FolderAsWorkspaceDock.h"
 
 #include <QFileSystemModel>
+
+ApplicationSetting<QString> rootPathSetting{"FolderAsWorkspace/RootPath"};
 
 FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
     QDockWidget(parent),
@@ -39,6 +42,9 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
             emit fileDoubleClicked(model->filePath(index));
         }
     });
+
+    ApplicationSettings settings;
+    setRootPath(settings.get(rootPathSetting));
 }
 
 FolderAsWorkspaceDock::~FolderAsWorkspaceDock()
@@ -48,6 +54,9 @@ FolderAsWorkspaceDock::~FolderAsWorkspaceDock()
 
 void FolderAsWorkspaceDock::setRootPath(const QString dir)
 {
+    ApplicationSettings settings;
+    settings.set(rootPathSetting, dir);
+
     model->setRootPath(dir);
     ui->treeView->setRootIndex(model->index(dir));
 }

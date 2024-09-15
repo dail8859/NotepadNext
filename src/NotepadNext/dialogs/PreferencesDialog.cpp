@@ -18,44 +18,33 @@
 
 
 #include "PreferencesDialog.h"
+#include "NotepadNextApplication.h"
+#include "TranslationManager.h"
 #include "ui_PreferencesDialog.h"
-
-#include "Settings.h"
 
 #include <QMessageBox>
 
-PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
+
+PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *parent) :
     QDialog(parent, Qt::Tool),
     ui(new Ui::PreferencesDialog),
     settings(settings)
 {
     ui->setupUi(this);
 
-    ui->checkBoxMenuBar->setChecked(settings->showMenuBar());
-    connect(settings, &Settings::showMenuBarChanged, ui->checkBoxMenuBar, &QCheckBox::setChecked);
-    connect(ui->checkBoxMenuBar, &QCheckBox::toggled, settings, &Settings::setShowMenuBar);
+    QIcon icon = style()->standardIcon(QStyle::SP_MessageBoxInformation);
+    QPixmap pixmap = icon.pixmap(QSize(16, 16));
+    ui->labelAppRestartIcon->setPixmap(pixmap);
+    ui->labelAppRestartIcon->hide();
+    ui->labelAppRestart->hide();
 
-    ui->checkBoxToolBar->setChecked(settings->showToolBar());
-    connect(settings, &Settings::showToolBarChanged, ui->checkBoxToolBar, &QCheckBox::setChecked);
-    connect(ui->checkBoxToolBar, &QCheckBox::toggled, settings, &Settings::setShowToolBar);
+    MapSettingToCheckBox(ui->checkBoxMenuBar, &ApplicationSettings::showMenuBar, &ApplicationSettings::setShowMenuBar, &ApplicationSettings::showMenuBarChanged);
+    MapSettingToCheckBox(ui->checkBoxToolBar, &ApplicationSettings::showToolBar, &ApplicationSettings::setShowToolBar, &ApplicationSettings::showToolBarChanged);
+    MapSettingToCheckBox(ui->checkBoxStatusBar, &ApplicationSettings::showStatusBar, &ApplicationSettings::setShowStatusBar, &ApplicationSettings::showStatusBarChanged);
+    MapSettingToCheckBox(ui->checkBoxRecenterSearchDialog, &ApplicationSettings::centerSearchDialog, &ApplicationSettings::setCenterSearchDialog, &ApplicationSettings::centerSearchDialogChanged);
 
-    ui->checkBoxStatusBar->setChecked(settings->showStatusBar());
-    connect(settings, &Settings::showStatusBarChanged, ui->checkBoxStatusBar, &QCheckBox::setChecked);
-    connect(ui->checkBoxStatusBar, &QCheckBox::toggled, settings, &Settings::setShowStatusBar);
-
-    ui->checkBoxDarkMode->setChecked(settings->darkMode());
-    connect(settings, &Settings::darkModeChanged, ui->checkBoxDarkMode, &QCheckBox::setChecked);
-    connect(ui->checkBoxDarkMode, &QCheckBox::toggled, settings, &Settings::setDarkMode);
-
-    ui->gbxRestorePreviousSession->setChecked(settings->restorePreviousSession());
-    connect(settings, &Settings::restorePreviousSessionChanged, ui->gbxRestorePreviousSession, &QGroupBox::setChecked);
-    connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, settings, &Settings::setRestorePreviousSession);
-
-    ui->checkBoxUnsavedFiles->setChecked(settings->restoreUnsavedFiles());
-    ui->checkBoxRestoreTempFiles->setChecked(settings->restoreTempFiles());
-
-    connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, ui->checkBoxRestoreTempFiles, &QCheckBox::setEnabled);
-
+    MapSettingToGroupBox(ui->gbxRestorePreviousSession, &ApplicationSettings::restorePreviousSession, &ApplicationSettings::setRestorePreviousSession, &ApplicationSettings::restorePreviousSessionChanged);
+    
     connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, this, [=](bool checked) {
         if (!checked) {
             ui->checkBoxUnsavedFiles->setChecked(false);
@@ -66,18 +55,85 @@ PreferencesDialog::PreferencesDialog(Settings *settings, QWidget *parent) :
         }
     });
 
-    connect(settings, &Settings::restoreUnsavedFilesChanged, ui->checkBoxUnsavedFiles, &QCheckBox::setChecked);
-    connect(ui->checkBoxUnsavedFiles, &QCheckBox::toggled, settings, &Settings::setRestoreUnsavedFiles);
+    MapSettingToCheckBox(ui->checkBoxUnsavedFiles, &ApplicationSettings::restoreUnsavedFiles, &ApplicationSettings::setRestoreUnsavedFiles, &ApplicationSettings::restoreUnsavedFilesChanged);
+    MapSettingToCheckBox(ui->checkBoxRestoreTempFiles, &ApplicationSettings::restoreTempFiles, &ApplicationSettings::setRestoreTempFiles, &ApplicationSettings::restoreTempFilesChanged);
 
-    connect(settings, &Settings::restoreTempFilesChanged, ui->checkBoxRestoreTempFiles, &QCheckBox::setChecked);
-    connect(ui->checkBoxRestoreTempFiles, &QCheckBox::toggled, settings, &Settings::setRestoreTempFiles);
+    MapSettingToCheckBox(ui->checkBoxCombineSearchResults, &ApplicationSettings::combineSearchResults, &ApplicationSettings::setCombineSearchResults, &ApplicationSettings::combineSearchResultsChanged);
 
-    ui->checkBoxCombineSearchResults->setChecked(settings->combineSearchResults());
-    connect(settings, &Settings::combineSearchResultsChanged, ui->checkBoxCombineSearchResults, &QCheckBox::setChecked);
-    connect(ui->checkBoxCombineSearchResults, &QCheckBox::toggled, settings, &Settings::setCombineSearchResults);
+    populateTranslationComboBox();
+    connect(ui->comboBoxTranslation, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+        settings->setTranslation(ui->comboBoxTranslation->itemData(index).toString());
+        showApplicationRestartRequired();
+    });
+
+    MapSettingToCheckBox(ui->checkBoxExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosed, &ApplicationSettings::setExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosedChanged);
+    
+    MapSettingToCheckBox(ui->checkBoxDarkMode, &ApplicationSettings::darkMode, &ApplicationSettings::setDarkMode, &ApplicationSettings::darModeChanged);
+
+    ui->fcbDefaultFont->setCurrentFont(QFont(settings->fontName()));
+    connect(ui->fcbDefaultFont, &QFontComboBox::currentFontChanged, this, [=](const QFont &f) {
+        settings->setFontName(f.family());
+    });
+    connect(settings, &ApplicationSettings::fontNameChanged, this, [=](QString fontName){
+        ui->fcbDefaultFont->setCurrentFont(QFont(fontName));
+    });
+
+    ui->spbDefaultFontSize->setValue(settings->fontSize());
+    connect(ui->spbDefaultFontSize, QOverload<int>::of(&QSpinBox::valueChanged), settings, &ApplicationSettings::setFontSize);
+    connect(settings, &ApplicationSettings::fontSizeChanged, ui->spbDefaultFontSize, &QSpinBox::setValue);
 }
 
 PreferencesDialog::~PreferencesDialog()
 {
     delete ui;
+}
+
+void PreferencesDialog::showApplicationRestartRequired() const
+{
+    ui->labelAppRestartIcon->show();
+    ui->labelAppRestart->show();
+}
+
+template<typename Func1, typename Func2, typename Func3>
+void PreferencesDialog::MapSettingToCheckBox(QCheckBox *checkBox, Func1 getter, Func2 setter, Func3 notifier) const
+{
+    // Get the value and set the checkbox state
+    checkBox->setChecked(std::bind(getter, settings)());
+
+    // Set up two way connection
+    connect(settings, notifier, checkBox, &QCheckBox::setChecked);
+    connect(checkBox, &QCheckBox::toggled, settings, setter);
+}
+
+template<typename Func1, typename Func2, typename Func3>
+void PreferencesDialog::MapSettingToGroupBox(QGroupBox *groupBox, Func1 getter, Func2 setter, Func3 notifier) const
+{
+    // Get the value and set the checkbox state
+    groupBox->setChecked(std::bind(getter, settings)());
+
+    // Set up two way connection
+    connect(settings, notifier, groupBox, &QGroupBox::setChecked);
+    connect(groupBox, &QGroupBox::toggled, settings, setter);
+}
+
+void PreferencesDialog::populateTranslationComboBox()
+{
+    NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
+
+    // Add the system default at the top
+    ui->comboBoxTranslation->addItem(QStringLiteral("%1 (%2)").arg(tr("<System Default>"), QLocale::system().name()), QStringLiteral(""));
+
+    // TODO: sort this list and keep the system default at the top
+    for (const auto &localeName : app->getTranslationManager()->availableTranslations())
+    {
+        QLocale locale(localeName);
+        const QString localeDisplay = TranslationManager::FormatLocaleTerritoryAndLanguage(locale);
+        ui->comboBoxTranslation->addItem(QStringLiteral("%1 (%2)").arg(localeDisplay, localeName), localeName);
+    }
+
+    // Select the current one
+    int index = ui->comboBoxTranslation->findData(settings->translation());
+    if (index != -1) {
+        ui->comboBoxTranslation->setCurrentIndex(index);
+    }
 }

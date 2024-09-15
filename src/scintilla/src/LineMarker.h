@@ -22,9 +22,9 @@ public:
 	enum class FoldPart { undefined, head, body, tail, headWithTail };
 
 	Scintilla::MarkerSymbol markType = Scintilla::MarkerSymbol::Circle;
-	ColourRGBA fore = ColourRGBA(0, 0, 0);
-	ColourRGBA back = ColourRGBA(0xff, 0xff, 0xff);
-	ColourRGBA backSelected = ColourRGBA(0xff, 0x00, 0x00);
+	ColourRGBA fore = black;
+	ColourRGBA back = white;
+	ColourRGBA backSelected = ColourRGBA(maximumByte, 0, 0);	// Red default
 	Scintilla::Layer layer = Scintilla::Layer::Base;
 	Scintilla::Alpha alpha = Scintilla::Alpha::NoAlpha;
 	XYPOSITION strokeWidth = 1.0f;

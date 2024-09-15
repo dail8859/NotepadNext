@@ -57,6 +57,7 @@ signals:
     void editorCloseRequested(ScintillaNext *editor);
     void editorClosed(ScintillaNext *editor);
     void editorActivated(ScintillaNext *editor);
+    void editorOrderChanged();
 
     void contextMenuRequestedForEditor(ScintillaNext *editor);
     void titleBarDoubleClicked();

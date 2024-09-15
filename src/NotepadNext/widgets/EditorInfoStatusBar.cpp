@@ -41,6 +41,9 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
     unicodeType = new StatusLabel(125);
     addPermanentWidget(unicodeType, 0);
 
+    overType = new StatusLabel(25);
+    addPermanentWidget(overType, 0);
+
     /*
     docType->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(docType, &QLabel::customContextMenuRequested, [=](const QPoint &pos) {
@@ -56,6 +59,12 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
     MainWindow *w = qobject_cast<MainWindow *>(window);
 
     connect(w, &MainWindow::editorActivated, this, &EditorInfoStatusBar::connectToEditor);
+
+    connect(qobject_cast<StatusLabel*>(overType), &StatusLabel::clicked, w, [=]() {
+        ScintillaNext *editor = w->currentEditor();
+        editor->editToggleOvertype();
+        updateOverType(editor);
+    });
 }
 
 void EditorInfoStatusBar::refresh(ScintillaNext *editor)
@@ -65,6 +74,7 @@ void EditorInfoStatusBar::refresh(ScintillaNext *editor)
     updateLanguage(editor);
     updateEol(editor);
     updateEncoding(editor);
+    updateOverType(editor);
 }
 
 void EditorInfoStatusBar::connectToEditor(ScintillaNext *editor)
@@ -160,3 +170,15 @@ void EditorInfoStatusBar::updateEncoding(ScintillaNext *editor)
     }
 }
 
+void EditorInfoStatusBar::updateOverType(ScintillaNext *editor)
+{
+    bool overtype = editor->overtype();
+    if (overtype) {
+        //: This is a short abbreviation to indicate characters will be replaced when typing
+        overType->setText(tr("OVR"));
+    }
+    else {
+        //: This is a short abbreviation to indicate characters will be inserted when typing
+        overType->setText(tr("INS"));
+    }
+}

@@ -13,7 +13,7 @@ namespace Lexilla {
 /**
  */
 class WordList {
-	// Each word contains at least one character - a empty word acts as sentinel at the end.
+	// Each word contains at least one character - an empty word acts as sentinel at the end.
 	char **words;
 	char *list;
 	size_t len;
@@ -31,7 +31,7 @@ public:
 	bool operator!=(const WordList &other) const noexcept;
 	int Length() const noexcept;
 	void Clear() noexcept;
-	bool Set(const char *s);
+	bool Set(const char *s, bool lowerCase=false);
 	bool InList(const char *s) const noexcept;
 	bool InList(const std::string &s) const noexcept;
 	bool InListAbbreviated(const char *s, const char marker) const noexcept;

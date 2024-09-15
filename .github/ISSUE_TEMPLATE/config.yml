@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Github Discussions
+    url: https://github.com/dail8859/NotepadNext/discussions
+    about: Start a discussion about the project, compiling, or any other general question.

@@ -56,8 +56,6 @@ ScintillaEditBase::ScintillaEditBase(QWidget *parent)
 	setAttribute(Qt::WA_KeyCompression);
 	setAttribute(Qt::WA_InputMethodEnabled);
 
-	// All IME indicators drawn in same colour, blue, with different patterns
-	const ColourRGBA colourIME(0, 0, UCHAR_MAX);
 	sqt->vs.indicators[IndicatorUnknown] = Indicator(IndicatorStyle::Hidden, colourIME);
 	sqt->vs.indicators[IndicatorInput] = Indicator(IndicatorStyle::Dots, colourIME);
 	sqt->vs.indicators[IndicatorConverted] = Indicator(IndicatorStyle::CompositionThick, colourIME);
@@ -447,8 +445,7 @@ void ScintillaEditBase::MoveImeCarets(Scintilla::Position offset)
 	// Move carets relatively by bytes
 	for (size_t r=0; r < sqt->sel.Count(); r++) {
 		const Sci::Position positionInsert = sqt->sel.Range(r).Start().Position();
-		sqt->sel.Range(r).caret.SetPosition(positionInsert + offset);
-		sqt->sel.Range(r).anchor.SetPosition(positionInsert + offset);
+		sqt->sel.Range(r) = SelectionRange(positionInsert + offset);
  	}
 }
 
