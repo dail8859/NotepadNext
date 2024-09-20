@@ -34,7 +34,13 @@ CONFIG -= debug_and_release debug_and_release_target
 # Controls if we want to define our own regex engine using QRegularExpression
 DEFINES += SCI_OWNREGEX
 
+# Build ADS package as static
 DEFINES += ADS_STATIC
+
+# https://stackoverflow.com/questions/78598141/first-stdmutexlock-crashes-in-application-built-with-latest-visual-studio
+msvc {
+    DEFINES += _DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR
+}
 
 msvc:QMAKE_CXXFLAGS += /guard:cf
 msvc:QMAKE_LFLAGS += /guard:cf
