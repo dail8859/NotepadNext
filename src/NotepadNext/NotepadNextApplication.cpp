@@ -161,6 +161,7 @@ bool NotepadNextApplication::init()
                 .addFunction("showToolBar", &ApplicationSettings::setShowToolBar)
                 .addFunction("showTabBar", &ApplicationSettings::setShowTabBar)
                 .addFunction("showStatusBar", &ApplicationSettings::setShowStatusBar)
+                .addFunction("getUseTabs", &ApplicationSettings::useTabs)
             .endClass()
         .endNamespace();
     luabridge::setGlobal(luaState->L, settings, "settings");
@@ -315,9 +316,9 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     getLuaState()->execute(R"(
         local L = languages[languageName]
 
-        if not skip_tabs then
-            editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
-        end
+        --if not skip_tabs then
+        --    editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
+        --end
         if not skip_tabwidth then
             editor.TabWidth = L.tabSize or 4
         end
