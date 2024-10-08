@@ -234,7 +234,8 @@ FORMS += \
 
 RESOURCES += \
     resources.qrc \
-    scripts.qrc
+    scripts.qrc \
+    qdarkstyle/dark/style.qrc
 
 INCLUDEPATH += $$PWD/decorators
 INCLUDEPATH += $$PWD/dialogs

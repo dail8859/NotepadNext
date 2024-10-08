@@ -47,6 +47,7 @@ signals:
 
 private:
     void setupEditor(ScintillaNext *editor);
+    void setupEditorTheme(ScintillaNext *editor);
     void purgeOldEditorPointers();
     QList<QPointer<ScintillaNext>> getEditors();
 

@@ -28,6 +28,7 @@
 #include <QMessageBox>
 #include <QStringList>
 #include <QClipboard>
+#include <QSettings>
 #include <QStandardPaths>
 #include <QWindow>
 #include <QPushButton>
@@ -84,6 +85,27 @@
 
 #include "FadingIndicator.h"
 
+#include "ThemeColors.h"
+
+QString loadCssFile(const QString& cssFile)
+{
+    QFile f(cssFile);
+    if (!f.exists()) {
+        qInfo("Stylesheet resource file '%s' not found, no style sheet set", qUtf8Printable(cssFile));
+
+        return "";
+    }
+    else { 
+        qInfo("Stylesheet resource file '%s' loaded", qUtf8Printable(cssFile));
+        
+        f.open(QFile::ReadOnly);
+        QTextStream ts(&f);
+        QString cssContent = ts.readAll();
+        f.close();
+
+        return cssContent;
+    }
+}
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
@@ -789,7 +811,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     applyStyleSheet();
 
     restoreSettings();
-
+    
     initUpdateCheck();
 }
 
@@ -825,6 +847,14 @@ void MainWindow::setupLanguageMenu()
 
     QStringList language_names = app->getLanguages();
 
+    QString subMenuStyleSheet;  // sub menu style sheet, for dark mode only
+    bool darkMode = app->getSettings()->darkMode();
+    if (darkMode) {
+        subMenuStyleSheet = QString("color:#%1; background-color:#%2")
+                    .arg(DARK_MENU_COLOR, 0, 16)
+                    .arg(DARK_MENU_BG_COLOR, 0, 16);
+    }
+
     int i = 0;
     while (i < language_names.size()) {
         QList<QAction *> actions;
@@ -852,6 +882,12 @@ void MainWindow::setupLanguageMenu()
             QMenu *compactMenu = new QMenu(actions[0]->text().at(0).toUpper());
             compactMenu->addActions(actions);
             ui->menuLanguage->addMenu(compactMenu);
+
+            // Set background color of sub menu, QDarkStyleSheet settings
+            // doesn't impact sub menu for unknown reason
+            if(darkMode) {
+                compactMenu->setStyleSheet(subMenuStyleSheet);
+            }
         }
         i = j;
     }
@@ -1645,13 +1681,17 @@ void MainWindow::applyStyleSheet()
 {
     qInfo(Q_FUNC_INFO);
 
-    QString sheet;
-    QFile f(":/stylesheets/npp.css");
-    qInfo() << "Loading stylesheet: " << f.fileName();
-
-    f.open(QFile::ReadOnly);
-    sheet = f.readAll();
-    f.close();
+    // Notepad next default style sheet
+    QString cssContent = loadCssFile(":/stylesheets/npp.css");
+    if (app->getSettings()->darkMode()) {
+        // QDarkStyleSheet dark theme
+        QString darkCss = loadCssFile(":/qdarkstyle/dark/style.qss");
+        cssContent.append(darkCss);
+        
+        // further tweak
+        QString nppDark= loadCssFile(":/stylesheets/npp-dark.css");
+        cssContent.append(nppDark);
+    }
 
     // If there is a "custom.css" file where the ini is located, load it as a style sheet addition
     QString directoryPath = QFileInfo(app->getSettings()->fileName()).absolutePath();
@@ -1661,11 +1701,11 @@ void MainWindow::applyStyleSheet()
         qInfo() << "Loading stylesheet: " << custom.fileName();
 
         custom.open(QFile::ReadOnly);
-        sheet += custom.readAll();
+        cssContent.append(custom.readAll());
         custom.close();
     }
 
-    setStyleSheet(sheet);
+    setStyleSheet(cssContent);
 }
 
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
@@ -2093,4 +2133,9 @@ void MainWindow::languageMenuTriggered()
     QVariant v = act->data();
 
     setLanguage(editor, v.toString());
+}
+
+Settings* MainWindow::getSettings()
+{
+    return app->getSettings();
 }

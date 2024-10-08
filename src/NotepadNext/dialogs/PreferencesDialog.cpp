@@ -44,6 +44,7 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     MapSettingToCheckBox(ui->checkBoxRecenterSearchDialog, &ApplicationSettings::centerSearchDialog, &ApplicationSettings::setCenterSearchDialog, &ApplicationSettings::centerSearchDialogChanged);
 
     MapSettingToGroupBox(ui->gbxRestorePreviousSession, &ApplicationSettings::restorePreviousSession, &ApplicationSettings::setRestorePreviousSession, &ApplicationSettings::restorePreviousSessionChanged);
+    
     connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, this, [=](bool checked) {
         if (!checked) {
             ui->checkBoxUnsavedFiles->setChecked(false);
@@ -66,6 +67,8 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     });
 
     MapSettingToCheckBox(ui->checkBoxExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosed, &ApplicationSettings::setExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosedChanged);
+    
+    MapSettingToCheckBox(ui->checkBoxDarkMode, &ApplicationSettings::darkMode, &ApplicationSettings::setDarkMode, &ApplicationSettings::darModeChanged);
 
     ui->fcbDefaultFont->setCurrentFont(QFont(settings->fontName()));
     connect(ui->fcbDefaultFont, &QFontComboBox::currentFontChanged, this, [=](const QFont &f) {
