@@ -1,6 +1,6 @@
 /*
  * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
+ * Copyright 2022 Justin Dailey
  *
  * Notepad Next is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,32 +17,31 @@
  */
 
 
-#ifndef RECENTFILESLISTMANAGER_H
-#define RECENTFILESLISTMANAGER_H
+#ifndef RECENTLISTMENUBUILDER_H
+#define RECENTLISTMENUBUILDER_H
 
+#include "RecentListManager.h"
 #include <QObject>
-#include <QList>
 
-class RecentFilesListManager : public QObject
+class QMenu;
+
+class RecentListMenuBuilder : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit RecentFilesListManager(QObject *parent = Q_NULLPTR);
+    explicit RecentListMenuBuilder(RecentListManager *manager, int limit);
+    void populateMenu(QMenu *menu);
 
-    QString mostRecentFile() const;
-    QStringList fileList() const;
-    void setFileList(const QStringList &list);
+signals:
+    void fileOpenRequest(const QString &filePath);
 
-    int count() const { return recentFiles.size(); }
-
-public slots:
-    void addFile(const QString &filePath);
-    void removeFile(const QString &filePath);
-    void clear();
+private slots:
+    void recentFileActionTriggered();
 
 private:
-    QStringList recentFiles;
+    RecentListManager *manager;
+    int limit;
 };
 
-#endif // RECENTFILESLISTMANAGER_H
+#endif // RECENTFILESLISTMENUBUILDER_H
