@@ -206,49 +206,61 @@
 <context>
     <name>EditorInfoStatusBar</name>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="107"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="117"/>
         <source>Sel: N/A</source>
         <translation>選擇：N/A</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="98"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="108"/>
         <source>Length: %L1    Lines: %L2</source>
         <translation>長度：%L1    行數：%L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="117"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="127"/>
         <source>Sel: %L1 | %L2</source>
         <translation>選擇：%L1 | %L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="121"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="131"/>
         <source>Ln: %L1    Col: %L2    </source>
         <translation>行：%L1    列：%L2    </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="137"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="147"/>
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="140"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="150"/>
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="143"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="153"/>
         <source>Unix (LF)</source>
         <translation>Unix (LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="152"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="162"/>
         <source>ANSI</source>
         <translation>ANSI</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="155"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="165"/>
         <source>UTF-8</source>
         <translation>UTF-8</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="178"/>
+        <source>OVR</source>
+        <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="182"/>
+        <source>INS</source>
+        <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -446,13 +458,23 @@
         <source>File List</source>
         <translation>檔案列表</translation>
     </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FileListDock.ui" line="51"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FileListDock.ui" line="90"/>
+        <source>Sort by File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FindReplaceDialog</name>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="26"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="259"/>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="60"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="59"/>
         <source>Find</source>
         <translation>查詢</translation>
     </message>
@@ -562,40 +584,40 @@
         <translation>迴圈搜尋(&amp;p)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="61"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="60"/>
         <source>Replace</source>
         <translation>取代</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="145"/>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="331"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="144"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="337"/>
         <source>Replaced %Ln matches</source>
         <translation>
             <numerusform>已取代 %Ln 個符合項目</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="229"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="235"/>
         <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
         <translation>已經到達文件的末尾。從頂端找到第一個符合項目。</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="240"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="246"/>
         <source>No matches found.</source>
         <translation>沒有找到符合項目。</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="303"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="309"/>
         <source>1 occurrence was replaced</source>
         <translation>已取代 1 個符合項目</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="312"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="318"/>
         <source>No more occurrences were found</source>
         <translation>沒有找到更多符合項目</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="342"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="348"/>
         <source>Found %Ln matches</source>
         <translation>
             <numerusform>找到 %Ln 個符合項目</numerusform>
@@ -748,17 +770,17 @@
         <translation>刪除選取的巨集</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="125"/>
+        <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="129"/>
         <source>Delete Macro</source>
         <translation>刪除巨集</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="125"/>
+        <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="129"/>
         <source>Are you sure you want to delete &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>您確定要刪除 &lt;b&gt;%1&lt;/b&gt; 嗎？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="146"/>
+        <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="150"/>
         <source>(Copy)</source>
         <translation>(複製)</translation>
     </message>
@@ -1565,6 +1587,17 @@
         <translation>Alt+Shift+9</translation>
     </message>
     <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1354"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1357"/>
+        <source>Toggle Overtype</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1360"/>
+        <source>Ins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1067"/>
         <source>Export as HTML...</source>
         <translation>匯出為 HTML...</translation>
@@ -1672,7 +1705,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="61"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1287"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1289"/>
         <source>Export As</source>
         <translation>匯出為</translation>
     </message>
@@ -1793,7 +1826,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="904"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="615"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="621"/>
         <source>Start Recording</source>
         <translation>開始錄製</translation>
     </message>
@@ -1883,120 +1916,120 @@
         <translation>以工作區方式開啟資料夾...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="356"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="362"/>
         <source>Go to line</source>
         <translation>跳轉到行</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="356"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="362"/>
         <source>Line Number (1 - %1)</source>
         <translation>行號（1 - %1）</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="606"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="612"/>
         <source>Stop Recording</source>
         <translation>停止錄製</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="888"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="890"/>
         <source>New %1</source>
         <translation>新檔案 %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="940"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="942"/>
         <source>Create File</source>
         <translation>建立檔案</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="940"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="942"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; 目前不存在，你想要建立一個嗎？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="981"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1079"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="983"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1081"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>儲存檔案 &lt;b&gt;%1&lt;/b&gt;？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="982"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1080"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="984"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1082"/>
         <source>Save File</source>
         <translation>儲存檔案</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1035"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1037"/>
         <source>Open Folder as Workspace</source>
         <translation>以工作區方式開啟資料夾</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1053"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1055"/>
         <source>Reload File</source>
         <translation>重新載入檔案</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1053"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1055"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>你確定要重新載入 &lt;b&gt;%1&lt;/b&gt;？任何未儲存的修改都會遺失。</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1470"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1472"/>
         <source>Administrator</source>
         <translation>Administrator</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1718"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1747"/>
         <source>Error Saving File</source>
         <translation>儲存檔案時出錯</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1254"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1256"/>
         <source>Save a Copy As</source>
         <translation>副本另存為</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1328"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1343"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1330"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1345"/>
         <source>Rename</source>
         <translation>重新命名</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1343"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1345"/>
         <source>Name:</source>
         <translation>巨集名稱：</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1363"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1365"/>
         <source>Delete File</source>
         <translation>刪除檔案</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1363"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1365"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>你確定要將 &lt;b&gt;%1&lt;/b&gt; 移至垃圾桶？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1373"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1375"/>
         <source>Error Deleting File</source>
         <translation>刪除檔案時出錯</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1373"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1375"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>刪除 &lt;b&gt;%1&lt;/b&gt; 時出錯了？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1718"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1747"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>儲存 &lt;b&gt;%1&lt;/b&gt; 時發生了錯誤&lt;br&gt;&lt;br&gt;錯誤：%2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1724"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1753"/>
         <source>Zoom: %1%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1864"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1893"/>
         <source>No updates are available at this time.</source>
         <translation>目前沒有可用的更新。</translation>
     </message>
@@ -2034,42 +2067,47 @@
         <translation>暫存檔案</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="92"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
+        <source>Recenter find/replace dialog when opened</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="99"/>
         <source>Translation:</source>
         <translation>翻譯：</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="101"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="108"/>
         <source>Exit on last tab closed</source>
         <translation>關閉最後一個分頁時結束程式</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="110"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="117"/>
         <source>Default Font</source>
         <translation>預設字體</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="116"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="123"/>
         <source>Font</source>
         <translation>字體</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="126"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="133"/>
         <source>Font Size</source>
         <translation>字體大小</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="133"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="140"/>
         <source>pt</source>
         <translation>點</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="179"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="186"/>
         <source>TextLabel</source>
         <translation>文字標籤</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="191"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="198"/>
         <source>An application restart is required to apply certain settings.</source>
         <translation>某些設定需要重新啟動應用程式才能生效。</translation>
     </message>
@@ -2079,22 +2117,22 @@
         <translation>未儲存的變更</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="81"/>
         <source>Combine search results</source>
         <translation>合併搜尋結果</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="52"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="53"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="52"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="53"/>
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
         <translation>此功能為實驗性質，對於重要的工作可能並不安全，可能導致資料遺失，請自行承擔風險。</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="120"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="121"/>
         <source>&lt;System Default&gt;</source>
         <translation>&lt;系統預設&gt;</translation>
     </message>
@@ -2107,17 +2145,17 @@
         <translation>列出所有分頁</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="203"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="204"/>
         <source>Detach Group</source>
         <translation>分離群組</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="228"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="231"/>
         <source>Minimize</source>
         <translation>最小化</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="268"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="267"/>
         <source>Close Tab</source>
         <translation>關閉分頁</translation>
     </message>
@@ -2183,22 +2221,27 @@
         <translation>搜尋結果</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="63"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.ui" line="38"/>
+        <source>Copy Results to Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="65"/>
         <source>Collapse All</source>
         <translation>全部摺疊</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="64"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
         <source>Expand All</source>
         <translation>全部展開</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="68"/>
         <source>Delete Entry</source>
         <translation>刪除項目</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="68"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="70"/>
         <source>Delete All</source>
         <translation>全部刪除</translation>
     </message>
@@ -2234,42 +2277,42 @@
 <context>
     <name>ads::CAutoHideTab</name>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="384"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="383"/>
         <source>Detach</source>
         <translation>分離</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="389"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="388"/>
         <source>Pin To...</source>
         <translation>釘選至...</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="391"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="390"/>
         <source>Top</source>
         <translation>頂端</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="392"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="391"/>
         <source>Left</source>
         <translation>左側</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="393"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="392"/>
         <source>Right</source>
         <translation>右側</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="394"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="393"/>
         <source>Bottom</source>
         <translation>底部</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="396"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="395"/>
         <source>Unpin (Dock)</source>
         <translation>取消釘選（Dock）</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="398"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="397"/>
         <source>Close</source>
         <translation>關閉</translation>
     </message>
@@ -2277,83 +2320,83 @@
 <context>
     <name>ads::CDockAreaTitleBar</name>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="749"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
         <source>Detach Group</source>
         <translation>分離群組</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="749"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
         <source>Detach</source>
         <translation>分離</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="754"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="811"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="779"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="836"/>
         <source>Unpin (Dock)</source>
         <translation>取消釘選（Dock）</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="754"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="816"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="779"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="841"/>
         <source>Pin Group</source>
         <translation>釘選群組</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="760"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="785"/>
         <source>Pin Group To...</source>
         <translation>釘選群組至...</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="762"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="787"/>
         <source>Top</source>
         <translation>頂端</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="763"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="788"/>
         <source>Left</source>
         <translation>左側</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="764"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="789"/>
         <source>Right</source>
         <translation>右側</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="765"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="790"/>
         <source>Bottom</source>
         <translation>底部</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="773"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="828"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="798"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="853"/>
         <source>Minimize</source>
         <translation>最小化</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="778"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="828"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="799"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="803"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="853"/>
         <source>Close</source>
         <translation>關閉</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="778"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="837"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="803"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="862"/>
         <source>Close Group</source>
         <translation>關閉群組</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="784"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="809"/>
         <source>Close Other Groups</source>
         <translation>關閉其他群組</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="820"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="845"/>
         <source>Pin Active Tab (Press Ctrl to Pin Group)</source>
         <translation>釘選使用中分頁（按 Ctrl 鍵釘選群組）</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="833"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="858"/>
         <source>Close Active Tab</source>
         <translation>關閉使用中分頁</translation>
     </message>
@@ -2361,7 +2404,7 @@
 <context>
     <name>ads::CDockManager</name>
     <message>
-        <location filename="../src/ads/src/DockManager.cpp" line="508"/>
+        <location filename="../src/ads/src/DockManager.cpp" line="513"/>
         <source>Show View</source>
         <translation>顯示畫面</translation>
     </message>
@@ -2369,47 +2412,47 @@
 <context>
     <name>ads::CDockWidgetTab</name>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="544"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="543"/>
         <source>Detach</source>
         <translation>分離</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="548"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="547"/>
         <source>Pin</source>
         <translation>釘選</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="552"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="551"/>
         <source>Pin To...</source>
         <translation>釘選至...</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="554"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="553"/>
         <source>Top</source>
         <translation>頂端</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="554"/>
         <source>Left</source>
         <translation>左側</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="556"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
         <source>Right</source>
         <translation>右側</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="557"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="556"/>
         <source>Bottom</source>
         <translation>底部</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="562"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="561"/>
         <source>Close</source>
         <translation>關閉</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="566"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="565"/>
         <source>Close Others</source>
         <translation>關閉其他</translation>
     </message>
