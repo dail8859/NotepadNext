@@ -206,49 +206,61 @@
 <context>
     <name>EditorInfoStatusBar</name>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="98"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="108"/>
         <source>Length: %L1    Lines: %L2</source>
         <translation>Dług: %L1    Wierszy: %L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="107"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="117"/>
         <source>Sel: N/A</source>
         <translation>Zazn: brak</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="117"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="127"/>
         <source>Sel: %L1 | %L2</source>
         <translation>Zazn: %L1 | %L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="121"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="131"/>
         <source>Ln: %L1    Col: %L2    </source>
         <translation>Wrs: %L1    Kol: %L2    </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="137"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="147"/>
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="140"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="150"/>
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="143"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="153"/>
         <source>Unix (LF)</source>
         <translation>Unix (LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="152"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="162"/>
         <source>ANSI</source>
         <translation>ANSI</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="155"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="165"/>
         <source>UTF-8</source>
         <translation>UTF-8</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="178"/>
+        <source>OVR</source>
+        <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="182"/>
+        <source>INS</source>
+        <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -446,13 +458,23 @@
         <source>File List</source>
         <translation>Lista plików</translation>
     </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FileListDock.ui" line="51"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/FileListDock.ui" line="90"/>
+        <source>Sort by File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FindReplaceDialog</name>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="26"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="259"/>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="60"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="59"/>
         <source>Find</source>
         <translation>Znajdź</translation>
     </message>
@@ -562,13 +584,13 @@
         <translation>Zawijanie dokumentu</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="61"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="60"/>
         <source>Replace</source>
         <translation>Zamień</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="145"/>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="331"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="144"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="337"/>
         <source>Replaced %Ln matches</source>
         <translation>
             <numerusform>Zamieniono %Ln wystąpienie</numerusform>
@@ -577,27 +599,27 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="229"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="235"/>
         <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
         <translation>Osiągnięto koniec dokumentu. Znaleziono pierwsze wystąpienie od góry.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="240"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="246"/>
         <source>No matches found.</source>
         <translation>Nie znaleziono żadnego wystąpienia.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="303"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="309"/>
         <source>1 occurrence was replaced</source>
         <translation>1 wystąpienie zostało zamienione</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="312"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="318"/>
         <source>No more occurrences were found</source>
         <translation>Nie znaleziono więcej wystąpień</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="342"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="348"/>
         <source>Found %Ln matches</source>
         <translation>
             <numerusform>Znaleziono %Ln wystąpienie</numerusform>
@@ -752,17 +774,17 @@
         <translation>Usuń wybrane makro</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="125"/>
+        <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="129"/>
         <source>Delete Macro</source>
         <translation>Usuń makro</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="125"/>
+        <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="129"/>
         <source>Are you sure you want to delete &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Czy na pewno chcesz usunąć &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="146"/>
+        <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="150"/>
         <source>(Copy)</source>
         <translation>(kopia)</translation>
     </message>
@@ -875,7 +897,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="61"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1287"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1289"/>
         <source>Export As</source>
         <translation>Eksportuj jako</translation>
     </message>
@@ -1431,7 +1453,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="904"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="615"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="621"/>
         <source>Start Recording</source>
         <translation>Rozpocznij nagrywanie</translation>
     </message>
@@ -1887,121 +1909,132 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="356"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1354"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1357"/>
+        <source>Toggle Overtype</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1360"/>
+        <source>Ins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="362"/>
         <source>Go to line</source>
         <translation>Idź do wiersza</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="356"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="362"/>
         <source>Line Number (1 - %1)</source>
         <translation>Numer wiersza (1-%1)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="606"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="612"/>
         <source>Stop Recording</source>
         <translation>Zakończ nagrywanie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="888"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="890"/>
         <source>New %1</source>
         <translation>Nowy %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="940"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="942"/>
         <source>Create File</source>
         <translation>Utwórz plik</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="940"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="942"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translatorcomment>&lt;b&gt;%1&lt;/b&gt; nie istnieje. Czy chcesz go utworzyć?</translatorcomment>
         <translation>&lt;b&gt;%1&lt;/b&gt; nie istnieje. Czy chcesz go utworzyć?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="981"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1079"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="983"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1081"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Zapisać plik &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="982"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1080"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="984"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1082"/>
         <source>Save File</source>
         <translation>Zapisz plik</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1035"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1037"/>
         <source>Open Folder as Workspace</source>
         <translation>Otwórz folder jako obszar roboczy</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1053"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1055"/>
         <source>Reload File</source>
         <translation>Wczytaj plik ponownie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1053"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1055"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>Czy na pewno chcesz ponownie wczytać&lt;b&gt;%1&lt;/b&gt;? Niezapisane zmiany zostaną utracone.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1254"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1256"/>
         <source>Save a Copy As</source>
         <translation>Zapisz kopię jako</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1328"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1343"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1330"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1345"/>
         <source>Rename</source>
         <translation>Zmień nazwę</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1343"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1345"/>
         <source>Name:</source>
         <translation>Nazwa:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1363"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1365"/>
         <source>Delete File</source>
         <translation>Usuń plik</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1363"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1365"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>Czy na pewno chcesz przenieść &lt;b&gt;%1&lt;/b&gt; do kosza?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1373"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1375"/>
         <source>Error Deleting File</source>
         <translation>Błąd podczas usuwania pliku</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1373"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1375"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Coś poszło nie tak przy próbie usunięcia &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1470"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1472"/>
         <source>Administrator</source>
         <translation>Administrator</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1718"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1747"/>
         <source>Error Saving File</source>
         <translation>Błąd podczas zapisywania pliku</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1718"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1747"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Pojawił się błąd podczas próby zapisania &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Błąd: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1724"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1753"/>
         <source>Zoom: %1%</source>
         <translation>Powiększenie: %1%</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1864"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1893"/>
         <source>No updates are available at this time.</source>
         <translation>Brak dostępnych aktualizacji.</translation>
     </message>
@@ -2045,61 +2078,66 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
+        <source>Recenter find/replace dialog when opened</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="81"/>
         <source>Combine search results</source>
         <translation>Połącz wyniki wyszukiwania</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="92"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="99"/>
         <source>Translation:</source>
         <translation>Język interfejsu:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="101"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="108"/>
         <source>Exit on last tab closed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="110"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="117"/>
         <source>Default Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="116"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="123"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="126"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="133"/>
         <source>Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="133"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="140"/>
         <source>pt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="179"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="186"/>
         <source>TextLabel</source>
         <translation>TextLabel</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="191"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="198"/>
         <source>An application restart is required to apply certain settings.</source>
         <translation>Wymagany jest restart aplikacji aby zastosować te ustawienia.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="52"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="53"/>
         <source>Warning</source>
         <translation>Uwaga</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="52"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="53"/>
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
         <translation>Ta funkcja jest eksperymentalna i nie powinna być używana w ważnych zastosowaniach. Jej użycie może prowadzić do utraty danych. Używaj jej na własną odpowiedzialność.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="120"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="121"/>
         <source>&lt;System Default&gt;</source>
         <translation>&lt;domyślny systemowy&gt;</translation>
     </message>
@@ -2112,17 +2150,17 @@
         <translation>Lista wszystkich kart</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="203"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="204"/>
         <source>Detach Group</source>
         <translation>Odłącz grupę</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="228"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="231"/>
         <source>Minimize</source>
         <translation>Minimalizuj</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="268"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="267"/>
         <source>Close Tab</source>
         <translation>Zamknij kartę</translation>
     </message>
@@ -2188,22 +2226,27 @@
         <translation>Wyniki wyszukiwania</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="63"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.ui" line="38"/>
+        <source>Copy Results to Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="65"/>
         <source>Collapse All</source>
         <translation>Zwiń wszystko</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="64"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
         <source>Expand All</source>
         <translation>Rozwiń wszystko</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="68"/>
         <source>Delete Entry</source>
         <translation>Usuń wpis</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="68"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="70"/>
         <source>Delete All</source>
         <translation>Usuń wszystko</translation>
     </message>
@@ -2239,42 +2282,42 @@
 <context>
     <name>ads::CAutoHideTab</name>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="384"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="383"/>
         <source>Detach</source>
         <translation>Odłącz</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="389"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="388"/>
         <source>Pin To...</source>
         <translation>Przypnij do...</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="391"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="390"/>
         <source>Top</source>
         <translation>Góra</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="392"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="391"/>
         <source>Left</source>
         <translation>Lewo</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="393"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="392"/>
         <source>Right</source>
         <translation>Prawo</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="394"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="393"/>
         <source>Bottom</source>
         <translation>Dół</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="396"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="395"/>
         <source>Unpin (Dock)</source>
         <translation>Odepnij (dokowanie)</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="398"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="397"/>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
@@ -2282,83 +2325,83 @@
 <context>
     <name>ads::CDockAreaTitleBar</name>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="749"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
         <source>Detach</source>
         <translation>Odłącz</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="749"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
         <source>Detach Group</source>
         <translation>Odłącz grupę</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="754"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="811"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="779"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="836"/>
         <source>Unpin (Dock)</source>
         <translation>Odepnij (dokowanie)</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="754"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="816"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="779"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="841"/>
         <source>Pin Group</source>
         <translation>Przypnij grupę</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="760"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="785"/>
         <source>Pin Group To...</source>
         <translation>Przypnij grupę do...</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="762"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="787"/>
         <source>Top</source>
         <translation>Góra</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="763"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="788"/>
         <source>Left</source>
         <translation>Lewo</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="764"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="789"/>
         <source>Right</source>
         <translation>Prawo</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="765"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="790"/>
         <source>Bottom</source>
         <translation>Dół</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="773"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="828"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="798"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="853"/>
         <source>Minimize</source>
         <translation>Minimalizuj</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="778"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="828"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="799"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="803"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="853"/>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="778"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="837"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="803"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="862"/>
         <source>Close Group</source>
         <translation>Zamknij grupę</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="784"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="809"/>
         <source>Close Other Groups</source>
         <translation>Zamknij inne grupy</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="820"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="845"/>
         <source>Pin Active Tab (Press Ctrl to Pin Group)</source>
         <translation>Przypnij aktywną kartę (naciśnij Ctrl aby przypiąć grupę)</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="833"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="858"/>
         <source>Close Active Tab</source>
         <translation>Zamknij aktywną kartę</translation>
     </message>
@@ -2366,7 +2409,7 @@
 <context>
     <name>ads::CDockManager</name>
     <message>
-        <location filename="../src/ads/src/DockManager.cpp" line="508"/>
+        <location filename="../src/ads/src/DockManager.cpp" line="513"/>
         <source>Show View</source>
         <translation>Pokaż widok</translation>
     </message>
@@ -2374,47 +2417,47 @@
 <context>
     <name>ads::CDockWidgetTab</name>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="544"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="543"/>
         <source>Detach</source>
         <translation>Odłącz</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="548"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="547"/>
         <source>Pin</source>
         <translation>Przypnij</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="552"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="551"/>
         <source>Pin To...</source>
         <translation>Przypnij do...</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="554"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="553"/>
         <source>Top</source>
         <translation>Góra</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="554"/>
         <source>Left</source>
         <translation>Lewo</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="556"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
         <source>Right</source>
         <translation>Prawo</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="557"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="556"/>
         <source>Bottom</source>
         <translation>Dół</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="562"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="561"/>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="566"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="565"/>
         <source>Close Others</source>
         <translation>Zamknij inne</translation>
     </message>
