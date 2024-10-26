@@ -91,8 +91,9 @@ L.styles = {
 	},
 	["ERROR"] = {
 		id = 13,
-		fgColor = rgb(0xFFFF80),
-		bgColor = rgb(0xFF0000),
+		fgColor = rgb(0xFF0000),
+		bgColor = rgb(0xFFFFFF),
+		fontStyle = 1,
 	},
 }
 return L
