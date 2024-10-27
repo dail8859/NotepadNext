@@ -40,8 +40,12 @@ This section specifically describes how to build Notepad Next using Microsoft's 
 
 Using a fresh Ubuntu 21.10 setup, the following script will install the needed dependencies and build the executable:
 
+Note - that while Qt5 can be built, we are not longer effectively supporting it,
+nor recommending it. Please build using Qt6 only. Qt5 is not effectively removed
+but it is not used, so code base might rot - and not work/compile.
+
 ```
-sudo apt install qtbase5-dev qt5-qmake qtbase5-dev-tools qttools5-dev-tools qtbase5-private-dev libqt5x11extras5-dev build-essential git
+sudo apt install qtbase6-dev qt6-qmake qtbase6-dev-tools qtbase6-private-dev qt6-5compat-dev build-essential git
 git clone --recurse-submodules https://github.com/dail8859/NotepadNext.git
 cd NotepadNext
 mkdir build
@@ -49,3 +53,29 @@ cd build
 qmake ../src/NotepadNext.pro
 make -j$(nproc)
 ```
+
+# CMake support
+
+To build this project using CMake (currently the official way is QMake), you should type this
+on the command line (tested on Linux, but should work on Windows as well as OSX):
+
+```
+cmake -S . -B cbuild -G Ninja
+cmake --build cbuild
+```
+
+If you are using Visual Studio - you can open the directory containing the source
+and then use CMake directly on Visual Studio, no addons needed (as Visual Studio 2019
+and above have really good support for CMake).
+
+Using CLion should be similar - just open the directory inside CLion and you
+should be ready to code.
+
+Currently CMake uses [CPM](https://github.com/cpm-cmake/CPM.cmake) to pull all 3rd parties (originally 3rd parties where
+a mix of submodules and in-repo code). The initial config should take a large time
+(the main time consumer is cloning of scintilla).
+
+A future goal is to move all 3rd party dependencies to conan or vcpkg (or some
+other package manager). This will also give us pre-compiled 3rd parties which
+will reduce compile times as we will use pre-compiled binaries - and will ease the
+ability to gain build-reproducability.
