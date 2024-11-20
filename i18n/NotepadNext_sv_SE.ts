@@ -266,13 +266,13 @@
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="178"/>
         <source>OVR</source>
         <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>OVR</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="182"/>
         <source>INS</source>
         <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>INS</translation>
     </message>
 </context>
 <context>
@@ -473,12 +473,12 @@
     <message>
         <location filename="../src/NotepadNext/docks/FileListDock.ui" line="51"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/FileListDock.ui" line="90"/>
         <source>Sort by File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortera efter filnamn</translation>
     </message>
 </context>
 <context>
@@ -1629,12 +1629,12 @@
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1354"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1357"/>
         <source>Toggle Overtype</source>
-        <translation type="unfinished"></translation>
+        <translation>Överskrivning på/av</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1360"/>
         <source>Ins</source>
-        <translation type="unfinished"></translation>
+        <translation>Ins</translation>
     </message>
     <message>
         <source>Alt+C</source>
@@ -2135,7 +2135,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
         <source>Recenter find/replace dialog when opened</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrera om dialogrutan Sök/Ersätt när den öppnas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="99"/>
@@ -2317,7 +2317,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.ui" line="38"/>
         <source>Copy Results to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera resultat till urklipp</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="65"/>
