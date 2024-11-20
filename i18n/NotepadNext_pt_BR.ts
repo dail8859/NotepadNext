@@ -443,7 +443,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="181"/>
         <source>Caret Virtual Space</source>
-        <translation>Espaço virtual do carácter</translation>
+        <translation>Espaço virtual do caractere</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="185"/>
@@ -1287,7 +1287,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="683"/>
         <source>Close All files</source>
-        <translation>Fechar todos os ficheiros</translation>
+        <translation>Fechar todos os arquivos</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="686"/>
@@ -1342,12 +1342,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="740"/>
         <source>About Qt</source>
-        <translation>Acerca do Qt</translation>
+        <translation>Sobre o Qt</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="752"/>
         <source>About Notepad Next</source>
-        <translation>Acerca do Notepad Next</translation>
+        <translation>Sobre o Notepad Next</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="763"/>
@@ -1392,12 +1392,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="831"/>
         <source>Open All Recent Files</source>
-        <translation>Abrir todos os ficheiros recentes</translation>
+        <translation>Abrir todos os arquivos recentes</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="836"/>
         <source>Clear Recent Files List</source>
-        <translation>Limpar a lista de ficheiros recentes</translation>
+        <translation>Limpar a lista de arquivos recentes</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="846"/>
@@ -1412,12 +1412,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="854"/>
         <source>Find in Files...</source>
-        <translation>localizar em Ficheiros...</translation>
+        <translation>localizar em arquivos...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="859"/>
         <source>Find &amp;Next</source>
-        <translation>Localizar &amp;seguinte</translation>
+        <translation>Localizar &amp;próximo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="862"/>
@@ -1493,7 +1493,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="968"/>
         <source>Select Next Instance</source>
-        <translation>Selecionar a instância seguinte</translation>
+        <translation>Selecionar a próxima instância</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="971"/>
@@ -1543,7 +1543,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1018"/>
         <source>Toggle Single Line Comment</source>
-        <translation>Alternar comentário de linha única</translation>
+        <translation>Ativar/desativar comentário de linha única</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1021"/>
@@ -1639,12 +1639,12 @@
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1121"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1124"/>
         <source>Show in Explorer</source>
-        <translation>Mostrar no Explorador</translation>
+        <translation>Mostrar no Explorer</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1133"/>
         <source>Open Command Prompt Here</source>
-        <translation>Abrir a janela de comandos aqui</translation>
+        <translation>Abrir o terminal aqui</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1138"/>
@@ -1659,7 +1659,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1146"/>
         <source>Next Bookmark</source>
-        <translation>Marcador seguinte</translation>
+        <translation>Próximo marcador</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1149"/>
@@ -1689,7 +1689,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1172"/>
         <source>Next Tab</source>
-        <translation>Separarador seguinte</translation>
+        <translation>Próxima aba</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1175"/>
@@ -1699,7 +1699,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1183"/>
         <source>Previous Tab</source>
-        <translation>Separador anterior</translation>
+        <translation>Aba anterior</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1186"/>
@@ -2073,7 +2073,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="62"/>
         <source>Temporary files</source>
-        <translation>Ficheiros temporários</translation>
+        <translation>arquivos temporários</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
