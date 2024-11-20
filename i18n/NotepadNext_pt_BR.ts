@@ -303,7 +303,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="45"/>
         <source>Line Length</source>
-        <translation>Comprimento da linha</translation>
+        <translation>Tamanho da linha</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="46"/>
@@ -318,7 +318,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="48"/>
         <source>Line Indent Position</source>
-        <translation></translation>
+        <translation>Posição da indentação da linha</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="52"/>
@@ -353,7 +353,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="75"/>
         <source>Multiple Selections</source>
-        <translation>Seleções múltiplas</translation>
+        <translation>Seleção múltipla</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="80"/>
@@ -363,7 +363,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="83"/>
         <source>Length</source>
-        <translation>Comprimento</translation>
+        <translation>Tamanho</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="84"/>
@@ -373,12 +373,12 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="88"/>
         <source>View Information</source>
-        <translation>Ver informação</translation>
+        <translation>Visualizar informação</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="91"/>
         <source>Lines on Screen</source>
-        <translation>Linhas no ecrã</translation>
+        <translation>Linhas na tela</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="92"/>
@@ -461,12 +461,12 @@
     <message>
         <location filename="../src/NotepadNext/docks/FileListDock.ui" line="51"/>
         <source>...</source>
-        <translation></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/FileListDock.ui" line="90"/>
         <source>Sort by File Name</source>
-        <translation>Ordenar pelo nome</translation>
+        <translation>Ordenar pelo nome do arquivo</translation>
     </message>
 </context>
 <context>
@@ -749,7 +749,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="110"/>
         <source>Delete Selected Macro Step</source>
-        <translation>Eliminar a etapa da macro selecionada</translation>
+        <translation>Apagar a etapa da macro selecionada</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="125"/>
@@ -1112,12 +1112,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="499"/>
         <source>Del</source>
-        <translation>Ctrl+V</translation>
+        <translation>Del</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="504"/>
         <source>Copy Full Path</source>
-        <translation>Copiar localização completa</translation>
+        <translation>Copiar caminho completo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="509"/>
@@ -1232,7 +1232,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="634"/>
         <source>Convert text to lower case</source>
-        <translation>Converter texto em minúsculas</translation>
+        <translation>Converter texto para minúsculo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="639"/>
@@ -1332,7 +1332,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="732"/>
         <source>Reset Zoom</source>
-        <translation>Repor</translation>
+        <translation>Resetar zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="735"/>
@@ -1352,7 +1352,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="763"/>
         <source>Show Whitespace</source>
-        <translation>Mostrar espaço em branco</translation>
+        <translation>Mostrar espaços em branco</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="771"/>
@@ -1382,7 +1382,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="823"/>
         <source>Restore Recently Closed File</source>
-        <translation>Restaurar ficheiro fechado recentemente</translation>
+        <translation>Restaurar arquivo fechado recentemente</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="826"/>
@@ -1468,7 +1468,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="931"/>
         <source>Save Current Recorded Macro...</source>
-        <translation>Guardar a macro gravada atual...</translation>
+        <translation>Salvar a macro gravada atual...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="943"/>
@@ -1503,12 +1503,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="980"/>
         <source>Move to Trash...</source>
-        <translation>Mover para o Lixo...</translation>
+        <translation>Mover para a Lixeira...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="983"/>
         <source>Move to Trash</source>
-        <translation>Mover para o Lixo</translation>
+        <translation>Mover para a Lixeira</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="988"/>
@@ -1543,7 +1543,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1018"/>
         <source>Toggle Single Line Comment</source>
-        <translation>Ativar/desativar comentário de linha única</translation>
+        <translation>Inserir/Remover comentário de linha única</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1021"/>
@@ -1563,7 +1563,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1034"/>
         <source>Single Line Uncomment</source>
-        <translation>Sem comentário de linha única</translation>
+        <translation>Remover comentário da linha atual</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1037"/>
@@ -1608,22 +1608,22 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1087"/>
         <source>Base 64 Encode</source>
-        <translation>Codificação Base 64</translation>
+        <translation>Codificar para Base 64</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1092"/>
         <source>URL Encode</source>
-        <translation>Codificação URL</translation>
+        <translation>Codificar para URL</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1097"/>
         <source>Base 64 Decode</source>
-        <translation>Descodificação Base 64</translation>
+        <translation>Decodificar Base 64</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1102"/>
         <source>URL Decode</source>
-        <translation>Descodificação URL</translation>
+        <translation>Decodificar URL</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1107"/>
@@ -1912,7 +1912,7 @@
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1354"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1357"/>
         <source>Toggle Overtype</source>
-        <translation>Ativar/desativar o overtype</translation>
+        <translation>Inserir/remover o overtype</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1360"/>
@@ -2000,12 +2000,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1356"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
-        <translation>Tem a certeza de que pretende mover &lt;b&gt;%1&lt;/b&gt; para o lixo?</translation>
+        <translation>Tem a certeza de que pretende mover &lt;b&gt;%1&lt;/b&gt; para a lixeira?</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1366"/>
         <source>Error Deleting File</source>
-        <translation>Erro ao eliminar arquivo</translation>
+        <translation>Erro ao Apagar arquivo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1366"/>
@@ -2068,7 +2068,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="55"/>
         <source>Unsaved changes</source>
-        <translation>Alterações não guardadas</translation>
+        <translation>Alterações não salvas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="62"/>
@@ -2078,7 +2078,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
         <source>Recenter find/replace dialog when opened</source>
-        <translation type="unfinished"></translation>
+        <translation>Centralizar a janela de pesquisar/substituir quando ela for aberta</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="81"/>
@@ -2227,7 +2227,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.ui" line="38"/>
         <source>Copy Results to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar resultados para a Área de Transferência</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="65"/>
@@ -2242,12 +2242,12 @@
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="68"/>
         <source>Delete Entry</source>
-        <translation>Eliminar entrada</translation>
+        <translation>Apagar entrada</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="70"/>
         <source>Delete All</source>
-        <translation>Eliminar tudo</translation>
+        <translation>Apagar tudo</translation>
     </message>
 </context>
 <context>
@@ -2397,12 +2397,12 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="845"/>
         <source>Pin Active Tab (Press Ctrl to Pin Group)</source>
-        <translation>Fixar separadores ativos (Premir Ctrl para fixar grupo)</translation>
+        <translation>Fixar aba atual (Aperte Ctrl para fixar grupo)</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="858"/>
         <source>Close Active Tab</source>
-        <translation>Fechar separador ativo</translation>
+        <translation>Fechar aba atual</translation>
     </message>
 </context>
 <context>
