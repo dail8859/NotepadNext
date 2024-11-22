@@ -26,7 +26,8 @@ LOCALES = \
     tr_TR \
     pl_PL \
     ru_RU \
-    pt_PT
+    pt_PT \
+    pt_BR
 
 for(LOCALE, LOCALES) {
     # The application translation file
