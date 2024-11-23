@@ -1638,7 +1638,7 @@ void MainWindow::applyStyleSheet()
 
     QString sheet;
     QFile f(":/stylesheets/npp.css");
-    qInfo() << "Loading stylesheet: " << f.fileName();
+    qInfo() << "Loading stylesheet:" << f.fileName();
 
     f.open(QFile::ReadOnly);
     sheet = f.readAll();
@@ -1649,7 +1649,7 @@ void MainWindow::applyStyleSheet()
     QString fullPath = QDir(directoryPath).filePath("custom.css");
     if (QFile::exists(fullPath)) {
         QFile custom(fullPath);
-        qInfo() << "Loading stylesheet: " << custom.fileName();
+        qInfo() << "Loading stylesheet:" << custom.fileName();
 
         custom.open(QFile::ReadOnly);
         sheet += custom.readAll();

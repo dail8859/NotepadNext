@@ -105,6 +105,15 @@ bool NotepadNextApplication::init()
     settings = new ApplicationSettings(this);
 
     if (parser.isSet("reset-settings")) {
+        QFileInfo original(settings->fileName());
+        QString backup = original.canonicalPath() + "/backup." + original.suffix();
+
+        qInfo("Resetting application settings");
+        qInfo("Backuping up %s to %s", qUtf8Printable(settings->fileName()), qUtf8Printable(backup));
+
+        QFile::remove(backup);
+        bool renameSuccessfull = QFile::rename(settings->fileName(), backup);
+
         settings->clear();
     }
 
