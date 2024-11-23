@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
     qInfo("CPU: %s", qUtf8Printable(QSysInfo::currentCpuArchitecture()));
     qInfo("File Path: %s", qUtf8Printable(QApplication::applicationFilePath()));
     qInfo("Arguments: %s", qUtf8Printable(app.arguments().join(' ')));
+    qInfo("Config File: %s", qUtf8Printable(ApplicationSettings().fileName()));
     qInfo("=============================");
 
     if(app.isPrimary()) {
