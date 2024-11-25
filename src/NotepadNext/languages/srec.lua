@@ -15,29 +15,29 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["RECSTART"] = {
 		id = 1,
 		fgColor = rgb(0x7F0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["RECTYPE"] = {
 		id = 2,
 		fgColor = rgb(0x7F0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["RECTYPE_UNKNOWN"] = {
 		id = 3,
 		fgColor = rgb(0x7F0000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 		fontStyle = 2,
 	},
 	["BYTECOUNT"] = {
 		id = 4,
 		fgColor = rgb(0x7F7F00),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["BYTECOUNT_WRONG"] = {
 		id = 5,
@@ -47,55 +47,55 @@ L.styles = {
 	["NOADDRESS"] = {
 		id = 6,
 		fgColor = rgb(0x7F00FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["DATAADDRESS"] = {
 		id = 7,
 		fgColor = rgb(0x007FFF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["RECCOUNT"] = {
 		id = 8,
 		fgColor = rgb(0x7F00FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["STARTADDRESS"] = {
 		id = 9,
 		fgColor = rgb(0x007FFF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["ADDRESSFIELD_UNKNOWN"] = {
 		id = 10,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 		fontStyle = 2,
 	},
 	["DATA_ODD"] = {
 		id = 12,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["DATA_EVEN"] = {
 		id = 13,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["DATA_UNKNOWN"] = {
 		id = 14,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 		fontStyle = 2,
 	},
 	["DATA_EMPTY"] = {
 		id = 15,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["CHECKSUM"] = {
 		id = 16,
 		fgColor = rgb(0x00BF00),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["CHECKSUM_WRONG"] = {
 		id = 17,
@@ -104,8 +104,8 @@ L.styles = {
 	},
 	["GARBAGE"] = {
 		id = 18,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 		fontStyle = 2,
 	},
 }

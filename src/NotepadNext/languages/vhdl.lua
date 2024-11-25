@@ -21,55 +21,55 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT LIne"] = {
 		id = 2,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT LINE BANG"] = {
 		id = 15,
 		fgColor = rgb(0x008080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["NUMBER"] = {
 		id = 3,
 		fgColor = rgb(0xFF8000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["STRING"] = {
 		id = 4,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["OPERATOR"] = {
 		id = 5,
-		fgColor = rgb(0x000080),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(OperatorColor),
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["IDENTIFIER"] = {
 		id = 6,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["INSTRUCTION"] = {
 		id = 8,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["STD OPERATOR"] = {
 		id = 9,
 		fgColor = rgb(0x0080C0),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["ATTRIBUTE"] = {
@@ -81,23 +81,23 @@ L.styles = {
 	["STD FUNCTION"] = {
 		id = 11,
 		fgColor = rgb(0x0080FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["STD PACKAGE"] = {
 		id = 12,
 		fgColor = rgb(0x800000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["STD TYPE"] = {
 		id = 13,
-		fgColor = rgb(0x8000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(TypeColor),
+		bgColor = rgb(defaultBg),
 	},
 	["USER DEFINE"] = {
 		id = 14,
 		fgColor = rgb(0xB5E71F),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 }
 return L

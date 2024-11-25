@@ -19,60 +19,60 @@ L.keywords = {
 L.styles = {
 	["DEFAULT"] = {
 		id = 0,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 	["COMMENT"] = {
 		id = 1,
 		fgColor = rgb(0x008000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["INSTRUCTION WORD"] = {
 		id = 2,
-		fgColor = rgb(0x0000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(InstructionColor),
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["BASE WORD"] = {
 		id = 3,
-		fgColor = rgb(0x8000FF),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(TypeColor),
+		bgColor = rgb(defaultBg),
 	},
 	["KEYWORD"] = {
 		id = 4,
 		fgColor = rgb(0x0080FF),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["NUMBER"] = {
 		id = 5,
 		fgColor = rgb(0xFF8000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["STRING"] = {
 		id = 6,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["STRING2"] = {
 		id = 7,
 		fgColor = rgb(0x808080),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["OPERATOR"] = {
 		id = 8,
-		fgColor = rgb(0x000080),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(OperatorColor),
+		bgColor = rgb(defaultBg),
 		fontStyle = 1,
 	},
 	["INFIX"] = {
 		id = 10,
 		fgColor = rgb(0x804000),
-		bgColor = rgb(0xFFFFFF),
+		bgColor = rgb(defaultBg),
 	},
 	["IDENTIFIER"] = {
 		id = 9,
-		fgColor = rgb(0x000000),
-		bgColor = rgb(0xFFFFFF),
+		fgColor = rgb(defaultFg),
+		bgColor = rgb(defaultBg),
 	},
 }
 return L

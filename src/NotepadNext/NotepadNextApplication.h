@@ -64,6 +64,9 @@ public:
     QString detectLanguageFromContents(ScintillaNext *editor) const;
 
     void sendInfoToPrimaryInstance();
+    
+    // expose this method to make it possible to change theme without restart
+    void setLanguageColors();
 
     bool isRunningAsAdmin() const;
 

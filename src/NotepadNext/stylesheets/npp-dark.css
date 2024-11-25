@@ -1,0 +1,54 @@
+/* Dark mode further tweak, in addition to qdarkstyle */
+/* Separate from qdarkstyle so that qdarkstyle upgrade will not override it */
+
+/* NotepadNext tabbar configuration ----------------------------------------
+
+----------------------------------------------------------------------------*/
+ads--CDockWidgetTab[activeTab="true"] {
+    /*background: qlineargradient(spread : pad, x1 : 0, y1 : 0, x2 : 0, y2 : 0.5, stop : 0
+                palette(window), stop:1 palette(light));*/
+    background: palette(highlight);
+    color: palette(foreground);
+}
+
+ads--CDockWidgetTab QLabel {
+     color: palette(dark);
+}
+
+ads--CDockWidgetTab[activeTab="true"] QLabel {
+    color: palette(foreground);
+    background: palette(highlight);
+}
+
+ads--CDockWidgetTab {
+    /* Make tab icons smaller */
+    /*qproperty-iconSize: 8px 8px;*/
+}
+
+#dockWidgetTabLabel {
+    margin: 0px;
+    /* Fix tiltle text truncation at header/tail */
+    padding: 0px;
+}
+
+#tabCloseButton {
+    margin:  0px;
+    padding: 0x;
+}
+
+/* changed for NotepadNext - 'Close without save' button */
+/*QDialogButtonBox QPushButton {
+   min-width: 160px; 
+}*/
+
+QMessageBox > QDialogButtonBox > QPushButton[text="Close without Saving"] {
+    /* Avoid save file dialog on Linux close button long text truncation */
+    min-width: 160px;
+}
+
+QAbstractScrollArea {
+    /* Fix NotepadNext editor first character cut-off issue */
+    margin-left: -2px;
+    /* Fix NotepadNext editor first line cut-off issue on Linux */
+    margin-top:  -2px;
+}

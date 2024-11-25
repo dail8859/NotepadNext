@@ -24,6 +24,7 @@
 #include "LuaExtension.h"
 #include "DebugManager.h"
 #include "SessionManager.h"
+#include "ThemeColors.h"
 #include "TranslationManager.h"
 #include "ApplicationSettings.h"
 
@@ -43,6 +44,8 @@
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
+
+QString luaLanguagePath;
 
 const SingleApplication::Options opts = SingleApplication::ExcludeAppPath | SingleApplication::ExcludeAppVersion | SingleApplication::SecondaryNotification;
 
@@ -141,12 +144,24 @@ bool NotepadNextApplication::init()
         }
     });
 
+    // why setting loaded here? can it be loaded eailer?
     loadSettings();
+
+    bool darkMode = settings->darkMode();
+
+    // Set language path based on theme,
+    // dark mode may have its own path
+    //luaLanguagePath = darkMode ? "languages/dark" : "languages";
+    luaLanguagePath = "languages";  // same language lua config for dark/light mode
+    qInfo("Dark mode: %d, Lua language path: %s", darkMode, qUtf8Printable(luaLanguagePath));
 
     connect(this, &NotepadNextApplication::aboutToQuit, this, &NotepadNextApplication::saveSettings);
 
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
     ecad->setEnabled(true);
+
+    // Set up colors language lua scripts, based on dark/light theme
+    setLanguageColors();
 
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
@@ -294,7 +309,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 {
     LuaExtension::Instance().setEditor(editor);
 
-    getLuaState()->execute(QString("languageName = \"%1\"").arg(languageName).toLatin1().constData());
+    getLuaState()->execute(QString("languageName = \"%1\"").arg(languageName));
     const QString lexer = getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
 
     editor->languageName = languageName;
@@ -309,8 +324,8 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
     // Dynamic properties can be used to skip part of the default initialization. The value in the
     // property doesn't currently matter, but may be used at a later point.
-    getLuaState()->execute(QString("skip_tabs = %1").arg(editor->QObject::property("nn_skip_usetabs").isValid() ? "true" : "false").toLatin1().constData());
-    getLuaState()->execute(QString("skip_tabwidth = %1").arg(editor->QObject::property("nn_skip_tabwidth").isValid() ? "true" : "false").toLatin1().constData());
+    getLuaState()->execute(QString("skip_tabs = %1").arg(editor->QObject::property("nn_skip_usetabs").isValid() ? "true" : "false"));
+    getLuaState()->execute(QString("skip_tabwidth = %1").arg(editor->QObject::property("nn_skip_tabwidth").isValid() ? "true" : "false"));
 
     getLuaState()->execute(R"(
         local L = languages[languageName]
@@ -521,4 +536,33 @@ MainWindow *NotepadNextApplication::createNewWindow()
     });
 
     return window;
+}
+
+/**
+ * Build a Lua assignment statement: var = rgb
+ */
+static QString buildLuaAssignment(QString var, long rgb)
+{
+    return QString("%1=0x%2").arg(var).arg(rgb2bgr(rgb), 0, 16);
+}
+
+/**
+ * Set languages colors based dark/light mode settings
+ */
+void NotepadNextApplication::setLanguageColors()
+{
+    bool darkMode = settings->darkMode();
+
+    // Set language highlighting colors based on theme
+    long defaultFgColor  = darkMode ? DARK_DEFAULT_FG : LIGHT_DEFAULT_FG;
+    long defaultBgColor  = darkMode ? DARK_DEFAULT_BG : LIGHT_DEFAULT_BG;
+    long instructionColor= darkMode ? DARK_INTRUCTION_COLOR : LIGHT_INTRUCTION_COLOR;
+    long operatorColor   = darkMode ? DARK_OPERATOR_COLOR : LIGHT_OPERATOR_COLOR;
+    long typeColor       = darkMode ? DARK_TYPE_COLOR : LIGHT_TYPE_COLOR;
+
+    luaState->execute(buildLuaAssignment("defaultFg", defaultFgColor));
+    luaState->execute(buildLuaAssignment("defaultBg", defaultBgColor));
+    luaState->execute(buildLuaAssignment("InstructionColor", instructionColor));
+    luaState->execute(buildLuaAssignment("OperatorColor", operatorColor));
+    luaState->execute(buildLuaAssignment("TypeColor", typeColor));
 }

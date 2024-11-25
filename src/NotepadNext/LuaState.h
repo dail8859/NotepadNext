@@ -27,6 +27,8 @@
 
 struct lua_State;
 
+extern QString luaLanguagePath;
+
 class LuaState
 {
 public:
@@ -34,6 +36,7 @@ public:
     ~LuaState();
 
     void execute(const char *statement, bool clear = true);
+    void execute(const QString& statement);
     void executeFile(const QString &fileName);
 
     template<typename T>
@@ -44,7 +47,6 @@ public:
     void raiseError(const char *errorMessage = Q_NULLPTR);
 
     lua_State *L = Q_NULLPTR;
-
 private:
 };
 
