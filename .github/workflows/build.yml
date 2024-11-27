@@ -26,8 +26,7 @@ jobs:
           modules: "qt5compat"
           os: windows-latest
         -
-          qt_version: "6.6.1"
-          modules: "qt5compat"
+          qt_version: "5.15"
           os: macos-latest
 
     runs-on: ${{ matrix.config.os }}
