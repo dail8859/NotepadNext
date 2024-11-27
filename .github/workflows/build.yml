@@ -18,15 +18,15 @@ jobs:
       matrix:
         config:
         -
-          qt_version: "6.6.1"
+          qt_version: "6.8"
           modules: "qt5compat"
           os: ubuntu-20.04
         -
-          qt_version: "6.6.1"
+          qt_version: "6.8"
           modules: "qt5compat"
           os: windows-latest
         -
-          qt_version: "5.15"
+          qt_version: "6.8"
           os: macos-latest
 
     runs-on: ${{ matrix.config.os }}
@@ -88,10 +88,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, windows-latest, macos-latest]
+        os: [ubuntu-20.04, windows-latest, macos-latest, osx-latest]
         qt_version: ["5.15", "6.5", "6.6"]
         exclude:
         - os: macos-latest
+          qt_version: "6.8"
+        - os: osx-latest
           qt_version: "5.15"
 
     runs-on: ${{ matrix.os }}
