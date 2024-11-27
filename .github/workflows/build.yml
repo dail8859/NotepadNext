@@ -9,7 +9,7 @@ on:
   pull_request:
 
 env:
-  QT_RELEASE_VER: 6.5
+  QT_RELEASE_VER: 6.8
 
 jobs:
   cmake-build:
@@ -18,15 +18,15 @@ jobs:
       matrix:
         config:
         -
-          qt_version: "6.8.0"
+          qt_version: "6.8"
           modules: "qt5compat"
           os: ubuntu-20.04
         -
-          qt_version: "6.8.0"
+          qt_version: "6.8"
           modules: "qt5compat"
           os: windows-latest
         -
-          qt_version: "6.8.0"
+          qt_version: "6.8"
           modules: "qt5compat"
           os: macos-latest
 
