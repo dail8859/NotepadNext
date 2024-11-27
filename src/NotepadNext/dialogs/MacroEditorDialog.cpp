@@ -73,7 +73,9 @@ void MacroEditorDialog::rowChanged(const QModelIndex &current, const QModelIndex
         ui->editMacroName->setReadOnly(true);
         ui->editMacroName->clear();
         ui->keyMacroShortcut->clear();
-        ui->tblMacroSteps->model()->deleteLater();
+        if (auto model = ui->tblMacroSteps->model()) {
+            model->deleteLater();
+        }
         return;
     }
     else {
@@ -84,7 +86,9 @@ void MacroEditorDialog::rowChanged(const QModelIndex &current, const QModelIndex
         ui->editMacroName->setText(macro->getName());
 
         // Replace the existing model
-        ui->tblMacroSteps->model()->deleteLater();
+        if (auto model = ui->tblMacroSteps->model()) {
+            model->deleteLater();
+        }
         ui->tblMacroSteps->setModel(new MacroStepTableModel(macro, this));
 
         // Resize some stuff now that we have a new model

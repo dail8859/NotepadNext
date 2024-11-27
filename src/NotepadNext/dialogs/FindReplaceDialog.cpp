@@ -18,9 +18,9 @@
 
 
 #include "FindReplaceDialog.h"
+#include "ApplicationSettings.h"
 #include "ui_FindReplaceDialog.h"
 
-#include <QSettings>
 #include <QStatusBar>
 #include <QLineEdit>
 #include <QKeyEvent>
@@ -49,7 +49,6 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
     // Turn off the help button on the dialog
     setWindowFlag(Qt::WindowContextHelpButtonHint, false);
-
     ui->setupUi(this);
 
     // Get the current editor, and keep up the reference
@@ -151,6 +150,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     connect(qApp, &QApplication::aboutToQuit, this, &FindReplaceDialog::saveSettings);
 
     changeTab(tabBar->currentIndex());
+
 }
 
 FindReplaceDialog::~FindReplaceDialog()
@@ -222,7 +222,13 @@ void FindReplaceDialog::find()
 
     prepareToPerformSearch();
 
-    Sci_CharacterRange range = finder->findNext();
+    Sci_CharacterRange range;
+    if(!ui->checkBoxBackwardsDirection->isChecked()) {
+        range = finder->findNext();
+    }
+    else{
+         range = finder->findPrev();
+    }
 
     if (ScintillaNext::isRangeValid(range)) {
         if (finder->didLatestSearchWrapAround()) {
@@ -367,8 +373,8 @@ void FindReplaceDialog::transparencyToggled(bool on)
 
     if (on) {
         if (ui->radioOnLosingFocus->isChecked()) {
-           adjustOpacityWhenLosingFocus(true);
-           adjustOpacityAlways(false);
+            adjustOpacityWhenLosingFocus(true);
+            adjustOpacityAlways(false);
         }
         else {
             adjustOpacityWhenLosingFocus(false);
@@ -491,7 +497,7 @@ void FindReplaceDialog::loadSettings()
 {
     qInfo(Q_FUNC_INFO);
 
-    QSettings settings;
+    ApplicationSettings settings;
 
     settings.beginGroup("FindReplaceDialog");
 
@@ -533,7 +539,7 @@ void FindReplaceDialog::saveSettings()
 {
     qInfo(Q_FUNC_INFO);
 
-    QSettings settings;
+    ApplicationSettings settings;
 
     settings.beginGroup("FindReplaceDialog");
     settings.remove(""); // clear out any previous keys
@@ -576,14 +582,22 @@ void FindReplaceDialog::savePosition()
 {
     qInfo(Q_FUNC_INFO);
 
-    position = pos();
+    lastClosedPosition = pos();
 }
 
 void FindReplaceDialog::restorePosition()
 {
     qInfo(Q_FUNC_INFO);
 
-    move(position);
+    ApplicationSettings settings;
+
+    if (settings.centerSearchDialog()) {
+        const QPoint centerPoint = parentWidget()->geometry().center();
+        move(centerPoint - rect().center());
+    }
+    else {
+        move(lastClosedPosition);
+    }
 }
 
 int FindReplaceDialog::computeSearchFlags()

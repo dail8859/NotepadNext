@@ -18,9 +18,12 @@
 
 
 #include "FileListDock.h"
+#include "ApplicationSettings.h"
 #include "ui_FileListDock.h"
 
 #include "MainWindow.h"
+
+ApplicationSetting<bool> sortByName{"FileList/SortByName", false};
 
 FileListDock::FileListDock(MainWindow *parent) :
     QDockWidget(parent),
@@ -30,13 +33,31 @@ FileListDock::FileListDock(MainWindow *parent) :
     qInfo(Q_FUNC_INFO);
 
     ui->setupUi(this);
+    ui->btnSettings->addAction(ui->actionSortbyFileName);
+
+    // Set the initial state
+    ApplicationSettings settings;
+    ui->actionSortbyFileName->setChecked(settings.get(sortByName));
+
+    // Track it if it changes
+    connect(ui->actionSortbyFileName, &QAction::toggled, this, [=](bool b) {
+        ApplicationSettings settings;
+        settings.set(sortByName, b);
+        refreshList();
+    });
 
     connect(this, &QDockWidget::visibilityChanged, this, [=](bool visible) {
         if (visible) {
             // Only get events when the dock is visible
-            connect(window->getDockedEditor(), &DockedEditor::editorAdded, this, &FileListDock::addEditor);
+            connect(window->getDockedEditor(), &DockedEditor::editorAdded, this, [=](ScintillaNext *editor) {
+                Q_UNUSED(editor);
+
+                // The editor could get added on any DockArea and doesn't necessarily get appended to the end of the FileList, so refresh everything
+                refreshList();
+            });
             connect(window->getDockedEditor(), &DockedEditor::editorActivated, this, &FileListDock::selectCurrentEditor);
             connect(window->getDockedEditor(), &DockedEditor::editorClosed, this, &FileListDock::removeEditor);
+            connect(window->getDockedEditor(), &DockedEditor::editorOrderChanged, this, &FileListDock::refreshList);
 
             refreshList();
             selectCurrentEditor();
@@ -72,9 +93,20 @@ void FileListDock::refreshList()
 
     ui->listWidget->clear();
 
-    for (ScintillaNext *editor : window->getDockedEditor()->editors()) {
+    QVector<ScintillaNext*> editors = window->getDockedEditor()->editors();
+    ApplicationSettings settings;
+
+    if (settings.get(sortByName)) {
+        std::sort(editors.begin(), editors.end(), [](const ScintillaNext* e1, const ScintillaNext* e2) {
+            return QString::compare(e1->getName(), e2->getName(), Qt::CaseInsensitive) < 0;
+        });
+    }
+
+    for (ScintillaNext *editor : editors) {
         addEditor(editor);
     }
+
+    selectCurrentEditor();
 }
 
 void FileListDock::addEditor(ScintillaNext *editor)
@@ -130,6 +162,7 @@ void FileListDock::itemClicked(QListWidgetItem *item)
 
 void FileListDock::editorSavePointChanged(bool dirty)
 {
+    Q_UNUSED(dirty);
     qInfo(Q_FUNC_INFO);
 
     ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());

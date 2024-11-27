@@ -10,6 +10,7 @@
     <title>
       Scintilla
     </title>
+    <link rel="canonical" href="https://scintilla.org/ScintillaHistory.html" />
     <style type="text/css">
         table {
             border-collapse: collapse;
@@ -580,9 +581,249 @@
 	<td>Chengzhi Li</td>
 	<td>Gary James</td>
 	<td>Tsuyoshi Miyake</td>
+	<td>Martijn Laan</td>
     </tr>
     </table>
     <h2>Releases</h2>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla553.zip">Release 5.5.3</a>
+    </h3>
+    <ul>
+	<li>
+	Released 19 October 2024.
+	</li>
+	<li>
+	On Win32 change direction of horizontal mouse wheel and touchpad scrolling to match other applications.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2449/">Bug #2449</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla552.zip">Release 5.5.2</a>
+    </h3>
+    <ul>
+	<li>
+	Released 21 August 2024.
+	</li>
+	<li>
+	Add SCI_SETCOPYSEPARATOR for separator between parts of a multiple selection when copied to the clipboard.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1530/">Feature #1530</a>.
+	</li>
+	<li>
+	Add SCI_GETUNDOSEQUENCE to determine whether an undo sequence is active and its nesting depth.
+	</li>
+	<li>
+	Add SCI_STYLESETSTRETCH to support condensed and expanded text styles.
+	</li>
+	<li>
+	Add SCI_LINEINDENT and SCI_LINEDEDENT.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1524/">Feature #1524</a>.
+	</li>
+	<li>
+	Fix bug on Cocoa where double-click stopped working when system had been running for a long time.
+	</li>
+	<li>
+	On Cocoa implement more values of font weight and stretch.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla551.zip">Release 5.5.1</a>
+    </h3>
+    <ul>
+	<li>
+	Released 22 July 2024.
+	</li>
+	<li>
+	SCI_CUTALLOWLINE added which is similar to SCI_COPYALLOWLINE but also deletes the copied text.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1518/">Feature #1518</a>.
+	</li>
+	<li>
+	Can set font used for autocompletion lists with SCI_AUTOCSETSTYLE.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1523/">Feature #1523</a>.
+	</li>
+	<li>
+	Increase maximum zoom set interactively to +60 points.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1517/">Feature #1517</a>.
+	</li>
+	<li>
+	Fix flickering cursor after some mouse action sequences.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2443/">Bug #2443</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla550.zip">Release 5.5.0</a>
+    </h3>
+    <ul>
+	<li>
+	Released 23 April 2024.
+	</li>
+	<li>
+	Add elements for inactive additional selections SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_TEXT
+	and SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_BACK.
+	When not set these default to SC_ELEMENT_SELECTION_INACTIVE_TEXT and SC_ELEMENT_SELECTION_INACTIVE_BACK.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2417/">Bug #2417</a>.
+	</li>
+	<li>
+	On Cocoa, avoid use of NSUserDefaults which will soon require justification when used in applications on the App Store.
+	</li>
+	<li>
+	Fix Win32 IME crash in windowed mode.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2433/">Bug #2433</a>.
+	</li>
+	<li>
+	Scale reverse arrow cursor for margins to match other cursors when user changes pointer size.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2321/">Bug #2321</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla543.zip">Release 5.4.3</a>
+    </h3>
+    <ul>
+	<li>
+	Released 9 March 2024.
+	</li>
+	<li>
+	Fix redo failure introduced with 5.4.2.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2432/">Bug #2432</a>.
+	</li>
+	<li>
+	Add SC_AUTOCOMPLETE_SELECT_FIRST_ITEM option to
+	always selects the first item in the autocompletion list.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2403/">Bug #2403</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla542.zip">Release 5.4.2</a>
+    </h3>
+    <ul>
+	<li>
+	Released 5 March 2024.
+	</li>
+	<li>
+	Significantly reduce memory used for undo actions, often to a half or quarter of previous versions.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1458/">Feature #1458</a>.
+	</li>
+	<li>
+	Add APIs for saving and restoring undo history.
+	</li>
+	<li>
+	For GTK, when laying out text, detect runs with both left-to-right and right-to-left ranges and divide into an ASCII prefix and
+	more complex suffix. Lay out the ASCII prefix in the standard manner but, for the suffix, measure the whole width
+	and spread that over the suffix bytes. This produces more usable results where the caret moves over the ASCII prefix correctly
+	and over the suffix reasonably but not accurately.
+	</li>
+	<li>
+	For ScintillaEdit on Qt, fix reference from ScintillaDocument to Document to match change in 5.4.1
+	using IDocumentEditable for SCI_GETDOCPOINTER and SCI_SETDOCPOINTER.
+	</li>
+	<li>
+	For Direct2D on Win32, use the multi-threaded option to avoid crashes when Scintilla instances
+	created on different threads. There may be more problems with this scenario so it should be avoided.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2420/">Bug #2420</a>.
+	</li>
+	<li>
+	For Win32, ensure keyboard-initiated context menu appears in multi-screen situations.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla541.zip">Release 5.4.1</a>
+    </h3>
+    <ul>
+	<li>
+	Released 27 December 2023.
+	</li>
+	<li>
+	Add IDocumentEditable interface to allow efficient interaction with document objects which may not be visible in
+	a Scintilla instance. This feature is provisional and may change before being declared stable.
+	For better type-safety, the ScintillaCall C++ API uses IDocumentEditable* where void* was used before which may require
+	changes to client code that uses document pointer APIs
+	DocPointer, SetDocPointer, CreateDocument, AddRefDocument, and ReleaseDocument.
+	</li>
+	<li>
+	Ctrl-click on a selection deselects it in multiple selection mode.
+	</li>
+	<li>
+	Add SCI_SELECTIONFROMPOINT for modifying multiple selections.
+	</li>
+	<li>
+	Add SCI_SETMOVEEXTENDSSELECTION and SCI_CHANGESELECTIONMODE to
+	simplify selection mode manipulation.
+	</li>
+	<li>
+	Improve performance of global replace by reducing cache invalidation overhead.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1502/">Feature #1502</a>.
+	</li>
+	<li>
+	Fix regular expression search for "\&lt;" matching beginning of search when not beginning of word and
+	for "\&gt;" not matching line end.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2157/">Bug #2157</a>.
+	</li>
+	<li>
+	Fix regular expression search failure when search for "\&lt;" followed by search for "\&gt;".
+	<a href="https://sourceforge.net/p/scintilla/bugs/2413/">Bug #2413</a>.
+	</li>
+	<li>
+	Fix regular expression assertion (^, $, \b. \B) failures when using SCFIND_CXX11REGEX.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2405/">Bug #2405</a>.
+	</li>
+	<li>
+	Fix regular expression bug in reverse direction where shortened match returned.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2405/">Bug #2405</a>.
+	</li>
+	<li>
+	Avoid character fragments in regular expression search results.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2405/">Bug #2405</a>.
+	</li>
+	<li>
+	With a document that does not have the SC_DOCUMENTOPTION_TEXT_LARGE option set,
+	allocating more than 2G (calling SCI_ALLOCATE or similar) will now fail with SC_STATUS_FAILURE.
+	</li>
+	<li>
+	Protect SCI_REPLACETARGET, SCI_REPLACETARGETMINIMAL, and SCI_REPLACETARGETRE from
+	application changing target in notification handlers.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2289/">Bug #2289</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla540.zip">Release 5.4.0</a>
+    </h3>
+    <ul>
+	<li>
+	Released 18 November 2023.
+	</li>
+	<li>
+	Fix crashes on macOS 12 and older when built with Xcode 15.0.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla538.zip">Release 5.3.8</a>
+    </h3>
+    <ul>
+	<li>
+	Released 5 November 2023.
+	</li>
+	<li>
+	Fix excessive memory use when deleting contiguous ranges backwards.
+	<a href="https://github.com/notepad-plus-plus/notepad-plus-plus/issues/13442">Notepad++ Issue #13442</a>.
+	</li>
+	<li>
+	Fix incorrect substitution when searching for a regular expression backwards.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2405/">Bug #2405</a>.
+	</li>
+	<li>
+	Make SCI_MOVESELECTEDLINESUP and SCI_MOVESELECTEDLINESDOWN work for rectangular selections.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2078/">Bug #2078</a>.
+	</li>
+	<li>
+	For Cocoa, minimum supported macOS release increased to 10.13.
+	</li>
+	<li>
+	For Cocoa, fix invisible text on macOS 14 Sonoma.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2402/">Bug #2402</a>.
+	</li>
+	<li>
+	For Cocoa, do nothing for suspendDrawing on macOS 10.14+ as the underlying calls have been deprecated.
+	</li>
+    </ul>
     <h3>
        <a href="https://www.scintilla.org/scintilla537.zip">Release 5.3.7</a>
     </h3>
@@ -1924,7 +2165,7 @@
 	</li>
 	<li>
 	Add SCI_SETTABMINIMUMWIDTH to set the minimum width of tabs.
-	This allows minimaps or overviews to be layed out to match the full size editing view.
+	This allows minimaps or overviews to be laid out to match the full size editing view.
 	<a href="https://sourceforge.net/p/scintilla/bugs/2118/">Bug #2118</a>.
 	</li>
 	<li>
@@ -2493,7 +2734,7 @@
 	<a href="https://sourceforge.net/p/scintilla/feature-requests/1210/">Feature #1210.</a>
 	</li>
 	<li>
-	Fix hang in Lua lexer when lexing a label upto the terminating "::".
+	Fix hang in Lua lexer when lexing a label up to the terminating "::".
 	<a href="https://sourceforge.net/p/scintilla/bugs/1999/">Bug #1999</a>.
 	</li>
 	<li>
@@ -2720,7 +2961,7 @@
 	'Ctrl+L|SCI_LINEDELETE|'.
 	</li>
 	<li>
-	The Matlab lexer treats 'end' as a number rather than a keyword when used as a index.
+	The Matlab lexer treats 'end' as a number rather than a keyword when used as an index.
 	This also stops incorrect folding.
 	<a href="https://sourceforge.net/p/scintilla/bugs/1951/">Bug #1951</a>.
 	</li>
@@ -9763,7 +10004,7 @@
 	SciTE crashing bug fixed in incremental search on Windows ME.
 	</li>
 	<li>
-	SciTE on Windows has a optional find and replace dialogs that can search through
+	SciTE on Windows has an optional find and replace dialogs that can search through
 	all buffers and search within a particular style number.
 	</li>
     </ul>
@@ -11332,7 +11573,7 @@
 	SciTE's Export as LaTeX output improved.
       </li>
       <li>
-	Better choice of autocompletion displaying above the caret rather then
+	Better choice of autocompletion displaying above the caret rather than
 	below when that is more sensible.
       </li>
       <li>
@@ -12700,7 +12941,7 @@
         Pascal lexer handles comments more correctly.
       </li>
       <li>
-        C/C++/Java/JavaScipt lexer has a state for line doc comments.
+        C/C++/Java/JavaScript lexer has a state for line doc comments.
       </li>
       <li>
         Error output lexer understands Sun CC messages.
@@ -13917,7 +14158,7 @@
       <li>
         Scintilla supports a 'savepoint' in the undo stack which can be set by the container when
         the document is saved. Notifications are sent to the container when the savepoint is
-        entered or left, allowing the container to to display a dirty indicator and change its
+        entered or left, allowing the container to display a dirty indicator and change its
         menus.
       </li>
       <li>

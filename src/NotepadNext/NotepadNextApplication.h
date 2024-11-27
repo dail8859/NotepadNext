@@ -20,13 +20,12 @@
 #ifndef NOTEPADNEXTAPPLICATION_H
 #define NOTEPADNEXTAPPLICATION_H
 
-#include "Settings.h"
+#include "ApplicationSettings.h"
 
 #include "SingleApplication"
 
 #include <QCommandLineParser>
 #include <QPointer>
-#include <QTranslator>
 
 
 class MainWindow;
@@ -35,6 +34,8 @@ class EditorManager;
 class RecentFilesListManager;
 class ScintillaNext;
 class SessionManager;
+class TranslationManager;
+
 
 class NotepadNextApplication : public SingleApplication
 {
@@ -48,10 +49,12 @@ public:
     RecentFilesListManager *getRecentFilesListManager() const { return recentFilesListManager; }
     EditorManager *getEditorManager() const { return editorManager; }
     SessionManager *getSessionManager() const;
+    TranslationManager *getTranslationManager() const { return translationManager; };
 
     LuaState *getLuaState() const { return luaState; }
     QString getFileDialogFilter() const;
-    Settings *getSettings() const { return settings; }
+    QString getFileDialogFilterForLanguage(const QString &language) const;
+    ApplicationSettings *getSettings() const { return settings; }
 
     QStringList getLanguages() const;
     void setEditorLanguage(ScintillaNext *editor, const QString &languageName) const;
@@ -59,9 +62,6 @@ public:
     QString detectLanguage(ScintillaNext *editor) const;
     QString detectLanguageFromExtension(const QString &extension) const;
     QString detectLanguageFromContents(ScintillaNext *editor) const;
-
-    void loadSystemDefaultTranslation();
-    void loadTranslation(QLocale locale);
 
     void sendInfoToPrimaryInstance();
 
@@ -72,6 +72,7 @@ protected:
 
 private slots:
     void saveSettings();
+    void receiveInfoFromSecondaryInstance(quint32 instanceId, QByteArray message);
 
 private:
     void openFiles(const QStringList &files);
@@ -80,8 +81,9 @@ private:
 
     EditorManager *editorManager;
     RecentFilesListManager *recentFilesListManager;
-    Settings *settings;
+    ApplicationSettings *settings;
     SessionManager *sessionManager;
+    TranslationManager *translationManager;
 
     LuaState *luaState = Q_NULLPTR;
 
@@ -89,9 +91,6 @@ private:
     QPointer<QWidget> currentlyFocusedWidget; // Keep a weak pointer to the QWidget since we don't own it
 
     MainWindow *createNewWindow();
-
-    QTranslator translatorNpn;
-    QTranslator translatorQt;
 
     QCommandLineParser parser;
 };

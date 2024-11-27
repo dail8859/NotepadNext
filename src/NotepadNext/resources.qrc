@@ -41,5 +41,6 @@
         <file>icons/table_edit.png</file>
         <file>icons/application_osx_terminal.png</file>
         <file>icons/folder_go.png</file>
+        <file>icons/wrapindicator.png</file>
     </qresource>
 </RCC>

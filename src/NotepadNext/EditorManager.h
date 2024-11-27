@@ -24,6 +24,7 @@
 #include <QPointer>
 
 
+class ApplicationSettings;
 class ScintillaNext;
 
 class EditorManager : public QObject
@@ -31,7 +32,7 @@ class EditorManager : public QObject
     Q_OBJECT
 
 public:
-    explicit EditorManager(QObject *parent = nullptr);
+    explicit EditorManager(ApplicationSettings *settings, QObject *parent = nullptr);
 
     ScintillaNext *createEditor(const QString &name);
     ScintillaNext *createEditorFromFile(const QString &filePath, bool tryToCreate=false);
@@ -47,8 +48,10 @@ signals:
 private:
     void setupEditor(ScintillaNext *editor);
     void purgeOldEditorPointers();
+    QList<QPointer<ScintillaNext>> getEditors();
 
     QList<QPointer<ScintillaNext>> editors;
+    ApplicationSettings *settings;
 };
 
 #endif // EDITORMANAGER_H

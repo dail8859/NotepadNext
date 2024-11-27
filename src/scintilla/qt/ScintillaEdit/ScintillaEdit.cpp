@@ -560,6 +560,14 @@ bool ScintillaEdit::styleCheckMonospaced(sptr_t style) const {
     return send(SCI_STYLEGETCHECKMONOSPACED, style, 0);
 }
 
+void ScintillaEdit::styleSetStretch(sptr_t style, sptr_t stretch) {
+    send(SCI_STYLESETSTRETCH, style, stretch);
+}
+
+sptr_t ScintillaEdit::styleStretch(sptr_t style) const {
+    return send(SCI_STYLEGETSTRETCH, style, 0);
+}
+
 void ScintillaEdit::styleSetInvisibleRepresentation(sptr_t style, const char * representation) {
     send(SCI_STYLESETINVISIBLEREPRESENTATION, style, (sptr_t)representation);
 }
@@ -694,6 +702,66 @@ void ScintillaEdit::beginUndoAction() {
 
 void ScintillaEdit::endUndoAction() {
     send(SCI_ENDUNDOACTION, 0, 0);
+}
+
+sptr_t ScintillaEdit::undoSequence() const {
+    return send(SCI_GETUNDOSEQUENCE, 0, 0);
+}
+
+sptr_t ScintillaEdit::undoActions() const {
+    return send(SCI_GETUNDOACTIONS, 0, 0);
+}
+
+void ScintillaEdit::setUndoSavePoint(sptr_t action) {
+    send(SCI_SETUNDOSAVEPOINT, action, 0);
+}
+
+sptr_t ScintillaEdit::undoSavePoint() const {
+    return send(SCI_GETUNDOSAVEPOINT, 0, 0);
+}
+
+void ScintillaEdit::setUndoDetach(sptr_t action) {
+    send(SCI_SETUNDODETACH, action, 0);
+}
+
+sptr_t ScintillaEdit::undoDetach() const {
+    return send(SCI_GETUNDODETACH, 0, 0);
+}
+
+void ScintillaEdit::setUndoTentative(sptr_t action) {
+    send(SCI_SETUNDOTENTATIVE, action, 0);
+}
+
+sptr_t ScintillaEdit::undoTentative() const {
+    return send(SCI_GETUNDOTENTATIVE, 0, 0);
+}
+
+void ScintillaEdit::setUndoCurrent(sptr_t action) {
+    send(SCI_SETUNDOCURRENT, action, 0);
+}
+
+sptr_t ScintillaEdit::undoCurrent() const {
+    return send(SCI_GETUNDOCURRENT, 0, 0);
+}
+
+void ScintillaEdit::pushUndoActionType(sptr_t type, sptr_t pos) {
+    send(SCI_PUSHUNDOACTIONTYPE, type, pos);
+}
+
+void ScintillaEdit::changeLastUndoActionText(sptr_t length, const char * text) {
+    send(SCI_CHANGELASTUNDOACTIONTEXT, length, (sptr_t)text);
+}
+
+sptr_t ScintillaEdit::undoActionType(sptr_t action) const {
+    return send(SCI_GETUNDOACTIONTYPE, action, 0);
+}
+
+sptr_t ScintillaEdit::undoActionPosition(sptr_t action) const {
+    return send(SCI_GETUNDOACTIONPOSITION, action, 0);
+}
+
+QByteArray ScintillaEdit::undoActionText(sptr_t action) const {
+    return TextReturner(SCI_GETUNDOACTIONTEXT, action);
 }
 
 void ScintillaEdit::indicSetStyle(sptr_t indicator, sptr_t indicatorStyle) {
@@ -930,6 +998,14 @@ void ScintillaEdit::autoCSetMaxHeight(sptr_t rowCount) {
 
 sptr_t ScintillaEdit::autoCMaxHeight() const {
     return send(SCI_AUTOCGETMAXHEIGHT, 0, 0);
+}
+
+void ScintillaEdit::autoCSetStyle(sptr_t style) {
+    send(SCI_AUTOCSETSTYLE, style, 0);
+}
+
+sptr_t ScintillaEdit::autoCStyle() const {
+    return send(SCI_AUTOCGETSTYLE, 0, 0);
 }
 
 void ScintillaEdit::setIndent(sptr_t indentSize) {
@@ -1756,8 +1832,16 @@ void ScintillaEdit::tab() {
     send(SCI_TAB, 0, 0);
 }
 
+void ScintillaEdit::lineIndent() {
+    send(SCI_LINEINDENT, 0, 0);
+}
+
 void ScintillaEdit::backTab() {
     send(SCI_BACKTAB, 0, 0);
+}
+
+void ScintillaEdit::lineDedent() {
+    send(SCI_LINEDEDENT, 0, 0);
 }
 
 void ScintillaEdit::newLine() {
@@ -2212,8 +2296,16 @@ void ScintillaEdit::setSelectionMode(sptr_t selectionMode) {
     send(SCI_SETSELECTIONMODE, selectionMode, 0);
 }
 
+void ScintillaEdit::changeSelectionMode(sptr_t selectionMode) {
+    send(SCI_CHANGESELECTIONMODE, selectionMode, 0);
+}
+
 sptr_t ScintillaEdit::selectionMode() const {
     return send(SCI_GETSELECTIONMODE, 0, 0);
+}
+
+void ScintillaEdit::setMoveExtendsSelection(bool moveExtendsSelection) {
+    send(SCI_SETMOVEEXTENDSSELECTION, moveExtendsSelection, 0);
 }
 
 bool ScintillaEdit::moveExtendsSelection() const {
@@ -2472,6 +2564,18 @@ void ScintillaEdit::copyAllowLine() {
     send(SCI_COPYALLOWLINE, 0, 0);
 }
 
+void ScintillaEdit::cutAllowLine() {
+    send(SCI_CUTALLOWLINE, 0, 0);
+}
+
+void ScintillaEdit::setCopySeparator(const char * separator) {
+    send(SCI_SETCOPYSEPARATOR, 0, (sptr_t)separator);
+}
+
+QByteArray ScintillaEdit::copySeparator() const {
+    return TextReturner(SCI_GETCOPYSEPARATOR, 0);
+}
+
 sptr_t ScintillaEdit::characterPointer() const {
     return send(SCI_GETCHARACTERPOINTER, 0, 0);
 }
@@ -2690,6 +2794,10 @@ void ScintillaEdit::setSelection(sptr_t caret, sptr_t anchor) {
 
 void ScintillaEdit::addSelection(sptr_t caret, sptr_t anchor) {
     send(SCI_ADDSELECTION, caret, anchor);
+}
+
+sptr_t ScintillaEdit::selectionFromPoint(sptr_t x, sptr_t y) {
+    return send(SCI_SELECTIONFROMPOINT, x, y);
 }
 
 void ScintillaEdit::dropSelectionN(sptr_t selection) {

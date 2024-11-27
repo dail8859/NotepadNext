@@ -28,7 +28,7 @@ When the application is built, it automatically uses `lrelease` to convert the l
 
 ### Project Setup
 
-The included .ts files are listed `i18n.pri`. New translations file names can be added to the `TRANSLATIONS` variable. To include the base Qt translations, the appropriate .qm file must also be added to `EXTRA_TRANSLATIONS`.
+The included .ts files are listed `i18n.pri`. New locales names can be added to the `LOCALES` variable.
 
 ## Translation Process for Translators
 

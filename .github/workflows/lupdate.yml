@@ -1,6 +1,9 @@
 name: Update translation files
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:  
+  schedule:           
+    - cron: '35 1 * * 0'  
 
 jobs:
   lupdate:
@@ -13,7 +16,7 @@ jobs:
           submodules: true
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
           version: '6.5'
 

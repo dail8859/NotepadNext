@@ -120,6 +120,9 @@ public:
 	Sci_Position LengthCurrent() const noexcept {
 		return currentPos - styler.GetStartSegment();
 	}
+	char GetRelativeChar(Sci_Position n, char chDefault='\0') {
+		return styler.SafeGetCharAt(currentPos + n, chDefault);
+	}
 	int GetRelative(Sci_Position n, char chDefault='\0') {
 		const unsigned char chRelative = styler.SafeGetCharAt(currentPos + n, chDefault);
 		return chRelative;
@@ -180,10 +183,10 @@ public:
 	}
 	// Non-inline
 	bool MatchIgnoreCase(const char *s);
-	void GetCurrent(char *s, Sci_PositionU len);
-	void GetCurrentLowered(char *s, Sci_PositionU len);
+	void GetCurrent(char *s, Sci_PositionU len) const;
+	void GetCurrentLowered(char *s, Sci_PositionU len) const;
 	enum class Transform { none, lower };
-	void GetCurrentString(std::string &string, Transform transform);
+	void GetCurrentString(std::string &string, Transform transform) const;
 };
 
 }

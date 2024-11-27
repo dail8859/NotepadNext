@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "actionscript"
+L.lexer = "cpp"
 
 L.singleLineComment = "// "
 

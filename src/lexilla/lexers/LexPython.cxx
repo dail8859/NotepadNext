@@ -20,7 +20,6 @@
 #include "Scintilla.h"
 #include "SciLexer.h"
 
-#include "StringCopy.h"
 #include "WordList.h"
 #include "LexAccessor.h"
 #include "Accessor.h"
@@ -78,49 +77,59 @@ constexpr bool IsPyStringTypeChar(int ch, literalsAllowed allowed) noexcept {
 		((allowed & litF) && (ch == 'f' || ch == 'F'));
 }
 
+constexpr bool IsQuote(int ch) {
+	return AnyOf(ch, '"', '\'');
+}
+
+constexpr bool IsRawPrefix(int ch) {
+	return AnyOf(ch, 'r', 'R');
+}
+
 bool IsPyStringStart(int ch, int chNext, int chNext2, literalsAllowed allowed) noexcept {
-	if (ch == '\'' || ch == '"')
+	// To cover both python2 and python3 lex character prefixes as --
+	// ur'' is a string, but ru'' is not
+	// fr'', rf'', br'', rb'' are all strings
+	if (IsQuote(ch))
 		return true;
 	if (IsPyStringTypeChar(ch, allowed)) {
-		if (chNext == '"' || chNext == '\'')
+		if (IsQuote(chNext))
 			return true;
-		if ((chNext == 'r' || chNext == 'R') && (chNext2 == '"' || chNext2 == '\''))
+		if (IsRawPrefix(chNext) && IsQuote(chNext2))
 			return true;
 	}
-	if ((ch == 'r' || ch == 'R') && (chNext == '"' || chNext == '\''))
-		return true;
+	if (IsRawPrefix(ch)) {
+		if (IsQuote(chNext))
+			return true;
+		if (IsPyStringTypeChar(chNext, allowed) && !AnyOf(chNext, 'u', 'U') && IsQuote(chNext2))
+			return true;
+	}
 
 	return false;
 }
 
 constexpr bool IsPyFStringState(int st) noexcept {
-	return ((st == SCE_P_FCHARACTER) || (st == SCE_P_FSTRING) ||
-		(st == SCE_P_FTRIPLE) || (st == SCE_P_FTRIPLEDOUBLE));
+	return AnyOf(st, SCE_P_FCHARACTER, SCE_P_FSTRING, SCE_P_FTRIPLE, SCE_P_FTRIPLEDOUBLE);
 }
 
 constexpr bool IsPySingleQuoteStringState(int st) noexcept {
-	return ((st == SCE_P_CHARACTER) || (st == SCE_P_STRING) ||
-		(st == SCE_P_FCHARACTER) || (st == SCE_P_FSTRING));
+	return AnyOf(st, SCE_P_CHARACTER, SCE_P_STRING, SCE_P_FCHARACTER, SCE_P_FSTRING);
 }
 
 constexpr bool IsPyTripleQuoteStringState(int st) noexcept {
-	return ((st == SCE_P_TRIPLE) || (st == SCE_P_TRIPLEDOUBLE) ||
-		(st == SCE_P_FTRIPLE) || (st == SCE_P_FTRIPLEDOUBLE));
+	return AnyOf(st, SCE_P_TRIPLE, SCE_P_TRIPLEDOUBLE, SCE_P_FTRIPLE, SCE_P_FTRIPLEDOUBLE);
 }
 
 char GetPyStringQuoteChar(int st) noexcept {
-	if ((st == SCE_P_CHARACTER) || (st == SCE_P_FCHARACTER) ||
-			(st == SCE_P_TRIPLE) || (st == SCE_P_FTRIPLE))
+	if (AnyOf(st, SCE_P_CHARACTER, SCE_P_FCHARACTER, SCE_P_TRIPLE, SCE_P_FTRIPLE))
 		return '\'';
-	if ((st == SCE_P_STRING) || (st == SCE_P_FSTRING) ||
-			(st == SCE_P_TRIPLEDOUBLE) || (st == SCE_P_FTRIPLEDOUBLE))
+	if (AnyOf(st, SCE_P_STRING, SCE_P_FSTRING, SCE_P_TRIPLEDOUBLE, SCE_P_FTRIPLEDOUBLE))
 		return '"';
 
 	return '\0';
 }
 
 void PushStateToStack(int state, std::vector<SingleFStringExpState> &stack, SingleFStringExpState *&currentFStringExp) {
-	SingleFStringExpState single = {state, 0};
+	const SingleFStringExpState single = {state, 0};
 	stack.push_back(single);
 
 	currentFStringExp = &stack.back();
@@ -147,15 +156,23 @@ int PopFromStateStack(std::vector<SingleFStringExpState> &stack, SingleFStringEx
 int GetPyStringState(Accessor &styler, Sci_Position i, Sci_PositionU *nextIndex, literalsAllowed allowed) {
 	char ch = styler.SafeGetCharAt(i);
 	char chNext = styler.SafeGetCharAt(i + 1);
-	const int firstIsF = (ch == 'f' || ch == 'F');
+	bool isFString = false;
 
-	// Advance beyond r, u, or ur prefix (or r, b, or br in Python 2.7+ and r, f, or fr in Python 3.6+), but bail if there are any unexpected chars
-	if (ch == 'r' || ch == 'R') {
+	// Advance beyond r, a type char, or both (in either order)
+	// Note that this depends on IsPyStringStart to enforce ru'' not being a string
+	if (IsRawPrefix(ch)) {
 		i++;
+		if (IsPyStringTypeChar(chNext, allowed)) {
+			if (AnyOf(chNext, 'f', 'F'))
+				isFString = true;
+			i++;
+		}
 		ch = styler.SafeGetCharAt(i);
 		chNext = styler.SafeGetCharAt(i + 1);
 	} else if (IsPyStringTypeChar(ch, allowed)) {
-		if (chNext == 'r' || chNext == 'R')
+		if (AnyOf(ch, 'f', 'F'))
+			isFString = true;
+		if (IsRawPrefix(chNext))
 			i += 2;
 		else
 			i += 1;
@@ -163,7 +180,8 @@ int GetPyStringState(Accessor &styler, Sci_Position i, Sci_PositionU *nextIndex,
 		chNext = styler.SafeGetCharAt(i + 1);
 	}
 
-	if (ch != '"' && ch != '\'') {
+	// ch and i will be the first quote
+	if (!IsQuote(ch)) {
 		*nextIndex = i + 1;
 		return SCE_P_DEFAULT;
 	}
@@ -172,20 +190,20 @@ int GetPyStringState(Accessor &styler, Sci_Position i, Sci_PositionU *nextIndex,
 		*nextIndex = i + 3;
 
 		if (ch == '"')
-			return (firstIsF ? SCE_P_FTRIPLEDOUBLE : SCE_P_TRIPLEDOUBLE);
+			return (isFString ? SCE_P_FTRIPLEDOUBLE : SCE_P_TRIPLEDOUBLE);
 		else
-			return (firstIsF ? SCE_P_FTRIPLE : SCE_P_TRIPLE);
+			return (isFString ? SCE_P_FTRIPLE : SCE_P_TRIPLE);
 	} else {
 		*nextIndex = i + 1;
 
 		if (ch == '"')
-			return (firstIsF ? SCE_P_FSTRING : SCE_P_STRING);
+			return (isFString ? SCE_P_FSTRING : SCE_P_STRING);
 		else
-			return (firstIsF ? SCE_P_FCHARACTER : SCE_P_CHARACTER);
+			return (isFString ? SCE_P_FCHARACTER : SCE_P_CHARACTER);
 	}
 }
 
-inline bool IsAWordChar(int ch, bool unicodeIdentifiers) {
+bool IsAWordChar(int ch, bool unicodeIdentifiers) noexcept {
 	if (IsASCII(ch))
 		return (IsAlphaNumeric(ch) || ch == '.' || ch == '_');
 
@@ -196,7 +214,7 @@ inline bool IsAWordChar(int ch, bool unicodeIdentifiers) {
 	return IsXidContinue(ch);
 }
 
-inline bool IsAWordStart(int ch, bool unicodeIdentifiers) {
+bool IsAWordStart(int ch, bool unicodeIdentifiers) noexcept {
 	if (IsASCII(ch))
 		return (IsUpperOrLowerCase(ch) || ch == '_');
 
@@ -212,7 +230,7 @@ bool IsFirstNonWhitespace(Sci_Position pos, Accessor &styler) {
 	const Sci_Position start_pos = styler.LineStart(line);
 	for (Sci_Position i = start_pos; i < pos; i++) {
 		const char ch = styler[i];
-		if (!(ch == ' ' || ch == '\t'))
+		if (!IsASpaceOrTab(ch))
 			return false;
 	}
 	return true;
@@ -221,7 +239,7 @@ bool IsFirstNonWhitespace(Sci_Position pos, Accessor &styler) {
 unsigned char GetNextNonWhitespaceChar(Accessor &styler, Sci_PositionU pos, Sci_PositionU maxPos, Sci_PositionU *charPosPtr = nullptr) {
 	while (pos < maxPos) {
 		const unsigned char ch = styler.SafeGetCharAt(pos, '\0');
-		if (!(ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r')) {
+		if (!AnyOf(ch, ' ', '\t', '\n', '\r')) {
 			if (charPosPtr != nullptr) {
 				*charPosPtr = pos;
 			}
@@ -281,8 +299,9 @@ struct OptionsPython {
 	bool unicodeIdentifiers = true;
 	int identifierAttributes = 0;
 	int decoratorAttributes = 0;
+	bool pep701StringsF = true;
 
-	literalsAllowed AllowedLiterals() const noexcept {
+	[[nodiscard]] literalsAllowed AllowedLiterals() const noexcept {
 		literalsAllowed allowedLiterals = stringsU ? litU : litNone;
 		if (stringsB)
 			allowedLiterals = static_cast<literalsAllowed>(allowedLiterals | litB);
@@ -321,6 +340,9 @@ struct OptionSetPython : public OptionSet<OptionsPython> {
 		DefineProperty("lexer.python.strings.f", &OptionsPython::stringsF,
 			       "Set to 0 to not recognise Python 3.6 f-string literals f\"var={var}\".");
 
+		DefineProperty("lexer.python.strings.f.pep.701", &OptionsPython::pep701StringsF,
+			       "Set to 0 to use pre-PEP 701 / Python 3.12 f-string lexing.");
+
 		DefineProperty("lexer.python.strings.over.newline", &OptionsPython::stringsOverNewline,
 			       "Set to 1 to allow strings to span newline characters.");
 
@@ -350,7 +372,7 @@ struct OptionSetPython : public OptionSet<OptionsPython> {
 
 const char styleSubable[] = { SCE_P_IDENTIFIER, 0 };
 
-LexicalClass lexicalClasses[] = {
+const LexicalClass lexicalClasses[] = {
 	// Lexer Python SCLEX_PYTHON SCE_P_:
 	0, "SCE_P_DEFAULT", "default", "White space",
 	1, "SCE_P_COMMENTLINE", "comment line", "Comment",
@@ -375,23 +397,19 @@ LexicalClass lexicalClasses[] = {
 	20, "SCE_P_ATTRIBUTE", "identifier", "Attribute of identifier",
 };
 
-}
-
 class LexerPython : public DefaultLexer {
 	WordList keywords;
 	WordList keywords2;
 	OptionsPython options;
 	OptionSetPython osPython;
 	enum { ssIdentifier };
-	SubStyles subStyles;
+	SubStyles subStyles{styleSubable};
 	std::map<Sci_Position, std::vector<SingleFStringExpState> > ftripleStateAtEol;
 public:
 	explicit LexerPython() :
-		DefaultLexer("python", SCLEX_PYTHON, lexicalClasses, ELEMENTS(lexicalClasses)),
-		subStyles(styleSubable, 0x80, 0x40, 0) {
+		DefaultLexer("python", SCLEX_PYTHON, lexicalClasses, std::size(lexicalClasses)) {
 	}
-	~LexerPython() override {
-	}
+	~LexerPython() override = default;
 	void SCI_METHOD Release() override {
 		delete this;
 	}
@@ -408,7 +426,7 @@ public:
 		return osPython.DescribeProperty(name);
 	}
 	Sci_Position SCI_METHOD PropertySet(const char *key, const char *val) override;
-	const char * SCI_METHOD PropertyGet(const char *key) override {
+	const char *SCI_METHOD PropertyGet(const char *key) override {
 		return osPython.PropertyGet(key);
 	}
 	const char *SCI_METHOD DescribeWordListSets() override {
@@ -492,23 +510,29 @@ Sci_Position SCI_METHOD LexerPython::WordListSet(int n, const char *wl) {
 }
 
 void LexerPython::ProcessLineEnd(StyleContext &sc, std::vector<SingleFStringExpState> &fstringStateStack, SingleFStringExpState *&currentFStringExp, bool &inContinuedString) {
-	long deepestSingleStateIndex = -1;
-	unsigned long i;
+	// Before pep 701 single quote f-string's could not continue to a 2nd+ line
+	// Post pep 701, they can continue both with a trailing \ and if a { field is
+	// not ended with a }
+	if (!options.pep701StringsF) {
+		long deepestSingleStateIndex = -1;
+		unsigned long i;
 
-	// Find the deepest single quote state because that string will end; no \ continuation in f-string
-	for (i = 0; i < fstringStateStack.size(); i++) {
-		if (IsPySingleQuoteStringState(fstringStateStack[i].state)) {
-			deepestSingleStateIndex = i;
-			break;
+		// Find the deepest single quote state because that string will end; no \ continuation in f-string
+		for (i = 0; i < fstringStateStack.size(); i++) {
+			if (IsPySingleQuoteStringState(fstringStateStack[i].state)) {
+				deepestSingleStateIndex = i;
+				break;
+			}
+		}
+
+		if (deepestSingleStateIndex != -1) {
+			sc.SetState(fstringStateStack[deepestSingleStateIndex].state);
+			while (fstringStateStack.size() > static_cast<unsigned long>(deepestSingleStateIndex)) {
+				PopFromStateStack(fstringStateStack, currentFStringExp);
+			}
 		}
 	}
 
-	if (deepestSingleStateIndex != -1) {
-		sc.SetState(fstringStateStack[deepestSingleStateIndex].state);
-		while (fstringStateStack.size() > static_cast<unsigned long>(deepestSingleStateIndex)) {
-			PopFromStateStack(fstringStateStack, currentFStringExp);
-		}
-	}
 	if (!fstringStateStack.empty()) {
 		std::pair<Sci_Position, std::vector<SingleFStringExpState> > val;
 		val.first = sc.currentLine;
@@ -551,10 +575,8 @@ void SCI_METHOD LexerPython::Lex(Sci_PositionU startPos, Sci_Position length, in
 			// Look for backslash-continued lines
 			while (lineCurrent > 0) {
 				const Sci_Position eolPos = styler.LineStart(lineCurrent) - 1;
-				const int eolStyle = styler.StyleAt(eolPos);
-				if (eolStyle == SCE_P_STRING
-						|| eolStyle == SCE_P_CHARACTER
-						|| eolStyle == SCE_P_STRINGEOL) {
+				const int eolStyle = styler.StyleIndexAt(eolPos);
+				if (AnyOf(eolStyle, SCE_P_STRING, SCE_P_CHARACTER, SCE_P_STRINGEOL)) {
 					lineCurrent -= 1;
 				} else {
 					break;
@@ -562,12 +584,11 @@ void SCI_METHOD LexerPython::Lex(Sci_PositionU startPos, Sci_Position length, in
 			}
 			startPos = styler.LineStart(lineCurrent);
 		}
-		initStyle = startPos == 0 ? SCE_P_DEFAULT : styler.StyleAt(startPos - 1);
+		initStyle = startPos == 0 ? SCE_P_DEFAULT : styler.StyleIndexAt(startPos - 1);
 	}
 
 	const literalsAllowed allowedLiterals = options.AllowedLiterals();
 
-	initStyle = initStyle & 31;
 	if (initStyle == SCE_P_STRINGEOL) {
 		initStyle = SCE_P_DEFAULT;
 	}
@@ -637,12 +658,12 @@ void SCI_METHOD LexerPython::Lex(Sci_PositionU startPos, Sci_Position length, in
 			}
 		} else if (sc.state == SCE_P_IDENTIFIER) {
 			if ((sc.ch == '.') || (!IsAWordChar(sc.ch, options.unicodeIdentifiers))) {
-				char s[100];
-				sc.GetCurrent(s, sizeof(s));
+				char identifier[100];
+				sc.GetCurrent(identifier, sizeof(identifier));
 				int style = SCE_P_IDENTIFIER;
-				if ((kwLast == kwImport) && (strcmp(s, "as") == 0)) {
+				if ((kwLast == kwImport) && (strcmp(identifier, "as") == 0)) {
 					style = SCE_P_WORD;
-				} else if (keywords.InList(s) && !IsMatchOrCaseIdentifier(sc, styler, s)) {
+				} else if (keywords.InList(identifier) && !IsMatchOrCaseIdentifier(sc, styler, identifier)) {
 					style = SCE_P_WORD;
 				} else if (kwLast == kwClass) {
 					style = SCE_P_CLASSNAME;
@@ -665,7 +686,7 @@ void SCI_METHOD LexerPython::Lex(Sci_PositionU startPos, Sci_Position length, in
 							break;
 						}
 					}
-				} else if (keywords2.InList(s)) {
+				} else if (keywords2.InList(identifier)) {
 					if (options.keywords2NoSubIdentifiers) {
 						// We don't want to highlight keywords2
 						// that are used as a sub-identifier,
@@ -677,7 +698,7 @@ void SCI_METHOD LexerPython::Lex(Sci_PositionU startPos, Sci_Position length, in
 						style = SCE_P_WORD2;
 					}
 				} else {
-					const int subStyle = classifierIdentifiers.ValueFor(s);
+					const int subStyle = classifierIdentifiers.ValueFor(identifier);
 					if (subStyle >= 0) {
 						style = subStyle;
 					}
@@ -705,14 +726,14 @@ void SCI_METHOD LexerPython::Lex(Sci_PositionU startPos, Sci_Position length, in
 								if (attrCh == '#')
 									isComment = true;
 								// Detect if this attribute belongs to a decorator
-								if (!(ch == ' ' || ch == '\t'))
+								if (!IsASpaceOrTab(ch))
 									break;
 							}
-							if (((isDecoratorAttribute) && (!isComment)) && (((options.decoratorAttributes == 1)  && (style == SCE_P_IDENTIFIER)) || (options.decoratorAttributes == 2))){
+							if (((isDecoratorAttribute) && (!isComment)) && (((options.decoratorAttributes == 1)  && (style == SCE_P_IDENTIFIER)) || (options.decoratorAttributes == 2))) {
 								// Style decorator attributes as decorators but respect already styled identifiers (unless requested to ignore already styled identifiers)
 								style = SCE_P_DECORATOR;
 							}
-							if (((!isDecoratorAttribute) && (!isComment)) && (((options.identifierAttributes == 1) && (style == SCE_P_IDENTIFIER)) || (options.identifierAttributes == 2))){
+							if (((!isDecoratorAttribute) && (!isComment)) && (((options.identifierAttributes == 1) && (style == SCE_P_IDENTIFIER)) || (options.identifierAttributes == 2))) {
 								// Style attributes and ignore decorator attributes but respect already styled identifiers (unless requested to ignore already styled identifiers)
 								style = SCE_P_ATTRIBUTE;
 							}
@@ -722,17 +743,17 @@ void SCI_METHOD LexerPython::Lex(Sci_PositionU startPos, Sci_Position length, in
 				sc.ChangeState(style);
 				sc.SetState(SCE_P_DEFAULT);
 				if (style == SCE_P_WORD) {
-					if (0 == strcmp(s, "class"))
+					if (0 == strcmp(identifier, "class"))
 						kwLast = kwClass;
-					else if (0 == strcmp(s, "def"))
+					else if (0 == strcmp(identifier, "def"))
 						kwLast = kwDef;
-					else if (0 == strcmp(s, "import"))
+					else if (0 == strcmp(identifier, "import"))
 						kwLast = kwImport;
-					else if (0 == strcmp(s, "cdef"))
+					else if (0 == strcmp(identifier, "cdef"))
 						kwLast = kwCDef;
-					else if (0 == strcmp(s, "cpdef"))
+					else if (0 == strcmp(identifier, "cpdef"))
 						kwLast = kwCPDef;
-					else if (0 == strcmp(s, "cimport"))
+					else if (0 == strcmp(identifier, "cimport"))
 						kwLast = kwImport;
 					else if (kwLast != kwCDef && kwLast != kwCPDef)
 						kwLast = kwOther;
@@ -795,10 +816,12 @@ void SCI_METHOD LexerPython::Lex(Sci_PositionU startPos, Sci_Position length, in
 			needEOLCheck = true;
 		}
 
-		// If in an f-string expression, check for the ending quote(s)
-		// and end f-string to handle syntactically incorrect cases like
-		// f'{' and f"""{"""
-		if (!fstringStateStack.empty() && (sc.ch == '\'' || sc.ch == '"')) {
+		// If in an f-string expression and pre pep 701 lexing is used,
+		// check for the ending quote(s) and end f-string to handle
+		// syntactically incorrect cases like f'{' and f"""{""". Post
+		// pep 701, a quote may appear in a { } field so cases like
+		// f"n = {":".join(seq)}" is valid
+		if (!options.pep701StringsF && !fstringStateStack.empty() && IsQuote(sc.ch)) {
 			long matching_stack_i = -1;
 			for (unsigned long stack_i = 0; stack_i < fstringStateStack.size() && matching_stack_i == -1; stack_i++) {
 				const int stack_state = fstringStateStack[stack_i].state;
@@ -904,21 +927,21 @@ void SCI_METHOD LexerPython::Lex(Sci_PositionU startPos, Sci_Position length, in
 	sc.Complete();
 }
 
-static bool IsCommentLine(Sci_Position line, Accessor &styler) {
+bool IsCommentLine(Sci_Position line, Accessor &styler) {
 	const Sci_Position pos = styler.LineStart(line);
 	const Sci_Position eol_pos = styler.LineStart(line + 1) - 1;
 	for (Sci_Position i = pos; i < eol_pos; i++) {
 		const char ch = styler[i];
 		if (ch == '#')
 			return true;
-		else if (ch != ' ' && ch != '\t')
+		if (!IsASpaceOrTab(ch))
 			return false;
 	}
 	return false;
 }
 
-static bool IsQuoteLine(Sci_Position line, const Accessor &styler) {
-	const int style = styler.StyleAt(styler.LineStart(line)) & 31;
+bool IsQuoteLine(Sci_Position line, const Accessor &styler) {
+	const int style = styler.StyleIndexAt(styler.LineStart(line));
 	return IsPyTripleQuoteStringState(style);
 }
 
@@ -952,9 +975,9 @@ void SCI_METHOD LexerPython::Fold(Sci_PositionU startPos, Sci_Position length, i
 
 	// Set up initial loop state
 	startPos = styler.LineStart(lineCurrent);
-	int prev_state = SCE_P_DEFAULT & 31;
+	int prev_state = SCE_P_DEFAULT;
 	if (lineCurrent >= 1)
-		prev_state = styler.StyleAt(startPos - 1) & 31;
+		prev_state = styler.StyleIndexAt(startPos - 1);
 	int prevQuote = options.foldQuotes && IsPyTripleQuoteStringState(prev_state);
 
 	// Process all characters to end of requested range or end of any triple quote
@@ -971,7 +994,7 @@ void SCI_METHOD LexerPython::Fold(Sci_PositionU startPos, Sci_Position length, i
 			// Information about next line is only available if not at end of document
 			indentNext = styler.IndentAmount(lineNext, &spaceFlags, nullptr);
 			const Sci_Position lookAtPos = (styler.LineStart(lineNext) == styler.Length()) ? styler.Length() - 1 : styler.LineStart(lineNext);
-			const int style = styler.StyleAt(lookAtPos) & 31;
+			const int style = styler.StyleIndexAt(lookAtPos);
 			quote = options.foldQuotes && IsPyTripleQuoteStringState(style);
 		}
 		const bool quote_start = (quote && !prevQuote);
@@ -1061,5 +1084,7 @@ void SCI_METHOD LexerPython::Fold(Sci_PositionU startPos, Sci_Position length, i
 	//styler.SetLevel(lineCurrent, indentCurrent);
 }
 
-LexerModule lmPython(SCLEX_PYTHON, LexerPython::LexerFactoryPython, "python",
+}
+
+extern const LexerModule lmPython(SCLEX_PYTHON, LexerPython::LexerFactoryPython, "python",
 		     pythonWordListDesc);

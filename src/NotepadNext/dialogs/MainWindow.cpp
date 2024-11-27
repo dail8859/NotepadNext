@@ -28,7 +28,6 @@
 #include <QMessageBox>
 #include <QStringList>
 #include <QClipboard>
-#include <QSettings>
 #include <QStandardPaths>
 #include <QWindow>
 #include <QPushButton>
@@ -49,7 +48,7 @@
 #include "DockAreaWidget.h"
 
 #include "NotepadNextApplication.h"
-#include "Settings.h"
+#include "ApplicationSettings.h"
 
 #include "ScintillaNext.h"
 
@@ -83,6 +82,8 @@
 #include "HtmlConverter.h"
 #include "RtfConverter.h"
 
+#include "FadingIndicator.h"
+
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
@@ -91,7 +92,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 {
     qInfo(Q_FUNC_INFO);
 
+    setAttribute(Qt::WA_DeleteOnClose);
+
     ui->setupUi(this);
+
+    applyCustomShortcuts();
 
     qInfo("setupUi Completed");
 
@@ -297,6 +302,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionIncrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->tab(); });
     connect(ui->actionDecrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->backTab(); });
 
+    addAction(ui->actionToggleOverType);
+    connect(ui->actionToggleOverType, &QAction::triggered, this, [=]() {
+        currentEditor()->editToggleOvertype();
+        ui->statusBar->refresh(currentEditor());
+    });
+
     SearchResultsDock *srDock = new SearchResultsDock(this);
     addDockWidget(Qt::BottomDockWidgetArea, srDock);
     srDock->toggleViewAction()->setShortcut(Qt::Key_F7);
@@ -418,6 +429,25 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
+    // The action needs added to the window so it can be triggered via the keyboard
+    addAction(ui->actionNextTab);
+    connect(ui->actionNextTab, &QAction::triggered, this, [=]() {
+        int index = dockedEditor->currentDockArea()->currentIndex();
+        int total = dockedEditor->currentDockArea()->dockWidgetsCount();
+
+        index++;
+        dockedEditor->currentDockArea()->setCurrentIndex(index < total ? index : 0);
+    });
+
+    // The action needs added to the window so it can be triggered via the keyboard
+    addAction(ui->actionPreviousTab);
+    connect(ui->actionPreviousTab, &QAction::triggered, this, [=]() {
+        int index = dockedEditor->currentDockArea()->currentIndex();
+        int total = dockedEditor->currentDockArea()->dockWidgetsCount();
+
+        index--;
+        dockedEditor->currentDockArea()->setCurrentIndex(index >= 0 ? index : total - 1);
+    });
 
     ui->pushExitFullScreen->setParent(this); // This is important
     ui->pushExitFullScreen->setVisible(false);
@@ -458,55 +488,44 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionShowAllCharacters, &QAction::triggered, this, [=](bool b) {
-        ui->actionShowWhitespace->setChecked(b);
-        ui->actionShowEndofLine->setChecked(b);
-    });
 
+    // Show All Characters is just a short cut to toggle whitespace and EOL on
+    ui->actionShowAllCharacters->setChecked(app->getSettings()->showWhitespace() && app->getSettings()->showEndOfLine());
+    connect(ui->actionShowAllCharacters, &QAction::triggered, app->getSettings(), &ApplicationSettings::setShowWhitespace);
+    connect(ui->actionShowAllCharacters, &QAction::triggered, app->getSettings(), &ApplicationSettings::setShowEndOfLine);
+
+    // Show White Space
+    ui->actionShowWhitespace->setChecked(app->getSettings()->showWhitespace());
+    connect(app->getSettings(), &ApplicationSettings::showWhitespaceChanged, ui->actionShowWhitespace, &QAction::setChecked);
+    connect(ui->actionShowWhitespace, &QAction::toggled, app->getSettings(), &ApplicationSettings::setShowWhitespace);
+    // Update the "Show All Character" action
     connect(ui->actionShowWhitespace, &QAction::toggled, this, [=](bool b) {
-        // TODO: could make SCWS_VISIBLEALWAYS configurable via settings. Probably not worth
-        // taking up menu space e.g. show all, show leading, show trailing
-        for (auto &editor : editors()) {
-            editor->setViewWS(b ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
-        }
-
         ui->actionShowAllCharacters->setChecked(b && ui->actionShowEndofLine->isChecked());
     });
 
+    // Show EOL
+    ui->actionShowEndofLine->setChecked(app->getSettings()->showEndOfLine());
+    connect(app->getSettings(), &ApplicationSettings::showEndOfLineChanged, ui->actionShowEndofLine, &QAction::setChecked);
+    connect(ui->actionShowEndofLine, &QAction::toggled, app->getSettings(), &ApplicationSettings::setShowEndOfLine);
+    // Update the "Show All Character" action
     connect(ui->actionShowEndofLine, &QAction::toggled, this, [=](bool b) {
-        for (auto &editor : editors()) {
-            editor->setViewEOL(b);
-        }
-
         ui->actionShowAllCharacters->setChecked(b && ui->actionShowWhitespace->isChecked());
     });
 
-    connect(ui->actionShowWrapSymbol, &QAction::triggered, this, [=](bool b) {
-        for (auto &editor : editors()) {
-            editor->setWrapVisualFlags(b ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
-        }
-    });
+    // Show Wrap Symbol
+    ui->actionShowWrapSymbol->setChecked(app->getSettings()->showWrapSymbol());
+    connect(app->getSettings(), &ApplicationSettings::showWrapSymbolChanged, ui->actionShowWrapSymbol, &QAction::setChecked);
+    connect(ui->actionShowWrapSymbol, &QAction::toggled, app->getSettings(), &ApplicationSettings::setShowWrapSymbol);
 
-    connect(ui->actionShowIndentGuide, &QAction::triggered, this, [=](bool b) {
-        currentEditor()->setIndentationGuides(b ? SC_IV_LOOKBOTH : SC_IV_NONE);
-    });
-    ui->actionShowIndentGuide->setChecked(true);
+    // Show Indentation Guide
+    ui->actionShowIndentGuide->setChecked(app->getSettings()->showIndentGuide());
+    connect(app->getSettings(), &ApplicationSettings::showIndentGuideChanged, ui->actionShowIndentGuide, &QAction::setChecked);
+    connect(ui->actionShowIndentGuide, &QAction::toggled, app->getSettings(), &ApplicationSettings::setShowIndentGuide);
 
-    connect(ui->actionWordWrap, &QAction::triggered, this, [=](bool b) {
-        if (b) {
-            for (auto &editor : editors()) {
-                editor->setWrapMode(SC_WRAP_WORD);
-            }
-        }
-        else {
-            for (auto &editor : editors()) {
-                // Store the top line and restore it after the lines have been unwrapped
-                int topLine = editor->docLineFromVisible(editor->firstVisibleLine());
-                editor->setWrapMode(SC_WRAP_NONE);
-                editor->setFirstVisibleLine(topLine);
-            }
-        }
-    });
+    // Word Wrap
+    ui->actionWordWrap->setChecked(app->getSettings()->wordWrap());
+    connect(app->getSettings(), &ApplicationSettings::wordWrapChanged, ui->actionWordWrap, &QAction::setChecked);
+    connect(ui->actionWordWrap, &QAction::toggled, app->getSettings(), &ApplicationSettings::setWordWrap);
 
     // Zooming controls all editors simulaneously
     connect(ui->actionZoomIn, &QAction::triggered, this, [=]() {
@@ -514,23 +533,52 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             editor->zoomIn();
         }
         zoomLevel = currentEditor()->zoom();
+
+        showEditorZoomLevelIndicator();
     });
     connect(ui->actionZoomOut, &QAction::triggered, this, [=]() {
         for (ScintillaNext *editor : editors()) {
             editor->zoomOut();
         }
         zoomLevel = currentEditor()->zoom();
+
+        showEditorZoomLevelIndicator();
     });
     connect(ui->actionZoomReset, &QAction::triggered, this, [=]() {
         for (ScintillaNext *editor : editors()) {
             editor->setZoom(0);
         }
         zoomLevel = 0;
+
+        showEditorZoomLevelIndicator();
     });
 
     // Zoom watcher has detected a zoom event, so just trigger the UI action
     connect(zoomEventWatcher, &ZoomEventWatcher::zoomIn, ui->actionZoomIn, &QAction::trigger);
     connect(zoomEventWatcher, &ZoomEventWatcher::zoomOut, ui->actionZoomOut, &QAction::trigger);
+
+    connect(ui->actionFoldAll, &QAction::triggered, this, [=]() { currentEditor()->foldAll(SC_FOLDACTION_CONTRACT | SC_FOLDACTION_CONTRACT_EVERY_LEVEL); });
+    connect(ui->actionUnfoldAll, &QAction::triggered, this, [=]() { currentEditor()->foldAll(SC_FOLDACTION_EXPAND | SC_FOLDACTION_CONTRACT_EVERY_LEVEL); });
+
+    connect(ui->actionFoldLevel1, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(0); });
+    connect(ui->actionFoldLevel2, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(1); });
+    connect(ui->actionFoldLevel3, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(2); });
+    connect(ui->actionFoldLevel4, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(3); });
+    connect(ui->actionFoldLevel5, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(4); });
+    connect(ui->actionFoldLevel6, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(5); });
+    connect(ui->actionFoldLevel7, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(6); });
+    connect(ui->actionFoldLevel8, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(7); });
+    connect(ui->actionFoldLevel9, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(8); });
+
+    connect(ui->actionUnfoldLevel1, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(0); });
+    connect(ui->actionUnfoldLevel2, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(1); });
+    connect(ui->actionUnfoldLevel3, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(2); });
+    connect(ui->actionUnfoldLevel4, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(3); });
+    connect(ui->actionUnfoldLevel5, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(4); });
+    connect(ui->actionUnfoldLevel6, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(5); });
+    connect(ui->actionUnfoldLevel7, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(6); });
+    connect(ui->actionUnfoldLevel8, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(7); });
+    connect(ui->actionUnfoldLevel9, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(8); });
 
     languageActionGroup = new QActionGroup(this);
     languageActionGroup->setExclusive(true);
@@ -661,16 +709,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                             QStringLiteral("<h3>%1 v%2%3</h3>"
                                     "<p>%4</p>"
                                     "<p>This program does stuff.</p>"
-                                    R"(<p>This program is free software: you can redistribute it and/or modify
-                                    it under the terms of the GNU General Public License as published by
-                                    the Free Software Foundation, either version 3 of the License, or
-                                    (at your option) any later version.</p>
-                                    <p>This program is distributed in the hope that it will be useful,
-                                    but WITHOUT ANY WARRANTY; without even the implied warranty of
-                                    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-                                    GNU General Public License for more details.</p>
-                                    <p>You should have received a copy of the GNU General Public License
-                                    along with this program. If not, see &lt;<a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>)")
+                                    R"(<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p> <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</p> <p>You should have received a copy of the GNU General Public License along with this program. If not, see &lt;<a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>)")
                                 .arg(QApplication::applicationDisplayName(), APP_VERSION, APP_DISTRIBUTION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
 
@@ -726,20 +765,19 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     addDockWidget(Qt::LeftDockWidgetArea, fileListDock);
     ui->menuView->addAction(fileListDock->toggleViewAction());
 
-    connect(app->getSettings(), &Settings::showMenuBarChanged, this, [=](bool showMenuBar) {
+    connect(app->getSettings(), &ApplicationSettings::showMenuBarChanged, this, [=](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
     });
-    connect(app->getSettings(), &Settings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
-    connect(app->getSettings(), &Settings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
+    connect(app->getSettings(), &ApplicationSettings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
+    connect(app->getSettings(), &ApplicationSettings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
+
+    // It seems restoreState() does not affect the status bar so set it manually
+    ui->statusBar->setVisible(app->getSettings()->showStatusBar());
 
     setupLanguageMenu();
 
-    // Put the style sheet here for now
-    QFile f(":/stylesheets/npp.css");
-    f.open(QFile::ReadOnly);
-    setStyleSheet(f.readAll());
-    f.close();
+    applyStyleSheet();
 
     restoreSettings();
 
@@ -748,7 +786,28 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
 MainWindow::~MainWindow()
 {
-    Q_ASSERT(dockedEditor->count() == 0);
+    delete ui;
+}
+
+void MainWindow::applyCustomShortcuts()
+{
+    ApplicationSettings *settings = app->getSettings();
+
+    settings->beginGroup("Shortcuts");
+
+    for (const QString &actionName : settings->childKeys()) {
+        QAction *action = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
+        const QString shortcutString = settings->value(actionName).toString();
+
+        if (action != Q_NULLPTR) {
+            action->setShortcut(QKeySequence(shortcutString));
+        }
+        else {
+            qWarning() << "Cannot find action" << actionName;
+        }
+    }
+
+    settings->endGroup();
 }
 
 void MainWindow::setupLanguageMenu()
@@ -801,6 +860,10 @@ int MainWindow::editorCount() const
 
 QVector<ScintillaNext *> MainWindow::editors() const
 {
+    // NOTE: this will need re-evaluated in the future.
+    // So far it has been assumed 1 ScintillaNext instance is 1 DockedEditor widget instance.
+    // If in the future a ScintillaNext can be cloned then the DockedEditor could return
+    // the same ScintillaNext instance multiple times since 1 ScintillaNext could mean >= 1 DockedEditor widget instance
     return dockedEditor->editors();
 }
 
@@ -833,14 +896,18 @@ void MainWindow::newFile()
 }
 
 // One unedited, new blank document
-bool MainWindow::isInInitialState()
+ScintillaNext *MainWindow::getInitialEditor()
 {
     if (editorCount() == 1) {
         ScintillaNext *editor = currentEditor();
-        return !editor->isFile() && editor->isSavedToDisk();
+
+        // If the editor has had ANY modifications, then don't call it an initial editor
+        if (!editor->isFile() && !editor->canUndo() && !editor->canRedo()) {
+            return editor;
+        }
     }
 
-    return false;
+    return Q_NULLPTR;
 }
 
 void MainWindow::openFileList(const QStringList &fileNames)
@@ -850,7 +917,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
     if (fileNames.size() == 0)
         return;
 
-    bool wasInitialState = isInInitialState();
+    ScintillaNext *initialEditor = getInitialEditor();
     const ScintillaNext *mostRecentEditor = Q_NULLPTR;
 
     for (const QString &filePath : fileNames) {
@@ -891,19 +958,9 @@ void MainWindow::openFileList(const QStringList &fileNames)
         dockedEditor->switchToEditor(mostRecentEditor);
     }
 
-    // TODO: reevaluate this now that the MainWindows doesn't deal with buffers any more
-    /* This code breaks things on start up. During initial launch of the application, if a file is
-     * specified via the command line, then the default new file would be closed. But if a buffer is closed
-     * then the DockedEditor doesn't know about it, since focusedDockWidgetChanged is not emitted
-     * leaving the currentEditor pointer pointing to a widget that is set to be deleted. Then during focusIn()
-     * it needs the currentEditor pointer to check if the document has been modified
-     *
-     * if (wasInitialState) {
-     *     QVector<ScintillaBuffer *> buffers = dockedEditor->buffers();
-     *     ScintillaBuffer *bufferToClose = buffers.first();
-     *     app->getBufferManager()->closeBuffer(bufferToClose);
-     * }
-    */
+    if (initialEditor) {
+        initialEditor->close();
+    }
 }
 
 bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
@@ -1000,8 +1057,8 @@ void MainWindow::closeCurrentFile()
 
 void MainWindow::closeFile(ScintillaNext *editor)
 {
-    if (isInInitialState()) {
-        // Don't close the last file
+    // Early out. If we aren't exiting on last tab closed, and it exists, there's no point in continuing
+    if (!app->getSettings()->exitOnLastTabClosed() && getInitialEditor() != Q_NULLPTR) {
         return;
     }
 
@@ -1030,9 +1087,14 @@ void MainWindow::closeFile(ScintillaNext *editor)
         editor->close();
     }
 
-    // If the last document was closed, start with a new one
+    // If the last document was closed, figure out what to do next
     if (editorCount() == 0) {
-        newFile();
+        if (app->getSettings()->exitOnLastTabClosed()) {
+            close();
+        }
+        else {
+            newFile();
+        }
     }
 }
 
@@ -1137,7 +1199,8 @@ bool MainWindow::saveCurrentFileAsDialog()
         dialogDir = editor->getFilePath();
     }
 
-    QString fileName = FileDialogHelpers::getSaveFileName(this, QString(), dialogDir, filter);
+    QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
+    QString fileName = FileDialogHelpers::getSaveFileName(this, QString(), dialogDir, filter, &selectedFilter);
 
     if (fileName.size() == 0) {
         return false;
@@ -1180,7 +1243,12 @@ bool MainWindow::saveCopyAsDialog()
         dialogDir = editor->getFilePath();
     }
 
-    QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Save a Copy As"), dialogDir, filter);
+    QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
+    QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Save a Copy As"), dialogDir, filter, &selectedFilter);
+
+    if (fileName.size() == 0) {
+        return false;
+    }
 
     return saveCopyAs(fileName);
 }
@@ -1210,6 +1278,11 @@ void MainWindow::saveAll()
 void MainWindow::exportAsFormat(Converter *converter, const QString &filter)
 {
     const QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Export As"), QString(), filter + ";;All files (*)");
+
+    if (fileName.isEmpty()) {
+        return;
+    }
+
     QFile f(fileName);
 
     f.open(QIODevice::WriteOnly);
@@ -1243,9 +1316,11 @@ void MainWindow::renameFile()
     ScintillaNext *editor = currentEditor();
 
     if (editor->isFile()) {
-        QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath());
+        const QString filter = app->getFileDialogFilter();
+        QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
+        QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath(), filter, &selectedFilter);
 
-        if (fileName.size() == 0) {
+        if (fileName.isEmpty()) {
             return;
         }
 
@@ -1557,6 +1632,33 @@ void MainWindow::activateEditor(ScintillaNext *editor)
     emit editorActivated(editor);
 }
 
+void MainWindow::applyStyleSheet()
+{
+    qInfo(Q_FUNC_INFO);
+
+    QString sheet;
+    QFile f(":/stylesheets/npp.css");
+    qInfo() << "Loading stylesheet: " << f.fileName();
+
+    f.open(QFile::ReadOnly);
+    sheet = f.readAll();
+    f.close();
+
+    // If there is a "custom.css" file where the ini is located, load it as a style sheet addition
+    QString directoryPath = QFileInfo(app->getSettings()->fileName()).absolutePath();
+    QString fullPath = QDir(directoryPath).filePath("custom.css");
+    if (QFile::exists(fullPath)) {
+        QFile custom(fullPath);
+        qInfo() << "Loading stylesheet: " << custom.fileName();
+
+        custom.open(QFile::ReadOnly);
+        sheet += custom.readAll();
+        custom.close();
+    }
+
+    setStyleSheet(sheet);
+}
+
 void MainWindow::setLanguage(ScintillaNext *editor, const QString &languageName)
 {
     qInfo(Q_FUNC_INFO);
@@ -1636,50 +1738,31 @@ void MainWindow::showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileEr
     QMessageBox::warning(this, tr("Error Saving File"), tr("An error occurred when saving <b>%1</b><br><br>Error: %2").arg(name, qt_error_string(error)));
 }
 
+void MainWindow::showEditorZoomLevelIndicator()
+{
+    // Not sure if Scintilla's zoom level matches up to an exact percentage, but visibly this is close
+    FadingIndicator::showText(currentEditor(), tr("Zoom: %1%").arg(zoomLevel * 10 + 100));
+}
+
 void MainWindow::saveSettings() const
 {
     qInfo(Q_FUNC_INFO);
 
-    QSettings settings;
+    ApplicationSettings *settings = app->getSettings();
 
-    settings.setValue("MainWindow/geometry", saveGeometry());
-    settings.setValue("MainWindow/windowState", saveState());
+    settings->setValue("MainWindow/geometry", saveGeometry());
+    settings->setValue("MainWindow/windowState", saveState());
 
-    settings.setValue("Gui/ShowMenuBar", app->getSettings()->showMenuBar());
-    settings.setValue("Gui/ShowToolBar", app->getSettings()->showToolBar());
-    settings.setValue("Gui/ShowStatusBar", app->getSettings()->showStatusBar());
-    settings.setValue("Gui/CombineSearchResults", app->getSettings()->combineSearchResults());
-
-    settings.setValue("Editor/ShowWhitespace", ui->actionShowWhitespace->isChecked());
-    settings.setValue("Editor/ShowEndOfLine", ui->actionShowEndofLine->isChecked());
-    settings.setValue("Editor/ShowWrapSymbol", ui->actionShowWrapSymbol->isChecked());
-
-    settings.setValue("Editor/WordWrap", ui->actionWordWrap->isChecked());
-    settings.setValue("Editor/IndentGuide", ui->actionShowIndentGuide->isChecked());
-    settings.setValue("Editor/ZoomLevel", zoomLevel);
-
-    FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
-    settings.setValue("FolderAsWorkspace/RootPath", fawDock->rootPath());
+    settings->setValue("Editor/ZoomLevel", zoomLevel);
 }
 
 void MainWindow::restoreSettings()
 {
     qInfo(Q_FUNC_INFO);
 
-    QSettings settings;
+    ApplicationSettings *settings = app->getSettings();
 
-    app->getSettings()->setShowMenuBar(settings.value("Gui/ShowMenuBar", true).toBool());
-    app->getSettings()->setShowToolBar(settings.value("Gui/ShowToolBar", true).toBool());
-    app->getSettings()->setShowStatusBar(settings.value("Gui/ShowStatusBar", true).toBool());
-    app->getSettings()->setCombineSearchResults(settings.value("Gui/CombineSearchResults", false).toBool());
-
-    ui->actionShowWhitespace->setChecked(settings.value("Editor/ShowWhitespace", false).toBool());
-    ui->actionShowEndofLine->setChecked(settings.value("Editor/ShowEndOfLine", false).toBool());
-    ui->actionShowWrapSymbol->setChecked(settings.value("Editor/ShowWrapSymbol", false).toBool());
-
-    ui->actionWordWrap->setChecked(settings.value("Editor/WordWrap", false).toBool());
-    ui->actionShowIndentGuide->setChecked(settings.value("Editor/IndentGuide", true).toBool());
-    zoomLevel = settings.value("Editor/ZoomLevel", 0).toInt();
+    zoomLevel = settings->value("Editor/ZoomLevel", 0).toInt();
 }
 
 ISearchResultsHandler *MainWindow::determineSearchResultsHandler()
@@ -1697,14 +1780,10 @@ ISearchResultsHandler *MainWindow::determineSearchResultsHandler()
 
 void MainWindow::restoreWindowState()
 {
-    QSettings settings;
+    ApplicationSettings *settings = app->getSettings();
 
-    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
-    restoreState(settings.value("MainWindow/windowState").toByteArray());
-
-    // Restore the path if it has one
-    FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
-    fawDock->setRootPath(settings.value("FolderAsWorkspace/RootPath").toString());
+    restoreGeometry(settings->value("MainWindow/geometry").toByteArray());
+    restoreState(settings->value("MainWindow/windowState").toByteArray());
 
     // Always hide the dock no matter how the application was closed
     SearchResultsDock *srDock = findChild<SearchResultsDock *>();
@@ -1744,15 +1823,6 @@ void MainWindow::addEditor(ScintillaNext *editor)
     // NOTE: Need to install this on the scroll area's viewport, not on the editor widget itself...that was painful to learn
     editor->viewport()->installEventFilter(zoomEventWatcher);
 
-    if (ui->actionWordWrap->isChecked())
-        editor->setWrapMode(SC_WRAP_WHITESPACE);
-
-    if (ui->actionShowIndentGuide->isChecked())
-        editor->setIndentationGuides(SC_IV_LOOKBOTH);
-
-    editor->setViewWS(ui->actionShowWhitespace->isChecked() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
-    editor->setViewEOL(ui->actionShowEndofLine->isChecked());
-    editor->setWrapVisualFlags(ui->actionShowWrapSymbol->isChecked() ? SC_WRAPVISUALFLAG_END : SC_WRAPVISUALFLAG_NONE);
     editor->setZoom(zoomLevel);
 
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -1800,8 +1870,8 @@ void MainWindow::checkForUpdates(bool silent)
         disconnect(QSimpleUpdater::getInstance(), &QSimpleUpdater::checkingFinished, this, &MainWindow::checkForUpdatesFinished);
     }
 
-    QSettings settings;
-    settings.setValue("App/LastUpdateCheck", QDateTime::currentDateTime());
+
+    app->getSettings()->setValue("App/LastUpdateCheck", QDateTime::currentDateTime());
 #else
     Q_UNUSED(silent);
 #endif
@@ -1832,7 +1902,7 @@ void MainWindow::initUpdateCheck()
 
         // A bit after startup, see if we need to automatically check for an update
         QTimer::singleShot(15000, this, [=]() {
-            QSettings settings;
+            ApplicationSettings settings;
             QDateTime dt = settings.value("App/LastUpdateCheck", QDateTime::currentDateTime()).toDateTime();
 
             if (dt.isValid()) {
@@ -1953,29 +2023,57 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
     // Focus on the correct tab
     dockedEditor->switchToEditor(editor);
 
-    // Create the menu and show it
+    // Create the menu
     QMenu *menu = new QMenu(this);
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
-    menu->addAction(ui->actionClose);
-    menu->addAction(ui->actionCloseAllExceptActive);
-    menu->addAction(ui->actionCloseAllToLeft);
-    menu->addAction(ui->actionCloseAllToRight);
-    menu->addSeparator();
-    menu->addAction(ui->actionSave);
-    menu->addAction(ui->actionSaveAs);
-    menu->addAction(ui->actionRename);
-    menu->addSeparator();
-    menu->addAction(ui->actionReload);
-    menu->addSeparator();
+    // Default actions
+    QStringList actionNames{
+        "Close",
+        "CloseAllExceptActive",
+        "CloseAllToLeft",
+        "CloseAllToRight",
+        "",
+        "Save",
+        "SaveAs",
+        "Rename",
+        "",
+        "Reload",
+        "",
 #ifdef Q_OS_WIN
-    menu->addAction(ui->actionShowInExplorer);
-    menu->addAction(ui->actionOpenCommandPromptHere);
-    menu->addSeparator();
+        "ShowInExplorer",
+        "OpenCommandPromptHere",
+        "",
 #endif
-    menu->addAction(ui->actionCopyFullPath);
-    menu->addAction(ui->actionCopyFileName);
-    menu->addAction(ui->actionCopyFileDirectory);
+        "CopyFullPath",
+        "CopyFileName",
+        "CopyFileDirectory"
+    };
+
+    // If the entry exists in the settings, use that
+    ApplicationSettings *settings = app->getSettings();
+    if (settings->contains("Gui/TabBarContextMenu")) {
+        actionNames = settings->value("Gui/TabBarContextMenu").toStringList();
+    }
+
+    // Populate the menu
+    for (const QString &actionName : actionNames) {
+        if (actionName.isEmpty()) {
+            menu->addSeparator();
+        }
+        else {
+            QAction *a = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
+
+            if (a != Q_NULLPTR) {
+                menu->addAction(a);
+            }
+            else {
+                qWarning() << "Cannot locate menu named" << actionName;
+            }
+        }
+    }
+
+    // Show it
     menu->popup(QCursor::pos());
 }
 

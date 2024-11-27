@@ -147,12 +147,15 @@ private:
 
     QScopedPointer<SearchResultsCollector> searchResults;
 
+    void applyStyleSheet();
+    void applyCustomShortcuts();
     void initUpdateCheck();
-    bool isInInitialState();
+    ScintillaNext *getInitialEditor();
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     bool checkFileForModification(ScintillaNext *editor);
     void showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileError error);
+    void showEditorZoomLevelIndicator();
 
     void saveSettings() const;
     void restoreSettings();
