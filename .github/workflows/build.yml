@@ -19,14 +19,14 @@ jobs:
         config:
         -
           qt_version: "6.8.0"
-          modules: "qt5compat qtprintsupport"
+          modules: "qt5compat"
           os: ubuntu-20.04
         -
-          qt_version: "6.8.0 qtprintsupport"
+          qt_version: "6.8.0"
           modules: "qt5compat"
           os: windows-latest
         -
-          qt_version: "6.8.0 qtprintsupport"
+          qt_version: "6.8.0"
           modules: "qt5compat"
           os: macos-latest
 
