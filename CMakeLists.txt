@@ -18,11 +18,17 @@ set(BUILD_BINARY OFF)
 set(BUILD_STATICCACHE OFF)
 set(BUILD_SHARED_LIBS OFF)
 
-# When building in debug mode, ucharder requests address santizer, it's not needed by us
+# SHA1 bd983ca108a1c493465270702c02bbbe792ea0ed
+#    When building in debug mode, ucharder requests address santizer, it's not needed by us
+#    Solution add this in the CPMAddPackage command
+#    OPTIONS "CMAKE_BUILD_TYPE Release"
+# SHA1 8118133e0017c4e1b3ddc9fad104c0ba19692cd7
+#    Introduced something that breaks on MSVC
+# SHA1 15fc8f0a0f55d6ec9373cf16ed96ebf6b35feef3
+#    Last working version
 CPMAddPackage(NAME uchardet
     GIT_REPOSITORY https://gitlab.freedesktop.org/uchardet/uchardet
-    GIT_TAG edae8e81cfb8092496f94da1a306c4c9f0ce32bb
-    OPTIONS "CMAKE_BUILD_TYPE Release"
+    GIT_TAG 15fc8f0a0f55d6ec9373cf16ed96ebf6b35feef3
 )
 CPMAddPackage("gh:vinniefalco/LuaBridge#5d21e35633a1f87ed08af115b07d3386096f792b")
 CPMAddPackage("gh:githubuser0xFFFF/Qt-Advanced-Docking-System#4.3.1")
@@ -44,7 +50,7 @@ CPMAddPackage(
   GIT_TAG rel-5-5-3-cmake2
   GIT_SHALLOW ON
 )
-CPMAddPackage("gh:diegoiast/lexilla#7de1d32b62dfb60aca9ad3b4a194f6333f044f60")
-# include(lexilla.cmake)
+# CPMAddPackage("gh:diegoiast/lexilla#7de1d32b62dfb60aca9ad3b4a194f6333f044f60")
+include(lexilla.cmake)
 
 add_subdirectory(src/NotepadNext)
