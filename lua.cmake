@@ -1,4 +1,4 @@
-CPMAddPackage("gh:lua/lua#26be27459b11feabed52cf40aaa76f86c7edc977")
+CPMAddPackage("gh:lua/lua#50c7c915ee2fa239043d5456237f5145d064089b")
 
 if (lua_ADDED)
     set(CMAKE_C_STANDARD 99)

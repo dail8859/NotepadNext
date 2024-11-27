@@ -12,6 +12,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 add_compile_definitions(APP_DISTRIBUTION="local")
 
 add_executable(NotepadNext
+    ApplicationSettings.cpp
     ColorPickerDelegate.cpp
     ColorPickerDelegate.h
     ComboBoxDelegate.cpp
@@ -27,6 +28,7 @@ add_executable(NotepadNext
     EditorManager.cpp
     EditorPrintPreviewRenderer.h
     EditorPrintPreviewRenderer.cpp
+    FadingIndicator.cpp
     Finder.cpp
     Finder.h
     FileDialogHelpers.cpp
@@ -80,14 +82,13 @@ add_executable(NotepadNext
     ScintillaCommenter.h
     ScintillaCommenter.cpp
     SelectionTracker.h
-    Settings.cpp
-    Settings.h
     SessionManager.h
     SessionManager.cpp
     SelectionTracker.cpp
     SpinBoxDelegate.h
     SpinBoxDelegate.cpp
     scripts.qrc
+    TranslationManager.cpp
     UndoAction.h
     UndoAction.cpp
     ZoomEventWatcher.h

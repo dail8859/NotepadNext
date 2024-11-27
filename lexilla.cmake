@@ -1,39 +1,9 @@
-CPMAddPackage("gh:ScintillaOrg/lexilla#rel-5-2-2")
+CPMAddPackage("gh:ScintillaOrg/lexilla#master")
 
 if (lexilla_ADDED)
     add_library(lexilla
-        ${lexilla_SOURCE_DIR}/src/Lexilla.cxx
         ${lexilla_SOURCE_DIR}/access/LexillaAccess.cxx
         ${lexilla_SOURCE_DIR}/access/LexillaAccess.h
-        ${lexilla_SOURCE_DIR}/lexlib/Accessor.cxx
-        ${lexilla_SOURCE_DIR}/lexlib/Accessor.h
-        ${lexilla_SOURCE_DIR}/lexlib/CatalogueModules.h
-        ${lexilla_SOURCE_DIR}/lexlib/CharacterCategory.cxx
-        ${lexilla_SOURCE_DIR}/lexlib/CharacterCategory.h
-        ${lexilla_SOURCE_DIR}/lexlib/CharacterSet.cxx
-        ${lexilla_SOURCE_DIR}/lexlib/CharacterSet.h
-        ${lexilla_SOURCE_DIR}/lexlib/DefaultLexer.cxx
-        ${lexilla_SOURCE_DIR}/lexlib/DefaultLexer.h
-        ${lexilla_SOURCE_DIR}/lexlib/LexAccessor.cxx
-        ${lexilla_SOURCE_DIR}/lexlib/LexAccessor.h
-        ${lexilla_SOURCE_DIR}/lexlib/LexerBase.cxx
-        ${lexilla_SOURCE_DIR}/lexlib/LexerBase.h
-        ${lexilla_SOURCE_DIR}/lexlib/LexerModule.cxx
-        ${lexilla_SOURCE_DIR}/lexlib/LexerModule.h
-        ${lexilla_SOURCE_DIR}/lexlib/LexerNoExceptions.cxx
-        ${lexilla_SOURCE_DIR}/lexlib/LexerNoExceptions.h
-        ${lexilla_SOURCE_DIR}/lexlib/LexerSimple.cxx
-        ${lexilla_SOURCE_DIR}/lexlib/LexerSimple.h
-        ${lexilla_SOURCE_DIR}/lexlib/OptionSet.h
-        ${lexilla_SOURCE_DIR}/lexlib/PropSetSimple.cxx
-        ${lexilla_SOURCE_DIR}/lexlib/PropSetSimple.h
-        ${lexilla_SOURCE_DIR}/lexlib/SparseState.h
-        ${lexilla_SOURCE_DIR}/lexlib/StringCopy.h
-        ${lexilla_SOURCE_DIR}/lexlib/StyleContext.cxx
-        ${lexilla_SOURCE_DIR}/lexlib/StyleContext.h
-        ${lexilla_SOURCE_DIR}/lexlib/SubStyles.h
-        ${lexilla_SOURCE_DIR}/lexlib/WordList.cxx
-        ${lexilla_SOURCE_DIR}/lexlib/WordList.h
         ${lexilla_SOURCE_DIR}/lexers/LexA68k.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexAbaqus.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexAda.cxx
@@ -62,6 +32,7 @@ if (lexilla_ADDED)
         ${lexilla_SOURCE_DIR}/lexers/LexCrontab.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexCsound.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexCSS.cxx
+        ${lexilla_SOURCE_DIR}/lexers/LexDart.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexDataflex.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexD.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexDiff.cxx
@@ -107,6 +78,7 @@ if (lexilla_ADDED)
         ${lexilla_SOURCE_DIR}/lexers/LexMySQL.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexNim.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexNimrod.cxx
+        ${lexilla_SOURCE_DIR}/lexers/LexNix.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexNsis.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexNull.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexOpal.cxx
@@ -145,6 +117,8 @@ if (lexilla_ADDED)
         ${lexilla_SOURCE_DIR}/lexers/LexTCL.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexTCMD.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexTeX.cxx
+        ${lexilla_SOURCE_DIR}/lexers/LexTOML.cxx
+        ${lexilla_SOURCE_DIR}/lexers/LexTroff.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexTxt2tags.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexVB.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexVerilog.cxx
@@ -152,6 +126,37 @@ if (lexilla_ADDED)
         ${lexilla_SOURCE_DIR}/lexers/LexVisualProlog.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexX12.cxx
         ${lexilla_SOURCE_DIR}/lexers/LexYAML.cxx
+        ${lexilla_SOURCE_DIR}/lexers/LexZig.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/Accessor.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/Accessor.h
+        ${lexilla_SOURCE_DIR}/lexlib/CatalogueModules.h
+        ${lexilla_SOURCE_DIR}/lexlib/CharacterCategory.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/CharacterCategory.h
+        ${lexilla_SOURCE_DIR}/lexlib/CharacterSet.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/CharacterSet.h
+        ${lexilla_SOURCE_DIR}/lexlib/DefaultLexer.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/DefaultLexer.h
+        ${lexilla_SOURCE_DIR}/lexlib/InList.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/InList.h
+        ${lexilla_SOURCE_DIR}/lexlib/LexAccessor.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/LexAccessor.h
+        ${lexilla_SOURCE_DIR}/lexlib/LexerBase.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/LexerBase.h
+        ${lexilla_SOURCE_DIR}/lexlib/LexerModule.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/LexerModule.h
+        ${lexilla_SOURCE_DIR}/lexlib/LexerSimple.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/LexerSimple.h
+        ${lexilla_SOURCE_DIR}/lexlib/OptionSet.h
+        ${lexilla_SOURCE_DIR}/lexlib/PropSetSimple.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/PropSetSimple.h
+        ${lexilla_SOURCE_DIR}/lexlib/SparseState.h
+        ${lexilla_SOURCE_DIR}/lexlib/StringCopy.h
+        ${lexilla_SOURCE_DIR}/lexlib/StyleContext.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/StyleContext.h
+        ${lexilla_SOURCE_DIR}/lexlib/SubStyles.h
+        ${lexilla_SOURCE_DIR}/lexlib/WordList.cxx
+        ${lexilla_SOURCE_DIR}/lexlib/WordList.h
+        ${lexilla_SOURCE_DIR}/src/Lexilla.cxx
     )
 
     target_link_libraries(lexilla PRIVATE scintilla-qt-edit)
@@ -163,6 +168,6 @@ if (lexilla_ADDED)
         ${lexilla_SOURCE_DIR}/lexlib/
         ${lexilla_SOURCE_DIR}/include/
     )
-    set_property(TARGET lexilla PROPERTY VERSION "5.22")
+    set_property(TARGET lexilla PROPERTY VERSION "${CMAKE_PROJECT_VERSION}")
     set_property(TARGET lexilla PROPERTY SOVERSION 5 )
 endif()
