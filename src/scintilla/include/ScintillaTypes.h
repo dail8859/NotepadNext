@@ -10,6 +10,7 @@
 
 #ifndef SCINTILLATYPES_H
 #define SCINTILLATYPES_H
+#include <cstdint>
 
 namespace Scintilla {
 
