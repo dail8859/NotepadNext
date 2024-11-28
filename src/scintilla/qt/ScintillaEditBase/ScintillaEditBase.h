@@ -11,6 +11,7 @@
 
 #ifndef SCINTILLAEDITBASE_H
 #define SCINTILLAEDITBASE_H
+#include <cstdint>
 
 #include <cstddef>
 
