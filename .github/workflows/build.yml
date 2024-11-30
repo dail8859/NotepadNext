@@ -18,7 +18,7 @@ jobs:
       matrix:
         buildsystem: ["cmake"]
         qt_version: ["5.15", "6.8"]
-        os: [ubuntu-20.04, windows-latest, osx-latest]
+        os: [ubuntu-22.04, windows-2022, macos-14]
 
     runs-on: ${{ matrix.config.os }}
 
