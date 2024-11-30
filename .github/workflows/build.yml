@@ -50,7 +50,7 @@ jobs:
         if: startsWith (matrix.config.os, 'ubuntu')
         run: |
           echo "DISTRIBUTION=AppImage" >> "$GITHUB_ENV"
-          sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev
+          sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev libcups2-dev
 
       - name: Setup VS tools (Windows)
         if: startsWith (matrix.config.os, 'windows')
