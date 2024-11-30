@@ -16,8 +16,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, windows-latest, osx-latest]
+        buildsystem: cmake
         qt_version: ["5.15", "6.8"]
+        os: [ubuntu-20.04, windows-latest, osx-latest]
 
     runs-on: ${{ matrix.config.os }}
 
