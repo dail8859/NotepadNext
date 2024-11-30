@@ -16,19 +16,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        config:
-        -
-          qt_version: 6.6
-          modules: "qt5compat"
-          os: ubuntu-20.04
-        -
-          qt_version: 6.6
-          modules: "qt5compat"
-          os: windows-latest
-        -
-          qt_version: 6.6
-          modules: "qt5compat"
-          os: macos-latest
+        os: [ubuntu-20.04, windows-latest, osx-latest]
+        qt_version: ["5.15", "6.8"]
 
     runs-on: ${{ matrix.config.os }}
 
