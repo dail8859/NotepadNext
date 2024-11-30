@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        buildsystem: cmake
+        buildsystem: "cmake"
         qt_version: ["5.15", "6.8"]
         os: [ubuntu-20.04, windows-latest, osx-latest]
 
