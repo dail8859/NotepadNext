@@ -38,6 +38,7 @@
 #include <QDirIterator>
 #include <QProcess>
 #include <QScreen>
+#include <QFontDatabase>
 
 
 #ifdef Q_OS_WIN
@@ -711,6 +712,15 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                                     "<p><a href=\"https://github.com/dail8859/NotepadNext\">Notepad Next Home Page</a></p>"
                                     R"(<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p> <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</p> <p>You should have received a copy of the GNU General Public License along with this program. If not, see &lt;<a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>)")
                                 .arg(QApplication::applicationDisplayName(), APP_VERSION, APP_DISTRIBUTION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
+    });
+
+    connect(ui->actionDebugInfo, &QAction::triggered, this, [=]() {
+        QMessageBox mb(QMessageBox::Information, tr("Debug Info"), app->debugInfo().join('\n'), QMessageBox::Ok, this);
+
+        mb.setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont).family());
+        mb.setTextInteractionFlags(Qt::TextSelectableByMouse);
+
+        mb.exec();
     });
 
 #ifdef Q_OS_WIN

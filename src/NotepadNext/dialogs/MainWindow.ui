@@ -35,6 +35,14 @@
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>855</width>
+     <height>21</height>
+    </rect>
+   </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>&amp;File</string>
@@ -298,6 +306,7 @@
     <addaction name="separator"/>
     <addaction name="actionAboutQt"/>
     <addaction name="actionAboutNotepadNext"/>
+    <addaction name="actionDebugInfo"/>
    </widget>
    <widget class="QMenu" name="menuEncodings">
     <property name="title">
@@ -1361,6 +1370,11 @@
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionDebugInfo">
+   <property name="text">
+    <string>Debug Info...</string>
    </property>
   </action>
  </widget>

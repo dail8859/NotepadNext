@@ -531,3 +531,20 @@ MainWindow *NotepadNextApplication::createNewWindow()
 
     return window;
 }
+
+QStringList NotepadNextApplication::debugInfo() const
+{
+    QStringList info;
+
+    info.append(QStringLiteral("%1 v%2 %3").arg(applicationDisplayName(), applicationVersion(), APP_DISTRIBUTION));
+    info.append(QStringLiteral("Build Date/Time: %1 %2").arg(__DATE__, __TIME__));
+    info.append(QStringLiteral("Qt: %1").arg(qVersion()));
+    info.append(QStringLiteral("OS: %1").arg(QSysInfo::prettyProductName()));
+    info.append(QStringLiteral("Locale: %1").arg(QLocale::system().name()));
+    info.append(QStringLiteral("CPU: %1").arg(QSysInfo::currentCpuArchitecture()));
+    info.append(QStringLiteral("File Path: %1").arg(applicationFilePath()));
+    info.append(QStringLiteral("Arguments: %1").arg(arguments().join(' ')));
+    info.append(QStringLiteral("Config File: %1").arg(ApplicationSettings().fileName()));
+
+    return info;
+}
