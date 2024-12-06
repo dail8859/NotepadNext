@@ -901,10 +901,17 @@ ScintillaNext *MainWindow::getInitialEditor()
     if (editorCount() == 1) {
         ScintillaNext *editor = currentEditor();
 
-        // If the editor has had ANY modifications, then don't call it an initial editor
-        if (!editor->isFile() && !editor->canUndo() && !editor->canRedo()) {
-            return editor;
+        // If the editor:
+        //   is a temporary file
+        //   is a 'real' file (or a 'missing' file)
+        //   can undo any actions
+        //   can redo any actions
+        // Then do not treat it as an 'initial editor' that can be transparently closed for the user
+        if (editor->isTemporary() || editor->isFile() || editor->canUndo() || editor->canRedo()) {
+            return Q_NULLPTR;
         }
+
+        return editor;
     }
 
     return Q_NULLPTR;
