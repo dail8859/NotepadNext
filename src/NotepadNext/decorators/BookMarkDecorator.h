@@ -29,12 +29,18 @@ class BookMarkDecorator : public EditorDecorator
 public:
     BookMarkDecorator(ScintillaNext *editor);
 
+    void addBookmark(int line);
+    void removeBookmark(int line);
     void toggleBookmark(int line);
     int nextBookmarkAfter(int line);
     int previousBookMarkBefore(int line);
     void clearBookmarks();
     QList<int> bookMarkedLines() const;
     void setBookMarkedLines(QList<int> &lines);
+
+    QString cutBookMarkedLines();
+    QString copyBookMarkedLines();
+    void deleteBookMarkedLines();
 
 public slots:
     void notify(const Scintilla::NotificationData *pscn) override;

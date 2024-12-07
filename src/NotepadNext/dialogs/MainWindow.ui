@@ -199,6 +199,10 @@
      <addaction name="separator"/>
      <addaction name="actionClearBookmarks"/>
      <addaction name="actionInvertBookmarks"/>
+     <addaction name="separator"/>
+     <addaction name="actionCutBookmarkedLines"/>
+     <addaction name="actionCopyBookmarkedLines"/>
+     <addaction name="actionDeleteBookmarkedLines"/>
     </widget>
     <addaction name="actionFind"/>
     <addaction name="actionFindInFiles"/>
@@ -1375,6 +1379,21 @@
   <action name="actionDebugInfo">
    <property name="text">
     <string>Debug Info...</string>
+   </property>
+  </action>
+  <action name="actionCutBookmarkedLines">
+   <property name="text">
+    <string>Cut Bookmarked Lines</string>
+   </property>
+  </action>
+  <action name="actionCopyBookmarkedLines">
+   <property name="text">
+    <string>Copy Bookmarked Lines</string>
+   </property>
+  </action>
+  <action name="actionDeleteBookmarkedLines">
+   <property name="text">
+    <string>Delete Bookmarked Lines</string>
    </property>
   </action>
  </widget>
