@@ -28,6 +28,8 @@
 #include <QStandardPaths>
 #include <QUuid>
 
+#define SETTINGS_FILE "session.ini"
+#define SETTINGS_DIR  ".nnsession"
 
 static QString RandomSessionFileName()
 {
@@ -54,7 +56,7 @@ static QList<int> QVariantListToQList(const QVariantList &variantList) {
 }
 
 SessionManager::SessionManager(NotepadNextApplication *app, SessionFileTypes types)
-    : app(app)
+    : app(app), useCustomSessionFolder(false)
 {
     setSessionFileTypes(types);
 }
@@ -66,12 +68,22 @@ void SessionManager::setSessionFileTypes(SessionFileTypes types)
 
 QDir SessionManager::sessionDirectory() const
 {
-    QDir d(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+    if (useCustomSessionFolder) {
+        QDir d(customSessionPath);
+        if (!d.cd(SETTINGS_DIR))
+        {
+            qCritical("Unable to open session dir %s", d.absolutePath().toUtf8().constData());
+        }
+        return d;
+    }
+    else {
+        QDir d(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
 
-    d.mkpath("session");
-    d.cd("session");
+        d.mkpath("session");
+        d.cd("session");
 
-    return d;
+        return d;
+    }
 }
 
 void SessionManager::saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName) const
@@ -101,17 +113,25 @@ SessionManager::SessionFileType SessionManager::determineType(ScintillaNext *edi
 
 void SessionManager::clear() const
 {
-    clearSettings();
+    qInfo(Q_FUNC_INFO);
+    if (useCustomSessionFolder) {
+        QSettings *settings = new QSettings(sessionDirectory().absolutePath() + QDir::separator() + SETTINGS_FILE,
+                QSettings::IniFormat);
+        clearSettings(settings);
+        delete settings;
+    }
+    else {
+        ApplicationSettings appSettings;
+        clearSettings(&appSettings);
+    }
     clearDirectory();
 }
 
-void SessionManager::clearSettings() const
+void SessionManager::clearSettings(QSettings *settings) const
 {
-    ApplicationSettings settings;;
-
     // Clear everything out. There can be left over entries that are no longer needed
-    settings.beginGroup("CurrentSession");
-    settings.remove("");
+    settings->beginGroup("CurrentSession");
+    settings->remove("");
 }
 
 void SessionManager::clearDirectory() const
@@ -119,11 +139,63 @@ void SessionManager::clearDirectory() const
     QDir d = sessionDirectory();
 
     for (const QString &f : d.entryList()) {
-        d.remove(f);
+        if (f != SETTINGS_FILE) {
+            d.remove(f);
+        }
     }
 }
 
-void SessionManager::saveSession(MainWindow *window)
+bool SessionManager::saveSessionTo(MainWindow *window, const QString &path)
+{
+    useCustomSessionFolder = true;
+    customSessionPath = path;
+    SessionFileTypes tmp = fileTypes;
+    QDir dir(path);
+    dir.mkdir(SETTINGS_DIR);
+    if (!dir.cd(SETTINGS_DIR))
+    {
+        return false;
+    }
+
+    Settings settings(sessionDirectory().absolutePath() + QDir::separator() + SETTINGS_FILE, QSettings::IniFormat);
+
+    settings.beginGroup("Session");
+
+    setSessionFileTypes(tmp | SavedFile);
+    saveSession(window, settings);
+    setSessionFileTypes(tmp);
+    settings.endGroup();
+
+    emit onSessionSaved(settings);
+
+    settings.sync();
+
+    return true;
+}
+
+void SessionManager::saveCurrentSession(MainWindow *window)
+{
+    if (useCustomSessionFolder) {
+        saveSessionTo(window, customSessionPath);
+    }
+    else {
+        saveDefaultSession(window);
+    }
+}
+
+void SessionManager::saveDefaultSession(MainWindow *window)
+{
+    useCustomSessionFolder = false;
+    ApplicationSettings appSettings;
+    appSettings.beginGroup("CurrentSession");
+    saveSession(window, appSettings);
+    appSettings.endGroup();
+
+
+    emit onSessionSaved(appSettings);
+}
+
+void SessionManager::saveSession(MainWindow *window, QSettings &settings)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -136,9 +208,7 @@ void SessionManager::saveSession(MainWindow *window)
 
     const ScintillaNext *currentEditor = window->currentEditor();
     int currentEditorIndex = 0;
-    ApplicationSettings settings;;
-
-    settings.beginGroup("CurrentSession");
+    ApplicationSettings appSettings;
 
     settings.beginWriteArray("OpenedFiles");
 
@@ -173,21 +243,74 @@ void SessionManager::saveSession(MainWindow *window)
     settings.endArray();
 
     settings.setValue("CurrentEditorIndex", currentEditorIndex);
-
-    settings.endGroup();
 }
 
-void SessionManager::loadSession(MainWindow *window)
+void SessionManager::loadDefaultSession(MainWindow *window)
 {
-    qInfo(Q_FUNC_INFO);
-
-    ApplicationSettings settings;;
+    ApplicationSettings settings;
 
     settings.beginGroup("CurrentSession");
+    ScintillaNext *currentEditor = loadSession(window, settings);
+    settings.endGroup();
+    emit onSessionLoaded(settings);
+
+    if (currentEditor) {
+        window->switchToEditor(currentEditor);
+    }
+}
+
+bool SessionManager::loadSessionFrom(MainWindow *window, const QString &path)
+{
+    SessionFileTypes tmp = fileTypes;
+    QDir dir(path);
+    if (!dir.cd(SETTINGS_DIR))
+    {
+        return false;
+    }
+    useCustomSessionFolder = true;
+    customSessionPath = path;
+    if (!QFile::exists(dir.absolutePath() + QDir::separator() + SETTINGS_FILE))
+    {
+        return false;
+    }
+    Settings settings(sessionDirectory().absolutePath() + QDir::separator() + SETTINGS_FILE, QSettings::IniFormat);
+
+    settings.beginGroup("Session");
+    ScintillaNext *currentEditor = loadSession(window, settings);
+    settings.endGroup();
+
+    settings.beginGroup("FolderAsWorkspace");
+    settings.value("RootPath");
+    settings.endGroup();
+
+    emit onSessionLoaded(settings);
+
+    if (currentEditor) {
+        window->switchToEditor(currentEditor);
+    }
+    return true;
+}
+
+ScintillaNext *SessionManager::loadSession(MainWindow *window, QSettings &settings)
+{
+    qInfo(Q_FUNC_INFO);
 
     ScintillaNext *currentEditor = Q_NULLPTR;
     const int currentEditorIndex = settings.value("CurrentEditorIndex").toInt();
     const int size = settings.beginReadArray("OpenedFiles");
+
+    for (auto &editor : window->editors()) {
+        if (editor->isFile()) {
+            if (editor->isSavedToDisk()) {
+                editor->close();
+            }
+        }
+        else {
+            if (!editor->modify()) {
+                editor->close();
+            }
+        }
+    }
 
     // NOTE: In theory the fileTypes should determine what is loaded, however if the session fileTypes
     // change from the last time it was saved then it means the settings were manually altered outside of the app,
@@ -226,12 +349,7 @@ void SessionManager::loadSession(MainWindow *window)
     }
 
     settings.endArray();
-
-    settings.endGroup();
-
-    if (currentEditor) {
-        window->switchToEditor(currentEditor);
-    }
+    return currentEditor;
 }
 
 bool SessionManager::willFileGetStoredInSession(ScintillaNext *editor) const
