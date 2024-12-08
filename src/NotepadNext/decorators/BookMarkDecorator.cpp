@@ -18,6 +18,7 @@
 
 
 #include "BookMarkDecorator.h"
+#include "UndoAction.h"
 
 const int MARK_BOOKMARK = 24;
 const int MARGIN = 1;
@@ -36,16 +37,26 @@ BookMarkDecorator::BookMarkDecorator(ScintillaNext *editor) :
     editor->setMarginSensitiveN(MARGIN, true);
 }
 
+void BookMarkDecorator::addBookmark(int line)
+{
+    editor->markerAdd(line, MARK_BOOKMARK);
+}
+
+void BookMarkDecorator::removeBookmark(int line)
+{
+    // The marker can be set multiple times, so keep deleting it till it is no longer set
+    while (editor->markerGet(line) & (1 << MARK_BOOKMARK)) {
+        editor->markerDelete(line, MARK_BOOKMARK);
+    }
+}
+
 void BookMarkDecorator::toggleBookmark(int line)
 {
     if (editor->markerGet(line) & (1 << MARK_BOOKMARK)) {
-        // The marker can be set multiple times, so keep deleting it till it is no longer set
-        while (editor->markerGet(line) & (1 << MARK_BOOKMARK)) {
-            editor->markerDelete(line, MARK_BOOKMARK);
-        }
+        removeBookmark(line);
     }
     else {
-        editor->markerAdd(line, MARK_BOOKMARK);
+        addBookmark(line);
     }
 }
 
@@ -100,8 +111,52 @@ QList<int> BookMarkDecorator::bookMarkedLines() const
 
 void BookMarkDecorator::setBookMarkedLines(QList<int> &lines)
 {
-    for(const int i : lines) {
-        editor->markerAdd(i, MARK_BOOKMARK);
+    // Make sure they are all clear first
+    clearBookmarks();
+
+    for(const int line : lines) {
+        addBookmark(line);
+    }
+}
+
+QString BookMarkDecorator::cutBookMarkedLines()
+{
+    QString s = copyBookMarkedLines();
+
+    deleteBookMarkedLines();
+
+    return s;
+}
+
+QString BookMarkDecorator::copyBookMarkedLines()
+{
+    QByteArray s;
+
+    for (const int line : bookMarkedLines()) {
+        s += editor->getLine(line);
+    }
+
+    return QString(s);
+}
+
+void BookMarkDecorator::deleteBookMarkedLines()
+{
+    const UndoAction ua(editor);
+
+    forever {
+        // Since every time a bookmark is found it is deleted, the search can restart from the beginning again to find the next bookmark
+        const int line = editor->markerNext(0, 1 << MARK_BOOKMARK);
+
+        if (line != -1) {
+            removeBookmark(line);
+
+            const int lineStart = editor->positionFromLine(line);
+            const int lineLength = editor->lineLength(line);
+            editor->deleteRange(lineStart, lineLength);
+        }
+        else {
+            break;
+        }
     }
 }
 
