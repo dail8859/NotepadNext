@@ -23,6 +23,7 @@
 #include "uchardet.h"
 #include <cinttypes>
 
+#include <QDebug>
 #include <QDir>
 #include <QMouseEvent>
 #include <QSaveFile>
@@ -92,6 +93,7 @@ ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate
         return Q_NULLPTR;
     }
 
+    qInfo() << Q_FUNC_INFO << filePath;
     editor->setFileInfo(filePath);
 
     return editor;
@@ -231,18 +233,14 @@ QFileInfo ScintillaNext::getFileInfo() const
     return fileInfo;
 }
 
-QString ScintillaNext::getPath() const
-{
-    Q_ASSERT(isFile());
-
-    return QDir::toNativeSeparators(fileInfo.canonicalPath());
-}
-
 QString ScintillaNext::getFilePath() const
 {
     Q_ASSERT(isFile());
 
-    return QDir::toNativeSeparators(fileInfo.canonicalFilePath());
+    // All files should be absolute for now
+    // There is an unexpected behaviour because QFileInfo is refresh info from a disk sometimes
+    // So canonicalFilePath would return empty string if there is no actual file anymore
+    return fileInfo.filePath();
 }
 
 void ScintillaNext::setFoldMarkers(const QString &type)
@@ -369,20 +367,25 @@ bool ScintillaNext::rename(const QString &newFilePath)
         QFile::remove(oldPath);
 
         // Everything worked fine, so update the buffer's info
-        setFileInfo(newFilePath);
-        setSavePoint();
-
-        // If this was a temporary file, make sure it is not any more
-        setTemporary(false);
-
-        emit saved();
-
-        emit renamed();
+        renameEditorPath(newFilePath);
 
         return true;
     }
 
     return false;
+}
+
+void ScintillaNext::renameEditorPath(const QString &newFilePath)
+{
+    setFileInfo(newFilePath);
+    setSavePoint();
+
+    // If this was a temporary file, make sure it is not any more
+    setTemporary(false);
+
+    emit saved();
+
+    emit renamed();
 }
 
 ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
@@ -611,6 +614,7 @@ void ScintillaNext::setFileInfo(const QString &filePath)
     bufferType = ScintillaNext::File;
 
     updateTimestamp();
+    emit renamed();
 }
 
 void ScintillaNext::detachFileInfo(const QString &newName)
