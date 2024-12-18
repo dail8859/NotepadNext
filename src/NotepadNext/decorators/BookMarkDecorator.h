@@ -29,6 +29,7 @@ class BookMarkDecorator : public EditorDecorator
 public:
     BookMarkDecorator(ScintillaNext *editor);
 
+    bool isBookmarkSet(int line) const;
     void addBookmark(int line);
     void removeBookmark(int line);
     void toggleBookmark(int line);

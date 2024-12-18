@@ -37,6 +37,11 @@ BookMarkDecorator::BookMarkDecorator(ScintillaNext *editor) :
     editor->setMarginSensitiveN(MARGIN, true);
 }
 
+bool BookMarkDecorator::isBookmarkSet(int line) const
+{
+    return editor->markerGet(line) & (1 << MARK_BOOKMARK);
+}
+
 void BookMarkDecorator::addBookmark(int line)
 {
     editor->markerAdd(line, MARK_BOOKMARK);
@@ -45,14 +50,14 @@ void BookMarkDecorator::addBookmark(int line)
 void BookMarkDecorator::removeBookmark(int line)
 {
     // The marker can be set multiple times, so keep deleting it till it is no longer set
-    while (editor->markerGet(line) & (1 << MARK_BOOKMARK)) {
+    while (isBookmarkSet(line)) {
         editor->markerDelete(line, MARK_BOOKMARK);
     }
 }
 
 void BookMarkDecorator::toggleBookmark(int line)
 {
-    if (editor->markerGet(line) & (1 << MARK_BOOKMARK)) {
+    if (isBookmarkSet(line)) {
         removeBookmark(line);
     }
     else {
@@ -114,7 +119,7 @@ void BookMarkDecorator::setBookMarkedLines(QList<int> &lines)
     // Make sure they are all clear first
     clearBookmarks();
 
-    for(const int line : lines) {
+    for (const int line : lines) {
         addBookmark(line);
     }
 }
