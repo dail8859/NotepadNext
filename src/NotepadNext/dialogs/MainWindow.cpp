@@ -400,7 +400,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
-            bookMarkDecorator->clearBookmarks();
+            bookMarkDecorator->clearAllBookmarks();
         }
     });
 
@@ -429,6 +429,42 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             }
         }
     });
+
+    connect(ui->actionCutBookmarkedLines, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            QString s = bookMarkDecorator->cutBookMarkedLines();
+
+            if (!s.isEmpty()) {
+                QApplication::clipboard()->setText(s);
+            }
+        }
+    });
+
+    connect(ui->actionCopyBookmarkedLines, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            QString s = bookMarkDecorator->copyBookMarkedLines();
+
+            if (!s.isEmpty()) {
+                QApplication::clipboard()->setText(s);
+            }
+        }
+    });
+
+    connect(ui->actionDeleteBookmarkedLines, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            bookMarkDecorator->deleteBookMarkedLines();
+        }
+    });
+
 
     // The action needs added to the window so it can be triggered via the keyboard
     addAction(ui->actionNextTab);
