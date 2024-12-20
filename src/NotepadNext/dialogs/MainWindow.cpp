@@ -400,7 +400,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
-            bookMarkDecorator->clearBookmarks();
+            bookMarkDecorator->clearAllBookmarks();
         }
     });
 

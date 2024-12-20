@@ -27,15 +27,18 @@ class BookMarkDecorator : public EditorDecorator
     Q_OBJECT
 
 public:
-    BookMarkDecorator(ScintillaNext *editor);
+    explicit BookMarkDecorator(ScintillaNext *editor);
 
     bool isBookmarkSet(int line) const;
     void addBookmark(int line);
     void removeBookmark(int line);
     void toggleBookmark(int line);
+
     int nextBookmarkAfter(int line);
     int previousBookMarkBefore(int line);
-    void clearBookmarks();
+
+    void clearAllBookmarks();
+
     QList<int> bookMarkedLines() const;
     void setBookMarkedLines(QList<int> &lines);
 

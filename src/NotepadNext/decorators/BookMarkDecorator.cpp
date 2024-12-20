@@ -31,7 +31,7 @@ BookMarkDecorator::BookMarkDecorator(ScintillaNext *editor) :
     editor->markerSetFore(MARK_BOOKMARK, 0xFF2020);
     editor->markerSetBack(MARK_BOOKMARK, 0xFF2020);
 
-    int mask = editor->marginMaskN(MARGIN);
+    const int mask = editor->marginMaskN(MARGIN);
     editor->setMarginMaskN(MARGIN, (1 << MARK_BOOKMARK) | mask);
 
     editor->setMarginSensitiveN(MARGIN, true);
@@ -89,7 +89,7 @@ int BookMarkDecorator::previousBookMarkBefore(int line)
     }
 }
 
-void BookMarkDecorator::clearBookmarks()
+void BookMarkDecorator::clearAllBookmarks()
 {
     editor->markerDeleteAll(MARK_BOOKMARK);
 }
@@ -117,7 +117,7 @@ QList<int> BookMarkDecorator::bookMarkedLines() const
 void BookMarkDecorator::setBookMarkedLines(QList<int> &lines)
 {
     // Make sure they are all clear first
-    clearBookmarks();
+    clearAllBookmarks();
 
     for (const int line : lines) {
         addBookmark(line);
