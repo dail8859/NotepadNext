@@ -108,6 +108,7 @@ extern const LexerModule lmMSSQL;
 extern const LexerModule lmMySQL;
 extern const LexerModule lmNim;
 extern const LexerModule lmNimrod;
+extern const LexerModule lmNix;
 extern const LexerModule lmNncrontab;
 extern const LexerModule lmNsis;
 extern const LexerModule lmNull;
@@ -260,6 +261,7 @@ void AddEachLexer() {
 		&lmMySQL,
 		&lmNim,
 		&lmNimrod,
+		&lmNix,
 		&lmNncrontab,
 		&lmNsis,
 		&lmNull,
