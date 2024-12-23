@@ -254,13 +254,15 @@
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="178"/>
         <source>OVR</source>
         <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Trata-se de uma abreviatura para indicar que os caracteres serão substituídos ao digitar</translatorcomment>
+        <translation>SUB</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="182"/>
         <source>INS</source>
         <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Trata-se de uma abreviatura para indicar que os caracteres serão inseridos ao digitar</translatorcomment>
+        <translation>INS</translation>
     </message>
 </context>
 <context>
@@ -318,7 +320,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="48"/>
         <source>Line Indent Position</source>
-        <translation></translation>
+        <translation>Posição de indentação de linha</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="52"/>
@@ -461,12 +463,12 @@
     <message>
         <location filename="../src/NotepadNext/docks/FileListDock.ui" line="51"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/FileListDock.ui" line="90"/>
         <source>Sort by File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordenar por nome de ficheiro</translation>
     </message>
 </context>
 <context>
@@ -912,12 +914,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="109"/>
         <source>Indent</source>
-        <translation></translation>
+        <translation>Indentação</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="116"/>
         <source>EOL Conversion</source>
-        <translation>Conversão de Fim De Linha</translation>
+        <translation>Conversão de fim de linha</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="124"/>
@@ -1182,12 +1184,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="584"/>
         <source>Increase Indent</source>
-        <translation>Aumentar o recuo</translation>
+        <translation>Aumentar a indentação</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="593"/>
         <source>Decrease Indent</source>
-        <translation>Diminuir o recuo</translation>
+        <translation>Diminuir a indentação</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="598"/>
@@ -1412,7 +1414,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="867"/>
         <source>Find in Files...</source>
-        <translation>localizar em Ficheiros...</translation>
+        <translation>Localizar em Ficheiros...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="872"/>
@@ -1427,7 +1429,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="880"/>
         <source>Find &amp;Previous</source>
-        <translation>Localiza &amp;anterior</translation>
+        <translation>Localizar &amp;anterior</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="890"/>
@@ -1912,32 +1914,32 @@
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1367"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1370"/>
         <source>Toggle Overtype</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternar entre tipos</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1373"/>
         <source>Ins</source>
-        <translation type="unfinished"></translation>
+        <translation>Ins</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1381"/>
         <source>Debug Info...</source>
-        <translation type="unfinished"></translation>
+        <translation>Informações de depuração...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1386"/>
         <source>Cut Bookmarked Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Cortar linhas com marcadores</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1391"/>
         <source>Copy Bookmarked Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar linhas com marcadores</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1396"/>
         <source>Delete Bookmarked Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar linhas com marcadores</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="363"/>
@@ -1957,7 +1959,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="754"/>
         <source>Debug Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Informações de depuração</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="927"/>
@@ -2103,7 +2105,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
         <source>Recenter find/replace dialog when opened</source>
-        <translation type="unfinished"></translation>
+        <translation>Recolocar a janela localizar/substituir quando aberta</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="81"/>
@@ -2252,7 +2254,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.ui" line="38"/>
         <source>Copy Results to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar resultados para a área de transferência</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="65"/>
