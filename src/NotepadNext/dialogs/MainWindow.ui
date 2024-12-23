@@ -1137,13 +1137,13 @@
     <string>Show in Explorer</string>
    </property>
   </action>
-  <action name="actionOpenCommandPromptHere">
+  <action name="actionOpenTerminalHere">
    <property name="icon">
     <iconset resource="../resources.qrc">
      <normaloff>:/icons/application_osx_terminal.png</normaloff>:/icons/application_osx_terminal.png</iconset>
    </property>
    <property name="text">
-    <string>Open Command Prompt Here</string>
+    <string>Open %1 Here</string>
    </property>
   </action>
   <action name="actionToggleBookmark">
