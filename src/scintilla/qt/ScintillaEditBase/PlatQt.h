@@ -10,9 +10,9 @@
 
 #ifndef PLATQT_H
 #define PLATQT_H
-#include <cstdint>
 
 #include <cstddef>
+#include <cstdint>
 
 #include <string>
 #include <string_view>

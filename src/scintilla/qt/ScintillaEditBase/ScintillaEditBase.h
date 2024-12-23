@@ -11,9 +11,9 @@
 
 #ifndef SCINTILLAEDITBASE_H
 #define SCINTILLAEDITBASE_H
-#include <cstdint>
 
 #include <cstddef>
+#include <cstdint>
 
 #include <string>
 #include <string_view>
