@@ -1924,8 +1924,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1381"/>
         <source>Debug Info...</source>
-        <translatorcomment>Informações de depuração...</translatorcomment>
-        <translation>Debug Info...</translation>
+        <translation>Informações de depuração...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1386"/>
