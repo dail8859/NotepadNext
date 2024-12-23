@@ -320,7 +320,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="48"/>
         <source>Line Indent Position</source>
-        <translation></translation>
+        <translation>Posição de indentação de linha</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="52"/>
@@ -914,12 +914,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="109"/>
         <source>Indent</source>
-        <translation></translation>
+        <translation>Indentação</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="116"/>
         <source>EOL Conversion</source>
-        <translation>Conversão de Fim De Linha</translation>
+        <translation>Conversão de fim de linha</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="124"/>
@@ -1184,12 +1184,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="584"/>
         <source>Increase Indent</source>
-        <translation>Aumentar o recuo</translation>
+        <translation>Aumentar a indentação</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="593"/>
         <source>Decrease Indent</source>
-        <translation>Diminuir o recuo</translation>
+        <translation>Diminuir a indentação</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="598"/>
@@ -1414,7 +1414,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="867"/>
         <source>Find in Files...</source>
-        <translation>localizar em Ficheiros...</translation>
+        <translation>Localizar em Ficheiros...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="872"/>
@@ -1429,7 +1429,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="880"/>
         <source>Find &amp;Previous</source>
-        <translation>Localiza &amp;anterior</translation>
+        <translation>Localizar &amp;anterior</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="890"/>
