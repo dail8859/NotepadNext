@@ -761,14 +761,19 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
 #ifdef Q_OS_WIN
     connect(ui->actionShowInExplorer, &QAction::triggered, this, [=]() {
-        QStringList arguments;
-        arguments << "/select," << QDir::toNativeSeparators(currentEditor()->getFileInfo().canonicalFilePath());
+        QString filePath = QDir::toNativeSeparators(currentEditor()->getFileInfo().canonicalFilePath());
+        QStringList arguments = {"/select,", filePath};
         QProcess::startDetached("explorer", arguments);
     });
-    connect(ui->actionOpenCommandPromptHere, &QAction::triggered, this, [=]() {
-        QStringList arguments;
-        arguments << "/c" << "start" << "/d" << QDir::toNativeSeparators(currentEditor()->getFileInfo().dir().canonicalPath()) << "cmd";
-        QProcess::startDetached(QStringLiteral("cmd"), arguments);
+
+    QString terminalName = app->getSettings()->value("App/TerminalName", "Command Prompt").toString();
+    ui->actionOpenTerminalHere->setText(ui->actionOpenTerminalHere->text().arg(terminalName));
+
+    connect(ui->actionOpenTerminalHere, &QAction::triggered, this, [=]() {
+        QString command = app->getSettings()->value("App/TerminalCommand", "cmd").toString();
+        QString filePath = QDir::toNativeSeparators(currentEditor()->getFileInfo().dir().canonicalPath());
+        QStringList arguments = {"/c", "start", "/d", filePath, command};
+        QProcess::startDetached("cmd", arguments);
     });
 #endif
 
@@ -1522,7 +1527,7 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
     ui->actionCopyFullPath->setEnabled(isFile);
     ui->actionCopyFileDirectory->setEnabled(isFile);
     ui->actionShowInExplorer->setEnabled(isFile);
-    ui->actionOpenCommandPromptHere->setEnabled(isFile);
+    ui->actionOpenTerminalHere->setEnabled(isFile);
 }
 
 bool MainWindow::isAnyUnsaved() const
@@ -2095,7 +2100,7 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
         "",
 #ifdef Q_OS_WIN
         "ShowInExplorer",
-        "OpenCommandPromptHere",
+        "OpenTerminalHere",
         "",
 #endif
         "CopyFullPath",
