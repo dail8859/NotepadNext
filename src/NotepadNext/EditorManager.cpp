@@ -35,6 +35,7 @@
 #include "AutoCompletion.h"
 #include "URLFinder.h"
 #include "BookMarkDecorator.h"
+#include "HTMLAutoCompleteDecorator.h"
 
 
 const int MARK_HIDELINESBEGIN = 23;
@@ -295,6 +296,8 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     BookMarkDecorator *bm = new BookMarkDecorator(editor);
     bm->setEnabled(true);
+
+    new HTMLAutoCompleteDecorator(editor);
 }
 
 void EditorManager::purgeOldEditorPointers()

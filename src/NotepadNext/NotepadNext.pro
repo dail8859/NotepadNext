@@ -110,6 +110,7 @@ SOURCES += \
     decorators/BetterMultiSelection.cpp \
     decorators/BookMarkDecorator.cpp \
     decorators/EditorConfigAppDecorator.cpp \
+    decorators/HTMLAutoCompleteDecorator.cpp \
     decorators/SurroundSelection.cpp \
     decorators/URLFinder.cpp \
     dialogs/ColumnEditorDialog.cpp \
@@ -189,6 +190,7 @@ HEADERS += \
     decorators/BetterMultiSelection.h \
     decorators/BookMarkDecorator.h \
     decorators/EditorConfigAppDecorator.h \
+    decorators/HTMLAutoCompleteDecorator.h \
     decorators/SurroundSelection.h \
     decorators/URLFinder.h \
     dialogs/ColumnEditorDialog.h \
