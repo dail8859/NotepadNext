@@ -297,7 +297,7 @@ void LuaConsoleDock::historyAdd(QString line)
 void LuaConsoleDock::historyEnd()
 {
     currentHistoryIndex = history.size();
-    input->emptyUndoBuffer(); // Empty first incase it was a mistake
+    input->emptyUndoBuffer(); // Empty first in case it was a mistake
     input->setText("");
 }
 
