@@ -41,6 +41,11 @@ public:
     void writeErrorToOutput(const char *s);
     LuaState *L = Q_NULLPTR;
 
+    void historyNext();
+    void historyPrevious();
+    void historyAdd(QString line);
+    void historyEnd();
+
 public slots:
     void runCurrentCommand(void);
 
@@ -53,6 +58,8 @@ private:
     ScintillaNext *output;
     ScintillaNext *input;
 
+    QStringList history;
+    int currentHistoryIndex = 0;
 
     void setupStyle(ScintillaNext *editor);
 };
