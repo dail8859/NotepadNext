@@ -217,11 +217,6 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
             input->braceHighlight(INVALID_POSITION, INVALID_POSITION);
         }
     });
-
-    connect(input, &ScintillaNext::linesAdded, [=](int linesAdded) {
-        if (input->lineCount() > 0)
-            qInfo("lines added %d", linesAdded);
-    });
 }
 
 LuaConsoleDock::~LuaConsoleDock()
@@ -262,6 +257,50 @@ void LuaConsoleDock::writeErrorToOutput(const char *s)
     output->documentEnd();
 }
 
+void LuaConsoleDock::historyNext()
+{
+    if (history.isEmpty()) return;
+
+    if (currentHistoryIndex < history.size() - 1) {
+        currentHistoryIndex++;
+        input->setText(history[currentHistoryIndex].toLatin1().constData());
+    }
+
+    input->documentEnd();
+    input->emptyUndoBuffer();
+    input->scrollToEnd();
+}
+
+void LuaConsoleDock::historyPrevious()
+{
+    if (currentHistoryIndex == 0) return;
+
+    currentHistoryIndex--;
+
+    input->setText(history[currentHistoryIndex].toLatin1().constData());
+    input->documentEnd();
+    input->emptyUndoBuffer();
+    input->scrollToEnd();
+}
+
+void LuaConsoleDock::historyAdd(QString line)
+{
+    if (!line.isEmpty()) {
+        if (history.isEmpty() || history.last() != line) {
+            history.append(line);
+        }
+    }
+
+    currentHistoryIndex = history.size();
+}
+
+void LuaConsoleDock::historyEnd()
+{
+    currentHistoryIndex = history.size();
+    input->emptyUndoBuffer(); // Empty first in case it was a mistake
+    input->setText("");
+}
+
 void LuaConsoleDock::runCurrentCommand()
 {
     int prevLastLine = output->lineCount();
@@ -289,7 +328,7 @@ void LuaConsoleDock::runCurrentCommand()
     }
 
     QString text((const char *)input->characterPointer());
-    //historyAdd(GUI::StringFromUTF8(text).c_str());
+    historyAdd(text);
 
     input->clearAll();
     input->emptyUndoBuffer();
@@ -307,11 +346,32 @@ bool LuaConsoleDock::eventFilter(QObject *obj, QEvent *event)
             runCurrentCommand();
             return true;
         }
+
+        if (keyEvent->key() == Qt::Key_Up)
+        {
+            if (input->lineCount() == 1 || input->currentPos() == input->length()) {
+                historyPrevious();
+                return true;
+            }
+        }
+
+        if (keyEvent->key() == Qt::Key_Down) {
+            if (input->lineCount() == 1 || input->currentPos() == 0) {
+                historyNext();
+                return true;
+            }
+        }
+
+        if (keyEvent->key() == Qt::Key_Escape) {
+            historyEnd();
+            return true;
+        }
     }
     else {
         // standard event processing
         return QObject::eventFilter(obj, event);
     }
+
     return false;
 }
 
