@@ -1,6 +1,6 @@
 local L = {}
 
-L.lexer = "phpscript"
+L.lexer = "hypertext"
 
 L.singleLineComment = "// "
 
@@ -87,4 +87,9 @@ L.styles = {
 		bgColor = rgb(0xFEFCF5),
 	},
 }
+
+L.additionalLanguages = {
+    "HTML"
+}
+
 return L

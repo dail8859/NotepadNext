@@ -321,44 +321,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     getLuaState()->execute(QString("skip_tabs = %1").arg(editor->QObject::property("nn_skip_usetabs").isValid() ? "true" : "false").toLatin1().constData());
     getLuaState()->execute(QString("skip_tabwidth = %1").arg(editor->QObject::property("nn_skip_tabwidth").isValid() ? "true" : "false").toLatin1().constData());
 
-    getLuaState()->execute(R"(
-        local L = languages[languageName]
-
-        if not skip_tabs then
-            editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
-        end
-        if not skip_tabwidth then
-            editor.TabWidth = L.tabSize or 4
-        end
-
-        editor.MarginWidthN[2] = L.disableFoldMargin and 0 or 16
-        if L.styles then
-            for name, style in pairs(L.styles) do
-                editor.StyleFore[style.id] = style.fgColor
-                editor.StyleBack[style.id] = style.bgColor
-
-                if style.fontStyle then
-                    editor.StyleBold[style.id] = (style.fontStyle & 1 == 1)
-                    editor.StyleItalic[style.id] = (style.fontStyle & 2 == 2)
-                    editor.StyleUnderline[style.id] = (style.fontStyle & 4 == 4)
-                    editor.StyleEOLFilled[style.id] = (style.fontStyle & 8 == 8)
-                end
-            end
-        end
-        if L.keywords then
-            for id, kw in pairs(L.keywords) do
-                editor.KeyWords[id] = kw
-            end
-        end
-        if L.properties then
-            for p,v in pairs(L.properties) do
-                editor.Property[p] = v
-            end
-        end
-
-        editor.Property["fold"] = "1"
-        editor.Property["fold.compact"] = "0"
-    )");
+    getLuaState()->execute(QString("SetLanguage(languageName)").toLatin1().constData());
 }
 
 QString NotepadNextApplication::detectLanguage(ScintillaNext *editor) const
@@ -407,7 +370,7 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
     -- Grab a small chunk
     if editor.Length > 0 then
         editor:SetTargetRange(0, math.min(64, editor.Length))
-        return detectLanguageFromContents(editor.TargetText)
+        return DetectLanguageFromContents(editor.TargetText)
     end
 
     return "Text"
