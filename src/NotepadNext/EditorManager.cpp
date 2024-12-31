@@ -334,7 +334,7 @@ int EditorManager::detectEOLMode(ScintillaNext *editor) const
     int chPrev = ' ';
     int chNext = editor->charAt(index);
 
-    for (int i = 0; i < qMin(MAX_BYTES_TO_CHECK, editor->length()); ++i) {
+    for (int i = 0; i < qMin(MAX_BYTES_TO_CHECK, (int) editor->length()); ++i) {
         int ch = chNext;
         chNext = editor->charAt(i + 1);
 
