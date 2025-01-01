@@ -21,6 +21,7 @@
 #include "NotepadNextApplication.h"
 #include "TranslationManager.h"
 #include "ui_PreferencesDialog.h"
+#include "ScintillaNext.h"
 
 #include <QMessageBox>
 
@@ -78,6 +79,23 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     ui->spbDefaultFontSize->setValue(settings->fontSize());
     connect(ui->spbDefaultFontSize, QOverload<int>::of(&QSpinBox::valueChanged), settings, &ApplicationSettings::setFontSize);
     connect(settings, &ApplicationSettings::fontSizeChanged, ui->spbDefaultFontSize, &QSpinBox::setValue);
+
+    ui->comboBoxLineEndings->addItem(tr("System Default"), QString(""));
+    ui->comboBoxLineEndings->addItem(tr("Windows (CR LF)"), ScintillaNext::eolModeToString(SC_EOL_CRLF));
+    ui->comboBoxLineEndings->addItem(tr("Linux (LF)"), ScintillaNext::eolModeToString(SC_EOL_LF));
+    ui->comboBoxLineEndings->addItem(tr("Macintosh (CR)"), ScintillaNext::eolModeToString(SC_EOL_CR));
+
+    // Select the current one
+    int index = ui->comboBoxLineEndings->findData(settings->defaultEOLMode());
+    ui->comboBoxLineEndings->setCurrentIndex(index == -1 ? 0 : index);
+
+    connect(ui->comboBoxLineEndings, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+        settings->setDefaultEOLMode(ui->comboBoxLineEndings->itemData(index).toString());
+    });
+    connect(settings, &ApplicationSettings::defaultEOLModeChanged, this, [=](QString defaultEOLMode) {
+        int index = ui->comboBoxLineEndings->findData(defaultEOLMode);
+        ui->comboBoxLineEndings->setCurrentIndex(index == -1 ? 0 : index);
+    });
 }
 
 PreferencesDialog::~PreferencesDialog()

@@ -266,8 +266,21 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setIndentationGuides(settings->showIndentGuide() ? SC_IV_LOOKBOTH : SC_IV_NONE);
     editor->setWrapMode(settings->wordWrap() ? SC_WRAP_WORD : SC_WRAP_NONE);
 
-    // TODO: make this optional
-    editor->setEOLMode(detectEOLMode(editor));
+    int detectedEOLMode = detectEOLMode(editor);
+    if (detectedEOLMode == -1) {
+        if (!settings->defaultEOLMode().isEmpty()) {
+            const int eol = ScintillaNext::stringToEolMode(settings->defaultEOLMode().toLower());
+
+            if (eol != -1)
+                editor->setEOLMode(eol);
+            else
+                qWarning("Unexpected DefaultEOLMode: %s", qUtf8Printable(settings->defaultEOLMode()));
+        }
+        // else it will just stay whatever EOL mode it was when it was created
+    }
+    else {
+        editor->setEOLMode(detectedEOLMode);
+    }
 
     // Decorators
     SmartHighlighter *s = new SmartHighlighter(editor);
@@ -366,6 +379,6 @@ int EditorManager::detectEOLMode(ScintillaNext *editor) const
         return SC_EOL_LF;
     }
     else {
-        return editor->eOLMode();
+        return -1;
     }
 }
