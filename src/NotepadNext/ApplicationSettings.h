@@ -107,4 +107,5 @@ public:
     DEFINE_SETTING(FontName, fontName, QString);
     DEFINE_SETTING(FontSize, fontSize, int);
     DEFINE_SETTING(AdditionalWordChars, additionalWordChars, QString);
+    DEFINE_SETTING(DefaultEOLMode, defaultEOLMode, QString)
 };
