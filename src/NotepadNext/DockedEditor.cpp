@@ -202,6 +202,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     else {
         dockWidget->tabWidget()->setIcon(QIcon(editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png"));
         connect(editor, &ScintillaNext::savePointChanged, dockWidget, [=](bool dirty) {
+            Q_UNUSED(dirty)
             const bool actuallyDirty = editor->canSaveToDisk();
             const QString iconPath = actuallyDirty ? ":/icons/unsaved.png" : ":/icons/saved.png";
             dockWidget->tabWidget()->setIcon(QIcon(iconPath));
