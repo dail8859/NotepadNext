@@ -42,6 +42,9 @@ QRegexSearch::QRegexSearch()
 
 Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, bool caseSensitive, bool word, bool wordStart, Scintilla::FindOption flags, Sci::Position *length)
 {
+    Q_UNUSED(caseSensitive);
+    Q_UNUSED(word)
+    Q_UNUSED(wordStart)
     // -----------------------------------------------------------------------------------------------------------------------
     // NOTE: This section of code has to be very careful about what units of measure is being used. Scintilla wants to operate
     // in units of bytes (e.g. position 3 is 3 bytes into the text). Qt wants to operate in units of UTF16 chars. The trouble is

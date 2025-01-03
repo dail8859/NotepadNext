@@ -112,7 +112,7 @@ bool NotepadNextApplication::init()
         qInfo("Backuping up %s to %s", qUtf8Printable(settings->fileName()), qUtf8Printable(backup));
 
         QFile::remove(backup);
-        bool renameSuccessfull = QFile::rename(settings->fileName(), backup);
+        QFile::rename(settings->fileName(), backup);
 
         settings->clear();
     }

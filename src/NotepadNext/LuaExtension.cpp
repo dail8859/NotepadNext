@@ -19,13 +19,10 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 #include <stdio.h>
 #include <time.h>
 
 #include <string>
-#include <vector>
-#include <fstream>
 
 #include "Scintilla.h"
 #include "LuaExtension.h"
@@ -312,6 +309,7 @@ struct ScintillaFailure {
 
 static int iface_function_helper(lua_State *L, const IFaceFunction &func) {
     NppExtensionAPIPane p = check_pane_object(L, 1);
+    Q_UNUSED(p)
 
     int arg = 2;
 
@@ -512,6 +510,7 @@ static int push_iface_propval(lua_State *L, const char *name, IFaceTableInterfac
             // The bool getter is untested since there are none in the iface.
             // However, the following is suggested as a reference protocol.
             NppExtensionAPIPane p = check_pane_object(L, 1);
+            Q_UNUSED(p)
 
             if (prop->getter) {
                 if (editor->send(prop->getter, 1, 0)) {
