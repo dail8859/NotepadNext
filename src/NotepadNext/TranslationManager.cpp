@@ -89,12 +89,7 @@ void TranslationManager::loadTranslation(QLocale locale)
     }
 }
 
-void TranslationManager::loadTranslationByName(QString localeName)
+void TranslationManager::loadTranslation(QString localeName)
 {
-    if (localeName.isEmpty()) {
-        loadSystemDefaultTranslation();
-    }
-    else {
-        loadTranslation(QLocale(localeName));
-    }
+    loadTranslation(QLocale(localeName));
 }

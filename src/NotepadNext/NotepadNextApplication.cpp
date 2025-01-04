@@ -122,11 +122,13 @@ bool NotepadNextApplication::init()
 
     // The command line overrides the settings
     if (!parser.value("translation").isEmpty()) {
-        translationManager->loadTranslationByName(parser.value("translation"));
+        translationManager->loadTranslation(parser.value("translation"));
+    }
+    else if (!settings->translation().isEmpty()){
+        translationManager->loadTranslation(settings->translation());
     }
     else {
-        // Normally the setting is "" which will load the default system translation
-        translationManager->loadTranslationByName(settings->translation());
+        translationManager->loadSystemDefaultTranslation();
     }
 
     // This connection isn't needed since the application can not appropriately retranslate the UI at runtime
