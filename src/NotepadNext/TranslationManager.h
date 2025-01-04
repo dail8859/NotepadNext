@@ -38,7 +38,7 @@ public:
 public slots:
     void loadSystemDefaultTranslation();
     void loadTranslation(QLocale locale);
-    void loadTranslationByName(QString localeName);
+    void loadTranslation(QString localeName);
 
 private:
     const QString path;
