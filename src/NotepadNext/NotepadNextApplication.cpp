@@ -106,7 +106,7 @@ bool NotepadNextApplication::init()
 
     if (parser.isSet("reset-settings")) {
         QFileInfo original(settings->fileName());
-        QString backup = original.canonicalPath() + "/backup." + original.suffix();
+        const QString backup = original.canonicalFilePath() + QStringLiteral(".backup");
 
         qInfo("Resetting application settings");
         qInfo("Backuping up %s to %s", qUtf8Printable(settings->fileName()), qUtf8Printable(backup));
