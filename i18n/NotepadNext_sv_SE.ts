@@ -484,94 +484,94 @@
 <context>
     <name>FindReplaceDialog</name>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="26"/>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="259"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="14"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="244"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="59"/>
         <source>Find</source>
         <translation>Sök</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="78"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="66"/>
         <source>Search Mode</source>
         <translation>Sökläge</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="102"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="87"/>
         <source>&amp;Normal</source>
         <translation>&amp;Normal</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="118"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="103"/>
         <source>E&amp;xtended (\n, \r, \t, \0, \x...)</source>
         <translation>&amp;Utökat (\n, \r, \t, \0, \x...)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="136"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="121"/>
         <source>Re&amp;gular expression</source>
         <translation>&amp;Regular expression</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="152"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="137"/>
         <source>&amp;. matches newline</source>
         <translation>&amp;. matchar ny rad</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="191"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="176"/>
         <source>Transparenc&amp;y</source>
         <translation>&amp;Transparens</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="212"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="197"/>
         <source>On losing focus</source>
         <translation>Vid förlorat fokus</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="222"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="207"/>
         <source>Always</source>
         <translation>Alltid</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="272"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="257"/>
         <source>Coun&amp;t</source>
         <translation>&amp;Räkna</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="282"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="267"/>
         <source>&amp;Replace</source>
         <translation>&amp;Ersätt</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="289"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="274"/>
         <source>Replace &amp;All</source>
         <translation>Ersätt &amp;alla</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="296"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="281"/>
         <source>Replace All in &amp;Opened Documents</source>
         <translation>Ersätt alla i &amp;öppna dokument</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="303"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="288"/>
         <source>Find All in All &amp;Opened Documents</source>
         <translation>Sök alla i &amp;öppna dokument</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="313"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="298"/>
         <source>Find All in Current Document</source>
         <translation>Sök alla i aktuellt dokument</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="323"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="308"/>
         <source>Close</source>
         <translation>Stäng</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="379"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="364"/>
         <source>&amp;Find:</source>
         <translation>&amp;Sök:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="411"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="396"/>
         <source>Replace:</source>
         <translation>Ersätt:</translation>
     </message>
@@ -584,22 +584,22 @@
         <translation type="vanished">Ersätt med:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="452"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="442"/>
         <source>Backward direction</source>
         <translation>Bakåtriktning</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="459"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="449"/>
         <source>Match &amp;whole word only</source>
         <translation>Matcha endast &amp;hela ord</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="466"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="456"/>
         <source>Match &amp;case</source>
         <translation>Matcha &amp;skiftläge</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="473"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="463"/>
         <source>Wra&amp;p Around</source>
         <translation>&amp;Radbryt</translation>
     </message>
@@ -614,7 +614,7 @@
     </message>
     <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="144"/>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="337"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="341"/>
         <source>Replaced %Ln matches</source>
         <translation>
             <numerusform>Ersatte %Ln träff</numerusform>
@@ -622,27 +622,27 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="235"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="239"/>
         <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
         <translation>Slutet på dokumentet har nåtts. Hittade 1:a förekomsten från toppen.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="246"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="250"/>
         <source>No matches found.</source>
         <translation>Inga träffar.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="309"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="313"/>
         <source>1 occurrence was replaced</source>
         <translation>1 förekomst ersattes</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="318"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="322"/>
         <source>No more occurrences were found</source>
         <translation>Inga fler förekomster hittades</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="348"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="352"/>
         <source>Found %Ln matches</source>
         <translation>
             <numerusform>Hittade %Ln träff</numerusform>
@@ -2137,72 +2137,77 @@
         <translation>Preferenser</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="22"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="37"/>
         <source>Show menu bar</source>
         <translation>Visa menyfält</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="29"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="44"/>
         <source>Show toolbar</source>
         <translation>Visa verktygsfält</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="36"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="51"/>
         <source>Show status bar</source>
         <translation>Visa statusfält</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="43"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="58"/>
         <source>Restore previous session</source>
         <translation>Återställ föregående session</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="62"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="77"/>
         <source>Temporary files</source>
         <translation>Temporära filer</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="74"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="89"/>
         <source>Recenter find/replace dialog when opened</source>
         <translation>Centrera om dialogrutan Sök/Ersätt när den öppnas</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="99"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="114"/>
         <source>Translation:</source>
         <translation>Översättning:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="108"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="123"/>
         <source>Exit on last tab closed</source>
         <translation>Avsluta när sista fliken stängs</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="117"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="132"/>
         <source>Default Font</source>
         <translation>Standardteckensnitt</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="123"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="138"/>
         <source>Font</source>
         <translation>Teckensnitt</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="133"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="148"/>
         <source>Font Size</source>
         <translation>Teckenstorlek</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="140"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="155"/>
         <source>pt</source>
         <translation>pt</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="186"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="188"/>
+        <source>Default Line Endings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="219"/>
         <source>TextLabel</source>
         <translation>TextEtikett</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="198"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="231"/>
         <source>An application restart is required to apply certain settings.</source>
         <translation>En programomstart krävs för att tillämpa vissa inställningar.</translation>
     </message>
@@ -2223,7 +2228,7 @@
         <translation type="vanished">Återställ föregående session</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="55"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="70"/>
         <source>Unsaved changes</source>
         <translation>Osparade ändringar</translation>
     </message>
@@ -2232,22 +2237,42 @@
         <translation type="vanished">Temp-filer</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="81"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="96"/>
         <source>Combine search results</source>
         <translation>Kombinera sökresultat</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="53"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="54"/>
         <source>Warning</source>
         <translation>Varning</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="53"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="54"/>
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
         <translation>Denna funktion är experimentell och den bör inte betraktas som säker för kritiskt viktigt arbete. Det kan leda till eventuell dataförlust. Används på egen risk.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="121"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="83"/>
+        <source>System Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="84"/>
+        <source>Windows (CR LF)</source>
+        <translation type="unfinished">Windows (CR LF)</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="85"/>
+        <source>Linux (LF)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="86"/>
+        <source>Macintosh (CR)</source>
+        <translation type="unfinished">Macintosh (CR)</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="139"/>
         <source>&lt;System Default&gt;</source>
         <translation>&lt;Systemstandard&gt;</translation>
     </message>
@@ -2286,52 +2311,52 @@
 <context>
     <name>QuickFindWidget</name>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="17"/>
+        <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="17"/>
         <source>Frame</source>
         <translation>Ram</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="44"/>
+        <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="44"/>
         <source>Match case</source>
         <translation>Matcha skiftläge</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="47"/>
+        <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="47"/>
         <source>Aa</source>
         <translation>Aa</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="57"/>
+        <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="57"/>
         <source>Match whole word</source>
         <translation>Matcha hela ord</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="60"/>
+        <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="60"/>
         <source>|A|</source>
         <translation>|A|</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="70"/>
+        <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="70"/>
         <source>Use regular expression</source>
         <translation>Använd regular expression</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="73"/>
+        <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="73"/>
         <source>. *</source>
         <translation>. *</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="76"/>
+        <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="76"/>
         <source>Alt+E</source>
         <translation>Alt+E</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.ui" line="32"/>
+        <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="32"/>
         <source>Find...</source>
         <translation>Sök...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/QuickFindWidget.cpp" line="238"/>
+        <location filename="../src/NotepadNext/widgets/QuickFindWidget.cpp" line="238"/>
         <source>%L1/%L2</source>
         <translation>%L1/%L2</translation>
     </message>
