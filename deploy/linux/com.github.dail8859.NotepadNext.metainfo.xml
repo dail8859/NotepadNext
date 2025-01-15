@@ -26,6 +26,7 @@
 
     <launchable type="desktop-id">com.github.dail8859.NotepadNext.desktop</launchable>
     <releases>
+        <release version="v0.10" date="2025-01-15" />
         <release version="v0.9" date="2024-11-20" />
         <release version="v0.8" date="2024-06-25" />
         <release version="v0.7" date="2024-02-22" />

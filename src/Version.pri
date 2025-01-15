@@ -15,5 +15,5 @@
 # along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
 
 
-APP_VERSION = "0.9"
+APP_VERSION = "0.10"
 APP_COPYRIGHT = "Copyright 2019-2025 Justin Dailey"
