@@ -1646,7 +1646,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1146"/>
         <source>Open %1 Here</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir %1 aqui</translation>
     </message>
     <message>
         <source>Open Command Prompt Here</source>
@@ -2149,7 +2149,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="188"/>
         <source>Default Line Endings</source>
-        <translation type="unfinished"></translation>
+        <translation>Finais de linha predefinidos</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="219"/>
@@ -2174,22 +2174,22 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="83"/>
         <source>System Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Predefinição do sistema</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="84"/>
         <source>Windows (CR LF)</source>
-        <translation type="unfinished">Windows (CR LF)</translation>
+        <translation>Windows (CR LF)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="85"/>
         <source>Linux (LF)</source>
-        <translation type="unfinished"></translation>
+        <translation>Linux (LF)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="86"/>
         <source>Macintosh (CR)</source>
-        <translation type="unfinished">Macintosh (CR)</translation>
+        <translation>Macintosh (CR)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="139"/>
