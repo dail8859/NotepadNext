@@ -1412,7 +1412,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="867"/>
         <source>Find in Files...</source>
-        <translation>buscar en archivos...</translation>
+        <translation>Buscar en archivos...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="872"/>
@@ -1805,7 +1805,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1279"/>
         <source>Unfold All</source>
-        <translation>Desplegar tudo</translation>
+        <translation>Desplegar todo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1282"/>
