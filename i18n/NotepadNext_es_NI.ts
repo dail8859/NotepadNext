@@ -87,7 +87,7 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="197"/>
         <source>Cannot find downloaded update!</source>
-        <translation>¡No se puedo encontrar la actualización descargada!</translation>
+        <translation>¡No se pudo encontrar la actualización descargada!</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="215"/>
