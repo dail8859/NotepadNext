@@ -160,12 +160,12 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="391"/>
         <source>Downloading Updates</source>
-        <translation>Descargando Actualizaciones</translation>
+        <translation>Descargando actualizaciones</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="392"/>
         <source>Time Remaining</source>
-        <translation>Tiempo Restante</translation>
+        <translation>Tiempo restante</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="392"/>
@@ -318,7 +318,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="48"/>
         <source>Line Indent Position</source>
-        <translation>Posición de sangría da línea</translation>
+        <translation>Posición de sangría de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="52"/>
@@ -418,12 +418,12 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="104"/>
         <source>Fold Parent</source>
-        <translation>Pliegue principal</translation>
+        <translation>Inicio de Pliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="105"/>
         <source>Last Child</source>
-        <translation>Último abajo</translation>
+        <translation>Fin de Pliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="106"/>
