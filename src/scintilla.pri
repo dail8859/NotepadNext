@@ -74,5 +74,6 @@ CONFIG(release, debug|release) {
 }
 
 macx {
+    DEFINES += OS_X_KEYS
     QMAKE_LFLAGS_SONAME = -Wl,-install_name,@executable_path/../Frameworks/
 }
