@@ -110,7 +110,7 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="201"/>
         <source>Cannot find downloaded update!</source>
-        <translation>Não foi possível localizar a atualização baixada</translation>
+        <translation>Não foi possível localizar a atualização baixada!</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="219"/>
@@ -1009,7 +1009,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="284"/>
         <source>Language</source>
-        <translation>Idioma</translation>
+        <translation>Linguagem</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="289"/>
