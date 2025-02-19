@@ -528,7 +528,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="137"/>
         <source>&amp;. matches newline</source>
-        <translation>&amp;. corresponde a una nueva línea</translation>
+        <translation>&amp;. coincide con una nueva línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="176"/>
@@ -558,12 +558,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="274"/>
         <source>Replace &amp;All</source>
-        <translation>Sustituir &amp;todo</translation>
+        <translation>Replace &amp;todo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="281"/>
         <source>Replace All in &amp;Opened Documents</source>
-        <translation>Sustituir todo en documentos &amp;abiertos</translation>
+        <translation>Reemplazar todo en documentos &amp;abiertos</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="288"/>
@@ -613,7 +613,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="60"/>
         <source>Replace</source>
-        <translation>Sustituir</translation>
+        <translation>Reemplazar</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="144"/>
@@ -989,7 +989,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="224"/>
         <source>&amp;Zoom</source>
-        <translation>&amp;Enfocar</translation>
+        <translation>&amp;Hacer zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="233"/>
@@ -1339,7 +1339,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="724"/>
         <source>Zoom &amp;In</source>
-        <translation>A&amp;umentar</translation>
+        <translation>A&amp;umentar zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="727"/>
@@ -1349,7 +1349,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="737"/>
         <source>Zoom &amp;Out</source>
-        <translation>&amp;Reducir</translation>
+        <translation>&amp;Reducir zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="740"/>
@@ -1359,7 +1359,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="745"/>
         <source>Reset Zoom</source>
-        <translation>Reiniciar enfoque</translation>
+        <translation>Reiniciar zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="748"/>
@@ -1459,7 +1459,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="890"/>
         <source>&amp;Replace...</source>
-        <translation>&amp;Sustituir...</translation>
+        <translation>&amp;Reemplazar...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="893"/>
@@ -2086,7 +2086,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1802"/>
         <source>Zoom: %1%</source>
-        <translation>Enfoque: %1%</translation>
+        <translation>Zoom: %1%</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1942"/>
