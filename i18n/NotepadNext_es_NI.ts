@@ -11,7 +11,7 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="26"/>
         <source>Please provide the user name and password for the download location.</source>
-        <translation>Por favor provea el nombre de usuario y la contraseña para la ubicación de descarga</translation>
+        <translation>Por favor provea el nombre de usuario y la contraseña para la ubicación de descarga.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="35"/>
@@ -202,12 +202,12 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="423"/>
         <source>about %1 hours</source>
-        <translation>dentro de %1 horas</translation>
+        <translation>cerca de %1 horas</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="425"/>
         <source>about one hour</source>
-        <translation>dentro de 1 hora</translation>
+        <translation>cerca de 1 hora</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="434"/>
@@ -330,7 +330,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="45"/>
         <source>Line Length</source>
-        <translation>Tamaño de línea</translation>
+        <translation>Longitud de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="46"/>
@@ -445,12 +445,12 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="104"/>
         <source>Fold Parent</source>
-        <translation>Inicio de Pliegue</translation>
+        <translation>Inicio de pliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="105"/>
         <source>Last Child</source>
-        <translation>Fin de Pliegue</translation>
+        <translation>Fin de pliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="106"/>
@@ -553,7 +553,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="267"/>
         <source>&amp;Replace</source>
-        <translation>&amp;Sustituir</translation>
+        <translation>&amp;Reemplazar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="274"/>
@@ -588,7 +588,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="396"/>
         <source>Replace:</source>
-        <translation>Sustituir:</translation>
+        <translation>Reemplazar:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="442"/>
@@ -598,7 +598,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="449"/>
         <source>Match &amp;whole word only</source>
-        <translation>Coincidir después de la palabra &amp;completa</translation>
+        <translation>Coincidir solo &amp;palabra completa</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="456"/>
@@ -637,7 +637,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="313"/>
         <source>1 occurrence was replaced</source>
-        <translation>Se sustituyó 1 incidencia</translation>
+        <translation>Se reemplazó 1 incidencia</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="322"/>
@@ -872,7 +872,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="82"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="89"/>
@@ -1249,7 +1249,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="639"/>
         <source>Convert text to upper case</source>
-        <translation>Convertir texto en mayúsculas</translation>
+        <translation>Convertir texto a mayúsculas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="644"/>
@@ -1259,7 +1259,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="647"/>
         <source>Convert text to lower case</source>
-        <translation>Convertir texto en minúsculas</translation>
+        <translation>Convertir texto a minúsculas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="652"/>
@@ -1334,7 +1334,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="714"/>
         <source>Close All to the Right</source>
-        <translation>Cerrar tudo a la derecha</translation>
+        <translation>Cerrar todo a la derecha</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="724"/>
@@ -1605,7 +1605,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1070"/>
         <source>This is not currently implemented</source>
-        <translation>Actualmente no está implementado</translation>
+        <translation>Esto actualmente no está implementado</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1075"/>
@@ -1635,7 +1635,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1100"/>
         <source>Base 64 Encode</source>
-        <translation>Codificar para base 64</translation>
+        <translation>Codificar en base 64</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1105"/>
@@ -1645,7 +1645,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1110"/>
         <source>Base 64 Decode</source>
-        <translation>Decodificar base 64</translation>
+        <translation>Decodificar de base 64</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1115"/>
@@ -2184,12 +2184,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="231"/>
         <source>An application restart is required to apply certain settings.</source>
-        <translation>Es necesario reiniciar el programa para aplicar algunos ajustes.</translation>
+        <translation>Se requiere reiniciar el programa para aplicar algunos ajustes.</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="54"/>
         <source>Warning</source>
-        <translation>Aviso</translation>
+        <translation>Advertencia</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="54"/>
@@ -2340,12 +2340,12 @@
     </message>
     <message>
         <source>Would you like to download the update now? This is a mandatory update, exiting now will close the application</source>
-        <translation type="vanished">¿Le gustaría bajar la actualización ahora? Esta es una actualización obligatoria, salir ahora cerrará la aplicación</translation>
+        <translation>¿Le gustaría bajar la actualización ahora? Esta es una actualización obligatoria, salir ahora cerrará la aplicación</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="449"/>
         <source>Would you like to download the update now?&lt;br /&gt;This is a mandatory update, exiting now will close the application.</source>
-        <translation type="vanished">¿Le gustaría bajar la actualización ahora? Esta es una actualización obligatoria, salir ahora cerrará la aplicación</translation>
+        <translation>¿Le gustaría bajar la actualización ahora? Esta es una actualización obligatoria, salir ahora cerrará la aplicación.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="454"/>
@@ -2378,7 +2378,7 @@
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="388"/>
         <source>Pin To...</source>
-        <translation>Fijar en...</translation>
+        <translation>Fijar...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="390"/>
@@ -2388,12 +2388,12 @@
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="391"/>
         <source>Left</source>
-        <translation>Izquierda</translation>
+        <translation>A la izquierda</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="392"/>
         <source>Right</source>
-        <translation>Derecha</translation>
+        <translation>A la derecha</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="393"/>
@@ -2438,7 +2438,7 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="785"/>
         <source>Pin Group To...</source>
-        <translation>Fijar grupo en...</translation>
+        <translation>Fijar grupo...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="787"/>
@@ -2448,12 +2448,12 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="788"/>
         <source>Left</source>
-        <translation>Izquierda</translation>
+        <translation>A la izquierda</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="789"/>
         <source>Right</source>
-        <translation>Derecha</translation>
+        <translation>A la derecha</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="790"/>
@@ -2518,7 +2518,7 @@
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="551"/>
         <source>Pin To...</source>
-        <translation>Fijar en...</translation>
+        <translation>Fijar...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="553"/>
@@ -2528,12 +2528,12 @@
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="554"/>
         <source>Left</source>
-        <translation>Izquierda</translation>
+        <translation>A la izquierda</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
         <source>Right</source>
-        <translation>Derecha</translation>
+        <translation>A la derecha</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="556"/>
