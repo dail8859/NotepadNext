@@ -497,68 +497,68 @@
     </message>
 </context>
 <context>
-    <name>FindReplaceDialog</name>
+    <name>FindDialog</name>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="14"/>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="244"/>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="59"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="14"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="244"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.cpp" line="59"/>
         <source>Find</source>
         <translation>Buscar</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="66"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="66"/>
         <source>Search Mode</source>
         <translation>Modo de búsqueda</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="87"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="87"/>
         <source>&amp;Normal</source>
         <translation>&amp;Normal</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="103"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="103"/>
         <source>E&amp;xtended (\n, \r, \t, \0, \x...)</source>
         <translation>E&amp;xtendida (\n, \r, \t, \0, \x...)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="121"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="121"/>
         <source>Re&amp;gular expression</source>
         <translation>Expresión re&amp;gular</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="137"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="137"/>
         <source>&amp;. matches newline</source>
         <translation>&amp;. coincide con una nueva línea</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="176"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="176"/>
         <source>Transparenc&amp;y</source>
         <translation>Transparenc&amp;ia</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="197"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="197"/>
         <source>On losing focus</source>
         <translation>Al perder el enfoque</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="207"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="207"/>
         <source>Always</source>
         <translation>Siempre</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="257"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="257"/>
         <source>Coun&amp;t</source>
         <translation>Con&amp;tar</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="267"/>
-        <source>&amp;Replace</source>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="267"/>
+        <source>&amp;</source>
         <translation>&amp;Reemplazar</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="274"/>
+        <location filename="../src/NotepadNext/dialogs/FindDialog.ui" line="274"/>
         <source>Replace &amp;All</source>
-        <translation>Replace &amp;todo</translation>
+        <translation>Reemplazar &amp;todo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="281"/>
