@@ -6,22 +6,22 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuadro de diálogo</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="26"/>
         <source>Please provide the user name and password for the download location.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor provea el nombre de usuario y la contraseña para la ubicación de descarga.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="35"/>
         <source>&amp;User name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de &amp;usuario:</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="48"/>
         <source>&amp;Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Contraseña:</translation>
     </message>
 </context>
 <context>
@@ -135,16 +135,16 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="230"/>
         <source>In order to install the update, you may need to quit the application.</source>
-        <translation>Para instalar la actualización, será necessario salir de la aplicación.</translation>
+        <translation>Para instalar la actualización, será necesario salir de la aplicación.</translation>
     </message>
     <message>
         <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application</source>
-        <translation type="vanished">Para instalar la actualización, será necessario salir de la aplicación. Esta es una actualización obligatoria, salir ahora cerrará la aplicación</translation>
+        <translation>Para instalar la actualización, será necesario salir de la aplicación. Esta es una actualización obligatoria, salir ahora cerrará la aplicación</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="234"/>
         <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application.</source>
-        <translation type="unfinished"></translation>
+        <translation>Para instalar la actualización, será necesario salir de la aplicación. Esta es una actualización obligatoria, salir ahora cerrará la aplicación</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="253"/>
@@ -202,12 +202,12 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="423"/>
         <source>about %1 hours</source>
-        <translation>dentro de %1 horas</translation>
+        <translation>cerca de %1 horas</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="425"/>
         <source>about one hour</source>
-        <translation>dentro de 1 hora</translation>
+        <translation>cerca de 1 hora</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="434"/>
@@ -330,7 +330,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="45"/>
         <source>Line Length</source>
-        <translation>Tamaño de línea</translation>
+        <translation>Longitud de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="46"/>
@@ -350,7 +350,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="52"/>
         <source>Selection Information</source>
-        <translation>Información de seleción</translation>
+        <translation>Información de selección</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="55"/>
@@ -445,12 +445,12 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="104"/>
         <source>Fold Parent</source>
-        <translation>Inicio de Pliegue</translation>
+        <translation>Inicio de pliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="105"/>
         <source>Last Child</source>
-        <translation>Fin de Pliegue</translation>
+        <translation>Fin de pliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="106"/>
@@ -528,7 +528,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="137"/>
         <source>&amp;. matches newline</source>
-        <translation>&amp;. corresponde a una nueva línea</translation>
+        <translation>&amp;. coincide con una nueva línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="176"/>
@@ -553,17 +553,17 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="267"/>
         <source>&amp;Replace</source>
-        <translation>&amp;Sustituir</translation>
+        <translation>&amp;Reemplazar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="274"/>
         <source>Replace &amp;All</source>
-        <translation>Sustituir &amp;todo</translation>
+        <translation>Replace &amp;todo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="281"/>
         <source>Replace All in &amp;Opened Documents</source>
-        <translation>Sustituir todo en documentos &amp;abiertos</translation>
+        <translation>Reemplazar todo en documentos &amp;abiertos</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="288"/>
@@ -588,7 +588,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="396"/>
         <source>Replace:</source>
-        <translation>Sustituir:</translation>
+        <translation>Reemplazar:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="442"/>
@@ -598,7 +598,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="449"/>
         <source>Match &amp;whole word only</source>
-        <translation>Coincidir después de la palabra &amp;completa</translation>
+        <translation>Coincidir solo &amp;palabra completa</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="456"/>
@@ -613,15 +613,15 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="60"/>
         <source>Replace</source>
-        <translation>Sustituir</translation>
+        <translation>Reemplazar</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="144"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="341"/>
         <source>Replaced %Ln matches</source>
         <translation>
-            <numerusform>Se ha reemplazado %Ln  incidencia</numerusform>
-            <numerusform>Se ha reemplazado %Ln  incidencias</numerusform>
+            <numerusform>Se ha reemplazado %Ln incidencia</numerusform>
+            <numerusform>Se han reemplazado %Ln incidencias</numerusform>
         </translation>
     </message>
     <message>
@@ -637,7 +637,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="313"/>
         <source>1 occurrence was replaced</source>
-        <translation>Se sustituyó 1 incidencia</translation>
+        <translation>Se reemplazó 1 incidencia</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="322"/>
@@ -649,7 +649,7 @@
         <source>Found %Ln matches</source>
         <translation>
             <numerusform>Se ha encontrado %Ln incidencia</numerusform>
-            <numerusform>Se ha encontrado %Ln incidencias</numerusform>
+            <numerusform>Se han encontrado %Ln incidencias</numerusform>
         </translation>
     </message>
 </context>
@@ -756,7 +756,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="48"/>
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="58"/>
@@ -872,7 +872,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="82"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="89"/>
@@ -944,7 +944,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="116"/>
         <source>EOL Conversion</source>
-        <translation>Conversión de Fin De Línea</translation>
+        <translation>Conversión de fin de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="124"/>
@@ -989,7 +989,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="224"/>
         <source>&amp;Zoom</source>
-        <translation>&amp;Enfocar</translation>
+        <translation>&amp;Hacer zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="233"/>
@@ -1249,7 +1249,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="639"/>
         <source>Convert text to upper case</source>
-        <translation>Convertir texto en mayúsculas</translation>
+        <translation>Convertir texto a mayúsculas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="644"/>
@@ -1259,7 +1259,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="647"/>
         <source>Convert text to lower case</source>
-        <translation>Convertir texto en minúsculas</translation>
+        <translation>Convertir texto a minúsculas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="652"/>
@@ -1334,12 +1334,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="714"/>
         <source>Close All to the Right</source>
-        <translation>Cerrar tudo a la derecha</translation>
+        <translation>Cerrar todo a la derecha</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="724"/>
         <source>Zoom &amp;In</source>
-        <translation>A&amp;umentar</translation>
+        <translation>A&amp;umentar zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="727"/>
@@ -1349,7 +1349,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="737"/>
         <source>Zoom &amp;Out</source>
-        <translation>&amp;Reducir</translation>
+        <translation>&amp;Reducir zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="740"/>
@@ -1359,7 +1359,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="745"/>
         <source>Reset Zoom</source>
-        <translation>Reiniciar enfoque</translation>
+        <translation>Reiniciar zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="748"/>
@@ -1379,7 +1379,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="776"/>
         <source>Show Whitespace</source>
-        <translation>Mostrar espacios en branco</translation>
+        <translation>Mostrar espacios en blanco</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="784"/>
@@ -1459,7 +1459,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="890"/>
         <source>&amp;Replace...</source>
-        <translation>&amp;Sustituir...</translation>
+        <translation>&amp;Reemplazar...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="893"/>
@@ -1545,7 +1545,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1006"/>
         <source>&amp;Go to Line...</source>
-        <translation>&amp;Ir para la línea...</translation>
+        <translation>&amp;Ir a la línea...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1009"/>
@@ -1605,7 +1605,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1070"/>
         <source>This is not currently implemented</source>
-        <translation>Actualmente no está implementado</translation>
+        <translation>Esto actualmente no está implementado</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1075"/>
@@ -1635,7 +1635,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1100"/>
         <source>Base 64 Encode</source>
-        <translation>Codificar para base 64</translation>
+        <translation>Codificar en base 64</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1105"/>
@@ -1645,7 +1645,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1110"/>
         <source>Base 64 Decode</source>
-        <translation>Decodificar base 64</translation>
+        <translation>Decodificar de base 64</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1115"/>
@@ -1671,11 +1671,11 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1146"/>
         <source>Open %1 Here</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir %1 aquí</translation>
     </message>
     <message>
         <source>Open Command Prompt Here</source>
-        <translation type="vanished">Abrir una consola aquí</translation>
+        <translation>Abrir una consola aquí</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1151"/>
@@ -1943,7 +1943,7 @@
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1367"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1370"/>
         <source>Toggle Overtype</source>
-        <translation>Insertar/remover overtype</translation>
+        <translation>Insertar/remover sobreescritura</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1373"/>
@@ -1973,7 +1973,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="363"/>
         <source>Go to line</source>
-        <translation>Ir a línea</translation>
+        <translation>Ir a la línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="363"/>
@@ -2025,12 +2025,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1104"/>
         <source>Reload File</source>
-        <translation>Recargar archivo</translation>
+        <translation>Volver a cargar archivo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1104"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
-        <translation>¿Está seguro de que desea recargar &lt;b&gt;%1&lt;/b&gt;? Todos los cambios sin guardar se perderán.</translation>
+        <translation>¿Está seguro de que desea volver a cargar &lt;b&gt;%1&lt;/b&gt;? Todos los cambios sin guardar se perderán.</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1305"/>
@@ -2056,7 +2056,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1414"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
-        <translation>¿Está seguro de que desea mover &lt;b&gt;%1&lt;/b&gt; para la papelera?</translation>
+        <translation>¿Está seguro de que desea mover &lt;b&gt;%1&lt;/b&gt; a la papelera?</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1424"/>
@@ -2086,7 +2086,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1802"/>
         <source>Zoom: %1%</source>
-        <translation>Enfoque: %1%</translation>
+        <translation>Zoom: %1%</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1942"/>
@@ -2134,7 +2134,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="89"/>
         <source>Recenter find/replace dialog when opened</source>
-        <translation>Centralizar diálogo de búsqueda/reemplazo cuando esté abierta</translation>
+        <translation>Centralizar diálogo de búsqueda/reemplazo cuando esté abierto</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="96"/>
@@ -2184,12 +2184,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="231"/>
         <source>An application restart is required to apply certain settings.</source>
-        <translation>Es necesario reiniciar el programa para aplicar algunos ajustes.</translation>
+        <translation>Se requiere reiniciar el programa para aplicar algunos ajustes.</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="54"/>
         <source>Warning</source>
-        <translation>Aviso</translation>
+        <translation>Advertencia</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="54"/>
@@ -2204,17 +2204,17 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="84"/>
         <source>Windows (CR LF)</source>
-        <translation type="unfinished">Windows (CR LF)</translation>
+        <translation>Windows (CR LF)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="85"/>
         <source>Linux (LF)</source>
-        <translation type="unfinished">Linux (LF)</translation>
+        <translation>Linux (LF)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="86"/>
         <source>Macintosh (CR)</source>
-        <translation type="unfinished">Macintosh (CR)</translation>
+        <translation>Macintosh (CR)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="139"/>
@@ -2308,7 +2308,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.ui" line="38"/>
         <source>Copy Results to Clipboard</source>
-        <translation>Copiar resultados para el portapapeles</translation>
+        <translation>Copiar resultados al portapapeles</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="65"/>
@@ -2340,17 +2340,17 @@
     </message>
     <message>
         <source>Would you like to download the update now? This is a mandatory update, exiting now will close the application</source>
-        <translation type="vanished">¿Le gustaría bajar la actualización ahora? Esta es una actualización obligatoria, salir ahora cerrará la aplicación.</translation>
+        <translation>¿Le gustaría bajar la actualización ahora? Esta es una actualización obligatoria, salir ahora cerrará la aplicación</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="449"/>
         <source>Would you like to download the update now?&lt;br /&gt;This is a mandatory update, exiting now will close the application.</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Le gustaría bajar la actualización ahora? Esta es una actualización obligatoria, salir ahora cerrará la aplicación.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="454"/>
         <source>&lt;strong&gt;Change log:&lt;/strong&gt;&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;strong&gt;Registro de cambios:&lt;/strong&gt;&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="457"/>
@@ -2378,7 +2378,7 @@
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="388"/>
         <source>Pin To...</source>
-        <translation>Fijar en...</translation>
+        <translation>Fijar...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="390"/>
@@ -2388,12 +2388,12 @@
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="391"/>
         <source>Left</source>
-        <translation>Izquierda</translation>
+        <translation>A la izquierda</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="392"/>
         <source>Right</source>
-        <translation>Derecha</translation>
+        <translation>A la derecha</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="393"/>
@@ -2438,7 +2438,7 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="785"/>
         <source>Pin Group To...</source>
-        <translation>Fijar grupo en...</translation>
+        <translation>Fijar grupo...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="787"/>
@@ -2448,12 +2448,12 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="788"/>
         <source>Left</source>
-        <translation>Izquierda</translation>
+        <translation>A la izquierda</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="789"/>
         <source>Right</source>
-        <translation>Derecha</translation>
+        <translation>A la derecha</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="790"/>
@@ -2518,7 +2518,7 @@
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="551"/>
         <source>Pin To...</source>
-        <translation>Fijar en...</translation>
+        <translation>Fijar...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="553"/>
@@ -2528,12 +2528,12 @@
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="554"/>
         <source>Left</source>
-        <translation>Izquierda</translation>
+        <translation>A la izquierda</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
         <source>Right</source>
-        <translation>Derecha</translation>
+        <translation>A la derecha</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="556"/>
