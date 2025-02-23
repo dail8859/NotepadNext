@@ -125,12 +125,12 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="221"/>
         <source>The installer will open separately</source>
-        <translation>El instalador se abrirá separadamente</translation>
+        <translation>El instalador se abrirá separadamente.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="228"/>
         <source>Click &quot;OK&quot; to begin installing the update</source>
-        <translation>Presione OK para empezar a descargar la actualización</translation>
+        <translation>Presione OK para empezar a descargar la actualización.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="230"/>
@@ -139,7 +139,7 @@
     </message>
     <message>
         <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application</source>
-        <translation type="vanished">Para instalar la actualización, será necesario salir de la aplicación. Esta es una actualización obligatoria, salir ahora cerrará la aplicación</translation>
+        <translation type="vanished">Para instalar la actualización, será necesario salir de la aplicación. Esta es una actualización obligatoria, salir ahora cerrará la aplicación.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="234"/>
@@ -558,7 +558,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="274"/>
         <source>Replace &amp;All</source>
-        <translation>Replace &amp;todo</translation>
+        <translation>Reemplazar &amp;todo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="281"/>
@@ -666,7 +666,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/HexViewerDock.ui" line="14"/>
         <source>Hex Viewer</source>
-        <translation>Visualizador Hexadecimal</translation>
+        <translation>Visualizador hexadecimal</translation>
     </message>
 </context>
 <context>
@@ -786,7 +786,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="140"/>
         <source>Move Selected Macro Step Down</source>
-        <translation>Mover tapa de macro seleccionada para abajo</translation>
+        <translation>Mover etapa de macro seleccionada para abajo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="176"/>
@@ -1520,7 +1520,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="981"/>
         <source>Select Next Instance</source>
-        <translation>Selecionar próxima instancia</translation>
+        <translation>Seleccionar instancia siguiente</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="984"/>
@@ -2009,7 +2009,7 @@
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1032"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1130"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>Guardar archivo &lt;b&gt;%1&lt;/b&gt;?</translation>
+        <translation>¿Guardar archivo &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1033"/>
@@ -2340,7 +2340,7 @@
     </message>
     <message>
         <source>Would you like to download the update now? This is a mandatory update, exiting now will close the application</source>
-        <translation type="vanished">¿Le gustaría bajar la actualización ahora? Esta es una actualización obligatoria, salir ahora cerrará la aplicación</translation>
+        <translation type="vanished">¿Le gustaría bajar la actualización ahora? Esta es una actualización obligatoria, salir ahora cerrará la aplicación.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="449"/>
@@ -2360,12 +2360,12 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="495"/>
         <source>No updates are available for the moment</source>
-        <translation>No hay actualizaciones disponibles por el momento</translation>
+        <translation>No hay actualizaciones disponibles por el momento.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="497"/>
         <source>Congratulations! You are running the latest version of %1</source>
-        <translation>¡Felicitaciones! Está ejecutando la última versión de %1</translation>
+        <translation>¡Felicitaciones! Está ejecutando la última versión de %1.</translation>
     </message>
 </context>
 <context>
