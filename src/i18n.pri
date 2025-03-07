@@ -23,15 +23,21 @@ for(TS_FILE, TS_FILES) {
     # Add the application translation file
     TRANSLATIONS += $$TS_FILE
 
-    # Extract the locale from the file name (e.g. NotepadNext_pl_PL.ts to pl_PL)
-    LOCALE =  $$str_member($$TS_FILE, -8, -4)
+    FILE_NAME = $$basename(TS_FILE)
 
-    # Extra translation files that include both the language and translation
+    # Extract the locale from the file name (e.g. NotepadNext_pl_PL.ts to pl_PL)
+    LOCALE = $$replace(FILE_NAME, "NotepadNext_(..)(\\_..)?\\.ts", "\\1\\2")
+
+    # Extra Qt translation files
     EXTRA_TRANSLATIONS += $$files($$[QT_INSTALL_TRANSLATIONS]/qt_$${LOCALE}.qm)
     EXTRA_TRANSLATIONS += $$files($$[QT_INSTALL_TRANSLATIONS]/qtbase_$${LOCALE}.qm)
 
     # Check for files without the territory specified (e.g. pl)
-    LANGUAGE = $$replace(LOCALE, "(..).*", "\\1")
-    EXTRA_TRANSLATIONS += $$files($$[QT_INSTALL_TRANSLATIONS]/qt_$${LANGUAGE}.qm)
-    EXTRA_TRANSLATIONS += $$files($$[QT_INSTALL_TRANSLATIONS]/qtbase_$${LANGUAGE}.qm)
+    greaterThan($$str_size(LOCALE), 2) {
+        LANGUAGE = $$replace(LOCALE, "(..).*", "\\1")
+        EXTRA_TRANSLATIONS += $$files($$[QT_INSTALL_TRANSLATIONS]/qt_$${LANGUAGE}.qm)
+        EXTRA_TRANSLATIONS += $$files($$[QT_INSTALL_TRANSLATIONS]/qtbase_$${LANGUAGE}.qm)
+    }
 }
+
+message("EXTRA_TRANSLATIONS: $$EXTRA_TRANSLATIONS")
