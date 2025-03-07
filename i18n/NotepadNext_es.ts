@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="cs_CZ">
+<TS version="2.1" language="es">
 <context>
     <name>AuthenticateDialog</name>
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuadro de diálogo</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="26"/>
         <source>Please provide the user name and password for the download location.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor provea el nombre de usuario y la contraseña para la ubicación de descarga.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="35"/>
         <source>&amp;User name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de &amp;usuario:</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="48"/>
         <source>&amp;Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Contraseña:</translation>
     </message>
 </context>
 <context>
@@ -29,28 +29,27 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="20"/>
         <source>Column Mode</source>
-        <translation>Režim sloupce</translation>
+        <translation>Modo de columna</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="32"/>
         <source>Text</source>
-        <translatorcomment>Text</translatorcomment>
-        <translation>Text</translation>
+        <translation>Texto</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="47"/>
         <source>Numbers</source>
-        <translation>Čísla</translation>
+        <translation>Números</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="59"/>
         <source>Start:</source>
-        <translation>Start:</translation>
+        <translation>Iniciar:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="76"/>
         <source>Step:</source>
-        <translation>Krok:</translation>
+        <translation>Etapa:</translation>
     </message>
 </context>
 <context>
@@ -58,7 +57,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/DebugLogDock.ui" line="14"/>
         <source>Debug Log</source>
-        <translation>Protokol ladění</translation>
+        <translation>Registro de depuración</translation>
     </message>
 </context>
 <context>
@@ -67,164 +66,168 @@
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="23"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="267"/>
         <source>Updater</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizador</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="90"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="114"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="349"/>
         <source>Downloading updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Descargando actualizaciones</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="113"/>
         <source>Time remaining: 0 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo restante: 0 minutos</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="154"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.ui" line="161"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="113"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Parar</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="115"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="449"/>
         <source>Time remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo restante</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="115"/>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>desconocido</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="201"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="201"/>
         <source>Cannot find downloaded update!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡No se pudo encontrar la actualización descargada!</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="219"/>
         <source>Close</source>
-        <translation type="unfinished">Zavřít</translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="220"/>
         <source>Download complete!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Descarga completa!</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="221"/>
         <source>The installer will open separately</source>
-        <translation type="unfinished"></translation>
+        <translation>El instalador se abrirá separadamente.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="228"/>
         <source>Click &quot;OK&quot; to begin installing the update</source>
-        <translation type="unfinished"></translation>
+        <translation>Presione OK para empezar a descargar la actualización.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="230"/>
         <source>In order to install the update, you may need to quit the application.</source>
-        <translation type="unfinished"></translation>
+        <translation>Para instalar la actualización, será necesario salir de la aplicación.</translation>
+    </message>
+    <message>
+        <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application</source>
+        <translation type="vanished">Para instalar la actualización, será necesario salir de la aplicación. Esta es una actualización obligatoria, salir ahora cerrará la aplicación.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="234"/>
         <source>In order to install the update, you may need to quit the application. This is a mandatory update, exiting now will close the application.</source>
-        <translation type="unfinished"></translation>
+        <translation>Para instalar la actualización, será necesario salir de la aplicación. Esta es una actualización obligatoria, salir ahora cerrará la aplicación</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="253"/>
         <source>Click the &quot;Open&quot; button to apply the update</source>
-        <translation type="unfinished"></translation>
+        <translation>Presione el botón “Abrir” para aplicar la actualización</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="271"/>
         <source>Are you sure you want to cancel the download?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Está seguro de que desea cancelar la descarga?</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="274"/>
         <source>Are you sure you want to cancel the download? This is a mandatory update, exiting now will close the application</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Está seguro de que desea cancelar la descarga? Esta es una actualización obligatoria, salir ahora cerrará la aplicación</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="332"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="341"/>
         <source>%1 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bytes</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="335"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="344"/>
         <source>%1 KB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="338"/>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="347"/>
         <source>%1 MB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="349"/>
         <source>of</source>
-        <translation type="unfinished"></translation>
+        <translation>de</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="395"/>
         <source>Downloading Updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Descargando actualizaciones</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="396"/>
         <source>Time Remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo restante</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="396"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Desconocido</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="423"/>
         <source>about %1 hours</source>
-        <translation type="unfinished"></translation>
+        <translation>cerca de %1 horas</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="425"/>
         <source>about one hour</source>
-        <translation type="unfinished"></translation>
+        <translation>cerca de 1 hora</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="434"/>
         <source>%1 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 minutos</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="436"/>
         <source>1 minute</source>
-        <translation type="unfinished"></translation>
+        <translation>1 minuto</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="444"/>
         <source>%1 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 segundos</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="446"/>
         <source>1 second</source>
-        <translation type="unfinished"></translation>
+        <translation>1 segundo</translation>
     </message>
 </context>
 <context>
@@ -232,22 +235,22 @@
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="108"/>
         <source>Length: %L1    Lines: %L2</source>
-        <translation>Délka: %L1 Řádky: %L2</translation>
+        <translation>Longitud: %L1    Líneas: %L2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="117"/>
         <source>Sel: N/A</source>
-        <translation>Výběr: N/A</translation>
+        <translation>Sel: N/D</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="127"/>
         <source>Sel: %L1 | %L2</source>
-        <translation>Výběr: %L1 | %L2</translation>
+        <translation>Sel: %L1 | %L2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="131"/>
         <source>Ln: %L1    Col: %L2    </source>
-        <translation>Řádek %L1    Sloupec: %L2    </translation>
+        <translation>Ln: %L1    Col: %L2    </translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="147"/>
@@ -278,13 +281,13 @@
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="178"/>
         <source>OVR</source>
         <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
-        <translation>OVR</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="182"/>
         <source>INS</source>
         <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
-        <translation>INS</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -292,194 +295,187 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.ui" line="14"/>
         <source>Editor Inspector</source>
-        <translation>Editor Inspekce</translation>
+        <translation>Inspector del editor</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="36"/>
         <source>Position Information</source>
-        <translation>Informace o poloze</translation>
+        <translation>Información de posición</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="39"/>
         <source>Current Position</source>
-        <translation>Aktuální Pozice</translation>
+        <translation>Posición actual</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="40"/>
         <source>Current Position (x, y)</source>
-        <translation>Aktuální Pozice (x, y)</translation>
+        <translation>Posición actual (x, y)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="41"/>
         <source>Column</source>
-        <translation>Sloupec</translation>
+        <translation>Columna</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="43"/>
         <source>Current Style</source>
-        <translation>Aktuální styl</translation>
+        <translation>Estilo actual</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="44"/>
         <source>Current Line</source>
-        <translatorcomment>Aktuální řádek</translatorcomment>
-        <translation>Aktuální řádek</translation>
+        <translation>Línea actual</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="45"/>
         <source>Line Length</source>
-        <translation>Délka řádky</translation>
+        <translation>Longitud de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="46"/>
         <source>Line End Position</source>
-        <translation>Pozice konce řádku</translation>
+        <translation>Posición final de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="47"/>
         <source>Line Indentation</source>
-        <translation>Odsazení řádku</translation>
+        <translation>Sangría de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="48"/>
         <source>Line Indent Position</source>
-        <translation>Pozice odsazení řádku</translation>
+        <translation>Posición de sangría de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="52"/>
         <source>Selection Information</source>
-        <translation>Informace o výběru</translation>
+        <translation>Información de selección</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="55"/>
         <source>Mode</source>
-        <translation>Režim</translation>
+        <translation>Modo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="69"/>
         <source>Is Rectangle</source>
-        <translatorcomment>Tohle netuším co je</translatorcomment>
-        <translation>Obdélník</translation>
+        <translation>Es un rectángulo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="70"/>
         <source>Selection Empty</source>
-        <translatorcomment>Nic nevybráno</translatorcomment>
-        <translation>Prázdný Výběr</translation>
+        <translation>Selección vacía</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="71"/>
         <source>Main Selection</source>
-        <translation>Hlavní výběr</translation>
+        <translation>Selección principal</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="72"/>
         <source># of Selections</source>
-        <translation>#Počet výběrů</translation>
+        <translation># de selecciones</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="75"/>
         <source>Multiple Selections</source>
-        <translation>Vícenásobné výběry</translation>
+        <translation>Selección múltiple</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="80"/>
         <source>Document Information</source>
-        <translation>Informace o dokumentu</translation>
+        <translation>Información sobre el documento</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="83"/>
         <source>Length</source>
-        <translation>Délka</translation>
+        <translation>Tamaño</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="84"/>
         <source>Line Count</source>
-        <translation>Počet řádků</translation>
+        <translation>Conteo de líneas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="88"/>
         <source>View Information</source>
-        <translation>Zobrazit informace</translation>
+        <translation>Visualizar información</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="91"/>
         <source>Lines on Screen</source>
-        <translation>Řádky na obrazovce</translation>
+        <translation>Líneas en pantalla</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="92"/>
         <source>First Visible Line</source>
-        <translation>První viditelný řádek</translation>
+        <translation>Primera línea visible</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="93"/>
         <source>X Offset</source>
-        <translation>X Offset</translation>
+        <translation>Desvío X</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="97"/>
         <source>Fold Information</source>
-        <translation>Informace o sbalení</translation>
+        <translation>Información sobre el pliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="100"/>
         <source>Visible From Doc Line</source>
-        <translatorcomment>nevím o co jde</translatorcomment>
-        <translation>Zobrazení na řádce</translation>
+        <translation>Visible desde línea de documento</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="101"/>
         <source>Doc Line From Visible</source>
-        <translatorcomment>nevím o co jde</translatorcomment>
-        <translation>Zobrazení od řádky</translation>
+        <translation>Línea de documento desde visible</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="102"/>
         <source>Fold Level</source>
-        <translation>Úroveň složení</translation>
+        <translation>Nivel de pliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="103"/>
         <source>Is Fold Header</source>
-        <translation>Je záhlaví složení</translation>
+        <translation>Es cabecera de pliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="104"/>
         <source>Fold Parent</source>
-        <translatorcomment>nevím</translatorcomment>
-        <translation>Rodič složení</translation>
+        <translation>Inicio de pliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="105"/>
         <source>Last Child</source>
-        <translation>Poslední potomek</translation>
+        <translation>Fin de pliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="106"/>
         <source>Contracted Fold Next</source>
-        <translatorcomment>nevím</translatorcomment>
-        <translation>Smluvené další složení</translation>
+        <translation>Pliegue contraído siguiente</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="173"/>
         <source>Caret</source>
-        <translation>Stříška</translation>
+        <translation>Carácter</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="177"/>
         <source>Anchor</source>
-        <translation>Kotva</translation>
+        <translation>Anclaje</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="181"/>
         <source>Caret Virtual Space</source>
-        <translation>Zastřešení virtuální prostor</translation>
+        <translation>Espacio virtual de caracteres</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="185"/>
         <source>Anchor Virtual Space</source>
-        <translation>Ukotvení virtuálního prostoru</translation>
+        <translation>Espacio virtual de anclaje</translation>
     </message>
 </context>
 <context>
@@ -487,7 +483,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/FileListDock.ui" line="14"/>
         <source>File List</source>
-        <translation>Seznam souborů</translation>
+        <translation>Lista de archivos</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/FileListDock.ui" line="51"/>
@@ -497,7 +493,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/FileListDock.ui" line="90"/>
         <source>Sort by File Name</source>
-        <translation>Seřadit podle názvu souboru</translation>
+        <translation>Ordenar por nombre de archivo</translation>
     </message>
 </context>
 <context>
@@ -507,155 +503,153 @@
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="244"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="59"/>
         <source>Find</source>
-        <translation>Najít</translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="66"/>
         <source>Search Mode</source>
-        <translation>Režim vyhledávání</translation>
+        <translation>Modo de búsqueda</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="87"/>
         <source>&amp;Normal</source>
-        <translation>&amp;Normální</translation>
+        <translation>&amp;Normal</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="103"/>
         <source>E&amp;xtended (\n, \r, \t, \0, \x...)</source>
-        <translation>E&amp;rozšířené (\n, \r, \t, \0, \x...)</translation>
+        <translation>E&amp;xtendida (\n, \r, \t, \0, \x...)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="121"/>
         <source>Re&amp;gular expression</source>
-        <translation>Re&amp;gulární výraz</translation>
+        <translation>Expresión re&amp;gular</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="137"/>
         <source>&amp;. matches newline</source>
-        <translation>&amp;. odpovídá novému řádku</translation>
+        <translation>&amp;. coincide con una nueva línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="176"/>
         <source>Transparenc&amp;y</source>
-        <translation>Průh&amp;lednost</translation>
+        <translation>Transparenc&amp;ia</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="197"/>
         <source>On losing focus</source>
-        <translation>Při ztrátě fokusu</translation>
+        <translation>Al perder el enfoque</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="207"/>
         <source>Always</source>
-        <translation>Vždy</translation>
+        <translation>Siempre</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="257"/>
         <source>Coun&amp;t</source>
-        <translation>Po&amp;čet</translation>
+        <translation>Con&amp;tar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="267"/>
         <source>&amp;Replace</source>
-        <translation>Nah&amp;radit</translation>
+        <translation>&amp;Reemplazar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="274"/>
         <source>Replace &amp;All</source>
-        <translation>Na&amp;hradit vše</translation>
+        <translation>Reemplazar &amp;todo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="281"/>
         <source>Replace All in &amp;Opened Documents</source>
-        <translation>Nahradit ve všech v &amp;otevřených dokumentech</translation>
+        <translation>Reemplazar todo en documentos &amp;abiertos</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="288"/>
         <source>Find All in All &amp;Opened Documents</source>
-        <translation>Najít vše ve všech &amp;otevřených dokumentech</translation>
+        <translation>Buscar todo en todos los documentos &amp;abiertos</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="298"/>
         <source>Find All in Current Document</source>
-        <translation>Najít vše v aktuálním dokumentu</translation>
+        <translation>Buscar todo en el documento actual</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="308"/>
         <source>Close</source>
-        <translation>Zavřít</translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="364"/>
         <source>&amp;Find:</source>
-        <translation>&amp;Najít:</translation>
+        <translation>&amp;Buscar:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="396"/>
         <source>Replace:</source>
-        <translation>Nahradit:</translation>
+        <translation>Reemplazar:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="442"/>
         <source>Backward direction</source>
-        <translation>Zpětný směr</translation>
+        <translation>Sentido inverso</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="449"/>
         <source>Match &amp;whole word only</source>
-        <translation>Hledat pouze &amp;celá slova</translation>
+        <translation>Coincidir solo &amp;palabra completa</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="456"/>
         <source>Match &amp;case</source>
-        <translation>Rozlišovat malá a &amp;VELKÁ písmena</translation>
+        <translation>Coincidir &amp;minúsculas/mayúsculas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="463"/>
         <source>Wra&amp;p Around</source>
-        <translation>Na konci znovu od &amp;začátku</translation>
+        <translation>Búsqueda circular</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="60"/>
         <source>Replace</source>
-        <translation>Nahradit</translation>
+        <translation>Reemplazar</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="144"/>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="341"/>
         <source>Replaced %Ln matches</source>
         <translation>
-            <numerusform>Nahrazeno %Ln shod</numerusform>
-            <numerusform>Nahrazeno %Ln shoda</numerusform>
-            <numerusform>Nahrazeno %Ln shod</numerusform>
+            <numerusform>Se ha reemplazado %Ln incidencia</numerusform>
+            <numerusform>Se han reemplazado %Ln incidencias</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="239"/>
         <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
-        <translation>Bylo dosaženo konce dokumentu. Nalezeno 1. výskyt shora.</translation>
+        <translation>Se ha alcanzado el fin del documento. Se encontró la 1ª incidencia desde arriba.</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="250"/>
         <source>No matches found.</source>
-        <translation>Nebyly nalezeny žádné shody.</translation>
+        <translation>Ninguna incidencia encontrada</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="313"/>
         <source>1 occurrence was replaced</source>
-        <translation>1 výskyt byl nahrazen</translation>
+        <translation>Se reemplazó 1 incidencia</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="322"/>
         <source>No more occurrences were found</source>
-        <translation>Nebyly nalezeny žádné další výskyty</translation>
+        <translation>No se encontraron más incidencias</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="352"/>
         <source>Found %Ln matches</source>
         <translation>
-            <numerusform>Nalezeno %Ln shod</numerusform>
-            <numerusform>Nalezeno %Ln shoda</numerusform>
-            <numerusform>Nalezeno %Ln shod</numerusform>
+            <numerusform>Se ha encontrado %Ln incidencia</numerusform>
+            <numerusform>Se han encontrado %Ln incidencias</numerusform>
         </translation>
     </message>
 </context>
@@ -664,7 +658,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/FolderAsWorkspaceDock.ui" line="14"/>
         <source>Folder as Workspace</source>
-        <translation>Složka jako pracovní prostor</translation>
+        <translation>Carpeta como área de trabajo</translation>
     </message>
 </context>
 <context>
@@ -672,7 +666,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/HexViewerDock.ui" line="14"/>
         <source>Hex Viewer</source>
-        <translation>Hexadecimální prohlížeč</translation>
+        <translation>Visualizador hexadecimal</translation>
     </message>
 </context>
 <context>
@@ -680,48 +674,48 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="14"/>
         <source>Language Inspector</source>
-        <translation>Inspekce jazyka</translation>
+        <translation>Inspector de lenguaje</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="56"/>
         <source>Language:</source>
-        <translation>Jazyk:</translation>
+        <translation>Lenguaje:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="70"/>
         <source>Lexer:</source>
-        <translation>Přípona:</translation>
+        <translation>Léxer:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="86"/>
         <source>Properties:</source>
-        <translation>Vlastnosti:</translation>
+        <translation>Propiedades:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="100"/>
         <source>Property</source>
-        <translation>Vlastnictví</translation>
+        <translation>Propiedad</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="105"/>
         <source>Type</source>
-        <translation>Typ</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="110"/>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="151"/>
         <source>Description</source>
-        <translation>Popis</translation>
+        <translation>Descripción</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="115"/>
         <source>Value</source>
-        <translation>Hodnota</translation>
+        <translation>Valor</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="123"/>
         <source>Keywords:</source>
-        <translation>Klíčová slova:</translation>
+        <translation>Palabras clave:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="146"/>
@@ -731,17 +725,17 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="159"/>
         <source>Styles:</source>
-        <translation>Styly:</translation>
+        <translation>Estilos:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="166"/>
         <source>TextLabel</source>
-        <translation>TextLabel</translation>
+        <translation>Título</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.cpp" line="146"/>
         <source>Position %1 Style %2</source>
-        <translation>Pozice %1 Styl %2</translation>
+        <translation>Posición %1 Estilo %2</translation>
     </message>
 </context>
 <context>
@@ -749,7 +743,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/LuaConsoleDock.ui" line="17"/>
         <source>Lua Console</source>
-        <translation>Konsole Lua</translation>
+        <translation>Consola de Lua</translation>
     </message>
 </context>
 <context>
@@ -757,67 +751,67 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="14"/>
         <source>Macro Editor</source>
-        <translation>Editor maker</translation>
+        <translation>Editor de macros</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="48"/>
         <source>Name</source>
-        <translation>Jméno</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="58"/>
         <source>Shortcut</source>
-        <translation>Zkratka</translation>
+        <translation>Atajo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="67"/>
         <source>Steps:</source>
-        <translation>Kroky:</translation>
+        <translation>Etapas:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="95"/>
         <source>Insert Macro Step</source>
-        <translation>Vložit krok makra</translation>
+        <translation>Insertar etapa de macro</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="110"/>
         <source>Delete Selected Macro Step</source>
-        <translation>Smazat vybraný krok makra</translation>
+        <translation>Eliminar etapa de macro seleccionada</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="125"/>
         <source>Move Selected Macro Step Up</source>
-        <translation>Přesunout vybraný krok nahoru</translation>
+        <translation>Mover etapa de macro seleccionada para arriba</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="140"/>
         <source>Move Selected Macro Step Down</source>
-        <translation>Přesunout vybraný krok dolů</translation>
+        <translation>Mover etapa de macro seleccionada para abajo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="176"/>
         <source>Copy Selected Macro</source>
-        <translation>Kopírovat vybrané makro</translation>
+        <translation>Copiar macro seleccionada</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.ui" line="191"/>
         <source>Delete Selected Macro</source>
-        <translation>Smazat vybrané makro</translation>
+        <translation>Eliminar macro seleccionada</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="129"/>
         <source>Delete Macro</source>
-        <translation>Smazat makro</translation>
+        <translation>Eliminar macro</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="129"/>
         <source>Are you sure you want to delete &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>Opravdu chcete smazat &lt;b&gt;%1&lt;/b&gt;?</translation>
+        <translation>¿Está seguro de que desea eliminar &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroEditorDialog.cpp" line="150"/>
         <source>(Copy)</source>
-        <translation>(Kopie)</translation>
+        <translation>(Copiar)</translation>
     </message>
 </context>
 <context>
@@ -825,37 +819,37 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="14"/>
         <source>Run a Macro Multiple Times</source>
-        <translation>Spusťte makro vícekrát</translation>
+        <translation>Ejecutar una macro varias veces</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="31"/>
         <source>Macro:</source>
-        <translation>Makro:</translation>
+        <translation>Macro:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="56"/>
         <source>Run Until End of File</source>
-        <translation>Spustit do konce souboru</translation>
+        <translation>Ejecutar hasta el fin del archivo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="63"/>
         <source>Execute...</source>
-        <translation>Spustit...</translation>
+        <translation>Ejecutar...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="116"/>
         <source>times</source>
-        <translation>časy</translation>
+        <translation>veces</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="166"/>
         <source>Run</source>
-        <translation>Start</translation>
+        <translation>Ejecutar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="173"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -863,27 +857,27 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="14"/>
         <source>Save Macro</source>
-        <translation>Uložit makro</translation>
+        <translation>Guardar macro</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="25"/>
         <source>Name:</source>
-        <translation>Jméno:</translation>
+        <translation>Nombre:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="39"/>
         <source>Shortcut:</source>
-        <translation>Zkratka:</translation>
+        <translation>Atajo:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="82"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroSaveDialog.ui" line="89"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -891,12 +885,12 @@
     <message>
         <location filename="../src/NotepadNext/MacroStepTableModel.cpp" line="34"/>
         <source>Name</source>
-        <translation>Jméno</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/MacroStepTableModel.cpp" line="36"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Texto</translation>
     </message>
 </context>
 <context>
@@ -914,144 +908,143 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="48"/>
         <source>&amp;File</source>
-        <translation>&amp;Soubor</translation>
+        <translation>&amp;Archivo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="52"/>
         <source>Close More</source>
-        <translatorcomment>Zavřít Více</translatorcomment>
-        <translation>Volby zavřít</translation>
+        <translation>Cerrar más</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="60"/>
         <source>&amp;Recent Files</source>
-        <translation>&amp;Poslední soubory</translation>
+        <translation>Archivos &amp;recientes</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1338"/>
         <source>Export As</source>
-        <translation>Exportovat jako</translation>
+        <translation>Exportar como</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="97"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Upravit</translation>
+        <translation>&amp;Editar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="101"/>
         <source>Copy More</source>
-        <translation>Volby kopírování</translation>
+        <translation>Copiar más</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="109"/>
         <source>Indent</source>
-        <translation>Odsazení</translation>
+        <translation>Añadir sangría</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="116"/>
         <source>EOL Conversion</source>
-        <translation>Konverze konce řádků</translation>
+        <translation>Conversión de fin de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="124"/>
         <source>Convert Case</source>
-        <translation>Konverze velikosti písma</translation>
+        <translation>Convertir mayúsculas/minúsculas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="131"/>
         <source>Line Operations</source>
-        <translation>Řádkové operace</translation>
+        <translation>Operaciones de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="143"/>
         <source>Comment/Uncomment</source>
-        <translation>Komentovat/Odkomentovat</translation>
+        <translation>Comentar/Remover comentario</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="151"/>
         <source>Copy As</source>
-        <translation>Kopírovat jako</translation>
+        <translation>Copiar como</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="158"/>
         <source>Encoding/Decoding</source>
-        <translation>Kódování/dekódování</translation>
+        <translation>Codificación/Decodificación</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="189"/>
         <source>Search</source>
-        <translation>Najít</translation>
+        <translation>Buscar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="193"/>
         <source>Bookmarks</source>
-        <translation>Záložky</translation>
+        <translation>Marcadores</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="220"/>
         <source>&amp;View</source>
-        <translation>&amp;Zobrazit</translation>
+        <translation>&amp;Ver</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="224"/>
         <source>&amp;Zoom</source>
-        <translation>&amp;Lupa</translation>
+        <translation>&amp;Hacer zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="233"/>
         <source>Show Symbol</source>
-        <translation>Zobrazit znak</translation>
+        <translation>Mostrar símbolo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="244"/>
         <source>Fold Level</source>
-        <translation>Úroveň sbalení</translation>
+        <translation>Nivel de pliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="258"/>
         <source>Unfold Level</source>
-        <translation>Úroveň rozbalení</translation>
+        <translation>Nivel de despliegue</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="284"/>
         <source>Language</source>
-        <translation>Jazyk</translation>
+        <translation>Lenguaje</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="289"/>
         <source>Settings</source>
-        <translation>Nastavení</translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="295"/>
         <source>Macro</source>
-        <translation>Makro</translation>
+        <translation>Macro</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="306"/>
         <source>Help</source>
-        <translation>Nápověda</translation>
+        <translation>Ayuda</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="317"/>
         <source>Encoding</source>
-        <translation>Kódování</translation>
+        <translation>Codificación</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="333"/>
         <source>Main Tool Bar</source>
-        <translation>Hlavní panel nástrojů</translation>
+        <translation>Barra de herramientas principal</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="393"/>
         <source>&amp;New</source>
-        <translation>&amp;Nový</translation>
+        <translation>&amp;Nuevo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="396"/>
         <source>Create a new file</source>
-        <translation>Vytvořit nový soubor</translation>
+        <translation>Crear un nuevo archivo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="399"/>
@@ -1061,7 +1054,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="409"/>
         <source>&amp;Open...</source>
-        <translation>&amp;Otevřít...</translation>
+        <translation>&amp;Abrir...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="412"/>
@@ -1071,12 +1064,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="425"/>
         <source>&amp;Save</source>
-        <translation>&amp;Uložit</translation>
+        <translation>&amp;Guardar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="428"/>
         <source>Save</source>
-        <translation>Uložit</translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="431"/>
@@ -1086,12 +1079,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="436"/>
         <source>E&amp;xit</source>
-        <translation>&amp;Konec</translation>
+        <translation>Sa&amp;lir</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="449"/>
         <source>&amp;Undo</source>
-        <translation>&amp;Zpět</translation>
+        <translation>Des&amp;hacer</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="452"/>
@@ -1101,7 +1094,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="462"/>
         <source>&amp;Redo</source>
-        <translation>&amp;Znovu</translation>
+        <translation>&amp;Rehacer</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="465"/>
@@ -1111,7 +1104,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="475"/>
         <source>Cu&amp;t</source>
-        <translation>Vyjmo&amp;ut</translation>
+        <translation>Cor&amp;tar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="478"/>
@@ -1121,7 +1114,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="488"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Kopírovat</translation>
+        <translation>&amp;Copiar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="491"/>
@@ -1131,7 +1124,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="501"/>
         <source>&amp;Paste</source>
-        <translation>&amp;Vložit</translation>
+        <translation>&amp;Pegar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="504"/>
@@ -1141,7 +1134,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="509"/>
         <source>&amp;Delete</source>
-        <translation>&amp;Smazat</translation>
+        <translation>&amp;Borrar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="512"/>
@@ -1151,27 +1144,27 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="517"/>
         <source>Copy Full Path</source>
-        <translation>Zkopírovat celou cestu</translation>
+        <translation>Copiar dirección completa</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="522"/>
         <source>Copy File Name</source>
-        <translation>Zkopírovat název souboru</translation>
+        <translation>Copiar nombre de archivo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="527"/>
         <source>Copy File Directory</source>
-        <translation>Kopírovat cestu aktuální složky</translation>
+        <translation>Copiar directorio de archivos</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="536"/>
         <source>&amp;Close</source>
-        <translation>&amp;Zavřít</translation>
+        <translation>&amp;Cerrar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="539"/>
         <source>Close the current file</source>
-        <translation>Zavřít aktuální soubor</translation>
+        <translation>Cerrar el archivo actual</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="542"/>
@@ -1181,7 +1174,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="547"/>
         <source>Save &amp;As...</source>
-        <translation>Uložit &amp;jako...</translation>
+        <translation>Guardar &amp;como...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="550"/>
@@ -1191,12 +1184,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="555"/>
         <source>Save a Copy As...</source>
-        <translation>Uložit kopii jako...</translation>
+        <translation>Guardar una copia como...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="564"/>
         <source>Sav&amp;e All</source>
-        <translation>&amp;Uložit vše</translation>
+        <translation>Guar&amp;dar todo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="567"/>
@@ -1206,7 +1199,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="572"/>
         <source>Select A&amp;ll</source>
-        <translation>Vybrat vš&amp;e</translation>
+        <translation>Seleccionar t&amp;odo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="575"/>
@@ -1216,22 +1209,22 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="584"/>
         <source>Increase Indent</source>
-        <translation>Zvětšit odsazení</translation>
+        <translation>Aumentar sangría</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="593"/>
         <source>Decrease Indent</source>
-        <translation>Zmenšit odsazení</translation>
+        <translation>Disminuir sangría</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="598"/>
         <source>Rename...</source>
-        <translation>Přejmenovat...</translation>
+        <translation>Renombrar...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="607"/>
         <source>Re&amp;load</source>
-        <translation>&amp;Obnovit</translation>
+        <translation>Re&amp;cargar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="615"/>
@@ -1251,42 +1244,42 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="636"/>
         <source>UPPER CASE</source>
-        <translation>VELKÁ PÍSMENA</translation>
+        <translation>MAYÚSCULAS</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="639"/>
         <source>Convert text to upper case</source>
-        <translation>Převést text na velká písmena</translation>
+        <translation>Convertir texto a mayúsculas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="644"/>
         <source>lower case</source>
-        <translation>malá písmena</translation>
+        <translation>minúsculas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="647"/>
         <source>Convert text to lower case</source>
-        <translation>Převést text na malá písmena</translation>
+        <translation>Convertir texto a minúsculas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="652"/>
         <source>Duplicate Current Line</source>
-        <translation>Duplikovat aktuální řádek</translation>
+        <translation>Duplicar línea actual</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="655"/>
         <source>Alt+Down</source>
-        <translation>Alt+Down</translation>
+        <translation>Alt+Abajo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="660"/>
         <source>Split Lines</source>
-        <translation>Rozdělit řádky</translation>
+        <translation>Dividir líneas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="665"/>
         <source>Join Lines</source>
-        <translation>Spojit řádky</translation>
+        <translation>Juntar líneas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="668"/>
@@ -1296,32 +1289,32 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="673"/>
         <source>Move Selected Lines Up</source>
-        <translation>Přesunout vybrané řádky nahoru</translation>
+        <translation>Mover líneas selecionadas para arriba</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="676"/>
         <source>Ctrl+Shift+Up</source>
-        <translation>Ctrl+Shift+Up</translation>
+        <translation>Ctrl+Shift+Arriba</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="681"/>
         <source>Move Selected Lines Down</source>
-        <translation>Přesunout vybrané řádky dolů</translation>
+        <translation>Mover líneas selecionadas para abajo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="684"/>
         <source>Ctrl+Shift+Down</source>
-        <translation>Ctrl+Shift+Down</translation>
+        <translation>Ctrl+Shift+Abajo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="693"/>
         <source>Clos&amp;e All</source>
-        <translation>Zavřít &amp;vše</translation>
+        <translation>Cerrar &amp;todo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="696"/>
         <source>Close All files</source>
-        <translation>Zavřít všechny soubory</translation>
+        <translation>Cerrar todos los archivos</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="699"/>
@@ -1331,22 +1324,22 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="704"/>
         <source>Close All Except Active Document</source>
-        <translation>Zavřít vše kromě aktivního dokumentu</translation>
+        <translation>Cerrar todo excepto el documento activo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="709"/>
         <source>Close All to the Left</source>
-        <translation>Zavřít vše vlevo</translation>
+        <translation>Cerrar todo a la izquierda</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="714"/>
         <source>Close All to the Right</source>
-        <translation>Zavřít vše vpravo</translation>
+        <translation>Cerrar todo a la derecha</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="724"/>
         <source>Zoom &amp;In</source>
-        <translation>&amp;Zvětšit</translation>
+        <translation>A&amp;umentar zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="727"/>
@@ -1356,7 +1349,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="737"/>
         <source>Zoom &amp;Out</source>
-        <translation>Zme&amp;nšit</translation>
+        <translation>&amp;Reducir zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="740"/>
@@ -1366,7 +1359,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="745"/>
         <source>Reset Zoom</source>
-        <translation>Obnovení měřítka</translation>
+        <translation>Reiniciar zoom</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="748"/>
@@ -1376,47 +1369,47 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="753"/>
         <source>About Qt</source>
-        <translation>O Qt</translation>
+        <translation>Acerca de Qt</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="765"/>
         <source>About Notepad Next</source>
-        <translation>O Notepad Next</translation>
+        <translation>Acerca de Notepad Next</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="776"/>
         <source>Show Whitespace</source>
-        <translation>Zobrazit prázdé znaky</translation>
+        <translation>Mostrar espacios en blanco</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="784"/>
         <source>Show End of Line</source>
-        <translation>Zobrazit konec řádku</translation>
+        <translation>Mostrar fin de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="797"/>
         <source>Show All Characters</source>
-        <translation>Zobrazit všechny znaky</translation>
+        <translation>Mostrar todos los caracteres</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="810"/>
         <source>Show Indent Guide</source>
-        <translation>Zobrazit odsazovací čáry</translation>
+        <translation>Mostrar guía de sangría</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="818"/>
         <source>Show Wrap Symbol</source>
-        <translation>Zobrazit znak zalomení</translation>
+        <translation>Mostrar símbolo de ajuste de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="831"/>
         <source>Word Wrap</source>
-        <translation>Zalomit řádky</translation>
+        <translation>Ajuste de línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="836"/>
         <source>Restore Recently Closed File</source>
-        <translation>Obnovit nedávno zavřený soubor</translation>
+        <translation>Restaurar archivo cerrado recientemente</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="839"/>
@@ -1426,17 +1419,17 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="844"/>
         <source>Open All Recent Files</source>
-        <translation>Otevřete všechny poslední soubory</translation>
+        <translation>Abrir todos los archivos recientes</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="849"/>
         <source>Clear Recent Files List</source>
-        <translation>Vymazat seznam posledních souborů</translation>
+        <translation>Limpar lista de archivos recientes</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="859"/>
         <source>&amp;Find...</source>
-        <translation>&amp;Najít...</translation>
+        <translation>&amp;Buscar...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="862"/>
@@ -1446,12 +1439,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="867"/>
         <source>Find in Files...</source>
-        <translation>Najít v souboru...</translation>
+        <translation>Buscar en archivos...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="872"/>
         <source>Find &amp;Next</source>
-        <translation>Nají &amp;další</translation>
+        <translation>Buscar si&amp;guiente</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="875"/>
@@ -1461,12 +1454,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="880"/>
         <source>Find &amp;Previous</source>
-        <translation>Najít &amp;předchozí</translation>
+        <translation>Buscar &amp;anterior</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="890"/>
         <source>&amp;Replace...</source>
-        <translation>Nah&amp;radit...</translation>
+        <translation>&amp;Reemplazar...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="893"/>
@@ -1476,7 +1469,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="901"/>
         <source>Full Screen</source>
-        <translation>Na celou obrazovku</translation>
+        <translation>Pantalla completa</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="904"/>
@@ -1487,12 +1480,12 @@
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="917"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="658"/>
         <source>Start Recording</source>
-        <translation>Začít nahrávání</translation>
+        <translation>Iniciar grabación</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="929"/>
         <source>Playback</source>
-        <translation>Přehrát</translation>
+        <translation>Reproducir</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="932"/>
@@ -1502,22 +1495,22 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="944"/>
         <source>Save Current Recorded Macro...</source>
-        <translation>Uložit aktuálně nahrané makro...</translation>
+        <translation>Guardar macro grabada actual...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="956"/>
         <source>Run a Macro Multiple Times...</source>
-        <translation>Spustit makro víckrát...</translation>
+        <translation>Ejecutar una macro varias veces...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="965"/>
         <source>Preferences...</source>
-        <translation>Předvolby...</translation>
+        <translation>Preferencias...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="973"/>
         <source>Quick Find</source>
-        <translation>Rychlé hledání</translation>
+        <translation>Búsqueda rápida</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="976"/>
@@ -1527,7 +1520,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="981"/>
         <source>Select Next Instance</source>
-        <translation>Vybebrat následující blok</translation>
+        <translation>Seleccionar instancia siguiente</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="984"/>
@@ -1537,22 +1530,22 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="993"/>
         <source>Move to Trash...</source>
-        <translation>Přesunout do koše...</translation>
+        <translation>Mover a la papelera...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="996"/>
         <source>Move to Trash</source>
-        <translation>Přesunout do koše</translation>
+        <translation>Mover a la papelera</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1001"/>
         <source>Check for Updates...</source>
-        <translation>Zkontrolovat aktualizace...</translation>
+        <translation>Buscar actualizaciones...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1006"/>
         <source>&amp;Go to Line...</source>
-        <translation>&amp;Přejít na řádek...</translation>
+        <translation>&amp;Ir a la línea...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1009"/>
@@ -1562,7 +1555,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1018"/>
         <source>Print...</source>
-        <translation>Tisk...</translation>
+        <translation>Imprimir...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1021"/>
@@ -1572,12 +1565,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1026"/>
         <source>Open Folder as Workspace...</source>
-        <translation>Otevřít složku jako pracovní prostor...</translation>
+        <translation>Abrir carpeta como área de trabajo...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1031"/>
         <source>Toggle Single Line Comment</source>
-        <translation>Přepnout na jedořátkový komentář</translation>
+        <translation>Insertar/Remover comentario de línea única</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1034"/>
@@ -1587,7 +1580,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1039"/>
         <source>Single Line Comment</source>
-        <translation>Jednořádkový komentář</translation>
+        <translation>Comentario de línea única</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1042"/>
@@ -1597,7 +1590,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1047"/>
         <source>Single Line Uncomment</source>
-        <translation>Odkomentovat jeden řádek</translation>
+        <translation>Remover comentario de línea actual</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1050"/>
@@ -1607,87 +1600,87 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1062"/>
         <source>Edit Macros...</source>
-        <translation>Upravit makra...</translation>
+        <translation>Editar macros...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1070"/>
         <source>This is not currently implemented</source>
-        <translation>V současné době toto není implementováno</translation>
+        <translation>Esto actualmente no está implementado</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1075"/>
         <source>Column Mode...</source>
-        <translation>Režim sloupce...</translation>
+        <translation>Modo de columna...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1080"/>
         <source>Export as HTML...</source>
-        <translation>Exportovat jako HTML...</translation>
+        <translation>Exportar como HTML...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1085"/>
         <source>Export as RTF...</source>
-        <translation>Exportovat jako RTF...</translation>
+        <translation>Exportar como RTF...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1090"/>
         <source>Copy as HTML</source>
-        <translation>Kopírovat jako HTML</translation>
+        <translation>Copiar como HTML</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1095"/>
         <source>Copy as RTF</source>
-        <translation>Kopírovat jako RTF</translation>
+        <translation>Copiar como RTF</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1100"/>
         <source>Base 64 Encode</source>
-        <translation>Zakódovat Base 64</translation>
+        <translation>Codificar en base 64</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1105"/>
         <source>URL Encode</source>
-        <translation>Zakódovat URL</translation>
+        <translation>Codificar para URL</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1110"/>
         <source>Base 64 Decode</source>
-        <translation>Base 64 Odkódovat</translation>
+        <translation>Decodificar de base 64</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1115"/>
         <source>URL Decode</source>
-        <translation>Dekódovát URL</translation>
+        <translation>Decodificar URL</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1120"/>
         <source>Copy URL</source>
-        <translation>Kopírovat URL</translation>
+        <translation>Copiar URL</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1125"/>
         <source>Remove Empty Lines</source>
-        <translation>Odstranit prázdné řádky</translation>
+        <translation>Remover líneas vacías</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1134"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1137"/>
         <source>Show in Explorer</source>
-        <translation>Zobrazit v Průzkumníku</translation>
+        <translation>Mostrar en el explorador</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1146"/>
         <source>Open %1 Here</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir %1 aquí</translation>
     </message>
     <message>
         <source>Open Command Prompt Here</source>
-        <translation type="vanished">Otevřete příkazový řádek zde</translation>
+        <translation type="vanished">Abrir una consola aquí</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1151"/>
         <source>Toggle Bookmark</source>
-        <translation>Přepnout záložku</translation>
+        <translation>Alternar marcador</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1154"/>
@@ -1697,7 +1690,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1159"/>
         <source>Next Bookmark</source>
-        <translation>Další záložka</translation>
+        <translation>Marcador siguiente</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1162"/>
@@ -1707,7 +1700,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1167"/>
         <source>Previous Bookmark</source>
-        <translation>Předchozí záložka</translation>
+        <translation>Marcador anterior</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1170"/>
@@ -1717,17 +1710,17 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1175"/>
         <source>Clear Bookmarks</source>
-        <translation>Vymazat záložky</translation>
+        <translation>Limpiar marcadores</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1180"/>
         <source>Invert Bookmarks</source>
-        <translation>Invertovat záložky</translation>
+        <translation>Invertir marcadores</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1185"/>
         <source>Next Tab</source>
-        <translation>Další karta</translation>
+        <translation>Pestaña siguiente</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1188"/>
@@ -1737,7 +1730,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1196"/>
         <source>Previous Tab</source>
-        <translation>Předchozí karta</translation>
+        <translation>Pestaña anterior</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1199"/>
@@ -1747,7 +1740,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1207"/>
         <source>Fold Level 1</source>
-        <translation>Úroveň Level 1</translation>
+        <translation>Nivel de pliegue 1</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1210"/>
@@ -1757,7 +1750,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1215"/>
         <source>Fold Level 2</source>
-        <translation>Úroveň Level 2</translation>
+        <translation>Nivel de pliegue 2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1218"/>
@@ -1767,7 +1760,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1223"/>
         <source>Fold Level 3</source>
-        <translation>Úroveň Level 3</translation>
+        <translation>Nivel de pliegue 3</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1226"/>
@@ -1777,17 +1770,18 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1231"/>
         <source>Fold Level 4</source>
-        <translation>Úroveň Level 4</translation>
+        <translation>Nivel de pliegue 4</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1234"/>
         <source>Alt+4</source>
+        <translatorcomment>Alt+4</translatorcomment>
         <translation>Alt+4</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1239"/>
         <source>Unfold Level 1</source>
-        <translation>Úroveň Level 1</translation>
+        <translation>Nivel de despliegue 1</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1242"/>
@@ -1797,7 +1791,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1247"/>
         <source>Unfold Level 2</source>
-        <translation>Úroveň Level 2</translation>
+        <translation>Nivel de despliegue 2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1250"/>
@@ -1807,7 +1801,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1255"/>
         <source>Unfold Level 3</source>
-        <translation>Úroveň Level 3</translation>
+        <translation>Nivel de despliegue 3</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1258"/>
@@ -1817,7 +1811,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1263"/>
         <source>Unfold Level 4</source>
-        <translation>Úroveň Level 4</translation>
+        <translation>Nivel de despliegue 4</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1266"/>
@@ -1827,27 +1821,28 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1271"/>
         <source>Fold All</source>
-        <translation>Sbalit vše</translation>
+        <translation>Plegar todo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1274"/>
         <source>Alt+0</source>
-        <translation></translation>
+        <translatorcomment>Alt+0</translatorcomment>
+        <translation>Alt+0</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1279"/>
         <source>Unfold All</source>
-        <translation>Rozbalit vše</translation>
+        <translation>Desplegar todo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1282"/>
         <source>Alt+Shift+0</source>
-        <translation></translation>
+        <translation>Alt+Shift+0</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1287"/>
         <source>Fold Level 5</source>
-        <translation>Úroveň Level 5</translation>
+        <translation>Nivel de pliegue 5</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1290"/>
@@ -1857,7 +1852,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1295"/>
         <source>Fold Level 6</source>
-        <translation>Úroveň Level 6</translation>
+        <translation>Nivel de pliegue 6</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1298"/>
@@ -1867,7 +1862,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1303"/>
         <source>Fold Level 7</source>
-        <translation>Úroveň Level 7</translation>
+        <translation>Nivel de pliegue 7</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1306"/>
@@ -1877,7 +1872,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1311"/>
         <source>Fold Level 8</source>
-        <translation>Úroveň Level 8</translation>
+        <translation>Nivel de pliegue 8</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1314"/>
@@ -1887,7 +1882,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1319"/>
         <source>Fold Level 9</source>
-        <translation>Úroveň Level 9</translation>
+        <translation>Nivel de pliegue 9</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1322"/>
@@ -1897,7 +1892,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1327"/>
         <source>Unfold Level 5</source>
-        <translation>Úroveň Level 5</translation>
+        <translation>Nivel de despliegue 5</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1330"/>
@@ -1907,7 +1902,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1335"/>
         <source>Unfold Level 6</source>
-        <translation>Úroveň Level 6</translation>
+        <translation>Nivel de despliegue 6</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1338"/>
@@ -1917,7 +1912,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1343"/>
         <source>Unfold Level 7</source>
-        <translation>Úroveň Level 7</translation>
+        <translation>Nivel de despliegue 7</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1346"/>
@@ -1927,7 +1922,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1351"/>
         <source>Unfold Level 8</source>
-        <translation>Úroveň Level 8</translation>
+        <translation>Nivel de despliegue 8</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1354"/>
@@ -1937,7 +1932,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1359"/>
         <source>Unfold Level 9</source>
-        <translation>Úroveň Level 9</translation>
+        <translation>Nivel de despliegue 9</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1362"/>
@@ -1948,155 +1943,155 @@
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1367"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1370"/>
         <source>Toggle Overtype</source>
-        <translation>Zapnou přepisování</translation>
+        <translation>Insertar/remover sobreescritura</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1373"/>
         <source>Ins</source>
-        <translation>Ins</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1381"/>
         <source>Debug Info...</source>
-        <translation>Debug Info...</translation>
+        <translation>Información de depuración</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1386"/>
         <source>Cut Bookmarked Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Cortar líneas marcadas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1391"/>
         <source>Copy Bookmarked Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar líneas marcadas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1396"/>
         <source>Delete Bookmarked Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar líneas marcadas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="363"/>
         <source>Go to line</source>
-        <translation>Přejít na řádek</translation>
+        <translation>Ir a la línea</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="363"/>
         <source>Line Number (1 - %1)</source>
-        <translation>Číslo řádku (1 – %1)</translation>
+        <translation>Número de línea (1 - %1)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="649"/>
         <source>Stop Recording</source>
-        <translation>Zastavit nahrávání</translation>
+        <translation>Parar grabación</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="754"/>
         <source>Debug Info</source>
-        <translation>Debug Info</translation>
+        <translation>Información de depuración</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="932"/>
         <source>New %1</source>
-        <translation>Nový %1</translation>
+        <translation>Nuevo %1</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="991"/>
         <source>Create File</source>
-        <translation>Vytvořit soubor</translation>
+        <translation>Crear archivo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="991"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; neexistuje. Chcete jej vytvořit?</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; no existe. ¿Desea crearlo?</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1032"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1130"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>Uložit soubor &lt;b&gt;%1&lt;/b&gt;?</translation>
+        <translation>¿Guardar archivo &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1033"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1131"/>
         <source>Save File</source>
-        <translation>Uložit soubor</translation>
+        <translation>Guardar archivo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1086"/>
         <source>Open Folder as Workspace</source>
-        <translation>Otevřít složku jako pracovní prostor</translation>
+        <translation>Abrir carpeta como área de trabajo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1104"/>
         <source>Reload File</source>
-        <translation>Znovu načíst soubor</translation>
+        <translation>Volver a cargar archivo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1104"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
-        <translation>Opravdu chcete znovu načíst &lt;b&gt;%1&lt;/b&gt;? Všechny neuložené změny budou ztraceny.</translation>
+        <translation>¿Está seguro de que desea volver a cargar &lt;b&gt;%1&lt;/b&gt;? Todos los cambios sin guardar se perderán.</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1305"/>
         <source>Save a Copy As</source>
-        <translation>Uložit kopii jako</translation>
+        <translation>Guardar una copia como</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1379"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1394"/>
         <source>Rename</source>
-        <translation>Přejmenovat</translation>
+        <translation>Renombrar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1394"/>
         <source>Name:</source>
-        <translation>Jméno:</translation>
+        <translation>Nombre:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1414"/>
         <source>Delete File</source>
-        <translation>Smazat soubor</translation>
+        <translation>Borrar archivo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1414"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
-        <translation>Opravdu chcete přesunout &lt;b&gt;%1&lt;/b&gt; do koše?</translation>
+        <translation>¿Está seguro de que desea mover &lt;b&gt;%1&lt;/b&gt; a la papelera?</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1424"/>
         <source>Error Deleting File</source>
-        <translation>Chyba při mazání souboru</translation>
+        <translation>Error al eliminar archivo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1424"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
-        <translation>Při mazání &lt;b&gt;%1&lt;/b&gt; se něco pokazilo?</translation>
+        <translation>Algo salió mal al eliminar &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1521"/>
         <source>Administrator</source>
-        <translation>Administrator</translation>
+        <translation>Administrador</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1796"/>
         <source>Error Saving File</source>
-        <translation>Chyba při ukládání souboru</translation>
+        <translation>Error al guardar archivo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1796"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
-        <translation>Při ukládání &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Chyba: %2 došlo k chybě</translation>
+        <translation>Ocurrió un error al guardar &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1802"/>
         <source>Zoom: %1%</source>
-        <translation>Lupa: %1%</translation>
+        <translation>Zoom: %1%</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1942"/>
         <source>No updates are available at this time.</source>
-        <translation>V tuto chvíli nejsou k dispozici žádné aktualizace.</translation>
+        <translation>No hay actualizaciones disponibles en este momento.</translation>
     </message>
 </context>
 <context>
@@ -2104,72 +2099,72 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="14"/>
         <source>Preferences</source>
-        <translation>Předvolby</translation>
+        <translation>Preferencias</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="37"/>
         <source>Show menu bar</source>
-        <translation>Zobrazit panel nabídek</translation>
+        <translation>Mostrar barra de menús</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="44"/>
         <source>Show toolbar</source>
-        <translation>Zobrazit panel nástrojů</translation>
+        <translation>Mostrar barra de herramientas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="51"/>
         <source>Show status bar</source>
-        <translation>Zobrazit stavový řádek</translation>
+        <translation>Mostrar barra de estado</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="58"/>
         <source>Restore previous session</source>
-        <translation>Obnovit předchozí relaci</translation>
+        <translation>Restaurar sesión anterior</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="70"/>
         <source>Unsaved changes</source>
-        <translation>Neuložené změny</translation>
+        <translation>Cambios sin guardar</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="77"/>
         <source>Temporary files</source>
-        <translation>Dočasné soubory</translation>
+        <translation>Archivos temporales</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="89"/>
         <source>Recenter find/replace dialog when opened</source>
-        <translation>Při otevření znovu vycentrovat dialogové okno najít/nahradit</translation>
+        <translation>Centralizar diálogo de búsqueda/reemplazo cuando esté abierto</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="96"/>
         <source>Combine search results</source>
-        <translation>Kombinovat výsledky vyhledávání</translation>
+        <translation>Combinar resultados de búsqueda</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="114"/>
         <source>Translation:</source>
-        <translation>Překlad:</translation>
+        <translation>Traducción:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="123"/>
         <source>Exit on last tab closed</source>
-        <translation>Ukončit se zavřením poslední karty</translation>
+        <translation>Salir en la última pestaña cerrada</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="132"/>
         <source>Default Font</source>
-        <translation>Výchozí písmo</translation>
+        <translation>Fuente predeterminada</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="138"/>
         <source>Font</source>
-        <translation>Písmo</translation>
+        <translation>Fuente</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="148"/>
         <source>Font Size</source>
-        <translation>Velikost písma</translation>
+        <translation>Tamaño de fuente</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="155"/>
@@ -2179,52 +2174,52 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="188"/>
         <source>Default Line Endings</source>
-        <translation type="unfinished"></translation>
+        <translation>Finales de línea predeterminados</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="219"/>
         <source>TextLabel</source>
-        <translation>TextLabel</translation>
+        <translation>Nota:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="231"/>
         <source>An application restart is required to apply certain settings.</source>
-        <translation>K použití určitých nastavení je vyžadován restart aplikace.</translation>
+        <translation>Se requiere reiniciar el programa para aplicar algunos ajustes.</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="54"/>
         <source>Warning</source>
-        <translation>Varování</translation>
+        <translation>Advertencia</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="54"/>
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
-        <translation>Tato funkce je experimentální a neměla by být považována za bezpečnou pro kriticky důležitou práci. Může to vést k možné ztrátě dat. Použití na vlastní nebezpečí.</translation>
+        <translation>Esta funcionalidad es experimental y no debe considerarse segura para trabajos de importancia crítica. Puede conllevar a una posible pérdida de datos. Utilícela bajo su propio riesgo.</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="83"/>
         <source>System Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Predeterminado del sistema</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="84"/>
         <source>Windows (CR LF)</source>
-        <translation type="unfinished">Windows (CR LF)</translation>
+        <translation>Windows (CR LF)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="85"/>
         <source>Linux (LF)</source>
-        <translation type="unfinished"></translation>
+        <translation>Linux (LF)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="86"/>
         <source>Macintosh (CR)</source>
-        <translation type="unfinished">Macintosh (CR)</translation>
+        <translation>Macintosh (CR)</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="139"/>
         <source>&lt;System Default&gt;</source>
-        <translation>&lt;Výchozí nastavení systému&gt;</translation>
+        <translation>&lt;Predeterminado del sistema&gt;</translation>
     </message>
 </context>
 <context>
@@ -2232,22 +2227,22 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="193"/>
         <source>List All Tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar todas las pestañas</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="204"/>
         <source>Detach Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirar grupo</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="231"/>
         <source>Minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimizar</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="267"/>
         <source>Close Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar pestañas</translation>
     </message>
 </context>
 <context>
@@ -2255,18 +2250,12 @@
     <message>
         <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="17"/>
         <source>Frame</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="32"/>
-        <source>Find...</source>
-        <translation>Najít...</translation>
+        <translation>Marco</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="44"/>
         <source>Match case</source>
-        <translatorcomment>tohle nevím</translatorcomment>
-        <translation>Rozlišovat velikost znaků</translation>
+        <translation>Comparar minúsculas/mayúsculas</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="47"/>
@@ -2276,7 +2265,7 @@
     <message>
         <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="57"/>
         <source>Match whole word</source>
-        <translation>Pouze shoda celého slova</translation>
+        <translation>Comparar palabra completa</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="60"/>
@@ -2286,7 +2275,7 @@
     <message>
         <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="70"/>
         <source>Use regular expression</source>
-        <translation>Použít regulární výraz</translation>
+        <translation>Usar expresión regular</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="73"/>
@@ -2299,6 +2288,11 @@
         <translation>Alt+E</translation>
     </message>
     <message>
+        <location filename="../src/NotepadNext/widgets/QuickFindWidget.ui" line="32"/>
+        <source>Find...</source>
+        <translation>Buscar...</translation>
+    </message>
+    <message>
         <location filename="../src/NotepadNext/widgets/QuickFindWidget.cpp" line="238"/>
         <source>%L1/%L2</source>
         <translation>%L1/%L2</translation>
@@ -2309,32 +2303,32 @@
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.ui" line="14"/>
         <source>Search Results</source>
-        <translation>Výsledek vyhledávání</translation>
+        <translation>Resultados de búsqueda</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.ui" line="38"/>
         <source>Copy Results to Clipboard</source>
-        <translation>Zkopírujte výsledek do schránky</translation>
+        <translation>Copiar resultados al portapapeles</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="65"/>
         <source>Collapse All</source>
-        <translation>Sbalit vše</translation>
+        <translation>Colapsar todo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
         <source>Expand All</source>
-        <translation>Rozbalit vše</translation>
+        <translation>Expandir todo</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="68"/>
         <source>Delete Entry</source>
-        <translation>Smazat záznam</translation>
+        <translation>Borrar entrada</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="70"/>
         <source>Delete All</source>
-        <translation>Smazat vše</translation>
+        <translation>Borrar todo</translation>
     </message>
 </context>
 <context>
@@ -2342,32 +2336,36 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="446"/>
         <source>Would you like to download the update now?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Le gustaría bajar la actualización ahora?</translation>
+    </message>
+    <message>
+        <source>Would you like to download the update now? This is a mandatory update, exiting now will close the application</source>
+        <translation type="vanished">¿Le gustaría bajar la actualización ahora? Esta es una actualización obligatoria, salir ahora cerrará la aplicación.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="449"/>
         <source>Would you like to download the update now?&lt;br /&gt;This is a mandatory update, exiting now will close the application.</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Le gustaría bajar la actualización ahora? Esta es una actualización obligatoria, salir ahora cerrará la aplicación.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="454"/>
         <source>&lt;strong&gt;Change log:&lt;/strong&gt;&lt;br/&gt;%1</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;strong&gt;Registro de cambios:&lt;/strong&gt;&lt;br/&gt;%1</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="457"/>
         <source>Version %1 of %2 has been released!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡La versión %1 de %2 fue lanzada!</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="495"/>
         <source>No updates are available for the moment</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay actualizaciones disponibles por el momento.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Updater.cpp" line="497"/>
         <source>Congratulations! You are running the latest version of %1</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Felicitaciones! Está ejecutando la última versión de %1.</translation>
     </message>
 </context>
 <context>
@@ -2375,42 +2373,42 @@
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="383"/>
         <source>Detach</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirar</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="388"/>
         <source>Pin To...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fijar...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="390"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Arriba</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="391"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>A la izquierda</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="392"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>A la derecha</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="393"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Abajo</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="395"/>
         <source>Unpin (Dock)</source>
-        <translation type="unfinished"></translation>
+        <translation>Desfijar (Muelle)</translation>
     </message>
     <message>
         <location filename="../src/ads/src/AutoHideTab.cpp" line="397"/>
         <source>Close</source>
-        <translation type="unfinished">Zavřít</translation>
+        <translation>Cerrar</translation>
     </message>
 </context>
 <context>
@@ -2418,83 +2416,83 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
         <source>Detach</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirar</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
         <source>Detach Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirar grupo</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="779"/>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="836"/>
         <source>Unpin (Dock)</source>
-        <translation type="unfinished"></translation>
+        <translation>Desfijar (Muelle)</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="779"/>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="841"/>
         <source>Pin Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Fijar grupo</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="785"/>
         <source>Pin Group To...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fijar grupo...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="787"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Arriba</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="788"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>A la izquierda</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="789"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>A la derecha</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="790"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Abajo</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="798"/>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="853"/>
         <source>Minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimizar</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="799"/>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="803"/>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="853"/>
         <source>Close</source>
-        <translation type="unfinished">Zavřít</translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="803"/>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="862"/>
         <source>Close Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar grupo</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="809"/>
         <source>Close Other Groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar otros grupos</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="845"/>
         <source>Pin Active Tab (Press Ctrl to Pin Group)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fijar pestaña actual (Presione Ctrl para fijar grupo)</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="858"/>
         <source>Close Active Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar pestaña actual</translation>
     </message>
 </context>
 <context>
@@ -2502,7 +2500,7 @@
     <message>
         <location filename="../src/ads/src/DockManager.cpp" line="513"/>
         <source>Show View</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar visualización</translation>
     </message>
 </context>
 <context>
@@ -2510,47 +2508,47 @@
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="543"/>
         <source>Detach</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirar</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="547"/>
         <source>Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>Fijar</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="551"/>
         <source>Pin To...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fijar...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="553"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Arriba</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="554"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>A la izquierda</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>A la derecha</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="556"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Abajo</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="561"/>
         <source>Close</source>
-        <translation type="unfinished">Zavřít</translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="565"/>
         <source>Close Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerrar otros</translation>
     </message>
 </context>
 </TS>
