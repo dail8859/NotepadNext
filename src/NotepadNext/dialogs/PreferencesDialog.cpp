@@ -136,14 +136,14 @@ void PreferencesDialog::populateTranslationComboBox()
     NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
 
     // Add the system default at the top
-    ui->comboBoxTranslation->addItem(QStringLiteral("%1 (%2)").arg(tr("<System Default>"), QLocale::system().name()), QStringLiteral(""));
+    ui->comboBoxTranslation->addItem(tr("<System Default>"), QStringLiteral(""));
 
     // TODO: sort this list and keep the system default at the top
     for (const auto &localeName : app->getTranslationManager()->availableTranslations())
     {
         QLocale locale(localeName);
         const QString localeDisplay = TranslationManager::FormatLocaleTerritoryAndLanguage(locale);
-        ui->comboBoxTranslation->addItem(QStringLiteral("%1 (%2)").arg(localeDisplay, localeName), localeName);
+        ui->comboBoxTranslation->addItem(localeDisplay, localeName);
     }
 
     // Select the current one
