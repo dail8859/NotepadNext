@@ -322,6 +322,10 @@ public:
 	sptr_t printColourMode() const;
 	void setChangeHistory(sptr_t changeHistory);
 	sptr_t changeHistory() const;
+	void setUndoSelectionHistory(sptr_t undoSelectionHistory);
+	sptr_t undoSelectionHistory() const;
+	void setSelectionSerialized(const char * selectionString);
+	QByteArray selectionSerialized() const;
 	sptr_t firstVisibleLine() const;
 	QByteArray getLine(sptr_t line);
 	sptr_t lineCount() const;
