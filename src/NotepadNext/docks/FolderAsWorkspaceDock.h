@@ -21,19 +21,21 @@
 #define FOLDERASWORKSPACEDOCK_H
 
 #include <QDockWidget>
+#include <QModelIndex>
 
 namespace Ui {
 class FolderAsWorkspaceDock;
 }
 
 class QFileSystemModel;
+class MainWindow;
 
 class FolderAsWorkspaceDock : public QDockWidget
 {
     Q_OBJECT
 
 public:
-    explicit FolderAsWorkspaceDock(QWidget *parent = nullptr);
+    explicit FolderAsWorkspaceDock(MainWindow *parent = nullptr);
     ~FolderAsWorkspaceDock();
 
     void setRootPath(const QString dir);
@@ -42,10 +44,21 @@ public:
 signals:
     void fileDoubleClicked(const QString &filePath);
 
+private slots:
+    void on_actionSaveHere_triggered();
+    void on_actionNewFolder_triggered();
+    void on_actionRename_triggered();
+    void on_actionMoveToTrash_triggered();
+
+    void onCustomContextMenu(const QPoint &point);
+
 private:
     Ui::FolderAsWorkspaceDock *ui;
 
+    MainWindow *window;
     QFileSystemModel *model;
+
+    QModelIndex lastSelectedItem;
 };
 
 #endif // FOLDERASWORKSPACEDOCK_H
