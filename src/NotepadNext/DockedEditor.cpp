@@ -160,7 +160,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     }
 
     // Create the dock widget for the editor
-    ads::CDockWidget *dockWidget = new ads::CDockWidget(editor->getName());
+    ads::CDockWidget *dockWidget = dockManager->createDockWidget(editor->getName());
 
     // Disable elide, elided file names not readable when lots of files opened
     dockWidget->tabWidget()->setElideMode(Qt::ElideNone);
