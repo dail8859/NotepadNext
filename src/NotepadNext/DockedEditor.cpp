@@ -146,14 +146,7 @@ void DockedEditor::dockWidgetCloseRequested()
 
 ads::CDockAreaWidget *DockedEditor::currentDockArea() const
 {
-    const ads::CDockWidget *dockWidget = dockManager->focusedDockWidget();
-
-    if (dockWidget) {
-        return dockWidget->dockAreaWidget();
-    }
-    else {
-        return Q_NULLPTR;
-    }
+    return dockManager->focusedDockWidget() ? dockManager->focusedDockWidget()->dockAreaWidget() : latestDockArea;
 }
 
 void DockedEditor::addEditor(ScintillaNext *editor)
@@ -215,7 +208,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     connect(dockWidget, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
 
-    dockManager->addDockWidget(ads::CenterDockWidgetArea, dockWidget, currentDockArea());
+    latestDockArea = dockManager->addDockWidget(ads::CenterDockWidgetArea, dockWidget, currentDockArea());
 
     emit editorAdded(editor);
 }
