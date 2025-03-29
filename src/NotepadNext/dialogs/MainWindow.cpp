@@ -1902,6 +1902,13 @@ void MainWindow::addEditor(ScintillaNext *editor)
             "URLDecode"
         };
 
+        // If the entry exists in the settings, use that
+        ApplicationSettings *settings = app->getSettings();
+        if (settings->contains("Gui/EditorContextMenu")) {
+            actionNames = settings->value("Gui/EditorContextMenu").toStringList();
+        }
+
+        // If the cursor is at a URL, prepend the action
         URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
         if (urlFinder && urlFinder->isEnabled() && urlFinder->isURL(contextMenuPos)) {
             actionNames.prepend("CopyURL");
