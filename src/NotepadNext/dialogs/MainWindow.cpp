@@ -1911,8 +1911,8 @@ void MainWindow::addEditor(ScintillaNext *editor)
         // If the cursor is at a URL, prepend the action
         URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
         if (urlFinder && urlFinder->isEnabled() && urlFinder->isURL(contextMenuPos)) {
-            actionNames.prepend("CopyURL");
             actionNames.prepend("");
+            actionNames.prepend("CopyURL");
         }
 
         buildDynamicMenu(actionNames)->popup(QCursor::pos());
