@@ -1886,27 +1886,36 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(editor, &ScintillaNext::customContextMenuRequested, this, [=](const QPoint &pos) {
         contextMenuPos = editor->send(SCI_POSITIONFROMPOINT, pos.x(), pos.y());
-        QMenu *menu = new QMenu(this);
-        menu->setAttribute(Qt::WA_DeleteOnClose);
 
+        QStringList actionNames = {
+            "Cut",
+            "Copy",
+            "Paste",
+            "Delete",
+            "",
+            "SelectAll",
+            "",
+            "Base64Encode",
+            "URLEncode",
+            "",
+            "Base64Decode",
+            "URLDecode"
+        };
+
+        // If the entry exists in the settings, use that
+        ApplicationSettings *settings = app->getSettings();
+        if (settings->contains("Gui/EditorContextMenu")) {
+            actionNames = settings->value("Gui/EditorContextMenu").toStringList();
+        }
+
+        // If the cursor is at a URL, prepend the action
         URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
         if (urlFinder && urlFinder->isEnabled() && urlFinder->isURL(contextMenuPos)) {
-            menu->addAction(ui->actionCopyURL);
-            menu->addSeparator();
+            actionNames.prepend("");
+            actionNames.prepend("CopyURL");
         }
-        menu->addAction(ui->actionCut);
-        menu->addAction(ui->actionCopy);
-        menu->addAction(ui->actionPaste);
-        menu->addAction(ui->actionDelete);
-        menu->addSeparator();
-        menu->addAction(ui->actionSelectAll);
-        menu->addSeparator();
-        menu->addAction(ui->actionBase64Encode);
-        menu->addAction(ui->actionURLEncode);
-        menu->addSeparator();
-        menu->addAction(ui->actionBase64Decode);
-        menu->addAction(ui->actionURLDecode);
-        menu->popup(QCursor::pos());
+
+        buildDynamicMenu(actionNames)->popup(QCursor::pos());
     });
 
     // The editor has been entirely configured at this point, so add it to the docked editor
@@ -2074,16 +2083,37 @@ void MainWindow::dropEvent(QDropEvent *event)
     }
 }
 
+QMenu *MainWindow::buildDynamicMenu(QStringList actionNames)
+{
+    QMenu *menu = new QMenu(this);
+    menu->setAttribute(Qt::WA_DeleteOnClose);
+
+    // Populate the menu
+    for (const QString &actionName : actionNames) {
+        if (actionName.isEmpty()) {
+            menu->addSeparator();
+        }
+        else {
+            QAction *a = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
+
+            if (a != Q_NULLPTR) {
+                menu->addAction(a);
+            }
+            else {
+                qWarning() << "Cannot locate menu named" << actionName;
+            }
+        }
+    }
+
+    return menu;
+}
+
 void MainWindow::tabBarRightClicked(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
     // Focus on the correct tab
     dockedEditor->switchToEditor(editor);
-
-    // Create the menu
-    QMenu *menu = new QMenu(this);
-    menu->setAttribute(Qt::WA_DeleteOnClose);
 
     // Default actions
     QStringList actionNames{
@@ -2114,25 +2144,7 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
         actionNames = settings->value("Gui/TabBarContextMenu").toStringList();
     }
 
-    // Populate the menu
-    for (const QString &actionName : actionNames) {
-        if (actionName.isEmpty()) {
-            menu->addSeparator();
-        }
-        else {
-            QAction *a = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
-
-            if (a != Q_NULLPTR) {
-                menu->addAction(a);
-            }
-            else {
-                qWarning() << "Cannot locate menu named" << actionName;
-            }
-        }
-    }
-
-    // Show it
-    menu->popup(QCursor::pos());
+    buildDynamicMenu(actionNames)->popup(QCursor::pos());
 }
 
 void MainWindow::languageMenuTriggered()
