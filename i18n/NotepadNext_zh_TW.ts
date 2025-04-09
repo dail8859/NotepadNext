@@ -2085,7 +2085,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1942"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1951"/>
         <source>No updates are available at this time.</source>
         <translation>目前沒有可用的更新。</translation>
     </message>
@@ -2221,17 +2221,17 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="193"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="201"/>
         <source>List All Tabs</source>
         <translation>列出所有分頁</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="204"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="212"/>
         <source>Detach Group</source>
         <translation>分離群組</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="231"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="239"/>
         <source>Minimize</source>
         <translation>最小化</translation>
     </message>
@@ -2367,42 +2367,42 @@
 <context>
     <name>ads::CAutoHideTab</name>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="383"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="394"/>
         <source>Detach</source>
         <translation>分離</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="388"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="399"/>
         <source>Pin To...</source>
         <translation>釘選至...</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="390"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="401"/>
         <source>Top</source>
         <translation>頂端</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="391"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="402"/>
         <source>Left</source>
         <translation>左側</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="392"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="403"/>
         <source>Right</source>
         <translation>右側</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="393"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="404"/>
         <source>Bottom</source>
         <translation>底部</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="395"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="406"/>
         <source>Unpin (Dock)</source>
         <translation>取消釘選（Dock）</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/AutoHideTab.cpp" line="397"/>
+        <location filename="../src/ads/src/AutoHideTab.cpp" line="408"/>
         <source>Close</source>
         <translation>關閉</translation>
     </message>
@@ -2410,83 +2410,83 @@
 <context>
     <name>ads::CDockAreaTitleBar</name>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="801"/>
         <source>Detach Group</source>
         <translation>分離群組</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="774"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="801"/>
         <source>Detach</source>
         <translation>分離</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="779"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="836"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="806"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="862"/>
         <source>Unpin (Dock)</source>
         <translation>取消釘選（Dock）</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="779"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="841"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="806"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="867"/>
         <source>Pin Group</source>
         <translation>釘選群組</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="785"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="812"/>
         <source>Pin Group To...</source>
         <translation>釘選群組至...</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="787"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="814"/>
         <source>Top</source>
         <translation>頂端</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="788"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="815"/>
         <source>Left</source>
         <translation>左側</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="789"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="816"/>
         <source>Right</source>
         <translation>右側</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="790"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="817"/>
         <source>Bottom</source>
         <translation>底部</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="798"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="853"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="825"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="879"/>
         <source>Minimize</source>
         <translation>最小化</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="799"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="803"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="853"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="826"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="830"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="879"/>
         <source>Close</source>
         <translation>關閉</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="803"/>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="862"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="830"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="888"/>
         <source>Close Group</source>
         <translation>關閉群組</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="809"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="836"/>
         <source>Close Other Groups</source>
         <translation>關閉其他群組</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="845"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="871"/>
         <source>Pin Active Tab (Press Ctrl to Pin Group)</source>
         <translation>釘選使用中分頁（按 Ctrl 鍵釘選群組）</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="858"/>
+        <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="884"/>
         <source>Close Active Tab</source>
         <translation>關閉使用中分頁</translation>
     </message>
@@ -2494,7 +2494,7 @@
 <context>
     <name>ads::CDockManager</name>
     <message>
-        <location filename="../src/ads/src/DockManager.cpp" line="513"/>
+        <location filename="../src/ads/src/DockManager.cpp" line="518"/>
         <source>Show View</source>
         <translation>顯示畫面</translation>
     </message>
@@ -2502,47 +2502,47 @@
 <context>
     <name>ads::CDockWidgetTab</name>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="543"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="551"/>
         <source>Detach</source>
         <translation>分離</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="547"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
         <source>Pin</source>
         <translation>釘選</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="551"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="559"/>
         <source>Pin To...</source>
         <translation>釘選至...</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="553"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="561"/>
         <source>Top</source>
         <translation>頂端</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="554"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="562"/>
         <source>Left</source>
         <translation>左側</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="563"/>
         <source>Right</source>
         <translation>右側</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="556"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="564"/>
         <source>Bottom</source>
         <translation>底部</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="561"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="569"/>
         <source>Close</source>
         <translation>關閉</translation>
     </message>
     <message>
-        <location filename="../src/ads/src/DockWidgetTab.cpp" line="565"/>
+        <location filename="../src/ads/src/DockWidgetTab.cpp" line="573"/>
         <source>Close Others</source>
         <translation>關閉其他</translation>
     </message>
