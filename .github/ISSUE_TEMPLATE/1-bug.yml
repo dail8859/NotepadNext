@@ -32,6 +32,10 @@ body:
       required: true
   - type: textarea
     attributes:
+      label: Debug Information
+      description: Menu: Help > Debug Information
+  - type: textarea
+    attributes:
       label: Additional Details
       description: Anything else that may be relavent
       value: e.g. screenshots, logs, etc
