@@ -33,6 +33,7 @@ jobs:
           version: ${{ matrix.qt_version }}
           modules: 'qt5compat'
           cache: true
+          aqtinstall: ==3.2.*
 
       - name: Get number of CPU cores
         if: runner.os != 'Windows'
