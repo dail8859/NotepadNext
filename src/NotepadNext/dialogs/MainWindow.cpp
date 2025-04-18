@@ -300,8 +300,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         copyAsFormat(&rtf, "Rich Text Format");
     });
 
-    connect(ui->actionIncrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->tab(); });
-    connect(ui->actionDecrease_Indent, &QAction::triggered, this, [=]() { currentEditor()->backTab(); });
+    connect(ui->actionIncreaseIndent, &QAction::triggered, this, [=]() { currentEditor()->tab(); });
+    connect(ui->actionDecreaseIndent, &QAction::triggered, this, [=]() { currentEditor()->backTab(); });
 
     addAction(ui->actionToggleOverType);
     connect(ui->actionToggleOverType, &QAction::triggered, this, [=]() {
