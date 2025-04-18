@@ -108,8 +108,6 @@
      <property name="title">
       <string>Indent</string>
      </property>
-     <addaction name="actionIncrease_Indent"/>
-     <addaction name="actionDecrease_Indent"/>
     </widget>
     <widget class="QMenu" name="menuEOLConversion">
      <property name="title">
@@ -575,7 +573,7 @@
     <string>Ctrl+A</string>
    </property>
   </action>
-  <action name="actionIncrease_Indent">
+  <action name="actionIncreaseIndent">
    <property name="icon">
     <iconset resource="../resources.qrc">
      <normaloff>:/icons/text_indent.png</normaloff>:/icons/text_indent.png</iconset>
@@ -584,7 +582,7 @@
     <string>Increase Indent</string>
    </property>
   </action>
-  <action name="actionDecrease_Indent">
+  <action name="actionDecreaseIndent">
    <property name="icon">
     <iconset resource="../resources.qrc">
      <normaloff>:/icons/text_indent_remove.png</normaloff>:/icons/text_indent_remove.png</iconset>
