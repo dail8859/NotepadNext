@@ -138,6 +138,7 @@ SOURCES += \
     widgets/StatusLabel.cpp
 
 HEADERS += \
+    ActionUtils.h \
     ApplicationSettings.h \
     ColorPickerDelegate.h \
     ComboBoxDelegate.h \

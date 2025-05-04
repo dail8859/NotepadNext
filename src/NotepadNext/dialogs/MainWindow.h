@@ -171,7 +171,7 @@ private:
     ZoomEventWatcher *zoomEventWatcher;
     int zoomLevel = 0;
     int contextMenuPos = 0;
-    QMenu *buildDynamicMenu(QStringList actionNames);
+    QMenu *buildMenu(QStringList actionNames);
 };
 
 #endif // MAINWINDOW_H

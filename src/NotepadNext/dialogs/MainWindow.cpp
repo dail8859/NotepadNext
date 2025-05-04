@@ -85,6 +85,8 @@
 
 #include "FadingIndicator.h"
 
+#include "ActionUtils.h"
+
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
@@ -1821,6 +1823,15 @@ void MainWindow::restoreSettings()
     ApplicationSettings *settings = app->getSettings();
 
     zoomLevel = settings->value("Editor/ZoomLevel", 0).toInt();
+
+    if (settings->contains("Gui/ToolBar")) {
+        QStringList actionNames;
+        actionNames = settings->value("Gui/ToolBar").toStringList();
+
+        ui->mainToolBar->clear();
+
+        ActionUtils::populateActionContainer(ui->mainToolBar, this, actionNames);
+    }
 }
 
 ISearchResultsHandler *MainWindow::determineSearchResultsHandler()
@@ -1915,7 +1926,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
             actionNames.prepend("CopyURL");
         }
 
-        buildDynamicMenu(actionNames)->popup(QCursor::pos());
+        buildMenu(actionNames)->popup(QCursor::pos());
     });
 
     // The editor has been entirely configured at this point, so add it to the docked editor
@@ -2083,27 +2094,12 @@ void MainWindow::dropEvent(QDropEvent *event)
     }
 }
 
-QMenu *MainWindow::buildDynamicMenu(QStringList actionNames)
+QMenu *MainWindow::buildMenu(QStringList actionNames)
 {
     QMenu *menu = new QMenu(this);
     menu->setAttribute(Qt::WA_DeleteOnClose);
 
-    // Populate the menu
-    for (const QString &actionName : actionNames) {
-        if (actionName.isEmpty()) {
-            menu->addSeparator();
-        }
-        else {
-            QAction *a = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
-
-            if (a != Q_NULLPTR) {
-                menu->addAction(a);
-            }
-            else {
-                qWarning() << "Cannot locate menu named" << actionName;
-            }
-        }
-    }
+    ActionUtils::populateActionContainer(menu, this, actionNames);
 
     return menu;
 }
@@ -2144,7 +2140,7 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
         actionNames = settings->value("Gui/TabBarContextMenu").toStringList();
     }
 
-    buildDynamicMenu(actionNames)->popup(QCursor::pos());
+    buildMenu(actionNames)->popup(QCursor::pos());
 }
 
 void MainWindow::languageMenuTriggered()
