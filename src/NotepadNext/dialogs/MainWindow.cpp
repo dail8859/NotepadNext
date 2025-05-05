@@ -845,18 +845,36 @@ MainWindow::~MainWindow()
 void MainWindow::applyCustomShortcuts()
 {
     ApplicationSettings *settings = app->getSettings();
-
     settings->beginGroup("Shortcuts");
 
     for (const QString &actionName : settings->childKeys()) {
         QAction *action = findChild<QAction *>(QStringLiteral("action") + actionName, Qt::FindDirectChildrenOnly);
-        const QString shortcutString = settings->value(actionName).toString();
 
-        if (action != Q_NULLPTR) {
-            action->setShortcut(QKeySequence(shortcutString));
+        if (!action) {
+            qWarning() << "CustomShortcut: Cannot find action" << actionName;
+            continue;
         }
-        else {
-            qWarning() << "Cannot find action" << actionName;
+
+        const QVariant value = settings->value(actionName);
+        if (!value.canConvert<QStringList>()) {
+            qWarning() << "CustomShortcut: Invalid shortcut format for" << actionName;
+            continue;
+        }
+
+        QList<QKeySequence> shortcuts;
+        for (const QString &shortcutString : value.toStringList()) {
+            auto sequence = QKeySequence(shortcutString);
+
+            if (sequence.count() > 0 && sequence[0].key() != Qt::Key_unknown) {
+                shortcuts.append(sequence);
+            }
+            else {
+                qWarning() << "CustomShortcut: Cannot create QKeySequence(" << shortcutString << ") for " << actionName;
+            }
+        }
+
+        if (!shortcuts.empty()) {
+            action->setShortcuts(shortcuts);
         }
     }
 
