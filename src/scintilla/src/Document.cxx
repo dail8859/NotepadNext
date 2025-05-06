@@ -7,6 +7,7 @@
 
 #include <cstddef>
 #include <cstdlib>
+#include <cstdint>
 #include <cassert>
 #include <cstring>
 #include <cstdio>
@@ -17,6 +18,7 @@
 #include <string_view>
 #include <vector>
 #include <array>
+#include <map>
 #include <forward_list>
 #include <optional>
 #include <algorithm>
@@ -131,6 +133,9 @@ size_t ActionDuration::ActionsInAllowedTime(double secondsAllowed) const noexcep
 	return std::lround(secondsAllowed / Duration());
 }
 
+const CharacterExtracted characterEmpty(unicodeReplacementChar, 0);
+const CharacterExtracted characterBadByte(unicodeReplacementChar, 1);
+
 CharacterExtracted::CharacterExtracted(const unsigned char *charBytes, size_t widthCharBytes) noexcept {
 	const int utf8status = UTF8Classify(charBytes, widthCharBytes);
 	if (utf8status & UTF8MaskInvalid) {
@@ -144,30 +149,28 @@ CharacterExtracted::CharacterExtracted(const unsigned char *charBytes, size_t wi
 }
 
 Document::Document(DocumentOption options) :
+	refCount(0),
 	cb(!FlagSet(options, DocumentOption::StylesNone), FlagSet(options, DocumentOption::TextLarge)),
-	durationStyleOneByte(0.000001, 0.0000001, 0.00001) {
-	refCount = 0;
+	endStyled(0),
+	styleClock(0),
+	enteredModification(0),
+	enteredStyling(0),
+	enteredReadOnlyCount(0),
+	insertionSet(false),
 #ifdef _WIN32
-	eolMode = EndOfLine::CrLf;
+	eolMode(EndOfLine::CrLf),
 #else
-	eolMode = EndOfLine::Lf;
+	eolMode(EndOfLine::Lf),
 #endif
-	dbcsCodePage = CpUtf8;
-	lineEndBitSet = LineEndType::Default;
-	endStyled = 0;
-	styleClock = 0;
-	enteredModification = 0;
-	enteredStyling = 0;
-	enteredReadOnlyCount = 0;
-	insertionSet = false;
-	tabInChars = 8;
-	indentInChars = 0;
-	actualIndentInChars = 8;
-	useTabs = true;
-	tabIndents = true;
-	backspaceUnindents = false;
-
-	matchesValid = false;
+	dbcsCodePage(CpUtf8),
+	lineEndBitSet(LineEndType::Default),
+	tabInChars(8),
+	indentInChars(0),
+	actualIndentInChars(8),
+	useTabs(true),
+	tabIndents(true),
+	backspaceUnindents(false),
+	durationStyleOneByte(0.000001, 0.0000001, 0.00001) {
 
 	perLineData[ldMarkers] = std::make_unique<LineMarkers>();
 	perLineData[ldLevels] = std::make_unique<LineLevels>();
@@ -834,15 +837,9 @@ Sci::Position Document::MovePositionOutsideChar(Sci::Position pos, Sci::Position
 				// Else invalid UTF-8 so return position of isolated trail byte
 			}
 		} else {
-			// Anchor DBCS calculations at start of line because start of line can
-			// not be a DBCS trail byte.
-			const Sci::Position posStartLine = LineStartPosition(pos);
-			if (pos == posStartLine)
-				return pos;
-
 			// Step back until a non-lead-byte is found.
 			Sci::Position posCheck = pos;
-			while ((posCheck > posStartLine) && IsDBCSLeadByteNoExcept(cb.CharAt(posCheck-1)))
+			while ((posCheck > 0) && IsDBCSLeadByteNoExcept(cb.CharAt(posCheck-1)))
 				posCheck--;
 
 			// Check from known start of character.
@@ -917,14 +914,11 @@ Sci::Position Document::NextPosition(Sci::Position pos, int moveDir) const noexc
 				if (pos > cb.Length())
 					pos = cb.Length();
 			} else {
-				// Anchor DBCS calculations at start of line because start of line can
-				// not be a DBCS trail byte.
-				const Sci::Position posStartLine = LineStartPosition(pos);
-				// See http://msdn.microsoft.com/en-us/library/cc194792%28v=MSDN.10%29.aspx
-				// http://msdn.microsoft.com/en-us/library/cc194790.aspx
-				if ((pos - 1) <= posStartLine) {
-					return pos - 1;
-				} else if (IsDBCSLeadByteNoExcept(cb.CharAt(pos - 1))) {
+				// How to Go Backward in a DBCS String
+				// https://msdn.microsoft.com/en-us/library/cc194792.aspx
+				// DBCS-Enabled Programs vs. Non-DBCS-Enabled Programs
+				// https://msdn.microsoft.com/en-us/library/cc194790.aspx
+				if (IsDBCSLeadByteNoExcept(cb.CharAt(pos - 1))) {
 					// Should actually be trail byte
 					if (IsDBCSDualByteAt(pos - 2)) {
 						return pos - 2;
@@ -935,7 +929,7 @@ Sci::Position Document::NextPosition(Sci::Position pos, int moveDir) const noexc
 				} else {
 					// Otherwise, step back until a non-lead-byte is found.
 					Sci::Position posTemp = pos - 1;
-					while (posStartLine <= --posTemp && IsDBCSLeadByteNoExcept(cb.CharAt(posTemp)))
+					while (--posTemp >= 0 && IsDBCSLeadByteNoExcept(cb.CharAt(posTemp)))
 						;
 					// Now posTemp+1 must point to the beginning of a character,
 					// so figure out whether we went back an even or an odd
@@ -969,7 +963,7 @@ bool Document::NextCharacter(Sci::Position &pos, int moveDir) const noexcept {
 
 CharacterExtracted Document::CharacterAfter(Sci::Position position) const noexcept {
 	if (position >= LengthNoExcept()) {
-		return CharacterExtracted(unicodeReplacementChar, 0);
+		return characterEmpty;
 	}
 	const unsigned char leadByte = cb.UCharAt(position);
 	if (!dbcsCodePage || UTF8IsAscii(leadByte)) {
@@ -995,7 +989,7 @@ CharacterExtracted Document::CharacterAfter(Sci::Position position) const noexce
 
 CharacterExtracted Document::CharacterBefore(Sci::Position position) const noexcept {
 	if (position <= 0) {
-		return CharacterExtracted(unicodeReplacementChar, 0);
+		return characterEmpty;
 	}
 	const unsigned char previousByte = cb.UCharAt(position - 1);
 	if (0 == dbcsCodePage) {
@@ -1020,7 +1014,7 @@ CharacterExtracted Document::CharacterBefore(Sci::Position position) const noexc
 			}
 			// Else invalid UTF-8 so return position of isolated trail byte
 		}
-		return CharacterExtracted(unicodeReplacementChar, 1);
+		return characterBadByte;
 	} else {
 		// Moving backwards in DBCS is complex so use NextPosition
 		const Sci::Position posStartCharacter = NextPosition(position, -1);
@@ -1172,6 +1166,29 @@ bool Document::IsDBCSTrailByteNoExcept(char ch) const noexcept {
 	return false;
 }
 
+unsigned char Document::DBCSMinTrailByte() const noexcept {
+	switch (dbcsCodePage) {
+	case 932:
+		// Shift_jis
+		return 0x40;
+	case 936:
+		// GBK
+		return 0x40;
+	case 949:
+		// Korean Wansung KS C-5601-1987
+		return 0x41;
+	case 950:
+		// Big5
+		return 0x40;
+	case 1361:
+		// Korean Johab KS C-5601-1992
+		return 0x31;
+	default:
+		// UTF-8 or single byte, should not occur as not DBCS
+		return 0;
+	}
+}
+
 int Document::DBCSDrawBytes(std::string_view text) const noexcept {
 	if (text.length() <= 1) {
 		return static_cast<int>(text.length());
@@ -1188,6 +1205,104 @@ bool Document::IsDBCSDualByteAt(Sci::Position pos) const noexcept {
 		&& IsDBCSTrailByteNoExcept(cb.CharAt(pos + 1));
 }
 
+namespace {
+
+// Remove any extra bytes after the last valid character.
+void DiscardEndFragment(std::string_view &text) noexcept {
+	if (!text.empty()) {
+		if (UTF8IsFirstByte(text.back())) {
+			// Ending with start of character byte is invalid
+			text.remove_suffix(1);
+		} else if (UTF8IsTrailByte(text.back())) {
+			// go back to the start of last character.
+			const size_t maxTrail = std::max<size_t>(UTF8MaxBytes - 1, text.length());
+			size_t trail = 1;
+			while (trail < maxTrail && UTF8IsTrailByte(text[text.length() - trail])) {
+				trail++;
+			}
+			const std::string_view endPortion = text.substr(text.length() - trail);
+			if (!UTF8IsValid(endPortion)) {
+				text.remove_suffix(trail);
+			}
+		}
+	}
+}
+
+constexpr bool IsBaseOfGrapheme(CharacterCategory cc) {
+	// \p{L}\p{N}\p{P}\p{Sm}\p{Sc}\p{So}\p{Zs}
+	switch (cc) {
+	case ccLu:
+	case ccLl:
+	case ccLt:
+	case ccLm:
+	case ccLo:
+	case ccNd:
+	case ccNl:
+	case ccNo:
+	case ccPc:
+	case ccPd:
+	case ccPs:
+	case ccPe:
+	case ccPi:
+	case ccPf:
+	case ccPo:
+	case ccSm:
+	case ccSc:
+	case ccSo:
+	case ccZs:
+		return true;
+	default:
+		// ccMn, ccMc, ccMe,
+		// ccSk,
+		// ccZl, ccZp,
+		// ccCc, ccCf, ccCs, ccCo, ccCn
+		return false;
+	}
+}
+
+CharacterExtracted LastCharacter(std::string_view text) noexcept {
+	if (text.empty())
+		return characterEmpty;
+	const size_t length = text.length();
+	size_t trail = length;
+	while ((trail > 0) && (length - trail < UTF8MaxBytes) && UTF8IsTrailByte(text[trail - 1]))
+		trail--;
+	const size_t start = (trail > 0) ? trail - 1 : trail;
+	const int utf8status = UTF8Classify(text.substr(start));
+	if (utf8status & UTF8MaskInvalid) {
+		return characterBadByte;
+	}
+	return { static_cast<unsigned int>(UnicodeFromUTF8(text.substr(start))),
+		static_cast<unsigned int>(utf8status & UTF8MaskWidth) };
+}
+
+}
+
+bool Scintilla::Internal::DiscardLastCombinedCharacter(std::string_view &text) noexcept {
+	// Handle the simple common case where a base character may be followed by
+	// accents and similar marks by discarding until start of base character.
+	// 
+	// From Grapheme_Cluster_Boundaries
+	// combining character sequence = ccs-base? ccs-extend+
+	// ccs-base := [\p{L}\p{N}\p{P}\p{S}\p{Zs}]
+	// ccs-extend := [\p{M}\p{Join_Control}]
+	// Modified to move Sk (Symbol Modifier) from ccs-base to ccs-extend to preserve modified emoji
+
+	std::string_view truncated = text;
+	while (truncated.length() > UTF8MaxBytes) {
+		// Give up when short
+		const CharacterExtracted ce = LastCharacter(truncated);
+		const CharacterCategory cc = CategoriseCharacter(static_cast<int>(ce.character));
+		truncated.remove_suffix(ce.widthBytes);
+		if (IsBaseOfGrapheme(cc)) {
+			text = truncated;
+			return true;
+		}
+	}
+	// No base character found so just leave as is
+	return false;
+}
+
 // Need to break text into segments near end but taking into account the
 // encoding to not break inside a UTF-8 or DBCS character and also trying
 // to avoid breaking inside a pair of combining characters, or inside
@@ -1201,7 +1316,8 @@ bool Document::IsDBCSDualByteAt(Sci::Position pos) const noexcept {
 // In preference order from best to worst:
 //   1) Break before or after spaces or controls
 //   2) Break at word and punctuation boundary for better kerning and ligature support
-//   3) Break after whole character, this may break combining characters
+//   3) Break before letter in UTF-8 to avoid breaking combining characters
+//   4) Break after whole character, this may break combining characters
 
 size_t Document::SafeSegment(std::string_view text) const noexcept {
 	// check space first as most written language use spaces.
@@ -1212,6 +1328,13 @@ size_t Document::SafeSegment(std::string_view text) const noexcept {
 	}
 
 	if (!dbcsCodePage || dbcsCodePage == CpUtf8) {
+		if (dbcsCodePage) {
+			// UTF-8
+			DiscardEndFragment(text);
+			if (DiscardLastCombinedCharacter(text)) {
+				return text.length();
+			}
+		}
 		// backward iterate for UTF-8 and single byte encoding to find word and punctuation boundary.
 		std::string_view::iterator it = text.end() - 1;
 		const bool punctuation = IsPunctuation(*it);
@@ -1222,14 +1345,7 @@ size_t Document::SafeSegment(std::string_view text) const noexcept {
 			}
 		} while (it != text.begin());
 
-		it = text.end() - 1;
-		if (dbcsCodePage) {
-			// for UTF-8 go back to the start of last character.
-			for (int trail = 0; trail < UTF8MaxBytes - 1 && UTF8IsTrailByte(*it); trail++) {
-				--it;
-			}
-		}
-		return it - text.begin();
+		return text.length() - 1;
 	}
 
 	{
@@ -1307,6 +1423,10 @@ bool Document::DeleteChars(Sci::Position pos, Sci::Position len) {
 	} else {
 		enteredModification++;
 		if (!cb.IsReadOnly()) {
+			if (cb.IsCollectingUndo() && cb.CanRedo()) {
+				// Abandoning some undo actions so truncate any later selections
+				TruncateUndoComments(cb.UndoCurrent());
+			}
 			NotifyModified(
 			    DocModification(
 			        ModificationFlags::BeforeDelete | ModificationFlags::User,
@@ -1359,6 +1479,10 @@ Sci::Position Document::InsertString(Sci::Position position, const char *s, Sci:
 	if (insertionSet) {
 		s = insertion.c_str();
 		insertLength = insertion.length();
+	}
+	if (cb.IsCollectingUndo() && cb.CanRedo()) {
+		// Abandoning some undo actions so truncate any later selections
+		TruncateUndoComments(cb.UndoCurrent());
 	}
 	NotifyModified(
 		DocModification(
@@ -1541,6 +1665,20 @@ Sci::Position Document::Redo() {
 		enteredModification--;
 	}
 	return newPos;
+}
+
+void Document::EndUndoAction() noexcept {
+	cb.EndUndoAction();
+	if (UndoSequenceDepth() == 0) {
+		// Broadcast notification to views to allow end of group processing.
+		// NotifyGroupCompleted may throw (for memory exhaustion) but this method
+		// may not as it is called in UndoGroup destructor so ignore exception.
+		try {
+			NotifyGroupCompleted();
+		} catch (...) {
+			// Ignore any exception
+		}
+	}
 }
 
 int Document::UndoSequenceDepth() const noexcept {
@@ -2376,11 +2514,11 @@ LineCharacterIndexType Document::LineCharacterIndex() const noexcept {
 }
 
 void Document::AllocateLineCharacterIndex(LineCharacterIndexType lineCharacterIndex) {
-	return cb.AllocateLineCharacterIndex(lineCharacterIndex);
+	cb.AllocateLineCharacterIndex(lineCharacterIndex);
 }
 
 void Document::ReleaseLineCharacterIndex(LineCharacterIndexType lineCharacterIndex) {
-	return cb.ReleaseLineCharacterIndex(lineCharacterIndex);
+	cb.ReleaseLineCharacterIndex(lineCharacterIndex);
 }
 
 Sci::Line Document::LinesTotal() const noexcept {
@@ -2489,6 +2627,32 @@ LexInterface *Document::GetLexInterface() const noexcept {
 
 void Document::SetLexInterface(std::unique_ptr<LexInterface> pLexInterface) noexcept {
 	pli = std::move(pLexInterface);
+}
+
+void Document::SetViewState(void *view, ViewStateShared pVSS) {
+	if (pVSS) {
+		viewData[view] = pVSS;
+	} else {
+		viewData.erase(view);
+	}
+}
+
+ViewStateShared Document::GetViewState(void *view) const noexcept {
+	try {
+		const std::map<void *, ViewStateShared>::const_iterator it = viewData.find(view);
+
+		if (it != viewData.end()) {
+			return it->second;
+		}
+	} catch (...) {
+	}
+	return {};
+}
+
+void Document::TruncateUndoComments(int action) {
+	for (auto &[key, value] : viewData) {
+		value->TruncateUndo(action);
+	}
 }
 
 int SCI_METHOD Document::SetLineState(Sci_Position line, int state) {
@@ -2687,6 +2851,12 @@ void Document::NotifySavePoint(bool atSavePoint) {
 	}
 }
 
+void Document::NotifyGroupCompleted() noexcept {
+	for (const WatcherWithUserData &watcher : watchers) {
+		watcher.watcher->NotifyGroupCompleted(this, watcher.userData);
+	}
+}
+
 void Document::NotifyModified(DocModification mh) {
 	if (FlagSet(mh.modificationType, ModificationFlags::InsertText)) {
 		decorations->InsertSpace(mh.position, mh.length);
@@ -2830,33 +3000,36 @@ static char BraceOpposite(char ch) noexcept {
 
 // TODO: should be able to extend styled region to find matching brace
 Sci::Position Document::BraceMatch(Sci::Position position, Sci::Position /*maxReStyle*/, Sci::Position startPos, bool useStartPos) noexcept {
-	const char chBrace = CharAt(position);
-	const char chSeek = BraceOpposite(chBrace);
+	const unsigned char chBrace = CharAt(position);
+	const unsigned char chSeek = BraceOpposite(chBrace);
 	if (chSeek == '\0')
-		return - 1;
+		return -1;
 	const int styBrace = StyleIndexAt(position);
 	int direction = -1;
 	if (chBrace == '(' || chBrace == '[' || chBrace == '{' || chBrace == '<')
 		direction = 1;
 	int depth = 1;
-	position = useStartPos ? startPos : NextPosition(position, direction);
-	while ((position >= 0) && (position < LengthNoExcept())) {
-		const char chAtPos = CharAt(position);
-		const int styAtPos = StyleIndexAt(position);
-		if ((position > GetEndStyled()) || (styAtPos == styBrace)) {
-			if (chAtPos == chBrace)
-				depth++;
-			if (chAtPos == chSeek)
-				depth--;
-			if (depth == 0)
-				return position;
-		}
-		const Sci::Position positionBeforeMove = position;
-		position = NextPosition(position, direction);
-		if (position == positionBeforeMove)
-			break;
+	position = useStartPos ? startPos : position + direction;
+
+	// Avoid using MovePositionOutsideChar to check DBCS trail byte
+	unsigned char maxSafeChar = 0xff;
+	if (dbcsCodePage != 0 && dbcsCodePage != CpUtf8) {
+		maxSafeChar = DBCSMinTrailByte() - 1;
 	}
-	return - 1;
+
+	while ((position >= 0) && (position < LengthNoExcept())) {
+		const unsigned char chAtPos = CharAt(position);
+		if (chAtPos == chBrace || chAtPos == chSeek) {
+			if (((position > GetEndStyled()) || (StyleIndexAt(position) == styBrace)) &&
+				(chAtPos <= maxSafeChar || position == MovePositionOutsideChar(position, direction, false))) {
+				depth += (chAtPos == chBrace) ? 1 : -1;
+				if (depth == 0)
+					return position;
+			}
+		}
+		position += direction;
+	}
+	return -1;
 }
 
 /**
@@ -2884,14 +3057,13 @@ namespace {
 */
 class RESearchRange {
 public:
-	const Document *doc;
 	int increment;
 	Sci::Position startPos;
 	Sci::Position endPos;
 	Sci::Line lineRangeStart;
 	Sci::Line lineRangeEnd;
 	Sci::Line lineRangeBreak;
-	RESearchRange(const Document *doc_, Sci::Position minPos, Sci::Position maxPos) noexcept : doc(doc_) {
+	RESearchRange(const Document *doc, Sci::Position minPos, Sci::Position maxPos) noexcept {
 		increment = (minPos <= maxPos) ? 1 : -1;
 
 		// Range endpoints should not be inside DBCS characters or between a CR and LF,
@@ -3191,8 +3363,8 @@ bool MatchOnLines(const Document *doc, const Regex &regexp, const RESearchRange 
 		const Sci::Position lineStartPos = doc->LineStart(line);
 		const Sci::Position lineEndPos = doc->LineEnd(line);
 		const Range lineRange = resr.LineRange(line, lineStartPos, lineEndPos);
-		Iterator itStart(doc, lineRange.start);
-		Iterator itEnd(doc, lineRange.end);
+		const Iterator itStart(doc, lineRange.start);
+		const Iterator itEnd(doc, lineRange.end);
 		const std::regex_constants::match_flag_type flagsMatch = MatchFlags(doc, lineRange.start, lineRange.end, lineStartPos, lineEndPos);
 		std::regex_iterator<Iterator> it(itStart, itEnd, regexp, flagsMatch);
 		for (const std::regex_iterator<Iterator> last; it != last; ++it) {

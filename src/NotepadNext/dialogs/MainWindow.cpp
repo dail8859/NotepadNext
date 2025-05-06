@@ -38,6 +38,7 @@
 #include <QDirIterator>
 #include <QProcess>
 #include <QScreen>
+#include <QFontDatabase>
 
 
 #ifdef Q_OS_WIN
@@ -400,7 +401,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
-            bookMarkDecorator->clearBookmarks();
+            bookMarkDecorator->clearAllBookmarks();
         }
     });
 
@@ -429,6 +430,42 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             }
         }
     });
+
+    connect(ui->actionCutBookmarkedLines, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            QString s = bookMarkDecorator->cutBookMarkedLines();
+
+            if (!s.isEmpty()) {
+                QApplication::clipboard()->setText(s);
+            }
+        }
+    });
+
+    connect(ui->actionCopyBookmarkedLines, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            QString s = bookMarkDecorator->copyBookMarkedLines();
+
+            if (!s.isEmpty()) {
+                QApplication::clipboard()->setText(s);
+            }
+        }
+    });
+
+    connect(ui->actionDeleteBookmarkedLines, &QAction::triggered, this, [=]() {
+        ScintillaNext *editor = currentEditor();
+        BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (bookMarkDecorator && bookMarkDecorator->isEnabled()) {
+            bookMarkDecorator->deleteBookMarkedLines();
+        }
+    });
+
 
     // The action needs added to the window so it can be triggered via the keyboard
     addAction(ui->actionNextTab);
@@ -707,32 +744,37 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
     connect(ui->actionAboutNotepadNext, &QAction::triggered, this, [=]() {
         QMessageBox::about(this, QString(),
-                            QStringLiteral("<h3>%1 v%2%3</h3>"
+                            QStringLiteral("<h3>%1 v%2 %3</h3>"
                                     "<p>%4</p>"
-                                    "<p>This program does stuff.</p>"
-                                    R"(<p>This program is free software: you can redistribute it and/or modify
-                                    it under the terms of the GNU General Public License as published by
-                                    the Free Software Foundation, either version 3 of the License, or
-                                    (at your option) any later version.</p>
-                                    <p>This program is distributed in the hope that it will be useful,
-                                    but WITHOUT ANY WARRANTY; without even the implied warranty of
-                                    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-                                    GNU General Public License for more details.</p>
-                                    <p>You should have received a copy of the GNU General Public License
-                                    along with this program. If not, see &lt;<a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>)")
+                                    "<p><a href=\"https://github.com/dail8859/NotepadNext\">Notepad Next Home Page</a></p>"
+                                    R"(<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p> <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</p> <p>You should have received a copy of the GNU General Public License along with this program. If not, see &lt;<a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>)")
                                 .arg(QApplication::applicationDisplayName(), APP_VERSION, APP_DISTRIBUTION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
+    });
+
+    connect(ui->actionDebugInfo, &QAction::triggered, this, [=]() {
+        QMessageBox mb(QMessageBox::Information, tr("Debug Info"), app->debugInfo().join('\n'), QMessageBox::Ok, this);
+
+        mb.setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont).family());
+        mb.setTextInteractionFlags(Qt::TextSelectableByMouse);
+
+        mb.exec();
     });
 
 #ifdef Q_OS_WIN
     connect(ui->actionShowInExplorer, &QAction::triggered, this, [=]() {
-        QStringList arguments;
-        arguments << "/select," << QDir::toNativeSeparators(currentEditor()->getFileInfo().canonicalFilePath());
+        QString filePath = QDir::toNativeSeparators(currentEditor()->getFileInfo().canonicalFilePath());
+        QStringList arguments = {"/select,", filePath};
         QProcess::startDetached("explorer", arguments);
     });
-    connect(ui->actionOpenCommandPromptHere, &QAction::triggered, this, [=]() {
-        QStringList arguments;
-        arguments << "/c" << "start" << "/d" << QDir::toNativeSeparators(currentEditor()->getFileInfo().dir().canonicalPath()) << "cmd";
-        QProcess::startDetached(QStringLiteral("cmd"), arguments);
+
+    QString terminalName = app->getSettings()->value("App/TerminalName", "Command Prompt").toString();
+    ui->actionOpenTerminalHere->setText(ui->actionOpenTerminalHere->text().arg(terminalName));
+
+    connect(ui->actionOpenTerminalHere, &QAction::triggered, this, [=]() {
+        QString command = app->getSettings()->value("App/TerminalCommand", "cmd").toString();
+        QString filePath = QDir::toNativeSeparators(currentEditor()->getFileInfo().dir().canonicalPath());
+        QStringList arguments = {"/c", "start", "/d", filePath, command};
+        QProcess::startDetached("cmd", arguments);
     });
 #endif
 
@@ -911,10 +953,17 @@ ScintillaNext *MainWindow::getInitialEditor()
     if (editorCount() == 1) {
         ScintillaNext *editor = currentEditor();
 
-        // If the editor has had ANY modifications, then don't call it an initial editor
-        if (!editor->isFile() && !editor->canUndo() && !editor->canRedo()) {
-            return editor;
+        // If the editor:
+        //   is a temporary file
+        //   is a 'real' file (or a 'missing' file)
+        //   can undo any actions
+        //   can redo any actions
+        // Then do not treat it as an 'initial editor' that can be transparently closed for the user
+        if (editor->isTemporary() || editor->isFile() || editor->canUndo() || editor->canRedo()) {
+            return Q_NULLPTR;
         }
+
+        return editor;
     }
 
     return Q_NULLPTR;
@@ -1515,7 +1564,7 @@ void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)
     ui->actionCopyFullPath->setEnabled(isFile);
     ui->actionCopyFileDirectory->setEnabled(isFile);
     ui->actionShowInExplorer->setEnabled(isFile);
-    ui->actionOpenCommandPromptHere->setEnabled(isFile);
+    ui->actionOpenTerminalHere->setEnabled(isFile);
 }
 
 bool MainWindow::isAnyUnsaved() const
@@ -1684,7 +1733,7 @@ void MainWindow::applyStyleSheet()
 
     QString sheet;
     QFile f(":/stylesheets/npp.css");
-    qInfo() << "Loading stylesheet: " << f.fileName();
+    qInfo() << "Loading stylesheet:" << f.fileName();
 
     f.open(QFile::ReadOnly);
     sheet = f.readAll();
@@ -1695,7 +1744,7 @@ void MainWindow::applyStyleSheet()
     QString fullPath = QDir(directoryPath).filePath("custom.css");
     if (QFile::exists(fullPath)) {
         QFile custom(fullPath);
-        qInfo() << "Loading stylesheet: " << custom.fileName();
+        qInfo() << "Loading stylesheet:" << custom.fileName();
 
         custom.open(QFile::ReadOnly);
         sheet += custom.readAll();
@@ -1874,27 +1923,36 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(editor, &ScintillaNext::customContextMenuRequested, this, [=](const QPoint &pos) {
         contextMenuPos = editor->send(SCI_POSITIONFROMPOINT, pos.x(), pos.y());
-        QMenu *menu = new QMenu(this);
-        menu->setAttribute(Qt::WA_DeleteOnClose);
 
+        QStringList actionNames = {
+            "Cut",
+            "Copy",
+            "Paste",
+            "Delete",
+            "",
+            "SelectAll",
+            "",
+            "Base64Encode",
+            "URLEncode",
+            "",
+            "Base64Decode",
+            "URLDecode"
+        };
+
+        // If the entry exists in the settings, use that
+        ApplicationSettings *settings = app->getSettings();
+        if (settings->contains("Gui/EditorContextMenu")) {
+            actionNames = settings->value("Gui/EditorContextMenu").toStringList();
+        }
+
+        // If the cursor is at a URL, prepend the action
         URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
         if (urlFinder && urlFinder->isEnabled() && urlFinder->isURL(contextMenuPos)) {
-            menu->addAction(ui->actionCopyURL);
-            menu->addSeparator();
+            actionNames.prepend("");
+            actionNames.prepend("CopyURL");
         }
-        menu->addAction(ui->actionCut);
-        menu->addAction(ui->actionCopy);
-        menu->addAction(ui->actionPaste);
-        menu->addAction(ui->actionDelete);
-        menu->addSeparator();
-        menu->addAction(ui->actionSelectAll);
-        menu->addSeparator();
-        menu->addAction(ui->actionBase64Encode);
-        menu->addAction(ui->actionURLEncode);
-        menu->addSeparator();
-        menu->addAction(ui->actionBase64Decode);
-        menu->addAction(ui->actionURLDecode);
-        menu->popup(QCursor::pos());
+
+        buildDynamicMenu(actionNames)->popup(QCursor::pos());
     });
 
     // The editor has been entirely configured at this point, so add it to the docked editor
@@ -2090,45 +2148,10 @@ void MainWindow::onNodeRenamed(const QString &parentPath, const QString &oldName
     }
 }
 
-void MainWindow::tabBarRightClicked(ScintillaNext *editor)
+QMenu *MainWindow::buildDynamicMenu(QStringList actionNames)
 {
-    qInfo(Q_FUNC_INFO);
-
-    // Focus on the correct tab
-    dockedEditor->switchToEditor(editor);
-
-    // Create the menu
     QMenu *menu = new QMenu(this);
     menu->setAttribute(Qt::WA_DeleteOnClose);
-
-    // Default actions
-    QStringList actionNames{
-        "Close",
-        "CloseAllExceptActive",
-        "CloseAllToLeft",
-        "CloseAllToRight",
-        "",
-        "Save",
-        "SaveAs",
-        "Rename",
-        "",
-        "Reload",
-        "",
-#ifdef Q_OS_WIN
-        "ShowInExplorer",
-        "OpenCommandPromptHere",
-        "",
-#endif
-        "CopyFullPath",
-        "CopyFileName",
-        "CopyFileDirectory"
-    };
-
-    // If the entry exists in the settings, use that
-    ApplicationSettings *settings = app->getSettings();
-    if (settings->contains("Gui/TabBarContextMenu")) {
-        actionNames = settings->value("Gui/TabBarContextMenu").toStringList();
-    }
 
     // Populate the menu
     for (const QString &actionName : actionNames) {
@@ -2147,8 +2170,46 @@ void MainWindow::tabBarRightClicked(ScintillaNext *editor)
         }
     }
 
-    // Show it
-    menu->popup(QCursor::pos());
+    return menu;
+}
+
+void MainWindow::tabBarRightClicked(ScintillaNext *editor)
+{
+    qInfo(Q_FUNC_INFO);
+
+    // Focus on the correct tab
+    dockedEditor->switchToEditor(editor);
+
+    // Default actions
+    QStringList actionNames{
+        "Close",
+        "CloseAllExceptActive",
+        "CloseAllToLeft",
+        "CloseAllToRight",
+        "",
+        "Save",
+        "SaveAs",
+        "Rename",
+        "",
+        "Reload",
+        "",
+#ifdef Q_OS_WIN
+        "ShowInExplorer",
+        "OpenTerminalHere",
+        "",
+#endif
+        "CopyFullPath",
+        "CopyFileName",
+        "CopyFileDirectory"
+    };
+
+    // If the entry exists in the settings, use that
+    ApplicationSettings *settings = app->getSettings();
+    if (settings->contains("Gui/TabBarContextMenu")) {
+        actionNames = settings->value("Gui/TabBarContextMenu").toStringList();
+    }
+
+    buildDynamicMenu(actionNames)->popup(QCursor::pos());
 }
 
 void MainWindow::languageMenuTriggered()

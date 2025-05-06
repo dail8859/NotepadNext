@@ -67,6 +67,8 @@ public:
 
     bool isRunningAsAdmin() const;
 
+    QStringList debugInfo() const;
+
 protected:
     bool event(QEvent *event) override;
 

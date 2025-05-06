@@ -172,6 +172,22 @@ public:
 	bool isEnabled;
 };
 
+// Base class for view state that can be held and transferred without understanding the contents.
+// Declared here but real implementation subclass declared in EditModel 
+struct ViewState {
+	ViewState() noexcept = default;
+	// Deleted so ViewState objects can not be copied
+	ViewState(const ViewState &) = delete;
+	ViewState(ViewState &&) = delete;
+	ViewState &operator=(const ViewState &) = delete;
+	ViewState &operator=(ViewState &&) = delete;
+	virtual ~ViewState() noexcept = default;
+
+	virtual void TruncateUndo(int index)=0;
+};
+
+using ViewStateShared = std::shared_ptr<ViewState>;
+
 struct LexerReleaser {
 	// Called by unique_ptr to destroy/free the Resource
 	void operator()(Scintilla::ILexer5 *pLexer) noexcept {
@@ -257,6 +273,8 @@ struct CharacterExtracted {
 	}
 };
 
+bool DiscardLastCombinedCharacter(std::string_view &text) noexcept;
+
 /**
  */
 class Document : PerLine, public Scintilla::IDocument, public Scintilla::ILoader, public Scintilla::IDocumentEditable {
@@ -301,9 +319,10 @@ private:
 	LineAnnotation *Annotations() const noexcept;
 	LineAnnotation *EOLAnnotations() const noexcept;
 
-	bool matchesValid;
 	std::unique_ptr<RegexSearchBase> regex;
 	std::unique_ptr<LexInterface> pli;
+
+	std::map<void *, ViewStateShared>viewData;
 
 public:
 
@@ -370,6 +389,7 @@ public:
 	bool SCI_METHOD IsDBCSLeadByte(char ch) const override;
 	bool IsDBCSLeadByteNoExcept(char ch) const noexcept;
 	bool IsDBCSTrailByteNoExcept(char ch) const noexcept;
+	unsigned char DBCSMinTrailByte() const noexcept;
 	int DBCSDrawBytes(std::string_view text) const noexcept;
 	bool IsDBCSDualByteAt(Sci::Position pos) const noexcept;
 	size_t SafeSegment(std::string_view text) const noexcept;
@@ -396,8 +416,9 @@ public:
 	}
 	bool IsCollectingUndo() const noexcept { return cb.IsCollectingUndo(); }
 	void BeginUndoAction(bool coalesceWithPrior=false) noexcept { cb.BeginUndoAction(coalesceWithPrior); }
-	void EndUndoAction() noexcept { cb.EndUndoAction(); }
+	void EndUndoAction() noexcept;
 	int UndoSequenceDepth() const noexcept;
+	bool AfterUndoSequenceStart() const noexcept { return cb.AfterUndoSequenceStart(); }
 	void AddUndoAction(Sci::Position token, bool mayCoalesce) { cb.AddUndoAction(token, mayCoalesce); }
 	void SetSavePoint();
 	bool IsSavePoint() const noexcept { return cb.IsSavePoint(); }
@@ -534,6 +555,10 @@ public:
 	LexInterface *GetLexInterface() const noexcept;
 	void SetLexInterface(std::unique_ptr<LexInterface> pLexInterface) noexcept;
 
+	void SetViewState(void *view, ViewStateShared pVSS);
+	ViewStateShared GetViewState(void *view) const noexcept;
+	void TruncateUndoComments(int action);
+
 	int SCI_METHOD SetLineState(Sci_Position line, int state) override;
 	int SCI_METHOD GetLineState(Sci_Position line) const override;
 	Sci::Line GetMaxLineState() const noexcept;
@@ -574,6 +599,7 @@ public:
 private:
 	void NotifyModifyAttempt();
 	void NotifySavePoint(bool atSavePoint);
+	void NotifyGroupCompleted() noexcept;
 	void NotifyModified(DocModification mh);
 };
 
@@ -664,6 +690,7 @@ public:
 	virtual void NotifyDeleted(Document *doc, void *userData) noexcept = 0;
 	virtual void NotifyStyleNeeded(Document *doc, void *userData, Sci::Position endPos) = 0;
 	virtual void NotifyErrorOccurred(Document *doc, void *userData, Scintilla::Status status) = 0;
+	virtual void NotifyGroupCompleted(Document *doc, void *userData) noexcept = 0;
 };
 
 }

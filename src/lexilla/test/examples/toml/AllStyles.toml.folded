@@ -1,4 +1,5 @@
- 0 400   0   # This is a full-line comment
+ 2 400   0 + # coding:utf-8
+ 0 401   0 | # This is a full-line comment
  0 400   0   key = "value"  # This is a comment at the end of a line
  0 400   0   another = "# This is not a comment"
  0 400   0   
@@ -185,6 +186,7 @@
  0 401   0 |            { x = 7, y = 8, z = 9 },
  0 401   0 |            { x = 2, y = 4, z = 8 } ]
  0 401   0 | 
+ 0 401   0 | ~~~~ = true       # invalid character in key
  0 401   0 | invalid           # invalid, missing value
  0 401   0 | key = identifier  # also invalid, identifier must be one of true, false, inf, nan
  0 401   0 | 

@@ -37,6 +37,7 @@
        Lexilla was originally code that was part of the Scintilla project.
        Thus it shares much of the history and contributors of Scintilla before it was extracted as its own project.
     </p>
+    <a href="#Releases">Releases</a>
     <h2>Contributors</h2>
     <p>
        Thanks to all the people that have contributed patches, bug reports and suggestions.
@@ -585,9 +586,142 @@
 	<td>Tsuyoshi Miyake</td>
 	<td>Martin Schäfer</td>
 	<td>RainRat</td>
+      </tr><tr>
+	<td>Henrik S. Johansen</td>
+	<td>Ekopalypse</td>
+	<td>HoTschir</td>
     </tr>
     </table>
-    <h2>Releases</h2>
+    <h2 id="Releases">Releases</h2>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla543.zip">Release 5.4.3</a>
+    </h3>
+    <ul>
+	<li>
+	Released 25 February 2025.
+	</li>
+	<li>
+	C++: Fix evaluation of != in preprocessor condition.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/299">Issue #299</a>.
+	</li>
+	<li>
+	Modula-3: Allow digits in uppercase identifiers.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/297">Issue #297</a>.
+	</li>
+	<li>
+	Pascal: Fix asm style extending past end.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/295">Issue #295</a>.
+	</li>
+	<li>
+	Python: Fix detection of attributes and decorators.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/294">Issue #294</a>,
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/302">Pull request #302</a>.
+	</li>
+	<li>
+	Ruby: Implement substyles for identifiers SCE_RB_IDENTIFIER.
+	</li>
+	<li>
+	Ruby: Recognize name as SCE_RB_DEFNAME in def when `::` used as well as `.`.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/300">Issue #300</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla542.zip">Release 5.4.2</a>
+    </h3>
+    <ul>
+	<li>
+	Released 18 December 2024.
+	</li>
+	<li>
+	Update to Unicode 15.1.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/285">Issue #285</a>.
+	</li>
+	<li>
+	Lexer added for Nix "nix".
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/282">Pull request #282</a>.
+	</li>
+	<li>
+	JavaScript: Use correct SCE_HJA_TEMPLATELITERAL style for server-side template literals in
+	HTML instead of client-side style.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/286">Issue #286</a>.
+	</li>
+	<li>
+	JavaScript: Use correct SCE_HJ_SYMBOLS style for '.' after regex instead of SCE_HJ_WORD.
+	Prevent empty word assertion when non-word character after regex flag.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/289">Issue #289</a>.
+	</li>
+	<li>
+	PHP: Fix unstable lexing with substyled keyword and unterminated string.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/288">Issue #288</a>.
+	</li>
+	<li>
+	Rust: Add C string and raw C string literal styles SCE_RUST_CSTRING and SCE_RUST_CSTRINGR.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/292">Pull request #292</a>,
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/268">Issue #268</a>.
+	</li>
+	<li>
+	TOML: Don't treat keys without values as errors.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/283">Pull request #283</a>.
+	</li>
+	<li>
+	Zig: Add SCE_ZIG_IDENTIFIER_STRING for identifiers expressed as strings.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/287">Pull request #287</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla541.zip">Release 5.4.1</a>
+    </h3>
+    <ul>
+	<li>
+	Released 19 October 2024.
+	</li>
+	<li>
+	Lexer added for Dart "dart".
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/265">Pull request #265</a>,
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/275">Pull request #275</a>.
+	</li>
+	<li>
+	Lexer added for troff / nroff "troff".
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/264">Pull request #264</a>.
+	</li>
+	<li>
+	Lexer added for Zig "zig".
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/267">Pull request #267</a>.
+	</li>
+	<li>
+	C++: Fix crash for empty documentation comment keyword where '&lt;' occurs at line end.
+	</li>
+	<li>
+	F#: Include EOLs in the style range of SCE_FSHARP_COMMENTLINE.
+	Stabilizes EOL detection when folding line comment groups.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/276">Issue #276</a>.
+	</li>
+	<li>
+	F#: Fix per-line folding in F# documents.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/277">Issue #277</a>.
+	</li>
+	<li>
+	HTML: Improve SGML/DTD lexing.
+	Don't terminate SGML when &gt; inside quoted string.
+	Lex both [ and ] as SCE_H_SGML_DEFAULT.
+	Nested sections handled instead of switching to SCE_H_SGML_ERROR.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/272">Issue #272</a>.
+	</li>
+	<li>
+	JavaScript: New SCE_HJ_TEMPLATELITERAL and SCE_HJA_TEMPLATELITERAL
+	styles for template literals when lexer is hypertext, or xml.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/280">Issue #280</a>.
+	</li>
+	<li>
+	PHP: Fix failure to recognize PHP start "&lt;?php' at end of document.
+	Caused by not capping retrieval range at document end causing no text to be retrieved.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/269">Issue #269</a>.
+	</li>
+	<li>
+	Smalltalk: Fix scaled decimal numbers without decimal separator.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/274">Pull request #274</a>.
+	</li>
+    </ul>
     <h3>
        <a href="https://www.scintilla.org/lexilla540.zip">Release 5.4.0</a>
     </h3>

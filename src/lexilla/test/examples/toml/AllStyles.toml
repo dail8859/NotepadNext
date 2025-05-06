@@ -1,3 +1,4 @@
+# coding:utf-8
 # This is a full-line comment
 key = "value"  # This is a comment at the end of a line
 another = "# This is not a comment"
@@ -185,5 +186,6 @@ points = [ { x = 1, y = 2, z = 3 },
            { x = 7, y = 8, z = 9 },
            { x = 2, y = 4, z = 8 } ]
 
+~~~~ = true       # invalid character in key
 invalid           # invalid, missing value
 key = identifier  # also invalid, identifier must be one of true, false, inf, nan

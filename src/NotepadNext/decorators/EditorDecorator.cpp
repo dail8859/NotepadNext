@@ -27,7 +27,7 @@ void EditorDecorator::setEnabled(bool b)
         connect(editor, &ScintillaEdit::notify, this, &EditorDecorator::notify);
     }
     else {
-        disconnect(editor, nullptr, this, nullptr);
+        disconnect(editor, &ScintillaEdit::notify, this, nullptr);
     }
 
     emit stateChanged(enabled);

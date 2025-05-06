@@ -1136,6 +1136,22 @@ sptr_t ScintillaEdit::changeHistory() const {
     return send(SCI_GETCHANGEHISTORY, 0, 0);
 }
 
+void ScintillaEdit::setUndoSelectionHistory(sptr_t undoSelectionHistory) {
+    send(SCI_SETUNDOSELECTIONHISTORY, undoSelectionHistory, 0);
+}
+
+sptr_t ScintillaEdit::undoSelectionHistory() const {
+    return send(SCI_GETUNDOSELECTIONHISTORY, 0, 0);
+}
+
+void ScintillaEdit::setSelectionSerialized(const char * selectionString) {
+    send(SCI_SETSELECTIONSERIALIZED, 0, (sptr_t)selectionString);
+}
+
+QByteArray ScintillaEdit::selectionSerialized() const {
+    return TextReturner(SCI_GETSELECTIONSERIALIZED, 0);
+}
+
 sptr_t ScintillaEdit::firstVisibleLine() const {
     return send(SCI_GETFIRSTVISIBLELINE, 0, 0);
 }

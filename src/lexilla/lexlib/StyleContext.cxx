@@ -54,6 +54,8 @@ bool StyleContext::MatchIgnoreCase(const char *s) {
 	if (MakeLowerCase(ch) != static_cast<unsigned char>(*s))
 		return false;
 	s++;
+	if (!*s)
+		return true;
 	if (MakeLowerCase(chNext) != static_cast<unsigned char>(*s))
 		return false;
 	s++;
@@ -66,15 +68,15 @@ bool StyleContext::MatchIgnoreCase(const char *s) {
 	return true;
 }
 
-void StyleContext::GetCurrent(char *s, Sci_PositionU len) {
+void StyleContext::GetCurrent(char *s, Sci_PositionU len) const {
 	styler.GetRange(styler.GetStartSegment(), currentPos, s, len);
 }
 
-void StyleContext::GetCurrentLowered(char *s, Sci_PositionU len) {
+void StyleContext::GetCurrentLowered(char *s, Sci_PositionU len) const {
 	styler.GetRangeLowered(styler.GetStartSegment(), currentPos, s, len);
 }
 
-void StyleContext::GetCurrentString(std::string &string, Transform transform) {
+void StyleContext::GetCurrentString(std::string &string, Transform transform) const {
 	const Sci_PositionU startPos = styler.GetStartSegment();
 	const Sci_PositionU len = currentPos - styler.GetStartSegment();
 	string.resize(len);

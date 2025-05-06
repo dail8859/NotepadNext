@@ -10,18 +10,6 @@
     <height>325</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>475</width>
-    <height>325</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>16777215</width>
-    <height>325</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>Find</string>
   </property>
@@ -79,12 +67,9 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
           <property name="spacing">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="topMargin">
-           <number>4</number>
-          </property>
-          <property name="bottomMargin">
            <number>4</number>
           </property>
           <item>
@@ -343,7 +328,7 @@
       </layout>
      </item>
      <item row="2" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,0,0,0">
+      <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0">
        <property name="leftMargin">
         <number>11</number>
        </property>
@@ -447,32 +432,39 @@
         </spacer>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBoxBackwardsDirection">
-         <property name="text">
-          <string>Backward direction</string>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <property name="spacing">
+          <number>0</number>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBoxMatchWholeWord">
-         <property name="text">
-          <string>Match &amp;whole word only</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBoxMatchCase">
-         <property name="text">
-          <string>Match &amp;case</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="checkBoxWrapAround">
-         <property name="text">
-          <string>Wra&amp;p Around</string>
-         </property>
-        </widget>
+         <item>
+          <widget class="QCheckBox" name="checkBoxBackwardsDirection">
+           <property name="text">
+            <string>Backward direction</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxMatchWholeWord">
+           <property name="text">
+            <string>Match &amp;whole word only</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxMatchCase">
+           <property name="text">
+            <string>Match &amp;case</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxWrapAround">
+           <property name="text">
+            <string>Wra&amp;p Around</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
@@ -483,10 +475,6 @@
  <tabstops>
   <tabstop>comboFind</tabstop>
   <tabstop>comboReplace</tabstop>
-  <tabstop>checkBoxBackwardsDirection</tabstop>
-  <tabstop>checkBoxMatchWholeWord</tabstop>
-  <tabstop>checkBoxMatchCase</tabstop>
-  <tabstop>checkBoxWrapAround</tabstop>
   <tabstop>radioNormalSearch</tabstop>
   <tabstop>radioExtendedSearch</tabstop>
   <tabstop>radioRegexSearch</tabstop>

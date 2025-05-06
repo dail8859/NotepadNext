@@ -99,6 +99,30 @@ ScintillaNext *ScintillaNext::fromFile(const QString &filePath, bool tryToCreate
     return editor;
 }
 
+QString ScintillaNext::eolModeToString(int eolMode)
+{
+    if (eolMode == SC_EOL_CRLF)
+        return QStringLiteral("crlf");
+    else if (eolMode == SC_EOL_CR)
+        return QStringLiteral("cr");
+    else if (eolMode == SC_EOL_LF)
+        return QStringLiteral("lf");
+    else
+        return QString(); // unknown
+}
+
+int ScintillaNext::stringToEolMode(QString eolMode)
+{
+    if (eolMode == QStringLiteral("crlf"))
+        return SC_EOL_CRLF;
+    else if (eolMode == QStringLiteral("cr"))
+        return SC_EOL_CR;
+    else if (eolMode == QStringLiteral("lf"))
+        return SC_EOL_LF;
+    else
+        return -1;
+}
+
 int ScintillaNext::allocateIndicator(const QString &name)
 {
     return indicatorResources.requestResource(name);

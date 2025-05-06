@@ -26,13 +26,10 @@ $ lupdate NotepadNext.pro
 
 When the application is built, it automatically uses `lrelease` to convert the list of .ts files into binary .qm files for the application to load.
 
-### Project Setup
-
-The included .ts files are listed `i18n.pri`. New locales names can be added to the `LOCALES` variable.
-
 ## Translation Process for Translators
 
-If you want to help with translations but the target language is not supported yet, please open an issue and a new .ts file will be added you can use. If one already exists, open the appropriate .ts file with Qt Linguist and follow the [Qt Linguist Manual](https://doc.qt.io/qt-6/linguist-translators.html). Once changes have been made to the .ts file you can create a pull request so new translated strings can be included in the application.
+If you want to help with translations you can follow the [Qt Linguist Manual](https://doc.qt.io/qt-6/linguist-translators.html). There may be a partial application translation already in the `/i18n/` directory. You can update it or create a new `.ts` file if your language does not exist yet. Once changes have been made to the `.ts`
+. file you can create a pull request so new translated strings can be included in the application.
 
 Qt Linguist is contained in the Qt SDK that you can download [here](https://www.qt.io/download-qt-installer). If you don't want to download the whole SDK, there is a community made a standalone version for Qt Linguist [here](https://github.com/lelegard/qtlinguist-installers/releases).
 
