@@ -58,6 +58,13 @@ public:
     QVector<ScintillaNext *> editors() const;
     DockedEditor *getDockedEditor() const { return dockedEditor; }
 
+    template<typename Func>
+    void forEachEditorByPath(const QString &path, Func callback);
+
+    bool askMoveToTrash(const QString &path);
+
+    void closeByPath(const QString &path, bool isDirectory);
+
 public slots:
     void newFile();
 
@@ -125,6 +132,8 @@ public slots:
 
     void switchToEditor(const ScintillaNext *editor);
 
+    void onNodeRenamed(const QString &parentPath, const QString &oldName, const QString &newName);
+
 signals:
     void editorActivated(ScintillaNext *editor);
     void aboutToClose();
@@ -173,5 +182,19 @@ private:
     int contextMenuPos = 0;
     QMenu *buildDynamicMenu(QStringList actionNames);
 };
+
+template<typename Func>
+void MainWindow::forEachEditorByPath(const QString &path, Func callback)
+{
+    qDebug() << Q_FUNC_INFO << path;
+    for(auto &&editor : editors())
+    {
+        qDebug() << editor->getFilePath();
+        if (editor->getFilePath() == path)
+        {
+            callback(editor);
+        }
+    }
+}
 
 #endif // MAINWINDOW_H

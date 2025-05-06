@@ -28,9 +28,45 @@
      <number>0</number>
     </property>
     <item>
+     <widget class="QMenu" name="menuFile">
+      <property name="title">
+       <string>File Menu</string>
+      </property>
+      <addaction name="actionRename"/>
+      <addaction name="actionMoveToTrash"/>
+     </widget>
+    </item>
+    <item>
+     <widget class="QMenu" name="menuDirectory">
+      <property name="title">
+       <string>Folder Menu</string>
+      </property>
+      <addaction name="actionRename"/>
+      <addaction name="actionMoveToTrash"/>
+      <addaction name="separator"/>
+      <addaction name="actionNewFolder"/>
+      <addaction name="actionSaveHere"/>
+     </widget>
+    </item>
+    <item>
+     <widget class="QMenu" name="menuEmpty">
+      <property name="title">
+       <string>Space Menu</string>
+      </property>
+      <addaction name="actionNewFolder"/>
+      <addaction name="actionSaveHere"/>
+     </widget>
+    </item>
+    <item>
      <widget class="QTreeView" name="treeView">
+      <property name="contextMenuPolicy">
+       <enum>Qt::CustomContextMenu</enum>
+      </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="editTriggers">
+       <set>QAbstractItemView::EditKeyPressed</set>
       </property>
       <attribute name="headerVisible">
        <bool>false</bool>
@@ -39,7 +75,33 @@
     </item>
    </layout>
   </widget>
+  <action name="actionSaveHere">
+   <property name="text">
+    <string>&amp;Save Current File Here</string>
+   </property>
+  </action>
+  <action name="actionNewFolder">
+   <property name="text">
+    <string>New &amp;Folder</string>
+   </property>
+  </action>
+  <action name="actionRename">
+   <property name="text">
+    <string>&amp;Rename</string>
+   </property>
+  </action>
+  <action name="actionMoveToTrash">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/bin_closed.png</normaloff>:/icons/bin_closed.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move to &amp;Trash</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

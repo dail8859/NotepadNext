@@ -277,7 +277,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionCopyFullPath, &QAction::triggered, this, [=]() {
         auto editor = currentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(editor->getFilePath());
+            QApplication::clipboard()->setText(QDir::toNativeSeparators(editor->getFilePath()));
         }
     });
     connect(ui->actionCopyFileName, &QAction::triggered, this, [=]() {
@@ -286,7 +286,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionCopyFileDirectory, &QAction::triggered, this, [=]() {
         auto editor = currentEditor();
         if (editor->isFile()) {
-            QApplication::clipboard()->setText(editor->getPath());
+            QFileInfo currentFile(editor->getFilePath());
+            QApplication::clipboard()->setText(QDir::toNativeSeparators(currentFile.dir().absolutePath()));
         }
     });
 
@@ -979,7 +980,7 @@ void MainWindow::openFileList(const QStringList &fileNames)
     const ScintillaNext *mostRecentEditor = Q_NULLPTR;
 
     for (const QString &filePath : fileNames) {
-        qInfo("%s", qUtf8Printable(filePath));
+        qInfo() << Q_FUNC_INFO << filePath;
 
         // Search currently open editors to see if it is already open
         ScintillaNext *editor = app->getEditorManager()->getEditorByFilePath(filePath);
@@ -1060,7 +1061,8 @@ void MainWindow::openFileDialog()
 
     // Use the path if possible
     if (editor->isFile()) {
-        dialogDir = editor->getPath();
+        QFileInfo currentFile(editor->getFilePath());
+        dialogDir = currentFile.dir().absolutePath();
     }
 
     QStringList fileNames = FileDialogHelpers::getOpenFileNames(this, QString(), dialogDir, filter);
@@ -1080,7 +1082,8 @@ void MainWindow::openFolderAsWorkspaceDialog()
 
     // Use the path if possible
     if (editor->isFile()) {
-        dialogDir = editor->getPath();
+        QFileInfo currentFile(editor->getFilePath());
+        dialogDir = currentFile.dir().absolutePath();
     }
 
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Folder as Workspace"), dialogDir, QFileDialog::ShowDirsOnly);
@@ -1406,14 +1409,48 @@ void MainWindow::moveCurrentFileToTrash()
     moveFileToTrash(editor);
 }
 
+bool MainWindow::askMoveToTrash(const QString &path)
+{
+    auto reply = QMessageBox::question(this, tr("Delete File"), tr("Are you sure you want to move <b>%1</b> to the trash?").arg(path));
+
+    return reply == QMessageBox::Yes;
+}
+
+void MainWindow::closeByPath(const QString &path, bool isDirectory)
+{
+    qInfo(Q_FUNC_INFO);
+
+    if (isDirectory) {
+        for (ScintillaNext *editor: editors()) {
+            if (editor->isFile() && editor->getFilePath().startsWith(path)) {
+                qInfo() << "->" << editor->getFilePath();
+
+                app->getRecentFilesListManager()->removeFile(path);
+                if (editor->isSavedToDisk()) {
+                    editor->close();
+                }
+                else {
+                    editor->detachFileInfo(editor->getName());
+                }
+            }
+        }
+    }
+    else {
+        forEachEditorByPath(path, [=](ScintillaNext* editor) {
+            closeFile(editor);
+        });
+        // Since the file no longer exists, specifically remove it from the recent files list
+        app->getRecentFilesListManager()->removeFile(path);
+    }
+}
+
 void MainWindow::moveFileToTrash(ScintillaNext *editor)
 {
     Q_ASSERT(editor->isFile());
 
     const QString filePath = editor->getFilePath();
-    auto reply = QMessageBox::question(this, tr("Delete File"), tr("Are you sure you want to move <b>%1</b> to the trash?").arg(filePath));
 
-    if (reply == QMessageBox::Yes) {
+    if (askMoveToTrash(filePath)) {
         if (editor->moveToTrash()) {
             closeCurrentFile();
 
@@ -2080,6 +2117,34 @@ void MainWindow::dropEvent(QDropEvent *event)
     }
     else {
         event->ignore();
+    }
+}
+
+void MainWindow::onNodeRenamed(const QString &parentPath, const QString &oldName, const QString &newName)
+{
+    qInfo(Q_FUNC_INFO);
+
+    QDir parentDir(parentPath);
+    QString oldPath = parentDir.absoluteFilePath(oldName);
+    QString newPath = parentDir.absoluteFilePath(newName);
+
+    QFileInfo fileInfo(newPath);
+    if (fileInfo.isDir()) {
+        for(auto &&editor : editors()) {
+            qInfo() << "" << editor->getFilePath();
+            if (editor->isFile() && editor->getFilePath().startsWith(oldPath))
+            {
+                QString newFilePath = newPath + editor->getFilePath().mid(oldPath.length());
+                qInfo() << "->" << newFilePath;
+                editor->setFileInfo(newFilePath);
+            }
+        }
+    }
+    else {
+        forEachEditorByPath(oldPath, [=](ScintillaNext* editor) {
+            qInfo() << Q_FUNC_INFO << editor->getFilePath();
+            editor->setFileInfo(newPath);
+        });
     }
 }
 

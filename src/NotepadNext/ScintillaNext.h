@@ -86,7 +86,6 @@ public:
 
     QString getName() const { return name; }
     void setName(const QString &name);
-    QString getPath() const;
     QString getFilePath() const;
 
     // NOTE: this is dangerous and should only be used in very rare situations
@@ -124,7 +123,8 @@ public slots:
     void reload();
     QFileDevice::FileError saveAs(const QString &newFilePath);
     QFileDevice::FileError saveCopyAs(const QString &filePath);
-    bool rename(const QString &newFilePath);
+    bool rename(const QString &newFilePath); // update FS then update representation
+    void renameEditorPath(const QString &newFilePath); // update representation only
     ScintillaNext::FileStateChange checkFileForStateChange();
     bool moveToTrash();
 
