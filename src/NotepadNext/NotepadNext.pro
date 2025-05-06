@@ -71,7 +71,7 @@ SOURCES += \
     EditorHexViewerTableModel.cpp \
     EditorManager.cpp \
     EditorPrintPreviewRenderer.cpp \
-    FadingIndicator.cpp \
+    widgets/FadingIndicator.cpp \
     FileDialogHelpers.cpp \
     Finder.cpp \
     HtmlConverter.cpp \
@@ -89,7 +89,7 @@ SOURCES += \
     NotepadNextApplication.cpp \
     NppImporter.cpp \
     QRegexSearch.cpp \
-    QuickFindWidget.cpp \
+    widgets/QuickFindWidget.cpp \
     RangeAllocator.cpp \
     RecentListManager.cpp \
     RecentListMenuBuilder.cpp \
@@ -110,6 +110,7 @@ SOURCES += \
     decorators/BetterMultiSelection.cpp \
     decorators/BookMarkDecorator.cpp \
     decorators/EditorConfigAppDecorator.cpp \
+    decorators/HTMLAutoCompleteDecorator.cpp \
     decorators/SurroundSelection.cpp \
     decorators/URLFinder.cpp \
     dialogs/ColumnEditorDialog.cpp \
@@ -147,7 +148,7 @@ HEADERS += \
     EditorHexViewerTableModel.h \
     EditorManager.h \
     EditorPrintPreviewRenderer.h \
-    FadingIndicator.h \
+    widgets/FadingIndicator.h \
     FileDialogHelpers.h \
     Finder.h \
     FocusWatcher.h \
@@ -167,7 +168,7 @@ HEADERS += \
     NotepadNextApplication.h \
     NppImporter.h \
     QRegexSearch.h \
-    QuickFindWidget.h \
+    widgets/QuickFindWidget.h \
     RangeAllocator.h \
     RecentListManager.h \
     RecentListMenuBuilder.h \
@@ -189,6 +190,7 @@ HEADERS += \
     decorators/BetterMultiSelection.h \
     decorators/BookMarkDecorator.h \
     decorators/EditorConfigAppDecorator.h \
+    decorators/HTMLAutoCompleteDecorator.h \
     decorators/SurroundSelection.h \
     decorators/URLFinder.h \
     dialogs/ColumnEditorDialog.h \
@@ -215,7 +217,7 @@ HEADERS += \
     widgets/StatusLabel.h
 
 FORMS += \
-    QuickFindWidget.ui \
+    widgets/QuickFindWidget.ui \
     dialogs/ColumnEditorDialog.ui \
     dialogs/MacroEditorDialog.ui \
     docks/DebugLogDock.ui \

@@ -24,6 +24,8 @@
  2 400 401 + /** Unknown doc keywords so in SCE_C_COMMENTDOCKEYWORDERROR:
  0 401 401 |  @wrong LexCPP.cxx
  0 401 401 |  <wrong>filename</wrong>
+ 0 401 401 |  Next line should not start a keyword but before 5.4.1 did and caused bad styling or a crash depending on range lexed
+ 0 401 401 |  <
  0 401 400 | **/
  1 400 400   
  0 400 400   #define M\
@@ -62,6 +64,11 @@
  0 400 400   #define MULTIPLY(a,b) a*b
  2 400 401 + #if MULTIPLY(2,3)==6
  0 401 401 | // Active
+ 0 401 400 | #endif
+ 1 400 400   
+ 0 400 400   #define ONE 1
+ 2 400 401 + #if ONE != 1
+ 0 401 401 | // Inactive
  0 401 400 | #endif
  1 400 400   
  2 400 401 + int main() {

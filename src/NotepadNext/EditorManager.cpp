@@ -35,6 +35,7 @@
 #include "AutoCompletion.h"
 #include "URLFinder.h"
 #include "BookMarkDecorator.h"
+#include "HTMLAutoCompleteDecorator.h"
 
 
 const int MARK_HIDELINESBEGIN = 23;
@@ -265,6 +266,22 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setIndentationGuides(settings->showIndentGuide() ? SC_IV_LOOKBOTH : SC_IV_NONE);
     editor->setWrapMode(settings->wordWrap() ? SC_WRAP_WORD : SC_WRAP_NONE);
 
+    int detectedEOLMode = detectEOLMode(editor);
+    if (detectedEOLMode == -1) {
+        if (!settings->defaultEOLMode().isEmpty()) {
+            const int eol = ScintillaNext::stringToEolMode(settings->defaultEOLMode().toLower());
+
+            if (eol != -1)
+                editor->setEOLMode(eol);
+            else
+                qWarning("Unexpected DefaultEOLMode: %s", qUtf8Printable(settings->defaultEOLMode()));
+        }
+        // else it will just stay whatever EOL mode it was when it was created
+    }
+    else {
+        editor->setEOLMode(detectedEOLMode);
+    }
+
     // Decorators
     SmartHighlighter *s = new SmartHighlighter(editor);
     s->setEnabled(true);
@@ -295,6 +312,8 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
     BookMarkDecorator *bm = new BookMarkDecorator(editor);
     bm->setEnabled(true);
+
+    new HTMLAutoCompleteDecorator(editor);
 }
 
 void EditorManager::purgeOldEditorPointers()
@@ -312,4 +331,54 @@ QList<QPointer<ScintillaNext> > EditorManager::getEditors()
 {
     purgeOldEditorPointers();
     return editors;
+}
+
+int EditorManager::detectEOLMode(ScintillaNext *editor) const
+{
+    qInfo(Q_FUNC_INFO);
+
+    const int MIN_LINE_THRESHOLD = 3;
+    const int MAX_BYTES_TO_CHECK = 10*1024;
+
+    int index = 0;
+    int lf = 0;
+    int cr = 0;
+    int crlf = 0;
+    int chPrev = ' ';
+    int chNext = editor->charAt(index);
+
+    for (int i = 0; i < qMin(MAX_BYTES_TO_CHECK, (int) editor->length()); ++i) {
+        int ch = chNext;
+        chNext = editor->charAt(i + 1);
+
+        if (ch == '\r') {
+            if (chNext == '\n') crlf++;
+            else cr++;
+        }
+        else if (ch == '\n') {
+            if (chPrev != '\r') lf++;
+        }
+
+        chPrev = ch;
+
+        // If any meet some minimum threshold then just declare victory
+        if (crlf == MIN_LINE_THRESHOLD) return SC_EOL_CRLF;
+        else if (cr == MIN_LINE_THRESHOLD) return SC_EOL_CR;
+        else if (lf == MIN_LINE_THRESHOLD) return SC_EOL_LF;
+    }
+
+    // There are either no lines or only a few, so make a best effort determination
+
+    if (crlf > cr && crlf > lf) {
+        return SC_EOL_CRLF;
+    }
+    else if (cr > lf) {
+        return SC_EOL_CR;
+    }
+    else if (lf > cr) {
+        return SC_EOL_LF;
+    }
+    else {
+        return -1;
+    }
 }

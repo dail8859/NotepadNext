@@ -2,11 +2,7 @@ function rgb(x)
     return ((x & 0xFF) << 16) | (x & 0xFF00) | ((x & 0xFF0000) >> 16)
 end
 
-function starts_with(str, start)
-   return str:sub(1, #start) == start
-end
-
-function detectLanguageFromContents(contents)
+function DetectLanguageFromContents(contents)
     for name, L in pairs(languages) do
         if L.first_line then
             for _, pattern in ipairs(L.first_line) do
@@ -50,6 +46,60 @@ function DialogFilters()
     table.insert(filters, 1, "All Files (*)")
 
     return table.concat(filters, ";;")
+end
+
+function SetStyle(L)
+    if L.styles then
+        for _, style in pairs(L.styles) do
+            editor.StyleFore[style.id] = style.fgColor
+            editor.StyleBack[style.id] = style.bgColor
+
+            if style.fontStyle then
+                editor.StyleBold[style.id] = (style.fontStyle & 1 == 1)
+                editor.StyleItalic[style.id] = (style.fontStyle & 2 == 2)
+                editor.StyleUnderline[style.id] = (style.fontStyle & 4 == 4)
+                editor.StyleEOLFilled[style.id] = (style.fontStyle & 8 == 8)
+            end
+        end
+    end
+
+    if L.keywords then
+        for id, kw in pairs(L.keywords) do
+            editor.KeyWords[id] = kw
+        end
+    end
+
+    if L.properties then
+        for p, v in pairs(L.properties) do
+            editor.Property[p] = v
+        end
+    end
+end
+
+function SetLanguage(languageName)
+    local L = languages[languageName]
+
+    if not skip_tabs then
+        editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
+    end
+
+    if not skip_tabwidth then
+        editor.TabWidth = L.tabSize or 4
+    end
+
+    editor.MarginWidthN[2] = L.disableFoldMargin and 0 or 16
+
+    SetStyle(L)
+
+    if L.additionalLanguages then
+        for _, language in pairs(L.additionalLanguages) do
+            SetStyle(languages[language])
+        end
+    end
+
+
+    editor.Property["fold"] = "1"
+    editor.Property["fold.compact"] = "0"
 end
 
 languages = {}
@@ -102,6 +152,7 @@ languages["Markdown"] = require("markdown")
 languages["Matlab"] = require("matlab")
 languages["MMIXAL"] = require("mmixal")
 languages["Nimrod"] = require("nimrod")
+languages["Nix"] = require("nix")
 languages["extended crontab"] = require("nncrontab")
 languages["Dos Style"] = require("nfo")
 languages["NSIS"] = require("nsis")

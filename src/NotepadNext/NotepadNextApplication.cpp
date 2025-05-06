@@ -108,6 +108,15 @@ bool NotepadNextApplication::init()
     settings = new ApplicationSettings(this);
 
     if (parser.isSet("reset-settings")) {
+        QFileInfo original(settings->fileName());
+        const QString backup = original.canonicalFilePath() + QStringLiteral(".backup");
+
+        qInfo("Resetting application settings");
+        qInfo("Backuping up %s to %s", qUtf8Printable(settings->fileName()), qUtf8Printable(backup));
+
+        QFile::remove(backup);
+        QFile::rename(settings->fileName(), backup);
+
         settings->clear();
     }
 
@@ -116,11 +125,13 @@ bool NotepadNextApplication::init()
 
     // The command line overrides the settings
     if (!parser.value("translation").isEmpty()) {
-        translationManager->loadTranslationByName(parser.value("translation"));
+        translationManager->loadTranslation(parser.value("translation"));
+    }
+    else if (!settings->translation().isEmpty()){
+        translationManager->loadTranslation(settings->translation());
     }
     else {
-        // Normally the setting is "" which will load the default system translation
-        translationManager->loadTranslationByName(settings->translation());
+        translationManager->loadSystemDefaultTranslation();
     }
 
     // This connection isn't needed since the application can not appropriately retranslate the UI at runtime
@@ -316,44 +327,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     getLuaState()->execute(QString("skip_tabs = %1").arg(editor->QObject::property("nn_skip_usetabs").isValid() ? "true" : "false").toLatin1().constData());
     getLuaState()->execute(QString("skip_tabwidth = %1").arg(editor->QObject::property("nn_skip_tabwidth").isValid() ? "true" : "false").toLatin1().constData());
 
-    getLuaState()->execute(R"(
-        local L = languages[languageName]
-
-        if not skip_tabs then
-            editor.UseTabs = (L.tabSettings or "tabs") == "tabs"
-        end
-        if not skip_tabwidth then
-            editor.TabWidth = L.tabSize or 4
-        end
-
-        editor.MarginWidthN[2] = L.disableFoldMargin and 0 or 16
-        if L.styles then
-            for name, style in pairs(L.styles) do
-                editor.StyleFore[style.id] = style.fgColor
-                editor.StyleBack[style.id] = style.bgColor
-
-                if style.fontStyle then
-                    editor.StyleBold[style.id] = (style.fontStyle & 1 == 1)
-                    editor.StyleItalic[style.id] = (style.fontStyle & 2 == 2)
-                    editor.StyleUnderline[style.id] = (style.fontStyle & 4 == 4)
-                    editor.StyleEOLFilled[style.id] = (style.fontStyle & 8 == 8)
-                end
-            end
-        end
-        if L.keywords then
-            for id, kw in pairs(L.keywords) do
-                editor.KeyWords[id] = kw
-            end
-        end
-        if L.properties then
-            for p,v in pairs(L.properties) do
-                editor.Property[p] = v
-            end
-        end
-
-        editor.Property["fold"] = "1"
-        editor.Property["fold.compact"] = "0"
-    )");
+    getLuaState()->execute(QString("SetLanguage(languageName)").toLatin1().constData());
 }
 
 QString NotepadNextApplication::detectLanguage(ScintillaNext *editor) const
@@ -402,7 +376,7 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
     -- Grab a small chunk
     if editor.Length > 0 then
         editor:SetTargetRange(0, math.min(64, editor.Length))
-        return detectLanguageFromContents(editor.TargetText)
+        return DetectLanguageFromContents(editor.TargetText)
     end
 
     return "Text"
@@ -527,4 +501,21 @@ MainWindow *NotepadNextApplication::createNewWindow()
     });
 
     return window;
+}
+
+QStringList NotepadNextApplication::debugInfo() const
+{
+    QStringList info;
+
+    info.append(QStringLiteral("%1 v%2 %3").arg(applicationDisplayName(), applicationVersion(), APP_DISTRIBUTION));
+    info.append(QStringLiteral("Build Date/Time: %1 %2").arg(__DATE__, __TIME__));
+    info.append(QStringLiteral("Qt: %1").arg(qVersion()));
+    info.append(QStringLiteral("OS: %1").arg(QSysInfo::prettyProductName()));
+    info.append(QStringLiteral("Locale: %1").arg(QLocale::system().name()));
+    info.append(QStringLiteral("CPU: %1").arg(QSysInfo::currentCpuArchitecture()));
+    info.append(QStringLiteral("File Path: %1").arg(applicationFilePath()));
+    info.append(QStringLiteral("Arguments: %1").arg(arguments().join(' ')));
+    info.append(QStringLiteral("Config File: %1").arg(ApplicationSettings().fileName()));
+
+    return info;
 }

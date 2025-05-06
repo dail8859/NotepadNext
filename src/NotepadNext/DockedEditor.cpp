@@ -146,14 +146,7 @@ void DockedEditor::dockWidgetCloseRequested()
 
 ads::CDockAreaWidget *DockedEditor::currentDockArea() const
 {
-    const ads::CDockWidget *dockWidget = dockManager->focusedDockWidget();
-
-    if (dockWidget) {
-        return dockWidget->dockAreaWidget();
-    }
-    else {
-        return Q_NULLPTR;
-    }
+    return dockManager->focusedDockWidget() ? dockManager->focusedDockWidget()->dockAreaWidget() : latestDockArea;
 }
 
 void DockedEditor::addEditor(ScintillaNext *editor)
@@ -167,7 +160,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     }
 
     // Create the dock widget for the editor
-    ads::CDockWidget *dockWidget = new ads::CDockWidget(editor->getName());
+    ads::CDockWidget *dockWidget = dockManager->createDockWidget(editor->getName());
 
     // Disable elide, elided file names not readable when lots of files opened
     dockWidget->tabWidget()->setElideMode(Qt::ElideNone);
@@ -202,6 +195,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     else {
         dockWidget->tabWidget()->setIcon(QIcon(editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png"));
         connect(editor, &ScintillaNext::savePointChanged, dockWidget, [=](bool dirty) {
+            Q_UNUSED(dirty)
             const bool actuallyDirty = editor->canSaveToDisk();
             const QString iconPath = actuallyDirty ? ":/icons/unsaved.png" : ":/icons/saved.png";
             dockWidget->tabWidget()->setIcon(QIcon(iconPath));
@@ -214,7 +208,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     connect(dockWidget, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
 
-    dockManager->addDockWidget(ads::CenterDockWidgetArea, dockWidget, currentDockArea());
+    latestDockArea = dockManager->addDockWidget(ads::CenterDockWidgetArea, dockWidget, currentDockArea());
 
     emit editorAdded(editor);
 }

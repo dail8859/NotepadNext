@@ -35,6 +35,7 @@
 **.cob text
 **.cmake text
 **.d text
+**.dart text
 **.diff text
 **.erl text
 **.f text
@@ -48,15 +49,19 @@
 **.matlab text
 **.ml text
 **.nim text
+**.nix text
 **.octave text
 **.p text
+**.pas text
 **.pl text
 **.p6 text
 **.ps1 text
 **.r text
 **.rb text
+**.roff text
 **.rs text
 **.sql text
+**.st text
 **.tcl text
 **.toml text
 **.tsql text
@@ -67,7 +72,9 @@
 **.vh text
 **.vhd text
 **.x12 text
+**.xml text
 **.yaml text
+**.zig text
 **.md text
 **.txt text
 **.pch text

@@ -14,30 +14,30 @@
 # You should have received a copy of the GNU General Public License
 # along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
 
-## [i18n.pri]  Configuration related to internationalization.
-
 CONFIG += lrelease embed_translations
 
-LOCALES = \
-    zh_CN \
-    zh_TW \
-    sv_SE \
-    uk_UA \
-    tr_TR \
-    pl_PL \
-    ru_RU \
-    pt_PT
+# All the application ts files
+TS_FILES = $$files($$PWD/../i18n/*.ts)
 
-for(LOCALE, LOCALES) {
-    # The application translation file
-    TRANSLATIONS += ../../i18n/NotepadNext_$${LOCALE}.ts
+for(TS_FILE, TS_FILES) {
+    # Add the application translation file
+    TRANSLATIONS += $$TS_FILE
 
-    # Extra translation files that include both the language and translation
+    FILE_NAME = $$basename(TS_FILE)
+
+    # Extract the locale from the file name (e.g. NotepadNext_pl_PL.ts to pl_PL)
+    LOCALE = $$replace(FILE_NAME, "NotepadNext_(..)(\\_..)?\\.ts", "\\1\\2")
+
+    # Extra Qt translation files
     EXTRA_TRANSLATIONS += $$files($$[QT_INSTALL_TRANSLATIONS]/qt_$${LOCALE}.qm)
     EXTRA_TRANSLATIONS += $$files($$[QT_INSTALL_TRANSLATIONS]/qtbase_$${LOCALE}.qm)
 
-    # Check for files without the territory specified
-    LANGUAGE = $$replace(LOCALE, "(..).*", "\\1")
-    EXTRA_TRANSLATIONS += $$files($$[QT_INSTALL_TRANSLATIONS]/qt_$${LANGUAGE}.qm)
-    EXTRA_TRANSLATIONS += $$files($$[QT_INSTALL_TRANSLATIONS]/qtbase_$${LANGUAGE}.qm)
+    # Check for files without the territory specified (e.g. pl)
+    greaterThan($$str_size(LOCALE), 2) {
+        LANGUAGE = $$replace(LOCALE, "(..).*", "\\1")
+        EXTRA_TRANSLATIONS += $$files($$[QT_INSTALL_TRANSLATIONS]/qt_$${LANGUAGE}.qm)
+        EXTRA_TRANSLATIONS += $$files($$[QT_INSTALL_TRANSLATIONS]/qtbase_$${LANGUAGE}.qm)
+    }
 }
+
+message("EXTRA_TRANSLATIONS: $$EXTRA_TRANSLATIONS")

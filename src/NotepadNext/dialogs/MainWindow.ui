@@ -35,6 +35,14 @@
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>855</width>
+     <height>21</height>
+    </rect>
+   </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>&amp;File</string>
@@ -202,6 +210,10 @@
      <addaction name="separator"/>
      <addaction name="actionClearBookmarks"/>
      <addaction name="actionInvertBookmarks"/>
+     <addaction name="separator"/>
+     <addaction name="actionCutBookmarkedLines"/>
+     <addaction name="actionCopyBookmarkedLines"/>
+     <addaction name="actionDeleteBookmarkedLines"/>
     </widget>
     <addaction name="actionFind"/>
     <addaction name="actionFindInFiles"/>
@@ -309,6 +321,7 @@
     <addaction name="separator"/>
     <addaction name="actionAboutQt"/>
     <addaction name="actionAboutNotepadNext"/>
+    <addaction name="actionDebugInfo"/>
    </widget>
    <widget class="QMenu" name="menuEncodings">
     <property name="title">
@@ -1135,13 +1148,13 @@
     <string>Show in Explorer</string>
    </property>
   </action>
-  <action name="actionOpenCommandPromptHere">
+  <action name="actionOpenTerminalHere">
    <property name="icon">
     <iconset resource="../resources.qrc">
      <normaloff>:/icons/application_osx_terminal.png</normaloff>:/icons/application_osx_terminal.png</iconset>
    </property>
    <property name="text">
-    <string>Open Command Prompt Here</string>
+    <string>Open %1 Here</string>
    </property>
   </action>
   <action name="actionToggleBookmark">
@@ -1390,6 +1403,26 @@
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionDebugInfo">
+   <property name="text">
+    <string>Debug Info...</string>
+   </property>
+  </action>
+  <action name="actionCutBookmarkedLines">
+   <property name="text">
+    <string>Cut Bookmarked Lines</string>
+   </property>
+  </action>
+  <action name="actionCopyBookmarkedLines">
+   <property name="text">
+    <string>Copy Bookmarked Lines</string>
+   </property>
+  </action>
+  <action name="actionDeleteBookmarkedLines">
+   <property name="text">
+    <string>Delete Bookmarked Lines</string>
    </property>
   </action>
  </widget>

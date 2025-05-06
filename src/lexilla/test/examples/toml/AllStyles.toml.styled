@@ -1,4 +1,5 @@
-{1}# This is a full-line comment
+{1}# coding:utf-8
+# This is a full-line comment
 {6}key{0} {8}={0} {10}"value"{0}  {1}# This is a comment at the end of a line
 {6}another{0} {8}={0} {10}"# This is not a comment"{0}
 
@@ -185,5 +186,6 @@ trimmed in raw strings.
            {8}{{0} {6}x{0} {8}={0} {4}7{8},{0} {6}y{0} {8}={0} {4}8{8},{0} {6}z{0} {8}={0} {4}9{0} {8}},{0}
            {8}{{0} {6}x{0} {8}={0} {4}2{8},{0} {6}y{0} {8}={0} {4}4{8},{0} {6}z{0} {8}={0} {4}8{0} {8}}{0} {8}]{0}
 
-{7}invalid           {1}# invalid, missing value
+{7}~~~~ = true       {1}# invalid character in key
+{6}invalid{0}           {1}# invalid, missing value
 {6}key{0} {8}={0} {2}identifier{0}  {1}# also invalid, identifier must be one of true, false, inf, nan

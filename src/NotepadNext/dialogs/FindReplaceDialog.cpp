@@ -147,10 +147,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
     loadSettings();
 
-    connect(qApp, &QApplication::aboutToQuit, this, &FindReplaceDialog::saveSettings);
-
     changeTab(tabBar->currentIndex());
-
 }
 
 FindReplaceDialog::~FindReplaceDialog()
@@ -192,6 +189,13 @@ void FindReplaceDialog::showEvent(QShowEvent *event)
     isFirstTime = false;
 
     QDialog::showEvent(event);
+}
+
+void FindReplaceDialog::closeEvent(QCloseEvent *event)
+{
+    saveSettings();
+
+    QDialog::closeEvent(event);
 }
 
 static void updateComboList(QComboBox *comboBox, const QString &text)
@@ -501,6 +505,8 @@ void FindReplaceDialog::loadSettings()
 
     settings.beginGroup("FindReplaceDialog");
 
+    restoreGeometry(settings.value("geometry").toByteArray());
+
     ui->comboFind->addItems(settings.value("RecentSearchList").toStringList());
     ui->comboReplace->addItems(settings.value("RecentReplaceList").toStringList());
 
@@ -543,6 +549,8 @@ void FindReplaceDialog::saveSettings()
 
     settings.beginGroup("FindReplaceDialog");
     settings.remove(""); // clear out any previous keys
+
+    settings.setValue("geometry", saveGeometry());
 
     QStringList recentSearches;
     for (int i = 0; i < ui->comboFind->count(); ++i) {

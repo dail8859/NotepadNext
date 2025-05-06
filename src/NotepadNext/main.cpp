@@ -50,15 +50,11 @@ int main(int argc, char *argv[])
 
     // Log some debug info
     qInfo("=============================");
-    qInfo("%s v%s%s", qUtf8Printable(QApplication::applicationDisplayName()), qUtf8Printable(QApplication::applicationVersion()), APP_DISTRIBUTION);
-    qInfo("Build Date/Time: %s %s", __DATE__, __TIME__);
-    qInfo("Qt: %s", qVersion());
-    qInfo("OS: %s", qUtf8Printable(QSysInfo::prettyProductName()));
-    qInfo("Locale: %s", qUtf8Printable(QLocale::system().name()));
-    qInfo("CPU: %s", qUtf8Printable(QSysInfo::currentCpuArchitecture()));
-    qInfo("File Path: %s", qUtf8Printable(QApplication::applicationFilePath()));
-    qInfo("Arguments: %s", qUtf8Printable(app.arguments().join(' ')));
+    for(const auto &d : app.debugInfo()){
+        qInfo("%s", qUtf8Printable(d));
+    }
     qInfo("=============================");
+
 
     if(app.isPrimary()) {
         app.init();

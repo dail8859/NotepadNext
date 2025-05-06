@@ -62,7 +62,7 @@ QString TranslationManager::FormatLocaleTerritoryAndLanguage(QLocale &locale)
     const QString territory = QLocale::territoryToString(locale.territory());
 #endif
     const QString language = QLocale::languageToString(locale.language());
-    return QStringLiteral("%1 / %2").arg(language, territory);
+    return QStringLiteral("%1 (%2)").arg(language, territory);
 }
 
 void TranslationManager::loadSystemDefaultTranslation()
@@ -89,12 +89,7 @@ void TranslationManager::loadTranslation(QLocale locale)
     }
 }
 
-void TranslationManager::loadTranslationByName(QString localeName)
+void TranslationManager::loadTranslation(QString localeName)
 {
-    if (localeName.isEmpty()) {
-        loadSystemDefaultTranslation();
-    }
-    else {
-        loadTranslation(QLocale(localeName));
-    }
+    loadTranslation(QLocale(localeName));
 }
