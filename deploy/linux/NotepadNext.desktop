@@ -1,10 +1,20 @@
 [Desktop Entry]
-Exec=NotepadNext %f
-Comment=A cross-platform, reimplementation of Notepad++
-Type=Application
-Icon=NotepadNext
-Name=Notepad Next
-StartupNotify=true
-Terminal=false
 Categories=Qt;TextEditor;Utility;
+Exec=NotepadNext %f
+Icon=NotepadNext
 MimeType=text/plain;
+StartupNotify=true
+Type=Application
+Terminal=false
+
+Name=Notepad Next
+Name[pt_BR]=Editor de Texto Notepad Next
+
+GenericName=Text Editor
+GenericName[pt_BR]=Editor de Texto
+
+Comment=A cross-platform, reimplementation of Notepad++
+Comment[pt_BR]=O ‘Notepad Next’ é um editor de texto e editor de código-fonte, trata-se de uma reimplementação do Notepad++ para várias plataformas, possui compatibilidade para várias linguagens de programação e oferece traduções para vários idiomas
+
+Keywords=notepad;next;text;editor;manager;IDE;programming tool;source code;tabs;
+Keywords[pt_BR]=notepad;next;bloco de notas;próximo;editor;texto;Ambiente de Desenvolvimento Integrado;IDE;ferramenta de programação;exibição de texto colorido;código-fonte;abas;guias;
