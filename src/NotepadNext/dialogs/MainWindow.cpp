@@ -960,7 +960,8 @@ void MainWindow::newFile()
         }
 
         if (canUseName) {
-            app->getEditorManager()->createEditor(newFileName);
+            ScintillaNext *editor = app->getEditorManager()->createEditor(newFileName);
+            editor->grabFocus();
             break;
         }
     }
@@ -1886,8 +1887,12 @@ void MainWindow::focusIn()
 {
     qInfo(Q_FUNC_INFO);
 
-    if (checkFileForModification(currentEditor())) {
-        updateGui(currentEditor());
+    ScintillaNext *editor = currentEditor();
+
+    if (editor) {
+        if (checkFileForModification(currentEditor())) {
+            updateGui(currentEditor());
+        }
     }
 }
 
