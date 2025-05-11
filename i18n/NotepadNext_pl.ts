@@ -924,7 +924,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1338"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1359"/>
         <source>Export As</source>
         <translation>Eksportuj jako</translation>
     </message>
@@ -944,734 +944,734 @@
         <translation>Wcięcie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="116"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="114"/>
         <source>EOL Conversion</source>
         <translation>Konwersja znaku końca wiersza</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="124"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="122"/>
         <source>Convert Case</source>
         <translation>Wielkość liter</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="131"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="129"/>
         <source>Line Operations</source>
         <translation>Operacje na wierszach</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="143"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="141"/>
         <source>Comment/Uncomment</source>
         <translation>Komentowanie/odkomentowanie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="151"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="149"/>
         <source>Copy As</source>
         <translation>Kopiuj jako</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="158"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="156"/>
         <source>Encoding/Decoding</source>
         <translation>Kodowanie/dekodowanie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="189"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="187"/>
         <source>Search</source>
         <translation>Szukaj</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="193"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="191"/>
         <source>Bookmarks</source>
         <translation>Zakładki</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="220"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="218"/>
         <source>&amp;View</source>
         <translation>Widok</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="224"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="222"/>
         <source>&amp;Zoom</source>
         <translation>Powięks&amp;zenie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="233"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="231"/>
         <source>Show Symbol</source>
         <translation>Pokaż symbole</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="244"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="242"/>
         <source>Fold Level</source>
         <translation type="unfinished">Poziom zagnieżdżenia</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="258"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="256"/>
         <source>Unfold Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="284"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="282"/>
         <source>Language</source>
         <translation>Język</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="289"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="287"/>
         <source>Settings</source>
         <translation>Ustawienia</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="295"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="293"/>
         <source>Macro</source>
         <translation>Makra</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="306"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="304"/>
         <source>Help</source>
         <translation>Pomoc</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="317"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="315"/>
         <source>Encoding</source>
         <translation>Kodowanie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="333"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="331"/>
         <source>Main Tool Bar</source>
         <translation>Główny pasek narzędziowy</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="393"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="391"/>
         <source>&amp;New</source>
         <translation>&amp;Nowy</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="396"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="394"/>
         <source>Create a new file</source>
         <translation>Utwórz nowy plik</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="399"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="397"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="409"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="407"/>
         <source>&amp;Open...</source>
         <translation>&amp;Otwórz...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="412"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="410"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="425"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="423"/>
         <source>&amp;Save</source>
         <translation>Zapi&amp;sz</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="428"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="426"/>
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="431"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="429"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="436"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="434"/>
         <source>E&amp;xit</source>
         <translation>Wyjdź</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="449"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="447"/>
         <source>&amp;Undo</source>
         <translation>Cofnij</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="452"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="450"/>
         <source>Ctrl+Z</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="462"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="460"/>
         <source>&amp;Redo</source>
         <translation>Ponów</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="465"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="463"/>
         <source>Ctrl+Y</source>
         <translation>Ctrl+Y</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="475"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="473"/>
         <source>Cu&amp;t</source>
         <translation>Wy&amp;tnij</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="478"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="476"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="488"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="486"/>
         <source>&amp;Copy</source>
         <translation>Kopiuj</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="491"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="489"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="501"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="499"/>
         <source>&amp;Paste</source>
         <translation>Wklej</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="504"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="502"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="509"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="507"/>
         <source>&amp;Delete</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="512"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="510"/>
         <source>Del</source>
         <translation>Del</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="517"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="515"/>
         <source>Copy Full Path</source>
         <translation>Kopiuj pełną ścieżkę</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="522"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="520"/>
         <source>Copy File Name</source>
         <translation>Kopiuj nazwę pliku</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="527"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="525"/>
         <source>Copy File Directory</source>
         <translation>Kopiuj folder pliku</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="536"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="534"/>
         <source>&amp;Close</source>
         <translation>Zamknij</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="539"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="537"/>
         <source>Close the current file</source>
         <translation>Zamknij bieżący plik</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="542"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="540"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="547"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="545"/>
         <source>Save &amp;As...</source>
         <translation>Z&amp;apisz jako...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="550"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="548"/>
         <source>Ctrl+Alt+S</source>
         <translation>Ctrl+Alt+S</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="555"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="553"/>
         <source>Save a Copy As...</source>
         <translation>Zapisz kopię jako...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="564"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="562"/>
         <source>Sav&amp;e All</source>
         <translation>Zapisz wszystko</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="567"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="565"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="572"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="570"/>
         <source>Select A&amp;ll</source>
         <translation>Zaznacz wszystko</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="575"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="573"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="584"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="582"/>
         <source>Increase Indent</source>
         <translation>Zwiększ wcięcie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="593"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="591"/>
         <source>Decrease Indent</source>
         <translation>Zmniejsz wcięcie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="598"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="596"/>
         <source>Rename...</source>
         <translation>Zmień nazwę...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="607"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="605"/>
         <source>Re&amp;load</source>
         <translation>Wczytaj ponownie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="615"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="613"/>
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="623"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="621"/>
         <source>Unix (LF)</source>
         <translation>Unix (LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="631"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="629"/>
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="636"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="634"/>
         <source>UPPER CASE</source>
         <translation>WIELKIE LITERY</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="639"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="637"/>
         <source>Convert text to upper case</source>
         <translation>Konwersja do wielkich liter</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="644"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="642"/>
         <source>lower case</source>
         <translation>małe litery</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="647"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="645"/>
         <source>Convert text to lower case</source>
         <translation>Konwersja do małych liter</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="652"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="650"/>
         <source>Duplicate Current Line</source>
         <translation>Powiel bieżący wiersz</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="655"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="653"/>
         <source>Alt+Down</source>
         <translation>Alt+Down</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="660"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="658"/>
         <source>Split Lines</source>
         <translation>Podziel wiersze</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="665"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="663"/>
         <source>Join Lines</source>
         <translation>Połącz wiersze</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="668"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="666"/>
         <source>Ctrl+J</source>
         <translation>Ctrl+J</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="673"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="671"/>
         <source>Move Selected Lines Up</source>
         <translation>Przenieś zaznaczone wiersze w górę</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="676"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="674"/>
         <source>Ctrl+Shift+Up</source>
         <translation>Ctrl+Shift+Up</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="681"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="679"/>
         <source>Move Selected Lines Down</source>
         <translation>Przenieś zaznaczone wiersze w dół</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="684"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="682"/>
         <source>Ctrl+Shift+Down</source>
         <translation>Ctrl+Shift+Down</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="693"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="691"/>
         <source>Clos&amp;e All</source>
         <translation>Zamknij wszystko</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="696"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="694"/>
         <source>Close All files</source>
         <translation>Zamknij wszystkie pliki</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="699"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="697"/>
         <source>Ctrl+Shift+W</source>
         <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="704"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="702"/>
         <source>Close All Except Active Document</source>
         <translation>Zamknij wszystko poza aktywnym dokumentem</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="709"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="707"/>
         <source>Close All to the Left</source>
         <translation>Zamknij wszystko po lewej</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="714"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="712"/>
         <source>Close All to the Right</source>
         <translation>Zamknij wszystko po prawej</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="724"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="722"/>
         <source>Zoom &amp;In</source>
         <translation>Zw&amp;iększ</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="727"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="725"/>
         <source>Ctrl++</source>
         <translation>Ctrl++</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="737"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="735"/>
         <source>Zoom &amp;Out</source>
         <translation>Zmniejsz</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="740"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="738"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="745"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="743"/>
         <source>Reset Zoom</source>
         <translation>Przywróć domyślne</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="748"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="746"/>
         <source>Ctrl+0</source>
         <translation>Ctrl+0</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="753"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="751"/>
         <source>About Qt</source>
         <translation>O Qt</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="765"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="763"/>
         <source>About Notepad Next</source>
         <translation>O Notepad Next</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="776"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="774"/>
         <source>Show Whitespace</source>
         <translation>Pokaż znaki niedrukowalne</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="784"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="782"/>
         <source>Show End of Line</source>
         <translation>Pokaż znaki końca wiersza</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="797"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="795"/>
         <source>Show All Characters</source>
         <translation>Pokaż wszystkie znaki</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="810"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="808"/>
         <source>Show Indent Guide</source>
         <translation>Pokaż linie wcięcia</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="818"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="816"/>
         <source>Show Wrap Symbol</source>
         <translation>Pokaż symbol zawijania</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="831"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="829"/>
         <source>Word Wrap</source>
         <translation>Zawijanie wierszy</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="836"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="834"/>
         <source>Restore Recently Closed File</source>
         <translation>Przywróć ostatnio zamknięty plik</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="839"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="837"/>
         <source>Ctrl+Shift+T</source>
         <translation>Ctrl+Shift+T</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="844"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="842"/>
         <source>Open All Recent Files</source>
         <translation>Otwórz wszystkie ostatnie pliki</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="849"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="847"/>
         <source>Clear Recent Files List</source>
         <translation>Wyczyść listę ostatnich plików</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="859"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="857"/>
         <source>&amp;Find...</source>
         <translation>Znajdź...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="862"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="860"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="867"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="865"/>
         <source>Find in Files...</source>
         <translation>Znajdź w plikach...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="872"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="870"/>
         <source>Find &amp;Next</source>
         <translation>Znajdź &amp;następne</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="875"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="873"/>
         <source>F3</source>
         <translation>F3</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="880"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="878"/>
         <source>Find &amp;Previous</source>
         <translation>Znajdź &amp;poprzednie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="890"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="888"/>
         <source>&amp;Replace...</source>
         <translation>Zamień</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="893"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="891"/>
         <source>Ctrl+H</source>
         <translation>Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="901"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="899"/>
         <source>Full Screen</source>
         <translation>Pełny ekran</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="904"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="902"/>
         <source>F11</source>
         <translation>F11</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="917"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="658"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="915"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="660"/>
         <source>Start Recording</source>
         <translation>Rozpocznij nagrywanie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="929"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="927"/>
         <source>Playback</source>
         <translation>Odtwórz</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="932"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="930"/>
         <source>Ctrl+Shift+P</source>
         <translation>Ctrl+Shift+P</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="944"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="942"/>
         <source>Save Current Recorded Macro...</source>
         <translation>Zapisz bieżące makro...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="956"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="954"/>
         <source>Run a Macro Multiple Times...</source>
         <translation>Uruchom makro wiele razy...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="965"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="963"/>
         <source>Preferences...</source>
         <translation>Preferencje...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="973"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="971"/>
         <source>Quick Find</source>
         <translation>Szybkie wyszukiwanie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="976"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="974"/>
         <source>Ctrl+Alt+I</source>
         <translation>Ctrl+Alt+I</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="981"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="979"/>
         <source>Select Next Instance</source>
         <translation>Zaznacz następne wystąpienie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="984"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="982"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="993"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="991"/>
         <source>Move to Trash...</source>
         <translation>Przenieś do kosza...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="996"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="994"/>
         <source>Move to Trash</source>
         <translation>Przenieś do kosza</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1001"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="999"/>
         <source>Check for Updates...</source>
         <translation>Sprawdź aktualizacje...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1006"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1004"/>
         <source>&amp;Go to Line...</source>
         <translation>Idź do wiersza...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1009"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1007"/>
         <source>Ctrl+G</source>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1018"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1016"/>
         <source>Print...</source>
         <translation>Drukuj...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1021"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1019"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1026"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1024"/>
         <source>Open Folder as Workspace...</source>
         <translation>Otwórz folder jako obszar roboczy...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1031"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1029"/>
         <source>Toggle Single Line Comment</source>
         <translation>Przełącz komentarz pojedynczego wiersza</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1034"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1032"/>
         <source>Ctrl+/</source>
         <translation>Ctrl+/</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1039"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1037"/>
         <source>Single Line Comment</source>
         <translation>Zakomentuj wiersz</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1042"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1040"/>
         <source>Ctrl+K</source>
         <translation>Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1047"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1045"/>
         <source>Single Line Uncomment</source>
         <translation>Odkomentuj wiersz</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1050"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1048"/>
         <source>Ctrl+Shift+K</source>
         <translation>Ctrl+Shift+K</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1062"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1060"/>
         <source>Edit Macros...</source>
         <translation>Edytor makr...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1070"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1068"/>
         <source>This is not currently implemented</source>
         <translation>Ta funkcja nie jest obecnie zaimplementowana</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1075"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1073"/>
         <source>Column Mode...</source>
         <translation>Tryb kolumnowy...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1080"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1078"/>
         <source>Export as HTML...</source>
         <translation>Eksportuj jako HTML...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1085"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1083"/>
         <source>Export as RTF...</source>
         <translation>Eksportuj jako RTF...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1090"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1088"/>
         <source>Copy as HTML</source>
         <translation>Kopiuj jako HTML</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1095"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1093"/>
         <source>Copy as RTF</source>
         <translation>Kopiuj jako RTF</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1100"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1098"/>
         <source>Base 64 Encode</source>
         <translation>Kodowanie Base 64</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1105"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1103"/>
         <source>URL Encode</source>
         <translation>Kodowanie URL</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1110"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1108"/>
         <source>Base 64 Decode</source>
         <translation>Dekodowanie Base 64</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1115"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1113"/>
         <source>URL Decode</source>
         <translation>Dekodowanie URL</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1120"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1118"/>
         <source>Copy URL</source>
         <translation>Kopiuj URL</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1125"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1123"/>
         <source>Remove Empty Lines</source>
         <translation>Usuń puste wiersze</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1134"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1137"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1132"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1135"/>
         <source>Show in Explorer</source>
         <translation>Pokaż w eksploratorze</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1146"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1144"/>
         <source>Open %1 Here</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1680,417 +1680,417 @@
         <translation type="vanished">Otwórz wiersz poleceń</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1151"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1149"/>
         <source>Toggle Bookmark</source>
         <translation>Przełącz zakładki</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1154"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1152"/>
         <source>Ctrl+F2</source>
         <translation>Ctrl+F2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1159"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1157"/>
         <source>Next Bookmark</source>
         <translation>Następna zakładka</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1162"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1160"/>
         <source>F2</source>
         <translation>F2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1167"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1165"/>
         <source>Previous Bookmark</source>
         <translation>Poprzednia zakładka</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1170"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1168"/>
         <source>Shift+F2</source>
         <translation>Shift+F2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1175"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1173"/>
         <source>Clear Bookmarks</source>
         <translation>Wyczyść zakładki</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1180"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1178"/>
         <source>Invert Bookmarks</source>
         <translation>Odwróć zakładki</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1185"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1183"/>
         <source>Next Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1188"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1186"/>
         <source>Ctrl+Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1196"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1194"/>
         <source>Previous Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1199"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1197"/>
         <source>Ctrl+Shift+Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1207"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1205"/>
         <source>Fold Level 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1210"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1208"/>
         <source>Alt+1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1215"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1213"/>
         <source>Fold Level 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1218"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1216"/>
         <source>Alt+2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1223"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1221"/>
         <source>Fold Level 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1226"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1224"/>
         <source>Alt+3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1231"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1229"/>
         <source>Fold Level 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1234"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1232"/>
         <source>Alt+4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1239"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1237"/>
         <source>Unfold Level 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1242"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1240"/>
         <source>Alt+Shift+1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1247"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1245"/>
         <source>Unfold Level 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1250"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1248"/>
         <source>Alt+Shift+2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1255"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1253"/>
         <source>Unfold Level 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1258"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1256"/>
         <source>Alt+Shift+3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1263"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1261"/>
         <source>Unfold Level 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1266"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1264"/>
         <source>Alt+Shift+4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1271"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1269"/>
         <source>Fold All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1274"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1272"/>
         <source>Alt+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1279"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1277"/>
         <source>Unfold All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1282"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1280"/>
         <source>Alt+Shift+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1287"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1285"/>
         <source>Fold Level 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1290"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1288"/>
         <source>Alt+5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1295"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1293"/>
         <source>Fold Level 6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1298"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1296"/>
         <source>Alt+6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1303"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1301"/>
         <source>Fold Level 7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1306"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1304"/>
         <source>Alt+7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1311"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1309"/>
         <source>Fold Level 8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1314"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1312"/>
         <source>Alt+8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1319"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1317"/>
         <source>Fold Level 9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1322"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1320"/>
         <source>Alt+9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1327"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1325"/>
         <source>Unfold Level 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1330"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1328"/>
         <source>Alt+Shift+5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1335"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1333"/>
         <source>Unfold Level 6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1338"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1336"/>
         <source>Alt+Shift+6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1343"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1341"/>
         <source>Unfold Level 7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1346"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1344"/>
         <source>Alt+Shift+7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1351"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1349"/>
         <source>Unfold Level 8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1354"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1352"/>
         <source>Alt+Shift+8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1359"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1357"/>
         <source>Unfold Level 9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1362"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1360"/>
         <source>Alt+Shift+9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1367"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1370"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1365"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1368"/>
         <source>Toggle Overtype</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1373"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1371"/>
         <source>Ins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1381"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1379"/>
         <source>Debug Info...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1386"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1384"/>
         <source>Cut Bookmarked Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1391"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1389"/>
         <source>Copy Bookmarked Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1396"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1394"/>
         <source>Delete Bookmarked Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="363"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="365"/>
         <source>Go to line</source>
         <translation>Idź do wiersza</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="363"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="365"/>
         <source>Line Number (1 - %1)</source>
         <translation>Numer wiersza (1-%1)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="649"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="651"/>
         <source>Stop Recording</source>
         <translation>Zakończ nagrywanie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="754"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="756"/>
         <source>Debug Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="932"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="952"/>
         <source>New %1</source>
         <translation>Nowy %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="991"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1012"/>
         <source>Create File</source>
         <translation>Utwórz plik</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="991"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1012"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translatorcomment>&lt;b&gt;%1&lt;/b&gt; nie istnieje. Czy chcesz go utworzyć?</translatorcomment>
         <translation>&lt;b&gt;%1&lt;/b&gt; nie istnieje. Czy chcesz go utworzyć?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1032"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1130"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1053"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1151"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Zapisać plik &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1033"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1131"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1054"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1152"/>
         <source>Save File</source>
         <translation>Zapisz plik</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1086"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1107"/>
         <source>Open Folder as Workspace</source>
         <translation>Otwórz folder jako obszar roboczy</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1104"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1125"/>
         <source>Reload File</source>
         <translation>Wczytaj plik ponownie</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1104"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1125"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>Czy na pewno chcesz ponownie wczytać&lt;b&gt;%1&lt;/b&gt;? Niezapisane zmiany zostaną utracone.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1305"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1326"/>
         <source>Save a Copy As</source>
         <translation>Zapisz kopię jako</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1379"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1394"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1400"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1415"/>
         <source>Rename</source>
         <translation>Zmień nazwę</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1394"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1415"/>
         <source>Name:</source>
         <translation>Nazwa:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1414"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1435"/>
         <source>Delete File</source>
         <translation>Usuń plik</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1414"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1435"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>Czy na pewno chcesz przenieść &lt;b&gt;%1&lt;/b&gt; do kosza?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1424"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1445"/>
         <source>Error Deleting File</source>
         <translation>Błąd podczas usuwania pliku</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1424"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1445"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Coś poszło nie tak przy próbie usunięcia &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1521"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1542"/>
         <source>Administrator</source>
         <translation>Administrator</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1796"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1817"/>
         <source>Error Saving File</source>
         <translation>Błąd podczas zapisywania pliku</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1796"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1817"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Pojawił się błąd podczas próby zapisania &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Błąd: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1802"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1823"/>
         <source>Zoom: %1%</source>
         <translation>Powiększenie: %1%</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1951"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1985"/>
         <source>No updates are available at this time.</source>
         <translation>Brak dostępnych aktualizacji.</translation>
     </message>
