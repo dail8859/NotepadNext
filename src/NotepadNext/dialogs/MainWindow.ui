@@ -108,6 +108,8 @@
      <property name="title">
       <string>Indent</string>
      </property>
+     <addaction name="actionIncreaseIndent"/>
+     <addaction name="actionDecreaseIndent"/>
     </widget>
     <widget class="QMenu" name="menuEOLConversion">
      <property name="title">
