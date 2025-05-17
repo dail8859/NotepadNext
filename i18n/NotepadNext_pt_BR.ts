@@ -1209,7 +1209,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="582"/>
         <source>Increase Indent</source>
-        translation>Aumentar o recuo da linha</translation>
+        <translation>Aumentar o recuo da linha</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="591"/>
