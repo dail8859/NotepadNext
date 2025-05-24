@@ -29,8 +29,6 @@
 
 #include "LuaState.h"
 #include "lua.hpp"
-#include "LuaBridge.h"
-
 #include "EditorConfigAppDecorator.h"
 
 #include "ILexer.h"
@@ -45,20 +43,6 @@
 #endif
 
 const SingleApplication::Options opts = SingleApplication::ExcludeAppPath | SingleApplication::ExcludeAppVersion | SingleApplication::SecondaryNotification;
-
-template <>
-struct luabridge::Stack <QString const&>
-{
-    static void push (lua_State* L, QString const &s)
-    {
-        lua_pushlstring(L, s.toLatin1().constData(), s.toLatin1().size());
-    }
-
-    static QString get (lua_State* L, int index)
-    {
-        return QString(luaL_checkstring (L, index));
-    }
-};
 
 void parseCommandLine(QCommandLineParser &parser, const QStringList &args)
 {
@@ -162,39 +146,8 @@ bool NotepadNextApplication::init()
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
 
-    // LuaBridge is not a long term solution
-    // This is probably temporary, but it is quick and works
-    luabridge::setHideMetatables(false);
-    luabridge::getGlobalNamespace(luaState->L)
-        .beginNamespace("nn")
-            .beginClass<ApplicationSettings>("Settings")
-                .addFunction("showMenuBar", &ApplicationSettings::setShowMenuBar)
-                .addFunction("showToolBar", &ApplicationSettings::setShowToolBar)
-                .addFunction("showTabBar", &ApplicationSettings::setShowTabBar)
-                .addFunction("showStatusBar", &ApplicationSettings::setShowStatusBar)
-            .endClass()
-        .endNamespace();
-    luabridge::setGlobal(luaState->L, settings, "settings");
-
     createNewWindow();
     connect(editorManager, &EditorManager::editorCreated, window, &MainWindow::addEditor);
-
-    luabridge::getGlobalNamespace(luaState->L)
-        .beginNamespace("nn")
-            .beginClass<QWidget>("QWidget")
-                .addFunction("exit", &QWidget::close)
-            .endClass()
-            .deriveClass<MainWindow, QWidget>("MainWindow")
-                .addFunction("newFile", &MainWindow::newFile)
-                .addFunction("openFile", &MainWindow::openFile)
-                .addFunction("openFileDialog", &MainWindow::openFileDialog)
-                .addFunction("reloadFile", &MainWindow::reloadFile)
-                .addFunction("saveFile", &MainWindow::saveCurrentFile)
-                .addFunction("saveFileAs", &MainWindow::saveCurrentFileAs)
-                .addFunction("closeFile", &MainWindow::closeCurrentFile)
-            .endClass()
-        .endNamespace();
-    luabridge::setGlobal(luaState->L, window, "window");
 
     // If the application is activated (e.g. user switching to another program and them back) the focus
     // needs to be reset on whatever object previously had focus (e.g. the find dialog)
