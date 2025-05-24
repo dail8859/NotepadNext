@@ -17,6 +17,8 @@
  */
 
 
+#include "SearchResultHighlighterDelegate.h"
+#include "SearchResultData.h"
 #include "SearchResultsDock.h"
 #include "ScintillaNext.h"
 #include "ui_SearchResultsDock.h"
@@ -27,12 +29,6 @@
 #include <QShortcut>
 #include <QClipboard>
 
-enum SearchResultData
-{
-    LineNumber = Qt::UserRole,
-    LinePosStart,
-    LinePosEnd
-};
 
 SearchResultsDock::SearchResultsDock(QWidget *parent) :
     QDockWidget(parent),
@@ -71,6 +67,8 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
 
         menu.exec(QCursor::pos());
     });
+
+    ui->treeWidget->setItemDelegate(new SearchResultHighlighterDelegate(ui->treeWidget));
 }
 
 SearchResultsDock::~SearchResultsDock()
@@ -125,12 +123,13 @@ void SearchResultsDock::newResultsEntry(const QString line, int lineNumber, int 
 
     // Scintilla internally references line numbers starting at 0, however it needs displayed starting at 1
     item->setText(0, QString::number(lineNumber + 1));
-    item->setData(0, SearchResultData::LineNumber, lineNumber);
-    item->setData(0, SearchResultData::LinePosStart, startPositionFromBeginning);
-    item->setData(0, SearchResultData::LinePosEnd, endPositionFromBeginning);
     item->setBackground(0, QBrush(QColor(220, 220, 220)));
     item->setTextAlignment(0, Qt::AlignRight);
 
+    item->setData(1, SearchResultData::LineNumber, lineNumber);
+    item->setData(1, SearchResultData::LinePosStart, startPositionFromBeginning);
+    item->setData(1, SearchResultData::LinePosEnd, endPositionFromBeginning);
+    item->setData(1, Qt::UserRole + 3, true); // <- Flag to enable highlight
     item->setText(1, line);
 
     totalFileHitCount += hitCount;
@@ -191,9 +190,9 @@ void SearchResultsDock::itemActivated(QTreeWidgetItem *item, int column)
 
         // The editor may no longer exist
         if (editor) {
-            int lineNumber = item->data(0, SearchResultData::LineNumber).toInt();
-            int startPositionFromBeginning = item->data(0, SearchResultData::LinePosStart).toInt();
-            int endPositionFromBeginning = item->data(0, SearchResultData::LinePosEnd).toInt();
+            int lineNumber = item->data(1, SearchResultData::LineNumber).toInt();
+            int startPositionFromBeginning = item->data(1, SearchResultData::LinePosStart).toInt();
+            int endPositionFromBeginning = item->data(1, SearchResultData::LinePosEnd).toInt();
 
             emit searchResultActivated(editor, lineNumber, startPositionFromBeginning, endPositionFromBeginning);
         }
