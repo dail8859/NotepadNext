@@ -71,6 +71,7 @@ SOURCES += \
     EditorHexViewerTableModel.cpp \
     EditorManager.cpp \
     EditorPrintPreviewRenderer.cpp \
+    SearchResultHighlighterDelegate.cpp \
     widgets/FadingIndicator.cpp \
     FileDialogHelpers.cpp \
     Finder.cpp \
@@ -149,6 +150,8 @@ HEADERS += \
     EditorHexViewerTableModel.h \
     EditorManager.h \
     EditorPrintPreviewRenderer.h \
+    SearchResultData.h \
+    SearchResultHighlighterDelegate.h \
     widgets/FadingIndicator.h \
     FileDialogHelpers.h \
     Finder.h \
