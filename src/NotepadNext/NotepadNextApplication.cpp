@@ -19,7 +19,7 @@
 
 #include "MainWindow.h"
 #include "NotepadNextApplication.h"
-#include "RecentFilesListManager.h"
+#include "RecentListManager.h"
 #include "EditorManager.h"
 #include "LuaExtension.h"
 #include "DebugManager.h"
@@ -41,6 +41,9 @@
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
+
+#define RECENT_SESSIONS_KEY "App/RecentSessionsList"
+#define RECENT_FILES_KEY "App/RecentFilesList"
 
 const SingleApplication::Options opts = SingleApplication::ExcludeAppPath | SingleApplication::ExcludeAppVersion | SingleApplication::SecondaryNotification;
 
@@ -120,7 +123,8 @@ bool NotepadNextApplication::init()
 
     luaState = new LuaState();
 
-    recentFilesListManager = new RecentFilesListManager(this);
+    recentFilesListManager = new RecentListManager(this);
+    recentSessionsListManager = new RecentListManager(this);
     editorManager = new EditorManager(settings, this);
     sessionManager = new SessionManager(this);
 
@@ -180,7 +184,7 @@ bool NotepadNextApplication::init()
     if (settings->restorePreviousSession()) {
         qInfo("Restoring previous session");
 
-        sessionManager->loadSession(window);
+        sessionManager->loadDefaultSession(window);
     }
 
     openFiles(parser.positionalArguments());
@@ -417,12 +421,14 @@ void NotepadNextApplication::openFiles(const QStringList &files)
 
 void NotepadNextApplication::loadSettings()
 {
-    recentFilesListManager->setFileList(getSettings()->value("App/RecentFilesList").toStringList());
+    recentFilesListManager->setFileList(getSettings()->value(RECENT_FILES_KEY).toStringList());
+    recentSessionsListManager->setFileList(getSettings()->value(RECENT_SESSIONS_KEY).toStringList());
 }
 
 void NotepadNextApplication::saveSettings()
 {
-    getSettings()->setValue("App/RecentFilesList", recentFilesListManager->fileList());
+    getSettings()->setValue(RECENT_FILES_KEY, recentFilesListManager->fileList());
+    getSettings()->setValue(RECENT_SESSIONS_KEY, recentSessionsListManager->fileList());
 }
 
 MainWindow *NotepadNextApplication::createNewWindow()
@@ -444,7 +450,7 @@ MainWindow *NotepadNextApplication::createNewWindow()
             }
         }
 
-        getSessionManager()->saveSession(window);
+        getSessionManager()->saveCurrentSession(window);
     });
 
     return window;
