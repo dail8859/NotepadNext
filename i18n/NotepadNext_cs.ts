@@ -2317,22 +2317,22 @@
         <translation>Zkopírujte výsledek do schránky</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="65"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="61"/>
         <source>Collapse All</source>
         <translation>Sbalit vše</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="62"/>
         <source>Expand All</source>
         <translation>Rozbalit vše</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="68"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="64"/>
         <source>Delete Entry</source>
         <translation>Smazat záznam</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="70"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
         <source>Delete All</source>
         <translation>Smazat vše</translation>
     </message>

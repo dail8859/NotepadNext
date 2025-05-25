@@ -2311,22 +2311,22 @@
         <translation>Copiar os resultados para a área de transferência</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="65"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="61"/>
         <source>Collapse All</source>
         <translation>Recolher tudo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="62"/>
         <source>Expand All</source>
         <translation>Expandir tudo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="68"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="64"/>
         <source>Delete Entry</source>
         <translation>Apagar a entrada</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="70"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
         <source>Delete All</source>
         <translation>Apagar tudo</translation>
     </message>
