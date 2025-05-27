@@ -19,6 +19,7 @@
 
 #include "MainWindow.h"
 #include "NotepadNextApplication.h"
+#include "MarkerAppDecorator.h"
 #include "RecentFilesListManager.h"
 #include "EditorManager.h"
 #include "LuaExtension.h"
@@ -142,6 +143,8 @@ bool NotepadNextApplication::init()
 
     EditorConfigAppDecorator *ecad = new EditorConfigAppDecorator(this);
     ecad->setEnabled(true);
+    MarkerAppDecorator *mad = new MarkerAppDecorator(this);
+    mad->setEnabled(true);
 
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
