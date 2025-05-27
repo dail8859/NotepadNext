@@ -19,6 +19,7 @@
 
 #include "MainWindow.h"
 #include "BookMarkDecorator.h"
+#include "MarkerAppDecorator.h"
 #include "URLFinder.h"
 #include "SessionManager.h"
 #include "UndoAction.h"
@@ -368,6 +369,53 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
             editor->ensureVisible(lineToGoTo - 1);
             editor->gotoLine(lineToGoTo - 1);
             editor->verticalCentreCaret();
+        }
+    });
+
+    // Style all actions that have a MarkerNumber and interpret that as the color needed
+    MarkerAppDecorator *markerAppDecorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+    for (QAction* action : findChildren<QAction*>()) {
+        if (action->property("MarkerNumber").isValid()) {
+            int markerNumber = action->property("MarkerNumber").toInt();
+            action->setIcon(ActionUtils::createSolidIcon(markerAppDecorator->markerColor(markerNumber)));
+        }
+    }
+
+    auto mark_callback = [=]() {
+        MarkerAppDecorator *markerAppDecorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (markerAppDecorator && markerAppDecorator->isEnabled()) {
+            if (sender()->property("MarkerNumber").isValid()) {
+                ScintillaNext *editor = currentEditor();
+                markerAppDecorator->mark(editor, sender()->property("MarkerNumber").toInt());
+            }
+        }
+    };
+
+    auto clear_mark_callback = [=]() {
+        MarkerAppDecorator *markerAppDecorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (markerAppDecorator && markerAppDecorator->isEnabled()) {
+            if (sender()->property("MarkerNumber").isValid()) {
+                ScintillaNext *editor = currentEditor();
+                markerAppDecorator->clear(editor, sender()->property("MarkerNumber").toInt());
+            }
+        }
+    };
+
+    connect(ui->actionMarkStyle1, &QAction::triggered, this, mark_callback);
+    connect(ui->actionMarkStyle2, &QAction::triggered, this, mark_callback);
+    connect(ui->actionMarkStyle3, &QAction::triggered, this, mark_callback);
+
+    connect(ui->actionClearStyle1, &QAction::triggered, this, clear_mark_callback);
+    connect(ui->actionClearStyle2, &QAction::triggered, this, clear_mark_callback);
+    connect(ui->actionClearStyle3, &QAction::triggered, this, clear_mark_callback);
+
+    connect(ui->actionClearAllStyles, &QAction::triggered, this, [=]() {
+        MarkerAppDecorator *markerAppDecorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (markerAppDecorator && markerAppDecorator->isEnabled()) {
+            markerAppDecorator->clearAll(currentEditor());
         }
     });
 
@@ -1923,7 +1971,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
 
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(editor, &ScintillaNext::customContextMenuRequested, this, [=](const QPoint &pos) {
-        contextMenuPos = editor->send(SCI_POSITIONFROMPOINT, pos.x(), pos.y());
+        contextMenuPos = editor->positionFromPoint(pos.x(), pos.y());
 
         QStringList actionNames = {
             "Cut",
@@ -1953,7 +2001,12 @@ void MainWindow::addEditor(ScintillaNext *editor)
             actionNames.prepend("CopyURL");
         }
 
-        buildMenu(actionNames)->popup(QCursor::pos());
+        auto menu = buildMenu(actionNames);
+        menu->addSeparator();
+        menu->addMenu(ui->menuMarkAllOccurrences);
+        menu->addMenu(ui->menuClearMarks);
+
+        menu->popup(QCursor::pos());
     });
 
     // The editor has been entirely configured at this point, so add it to the docked editor
