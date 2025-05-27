@@ -72,6 +72,7 @@ SOURCES += \
     EditorManager.cpp \
     EditorPrintPreviewRenderer.cpp \
     SearchResultHighlighterDelegate.cpp \
+    decorators/MarkerAppDecorator.cpp \
     widgets/FadingIndicator.cpp \
     FileDialogHelpers.cpp \
     Finder.cpp \
@@ -152,6 +153,7 @@ HEADERS += \
     EditorPrintPreviewRenderer.h \
     SearchResultData.h \
     SearchResultHighlighterDelegate.h \
+    decorators/MarkerAppDecorator.h \
     widgets/FadingIndicator.h \
     FileDialogHelpers.h \
     Finder.h \

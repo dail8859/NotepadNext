@@ -21,7 +21,9 @@
 #include <QObject>
 #include <QStringList>
 #include <QAction>
-#include <QDebug>
+#include <QApplication>
+#include <QStyle>
+#include <QPainter>
 
 namespace ActionUtils {
 
@@ -41,6 +43,21 @@ void populateActionContainer(Container* container, QObject* context, const QStri
             }
         }
     }
+}
+
+QIcon createSolidIcon(QColor color)
+{
+    int iconSize = qApp->style()->pixelMetric(QStyle::PM_SmallIconSize);
+
+    QPixmap pixmap(iconSize, iconSize);
+    pixmap.fill(color);
+
+    QPainter painter(&pixmap);
+    painter.setPen(Qt::black); // 1-pixel black pen by default
+    painter.drawRect(0, 0, iconSize - 1, iconSize - 1); // draw border inside the pixmap
+    painter.end();
+
+    return QIcon(pixmap);
 }
 
 }
