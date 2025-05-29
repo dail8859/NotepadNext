@@ -50,3 +50,11 @@ CMakeLists.txt.user*
 /build
 /icon/*.png
 /icon/ImageMagick
+
+# JetBrains IDE prefs
+.idea/
+
+# macOS annoyances
+.DS_Store
+*DS_Store
+._*
