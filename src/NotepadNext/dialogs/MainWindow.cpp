@@ -865,12 +865,16 @@ void MainWindow::applyCustomShortcuts()
         for (const QString &shortcutString : value.toStringList()) {
             auto sequence = QKeySequence(shortcutString);
 
-            if (sequence.count() > 0 && sequence[0].key() != Qt::Key_unknown) {
-                shortcuts.append(sequence);
-            }
-            else {
-                qWarning() << "CustomShortcut: Cannot create QKeySequence(" << shortcutString << ") for " << actionName;
-            }
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+                if (sequence.count() > 0 && sequence[0].key() != Qt::Key_unknown) {
+#else
+                if (sequence.count() > 0 && (sequence[0] & ~Qt::KeyboardModifierMask) != Qt::Key_unknown) {
+#endif
+                    shortcuts.append(sequence);
+                }
+                else {
+                    qWarning() << "CustomShortcut: Cannot create QKeySequence(" << shortcutString << ") for " << actionName;
+                }
         }
 
         if (!shortcuts.empty()) {
