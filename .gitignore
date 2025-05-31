@@ -48,6 +48,7 @@ CMakeLists.txt.user*
 *.pyc
 
 /build
+/build*
 /icon/*.png
 /icon/ImageMagick
 
