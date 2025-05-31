@@ -303,6 +303,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="buttonFindInFiles">
+         <property name="text">
+          <string>Find All In Files</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="buttonClose">
          <property name="text">
           <string>Close</string>
