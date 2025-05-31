@@ -87,8 +87,6 @@
 
 #include "ActionUtils.h"
 
-#include <QtGlobal>
-#include <QDebug>
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
@@ -867,26 +865,16 @@ void MainWindow::applyCustomShortcuts()
         for (const QString &shortcutString : value.toStringList()) {
             auto sequence = QKeySequence(shortcutString);
 
-            qDebug() << "QT version is" << QT_VERSION_MAJOR << "." << QT_VERSION_MINOR << "." << QT_VERSION_PATCH;
-            #if QT_VERSION >= QT_VERSION_CHECK(6,5,0)
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
                 if (sequence.count() > 0 && sequence[0].key() != Qt::Key_unknown) {
+#else
+                if (sequence.count() > 0 && (sequence[0] & ~Qt::KeyboardModifierMask) != Qt::Key_unknown) {
+#endif
                     shortcuts.append(sequence);
                 }
                 else {
                     qWarning() << "CustomShortcut: Cannot create QKeySequence(" << shortcutString << ") for " << actionName;
                 }
-            #elif QT_VERSION <= QT_VERSION_CHECK(6,0,0) && QT_VERSION >= QT_VERSION_CHECK(5,15,0)
-                int key = sequence[0] & ~Qt::KeyboardModifierMask;
-                if (sequence.count() > 0 && key != Qt::Key_unknown) {
-                    shortcuts.append(sequence);
-                }
-                else {
-                    qWarning() << "CustomShortcut: Cannot create QKeySequence(" << shortcutString << ") for " << actionName;
-                }
-            #else
-                qDebug() << "This version of Qt is not supported; the app will not launch.";
-                exit(1);
-            #endif
         }
 
         if (!shortcuts.empty()) {
