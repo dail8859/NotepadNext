@@ -204,6 +204,23 @@
      <addaction name="actionCopyBookmarkedLines"/>
      <addaction name="actionDeleteBookmarkedLines"/>
     </widget>
+    <widget class="QMenu" name="menuMarkAllOccurrences">
+     <property name="title">
+      <string>Mark All Occurrences</string>
+     </property>
+     <addaction name="actionMarkStyle1"/>
+     <addaction name="actionMarkStyle2"/>
+     <addaction name="actionMarkStyle3"/>
+    </widget>
+    <widget class="QMenu" name="menuClearMarks">
+     <property name="title">
+      <string>Clear Marks</string>
+     </property>
+     <addaction name="actionClearStyle1"/>
+     <addaction name="actionClearStyle2"/>
+     <addaction name="actionClearStyle3"/>
+     <addaction name="actionClearAllStyles"/>
+    </widget>
     <addaction name="actionFind"/>
     <addaction name="actionFindInFiles"/>
     <addaction name="actionFindNext"/>
@@ -212,6 +229,9 @@
     <addaction name="separator"/>
     <addaction name="actionQuickFind"/>
     <addaction name="actionGoToLine"/>
+    <addaction name="separator"/>
+    <addaction name="menuMarkAllOccurrences"/>
+    <addaction name="menuClearMarks"/>
     <addaction name="separator"/>
     <addaction name="menuBookmark"/>
    </widget>
@@ -1394,6 +1414,62 @@
   <action name="actionDeleteBookmarkedLines">
    <property name="text">
     <string>Delete Bookmarked Lines</string>
+   </property>
+  </action>
+  <action name="actionMarkStyle1">
+   <property name="text">
+    <string>Mark Style 1</string>
+   </property>
+   <property name="MarkerNumber" stdset="0">
+    <number>0</number>
+   </property>
+  </action>
+  <action name="actionMarkStyle2">
+   <property name="text">
+    <string>Mark Style 2</string>
+   </property>
+   <property name="MarkerNumber" stdset="0">
+    <number>1</number>
+   </property>
+  </action>
+  <action name="actionClearStyle1">
+   <property name="text">
+    <string>Clear Style 1</string>
+   </property>
+   <property name="MarkerNumber" stdset="0">
+    <number>0</number>
+   </property>
+  </action>
+  <action name="actionClearStyle2">
+   <property name="text">
+    <string>Clear Style 2</string>
+   </property>
+   <property name="MarkerNumber" stdset="0">
+    <number>1</number>
+   </property>
+  </action>
+  <action name="actionMarkStyle3">
+   <property name="text">
+    <string>Mark Style 3</string>
+   </property>
+   <property name="MarkerNumber" stdset="0">
+    <number>2</number>
+   </property>
+  </action>
+  <action name="actionClearStyle3">
+   <property name="text">
+    <string>Clear Style 3</string>
+   </property>
+   <property name="MarkerNumber" stdset="0">
+    <number>2</number>
+   </property>
+  </action>
+  <action name="actionClearAllStyles">
+   <property name="text">
+    <string>Clear All Styles</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear All Styles</string>
    </property>
   </action>
  </widget>
