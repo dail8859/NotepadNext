@@ -4954,6 +4954,9 @@ void Editor::ButtonDownWithModifiers(Point pt, unsigned int curTime, KeyMod modi
 void Editor::RightButtonDownWithModifiers(Point pt, unsigned int, KeyMod modifiers) {
 	if (NotifyMarginRightClick(pt, modifiers))
 		return;
+    // if the pt is not in the selected region we clear the selection and move the caret to the new right click
+    if (!PointInSelection(pt))
+            SetEmptySelection(SPositionFromLocation(pt));
 }
 
 bool Editor::PositionIsHotspot(Sci::Position position) const noexcept {
