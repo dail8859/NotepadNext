@@ -1,0 +1,35 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="i18n">
+<file alias="NotepadNext_cs.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/NotepadNext_cs.qm</file>
+<file alias="NotepadNext_es.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/NotepadNext_es.qm</file>
+<file alias="NotepadNext_pl.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/NotepadNext_pl.qm</file>
+<file alias="NotepadNext_pt_BR.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/NotepadNext_pt_BR.qm</file>
+<file alias="NotepadNext_pt_PT.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/NotepadNext_pt_PT.qm</file>
+<file alias="NotepadNext_ru.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/NotepadNext_ru.qm</file>
+<file alias="NotepadNext_sv.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/NotepadNext_sv.qm</file>
+<file alias="NotepadNext_tr.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/NotepadNext_tr.qm</file>
+<file alias="NotepadNext_uk.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/NotepadNext_uk.qm</file>
+<file alias="NotepadNext_zh_CN.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/NotepadNext_zh_CN.qm</file>
+<file alias="NotepadNext_zh_TW.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/NotepadNext_zh_TW.qm</file>
+<file alias="qt_cs.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qt_cs.qm</file>
+<file alias="qtbase_cs.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qtbase_cs.qm</file>
+<file alias="qt_es.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qt_es.qm</file>
+<file alias="qtbase_es.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qtbase_es.qm</file>
+<file alias="qt_pl.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qt_pl.qm</file>
+<file alias="qtbase_pl.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qtbase_pl.qm</file>
+<file alias="qt_pt_BR.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qt_pt_BR.qm</file>
+<file alias="qtbase_pt_BR.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qtbase_pt_BR.qm</file>
+<file alias="qt_pt_PT.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qt_pt_PT.qm</file>
+<file alias="qt_ru.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qt_ru.qm</file>
+<file alias="qtbase_ru.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qtbase_ru.qm</file>
+<file alias="qt_sv.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qt_sv.qm</file>
+<file alias="qt_tr.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qt_tr.qm</file>
+<file alias="qtbase_tr.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qtbase_tr.qm</file>
+<file alias="qt_uk.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qt_uk.qm</file>
+<file alias="qtbase_uk.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qtbase_uk.qm</file>
+<file alias="qt_zh_CN.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qt_zh_CN.qm</file>
+<file alias="qtbase_zh_CN.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qtbase_zh_CN.qm</file>
+<file alias="qt_zh_TW.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qt_zh_TW.qm</file>
+<file alias="qtbase_zh_TW.qm">C:/SWE/Open_source/NotepadNext/src/NotepadNext/build/Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/.qm/qtbase_zh_TW.qm</file>
+</qresource>
+</RCC>
