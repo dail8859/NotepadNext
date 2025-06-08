@@ -28,9 +28,12 @@
 class ScintillaNext;
 class MainWindow;
 class NotepadNextApplication;
+class Settings;
 
-class SessionManager
+class SessionManager: public QObject
 {
+    Q_OBJECT
+
 public:
     enum SessionFileType {
         None = 0,
@@ -47,19 +50,30 @@ public:
 
     void clear() const;
 
-    void saveSession(MainWindow *window);
-    void loadSession(MainWindow *window);
+    bool saveSessionTo(MainWindow *window, const QString &path);
+    void saveCurrentSession(MainWindow *window);
+    void loadDefaultSession(MainWindow *window);
+    bool loadSessionFrom(MainWindow *window, const QString &path);
 
     bool willFileGetStoredInSession(ScintillaNext *editor) const;
 
-private:
     QDir sessionDirectory() const;
+    bool isCustomSessionFolder() const { return useCustomSessionFolder; }
+
+signals:
+    void onSessionSaved(Settings &settings);
+    void onSessionLoaded(Settings &settings);
+
+private:
+    void saveSession(MainWindow *window, QSettings &settings);
+    void saveDefaultSession(MainWindow *window);
+    ScintillaNext *loadSession(MainWindow *window, QSettings &settings);
 
     void saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName) const;
 
     SessionFileType determineType(ScintillaNext *editor) const;
 
-    void clearSettings() const;
+    void clearSettings(QSettings *settings) const;
     void clearDirectory() const;
 
     void storeFileDetails(ScintillaNext *editor, QSettings &settings);
@@ -76,6 +90,9 @@ private:
 
     NotepadNextApplication *app;
     SessionFileTypes fileTypes;
+
+    bool useCustomSessionFolder;
+    QString customSessionPath;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(SessionManager::SessionFileTypes)

@@ -17,21 +17,26 @@
  */
 
 
-#include "RecentFilesListMenuBuilder.h"
+#include "RecentListMenuBuilder.h"
 
 #include <QAction>
 #include <QMenu>
 #include <QDir>
 
-RecentFilesListMenuBuilder::RecentFilesListMenuBuilder(RecentFilesListManager *manager) :
+RecentListMenuBuilder::RecentListMenuBuilder(RecentListManager *manager, int limit) :
     QObject(manager),
-    manager(manager)
+    manager(manager),
+    limit(limit)
 {
 }
 
-void RecentFilesListMenuBuilder::populateMenu(QMenu *menu)
+void RecentListMenuBuilder::populateMenu(QMenu *menu)
 {
     int i = 0;
+
+    while (menu->actions().size() > limit) {
+        delete menu->actions().takeLast();
+    }
 
     QList<QAction *> recentFileListActions;
     for (const QString &file : manager->fileList()) {
@@ -39,7 +44,7 @@ void RecentFilesListMenuBuilder::populateMenu(QMenu *menu)
         QAction *action = new QAction(QString("%1%2: %3").arg(i < 10 ? "&" : "").arg(i).arg(QDir::toNativeSeparators(file)), menu);
 
         action->setData(file);
-        connect(action, &QAction::triggered, this, &RecentFilesListMenuBuilder::recentFileActionTriggered);
+        connect(action, &QAction::triggered, this, &RecentListMenuBuilder::recentFileActionTriggered);
 
         recentFileListActions.append(action);
     }
@@ -47,7 +52,7 @@ void RecentFilesListMenuBuilder::populateMenu(QMenu *menu)
     menu->addActions(recentFileListActions);
 }
 
-void RecentFilesListMenuBuilder::recentFileActionTriggered()
+void RecentListMenuBuilder::recentFileActionTriggered()
 {
     qInfo(Q_FUNC_INFO);
 

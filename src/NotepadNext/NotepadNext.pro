@@ -92,8 +92,8 @@ SOURCES += \
     QRegexSearch.cpp \
     widgets/QuickFindWidget.cpp \
     RangeAllocator.cpp \
-    RecentFilesListManager.cpp \
-    RecentFilesListMenuBuilder.cpp \
+    RecentListManager.cpp \
+    RecentListMenuBuilder.cpp \
     RtfConverter.cpp \
     SciIFaceTable.cpp \
     ScintillaCommenter.cpp \
@@ -174,8 +174,8 @@ HEADERS += \
     QRegexSearch.h \
     widgets/QuickFindWidget.h \
     RangeAllocator.h \
-    RecentFilesListManager.h \
-    RecentFilesListMenuBuilder.h \
+    RecentListManager.h \
+    RecentListMenuBuilder.h \
     RtfConverter.h \
     SciIFaceTable.h \
     ScintillaCommenter.h \

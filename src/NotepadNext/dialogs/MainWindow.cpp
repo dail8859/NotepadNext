@@ -53,8 +53,8 @@
 
 #include "ScintillaNext.h"
 
-#include "RecentFilesListManager.h"
-#include "RecentFilesListMenuBuilder.h"
+#include "RecentListManager.h"
+#include "RecentListMenuBuilder.h"
 #include "EditorManager.h"
 
 #include "LuaConsoleDock.h"
@@ -184,20 +184,23 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentFilesListManager::clear);
+    connect(ui->actionClearRecentFilesList, &QAction::triggered, app->getRecentFilesListManager(), &RecentListManager::clear);
 
     connect(ui->actionMoveToTrash, &QAction::triggered, this, &MainWindow::moveCurrentFileToTrash);
 
-    RecentFilesListMenuBuilder *recentFileListMenuBuilder = new RecentFilesListMenuBuilder(app->getRecentFilesListManager());
+    // NOTE: its unfortunate that this has to be hard coded, but there's no way
+    // to easily determine what should or shouldn't be there
+    RecentListMenuBuilder *recentFileListMenuBuilder = new RecentListMenuBuilder(app->getRecentFilesListManager(), 4);
     connect(ui->menuRecentFiles, &QMenu::aboutToShow, this, [=]() {
-        // NOTE: its unfortunate that this has to be hard coded, but there's no way
-        // to easily determine what should or shouldn't be there
-        while (ui->menuRecentFiles->actions().size() > 4) {
-            delete ui->menuRecentFiles->actions().takeLast();
-        }
-
         recentFileListMenuBuilder->populateMenu(ui->menuRecentFiles);
     });
+    connect(recentFileListMenuBuilder, &RecentListMenuBuilder::fileOpenRequest, this, &MainWindow::openFile);
+
+    RecentListMenuBuilder *recentSessionsListMenuBuilder = new RecentListMenuBuilder(app->getRecentSessionsListManager(), 3);
+    connect(ui->menuSessions, &QMenu::aboutToShow, this, [=]() {
+        recentSessionsListMenuBuilder->populateMenu(ui->menuSessions);
+    });
+    connect(recentSessionsListMenuBuilder, &RecentListMenuBuilder::fileOpenRequest, this, &MainWindow::loadSession);
 
     connect(ui->actionRestoreRecentlyClosedFile, &QAction::triggered, this, [=]() {
         if (app->getRecentFilesListManager()->count() > 0) {
@@ -208,8 +211,6 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionOpenAllRecentFiles, &QAction::triggered, this, [=]() {
         openFileList(app->getRecentFilesListManager()->fileList());
     });
-
-    connect(recentFileListMenuBuilder, &RecentFilesListMenuBuilder::fileOpenRequest, this, &MainWindow::openFile);
 
     QActionGroup *eolActionGroup = new QActionGroup(this);
     eolActionGroup->addAction(ui->actionWindows);
@@ -807,7 +808,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                                     hexViewerDock->toggleViewAction()
                                 });
 
-    FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
+    FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(app, this);
     fawDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, fawDock);
     ui->menuView->addAction(fawDock->toggleViewAction());
@@ -991,6 +992,51 @@ ScintillaNext *MainWindow::getInitialEditor()
     }
 
     return Q_NULLPTR;
+}
+
+void MainWindow::on_actionOpenSessionFile_triggered()
+{
+    FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
+    // TODO: if there is active session - use it
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Load Session From Folder"), fawDock->rootPath(), QFileDialog::ShowDirsOnly);
+    if (!dir.isEmpty()) {
+        app->getSessionManager()->saveCurrentSession(this);
+        if (!app->getSessionManager()->loadSessionFrom(this, dir))
+        {
+            qCritical("Unable to load from %s", dir.toUtf8().constData());
+            QMessageBox::critical(this, "Error", tr("Unable to load from %1").arg(dir));
+        }
+        else {
+            app->getRecentSessionsListManager()->addFile(dir);
+        }
+    }
+}
+
+void MainWindow::loadSession(const QString &filePath)
+{
+    app->getSessionManager()->saveCurrentSession(this);
+    if (!app->getSessionManager()->loadSessionFrom(this, filePath)) {
+        qCritical("Unable to load from %s", filePath.toUtf8().constData());
+        app->getRecentSessionsListManager()->removeFile(filePath);
+    }
+}
+
+void MainWindow::on_actionSaveSession_triggered()
+{
+    FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
+    // TODO: if there is active session - use it
+    SessionManager *sessionManager = app->getSessionManager();
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Save Session To Folder"), fawDock->rootPath(), QFileDialog::ShowDirsOnly);
+    if (!dir.isEmpty()) {
+        // TODO: save active session if any
+        if (!sessionManager->saveSessionTo(this, dir)) {
+            qCritical("Unable to save to %s", dir.toUtf8().constData());
+            QMessageBox::critical(this, "Error", tr("Unable to save to %1").arg(dir));
+        }
+        else {
+            app->getRecentSessionsListManager()->addFile(dir);
+        }
+    }
 }
 
 void MainWindow::openFileList(const QStringList &fileNames)

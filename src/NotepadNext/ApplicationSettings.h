@@ -25,6 +25,7 @@
 #include <QSettings>
 #include <QString>
 
+#include "SessionManager.h"
 
 template<typename T>
 class ApplicationSetting
@@ -45,12 +46,30 @@ public:
     inline T getDefault() const { return mCallable ? mCallable() : mDefault ; }
     inline const char * const key() const { return mKey; }
 
-private:
+protected:
     const char * const mKey;
     const T mDefault;
     std::function<T()> mCallable;
 };
 
+template<typename T>
+class SessionSetting : public ApplicationSetting<T>
+{
+};
+
+// This macro should be used on any Qt class which uses session settings so they could be saved/reloaded
+#define USE_SESSION_SETTINGS \
+public slots: \
+    void onSettingsLoaded(const Settings &settings); \
+    void onSettingsSaved(Settings &settings); \
+\
+protected: \
+    template<typename T> \
+    void initSettingsListener(T *This, SessionManager *manager) \
+    { \
+        connect(manager, &SessionManager::onSessionSaved, This, &T::onSettingsSaved); \
+        connect(manager, &SessionManager::onSessionLoaded, This, &T::onSettingsLoaded); \
+    }
 
 #define DEFINE_SETTING(name, lname, type)\
 public:\
@@ -61,12 +80,13 @@ Q_SIGNAL\
     void lname##Changed(type lname);\
 
 
-class ApplicationSettings : public QSettings
+class Settings : public QSettings
 {
     Q_OBJECT
 
 public:
-    explicit ApplicationSettings(QObject *parent = nullptr);
+    explicit Settings(QObject *parent = nullptr);
+	Settings(const QString &path, QSettings::Format format);
 
 public:
     template <typename T>
@@ -81,7 +101,15 @@ public:
     void set(const ApplicationSetting<T> &setting, const T &value)
     { setValue(QLatin1String(setting.key()), value); }
 
+};
+
+class ApplicationSettings: public Settings
+{
+    Q_OBJECT
+
 public:
+    explicit ApplicationSettings(QObject *parent = nullptr);
+
     DEFINE_SETTING(ShowMenuBar, showMenuBar, bool)
     DEFINE_SETTING(ShowToolBar, showToolBar, bool)
     DEFINE_SETTING(ShowTabBar, showTabBar, bool)

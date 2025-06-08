@@ -31,7 +31,7 @@
 class MainWindow;
 class LuaState;
 class EditorManager;
-class RecentFilesListManager;
+class RecentListManager;
 class ScintillaNext;
 class SessionManager;
 class TranslationManager;
@@ -46,7 +46,8 @@ public:
 
     bool init();
 
-    RecentFilesListManager *getRecentFilesListManager() const { return recentFilesListManager; }
+    RecentListManager *getRecentFilesListManager() const { return recentFilesListManager; }
+    RecentListManager *getRecentSessionsListManager() const { return recentSessionsListManager; }
     EditorManager *getEditorManager() const { return editorManager; }
     SessionManager *getSessionManager() const;
     TranslationManager *getTranslationManager() const { return translationManager; };
@@ -82,7 +83,8 @@ private:
     void loadSettings();
 
     EditorManager *editorManager;
-    RecentFilesListManager *recentFilesListManager;
+    RecentListManager *recentFilesListManager;
+    RecentListManager *recentSessionsListManager;
     ApplicationSettings *settings;
     SessionManager *sessionManager;
     TranslationManager *translationManager;

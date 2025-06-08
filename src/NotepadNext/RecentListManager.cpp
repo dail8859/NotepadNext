@@ -17,14 +17,14 @@
  */
 
 
-#include "RecentFilesListManager.h"
+#include "RecentListManager.h"
 
-RecentFilesListManager::RecentFilesListManager(QObject *parent) :
-    QObject(parent)
+RecentListManager::RecentListManager(QObject *parent) :
+    QObject(parent), limit(10)
 {
 }
 
-void RecentFilesListManager::addFile(const QString &filePath)
+void RecentListManager::addFile(const QString &filePath)
 {
     qInfo(Q_FUNC_INFO);
 
@@ -32,37 +32,37 @@ void RecentFilesListManager::addFile(const QString &filePath)
     removeFile(filePath);
 
     // Set a limit on how many can be in the list
-    if (recentFiles.size() >= 10) {
+    if (recentFiles.size() >= limit) {
         recentFiles.removeLast();
     }
 
     recentFiles.prepend(filePath);
 }
 
-void RecentFilesListManager::removeFile(const QString &filePath)
+void RecentListManager::removeFile(const QString &filePath)
 {
     recentFiles.removeOne(filePath);
 }
 
-void RecentFilesListManager::clear()
+void RecentListManager::clear()
 {
     // Clear the file list
     recentFiles.clear();
 }
 
-QString RecentFilesListManager::mostRecentFile() const
+QString RecentListManager::mostRecentFile() const
 {
     Q_ASSERT(!recentFiles.empty());
 
     return recentFiles.first();
 }
 
-QStringList RecentFilesListManager::fileList() const
+QStringList RecentListManager::fileList() const
 {
     return recentFiles;
 }
 
-void RecentFilesListManager::setFileList(const QStringList &list)
+void RecentListManager::setFileList(const QStringList &list)
 {
     clear();
     recentFiles.append(list);
