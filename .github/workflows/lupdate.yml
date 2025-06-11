@@ -24,7 +24,7 @@ jobs:
         run: lupdate src/NotepadNext.pro
 
       - name: Commit translation changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v6
         with:
           commit_message: Update translation files
           file_pattern: 'i18n/*.ts'
