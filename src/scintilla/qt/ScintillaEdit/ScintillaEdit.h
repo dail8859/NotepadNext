@@ -290,6 +290,8 @@ public:
 	sptr_t autoCMaxHeight() const;
 	void autoCSetStyle(sptr_t style);
 	sptr_t autoCStyle() const;
+	void autoCSetImageScale(sptr_t scalePercent);
+	sptr_t autoCImageScale() const;
 	void setIndent(sptr_t indentSize);
 	sptr_t indent() const;
 	void setUseTabs(bool useTabs);
@@ -344,6 +346,7 @@ public:
 	sptr_t lineFromPosition(sptr_t pos);
 	sptr_t positionFromLine(sptr_t line);
 	void lineScroll(sptr_t columns, sptr_t lines);
+	void scrollVertical(sptr_t docLine, sptr_t subLine);
 	void scrollCaret();
 	void scrollRange(sptr_t secondary, sptr_t primary);
 	void replaceSel(const char * text);
@@ -388,7 +391,7 @@ public:
 	void callTipShow(sptr_t pos, const char * definition);
 	void callTipCancel();
 	bool callTipActive();
-	sptr_t callTipPosStart();
+	sptr_t callTipPosStart() const;
 	void callTipSetPosStart(sptr_t posStart);
 	void callTipSetHlt(sptr_t highlightStart, sptr_t highlightEnd);
 	void callTipSetBack(sptr_t back);
