@@ -21,11 +21,6 @@
 #include <QScrollBar>
 #include <QTextFormat>
 
-constexpr int IndicatorInput = static_cast<int>(Scintilla::IndicatorNumbers::Ime);
-constexpr int IndicatorTarget = IndicatorInput + 1;
-constexpr int IndicatorConverted = IndicatorInput + 2;
-constexpr int IndicatorUnknown = IndicatorInput + 3;
-
 // Q_WS_MAC and Q_WS_X11 aren't defined in Qt5
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 #ifdef Q_OS_MAC
@@ -373,6 +368,12 @@ void ScintillaEditBase::mouseMoveEvent(QMouseEvent *event)
 	sqt->ButtonMoveWithModifiers(pos, TimeOfEvent(time), modifiers);
 }
 
+void ScintillaEditBase::leaveEvent(QEvent *event)
+{
+	QWidget::leaveEvent(event);
+	sqt->MouseLeave();
+}
+
 void ScintillaEditBase::contextMenuEvent(QContextMenuEvent *event)
 {
 	const Point pos = PointFromQPoint(event->globalPos());
@@ -450,31 +451,6 @@ bool ScintillaEditBase::IsHangul(const QChar qchar)
 	const bool HangulSyllable = (0xAC00 <= unicode && unicode <= 0xD7A3);
 	return HangulJamo || HangulCompatibleJamo  || HangulSyllable ||
 				HangulJamoExtendedA || HangulJamoExtendedB;
-}
-
-void ScintillaEditBase::MoveImeCarets(Scintilla::Position offset)
-{
-	// Move carets relatively by bytes
-	for (size_t r=0; r < sqt->sel.Count(); r++) {
-		const Sci::Position positionInsert = sqt->sel.Range(r).Start().Position();
-		sqt->sel.Range(r) = SelectionRange(positionInsert + offset);
- 	}
-}
-
-void ScintillaEditBase::DrawImeIndicator(int indicator, int len)
-{
-	// Emulate the visual style of IME characters with indicators.
-	// Draw an indicator on the character before caret by the character bytes of len
-	// so it should be called after InsertCharacter().
-	// It does not affect caret positions.
-	if (indicator < INDICATOR_CONTAINER || indicator > INDICATOR_MAX) {
-		return;
-	}
-	sqt->pdoc->DecorationSetCurrentIndicator(indicator);
-	for (size_t r=0; r< sqt-> sel.Count(); r++) {
-		const Sci::Position positionInsert = sqt->sel.Range(r).Start().Position();
-		sqt->pdoc->DecorationFillRange(positionInsert - len, 1, len);
-	}
 }
 
 namespace {
@@ -607,7 +583,7 @@ void ScintillaEditBase::inputMethodEvent(QInputMethodEvent *event)
 
 			sqt->InsertCharacter(std::string_view(oneChar.data(), oneCharLen), CharacterSource::TentativeInput);
 
-			DrawImeIndicator(imeIndicator[i], oneCharLen);
+			sqt->DrawImeIndicator(imeIndicator[i], oneCharLen);
 			i += ucWidth;
 		}
 
@@ -616,13 +592,13 @@ void ScintillaEditBase::inputMethodEvent(QInputMethodEvent *event)
 		const int imeEndToImeCaretU16 = imeCaretPos - preeditStrLen;
 		const Sci::Position imeCaretPosDoc = sqt->pdoc->GetRelativePositionUTF16(sqt->CurrentPosition(), imeEndToImeCaretU16);
 
-		MoveImeCarets(- sqt->CurrentPosition() + imeCaretPosDoc);
+		sqt->MoveImeCarets(- sqt->CurrentPosition() + imeCaretPosDoc);
 
 		if (IsHangul(preeditStr.at(0))) {
 #ifndef Q_OS_WIN
 			if (imeCaretPos > 0) {
 				int oneCharBefore = sqt->pdoc->GetRelativePosition(sqt->CurrentPosition(), -1);
-				MoveImeCarets(- sqt->CurrentPosition() + oneCharBefore);
+				sqt->MoveImeCarets(- sqt->CurrentPosition() + oneCharBefore);
 			}
 #endif
 			sqt->view.imeCaretBlockOverride = true;
@@ -810,7 +786,7 @@ void ScintillaEditBase::notifyParent(NotificationData scn)
 			break;
 
 		case Notification::AutoCSelection:
-			emit autoCompleteSelection(scn.lParam, QString::fromUtf8(scn.text));
+			emit autoCompleteSelection(scn.lParam, sqt->IsUnicodeMode() ? QString::fromUtf8(scn.text) : QString::fromLocal8Bit(scn.text));
 			break;
 
 		case Notification::AutoCCancelled:

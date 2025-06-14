@@ -1008,6 +1008,14 @@ sptr_t ScintillaEdit::autoCStyle() const {
     return send(SCI_AUTOCGETSTYLE, 0, 0);
 }
 
+void ScintillaEdit::autoCSetImageScale(sptr_t scalePercent) {
+    send(SCI_AUTOCSETIMAGESCALE, scalePercent, 0);
+}
+
+sptr_t ScintillaEdit::autoCImageScale() const {
+    return send(SCI_AUTOCGETIMAGESCALE, 0, 0);
+}
+
 void ScintillaEdit::setIndent(sptr_t indentSize) {
     send(SCI_SETINDENT, indentSize, 0);
 }
@@ -1224,6 +1232,10 @@ void ScintillaEdit::lineScroll(sptr_t columns, sptr_t lines) {
     send(SCI_LINESCROLL, columns, lines);
 }
 
+void ScintillaEdit::scrollVertical(sptr_t docLine, sptr_t subLine) {
+    send(SCI_SCROLLVERTICAL, docLine, subLine);
+}
+
 void ScintillaEdit::scrollCaret() {
     send(SCI_SCROLLCARET, 0, 0);
 }
@@ -1400,7 +1412,7 @@ bool ScintillaEdit::callTipActive() {
     return send(SCI_CALLTIPACTIVE, 0, 0);
 }
 
-sptr_t ScintillaEdit::callTipPosStart() {
+sptr_t ScintillaEdit::callTipPosStart() const {
     return send(SCI_CALLTIPPOSSTART, 0, 0);
 }
 
