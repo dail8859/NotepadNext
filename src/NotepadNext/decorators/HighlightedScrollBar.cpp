@@ -32,7 +32,7 @@ const QColor CURSOR_CARET_COLOR = QColor(0, 0, 0, 100);
 HighlightedScrollBarDecorator::HighlightedScrollBarDecorator(ScintillaNext *editor)
     : EditorDecorator(editor), scrollBar(new HighlightedScrollBar(editor, Qt::Vertical, editor))
 {
-    connect(scrollBar, &QScrollBar::valueChanged, editor, &ScintillaEdit::scrollVertical);
+    connect(scrollBar, &QScrollBar::valueChanged, editor, &ScintillaEditBase::scrollVertical);
 
     editor->setVerticalScrollBar(scrollBar);
 }
