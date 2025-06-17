@@ -2,8 +2,8 @@
   "updates": {
     "windows": {
       "open-url": "",
-      "latest-version": "0.11",
-      "download-url": "https://github.com/dail8859/NotepadNext/releases/download/v0.11/NotepadNext-v0.11-Installer.exe",
+      "latest-version": "0.12",
+      "download-url": "https://github.com/dail8859/NotepadNext/releases/download/v0.12/NotepadNext-v0.12-Installer.exe",
       "changelog": "",
       "mandatory": false
     }
