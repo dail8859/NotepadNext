@@ -42,14 +42,22 @@ URLFinder::URLFinder(ScintillaNext *editor) :
     timer->setInterval(200);
     timer->setSingleShot(true);
     connect(timer, &QTimer::timeout, this, &URLFinder::findURLs);
+
+    connect(this, &EditorDecorator::stateChanged, this, [=](bool b) {
+        if (b) {
+            connect(editor, &ScintillaNext::resized, timer, qOverload<>(&QTimer::start));
+            findURLs();
+        }
+        else {
+            disconnect(editor, &ScintillaNext::resized, timer, qOverload<>(&QTimer::start));
+            clearURLs();
+        }
+    });
 }
 
 void URLFinder::findURLs()
 {
-    //qInfo(Q_FUNC_INFO);
-
-    editor->setIndicatorCurrent(indicator);
-    editor->indicatorClearRange(0, editor->length());
+    clearURLs();
 
     int currentLine = editor->docLineFromVisible(editor->firstVisibleLine());
     int linesLeftToProcess = editor->linesOnScreen();
@@ -101,6 +109,12 @@ void URLFinder::findURLs()
             currentLine++;
         }
     }
+}
+
+void URLFinder::clearURLs()
+{
+    editor->setIndicatorCurrent(indicator);
+    editor->indicatorClearRange(0, editor->length());
 }
 
 void URLFinder::notify(const Scintilla::NotificationData *pscn)
