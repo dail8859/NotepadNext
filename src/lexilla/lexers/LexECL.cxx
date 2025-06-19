@@ -123,7 +123,7 @@ static void ColouriseEclDoc(Sci_PositionU startPos, Sci_Position length, int ini
 				// ends with a line continuation by locking in the state upto this position.
 				sc.SetState(SCE_ECL_STRING);
 			}
-			// Reset states to begining of colourise so no surprises
+			// Reset states to beginning of colourise so no surprises
 			// if different sets of lines lexed.
 			visibleChars = 0;
 			lastWordWasUUID = false;
