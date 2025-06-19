@@ -110,6 +110,15 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
             }
         }
     });
+
+    connect(settings, &ApplicationSettings::urlHighlightingChanged, this, [=](bool b){
+        for (auto &editor : getEditors()) {
+            URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
+            if (urlFinder) {
+                urlFinder->setEnabled(b);
+            }
+        }
+    });
 }
 
 ScintillaNext *EditorManager::createEditor(const QString &name)
@@ -308,7 +317,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     ac->setEnabled(true);
 
     URLFinder *uf = new URLFinder(editor);
-    uf->setEnabled(true);
+    uf->setEnabled(settings->urlHighlighting());
 
     BookMarkDecorator *bm = new BookMarkDecorator(editor);
     bm->setEnabled(true);
