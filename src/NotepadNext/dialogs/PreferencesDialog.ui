@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>803</width>
-    <height>564</height>
+    <height>597</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>783</width>
-        <height>512</height>
+        <height>545</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -198,6 +198,13 @@
         <widget class="QCheckBox" name="checkBoxHighlightURLs">
          <property name="text">
           <string>Highlight URLs</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBoxShowLineNumbers">
+         <property name="text">
+          <string>Show Line Numbers</string>
          </property>
         </widget>
        </item>
