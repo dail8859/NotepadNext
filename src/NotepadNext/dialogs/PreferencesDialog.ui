@@ -195,6 +195,13 @@
         </layout>
        </item>
        <item>
+        <widget class="QCheckBox" name="checkBoxHighlightURLs">
+         <property name="text">
+          <string>Highlight URLs</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -255,8 +262,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>641</x>
-     <y>439</y>
+     <x>792</x>
+     <y>553</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -271,8 +278,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>709</x>
-     <y>439</y>
+     <x>792</x>
+     <y>553</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
