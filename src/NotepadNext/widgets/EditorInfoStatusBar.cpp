@@ -37,24 +37,16 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
 
     eolFormat = new StatusLabel(100);
     addPermanentWidget(eolFormat, 0);
+    eolFormat->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(qobject_cast<StatusLabel*>(eolFormat), &StatusLabel::customContextMenuRequested, this, [=](const QPoint &pos) {
+        emit customContextMenuRequestedForEOLLabel(eolFormat->mapToGlobal(pos));
+    });
 
     unicodeType = new StatusLabel(125);
     addPermanentWidget(unicodeType, 0);
 
     overType = new StatusLabel(25);
     addPermanentWidget(overType, 0);
-
-    /*
-    docType->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(docType, &QLabel::customContextMenuRequested, [=](const QPoint &pos) {
-        ui->menuLanguage->popup(docType->mapToGlobal(pos));
-    });
-
-    eolFormat->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(eolFormat, &QLabel::customContextMenuRequested, [=](const QPoint &pos) {
-        ui->menuEOLConversion->popup(eolFormat->mapToGlobal(pos));
-    });
-    */
 
     MainWindow *w = qobject_cast<MainWindow *>(window);
 
