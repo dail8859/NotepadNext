@@ -54,7 +54,7 @@ Current development is done using QtCreator with the Microsoft Visual C++ (msvc)
 
 If you are familiar with building C++ Qt desktop applications with Qt Creator, then this should be as simple as opening `src/NotepadNext.pro` and build/run the project.
 
-If you are new to building C++ Qt desktop applications, there is a more detailed guide [here](/doc/Building.md).
+If you are new to building C++ Qt desktop applications, there is a more detailed guide [here](/doc/Building.md)....#Code2With-Pratik
 
 
 # License
