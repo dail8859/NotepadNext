@@ -33,6 +33,7 @@ public:
 
 private slots:
     void findURLs();
+    void clearURLs();
 
 public slots:
     void notify(const Scintilla::NotificationData *pscn) override;

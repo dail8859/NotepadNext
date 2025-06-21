@@ -108,4 +108,6 @@ public:
     DEFINE_SETTING(FontSize, fontSize, int);
     DEFINE_SETTING(AdditionalWordChars, additionalWordChars, QString);
     DEFINE_SETTING(DefaultEOLMode, defaultEOLMode, QString)
+    DEFINE_SETTING(URLHighlighting, urlHighlighting, bool)
+    DEFINE_SETTING(ShowLineNumbers, showLineNumbers, bool)
 };

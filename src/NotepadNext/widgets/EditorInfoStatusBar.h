@@ -38,6 +38,9 @@ public:
 
     void refresh(ScintillaNext *editor);
 
+signals:
+    void customContextMenuRequestedForEOLLabel(const QPoint &pos);
+
 private slots:
     void connectToEditor(ScintillaNext *editor);
 

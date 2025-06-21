@@ -110,6 +110,24 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
             }
         }
     });
+
+    connect(settings, &ApplicationSettings::urlHighlightingChanged, this, [=](bool b){
+        for (auto &editor : getEditors()) {
+            URLFinder *decorator = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
+            if (decorator) {
+                decorator->setEnabled(b);
+            }
+        }
+    });
+
+    connect(settings, &ApplicationSettings::showLineNumbersChanged, this, [=](bool b){
+        for (auto &editor : getEditors()) {
+            LineNumbers *decorator = editor->findChild<LineNumbers *>(QString(), Qt::FindDirectChildrenOnly);
+            if (decorator) {
+                decorator->setEnabled(b);
+            }
+        }
+    });
 }
 
 ScintillaNext *EditorManager::createEditor(const QString &name)
@@ -293,7 +311,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     b->setEnabled(true);
 
     LineNumbers *l = new LineNumbers(editor);
-    l->setEnabled(true);
+    l->setEnabled(settings->showLineNumbers());
 
     SurroundSelection *ss = new SurroundSelection(editor);
     ss->setEnabled(true);
@@ -308,7 +326,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     ac->setEnabled(true);
 
     URLFinder *uf = new URLFinder(editor);
-    uf->setEnabled(true);
+    uf->setEnabled(settings->urlHighlighting());
 
     BookMarkDecorator *bm = new BookMarkDecorator(editor);
     bm->setEnabled(true);
