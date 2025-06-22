@@ -237,7 +237,7 @@
         <translation type="vanished">Längd: %1    Rader: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="117"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="109"/>
         <source>Sel: N/A</source>
         <translation>Markerat: Ej tillämpligt</translation>
     </message>
@@ -250,53 +250,53 @@
         <translation type="vanished">Rad: %1    Col: %2    </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="108"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="100"/>
         <source>Length: %L1    Lines: %L2</source>
         <translation>Längd: %L1    Rader: %L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="127"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="119"/>
         <source>Sel: %L1 | %L2</source>
         <translation>Mark: %L1 | %L2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="131"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="123"/>
         <source>Ln: %L1    Col: %L2    </source>
         <translation>Rad: %L1    Kol: %L2    </translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="147"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="139"/>
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="150"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="142"/>
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="153"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="145"/>
         <source>Unix (LF)</source>
         <translation>Unix (LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="162"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="154"/>
         <source>ANSI</source>
         <translation>ANSI</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="165"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="157"/>
         <source>UTF-8</source>
         <translation>UTF-8</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="178"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="170"/>
         <source>OVR</source>
         <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
         <translation>OVR</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="182"/>
+        <location filename="../src/NotepadNext/widgets/EditorInfoStatusBar.cpp" line="174"/>
         <source>INS</source>
         <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
         <translation>INS</translation>
@@ -1835,7 +1835,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1411"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1414"/>
         <source>Export As</source>
         <translation>Exportera som</translation>
     </message>
@@ -2095,105 +2095,105 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1004"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1007"/>
         <source>New %1</source>
         <translation>Ny %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1064"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1067"/>
         <source>Create File</source>
         <translation>Skapa fil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1064"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1067"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; finns inte. Vill du skapa den?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1105"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1203"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1108"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1206"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Vill du spara &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1106"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1204"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1109"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1207"/>
         <source>Save File</source>
         <translation>Spara fil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1159"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1162"/>
         <source>Open Folder as Workspace</source>
         <translation>Öppen mapp som arbetsyta</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1177"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1180"/>
         <source>Reload File</source>
         <translation>Läs om fil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1177"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1180"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>Vill du verkligen läsa om &lt;b&gt;%1&lt;/b&gt; från disk? Alla osparade ändringar kommer att förloras.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1594"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1597"/>
         <source>Administrator</source>
         <translation>Administratör</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1869"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1872"/>
         <source>Error Saving File</source>
         <translation>Kunde inte spara fil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1378"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1381"/>
         <source>Save a Copy As</source>
         <translation>Spara en kopia som</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1452"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1467"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1455"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1470"/>
         <source>Rename</source>
         <translation>Byt namn</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1467"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1470"/>
         <source>Name:</source>
         <translation>Namn:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1487"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1490"/>
         <source>Delete File</source>
         <translation>Ta bort fil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1487"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1490"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>Vill du verkligen flytta &lt;b&gt;%1&lt;/b&gt; till papperskorgen?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1497"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1500"/>
         <source>Error Deleting File</source>
         <translation>Kunde inte ta bort fil</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1497"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1500"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Gick något fel vid borttagning av &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1869"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1872"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Ett fel uppstod när &lt;b&gt;%1&lt;/b&gt; skulle sparas.&lt;br&gt;&lt;br&gt;Fel: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1875"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1878"/>
         <source>Zoom: %1%</source>
         <translation>Zoom: %1%</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2042"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2045"/>
         <source>No updates are available at this time.</source>
         <translation>Inga uppdateringar tillgängliga den här gången.</translation>
     </message>
@@ -2275,12 +2275,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="219"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="200"/>
+        <source>Highlight URLs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="207"/>
+        <source>Show Line Numbers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="233"/>
         <source>TextLabel</source>
         <translation>TextEtikett</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="231"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="245"/>
         <source>An application restart is required to apply certain settings.</source>
         <translation>En programomstart krävs för att tillämpa vissa inställningar.</translation>
     </message>
@@ -2345,7 +2355,7 @@
         <translation type="unfinished">Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="139"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="142"/>
         <source>&lt;System Default&gt;</source>
         <translation>&lt;Systemstandard&gt;</translation>
     </message>
