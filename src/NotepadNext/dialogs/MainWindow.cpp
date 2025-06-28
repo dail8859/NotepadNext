@@ -1853,8 +1853,16 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
         return false;
     }
     else if (state == ScintillaNext::Modified) {
+        // TODO: remove Application name from title / check behaviour in code
+        // TODO: add finding links
+        // TODO: add flag to stop reloading
         qInfo("ScintillaNext::Modified");
-        editor->reload();
+        const QString filePath = editor->getFilePath();
+        auto reply = QMessageBox::question(this, tr("Reload"), tr("\"%1\"<br><br>This file has been modified by another program.<br>Do you want to reload it?").arg(filePath));
+
+        if (reply == QMessageBox::Yes) {
+            editor->reload();
+        }
     }
     else if (state == ScintillaNext::Deleted) {
         qInfo("ScintillaNext::Deleted");
