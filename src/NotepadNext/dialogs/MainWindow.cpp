@@ -1853,8 +1853,7 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
         return false;
     }
     else if (state == ScintillaNext::Modified) {
-        // TODO: remove Application name from title / check behaviour in code
-        // TODO: add finding links
+        // TODO: add connect to URLFinder signal
         // TODO: add flag to stop reloading
         qInfo("ScintillaNext::Modified");
         const QString filePath = editor->getFilePath();
