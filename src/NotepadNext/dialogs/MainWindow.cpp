@@ -1854,13 +1854,16 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
     }
     else if (state == ScintillaNext::Modified) {
         // TODO: add connect to URLFinder signal
-        // TODO: add flag to stop reloading
+        // TODO: add flag to stop spawning message box
         qInfo("ScintillaNext::Modified");
         const QString filePath = editor->getFilePath();
         auto reply = QMessageBox::question(this, tr("Reload"), tr("\"%1\"<br><br>This file has been modified by another program.<br>Do you want to reload it?").arg(filePath));
 
         if (reply == QMessageBox::Yes) {
             editor->reload();
+        }
+        else {
+            editor->setTemporary(true);
         }
     }
     else if (state == ScintillaNext::Deleted) {
