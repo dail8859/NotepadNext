@@ -1853,7 +1853,6 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
         return false;
     }
     else if (state == ScintillaNext::Modified) {
-        // TODO: add connect to URLFinder signal
         // TODO: add flag to stop spawning message box
         qInfo("ScintillaNext::Modified");
         const QString filePath = editor->getFilePath();
