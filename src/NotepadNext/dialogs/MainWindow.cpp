@@ -1853,7 +1853,6 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
         return false;
     }
     else if (state == ScintillaNext::Modified) {
-        // TODO: remain cursor position after reload
         qInfo("ScintillaNext::Modified");
         const QString filePath = editor->getFilePath();
         auto reply = QMessageBox::question(this, tr("Reload"), tr("\"%1\"<br><br>This file has been modified by another program.<br>Do you want to reload it?").arg(filePath));
