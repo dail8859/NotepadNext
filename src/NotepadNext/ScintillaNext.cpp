@@ -357,7 +357,7 @@ void ScintillaNext::reload()
 
 void ScintillaNext::omitModifications()
 {
-    // If file modifications will be ommited just update file timestamp
+    // If file modifications will be omitted just update file timestamp
     // so pop-up will be displayed only once per file modifications.
     updateTimestamp();
     setTemporary(true);
