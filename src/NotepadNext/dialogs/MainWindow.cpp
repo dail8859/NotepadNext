@@ -1855,7 +1855,7 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
     else if (state == ScintillaNext::Modified) {
         qInfo("ScintillaNext::Modified");
         const QString filePath = editor->getFilePath();
-        auto reply = QMessageBox::question(this, tr("Reload"), tr("\"%1\"<br><br>This file has been modified by another program.<br>Do you want to reload it?").arg(filePath));
+        auto reply = QMessageBox::question(this, tr("Reload File"), tr("<b>%1</b> has been modified by another program. Do you want to reload it?").arg(filePath));
 
         if (reply == QMessageBox::Yes) {
             editor->reload();

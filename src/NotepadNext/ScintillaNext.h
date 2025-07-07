@@ -140,6 +140,7 @@ signals:
     void renamed();
 
     void lexerChanged();
+    void reloaded();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;

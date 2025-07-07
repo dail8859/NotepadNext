@@ -348,8 +348,7 @@ void ScintillaNext::reload()
         updateTimestamp();
         setSavePoint();
 
-        // If this was a temporary file, make sure it is not any more
-        setTemporary(false);
+        emit reloaded();
     }
 
     return;
@@ -360,7 +359,7 @@ void ScintillaNext::omitModifications()
     // If file modifications will be omitted just update file timestamp
     // so pop-up will be displayed only once per file modifications.
     updateTimestamp();
-    setTemporary(true);
+    emit savePointChanged(true); // TODO: find another signal to mark as dirty
 
     return;
 }
