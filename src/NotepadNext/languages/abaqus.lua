@@ -23,35 +23,34 @@ L.styles = {
 		bgColor = rgb(0xFFFFFF),
 	},
 	["NUMBER"] = {
-        id = 3,
-        fgColor = rgb(0xFF8000),
-        bgColor = rgb(0xFFFFFF),
-    },
+		id = 3,
+		fgColor = rgb(0xFF8000),
+		bgColor = rgb(0xFFFFFF),
+	},
 	["STRING"] = {
-        id = 4,
-        fgColor = rgb(0xFF8000),
-        bgColor = rgb(0xFFFFFF),
-    },
+		id = 4,
+		fgColor = rgb(0xFF8000),
+		bgColor = rgb(0xFFFFFF),
+	},
 	["OPERATOR"] = {
-        id = 5,
-        fgColor = rgb(0x000080),
-        bgColor = rgb(0xFFFFFF),
-    },
-    ["PROCESSORS"] = {
-        id = 7,
-        fgColor = rgb(0x8000FF),
-        bgColor = rgb(0xFFFFFF),
-    },
+		id = 5,
+		fgColor = rgb(0x000080),
+		bgColor = rgb(0xFFFFFF),
+	},
+	["PROCESSORS"] = {
+		id = 7,
+		fgColor = rgb(0x8000FF),
+		bgColor = rgb(0xFFFFFF),
+	},
 	["STARCOMMAND"] = {
 		id = 10,
 		fgColor = rgb(0x0000FF),
 		bgColor = rgb(0xFFFFFF),
-    },
+	},
 	["ARGUMENT"] = {
 		id = 11,
 		fgColor = rgb(0x8800FF),
 		bgColor = rgb(0xFFFFFF),
-    },
-d
+	},
 }
 return L
