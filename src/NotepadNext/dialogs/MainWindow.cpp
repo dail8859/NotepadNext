@@ -1854,7 +1854,15 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
     }
     else if (state == ScintillaNext::Modified) {
         qInfo("ScintillaNext::Modified");
-        editor->reload();
+        const QString filePath = editor->getFilePath();
+        auto reply = QMessageBox::question(this, tr("Reload File"), tr("<b>%1</b> has been modified by another program. Do you want to reload it?").arg(filePath));
+
+        if (reply == QMessageBox::Yes) {
+            editor->reload();
+        }
+        else {
+            editor->omitModifications();
+        }
     }
     else if (state == ScintillaNext::Deleted) {
         qInfo("ScintillaNext::Deleted");

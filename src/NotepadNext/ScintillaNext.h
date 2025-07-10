@@ -122,6 +122,7 @@ public slots:
     void close();
     QFileDevice::FileError save();
     void reload();
+    void omitModifications();
     QFileDevice::FileError saveAs(const QString &newFilePath);
     QFileDevice::FileError saveCopyAs(const QString &filePath);
     bool rename(const QString &newFilePath);
@@ -139,6 +140,7 @@ signals:
     void renamed();
 
     void lexerChanged();
+    void reloaded();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
