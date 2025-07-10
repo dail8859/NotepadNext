@@ -87,5 +87,6 @@
         <file>languages/go.lua</file>
         <file>languages/markdown.lua</file>
         <file>languages/nix.lua</file>
+        <file>languages/abaqus.lua</file>
     </qresource>
 </RCC>
