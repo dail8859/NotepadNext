@@ -46,6 +46,7 @@ URLFinder::URLFinder(ScintillaNext *editor) :
     connect(this, &EditorDecorator::stateChanged, this, [=](bool b) {
         if (b) {
             connect(editor, &ScintillaNext::resized, timer, qOverload<>(&QTimer::start));
+            connect(editor, &ScintillaNext::reloaded, timer, qOverload<>(&QTimer::start));
             findURLs();
         }
         else {
