@@ -986,12 +986,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="209"/>
         <source>Mark All Occurrences</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecionar todas as ocorrências</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="217"/>
         <source>Clear Marks</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover as seleções</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="240"/>
@@ -1436,7 +1436,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="869"/>
         <source>Clear Recent Files List</source>
-        <translation>Limpar a lista de ficheiros recentes</translation>
+        <translation>Limpar a lista dos ficheiros recentes</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="879"/>
@@ -1688,38 +1688,38 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1421"/>
         <source>Mark Style 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Estilo da seleção 1</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1429"/>
         <source>Mark Style 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Estilo da seleção 2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1437"/>
         <source>Clear Style 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover o estilo 1</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1445"/>
         <source>Clear Style 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover o estilo 2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1453"/>
         <source>Mark Style 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Estilo da seleção 3</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1461"/>
         <source>Clear Style 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover o estilo 3</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1469"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1472"/>
         <source>Clear All Styles</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover todos os estilos</translation>
     </message>
     <message>
         <source>Open Command Prompt Here</source>
@@ -2227,12 +2227,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="200"/>
         <source>Highlight URLs</source>
-        <translation type="unfinished"></translation>
+        <translation>Destacar URLs</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="207"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar números de linha</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="233"/>
