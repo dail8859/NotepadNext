@@ -2066,6 +2066,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1180"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1858"/>
         <source>Reload File</source>
         <translation>重新載入檔案</translation>
     </message>
@@ -2080,7 +2081,12 @@
         <translation>Administrator</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1872"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1858"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
         <source>Error Saving File</source>
         <translation>儲存檔案時出錯</translation>
     </message>
@@ -2121,17 +2127,17 @@
         <translation>刪除 &lt;b&gt;%1&lt;/b&gt; 時出錯了？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1872"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>儲存 &lt;b&gt;%1&lt;/b&gt; 時發生了錯誤&lt;br&gt;&lt;br&gt;錯誤：%2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1878"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1886"/>
         <source>Zoom: %1%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2045"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2053"/>
         <source>No updates are available at this time.</source>
         <translation>目前沒有可用的更新。</translation>
     </message>

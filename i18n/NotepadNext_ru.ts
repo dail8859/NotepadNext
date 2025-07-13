@@ -2066,6 +2066,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1180"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1858"/>
         <source>Reload File</source>
         <translation>Перезагрузить файл</translation>
     </message>
@@ -2116,22 +2117,27 @@
         <translation>Администратор</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1872"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1858"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
         <source>Error Saving File</source>
         <translation>Ошибка при сохранении файла</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1872"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Произошла ошибка при сохранении &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Ошибка: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1878"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1886"/>
         <source>Zoom: %1%</source>
         <translation>Масштаб: %1%</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2045"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2053"/>
         <source>No updates are available at this time.</source>
         <translation>В настоящее время обновлений нет.</translation>
     </message>

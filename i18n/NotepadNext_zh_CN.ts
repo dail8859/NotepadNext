@@ -2102,6 +2102,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1180"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1858"/>
         <source>Reload File</source>
         <translation>重新加载文件</translation>
     </message>
@@ -2116,7 +2117,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1872"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1858"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
         <source>Error Saving File</source>
         <translation>保存文件时出错</translation>
     </message>
@@ -2157,17 +2163,17 @@
         <translation>删除  &lt;b&gt;%1&lt;/b&gt; 时出错了？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1872"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>保存 &lt;b&gt;%1&lt;/b&gt; 时发生了错误&lt;br&gt;&lt;br&gt;错误：%2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1878"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1886"/>
         <source>Zoom: %1%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2045"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2053"/>
         <source>No updates are available at this time.</source>
         <translation>本次无可用更新。</translation>
     </message>
