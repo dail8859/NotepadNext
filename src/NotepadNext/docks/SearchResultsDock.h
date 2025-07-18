@@ -24,6 +24,8 @@
 
 #include "ISearchResultsHandler.h"
 
+#include "ApplicationSettings.h"
+
 namespace Ui {
 class SearchResultsDock;
 }
@@ -43,6 +45,7 @@ public:
     void newFileEntry(ScintillaNext *editor) override;
     void newResultsEntry(const QString line, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning, int hitCount=1) override;
     void completeSearch() override;
+    void setFont(ApplicationSettings *settings);
 
 public slots:
     void collapseAll() const;

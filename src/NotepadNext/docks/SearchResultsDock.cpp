@@ -36,12 +36,6 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
 {
     ui->setupUi(this);
 
-#ifdef Q_OS_MACOS
-    // Set a slightly larger font on MacOS
-    QFont font("Courier New", 14);
-    ui->treeWidget->setFont(font);
-#endif
-
     // Close the results when escape is pressed
     new QShortcut(QKeySequence::Cancel, this, this, &SearchResultsDock::close, Qt::WidgetWithChildrenShortcut);
 
@@ -148,6 +142,12 @@ void SearchResultsDock::completeSearch()
 
     ui->treeWidget->resizeColumnToContents(0);
     ui->treeWidget->resizeColumnToContents(1);
+}
+
+void SearchResultsDock::setFont(ApplicationSettings *settings)
+{
+    QFont font(settings->fontName(), settings->fontSize());
+    ui->treeWidget->setFont(font);
 }
 
 void SearchResultsDock::collapseAll() const
