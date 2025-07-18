@@ -144,6 +144,12 @@ void SearchResultsDock::completeSearch()
     ui->treeWidget->resizeColumnToContents(1);
 }
 
+void SearchResultsDock::setFont(ApplicationSettings *settings)
+{
+    QFont font(settings->fontName(), settings->fontSize());
+    ui->treeWidget->setFont(font);
+}
+
 void SearchResultsDock::collapseAll() const
 {
     ui->treeWidget->collapseAll();
