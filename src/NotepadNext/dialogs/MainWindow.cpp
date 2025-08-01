@@ -317,9 +317,6 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     srDock->toggleViewAction()->setShortcut(Qt::Key_F7);
     ui->menuView->addAction(srDock->toggleViewAction());
 
-    ApplicationSettings *settings = app->getSettings();
-    srDock->setFont(settings);
-
     connect(srDock, &SearchResultsDock::searchResultActivated, this, [=](ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning) {
         dockedEditor->switchToEditor(editor);
 
@@ -329,9 +326,6 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
         editor->grabFocus();
     });
-
-    connect(settings, &ApplicationSettings::fontNameChanged, srDock, [=]() { srDock->setFont(settings); });
-    connect(settings, &ApplicationSettings::fontSizeChanged, srDock, [=]() { srDock->setFont(settings); });
 
     connect(ui->actionFind, &QAction::triggered, this, [=]() {
         showFindReplaceDialog(FindReplaceDialog::FIND_TAB);

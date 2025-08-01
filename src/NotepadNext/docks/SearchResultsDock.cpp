@@ -17,6 +17,8 @@
  */
 
 
+#include "ApplicationSettings.h"
+#include "NotepadNextApplication.h"
 #include "SearchResultHighlighterDelegate.h"
 #include "SearchResultData.h"
 #include "SearchResultsDock.h"
@@ -63,6 +65,16 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
     });
 
     ui->treeWidget->setItemDelegate(new SearchResultHighlighterDelegate(ui->treeWidget));
+
+    ApplicationSettings *settings = qobject_cast<NotepadNextApplication*>(qApp)->getSettings();
+    auto updateTreeWidgetFont = [=]() {
+        QFont f(settings->fontName(), settings->fontSize());
+        ui->treeWidget->setFont(f);
+        ui->treeWidget->resizeColumnToContents(0);
+    };
+    connect(settings, &ApplicationSettings::fontNameChanged, this, updateTreeWidgetFont);
+    connect(settings, &ApplicationSettings::fontSizeChanged, this, updateTreeWidgetFont);
+    updateTreeWidgetFont();
 }
 
 SearchResultsDock::~SearchResultsDock()
@@ -142,12 +154,6 @@ void SearchResultsDock::completeSearch()
 
     ui->treeWidget->resizeColumnToContents(0);
     ui->treeWidget->resizeColumnToContents(1);
-}
-
-void SearchResultsDock::setFont(ApplicationSettings *settings)
-{
-    QFont font(settings->fontName(), settings->fontSize());
-    ui->treeWidget->setFont(font);
 }
 
 void SearchResultsDock::collapseAll() const
