@@ -128,6 +128,18 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
             }
         }
     });
+
+    connect(settings, &ApplicationSettings::indentSizeChanged, this, [=](int indentSize){
+        for (auto &editor : getEditors()) {
+            editor->setIndent(indentSize);
+        }
+    });
+
+    connect(settings, &ApplicationSettings::tabCharChanged, this, [=](bool useTabs){
+        for (auto &editor : getEditors()) {
+            editor->setUseTabs(useTabs);
+        }
+    });
 }
 
 ScintillaNext *EditorManager::createEditor(const QString &name)
@@ -218,6 +230,9 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setTabDrawMode(SCTD_STRIKEOUT);
     editor->setTabWidth(4);
     editor->setBackSpaceUnIndents(true);
+
+    editor->setIndent(settings->indentSize());
+    editor->setUseTabs(settings->tabChar());
 
     editor->setCaretLineVisible(true);
     editor->setCaretLineVisibleAlways(true);
