@@ -17,6 +17,8 @@
  */
 
 
+#include "ApplicationSettings.h"
+#include "NotepadNextApplication.h"
 #include "SearchResultHighlighterDelegate.h"
 #include "SearchResultData.h"
 #include "SearchResultsDock.h"
@@ -35,12 +37,6 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
     ui(new Ui::SearchResultsDock)
 {
     ui->setupUi(this);
-
-#ifdef Q_OS_MACOS
-    // Set a slightly larger font on MacOS
-    QFont font("Courier New", 14);
-    ui->treeWidget->setFont(font);
-#endif
 
     // Close the results when escape is pressed
     new QShortcut(QKeySequence::Cancel, this, this, &SearchResultsDock::close, Qt::WidgetWithChildrenShortcut);
@@ -69,6 +65,16 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
     });
 
     ui->treeWidget->setItemDelegate(new SearchResultHighlighterDelegate(ui->treeWidget));
+
+    ApplicationSettings *settings = qobject_cast<NotepadNextApplication*>(qApp)->getSettings();
+    auto updateTreeWidgetFont = [=]() {
+        QFont f(settings->fontName(), settings->fontSize());
+        ui->treeWidget->setFont(f);
+        ui->treeWidget->resizeColumnToContents(0);
+    };
+    connect(settings, &ApplicationSettings::fontNameChanged, this, updateTreeWidgetFont);
+    connect(settings, &ApplicationSettings::fontSizeChanged, this, updateTreeWidgetFont);
+    updateTreeWidgetFont();
 }
 
 SearchResultsDock::~SearchResultsDock()
