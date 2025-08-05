@@ -25,7 +25,6 @@
 #include <QDialog>
 #include <QCheckBox>
 #include <QGroupBox>
-#include <QRadioButton>
 
 namespace Ui {
 class PreferencesDialog;
@@ -52,9 +51,6 @@ private:
 
     template <typename Func1, typename Func2, typename Func3>
     void MapSettingToGroupBox(QGroupBox *groupBox, Func1 getter, Func2 setter, Func3 notifier) const;
-
-    template <typename Func1, typename Func2, typename Func3>
-    void MapSettingToRadioButton(QRadioButton *radioButton, Func1 getter, Func2 setter, Func3 notifier) const;
 
     void populateTranslationComboBox();
 };
