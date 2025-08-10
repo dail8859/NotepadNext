@@ -2374,22 +2374,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="61"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="57"/>
         <source>Collapse All</source>
         <translation>Zwiń wszystko</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="62"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="58"/>
         <source>Expand All</source>
         <translation>Rozwiń wszystko</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="64"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="60"/>
         <source>Delete Entry</source>
         <translation>Usuń wpis</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="62"/>
         <source>Delete All</source>
         <translation>Usuń wszystko</translation>
     </message>
