@@ -341,8 +341,19 @@ void NotepadNextApplication::sendInfoToPrimaryInstance()
 
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::WriteOnly);
+    QStringList argsToSend;
+    QStringList toFilter = parser.positionalArguments();
+    for (const QString &arg : arguments()) {
+        if (toFilter.contains(arg)) {
+            QFileInfo fileInfo(arg);
+            argsToSend.push_back(fileInfo.absoluteFilePath());
+        }
+        else {
+            argsToSend.push_back(arg);
+        }
+    }
 
-    stream << arguments();
+    stream << argsToSend;
     const bool success = sendMessage(buffer);
 
     if (!success) {
