@@ -339,12 +339,25 @@ void NotepadNextApplication::sendInfoToPrimaryInstance()
 {
     qInfo(Q_FUNC_INFO);
 
+    QStringList argsToSend;
+    const QStringList positionalArguments = parser.positionalArguments();
+    const QSet<QString> positionalSet(positionalArguments.begin(), positionalArguments.end());
+
+    // Any positional arguments need translated into an absolute file path relative to this instance
+    for (const QString &arg : arguments()) {
+        if (positionalSet.contains(arg)) {
+            QFileInfo fileInfo(arg);
+            argsToSend.append(fileInfo.absoluteFilePath());
+        } else {
+            argsToSend.append(arg);
+        }
+    }
+
     QByteArray buffer;
     QDataStream stream(&buffer, QIODevice::WriteOnly);
+    stream << argsToSend;
 
-    stream << arguments();
     const bool success = sendMessage(buffer);
-
     if (!success) {
         qWarning("sendMessage() unsuccessful");
     }
