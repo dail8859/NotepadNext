@@ -341,11 +341,10 @@ void NotepadNextApplication::sendInfoToPrimaryInstance()
 
     QStringList argsToSend;
     const QStringList positionalArguments = parser.positionalArguments();
-    const QSet<QString> positionalSet(positionalArguments.begin(), positionalArguments.end());
 
     // Any positional arguments need translated into an absolute file path relative to this instance
     for (const QString &arg : arguments()) {
-        if (positionalSet.contains(arg)) {
+        if (positionalArguments.contains(arg)) {
             QFileInfo fileInfo(arg);
             argsToSend.append(fileInfo.absoluteFilePath());
         } else {
