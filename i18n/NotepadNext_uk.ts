@@ -1687,7 +1687,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1166"/>
         <source>Open %1 Here</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити %1 тут</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1421"/>
@@ -1717,7 +1717,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1461"/>
         <source>Clear Style 3</source>
-        <translation>Позначити стилем 3</translation>
+        <translation>Очистити стиль 3</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1469"/>
