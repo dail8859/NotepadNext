@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="uk">
+<TS version="2.1" language="uk_UA">
 <context>
     <name>AuthenticateDialog</name>
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Діалогове вікно</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="26"/>
         <source>Please provide the user name and password for the download location.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Будь ласка, надайте ім&apos;я користувача та пароль для розташування завантаження.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="35"/>
         <source>&amp;User name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Ім&apos;я користувача:</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="48"/>
         <source>&amp;Password:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Пароль:</translation>
     </message>
 </context>
 <context>
@@ -57,7 +57,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/DebugLogDock.ui" line="14"/>
         <source>Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Журнал налагодження</translation>
     </message>
 </context>
 <context>
@@ -125,7 +125,7 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="221"/>
         <source>The installer will open separately</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Інсталятор буде відкрито окремо</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="228"/>
@@ -366,17 +366,17 @@
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="71"/>
         <source>Main Selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Головне виділення</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="72"/>
         <source># of Selections</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"># виділень</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="75"/>
         <source>Multiple Selections</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Множинний вибір</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/EditorInspectorDock.cpp" line="80"/>
@@ -484,12 +484,12 @@
     <message>
         <location filename="../src/NotepadNext/docks/FileListDock.ui" line="51"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/FileListDock.ui" line="90"/>
         <source>Sort by File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Сортувати за іменем файлу</translation>
     </message>
 </context>
 <context>
@@ -825,7 +825,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="14"/>
         <source>Run a Macro Multiple Times</source>
-        <translation>Виконати макрос багато разів</translation>
+        <translation>Багаторазове виконання макросу</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MacroRunDialog.ui" line="31"/>
@@ -2185,7 +2185,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="89"/>
         <source>Recenter find/replace dialog when opened</source>
-        <translation type="unfinished"></translation>
+        <translation>Центрувати вікно пошуку/заміни під час його відкриття</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="114"/>
@@ -2215,22 +2215,22 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="155"/>
         <source>pt</source>
-        <translation type="unfinished"></translation>
+        <translation>pt</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="188"/>
         <source>Default Line Endings</source>
-        <translation type="unfinished"></translation>
+        <translation>Символ кінця рядку за замовчуванням</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="200"/>
         <source>Highlight URLs</source>
-        <translation type="unfinished"></translation>
+        <translation>Підкреслювати посилання URL</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="207"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Показувати кількість рядків</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="233"/>
@@ -2402,7 +2402,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.ui" line="38"/>
         <source>Copy Results to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати результати до буферу обміну</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="57"/>
@@ -2521,7 +2521,7 @@
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="806"/>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="862"/>
         <source>Unpin (Dock)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Відкріпити (Dock)</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="806"/>
@@ -2532,7 +2532,7 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="812"/>
         <source>Pin Group To...</source>
-        <translation type="unfinished"></translation>
+        <translation>Прикріпити групу до...</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="814"/>
@@ -2581,7 +2581,7 @@
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="871"/>
         <source>Pin Active Tab (Press Ctrl to Pin Group)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закріпити поточну вкладку (натисніть Ctrl для закріплення групи)</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockAreaTitleBar.cpp" line="884"/>
@@ -2607,7 +2607,7 @@
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="555"/>
         <source>Pin</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закріпити</translation>
     </message>
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="559"/>
@@ -2642,7 +2642,7 @@
     <message>
         <location filename="../src/ads/src/DockWidgetTab.cpp" line="573"/>
         <source>Close Others</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрити інші</translation>
     </message>
 </context>
 </TS>
