@@ -82,6 +82,7 @@ jobs:
       - name: Create Windows Installer
         if: runner.os == 'Windows'
         run: |
+          choco install nsis -y
           cd build
           jom installer
 
