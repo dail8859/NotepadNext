@@ -79,10 +79,15 @@ jobs:
           cd build
           jom package
 
+      - name: Install NSIS
+        if: runner.os == 'Windows'
+        uses: repolevedavaj/install-nsis@v1
+        with:
+          nsis-version: '3.11'
+
       - name: Create Windows Installer
         if: runner.os == 'Windows'
         run: |
-          choco install nsis -y
           cd build
           jom installer
 
