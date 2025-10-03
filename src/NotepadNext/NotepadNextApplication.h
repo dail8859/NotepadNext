@@ -26,6 +26,7 @@
 
 #include <QCommandLineParser>
 #include <QPointer>
+#include <QTimer>
 
 
 class MainWindow;
@@ -75,6 +76,7 @@ protected:
 private slots:
     void saveSettings();
     void receiveInfoFromSecondaryInstance(quint32 instanceId, QByteArray message);
+    void saveSession();
 
 private:
     void openFiles(const QStringList &files);
@@ -95,6 +97,8 @@ private:
     MainWindow *createNewWindow();
 
     QCommandLineParser parser;
+
+    QTimer autoSaveTimer; //save automatically the session
 };
 
 #endif // NOTEPADNEXTAPPLICATION_H
