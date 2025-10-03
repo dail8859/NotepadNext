@@ -440,6 +440,17 @@ void NotepadNextApplication::saveSettings()
     getSettings()->setValue("App/RecentFilesList", recentFilesListManager->fileList());
 }
 
+void NotepadNextApplication::saveSession()
+{
+    for (const auto &editor : window->editors()) {
+        if (editor->isFile()) {
+            recentFilesListManager->addFile(editor->getFilePath());
+        }
+    }
+
+    getSessionManager()->saveSession(window);
+}
+
 MainWindow *NotepadNextApplication::createNewWindow()
 {
     Q_ASSERT(window == Q_NULLPTR);
@@ -452,15 +463,12 @@ MainWindow *NotepadNextApplication::createNewWindow()
     });
 
     // Since these editors don't actually get "closed" go ahead and add them to the recent file list
-    connect(window, &MainWindow::aboutToClose, this, [=]() {
-        for (const auto &editor : window->editors()) {
-            if (editor->isFile()) {
-                recentFilesListManager->addFile(editor->getFilePath());
-            }
-        }
+    connect(window, &MainWindow::aboutToClose, this, &NotepadNextApplication::saveSession);
 
-        getSessionManager()->saveSession(window);
-    });
+    // Timer to autosave session each minute
+    connect(&autoSaveTimer, &QTimer::timeout, this, &NotepadNextApplication::saveSession);
+    autoSaveTimer.setInterval(60 * 1000);
+    autoSaveTimer.start();
 
     return window;
 }
