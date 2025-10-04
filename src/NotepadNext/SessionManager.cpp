@@ -316,9 +316,9 @@ ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings)
         editor->setFileInfo(filePath);
         editor->setTemporary(true);
 
-        loadEditorViewDetails(editor, settings);
-
         app->getEditorManager()->manageEditor(editor);
+
+        loadEditorViewDetails(editor, settings);
 
         return editor;
     }
