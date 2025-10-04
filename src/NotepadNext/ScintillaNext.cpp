@@ -135,7 +135,7 @@ void ScintillaNext::goToRange(const Sci_CharacterRange &range)
         ensureVisible(lineFromPosition(range.cpMin));
         ensureVisible(lineFromPosition(range.cpMax));
 
-        setSelection(range.cpMin, range.cpMax);
+        setSelection(range.cpMax, range.cpMin);
         scrollRange(range.cpMax, range.cpMin);
     }
 }
