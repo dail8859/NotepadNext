@@ -421,7 +421,7 @@
        <item>
         <widget class="QLabel" name="labelReplaceinFiles">
          <property name="text">
-          <string>Replace in Files:</string>
+          <string>PATH of directory containing files to be replaced:</string>
          </property>
         </widget>
        </item>
