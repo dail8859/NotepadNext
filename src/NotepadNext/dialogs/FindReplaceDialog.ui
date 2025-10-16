@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>605</width>
-    <height>381</height>
+    <width>614</width>
+    <height>410</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -433,7 +433,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboReplaceInFiles"/>
+        <widget class="QComboBox" name="comboReplaceInFiles">
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer">
