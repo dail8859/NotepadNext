@@ -437,6 +437,7 @@ void FindReplaceDialog::changeTab(int index)
         ui->buttonReplaceAllInDocuments->hide();
         ui->comboReplaceInFiles->hide();
         ui->labelReplaceinFiles->hide();
+        ui->buttonReplaceAllInFiles->hide();
 
         ui->buttonCount->show();
         ui->buttonFindAllInCurrent->show();
@@ -454,6 +455,7 @@ void FindReplaceDialog::changeTab(int index)
         ui->labelReplaceinFiles->hide();
         ui->comboReplaceInFiles->hide();
         ui->labelReplaceinFiles->hide();
+        ui->buttonReplaceAllInFiles->hide();
 
         ui->buttonCount->hide();
         ui->buttonFindAllInCurrent->hide();
