@@ -283,6 +283,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="buttonReplaceAllInFiles">
+         <property name="text">
+          <string>Replace All in Files</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="buttonFindAllInDocuments">
          <property name="text">
           <string>Find All in All &amp;Opened Documents</string>
@@ -493,7 +500,6 @@
   <tabstop>buttonCount</tabstop>
   <tabstop>buttonReplace</tabstop>
   <tabstop>buttonReplaceAll</tabstop>
-  <tabstop>buttonReplaceAllInDocuments</tabstop>
   <tabstop>buttonFindAllInDocuments</tabstop>
   <tabstop>buttonFindAllInCurrent</tabstop>
   <tabstop>buttonClose</tabstop>
