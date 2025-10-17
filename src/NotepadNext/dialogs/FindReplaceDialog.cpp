@@ -656,6 +656,9 @@ void FindReplaceDialog::on_buttonFindInFilesSelector_clicked()
     int currentIndex = ui->comboReplaceInFiles->currentIndex();
     if (currentIndex != -1) {
         ui->comboReplaceInFiles->setItemText(currentIndex, dir);
+    } else {
+        ui->comboReplaceInFiles->addItem(dir);
+        ui->comboReplaceInFiles->setCurrentIndex(ui->comboReplaceInFiles->count() - 1);
     }
 }
 
