@@ -193,7 +193,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
             count += 1;
         }
 
-        showMessage(tr("Replaced %Ln matches", "", count), "green");
+        showMessage(tr("Replaced matches in %Ln files", "", count), "green");
     });
     connect(ui->buttonClose, &QPushButton::clicked, this, &FindReplaceDialog::close);
 
