@@ -160,6 +160,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
         showMessage(tr("Replaced %Ln matches", "", count), "green");
     });
     connect(ui->buttonReplaceAllInFiles, &QPushButton::clicked, this, [=]() {
+        int count = 0;
         QString dirname = ui->comboReplaceInFiles->currentText();
         QString toFind = ui->comboFind->currentText();
         QString toReplace = ui->comboReplace->currentText();
@@ -188,7 +189,11 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
             toModifyFile.seek(0);
             toModifyFile.write(text);
             toModifyFile.close();
+
+            count += 1;
         }
+
+        showMessage(tr("Replaced %Ln matches", "", count), "green");
     });
     connect(ui->buttonClose, &QPushButton::clicked, this, &FindReplaceDialog::close);
 
