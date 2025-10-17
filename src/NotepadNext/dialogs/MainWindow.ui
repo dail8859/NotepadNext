@@ -222,10 +222,10 @@
      <addaction name="actionClearAllStyles"/>
     </widget>
     <addaction name="actionFind"/>
-    <addaction name="actionFindInFiles"/>
     <addaction name="actionFindNext"/>
     <addaction name="actionFindPrevious"/>
     <addaction name="actionReplace"/>
+    <addaction name="actionFindInFiles"/>
     <addaction name="separator"/>
     <addaction name="actionQuickFind"/>
     <addaction name="actionGoToLine"/>
