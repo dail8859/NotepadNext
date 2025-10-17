@@ -45,14 +45,24 @@ static void convertToExtended(QString &str)
     // TODO: more
 }
 
-bool isBinary(QString filename){
-    QFile mfile(filename);
-    if (!mfile.open(QFile::ReadOnly)) {
+bool isBinary(QString filename, int maxBytesToCheck = 1024){
+    QFile file(filename);
+    if (!file.open(QFile::ReadOnly)) {
         qDebug() << "File " << filename << " is binary";
         return true;
-    } else {
-        return false;
     }
+
+    QByteArray data = file.read(maxBytesToCheck);
+    file.close();
+
+    for (char c : data) {
+        if ((c < 0x09) || (c > 0x0D && c < 0x20) || c == 0x7F) {
+            qDebug() << "File" << filename << "is binary (non-text bytes detected)";
+            return true;
+        }
+    }
+
+    return false;
 }
 
 FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainWindow *window) :
