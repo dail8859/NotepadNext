@@ -159,6 +159,37 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
         showMessage(tr("Replaced %Ln matches", "", count), "green");
     });
+    connect(ui->buttonReplaceAllInFiles, &QPushButton::clicked, this, [=]() {
+        QString dirname = ui->comboReplaceInFiles->currentText();
+        QString toFind = ui->comboFind->currentText();
+        QString toReplace = ui->comboReplace->currentText();
+        QStringList fileList;
+
+        QDirIterator it(dirname, QDir::Files, QDirIterator::Subdirectories);
+        while (it.hasNext()) {
+            fileList.append(it.next()); // Add file path to the list
+        }
+
+        qDebug() << "Obtained filelist for replacement from user:";
+        for (const QString &file : fileList){
+            qDebug() << file;
+        }
+
+        for (const QString &file : fileList){
+            if (isBinary(file)){
+                qDebug() << "Skipping likely binary file: " << file;
+                continue;
+            }
+
+            QFile toModifyFile(file);
+            toModifyFile.open(QIODevice::ReadWrite);
+            QByteArray text = toModifyFile.readAll();
+            text.replace(toFind.toUtf8(), toReplace.toUtf8());
+            toModifyFile.seek(0);
+            toModifyFile.write(text);
+            toModifyFile.close();
+        }
+    });
     connect(ui->buttonClose, &QPushButton::clicked, this, &FindReplaceDialog::close);
 
     loadSettings();
