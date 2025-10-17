@@ -24,6 +24,11 @@
 #include <QStatusBar>
 #include <QLineEdit>
 #include <QKeyEvent>
+#include <QDirIterator>
+#include <QFile>
+#include <QTextStream>
+#include <QRegularExpression>
+#include <QByteArray>
 
 #include "ScintillaNext.h"
 #include "MainWindow.h"
