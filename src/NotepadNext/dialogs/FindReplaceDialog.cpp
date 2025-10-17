@@ -644,6 +644,16 @@ void FindReplaceDialog::showMessage(const QString &message, const QString &color
     statusBar->showMessage(message);
 }
 
+bool isBinary(QString filename){
+    QFile mfile(filename);
+    if (!mfile.open(QFile::ReadOnly)) {
+        qDebug() << "File " << filename << " is binary";
+        return true;
+    } else {
+        return false;
+    }
+}
+
 void FindReplaceDialog::on_buttonFindInFilesSelector_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(
