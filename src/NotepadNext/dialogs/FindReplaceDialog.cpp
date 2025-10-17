@@ -29,6 +29,7 @@
 #include <QTextStream>
 #include <QRegularExpression>
 #include <QByteArray>
+#include <QFileDialog>
 
 #include "ScintillaNext.h"
 #include "MainWindow.h"
@@ -642,3 +643,19 @@ void FindReplaceDialog::showMessage(const QString &message, const QString &color
     statusBar->setStyleSheet(QStringLiteral("color: %1").arg(color));
     statusBar->showMessage(message);
 }
+
+void FindReplaceDialog::on_buttonFindInFilesSelector_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(
+        this,
+        tr("Select Directory"),
+        "",
+        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks
+        );
+
+    int currentIndex = ui->comboReplaceInFiles->currentIndex();
+    if (currentIndex != -1) {
+        comboBox->setItemText(currentIndex, dir);
+    }
+}
+
