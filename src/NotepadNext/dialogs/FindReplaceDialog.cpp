@@ -24,6 +24,12 @@
 #include <QStatusBar>
 #include <QLineEdit>
 #include <QKeyEvent>
+#include <QDirIterator>
+#include <QFile>
+#include <QTextStream>
+#include <QRegularExpression>
+#include <QByteArray>
+#include <QFileDialog>
 
 #include "ScintillaNext.h"
 #include "MainWindow.h"
@@ -37,6 +43,26 @@ static void convertToExtended(QString &str)
     str.replace("\\0", "\0");
     str.replace("\\\\", "\\");
     // TODO: more
+}
+
+bool isBinary(QString filename, int maxBytesToCheck = 1024){
+    QFile file(filename);
+    if (!file.open(QFile::ReadOnly)) {
+        qDebug() << "File " << filename << " is binary";
+        return true;
+    }
+
+    QByteArray data = file.read(maxBytesToCheck);
+    file.close();
+
+    for (char c : data) {
+        if ((c < 0x09) || (c > 0x0D && c < 0x20) || c == 0x7F) {
+            qDebug() << "File" << filename << "is binary (non-text bytes detected)";
+            return true;
+        }
+    }
+
+    return false;
 }
 
 FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainWindow *window) :
@@ -142,6 +168,42 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
         setEditor(current_editor);
 
         showMessage(tr("Replaced %Ln matches", "", count), "green");
+    });
+    connect(ui->buttonReplaceAllInFiles, &QPushButton::clicked, this, [=]() {
+        int count = 0;
+        QString dirname = ui->comboReplaceInFiles->currentText();
+        QString toFind = ui->comboFind->currentText();
+        QString toReplace = ui->comboReplace->currentText();
+        QStringList fileList;
+
+        QDirIterator it(dirname, QDir::Files, QDirIterator::Subdirectories);
+        while (it.hasNext()) {
+            fileList.append(it.next()); // Add file path to the list
+        }
+
+        qDebug() << "Obtained filelist for replacement from user:";
+        for (const QString &file : fileList){
+            qDebug() << file;
+        }
+
+        for (const QString &file : fileList){
+            if (isBinary(file)){
+                qDebug() << "Skipping likely binary file: " << file;
+                continue;
+            }
+
+            QFile toModifyFile(file);
+            toModifyFile.open(QIODevice::ReadWrite);
+            QByteArray text = toModifyFile.readAll();
+            text.replace(toFind.toUtf8(), toReplace.toUtf8());
+            toModifyFile.seek(0);
+            toModifyFile.write(text);
+            toModifyFile.close();
+
+            count += 1;
+        }
+
+        showMessage(tr("Replaced matches in %Ln files", "", count), "green");
     });
     connect(ui->buttonClose, &QPushButton::clicked, this, &FindReplaceDialog::close);
 
@@ -435,6 +497,10 @@ void FindReplaceDialog::changeTab(int index)
         ui->buttonReplace->hide();
         ui->buttonReplaceAll->hide();
         ui->buttonReplaceAllInDocuments->hide();
+        ui->comboReplaceInFiles->hide();
+        ui->labelReplaceinFiles->hide();
+        ui->buttonReplaceAllInFiles->hide();
+        ui->buttonFindInFilesSelector->hide();
 
         ui->buttonCount->show();
         ui->buttonFindAllInCurrent->show();
@@ -448,6 +514,12 @@ void FindReplaceDialog::changeTab(int index)
         ui->buttonReplace->show();
         ui->buttonReplaceAll->show();
         ui->buttonReplaceAllInDocuments->show();
+        ui->comboReplaceInFiles->show();
+        ui->labelReplaceinFiles->show();
+        ui->comboReplaceInFiles->show();
+        ui->labelReplaceinFiles->show();
+        ui->buttonReplaceAllInFiles->show();
+        ui->buttonFindInFilesSelector->show();
 
         ui->buttonCount->hide();
         ui->buttonFindAllInCurrent->hide();
@@ -627,3 +699,22 @@ void FindReplaceDialog::showMessage(const QString &message, const QString &color
     statusBar->setStyleSheet(QStringLiteral("color: %1").arg(color));
     statusBar->showMessage(message);
 }
+
+void FindReplaceDialog::on_buttonFindInFilesSelector_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(
+        this,
+        tr("Select Directory"),
+        "",
+        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks
+        );
+
+    int currentIndex = ui->comboReplaceInFiles->currentIndex();
+    if (currentIndex != -1) {
+        ui->comboReplaceInFiles->setItemText(currentIndex, dir);
+    } else {
+        ui->comboReplaceInFiles->addItem(dir);
+        ui->comboReplaceInFiles->setCurrentIndex(ui->comboReplaceInFiles->count() - 1);
+    }
+}
+

@@ -2070,6 +2070,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1180"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1858"/>
         <source>Reload File</source>
         <translation>Volver a cargar archivo</translation>
     </message>
@@ -2120,22 +2121,27 @@
         <translation>Administrador</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1872"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1858"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
         <source>Error Saving File</source>
         <translation>Error al guardar archivo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1872"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Ocurrió un error al guardar &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1878"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1886"/>
         <source>Zoom: %1%</source>
         <translation>Zoom: %1%</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2045"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2053"/>
         <source>No updates are available at this time.</source>
         <translation>No hay actualizaciones disponibles en este momento.</translation>
     </message>
@@ -2367,22 +2373,22 @@
         <translation>Copiar resultados al portapapeles</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="61"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="57"/>
         <source>Collapse All</source>
         <translation>Colapsar todo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="62"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="58"/>
         <source>Expand All</source>
         <translation>Expandir todo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="64"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="60"/>
         <source>Delete Entry</source>
         <translation>Borrar entrada</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="62"/>
         <source>Delete All</source>
         <translation>Borrar todo</translation>
     </message>

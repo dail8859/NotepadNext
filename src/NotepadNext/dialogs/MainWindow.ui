@@ -40,7 +40,7 @@
      <x>0</x>
      <y>0</y>
      <width>855</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -222,10 +222,10 @@
      <addaction name="actionClearAllStyles"/>
     </widget>
     <addaction name="actionFind"/>
-    <addaction name="actionFindInFiles"/>
     <addaction name="actionFindNext"/>
     <addaction name="actionFindPrevious"/>
     <addaction name="actionReplace"/>
+    <addaction name="actionFindInFiles"/>
     <addaction name="separator"/>
     <addaction name="actionQuickFind"/>
     <addaction name="actionGoToLine"/>
@@ -884,7 +884,7 @@
   </action>
   <action name="actionFindInFiles">
    <property name="text">
-    <string>Find in Files...</string>
+    <string>Replace in Files...</string>
    </property>
   </action>
   <action name="actionFindNext">

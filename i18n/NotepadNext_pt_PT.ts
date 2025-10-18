@@ -986,12 +986,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="209"/>
         <source>Mark All Occurrences</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecionar todas as ocorrências</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="217"/>
         <source>Clear Marks</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover as seleções</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="240"/>
@@ -1436,7 +1436,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="869"/>
         <source>Clear Recent Files List</source>
-        <translation>Limpar a lista de ficheiros recentes</translation>
+        <translation>Limpar a lista dos ficheiros recentes</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="879"/>
@@ -1688,38 +1688,38 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1421"/>
         <source>Mark Style 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Estilo da seleção 1</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1429"/>
         <source>Mark Style 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Estilo da seleção 2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1437"/>
         <source>Clear Style 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover o estilo 1</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1445"/>
         <source>Clear Style 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover o estilo 2</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1453"/>
         <source>Mark Style 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Estilo da seleção 3</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1461"/>
         <source>Clear Style 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover o estilo 3</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1469"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="1472"/>
         <source>Clear All Styles</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover todos os estilos</translation>
     </message>
     <message>
         <source>Open Command Prompt Here</source>
@@ -2072,6 +2072,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1180"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1858"/>
         <source>Reload File</source>
         <translation>Recarregar ficheiro</translation>
     </message>
@@ -2122,22 +2123,27 @@
         <translation>Administrador</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1872"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1858"/>
+        <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
+        <translation>&lt;b&gt;%1&lt;/b&gt; foi modificado por outro programa. Deseja recarregá-lo?</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
         <source>Error Saving File</source>
         <translation>Erro ao guardar ficheiro</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1872"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Ocorreu um erro ao guardar &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Erro: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1878"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1886"/>
         <source>Zoom: %1%</source>
         <translation>Zoom: %1%</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2045"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2053"/>
         <source>No updates are available at this time.</source>
         <translation>De momento, não há atualizações disponíveis.</translation>
     </message>
@@ -2227,12 +2233,12 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="200"/>
         <source>Highlight URLs</source>
-        <translation type="unfinished"></translation>
+        <translation>Destacar URLs</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="207"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar números de linha</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="233"/>
@@ -2369,22 +2375,22 @@
         <translation>Copiar resultados para a área de transferência</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="61"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="57"/>
         <source>Collapse All</source>
         <translation>Recolher tudo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="62"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="58"/>
         <source>Expand All</source>
         <translation>Expandir tudo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="64"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="60"/>
         <source>Delete Entry</source>
         <translation>Eliminar entrada</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="66"/>
+        <location filename="../src/NotepadNext/docks/SearchResultsDock.cpp" line="62"/>
         <source>Delete All</source>
         <translation>Eliminar tudo</translation>
     </message>

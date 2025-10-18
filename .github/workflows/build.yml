@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           submodules: true
 
@@ -78,6 +78,12 @@ jobs:
         run: |
           cd build
           jom package
+
+      - name: Install NSIS
+        if: runner.os == 'Windows'
+        uses: repolevedavaj/install-nsis@v1.1.0
+        with:
+          nsis-version: '3.11'
 
       - name: Create Windows Installer
         if: runner.os == 'Windows'
@@ -137,14 +143,14 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Create Draft Release
         run: |
           gh release create ${{ github.ref_name }} --title ${{ github.ref_name }} --generate-notes --draft
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
 
       - name: Upload Windows Installer
         run: |
