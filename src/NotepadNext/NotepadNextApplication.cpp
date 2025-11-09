@@ -440,6 +440,19 @@ void NotepadNextApplication::saveSettings()
     getSettings()->setValue("App/RecentFilesList", recentFilesListManager->fileList());
 }
 
+void NotepadNextApplication::saveSession()
+{
+    // Iterate all the opened editors and add them to the recent file list
+    for (const auto &editor : window->editors()) {
+        if (editor->isFile()) {
+            recentFilesListManager->addFile(editor->getFilePath());
+        }
+    }
+    saveSettings();
+
+    getSessionManager()->saveSession(window);
+}
+
 MainWindow *NotepadNextApplication::createNewWindow()
 {
     Q_ASSERT(window == Q_NULLPTR);
@@ -451,16 +464,14 @@ MainWindow *NotepadNextApplication::createNewWindow()
         LuaExtension::Instance().setEditor(editor);
     });
 
-    // Since these editors don't actually get "closed" go ahead and add them to the recent file list
-    connect(window, &MainWindow::aboutToClose, this, [=]() {
-        for (const auto &editor : window->editors()) {
-            if (editor->isFile()) {
-                recentFilesListManager->addFile(editor->getFilePath());
-            }
-        }
+    // TODO: this shouldn't be dependent on a MainWindow closing, but this works for now
+    // since the assumption is MainWindow::aboutToClose() infers the application is shutting
+    // down but the editors are still active.
+    connect(window, &MainWindow::aboutToClose, this, &NotepadNextApplication::saveSession);
 
-        getSessionManager()->saveSession(window);
-    });
+    // Timer to autosave the session
+    connect(&autoSaveTimer, &QTimer::timeout, this, &NotepadNextApplication::saveSession);
+    autoSaveTimer.start(60 * 1000);
 
     return window;
 }
