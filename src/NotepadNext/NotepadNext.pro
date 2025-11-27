@@ -142,6 +142,7 @@ SOURCES += \
 HEADERS += \
     ActionUtils.h \
     ApplicationSettings.h \
+    ByteArrayUtils.h \
     ColorPickerDelegate.h \
     ComboBoxDelegate.h \
     Converter.h \

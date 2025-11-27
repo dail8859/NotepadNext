@@ -250,6 +250,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         // Regex will also not delete the final blank line
         editor->deleteTrailingEmptyLines();
     });
+    connect(ui->actionRemoveDuplicateLines, &QAction::triggered, this, [=]() {
+        currentEditor()->removeDuplicateLines();
+    });
+    connect(ui->actionRemoveConsecutiveDuplicateLines, &QAction::triggered, this, [=]() {
+        currentEditor()->removeConsecutiveDuplicateLines();
+    });
 
     connect(ui->actionColumnMode, &QAction::triggered, this, [=]() {
         ColumnEditorDialog *columnEditor = findChild<ColumnEditorDialog *>(QString(), Qt::FindDirectChildrenOnly);

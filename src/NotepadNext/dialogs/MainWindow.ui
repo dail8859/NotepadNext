@@ -137,6 +137,8 @@
      <addaction name="actionMoveSelectedLinesDown"/>
      <addaction name="separator"/>
      <addaction name="actionRemoveEmptyLines"/>
+     <addaction name="actionRemoveDuplicateLines"/>
+     <addaction name="actionRemoveConsecutiveDuplicateLines"/>
     </widget>
     <widget class="QMenu" name="menuCommentUncomment">
      <property name="title">
@@ -1470,6 +1472,16 @@
    </property>
    <property name="toolTip">
     <string>Clear All Styles</string>
+   </property>
+  </action>
+  <action name="actionRemoveDuplicateLines">
+   <property name="text">
+    <string>Remove Duplicate Lines</string>
+   </property>
+  </action>
+  <action name="actionRemoveConsecutiveDuplicateLines">
+   <property name="text">
+    <string>Remove Consecutive Duplicate Lines</string>
    </property>
   </action>
  </widget>
