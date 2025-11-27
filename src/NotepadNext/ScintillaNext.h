@@ -133,6 +133,9 @@ public slots:
     void commentLineSelection();
     void uncommentLineSelection();
 
+    void removeDuplicateLines();
+    void removeConsecutiveDuplicateLines();
+
 signals:
     void aboutToSave();
     void saved();
