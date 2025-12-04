@@ -1167,6 +1167,11 @@ void MainWindow::openFolderAsWorkspaceDialog()
 
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Folder as Workspace"), dialogDir, QFileDialog::ShowDirsOnly);
 
+    setFolderAsWorkspacePath(dir);
+}
+
+void MainWindow::setFolderAsWorkspacePath(const QString &dir)
+{
     if (!dir.isEmpty()) {
         FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
         fawDock->setRootPath(dir);
