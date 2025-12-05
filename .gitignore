@@ -49,6 +49,8 @@ CMakeLists.txt.user*
 
 /build
 /build*
+build/
+build*/
 /icon/*.png
 /icon/ImageMagick
 

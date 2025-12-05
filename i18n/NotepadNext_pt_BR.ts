@@ -499,158 +499,186 @@
 <context>
     <name>FindReplaceDialog</name>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="14"/>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="244"/>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="59"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="20"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="250"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="85"/>
         <source>Find</source>
         <translation>Localizar</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="66"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="72"/>
         <source>Search Mode</source>
         <translation>Modo de pesquisa</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="87"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="93"/>
         <source>&amp;Normal</source>
         <translation>&amp;Normal</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="103"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="109"/>
         <source>E&amp;xtended (\n, \r, \t, \0, \x...)</source>
         <translation>E&amp;stendida (\n, \r, \t, \0, \x...)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="121"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="127"/>
         <source>Re&amp;gular expression</source>
         <translation>Expressão re&amp;gular</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="137"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="143"/>
         <source>&amp;. matches newline</source>
         <translation>&amp;. corresponde a uma nova linha</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="176"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="182"/>
         <source>Transparenc&amp;y</source>
         <translation>Transparênc&amp;ia</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="197"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="203"/>
         <source>On losing focus</source>
         <translation>Ao perder o foco</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="207"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="213"/>
         <source>Always</source>
         <translation>Sempre</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="257"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="263"/>
         <source>Coun&amp;t</source>
         <translation>Con&amp;tar</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="267"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="273"/>
         <source>&amp;Replace</source>
         <translation>&amp;Substituir</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="274"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="280"/>
         <source>Replace &amp;All</source>
         <translation>Substituir &amp;tudo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="281"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="287"/>
         <source>Replace All in &amp;Opened Documents</source>
         <translation>Substituir tudo nos arquivos &amp;abertos</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="288"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="294"/>
+        <source>Replace All in Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="301"/>
         <source>Find All in All &amp;Opened Documents</source>
         <translation>Localizar tudo em todos os arquivos &amp;abertos</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="298"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="311"/>
         <source>Find All in Current Document</source>
         <translation>Localizar tudo no arquivo atual</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="308"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="321"/>
         <source>Close</source>
         <translation>Fechar</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="364"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="377"/>
         <source>&amp;Find:</source>
         <translation>&amp;Localizar:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="396"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="409"/>
         <source>Replace:</source>
         <translation>Substituir:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="442"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="437"/>
+        <source>Path of directory containing files to be replaced:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="451"/>
+        <source>Select Containing Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="476"/>
         <source>Backward direction</source>
         <translation>No sentido inverso</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="449"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="483"/>
         <source>Match &amp;whole word only</source>
         <translation>Corresponder apenas à palavra &amp;inteira</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="456"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="490"/>
         <source>Match &amp;case</source>
         <translation>Corresponder as letras &amp;minúsculas/maiúsculas</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="463"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.ui" line="497"/>
         <source>Wra&amp;p Around</source>
         <translation>Pesquisar e circular</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="60"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="86"/>
         <source>Replace</source>
         <translation>Substituir</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="144"/>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="341"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="170"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="403"/>
         <source>Replaced %Ln matches</source>
         <translation>
             <numerusform>Foi substituída %Ln correspondência</numerusform>
             <numerusform>Foram substituídas %Ln correspondências</numerusform>
         </translation>
     </message>
+    <message numerus="yes">
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="206"/>
+        <source>Replaced matches in %Ln files</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="239"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="301"/>
         <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
         <translation>O fim do arquivo foi alcançado. Foi localizada a 1ª ocorrência de cima para baixo.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="250"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="312"/>
         <source>No matches found.</source>
         <translation>Nenhuma correspondência foi encontrada</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="313"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="375"/>
         <source>1 occurrence was replaced</source>
         <translation>Uma ocorrência foi substituída</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="322"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="384"/>
         <source>No more occurrences were found</source>
         <translation>Não foram localizadas outras ocorrências</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="352"/>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="414"/>
         <source>Found %Ln matches</source>
         <translation>
             <numerusform>Foi localizada %Ln correspondência</numerusform>
             <numerusform>Foram localizadas %Ln correspondências</numerusform>
         </translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/FindReplaceDialog.cpp" line="707"/>
+        <source>Select Directory</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -922,7 +950,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1414"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1418"/>
         <source>Export As</source>
         <translation>Exportar como</translation>
     </message>
@@ -1448,8 +1476,12 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="887"/>
+        <source>Replace in Files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Find in Files...</source>
-        <translation>Localizar nos arquivos...</translation>
+        <translation type="vanished">Localizar nos arquivos...</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="892"/>
@@ -1488,7 +1520,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="937"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="708"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="712"/>
         <source>Start Recording</source>
         <translation>Iniciar a gravação</translation>
     </message>
@@ -2017,131 +2049,131 @@
         <translation>Apagar as linhas dos favoritos</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="366"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="370"/>
         <source>Go to line</source>
         <translation>Ir para a linha</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="366"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="370"/>
         <source>Line Number (1 - %1)</source>
         <translation>Número da linha (1 - %1)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="699"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="703"/>
         <source>Stop Recording</source>
         <translation>Parar a gravação</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="804"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="808"/>
         <source>Debug Info</source>
         <translation>Informações da depuração</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1007"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1011"/>
         <source>New %1</source>
         <translation>Novo %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1067"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1071"/>
         <source>Create File</source>
         <translation>Criar um arquivo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1067"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1071"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>O &lt;b&gt;%1&lt;/b&gt; não existe. Você quer criá-lo agora?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1108"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1206"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1112"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1210"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Salvar o arquivo &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1109"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1207"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1113"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1211"/>
         <source>Save File</source>
         <translation>Salvar o arquivo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1162"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1166"/>
         <source>Open Folder as Workspace</source>
         <translation>Abrir a pasta como área de trabalho</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1180"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1858"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1184"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1862"/>
         <source>Reload File</source>
         <translation>Recarregar o arquivo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1180"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1184"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>Você tem certeza de que quer recarregar o &lt;b&gt;%1&lt;/b&gt;? Todas as alterações que não foram salvas serão perdidas.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1381"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1385"/>
         <source>Save a Copy As</source>
         <translation>Salvar uma cópia como</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1455"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1470"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1459"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1474"/>
         <source>Rename</source>
         <translation>Renomear</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1470"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1474"/>
         <source>Name:</source>
         <translation>Nome:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1490"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1494"/>
         <source>Delete File</source>
         <translation>Apagar o arquivo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1490"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1494"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>Você tem a certeza de que quer mover o &lt;b&gt;%1&lt;/b&gt; para a lixeira?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1500"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1504"/>
         <source>Error Deleting File</source>
         <translation>Ocorreu um erro ao apagar o arquivo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1500"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1504"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Ocorreu um problema ao tentar apagar o &lt;b&gt;%1&lt;/b&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1597"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1601"/>
         <source>Administrator</source>
         <translation>Administrador</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1858"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1862"/>
         <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1884"/>
         <source>Error Saving File</source>
         <translation>Ocorreu um erro ao tentar salvar o arquivo</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1884"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Ocorreu um erro ao tentar salvar o &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;. Ocorreu o erro: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1886"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1890"/>
         <source>Zoom: %1%</source>
         <translation>Ampliar ou reduzir: %1%</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2053"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2057"/>
         <source>No updates are available at this time.</source>
         <translation>Não existem atualizações disponíveis neste exato momento</translation>
     </message>
