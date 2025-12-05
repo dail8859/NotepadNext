@@ -56,7 +56,8 @@ void parseCommandLine(QCommandLineParser &parser, const QStringList &args)
     parser.addOptions({
         {"translation", "Overrides the system default translation.", "translation"},
         {"reset-settings", "Resets all application settings."},
-        {"n", "Places the cursor on the line number for the first file specified", "line number"}
+        {"n", "Places the cursor on the line number for the first file specified", "line number"},
+        {"workspace", "Opens the specified folder as a workspace", "workspace path"}
     });
 
     parser.process(args);
@@ -207,6 +208,14 @@ bool NotepadNextApplication::init()
     // Everything should be ready at this point
 
     window->restoreWindowState();
+
+    // Check this after restoring the state, as the state contains the previous visibility state of the FAW dock
+    if (parser.isSet("workspace")) {
+        const QString dir = parser.value("workspace");
+        qInfo("Opening folder as workspace: %s", qUtf8Printable(dir));
+        window->setFolderAsWorkspacePath(dir);
+    }
+
     window->show();
 
     DebugManager::resumeDebugOutput();
