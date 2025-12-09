@@ -65,6 +65,7 @@ public slots:
     void openFile(const QString &filePath);
 
     void openFolderAsWorkspaceDialog();
+    void setFolderAsWorkspacePath(const QString &dir);
 
     void reloadFile();
 
