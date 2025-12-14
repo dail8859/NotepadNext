@@ -18,8 +18,10 @@
 
 
 #include "ScintillaNext.h"
+#include "Finder.h"
 #include "ScintillaCommenter.h"
 
+#include "ByteArrayUtils.h"
 #include "uchardet.h"
 #include <cinttypes>
 
@@ -496,6 +498,45 @@ void ScintillaNext::uncommentLineSelection()
 {
     ScintillaCommenter sc(this);
     sc.uncommentSelection();
+}
+
+void ScintillaNext::removeDuplicateLines()
+{
+    QByteArray data = QByteArray::fromRawData((char*) characterPointer(), textLength());
+    const QByteArray delim = eolString();
+
+    auto lines = ByteArrayUtils::split(data, delim);
+    int originalLineCount = lines.length();
+    ByteArrayUtils::removeDuplicates(lines);
+
+    if (originalLineCount == lines.length()){
+        return; // No lines were removed
+    }
+
+    QByteArray result = ByteArrayUtils::join(lines, delim);
+
+    const UndoAction ua(this);
+    setTargetRange(0, textLength());
+    replaceTarget(result.length(), result.constData());
+}
+
+void ScintillaNext::removeConsecutiveDuplicateLines()
+{
+    QByteArray data = QByteArray::fromRawData((char*) characterPointer(), textLength());
+    const QByteArray delim = eolString();
+
+    auto lines = ByteArrayUtils::split(data, delim);
+    int originalLineCount = lines.length();
+    ByteArrayUtils::removeConsecutiveDuplicates(lines);
+    QByteArray result = ByteArrayUtils::join(lines, delim);
+
+    if (originalLineCount == lines.length()){
+        return; // No lines were removed
+    }
+
+    const UndoAction ua(this);
+    setTargetRange(0, textLength());
+    replaceTarget(result.length(), result.constData());
 }
 
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)

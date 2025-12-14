@@ -250,6 +250,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         // Regex will also not delete the final blank line
         editor->deleteTrailingEmptyLines();
     });
+    connect(ui->actionRemoveDuplicateLines, &QAction::triggered, this, [=]() {
+        currentEditor()->removeDuplicateLines();
+    });
+    connect(ui->actionRemoveConsecutiveDuplicateLines, &QAction::triggered, this, [=]() {
+        currentEditor()->removeConsecutiveDuplicateLines();
+    });
 
     connect(ui->actionColumnMode, &QAction::triggered, this, [=]() {
         ColumnEditorDialog *columnEditor = findChild<ColumnEditorDialog *>(QString(), Qt::FindDirectChildrenOnly);
@@ -1165,6 +1171,11 @@ void MainWindow::openFolderAsWorkspaceDialog()
 
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Folder as Workspace"), dialogDir, QFileDialog::ShowDirsOnly);
 
+    setFolderAsWorkspacePath(dir);
+}
+
+void MainWindow::setFolderAsWorkspacePath(const QString &dir)
+{
     if (!dir.isEmpty()) {
         FolderAsWorkspaceDock *fawDock = findChild<FolderAsWorkspaceDock *>();
         fawDock->setRootPath(dir);
@@ -1881,7 +1892,29 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
 void MainWindow::showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileError error)
 {
     const QString name = editor->isFile() ? editor->getFilePath() : editor->getName();
-    QMessageBox::warning(this, tr("Error Saving File"), tr("An error occurred when saving <b>%1</b><br><br>Error: %2").arg(name, qt_error_string(error)));
+
+    // Map error code to human-readable string
+    QString errorString;
+    switch (error) {
+        case QFileDevice::ReadError:        errorString = tr("Read error"); break;
+        case QFileDevice::WriteError:       errorString = tr("Write error"); break;
+        case QFileDevice::FatalError:       errorString = tr("Fatal error"); break;
+        case QFileDevice::ResourceError:    errorString = tr("Resource error"); break;
+        case QFileDevice::OpenError:        errorString = tr("Open error"); break;
+        case QFileDevice::AbortError:       errorString = tr("Abort error"); break;
+        case QFileDevice::TimeOutError:     errorString = tr("Timeout error"); break;
+        case QFileDevice::UnspecifiedError: errorString = tr("Unspecified error"); break;
+        case QFileDevice::RemoveError:      errorString = tr("Remove error"); break;
+        case QFileDevice::RenameError:      errorString = tr("Rename error"); break;
+        case QFileDevice::PositionError:    errorString = tr("Position error"); break;
+        case QFileDevice::ResizeError:      errorString = tr("Resize error"); break;
+        case QFileDevice::PermissionsError: errorString = tr("Permissions error"); break;
+        case QFileDevice::CopyError:        errorString = tr("Copy error"); break;
+        default:                            errorString = tr("Unknown error (%1)").arg(static_cast<int>(error)); break;
+    }
+
+    QMessageBox::warning(this, tr("Error Saving File"),
+        tr("An error occurred when saving <b>%1</b><br><br>Error: %2").arg(name, errorString));
 }
 
 void MainWindow::showEditorZoomLevelIndicator()
