@@ -86,6 +86,8 @@ private slots:
 
     void changeTab(int index);
 
+    void on_buttonFindInFilesSelector_clicked();
+
 private:
     QString findString();
     void prepareToPerformSearch(bool replace=false);
