@@ -23,6 +23,8 @@
 #include "ui_PreferencesDialog.h"
 #include "ScintillaNext.h"
 
+#include <QButtonGroup>
+#include <QFileDialog>
 #include <QMessageBox>
 
 
@@ -99,6 +101,47 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
 
     MapSettingToCheckBox(ui->checkBoxHighlightURLs, &ApplicationSettings::urlHighlighting, &ApplicationSettings::setURLHighlighting, &ApplicationSettings::urlHighlightingChanged);
     MapSettingToCheckBox(ui->checkBoxShowLineNumbers, &ApplicationSettings::showLineNumbers, &ApplicationSettings::setShowLineNumbers, &ApplicationSettings::showLineNumbersChanged);
+
+
+    QButtonGroup *buttonGroup = new QButtonGroup(this);
+    buttonGroup->addButton(ui->radioFollowCurrentDirectory, ApplicationSettings::FollowCurrentDocument);
+    buttonGroup->addButton(ui->radioLastUsedDirectory, ApplicationSettings::RememberLastUsed);
+    buttonGroup->addButton(ui->radioHardCoded, ApplicationSettings::HardCoded);
+
+    connect(buttonGroup, &QButtonGroup::idClicked, this, [=](int id) {
+        ApplicationSettings::DefaultDirectoryBehaviorEnum e = static_cast<ApplicationSettings::DefaultDirectoryBehaviorEnum>(id);
+        settings->setDefaultDirectoryBehavior(e);
+    });
+
+    connect(ui->radioHardCoded, &QRadioButton::toggled, this, [=](bool checked){
+        ui->btnSelectHardCodedPath->setEnabled(checked);
+        ui->txtHardCodedPath->setEnabled(checked);
+    });
+
+    connect(ui->btnSelectHardCodedPath, &QToolButton::clicked, this, [=]() {
+        QString dir = QFileDialog::getExistingDirectory(this, tr("Default Directory"));
+        if (dir.isEmpty()) return; // user cancelled
+
+        settings->setDefaultDirectory(QDir::fromNativeSeparators(dir));
+        ui->txtHardCodedPath->setText(QDir::toNativeSeparators(dir));
+    });
+
+    connect(ui->txtHardCodedPath, &QLineEdit::editingFinished, this, [=]() {
+        QString dir = ui->txtHardCodedPath->text();
+        settings->setDefaultDirectory(QDir::fromNativeSeparators(dir));
+        ui->txtHardCodedPath->setText(QDir::toNativeSeparators(dir));
+    });
+
+    if (auto b = buttonGroup->button(settings->defaultDirectoryBehavior())) {
+        b->setChecked(true);
+    }
+
+    if (settings->defaultDirectoryBehavior() == ApplicationSettings::HardCoded) {
+        ui->txtHardCodedPath->setText((QDir::toNativeSeparators(settings->defaultDirectory())));
+    }
+    else {
+        ui->txtHardCodedPath->setText(QString());
+    }
 }
 
 PreferencesDialog::~PreferencesDialog()

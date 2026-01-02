@@ -19,6 +19,7 @@
 
 #include "MainWindow.h"
 #include "BookMarkDecorator.h"
+#include "DefaultDirectoryManager.h"
 #include "MarkerAppDecorator.h"
 #include "URLFinder.h"
 #include "SessionManager.h"
@@ -103,6 +104,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     applyCustomShortcuts();
 
     qInfo("setupUi Completed");
+
+    defaultDirectoryManager = new DefaultDirectoryManager(this, app->getSettings(), this);
 
     connect(this, &MainWindow::aboutToClose, this, &MainWindow::saveSettings);
 
@@ -1057,8 +1060,8 @@ void MainWindow::openFileList(const QStringList &fileNames)
     if (fileNames.size() == 0)
         return;
 
+    QList<ScintillaNext *> openedEditors;
     ScintillaNext *initialEditor = getInitialEditor();
-    const ScintillaNext *mostRecentEditor = Q_NULLPTR;
 
     for (const QString &filePath : fileNames) {
         qInfo("%s", qUtf8Printable(filePath));
@@ -1089,13 +1092,13 @@ void MainWindow::openFileList(const QStringList &fileNames)
         }
 
         if (editor) {
-            mostRecentEditor = editor;
+            openedEditors.append(editor);
         }
     }
 
     // If any were successful, switch to the last one
-    if (mostRecentEditor) {
-        dockedEditor->switchToEditor(mostRecentEditor);
+    if (!openedEditors.empty()) {
+        dockedEditor->switchToEditor(openedEditors.last());
     }
 
     if (initialEditor) {
@@ -1136,16 +1139,12 @@ bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors
 
 void MainWindow::openFileDialog()
 {
-    QString dialogDir;
     const QString filter = app->getFileDialogFilter();
-    const ScintillaNext *editor = currentEditor();
 
-    // Use the path if possible
-    if (editor->isFile()) {
-        dialogDir = editor->getPath();
-    }
+    QStringList fileNames = FileDialogHelpers::getOpenFileNames(this, QString(), defaultDirectoryManager->getDefaultDirectory(), filter);
 
-    QStringList fileNames = FileDialogHelpers::getOpenFileNames(this, QString(), dialogDir, filter);
+    if (!fileNames.empty())
+        emit fileDialogAccepted(fileNames.last());
 
     openFileList(fileNames);
 }
@@ -1157,15 +1156,7 @@ void MainWindow::openFile(const QString &filePath)
 
 void MainWindow::openFolderAsWorkspaceDialog()
 {
-    QString dialogDir;
-    const ScintillaNext *editor = currentEditor();
-
-    // Use the path if possible
-    if (editor->isFile()) {
-        dialogDir = editor->getPath();
-    }
-
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Folder as Workspace"), dialogDir, QFileDialog::ShowDirsOnly);
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Folder as Workspace"), defaultDirectoryManager->getDefaultDirectory(), QFileDialog::ShowDirsOnly);
 
     setFolderAsWorkspacePath(dir);
 }
@@ -1335,21 +1326,17 @@ bool MainWindow::saveFile(ScintillaNext *editor)
 
 bool MainWindow::saveCurrentFileAsDialog()
 {
-    QString dialogDir;
     const QString filter = app->getFileDialogFilter();
     ScintillaNext *editor = currentEditor();
 
-    // Use the file path if possible
-    if (editor->isFile()) {
-        dialogDir = editor->getFilePath();
-    }
-
     QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
-    QString fileName = FileDialogHelpers::getSaveFileName(this, QString(), dialogDir, filter, &selectedFilter);
+    QString fileName = FileDialogHelpers::getSaveFileName(this, QString(), defaultDirectoryManager->getDefaultDirectory(), filter, &selectedFilter);
 
     if (fileName.size() == 0) {
         return false;
     }
+
+    emit fileDialogAccepted(fileName);
 
     // TODO: distinguish between the above case (i.e. the user cancels the dialog) and a failure
     // calling editor->saveAs() as it might fail.
@@ -1379,21 +1366,17 @@ bool MainWindow::saveFileAs(ScintillaNext *editor, const QString &fileName)
 
 bool MainWindow::saveCopyAsDialog()
 {
-    QString dialogDir;
     const QString filter = app->getFileDialogFilter();
-    const ScintillaNext* editor = currentEditor();
+    const QString languageName = currentEditor()->languageName;
 
-    // Use the file path if possible
-    if (editor->isFile()) {
-        dialogDir = editor->getFilePath();
-    }
-
-    QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
-    QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Save a Copy As"), dialogDir, filter, &selectedFilter);
+    QString selectedFilter = app->getFileDialogFilterForLanguage(languageName);
+    const QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Save a Copy As"), defaultDirectoryManager->getDefaultDirectory(), filter, &selectedFilter);
 
     if (fileName.size() == 0) {
         return false;
     }
+
+    emit fileDialogAccepted(fileName);
 
     return saveCopyAs(fileName);
 }
@@ -1463,11 +1446,13 @@ void MainWindow::renameFile()
     if (editor->isFile()) {
         const QString filter = app->getFileDialogFilter();
         QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
-        QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath(), filter, &selectedFilter);
+        QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), defaultDirectoryManager->getDefaultDirectory(), filter, &selectedFilter);
 
         if (fileName.isEmpty()) {
             return;
         }
+
+        emit fileDialogAccepted(fileName);
 
         // TODO
         // The new fileName might be to one of the existing editors.
