@@ -24,6 +24,7 @@
 #include <QObject>
 #include <QSettings>
 #include <QString>
+#include <QMetaEnum>
 
 
 template<typename T>
@@ -68,7 +69,13 @@ class ApplicationSettings : public QSettings
 public:
     explicit ApplicationSettings(QObject *parent = nullptr);
 
-public:
+    enum DefaultDirectoryBehaviorEnum {
+        FollowCurrentDocument,
+        RememberLastUsed,
+        HardCoded
+    };
+    Q_ENUM(DefaultDirectoryBehaviorEnum)
+
     template <typename T>
     T get(const char *key, const T &defaultValue) const
     { return value(QLatin1String(key), defaultValue).template value<T>(); }
@@ -81,7 +88,6 @@ public:
     void set(const ApplicationSetting<T> &setting, const T &value)
     { setValue(QLatin1String(setting.key()), value); }
 
-public:
     DEFINE_SETTING(ShowMenuBar, showMenuBar, bool)
     DEFINE_SETTING(ShowToolBar, showToolBar, bool)
     DEFINE_SETTING(ShowTabBar, showTabBar, bool)
@@ -96,6 +102,9 @@ public:
     DEFINE_SETTING(RestorePreviousSession, restorePreviousSession, bool)
     DEFINE_SETTING(RestoreUnsavedFiles, restoreUnsavedFiles, bool)
     DEFINE_SETTING(RestoreTempFiles, restoreTempFiles, bool)
+
+    DEFINE_SETTING(DefaultDirectoryBehavior, defaultDirectoryBehavior, DefaultDirectoryBehaviorEnum)
+    DEFINE_SETTING(DefaultDirectory, defaultDirectory, QString)
 
     DEFINE_SETTING(Translation, translation, QString)
 
