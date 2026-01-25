@@ -364,6 +364,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         showFindReplaceDialog(FindReplaceDialog::REPLACE_TAB);
     });
 
+    connect(ui->actionFindInFiles, &QAction::triggered, this, [=]() {
+        showFindReplaceDialog(FindReplaceDialog::REPLACE_TAB);
+    });
+
     connect(ui->actionGoToLine, &QAction::triggered, this, [=]() {
         ScintillaNext *editor = currentEditor();
         const int currentLine = editor->lineFromPosition(editor->currentPos()) + 1;

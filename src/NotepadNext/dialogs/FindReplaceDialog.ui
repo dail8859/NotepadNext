@@ -7,8 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>325</height>
+    <height>350</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+    <size>
+      <width>600</width>
+      <height>350</height>
+    </size>
   </property>
   <property name="windowTitle">
    <string>Find</string>
@@ -283,6 +289,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="buttonReplaceAllInFiles">
+         <property name="text">
+          <string>Replace All in Files</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="buttonFindAllInDocuments">
          <property name="text">
           <string>Find All in All &amp;Opened Documents</string>
@@ -328,7 +341,7 @@
       </layout>
      </item>
      <item row="2" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0">
+      <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,0,0,0">
        <property name="leftMargin">
         <number>11</number>
        </property>
@@ -419,6 +432,27 @@
         </layout>
        </item>
        <item>
+        <widget class="QLabel" name="labelReplaceinFiles">
+         <property name="text">
+          <string>Path of directory containing files to be replaced:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboReplaceInFiles">
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonFindInFilesSelector">
+         <property name="text">
+          <string>Select Containing Directory</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -483,7 +517,6 @@
   <tabstop>buttonCount</tabstop>
   <tabstop>buttonReplace</tabstop>
   <tabstop>buttonReplaceAll</tabstop>
-  <tabstop>buttonReplaceAllInDocuments</tabstop>
   <tabstop>buttonFindAllInDocuments</tabstop>
   <tabstop>buttonFindAllInCurrent</tabstop>
   <tabstop>buttonClose</tabstop>
