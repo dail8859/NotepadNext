@@ -23,9 +23,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>783</width>
-        <height>545</height>
+        <y>-99</y>
+        <width>769</width>
+        <height>644</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -209,6 +209,50 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Default Directory</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QRadioButton" name="radioFollowCurrentDirectory">
+            <property name="text">
+             <string>Follow Current Document</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioLastUsedDirectory">
+            <property name="text">
+             <string>Last Used Directory</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QRadioButton" name="radioHardCoded">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="txtHardCodedPath"/>
+            </item>
+            <item>
+             <widget class="QToolButton" name="btnSelectHardCodedPath">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -270,7 +314,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>792</x>
-     <y>553</y>
+     <y>586</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -286,7 +330,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>792</x>
-     <y>553</y>
+     <y>586</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

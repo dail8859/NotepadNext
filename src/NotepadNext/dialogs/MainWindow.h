@@ -41,6 +41,7 @@ class Settings;
 class QuickFindWidget;
 class ZoomEventWatcher;
 class Converter;
+class DefaultDirectoryManager;
 
 class MainWindow : public QMainWindow
 {
@@ -129,6 +130,7 @@ public slots:
 signals:
     void editorActivated(ScintillaNext *editor);
     void aboutToClose();
+    void fileDialogAccepted(const QString &filePath);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -168,6 +170,7 @@ private:
     //NppImporter *npp;
 
     MacroManager macroManager;
+    DefaultDirectoryManager *defaultDirectoryManager;
 
     ZoomEventWatcher *zoomEventWatcher;
     int zoomLevel = 0;
