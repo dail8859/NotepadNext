@@ -354,10 +354,16 @@ static const char *getobjname (Proto *p, int lastpc, int reg,
 */
 static void kname (Proto *p, int pc, int c, const char **name) {
   if (ISK(c)) {  /* is 'c' a constant? */
-    TValue *kvalue = &p->k[INDEXK(c)];
-    if (ttisstring(kvalue)) {  /* literal constant? */
-      *name = svalue(kvalue);  /* it is its own name */
-      return;
+    int idx = INDEXK(c);
+    /* is 'idx' a valid index? 
+    * fix for potential oob read via loading malicious binary chunk 
+    */
+    if (idx >= 0 && idx < p->sizek) {
+      TValue *kvalue = &p->k[idx];
+      if (ttisstring(kvalue)) {  /* literal constant? */
+        *name = svalue(kvalue);  /* it is its own name */
+        return;
+      }
     }
     /* else no reasonable name found */
   }
