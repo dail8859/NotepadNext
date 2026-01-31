@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-24.04, windows-latest, macos-latest]
-        qt_version: ["6.5", "6.8", "6.9"]
+        qt_version: ["6.5", "6.8", "6.10"]
 
     runs-on: ${{ matrix.os }}
 
