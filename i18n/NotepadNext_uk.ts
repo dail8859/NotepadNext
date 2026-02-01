@@ -928,7 +928,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1425"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1408"/>
         <source>Export As</source>
         <translation>Експортувати як</translation>
     </message>
@@ -1494,7 +1494,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="939"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="714"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="717"/>
         <source>Start Recording</source>
         <translation>Почати запис</translation>
     </message>
@@ -2031,206 +2031,206 @@
         <translation>Видалити рядки з закладок</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="372"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="375"/>
         <source>Go to line</source>
         <translation>Перейти до рядку</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="372"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="375"/>
         <source>Line Number (1 - %1)</source>
         <translation>Номер рядку (1 - %1)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="705"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="708"/>
         <source>Stop Recording</source>
         <translation>Зупинити запис</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="810"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="813"/>
         <source>Debug Info</source>
         <translation>Інформація про налагодження</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1013"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1016"/>
         <source>New %1</source>
         <translation>Новий %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1073"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1076"/>
         <source>Create File</source>
         <translation>Створити файл</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1073"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1076"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; не існує. Бажаєте створити його ?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1114"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1217"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1117"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1208"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Зберегти файл &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1115"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1218"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1118"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1209"/>
         <source>Save File</source>
         <translation>Зберегти файл</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1168"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1159"/>
         <source>Open Folder as Workspace</source>
         <translation>Відкрити каталог як робочий простір</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1191"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1869"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1182"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1854"/>
         <source>Reload File</source>
         <translation>Перезавантажити файл</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1191"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1182"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>Ви дійсно хочете перезавантажити файл&lt;b&gt;%1&lt;/b&gt;? Всі не збережені зміни будут втрачені.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1392"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1373"/>
         <source>Save a Copy As</source>
         <translation>Зберегти копію як</translation>
     </message>
     <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1449"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1466"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1481"/>
         <source>Rename</source>
         <translation>Перейменувати</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1481"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1466"/>
         <source>Name:</source>
         <translation>Назва:</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1501"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1486"/>
         <source>Delete File</source>
         <translation>Видалити файл</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1501"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1486"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>Ви дійсно хочете перемістити файл &lt;b&gt;%1&lt;/b&gt; до смітника ?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1511"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1496"/>
         <source>Error Deleting File</source>
         <translation>Помилка видалення файлу</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1511"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1496"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Під час видалення щось пішло не так &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1608"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1593"/>
         <source>Administrator</source>
         <translation>Адміністратор</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1869"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1854"/>
         <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; був змінений. Бажаєте завантажити актуальну версію?</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1895"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
         <source>Read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1896"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1881"/>
         <source>Write error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1897"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1882"/>
         <source>Fatal error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1898"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1883"/>
         <source>Resource error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1899"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1884"/>
         <source>Open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1900"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1885"/>
         <source>Abort error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1901"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1886"/>
         <source>Timeout error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1902"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1887"/>
         <source>Unspecified error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1903"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1888"/>
         <source>Remove error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1904"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1889"/>
         <source>Rename error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1905"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1890"/>
         <source>Position error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1906"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1891"/>
         <source>Resize error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1907"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1892"/>
         <source>Permissions error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1908"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1893"/>
         <source>Copy error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1909"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1894"/>
         <source>Unknown error (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1912"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1897"/>
         <source>Error Saving File</source>
         <translation>Помилка збереження файлу</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1913"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1898"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Під час збереження виникла помилка&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Помилка: %2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1919"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1904"/>
         <source>Zoom: %1%</source>
         <translation>Масштаб: %1%</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2086"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2071"/>
         <source>No updates are available at this time.</source>
         <translation>На цю мить не має ніяких оновлень.</translation>
     </message>
@@ -2318,12 +2318,33 @@
         <translation>Показувати кількість рядків</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="233"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="214"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="122"/>
+        <source>Default Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="220"/>
+        <source>Follow Current Document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="227"/>
+        <source>Last Used Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="246"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="277"/>
         <source>TextLabel</source>
         <translation>Текстове поле</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="245"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="289"/>
         <source>An application restart is required to apply certain settings.</source>
         <translation>Для застосування деяких змін потрібно перезапустити програму.</translation>
     </message>
@@ -2358,37 +2379,37 @@
         <translation>Об&apos;єднувати результати пошуку</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="54"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="56"/>
         <source>Warning</source>
         <translation>Попередження</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="54"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="56"/>
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
         <translation>Ця функція є експериментальною, тому її не можна вважати безпечною. Її використання може призвести до втрати даних. Використовуйте цю опцію на власний розсуд.</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="83"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="85"/>
         <source>System Default</source>
         <translation>Системний</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="84"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="86"/>
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="85"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="87"/>
         <source>Linux (LF)</source>
         <translation>Linux (LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="86"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="88"/>
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="142"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="185"/>
         <source>&lt;System Default&gt;</source>
         <translation>&lt;Мова системи&gt;</translation>
     </message>
