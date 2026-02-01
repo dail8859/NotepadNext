@@ -1844,7 +1844,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1425"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1408"/>
         <source>Export As</source>
         <translation>导出为</translation>
     </message>
@@ -1967,7 +1967,7 @@
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="939"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="714"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="717"/>
         <source>Start Recording</source>
         <translation>开始录制</translation>
     </message>
@@ -2058,207 +2058,207 @@
         <translation>打开文件夹为工作区...</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="372"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="375"/>
         <source>Go to line</source>
         <translation>转跳到行</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="372"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="375"/>
         <source>Line Number (1 - %1)</source>
         <translation>行号（1 - %1）</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="705"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="708"/>
         <source>Stop Recording</source>
         <translation>停止录制</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="810"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="813"/>
         <source>Debug Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1013"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1016"/>
         <source>New %1</source>
         <translatorcomment>用作新建空白文件的标题</translatorcomment>
         <translation>新文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1073"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1076"/>
         <source>Create File</source>
         <translation>新建文件</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1073"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1076"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; 尚不存在，你想要新建一个吗？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1114"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1217"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1117"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1208"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>保存文件 &lt;b&gt;%1&lt;/b&gt;？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1115"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1218"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1118"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1209"/>
         <source>Save File</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1168"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1159"/>
         <source>Open Folder as Workspace</source>
         <translation>打开文件夹作为工作区</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1191"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1869"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1182"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1854"/>
         <source>Reload File</source>
         <translation>重新加载文件</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1191"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1182"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>你确定要重新加载 &lt;b&gt;%1&lt;/b&gt;？任何未保存的修改都会丢失。</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1608"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1593"/>
         <source>Administrator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1869"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1854"/>
         <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1895"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1880"/>
         <source>Read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1896"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1881"/>
         <source>Write error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1897"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1882"/>
         <source>Fatal error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1898"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1883"/>
         <source>Resource error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1899"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1884"/>
         <source>Open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1900"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1885"/>
         <source>Abort error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1901"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1886"/>
         <source>Timeout error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1902"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1887"/>
         <source>Unspecified error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1903"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1888"/>
         <source>Remove error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1904"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1889"/>
         <source>Rename error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1905"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1890"/>
         <source>Position error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1906"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1891"/>
         <source>Resize error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1907"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1892"/>
         <source>Permissions error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1908"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1893"/>
         <source>Copy error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1909"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1894"/>
         <source>Unknown error (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1912"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1897"/>
         <source>Error Saving File</source>
         <translation>保存文件时出错</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1392"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1373"/>
         <source>Save a Copy As</source>
         <translation>副本另存为</translation>
     </message>
     <message>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1449"/>
         <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1466"/>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1481"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1481"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1466"/>
         <source>Name:</source>
         <translation>宏名：</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1501"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1486"/>
         <source>Delete File</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1501"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1486"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>你确定要将 &lt;b&gt;%1&lt;/b&gt; 移至回收站？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1511"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1496"/>
         <source>Error Deleting File</source>
         <translation>删除文件时出错</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1511"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1496"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>删除  &lt;b&gt;%1&lt;/b&gt; 时出错了？</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1913"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1898"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>保存 &lt;b&gt;%1&lt;/b&gt; 时发生了错误&lt;br&gt;&lt;br&gt;错误：%2</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1919"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="1904"/>
         <source>Zoom: %1%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2086"/>
+        <location filename="../src/NotepadNext/dialogs/MainWindow.cpp" line="2071"/>
         <source>No updates are available at this time.</source>
         <translation>本次无可用更新。</translation>
     </message>
@@ -2346,12 +2346,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="233"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="214"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="122"/>
+        <source>Default Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="220"/>
+        <source>Follow Current Document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="227"/>
+        <source>Last Used Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="246"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="277"/>
         <source>TextLabel</source>
         <translation type="unfinished">文本标签</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="245"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="289"/>
         <source>An application restart is required to apply certain settings.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2386,37 +2407,37 @@
         <translation>结合搜索结果</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="54"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="56"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="54"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="56"/>
         <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
         <translation>本功能是实验性的。对于关键性的重要工作开启本功能并不安全，可能导致数据丢失，使用时风险自负。</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="83"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="85"/>
         <source>System Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="84"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="86"/>
         <source>Windows (CR LF)</source>
         <translation type="unfinished">Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="85"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="87"/>
         <source>Linux (LF)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="86"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="88"/>
         <source>Macintosh (CR)</source>
         <translation type="unfinished">Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="142"/>
+        <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="185"/>
         <source>&lt;System Default&gt;</source>
         <translation type="unfinished"></translation>
     </message>
