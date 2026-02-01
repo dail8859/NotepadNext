@@ -1,0 +1,38 @@
+name: Create Tarball
+
+on:
+  release:
+     types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+      with:
+        submodules: 'true'
+        ref: ${{ github.ref }}
+
+    - name: Get the tag name
+      id: get_tag_name
+      run: echo "tagname=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+    - name: Create tarball
+      id: package_generator
+      run: |
+        export PACKAGE_NAME=NotepadNext-${{ steps.get_tag_name.outputs.tagname }}
+        export RELEASE_TARBALL=${PACKAGE_NAME}.tar.gz
+        git ls-files --recurse-submodules | tar caf ${RELEASE_TARBALL} --xform s:^:${PACKAGE_NAME}/: --verbatim-files-from -T-
+        echo "filename=${RELEASE_TARBALL}" >> $GITHUB_OUTPUT
+
+    - name: Upload to release
+      uses: JasonEtco/upload-to-release@master
+      with:
+        args: ${{ steps.package_generator.outputs.filename }} application/gzip
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
