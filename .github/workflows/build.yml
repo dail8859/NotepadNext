@@ -131,21 +131,6 @@ jobs:
           name: NotepadNext-Linux-Qt${{ matrix.qt_version }}-AppImage
           path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.AppImage
 
-      - name: Create source tarball
-        if: runner.os == 'Linux'
-        run: |
-              rm -rf build
-              export PACKAGE_NAME=NotepadNext-${{ github.ref_name }}
-              export RELEASE_TARBALL=${PACKAGE_NAME}.tar.gz
-              git ls-files --recurse-submodules | tar caf ${RELEASE_TARBALL} --xform s:^:${PACKAGE_NAME}/: --verbatim-files-from -T-
-
-      - name: Upload source tarball
-        uses: actions/upload-artifact@v6
-        if: runner.os == 'Linux'
-        with:
-          name: NotepadNext-Source-Tarball
-          path: ${{ github.workspace }}/${{ env.RELEASE_TARBALL }}
-
   github:
     name: Draft GitHub Release
     runs-on: ubuntu-latest
@@ -159,6 +144,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
+        with:
+          submodules: true
 
       - name: Create Draft Release
         run: |
@@ -191,3 +178,12 @@ jobs:
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-Source-Tarball/NotepadNext-${{ github.ref_name }}.tar.gz
 
+      - name: Create Source Tarball
+        run: |
+              export PACKAGE_NAME=NotepadNext-${{ github.ref_name }}
+              export RELEASE_TARBALL=${PACKAGE_NAME}.tar.gz
+              git ls-files --recurse-submodules | tar caf ${RELEASE_TARBALL} --xform s:^:${PACKAGE_NAME}/: --verbatim-files-from -T-
+
+      - name: Upload Source Tarball
+        run: |
+          gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}.tar.gz
