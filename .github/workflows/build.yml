@@ -179,7 +179,6 @@ jobs:
           cd ..
           gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}-win64.zip
 
-
       - name: Upload Linux AppImage
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt$QT_RELEASE_VER-AppImage/NotepadNext-${{ github.ref_name }}-x86_64.AppImage
