@@ -174,10 +174,6 @@ jobs:
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt$QT_RELEASE_VER/NotepadNext-${{ github.ref_name }}.dmg
 
-      - name: Upload Source Tarball
-        run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-Source-Tarball/NotepadNext-${{ github.ref_name }}.tar.gz
-
       - name: Create Source Tarball
         run: |
               export PACKAGE_NAME=NotepadNext-${{ github.ref_name }}
