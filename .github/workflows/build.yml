@@ -144,6 +144,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
+        with:
+          submodules: true
 
       - name: Create Draft Release
         run: |
@@ -164,7 +166,6 @@ jobs:
           cd ..
           gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}-win64.zip
 
-
       - name: Upload Linux AppImage
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt$QT_RELEASE_VER-AppImage/NotepadNext-${{ github.ref_name }}-x86_64.AppImage
@@ -173,3 +174,12 @@ jobs:
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt$QT_RELEASE_VER/NotepadNext-${{ github.ref_name }}.dmg
 
+      - name: Create Source Tarball
+        run: |
+              export PACKAGE_NAME=NotepadNext-${{ github.ref_name }}
+              export RELEASE_TARBALL=${PACKAGE_NAME}.tar.gz
+              git ls-files --recurse-submodules | tar caf ${RELEASE_TARBALL} --xform s:^:${PACKAGE_NAME}/: --verbatim-files-from -T-
+
+      - name: Upload Source Tarball
+        run: |
+          gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}.tar.gz
