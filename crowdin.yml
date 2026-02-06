@@ -1,3 +1,5 @@
 files:
   - source: /i18n/NotepadNext_en.ts
     translation: /i18n/NotepadNext_%locale%.ts
+bundles:
+  - 3
