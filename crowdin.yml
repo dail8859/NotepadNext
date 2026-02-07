@@ -1,3 +1,3 @@
 files:
   - source: /i18n/NotepadNext_en.ts
-    translation: /i18n/NotepadNext_%locale_with_underscore%.ts
+    translation: /i18n/NotepadNext_%two_letters_code%.ts
