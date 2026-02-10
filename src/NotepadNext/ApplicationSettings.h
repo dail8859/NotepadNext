@@ -44,7 +44,7 @@ public:
     {}
 
     inline T getDefault() const { return mCallable ? mCallable() : mDefault ; }
-    inline const char * const key() const { return mKey; }
+    inline const char * key() const { return mKey; }
 
 private:
     const char * const mKey;
