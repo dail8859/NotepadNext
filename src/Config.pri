@@ -44,3 +44,8 @@ msvc {
 
 msvc:QMAKE_CXXFLAGS += /guard:cf
 msvc:QMAKE_LFLAGS += /guard:cf
+
+unix:!macx {
+    QMAKE_CXXFLAGS += -fstack-protector-strong -D_FORTIFY_SOURCE=2
+    QMAKE_LFLAGS += -Wl,-z,relro -Wl,-z,now
+}
