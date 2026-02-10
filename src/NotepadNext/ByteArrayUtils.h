@@ -18,9 +18,36 @@
 #pragma once
 
 #include <QByteArray>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QByteArrayView>
+#else
+#include <QtGlobal>
+#include <cstring>
+
+// WARNING: Dirty QT5 compat. Tested on Debian 13.
+class QByteArrayView
+{
+public:
+    QByteArrayView() : m_data(nullptr), m_size(0) {}
+    QByteArrayView(const char* data, qsizetype size) : m_data(data), m_size(size) {}
+    QByteArrayView(const QByteArray& ba) : m_data(ba.constData()), m_size(ba.size()) {}
+    const char* data() const { return m_data; }
+    qsizetype size() const { return m_size; }
+    bool isEmpty() const { return m_size == 0; }
+    bool operator==(const QByteArrayView& other) const
+    {
+        return m_size == other.m_size && (m_data == other.m_data || (m_size > 0 && std::memcmp(m_data, other.m_data, m_size) == 0));
+    }
+    bool operator!=(const QByteArrayView& other) const { return !(*this == other); }
+
+private:
+    const char* m_data;
+    qsizetype m_size;
+};
+#endif
 #include <QList>
 #include <QSet>
+#include <algorithm>
 #include <cstring>
 #include <unordered_set>
 
