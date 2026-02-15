@@ -159,7 +159,7 @@
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="274"/>
         <source>Are you sure you want to cancel the download? This is a mandatory update, exiting now will close the application</source>
-        <translation>Vuoidavvero annullare il download? Questo è un aggiornamento obbligatorio, uscire ora chiuderà l&apos;applicazione.</translation>
+        <translation>Vuoi davvero annullare il download? Questo è un aggiornamento obbligatorio, uscire ora chiuderà l&apos;applicazione.</translation>
     </message>
     <message>
         <location filename="../src/QSimpleUpdater/src/Downloader.cpp" line="332"/>
@@ -679,7 +679,7 @@
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="56"/>
         <source>Language:</source>
-        <translation>Lingua:</translation>
+        <translation>Linguaggio:</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/docks/LanguageInspectorDock.ui" line="70"/>
@@ -1019,7 +1019,7 @@
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="306"/>
         <source>Language</source>
-        <translation>Lingua</translation>
+        <translation>Linguaggio</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/MainWindow.ui" line="311"/>
@@ -2327,17 +2327,17 @@
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="214"/>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.cpp" line="122"/>
         <source>Default Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Directory predefinita</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="220"/>
         <source>Follow Current Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Segui documento corrente</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="227"/>
         <source>Last Used Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Ultima directory utilizzata</translation>
     </message>
     <message>
         <location filename="../src/NotepadNext/dialogs/PreferencesDialog.ui" line="246"/>
