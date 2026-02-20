@@ -332,6 +332,10 @@ void ScintillaNext::reload()
         return;
     }
 
+    const int line = firstVisibleLine();
+    const int caret = selectionNCaret(mainSelection());
+    const int anchor = selectionNAnchor(mainSelection());
+
     // Remove all the text
     {
         const QSignalBlocker blocker(this);
@@ -346,17 +350,21 @@ void ScintillaNext::reload()
     QFile f(fileInfo.canonicalFilePath());
     bool readSuccessful = readFromDisk(f);
 
-    if (readSuccessful) {
-        updateTimestamp();
-        setSavePoint();
-
-        // If this was a temporary file, make sure it is not any more
-        setTemporary(false);
-        
-        emit reloaded();
+    if (!readSuccessful) {
+        return;
     }
 
-    return;
+    updateTimestamp();
+    setSavePoint();
+
+    // If this was a temporary file, make sure it is not any more
+    if (isTemporary())
+        setTemporary(false);
+
+    scrollVertical(line, 0);
+    setSelection(caret, anchor);
+
+    emit reloaded();
 }
 
 void ScintillaNext::omitModifications()
