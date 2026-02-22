@@ -24,11 +24,21 @@ winget install dail8859.NotepadNext
 ```
 
 ## Linux
-Linux packages can be obtained by downloading the stand-alone AppImage on the [release](https://github.com/dail8859/NotepadNext/releases) page or by installing the [flatpak](https://flathub.org/apps/details/com.github.dail8859.NotepadNext) by executing:
+Linux packages can be obtained using 2 methods:
+
+### AppImage 
+
+by downloading the stand-alone Appimage on the [release](https://github.com/dail8859/NotepadNext/releases) page
+
+### Flatpak
+<a href='https://flathub.org/en/apps/com.github.dail8859.NotepadNext'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
+
+or by executing:
 
 ```bash
 flatpak install flathub com.github.dail8859.NotepadNext
 ```
+
 
 ## MacOS
 MacOS disk images can be downloaded from the [release](https://github.com/dail8859/NotepadNext/releases) page.
