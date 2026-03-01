@@ -20,7 +20,7 @@ jobs:
 
       - name: Update App Version
         run: |
-          sed -i 's/APP_VERSION = ".*"/APP_VERSION = "${{ github.event.inputs.version }}"/' src/Version.pri
+          sed -i 's/^\([[:space:]]*VERSION[[:space:]]*\).*/\1${{ github.event.inputs.version }}/' CMakeLists.txt
 
       - name: Update Flatpak Version
         run: |

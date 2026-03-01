@@ -1,0 +1,16 @@
+<SAMI>
+<HEAD>
+<TITLE>EUC-KR.smi</TITLE>
+<STYLE TYPE="text/css">
+</STYLE>
+</HEAD>
+<BODY>
+<SYNC Start=0000><P>EUC-KR
+<SYNC Start=1000><P>EUC-KR은 KS X 1001와 KS X 1003을 사용하는 8비트 문자 인코딩으로, EUC의 일종이며 대표적인 한글 완성형 인코딩이기 때문에 보통 완성형이라고 불린다.
+<SYNC Start=2000><P>EUC-KR 인코딩은 다음과 같이 구성된다.
+<SYNC Start=3000><P>128보다 작은 바이트에 KS X 1003을 배당한다.
+<SYNC Start=4000><P>128보다 크거나 같은 바이트에 KS X 1001을 배당한다. 각 글자는 행과 열에 128을 더한 코드값을 사용하여 2바이트로 표현된다.
+<SYNC Start=5000><P>따라서 KS X 1001의 40-27에 배당된 "위"라는 글자는 EUC-KR에서 C0 A7라는 바이트 열로 표현된다.
+<SYNC Start=6000><P>KS X 1001에는 한글 채움 문자를 사용하여 규격의 문자 집합에 포함되지 않은 한글을 표현하는 확장 방법이 있지만, 대부분의 경우 이 방법은 EUC-KR에서 사용되지 않고 대신 CP949와 같은 다른 방법을 사용하여 KS X 1001 바깥의 현대 한글을 표현한다.
+</BODY>
+</SAMI>
