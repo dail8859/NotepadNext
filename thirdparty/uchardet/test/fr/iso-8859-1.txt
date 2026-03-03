@@ -1,0 +1,5 @@
+La norme ISO 8859-1, dont le nom complet est ISO/CEI 8859-1, et qui est souvent appelée Latin-1 ou Europe occidentale, forme la première partie de la norme internationale ISO/CEI 8859, qui est une norme de l'Organisation internationale de normalisation pour le codage des caractères en informatique.
+
+Elle définit ce qu'elle appelle l'alphabet latin numéro 1, qui consiste en 191 caractères de l'alphabet latin, chacun d'entre eux étant codé par un octet (soit 8 bits). ISO 8859-1 reprend le codage des caractères imprimables d'US-ASCII.
+
+Dans les pays occidentaux, cette norme était utilisée par de nombreux systèmes d'exploitation, dont UNIX, Windows ou AmigaOS. Elle a donné lieu à quelques extensions et adaptations, dont Windows-1252 et ISO 8859-15. La distinction entre ASCII, ISO 8859-1, ISO 8859-15, Windows-1252 et MacRoman est une source de confusion parmi les développeurs de programmes informatiques. Le Multinational Character Set créé par Digital Equipment Corporation pour le terminal informatique VT220 est considéré comme à la fois l'ancêtre de l'ISO 8859-1 et de l'Unicode2. Aujourd'hui, son utilisation tend à décroître au profit de l'Unicode.

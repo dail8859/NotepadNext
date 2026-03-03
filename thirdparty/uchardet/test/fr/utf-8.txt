@@ -1,0 +1,14 @@
+UTF-8 (abréviation de l’anglais Universal Character Set Transformation Format -
+8 bits) est un codage de caractères informatiques conçu pour coder l’ensemble
+des caractères du « répertoire universel de caractères codés », initialement
+développé par l’ISO dans la norme internationale ISO/CEI 10646, aujourd’hui
+totalement compatible avec le standard Unicode, en restant compatible avec la
+norme ASCII limitée à l’anglais de base (et quelques autres langues beaucoup
+moins fréquentes), mais très largement répandue depuis des décennies.
+
+L’UTF-8 est utilisé par 82,2 % des sites web en décembre 20141. De par sa
+nature, UTF-8 est d’un usage de plus en plus courant sur Internet, et dans les
+systèmes devant échanger de l'information. Il s’agit également du codage le plus
+utilisé dans les systèmes GNU, Linux et compatibles pour gérer le plus
+simplement possible des textes et leurs traductions dans tous les systèmes
+d’écritures et tous les alphabets du monde.

@@ -1,0 +1,16 @@
+== Original Authors ==
+
+The original code is Mozilla Universal charset detector code.
+The initial developer of the Original Code is Netscape Communications Corporation.
+The initial developer of the C wrapper is BYVoid.
+
+== Maintainers ==
+
+BYVoid <byvoid.kcp@gmail.com>
+Jehan <jehan@girinstud.io>
+
+== Contributors ==
+
+You can obtain the full list of contributors to uchardet with the
+following git command in the source repository:
+$ git shortlog -s

@@ -16,6 +16,6 @@ jobs:
     - uses: codespell-project/actions-codespell@master
       with:
         check_filenames: true
-        path: ./src/NotepadNext
+        path: ./src
         skip: "*.lua,*.ui"
         ignore_words_list: "doubleclick,msdos"

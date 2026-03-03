@@ -1,0 +1,9 @@
+UTF-8（ユーティーエフはち、ユーティーエフエイト）はISO/IEC 10646 (UCS) とUnicodeで使える8ビット符号単位の文字符号化形式及び文字符号化スキーム。
+
+正式名称は、ISO/IEC 10646では “UCS Transformation Format 8”、Unicodeでは “Unicode Transformation Format-8” という。両者はISO/IEC 10646とUnicodeのコード重複範囲で互換性がある。RFCにも仕様がある[1]。
+
+2バイト目以降に「/」などのASCII文字が現れないように工夫されていることから、UTF-FSS (File System Safe) ともいわれる。旧名称はUTF-2。
+
+データ交換方式、ファイル形式として、一般的にUTF-8は使われる傾向にある。
+
+当初は、ベル研究所においてPlan 9で用いるエンコードとして、ロブ・パイクによる設計指針のもと、ケン・トンプソンによって考案された

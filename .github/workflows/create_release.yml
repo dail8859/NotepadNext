@@ -20,7 +20,7 @@ jobs:
 
       - name: Update App Version
         run: |
-          sed -i 's/APP_VERSION = ".*"/APP_VERSION = "${{ github.event.inputs.version }}"/' src/Version.pri
+          sed -i 's/^\([[:space:]]*VERSION[[:space:]]*\).*/\1${{ github.event.inputs.version }}/' CMakeLists.txt
 
       - name: Update Flatpak Version
         run: |
@@ -30,7 +30,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add src/Version.pri deploy/linux/com.github.dail8859.NotepadNext.metainfo.xml
+          git add CMakeLists.txt deploy/linux/com.github.dail8859.NotepadNext.metainfo.xml
           git commit -m "v${{ github.event.inputs.version }} release"
 
       - name: Tag commit
