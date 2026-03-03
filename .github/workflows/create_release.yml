@@ -30,7 +30,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add src/Version.pri deploy/linux/com.github.dail8859.NotepadNext.metainfo.xml
+          git add CMakeLists.txt deploy/linux/com.github.dail8859.NotepadNext.metainfo.xml
           git commit -m "v${{ github.event.inputs.version }} release"
 
       - name: Tag commit
