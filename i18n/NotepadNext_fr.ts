@@ -6,22 +6,22 @@
     <message>
       <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="14"/>
       <source>Dialog</source>
-      <translation type="unfinished">Dialog</translation>
+      <translation>Dialogue</translation>
     </message>
     <message>
       <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="26"/>
       <source>Please provide the user name and password for the download location.</source>
-      <translation type="unfinished">Please provide the user name and password for the download location.</translation>
+      <translation>Veuillez fournir le nom d'utilisateur et le mot de passe pour l'emplacement de téléchargement.</translation>
     </message>
     <message>
       <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="35"/>
       <source>&amp;User name:</source>
-      <translation type="unfinished">&amp;User name:</translation>
+      <translation>&amp;Nom d'utilisateur :</translation>
     </message>
     <message>
       <location filename="../src/QSimpleUpdater/src/AuthenticateDialog.ui" line="48"/>
       <source>&amp;Password:</source>
-      <translation type="unfinished">&amp;Password:</translation>
+      <translation>&amp;Mot de passe :</translation>
     </message>
   </context>
   <context>
@@ -29,27 +29,27 @@
     <message>
       <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="20"/>
       <source>Column Mode</source>
-      <translation type="unfinished">Column Mode</translation>
+      <translation>Mode colonne</translation>
     </message>
     <message>
       <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="32"/>
       <source>Text</source>
-      <translation type="unfinished">Text</translation>
+      <translation>Texte</translation>
     </message>
     <message>
       <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="47"/>
       <source>Numbers</source>
-      <translation type="unfinished">Numbers</translation>
+      <translation>Nombres</translation>
     </message>
     <message>
       <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="59"/>
       <source>Start:</source>
-      <translation type="unfinished">Start:</translation>
+      <translation>Début :</translation>
     </message>
     <message>
       <location filename="../src/NotepadNext/dialogs/ColumnEditorDialog.ui" line="76"/>
       <source>Step:</source>
-      <translation type="unfinished">Step:</translation>
+      <translation>Étape :</translation>
     </message>
   </context>
   <context>
@@ -57,7 +57,7 @@
     <message>
       <location filename="../src/NotepadNext/docks/DebugLogDock.ui" line="14"/>
       <source>Debug Log</source>
-      <translation type="unfinished">Debug Log</translation>
+      <translation>Journal de débogage</translation>
     </message>
   </context>
   <context>
