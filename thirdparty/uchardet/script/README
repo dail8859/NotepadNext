@@ -1,0 +1,63 @@
+# Supporting new or Updating languages #
+
+We generate statistical language data using Wikipedia as natural
+language text resource.
+
+Right now, we have automated scripts only to generate statistical data
+for single-byte encodings. Multi-byte encodings usually requires more
+in-depth knowledge of its specification.
+
+## New single-byte encoding ##
+
+Uchardet uses language data, and therefore rather than supporting a
+charset, we in fact support a couple (language, charset). So for
+instance if uchardet supports (French, ISO-8859-15), it should be able
+to recognize French text encoded in ISO-8859-15, but may fail at
+detecting ISO-8859-15 for non-supported languages.
+
+This is why, though less flexible, it also makes uchardet much more
+accurate than other detection system, as well as making it an efficient
+language recognition system.
+Since many single-byte charsets actually share the same layout (or very
+similar ones), it is actually impossible to have an accurate single-byte
+encoding detector for random text.
+
+Therefore you need to describe the language and the codepoint layouts of
+every charset you want to add support for.
+
+I recommend having a look at langs/fr.py which is heavily commented as
+a base of a new language description, and charsets/windows-1252.py as a
+base for a new charset layout (note that charset layouts can be shared
+between languages. If yours is already there, you have nothing to do).
+The important name in the charset file are:
+
+- `name`: an iconv-compatible name.
+- `charmap`: fill it with CTR (control character), SYM (symbol), NUM
+             (number), LET (letter), ILL (illegal codepoint).
+
+## Tools ##
+
+You must install Python 3 and the [`Wikipedia` Python
+tool](https://github.com/goldsmith/Wikipedia).
+
+## Run script ##
+
+Let's say you added (or modified) support for French (`fr`), run:
+
+> ./BuildLangModel.py fr --max-page=100 --max-depth=4
+
+The options can be changed to any value. Bigger values mean the script
+will process more data, so more processing time now, but uchardet may
+possibly be more accurate in the end.
+
+## Updating core code ##
+
+If you were only updating data for a language model, you have nothing
+else to do. Just build `uchardet` again and test it.
+
+If you were creating new models though, you will have to add these in
+src/nsSBCSGroupProber.cpp and src/nsSBCharSetProber.h, and increase the
+value of `NUM_OF_SBCS_PROBERS` in src/nsSBCSGroupProber.h.
+Finally add the new file in src/CMakeLists.txt.
+
+I will be looking to make this step more straightforward in the future.

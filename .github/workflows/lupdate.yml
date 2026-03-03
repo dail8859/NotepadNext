@@ -1,9 +1,9 @@
 name: Update translation files
 
 on: 
-  workflow_dispatch:  
-  schedule:           
-    - cron: '35 1 * * 0'  
+  workflow_dispatch:
+  schedule:
+    - cron: '35 1 * * 0'
 
 jobs:
   lupdate:
@@ -20,11 +20,14 @@ jobs:
         with:
           version: '6.5'
 
-      - name: Run lupdate
-        run: lupdate src/NotepadNext.pro
+      - name: Configure CMake
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Update translations
+        run: cmake --build build --target update_translations
 
       - name: Commit translation changes
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Update translation files
-          file_pattern: 'i18n/*.ts'
+          file_pattern: 'i18n/NotepadNext_en.ts'

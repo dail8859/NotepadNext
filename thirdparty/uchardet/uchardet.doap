@@ -1,0 +1,51 @@
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+  <name xml:lang="en">uchardet</name>
+
+  <shortdesc xml:lang="en">Universal Charset Detector</shortdesc>
+
+  <description xml:lang="en">
+      uchardet is an encoding detector library, which takes a sequence of bytes
+      in an unknown character encoding without any additional information, and
+      attempts to determine the encoding of the text. Returned encoding names
+      are iconv-compatible.
+
+      uchardet started as a C language binding of the original C++
+      implementation of the universal charset detection library by Mozilla. It
+      can now detect more charsets, and more reliably than the original
+      implementation.
+  </description>
+  <description xml:lang="fr">
+      uchardet est une bibliothèque de détection de codage, prenant une séquence
+      d'octets en entrée, représentant un texte, et tente d'en déterminer le
+      codage. Le nom du codage retourné est compatible iconv.
+
+      uchardet était originellement un binding en C de l'implémentation
+      originelle en C++ par Mozilla. L'implémentation actuelle peut détecter
+      plus de codages de caractères que l'originale.
+  </description>
+
+  <homepage rdf:resource="https://www.freedesktop.org/wiki/Software/uchardet/" />
+
+  <download-page rdf:resource="https://www.freedesktop.org/software/uchardet/releases/" />
+
+  <bug-database rdf:resource="https://gitlab.freedesktop.org/uchardet/uchardet/-/issues" />
+
+  <programming-language>C</programming-language>
+  <programming-language>C++</programming-language>
+  <programming-language>Python</programming-language>
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Jehan</foaf:name>
+      <gnome:userid>jehanp</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+
+<!-- TODO: generate MAINTAINERS from this file -->
+
+</Project>

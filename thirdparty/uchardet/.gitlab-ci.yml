@@ -1,0 +1,106 @@
+image: debian:testing
+
+stages:
+  - build
+
+variables:
+  GIT_DEPTH: "1"
+
+## GNU/Linux 64-bit CIs ##
+
+debian/testing-gcc:
+  stage: build
+  artifacts:
+    expire_in: 1 week
+    when: always
+    name: "uchardet-build-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    paths:
+    - _build
+  before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+        build-essential
+        cmake
+  script:
+    - mkdir _build
+    - cd _build
+    - cmake ..
+    - make -j "$(nproc)"
+    - make test
+    - make install
+
+debian/testing-clang:
+  extends: debian/testing-gcc
+  variables:
+    CC: "clang"
+    CXX: "clang++"
+  before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+        build-essential
+        clang
+        cmake
+
+## Windows CIs ##
+
+win64:
+  stage: build
+  artifacts:
+    expire_in: 1 week
+    when: always
+    name: "uchardet-build-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    paths:
+    - _build
+  before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+        build-essential
+        cmake
+        cpio
+        gcc-mingw-w64-x86-64
+        g++-mingw-w64-x86-64
+        git
+        python3-distutils
+        python3-docutils
+        rpm
+    - apt-get install -y --reinstall ca-certificates
+    - git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
+    - cd crossroad
+    - ./setup.py install --prefix=`pwd`/../.local
+    - cd ..
+  script:
+    - export PATH="`pwd`/.local/bin:$PATH"
+    - mkdir _build
+    - cd _build
+    - echo 'crossroad cmake .. && make && make install' | crossroad w64 gimp --run="-"
+
+win32:
+  stage: build
+  artifacts:
+    expire_in: 1 week
+    when: always
+    name: "uchardet-build-${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    paths:
+    - _build
+  before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+        build-essential
+        cmake
+        cpio
+        gcc-mingw-w64-i686
+        g++-mingw-w64-i686
+        git
+        python3-distutils
+        python3-docutils
+        rpm
+    - apt-get install -y --reinstall ca-certificates
+    - git clone --depth=${GIT_DEPTH} git://git.tuxfamily.org/gitroot/crossroad/crossroad.git
+    - cd crossroad
+    - ./setup.py install --prefix=`pwd`/../.local
+    - cd ..
+  script:
+    - export PATH="`pwd`/.local/bin:$PATH"
+    - mkdir _build
+    - cd _build
+    - echo 'crossroad cmake .. && make && make install' | crossroad w32 gimp --run="-"

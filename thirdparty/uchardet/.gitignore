@@ -1,0 +1,38 @@
+__pycache__/
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+cmake_install.cmake
+
+# With make generator
+Makefile
+
+# With ninja generator
+.ninja_deps
+.ninja_log
+build.ninja
+
+# Built files
+uchardet-config-version.cmake
+uchardet-config.cmake
+uchardet-targets.cmake
+uchardet.pc
+src/version.script
+
+# Build binaries
+src/libuchardet.a
+src/libuchardet.so*
+
+src/tools/uchardet
+test/uchardet-tests
+
+# For Windows (untested)
+src/libuchardet.dll
+
+src/tools/uchardet.exe
+test/uchardet-tests.exe
+
+# For macOS (untested)
+src/libuchardet.dylib

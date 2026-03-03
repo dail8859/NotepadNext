@@ -1,0 +1,3 @@
+Az ISO 8859-2 (hivatalosan ISO/IEC 8859-2, röviden és nem hivatalosan Latin-2) az ISO/IEC 8859-es karakterkódolási szabvány második része. Az ISO által kettes számú latin ábécének nevezett 191 karakter mindegyikének egybájtos (nyolcbites) kódját adja meg. A 191 karakter között minden magyar ékezetes betû megtalálható (a sok más készletbõl hiányzó õ és û is).
+
+Az ISO_8859-2:1987 (mime rövidítésébõl ismertebb nevén ISO-8859-2 (az "ISO" után kötõjellel)) az IANA-nak erre a szabványra épülõ karakterkészletének neve, melyben a C0 (0x00-0x1F) és a C1 (0x80-0x9F) rész az ISO/IEC 6429-ben meghatározott vezérlõkódokat tartalmazza. Az ISO/IEC 6429-ben és 2022-ben megadott escape szekvenciákat nem használja. További ismert nevei: ISO_8859-2, latin2, l2 és csISOLatin2.

@@ -1,0 +1,10 @@
+Extended Unix Code(EUC)は、UNIX上でよく使われる文字コードの符号化方式である。
+
+    日本語EUC
+        JIS X 0208ベース (EUC-JP)
+        JIS X 0213ベース (EUC-JIS-2004)
+    韓国語EUC (EUC-KR)
+    簡体字中国語EUC (EUC-CN)
+    繁体字中国語EUC (EUC-TW)
+
+などがある。

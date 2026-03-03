@@ -1,0 +1,59 @@
+# How to do a uchardet release #
+
+* Update UCHARDET_VERSION_MAJOR, UCHARDET_VERSION_MINOR and
+  UCHARDET_VERSION_REVISION as needed in CMakeLists.txt.
+
+* Update README.md.
+
+* Commit the version change with the message "Release: version X.Y.Z."
+
+* Tag your release commit with:
+
+    git tag -a vx.y.z
+
+  The tag message should be have the header "Version x.y.z released." followed
+  by a list of new features or important fixes. This tag message will be
+  considered as the release note, hence have to be carefully crafted.
+
+  Considering that the previous release was va.b.c, you can read the full list
+  of commits between a.b.c and x.y.z with:
+
+    git log va.b.c..
+
+  This should help you to build a proper release note.
+
+* Push the release and the tag:
+
+    git push
+    git push origin vx.y.z
+
+* Create a release tarball:
+
+    git archive --format=tar.xz --prefix=uchardet-x.y.z/ vx.y.z >uchardet-x.y.z.tar.xz
+
+Note: if you have not already set this up, you have to run first:
+
+    git config tar.tar.xz.command "xz -c"
+
+Cf. EXAMPLES section in `git help archive`.
+
+* Compute a SHA1 checksum:
+
+    sha1sum uchardet-x.y.x.tar.xz > uchardet-x.y.z.tar.xz.sha1
+
+* Upload to annarchy download server:
+
+    scp uchardet-x.y.x.tar.xz uchardet-x.y.z.tar.xz.sha1 annarchy.freedesktop.org:/srv/www.freedesktop.org/www/software/uchardet/releases/
+
+  The archive and its checksum file should now be available from:
+  https://www.freedesktop.org/software/uchardet/releases/
+
+* Make the git tag into a Gitlab release (not automatic).
+  It will be found at: https://gitlab.freedesktop.org/uchardet/uchardet/-/tags/vx.y.z
+  Just click the "Edit release notes" button, and copy paste the tag comment as "release notes".
+
+* Update the wiki page: https://www.freedesktop.org/wiki/Software/uchardet/
+  The release note link will be:
+  https://gitlab.freedesktop.org/uchardet/uchardet/-/releases/vx.y.z
+
+* Spread the good news!

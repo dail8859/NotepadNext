@@ -24,8 +24,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
-        with:
-          submodules: true
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
@@ -34,50 +32,11 @@ jobs:
           modules: 'qt5compat'
           cache: true
 
-      - name: Get number of CPU cores
-        if: runner.os != 'Windows'
-        uses: SimenB/github-actions-cpu-cores@v2
-        id: cpu-cores
-
       - name: Setup Visual Studio Tools
         if: runner.os == 'Windows'
         uses: egor-tensin/vs-shell@v2
         with:
           arch: x64
-
-      - name: Install jom
-        if: runner.os == 'Windows'
-        run: choco install jom
-
-      - name: Setup Linux
-        if: runner.os == 'Linux'
-        run: |
-          echo "DISTRIBUTION=AppImage" >> "$GITHUB_ENV"
-          sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev libcups2-dev
-
-      - name: Run QMake
-        run: |
-          mkdir build
-          cd build
-          qmake ../src/NotepadNext.pro "DISTRIBUTION=$DISTRIBUTION"
-
-      - name: Compile for Windows
-        if: runner.os == 'Windows'
-        run: |
-          cd build
-          jom
-
-      - name: Compile for Linux/macOS
-        if: runner.os != 'Windows'
-        run: |
-          cd build
-          make -j${{ steps.cpu-cores.outputs.count }}
-
-      - name: Create Windows zip Package
-        if: runner.os == 'Windows'
-        run: |
-          cd build
-          jom package
 
       - name: Install NSIS
         if: runner.os == 'Windows'
@@ -85,23 +44,29 @@ jobs:
         with:
           nsis-version: '3.11'
 
-      - name: Create Windows Installer
-        if: runner.os == 'Windows'
-        run: |
-          cd build
-          jom installer
-
-      - name: Create DMG
-        if: runner.os == 'macOS'
-        run: |
-          cd build
-          make dmg
-
-      - name: Create AppImage
+      - name: Setup Linux
         if: runner.os == 'Linux'
         run: |
-          cd build
-          make appimage
+          echo "DISTRIBUTION=AppImage" >> "$GITHUB_ENV"
+          sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev libcups2-dev
+
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION=${{ env.DISTRIBUTION }}
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Build Windows Targets
+        if: runner.os == 'Windows'
+        run: cmake --build build --target package zip installer --parallel
+
+      - name: Build MacOS Targets
+        if: runner.os == 'macOS'
+        run: cmake --build build --target dmg --parallel
+
+      - name: Build Linux Targets
+        if: runner.os == 'Linux'
+        run: cmake --build build --target appimage --parallel
 
       - name: Upload Windows zip Package
         uses: actions/upload-artifact@v6
@@ -117,19 +82,19 @@ jobs:
           name: NotepadNext-Windows-Qt${{ matrix.qt_version }}-Installer
           path: ${{ github.workspace }}/installer/NotepadNext*.exe
 
-      - name: Upload macOS dmg
+      - name: Upload MacOS dmg
         uses: actions/upload-artifact@v6
         if: runner.os == 'macOS'
         with:
           name: NotepadNext-macOS-Qt${{ matrix.qt_version }}
-          path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.dmg
+          path: ${{ github.workspace }}/build/NotepadNext*.dmg
 
       - name: Upload Linux AppImage
         uses: actions/upload-artifact@v6
         if: runner.os == 'Linux'
         with:
           name: NotepadNext-Linux-Qt${{ matrix.qt_version }}-AppImage
-          path: ${{ github.workspace }}/build/NotepadNext/NotepadNext*.AppImage
+          path: ${{ github.workspace }}/build/NotepadNext*.AppImage
 
   github:
     name: Draft GitHub Release
@@ -144,8 +109,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
-        with:
-          submodules: true
 
       - name: Create Draft Release
         run: |
@@ -173,13 +136,3 @@ jobs:
       - name: Upload macOS App
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt$QT_RELEASE_VER/NotepadNext-${{ github.ref_name }}.dmg
-
-      - name: Create Source Tarball
-        run: |
-              export PACKAGE_NAME=NotepadNext-${{ github.ref_name }}
-              export RELEASE_TARBALL=${PACKAGE_NAME}.tar.gz
-              git ls-files --recurse-submodules | tar caf ${RELEASE_TARBALL} --xform s:^:${PACKAGE_NAME}/: --verbatim-files-from -T-
-
-      - name: Upload Source Tarball
-        run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}.tar.gz

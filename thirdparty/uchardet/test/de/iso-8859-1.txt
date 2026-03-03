@@ -1,0 +1,11 @@
+ISO 8859-1, genauer ISO/IEC 8859-1, auch bekannt als Latin-1, ist ein von der
+ISO zuletzt 1998 aktualisierter Standard für die Informationstechnik zur
+Zeichenkodierung mit acht Bit und der erste Teil der Normenfamilie ISO/IEC 8859.
+
+Die mit sieben Bit kodierbaren Zeichen entsprechen US-ASCII mit führendem
+Nullbit. Zusätzlich zu den 95 darstellbaren ASCII-Zeichen (2016-7E16) kodiert
+ISO 8859-1 96 weitere (A016-FF16), also insgesamt 191 von theoretisch möglichen
+256 (= 28). Den Positionen 0016-1F16 und 7F16-9F16 sind in ISO/IEC 8859 und
+damit ISO/IEC 8859-1 keine Zeichen zugewiesen. Die von der IANA definierte
+Bezeichnung ISO-8859-1 (mit Bindestrich) steht für die Kombination der Zeichen
+dieser Norm mit nicht darstellbaren Steuerzeichen gemäß ISO/IEC 6429.
