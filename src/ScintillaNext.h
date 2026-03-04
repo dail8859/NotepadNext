@@ -107,6 +107,15 @@ public:
         FileMissing, // Buffer with a missing file on the file system
     };
 
+    enum class BomType {
+        None,
+        Utf8,
+        Utf16LE,
+        Utf16BE
+    };
+
+    BomType bom() const { return bomType; }
+
     bool isTemporary() const { return temporary; }
     void setTemporary(bool temp);
 
@@ -152,6 +161,7 @@ protected:
 private:
     QString name;
     BufferType bufferType = BufferType::New;
+    BomType bomType = BomType::None;
     QFileInfo fileInfo;
     QDateTime modifiedTime;
     RangeAllocator indicatorResources;
