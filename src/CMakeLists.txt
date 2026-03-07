@@ -11,7 +11,7 @@ qt_add_executable(NotepadNext
 	DefaultDirectoryManager.h
 	DockedEditor.h
 	DockedEditorTitleBar.h
-	EditorHexViewerTableModel.h
+
 	EditorManager.h
 	EditorPrintPreviewRenderer.h
 	FileDialogHelpers.h
@@ -59,7 +59,7 @@ qt_add_executable(NotepadNext
 	DebugManager.cpp
 	DefaultDirectoryManager.cpp
 	DockedEditor.cpp
-	EditorHexViewerTableModel.cpp
+
 	EditorManager.cpp
 	EditorPrintPreviewRenderer.cpp
 	FileDialogHelpers.cpp
@@ -158,9 +158,9 @@ qt_add_executable(NotepadNext
 	docks/FolderAsWorkspaceDock.cpp
 	docks/FolderAsWorkspaceDock.h
 	docks/FolderAsWorkspaceDock.ui
-	docks/HexViewerDock.cpp
-	docks/HexViewerDock.h
-	docks/HexViewerDock.ui
+
+
+
 	docks/LanguageInspectorDock.cpp
 	docks/LanguageInspectorDock.h
 	docks/LanguageInspectorDock.ui
