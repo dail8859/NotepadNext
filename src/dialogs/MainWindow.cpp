@@ -65,7 +65,6 @@
 #include "FolderAsWorkspaceDock.h"
 #include "SearchResultsDock.h"
 #include "DebugLogDock.h"
-#include "HexViewerDock.h"
 #include "FileListDock.h"
 
 #include "FindReplaceDialog.h"
@@ -728,7 +727,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         macroManager.replayCurrentMacro(currentEditor());
     });
 
-    connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, this, [=]() {
+    connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, this, [=, this]() {
         MacroSaveDialog macroSaveDialog;
 
         macroSaveDialog.show();
@@ -852,16 +851,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     debugLogDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, debugLogDock);
 
-    HexViewerDock *hexViewerDock = new HexViewerDock(this);
-    hexViewerDock->hide();
-    addDockWidget(Qt::RightDockWidgetArea, hexViewerDock);
-
     ui->menuHelp->insertActions(ui->menuHelp->actions().at(0), {
                                     luaConsoleDock->toggleViewAction(),
                                     languageInspectorDock->toggleViewAction(),
                                     editorInspectorDock->toggleViewAction(),
-                                    debugLogDock->toggleViewAction(),
-                                    hexViewerDock->toggleViewAction()
+                                    debugLogDock->toggleViewAction()
                                 });
 
     FolderAsWorkspaceDock *fawDock = new FolderAsWorkspaceDock(this);
