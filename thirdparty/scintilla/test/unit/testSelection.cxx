@@ -115,18 +115,21 @@ TEST_CASE("SelectionPosition") {
 
 		const std::string invalidString(invalid.ToString());
 		REQUIRE(invalidString == "-1");
-		const SelectionPosition invalidReturned(invalidString);
+		std::string_view sv = invalidString;
+		const SelectionPosition invalidReturned(sv);
 		REQUIRE(invalidReturned == invalid);
 
 		const std::string zeroString(zero.ToString());
 		REQUIRE(zeroString == "0");
-		const SelectionPosition zeroReturned(zeroString);
+		sv = zeroString;
+		const SelectionPosition zeroReturned(sv);
 		REQUIRE(zeroReturned == zero);
 
 		const SelectionPosition virtue(2, 3);
 		const std::string virtueString(virtue.ToString());
 		REQUIRE(virtueString == "2v3");
-		const SelectionPosition virtueReturned(virtueString);
+		sv = virtueString;
+		const SelectionPosition virtueReturned(sv);
 		REQUIRE(virtueReturned == virtue);
 	}
 
@@ -156,9 +159,10 @@ TEST_CASE("SelectionRange") {
 		// Range from 1 to 2 with 3 virtual spaces
 		const SelectionRange range123(SelectionPosition(2, 3), SelectionPosition(1));
 		const std::string range123String(range123.ToString());
-		// Opposite order to constructor: from anchor to caret 
+		// Opposite order to constructor: from anchor to caret
 		REQUIRE(range123String == "1-2v3");
-		const SelectionRange range123Returned(range123String);
+		std::string_view sv = range123String;
+		const SelectionRange range123Returned(sv);
 		REQUIRE(range123Returned == range123);
 	}
 
@@ -194,13 +198,103 @@ TEST_CASE("SelectionRange") {
 		REQUIRE(thin == single);
 	}
 
+	SECTION("StartEndSet") {
+		{
+			SelectionRange range;
+
+			range.StartSet(SelectionPosition(2));
+			range.EndSet(SelectionPosition(3));
+			REQUIRE(range.Start() == SelectionPosition(2));
+			REQUIRE(range.End() == SelectionPosition(3));
+			REQUIRE(range == SelectionRange(3, 2));
+
+			range.StartSet(SelectionPosition(1));
+			REQUIRE(range.Start() == SelectionPosition(1));
+			REQUIRE(range.End() == SelectionPosition(3));
+			REQUIRE(range == SelectionRange(3, 1));
+		}
+
+		{
+			// Outside after
+			SelectionRange range(2, 1);
+			range.StartSet(SelectionPosition(3));
+			REQUIRE(range.Start() == SelectionPosition(3));
+			REQUIRE(range.End() == SelectionPosition(3));
+			REQUIRE(range == SelectionRange(3, 3));
+		}
+
+		{
+			// Outside after
+			SelectionRange range(2, 1);
+			range.EndSet(SelectionPosition(3));
+			REQUIRE(range.Start() == SelectionPosition(1));
+			REQUIRE(range.End() == SelectionPosition(3));
+			REQUIRE(range == SelectionRange(3, 1));
+		}
+
+		{
+			// Outside before
+			SelectionRange range(2, 1);
+			range.StartSet(SelectionPosition(0));
+			REQUIRE(range.Start() == SelectionPosition(0));
+			REQUIRE(range.End() == SelectionPosition(2));
+			REQUIRE(range == SelectionRange(2, 0));
+		}
+
+		{
+			// Outside before
+			SelectionRange range(2, 1);
+			range.EndSet(SelectionPosition(0));
+			REQUIRE(range.Start() == SelectionPosition(0));
+			REQUIRE(range.End() == SelectionPosition(0));
+			REQUIRE(range == SelectionRange(0, 0));
+		}
+
+		{
+			// Inside
+			SelectionRange range(3, 1);
+			range.EndSet(SelectionPosition(2));
+			REQUIRE(range.Start() == SelectionPosition(1));
+			REQUIRE(range.End() == SelectionPosition(2));
+			REQUIRE(range == SelectionRange(2, 1));
+		}
+
+		{
+			// Inside
+			SelectionRange range(3, 1);
+			range.StartSet(SelectionPosition(2));
+			REQUIRE(range.Start() == SelectionPosition(2));
+			REQUIRE(range.End() == SelectionPosition(3));
+			REQUIRE(range == SelectionRange(3, 2));
+		}
+
+		{
+			// Empty then outside
+			SelectionRange range(2);
+			range.StartSet(SelectionPosition(9));
+			REQUIRE(range.Start() == SelectionPosition(9));
+			REQUIRE(range.End() == SelectionPosition(9));
+			REQUIRE(range == SelectionRange(9, 9));
+		}
+
+		{
+			// Empty then outside
+			SelectionRange range(2);
+			range.StartSet(SelectionPosition(0));
+			REQUIRE(range.Start() == SelectionPosition(0));
+			REQUIRE(range.End() == SelectionPosition(2));
+			REQUIRE(range == SelectionRange(2, 0));
+		}
+
+	}
+
 }
 
 TEST_CASE("Selection") {
 
 	SECTION("Selection") {
 		Selection sel;
-		
+
 		REQUIRE(sel.selType == Selection::SelTypes::stream);
 		REQUIRE(!sel.IsRectangular());
 		REQUIRE(sel.Count() == 1);
@@ -220,9 +314,9 @@ TEST_CASE("Selection") {
 		Selection selection;
 		selection.SetSelection(range532);
 		const std::string selectionString(selection.ToString());
-		// Opposite order to constructor: from anchor to caret 
+		// Opposite order to constructor: from anchor to caret
 		REQUIRE(selectionString == "5v3-2");
-		const SelectionRange selectionReturned(selectionString);
+		selection = Selection(selectionString);
 
 		REQUIRE(selection.selType == Selection::SelTypes::stream);
 		REQUIRE(!selection.IsRectangular());
@@ -246,8 +340,8 @@ TEST_CASE("Selection") {
 		selection.AddSelection(range1);
 		selection.SetMain(1);
 		const std::string selectionString(selection.ToString());
-		REQUIRE(selectionString == "5v3-2,1#1");
-		const SelectionRange selectionReturned(selectionString);
+		REQUIRE(selectionString == "#1,5v3-2,1");
+		selection = Selection(selectionString);
 
 		REQUIRE(selection.selType == Selection::SelTypes::stream);
 		REQUIRE(!selection.IsRectangular());
@@ -266,7 +360,7 @@ TEST_CASE("Selection") {
 
 		// Range from 5 with 3 virtual spaces to 2
 		const SelectionRange range532(SelectionPosition(2), SelectionPosition(5, 3));
-		
+
 		// Create a single-line rectangular selection
 		Selection selection;
 		selection.selType = Selection::SelTypes::rectangle;
@@ -276,7 +370,7 @@ TEST_CASE("Selection") {
 
 		const std::string selectionString(selection.ToString());
 		REQUIRE(selectionString == "R5v3-2");
-		const Selection selectionReturned(selectionString);
+		selection = Selection(selectionString);
 
 		REQUIRE(selection.selType == Selection::SelTypes::rectangle);
 		REQUIRE(selection.IsRectangular());
