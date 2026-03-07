@@ -18,6 +18,8 @@ constexpr FLOAT dpiDefault = USER_DEFAULT_SCREEN_DPI;
 // Used for defining font size with LOGFONT
 constexpr int pointsPerInch = 72;
 
+constexpr UINT codePageWindowsLatin = 1252;
+
 extern void Platform_Initialise(void *hInstance) noexcept;
 
 extern void Platform_Finalise(bool fromDllMain) noexcept;
@@ -79,6 +81,11 @@ struct Painter {
 	explicit Painter(HWND hWnd_) noexcept : hWnd(hWnd_) {
 		::BeginPaint(hWnd, &ps);
 	}
+	// Deleted so Painter objects can not be copied.
+	Painter(const Painter &) = delete;
+	Painter(Painter &&) = delete;
+	Painter &operator=(const Painter &) = delete;
+	Painter &operator=(Painter &&) = delete;
 	~Painter() {
 		::EndPaint(hWnd, &ps);
 	}
