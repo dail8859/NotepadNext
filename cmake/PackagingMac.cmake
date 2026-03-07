@@ -24,6 +24,10 @@ install(TARGETS NotepadNext
     BUNDLE DESTINATION .
 )
 
+install(FILES ${APP_ICON_MACOS}
+    DESTINATION NotepadNext.app/Contents/Resources
+)
+
 add_custom_target(install_local
     COMMAND ${CMAKE_COMMAND}
         --install ${CMAKE_BINARY_DIR}
