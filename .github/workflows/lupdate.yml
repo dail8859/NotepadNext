@@ -19,6 +19,8 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: '6.5'
+          modules: 'qt5compat'
+          cache: true
 
       - name: Configure CMake
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
