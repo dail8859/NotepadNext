@@ -303,7 +303,7 @@ Section "Uninstall"
 	DeleteRegKey SHCTX "Software\Classes\*\shell\NotepadNext"
 
 	# Remove application registration
-	DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe" "" "$INSTDIR\NotepadNext.exe"
+	DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\App Paths\NotepadNext.exe"
 
 	# Remove registered verbs
 	DeleteRegKey SHCTX "Software\Classes\Applications\NotepadNext.exe"
