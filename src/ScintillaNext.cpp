@@ -33,22 +33,62 @@
 
 const int CHUNK_SIZE = 1024 * 1024 * 4; // Not sure what is best
 
+inline const QByteArray BOM_UTF8    = QByteArray::fromHex("EFBBBF");
+inline const QByteArray BOM_UTF16LE = QByteArray::fromHex("FFFE");
+inline const QByteArray BOM_UTF16BE = QByteArray::fromHex("FEFF");
 
-static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString &path)
+ScintillaNext::BomType detectBom(const QByteArray& data)
+{
+    if (data.startsWith(BOM_UTF8))    return ScintillaNext::BomType::Utf8;
+    if (data.startsWith(BOM_UTF16LE)) return ScintillaNext::BomType::Utf16LE;
+    if (data.startsWith(BOM_UTF16BE)) return ScintillaNext::BomType::Utf16BE;
+
+    return ScintillaNext::BomType::None;
+}
+
+QByteArray bomData(ScintillaNext::BomType bom)
+{
+    switch (bom) {
+    case ScintillaNext::BomType::Utf8:    return BOM_UTF8;
+    case ScintillaNext::BomType::Utf16LE: return BOM_UTF16LE;
+    case ScintillaNext::BomType::Utf16BE: return BOM_UTF16BE;
+    case ScintillaNext::BomType::None:    return QByteArray();
+    }
+    return QByteArray();
+}
+
+int bomLength(ScintillaNext::BomType bom)
+{
+    if (bom == ScintillaNext::BomType::Utf8) return BOM_UTF8.length();
+    else if (bom == ScintillaNext::BomType::Utf16LE) return BOM_UTF16LE.length();
+    else if (bom == ScintillaNext::BomType::Utf16BE) return BOM_UTF16BE.length();
+
+    return 0;
+}
+
+static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString &path, ScintillaNext::BomType bom)
 {
     qInfo(Q_FUNC_INFO);
 
     QFile file(path);
-
-    if (file.open(QIODevice::WriteOnly)) {
-        if (file.write(data) != -1) {
-            file.close();
-            return QFileDevice::NoError;
-        }
+    if (!file.open(QIODevice::WriteOnly)) {
+        qWarning("writeToDisk() failed to open file %s: %s", qPrintable(path), qPrintable(file.errorString()));
+        return file.error();
     }
 
-    // If it got to this point there was an error
-    qWarning("writeToDisk() failure code %d: %s", file.error(), qPrintable(file.errorString()));
+    // Write BOM
+    const QByteArray bomBytes = bomData(bom);
+    if (!bomBytes.isEmpty() && file.write(bomBytes) == -1) {
+        qWarning("writeToDisk() failed writing BOM: %s", qPrintable(file.errorString()));
+        return file.error();
+    }
+
+    // Write actual data
+    if (file.write(data) == -1) {
+        qWarning("writeToDisk() failed writing data: %s", qPrintable(file.errorString()));
+        return file.error();
+    }
+
     return file.error();
 }
 
@@ -308,7 +348,9 @@ QFileDevice::FileError ScintillaNext::save()
 
     emit aboutToSave();
 
-    QFileDevice::FileError writeSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), fileInfo.filePath());
+    const QByteArray data = QByteArray::fromRawData((char*)characterPointer(), textLength());
+    const QString path = fileInfo.filePath();
+    QFileDevice::FileError writeSuccessful = writeToDisk(data, path, bomType);
 
     if (writeSuccessful == QFileDevice::NoError) {
         updateTimestamp();
@@ -383,7 +425,8 @@ QFileDevice::FileError ScintillaNext::saveAs(const QString &newFilePath)
 
     emit aboutToSave();
 
-    QFileDevice::FileError saveSuccessful = writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), newFilePath);
+    const QByteArray data = QByteArray::fromRawData((char*)characterPointer(), textLength());
+    QFileDevice::FileError saveSuccessful = writeToDisk(data, newFilePath, bomType);
 
     if (saveSuccessful == QFileDevice::NoError) {
         setFileInfo(newFilePath);
@@ -404,7 +447,8 @@ QFileDevice::FileError ScintillaNext::saveAs(const QString &newFilePath)
 
 QFileDevice::FileError ScintillaNext::saveCopyAs(const QString &filePath)
 {
-    return writeToDisk(QByteArray::fromRawData((char*)characterPointer(), textLength()), filePath);
+    const QByteArray data = QByteArray::fromRawData((char*)characterPointer(), textLength());
+    return writeToDisk(data, filePath, bomType);
 }
 
 bool ScintillaNext::rename(const QString &newFilePath)
@@ -590,8 +634,6 @@ bool ScintillaNext::readFromDisk(QFile &file)
 
     QByteArray chunk;
     qint64 bytesRead;
-    QTextCodec *codec = Q_NULLPTR;
-    QTextCodec::ConverterState state;
 
     bool first_read = true;
     do {
@@ -611,42 +653,22 @@ bool ScintillaNext::readFromDisk(QFile &file)
         if (first_read) {
             first_read = false;
 
-            // Search for a BOM mark
-            codec = QTextCodec::codecForUtfText(chunk, Q_NULLPTR);
+            bomType = detectBom(chunk);
 
-            if (codec != Q_NULLPTR) {
-                qDebug("BOM mark found");
-            }
-            else {
-                qDebug("BOM mark not found, using uchardet");
-
-                // Limit decoding to the first 64 kilobytes
-                int detectionSize = qMin(chunk.size(), 64 * 1024);
-
-                // Use uchardet to try and detect file encoding since no BOM was found
-                uchardet_t encodingDetector = uchardet_new();
-                if (uchardet_handle_data(encodingDetector, chunk.data(), detectionSize) == 0) {
-                    uchardet_data_end(encodingDetector);
-
-                    qDebug("uchardet detected encoding as: '%s'", uchardet_get_charset(encodingDetector));
-                    codec = QTextCodec::codecForName(uchardet_get_charset(encodingDetector));
-                }
-                else {
-                    qDebug("uchardet failure");
-                }
-                uchardet_delete(encodingDetector);
+            if (bomType != BomType::None) {
+                qDebug("BOM found");
             }
 
-            qDebug("Using codec: '%s'", codec ? codec->name().constData() : "");
+            if (bomType == BomType::Utf8) {
+                chunk.remove(0, bomLength(bomType));
+            }
+
+            if (bomType == BomType::Utf16BE || bomType == BomType::Utf16LE) {
+                // Um...ignore this for now?
+            }
         }
 
-        if (codec) {
-            const QByteArray utf8_data = codec->toUnicode(chunk.constData(), chunk.size(), &state).toUtf8();
-            appendText(utf8_data.size(), utf8_data.constData());
-        }
-        else {
-            appendText(chunk.size(), chunk.constData());
-        }
+        appendText(chunk.size(), chunk.constData());
     } while (!file.atEnd() && status() == SC_STATUS_OK);
 
     file.close();
