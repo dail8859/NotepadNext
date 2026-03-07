@@ -149,17 +149,25 @@ void EditorInfoStatusBar::updateEol(ScintillaNext *editor)
 
 void EditorInfoStatusBar::updateEncoding(ScintillaNext *editor)
 {
+    QString text;
     switch(editor->codePage()) {
     case 0:
-        unicodeType->setText(tr("ANSI"));
+        text = tr("ANSI");
         break;
     case SC_CP_UTF8:
-        unicodeType->setText(tr("UTF-8"));
+        switch (editor->bom()) {
+        case ScintillaNext::BomType::None:    text = tr("UTF-8"); break;
+        case ScintillaNext::BomType::Utf8:    text = tr("UTF-8 BOM"); break;
+        case ScintillaNext::BomType::Utf16LE: text = tr("UTF-16LE BOM"); break;
+        case ScintillaNext::BomType::Utf16BE: text = tr("UTF-16BE BOM"); break;
+        }
         break;
     default:
-        unicodeType->setText(QString::number(editor->codePage()));
+        text = QString::number(editor->codePage());
         break;
     }
+
+    unicodeType->setText(text);
 }
 
 void EditorInfoStatusBar::updateOverType(ScintillaNext *editor)
