@@ -87,29 +87,29 @@
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="160"/>
       <source>UTF-8 BOM</source>
-      <translation type="unfinished">UTF-8 BOM</translation>
+      <translation>BOM UTF-8</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="161"/>
       <source>UTF-16LE BOM</source>
-      <translation type="unfinished">UTF-16LE BOM</translation>
+      <translation>BOM UTF-16LE</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="162"/>
       <source>UTF-16BE BOM</source>
-      <translation type="unfinished">UTF-16BE BOM</translation>
+      <translation>BOM UTF-16BE</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="178"/>
       <source>OVR</source>
       <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
-      <translation type="unfinished">OVR</translation>
+      <translation>ÉCR</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="182"/>
       <source>INS</source>
       <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
-      <translation type="unfinished">INS</translation>
+      <translation>INS</translation>
     </message>
   </context>
   <context>
@@ -117,177 +117,177 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.ui" line="14"/>
       <source>Editor Inspector</source>
-      <translation type="unfinished">Editor Inspector</translation>
+      <translation>Inspecteur de l'éditeur</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="36"/>
       <source>Position Information</source>
-      <translation type="unfinished">Position Information</translation>
+      <translation>Informations sur la position</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="39"/>
       <source>Current Position</source>
-      <translation type="unfinished">Current Position</translation>
+      <translation>Position actuelle</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="40"/>
       <source>Current Position (x, y)</source>
-      <translation type="unfinished">Current Position (x, y)</translation>
+      <translation>Position actuelle (x, y)</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="41"/>
       <source>Column</source>
-      <translation type="unfinished">Column</translation>
+      <translation>Colonne</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="43"/>
       <source>Current Style</source>
-      <translation type="unfinished">Current Style</translation>
+      <translation>Apparence actuelle</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="44"/>
       <source>Current Line</source>
-      <translation type="unfinished">Current Line</translation>
+      <translation>Ligne actuelle</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="45"/>
       <source>Line Length</source>
-      <translation type="unfinished">Line Length</translation>
+      <translation>Longueur de la ligne</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="46"/>
       <source>Line End Position</source>
-      <translation type="unfinished">Line End Position</translation>
+      <translation>Position de fin de la ligne</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="47"/>
       <source>Line Indentation</source>
-      <translation type="unfinished">Line Indentation</translation>
+      <translation>Indentation de la ligne</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="48"/>
       <source>Line Indent Position</source>
-      <translation type="unfinished">Line Indent Position</translation>
+      <translation>Position de l'indentation de la ligne</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="52"/>
       <source>Selection Information</source>
-      <translation type="unfinished">Selection Information</translation>
+      <translation>Informations sur la sélection</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="55"/>
       <source>Mode</source>
-      <translation type="unfinished">Mode</translation>
+      <translation>Mode</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="69"/>
       <source>Is Rectangle</source>
-      <translation type="unfinished">Is Rectangle</translation>
+      <translation>Est rectangle</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="70"/>
       <source>Selection Empty</source>
-      <translation type="unfinished">Selection Empty</translation>
+      <translation>Sélection vide</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="71"/>
       <source>Main Selection</source>
-      <translation type="unfinished">Main Selection</translation>
+      <translation>Sélection principale</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="72"/>
       <source># of Selections</source>
-      <translation type="unfinished"># of Selections</translation>
+      <translation># de sélections</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="75"/>
       <source>Multiple Selections</source>
-      <translation type="unfinished">Multiple Selections</translation>
+      <translation>Sélections multiples</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="80"/>
       <source>Document Information</source>
-      <translation type="unfinished">Document Information</translation>
+      <translation>Informations du document</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="83"/>
       <source>Length</source>
-      <translation type="unfinished">Length</translation>
+      <translation>Longueur</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="84"/>
       <source>Line Count</source>
-      <translation type="unfinished">Line Count</translation>
+      <translation>Nombre de lignes</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="88"/>
       <source>View Information</source>
-      <translation type="unfinished">View Information</translation>
+      <translation>Afficher les informations</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="91"/>
       <source>Lines on Screen</source>
-      <translation type="unfinished">Lines on Screen</translation>
+      <translation>Lignes sur l’écran</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="92"/>
       <source>First Visible Line</source>
-      <translation type="unfinished">First Visible Line</translation>
+      <translation>Première ligne visible</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="93"/>
       <source>X Offset</source>
-      <translation type="unfinished">X Offset</translation>
+      <translation>Décalage X</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="97"/>
       <source>Fold Information</source>
-      <translation type="unfinished">Fold Information</translation>
+      <translation>Déplier les informations</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="100"/>
       <source>Visible From Doc Line</source>
-      <translation type="unfinished">Visible From Doc Line</translation>
+      <translation>Visible depuis la ligne de doc</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="101"/>
       <source>Doc Line From Visible</source>
-      <translation type="unfinished">Doc Line From Visible</translation>
+      <translation>Ligne de doc à partir de visible</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="102"/>
       <source>Fold Level</source>
-      <translation type="unfinished">Fold Level</translation>
+      <translation>Niveau de pli</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="103"/>
       <source>Is Fold Header</source>
-      <translation type="unfinished">Is Fold Header</translation>
+      <translation>Est un en-tête plié</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="104"/>
       <source>Fold Parent</source>
-      <translation type="unfinished">Fold Parent</translation>
+      <translation>Replier le parent</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="105"/>
       <source>Last Child</source>
-      <translation type="unfinished">Last Child</translation>
+      <translation>Dernier enfant</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="106"/>
       <source>Contracted Fold Next</source>
-      <translation type="unfinished">Contracted Fold Next</translation>
+      <translation>Repli contracté suivant</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="173"/>
       <source>Caret</source>
-      <translation type="unfinished">Caret</translation>
+      <translation>Accent circonflexe</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="177"/>
       <source>Anchor</source>
-      <translation type="unfinished">Anchor</translation>
+      <translation>Ancre</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="181"/>
