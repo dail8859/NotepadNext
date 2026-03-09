@@ -470,7 +470,7 @@
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="352"/>
       <source>Found %Ln matches</source>
       <translation>
-        <numerusform>%Ln correspondances trouvées</numerusform>
+        <numerusform>%Ln correspondance trouvée</numerusform>
         <numerusform>%Ln correspondances trouvées</numerusform>
       </translation>
     </message>
@@ -684,7 +684,7 @@
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="25"/>
       <source>Name:</source>
-      <translation>Nom:</translation>
+      <translation>Nom :</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="39"/>
