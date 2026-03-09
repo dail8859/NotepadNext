@@ -117,7 +117,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.ui" line="14"/>
       <source>Editor Inspector</source>
-      <translation>Inspecteur de l'éditeur</translation>
+      <translation>Inspecteur de l’éditeur</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="36"/>
@@ -167,7 +167,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="48"/>
       <source>Line Indent Position</source>
-      <translation>Position de l'indentation de la ligne</translation>
+      <translation>Position de l’indentation de la ligne</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="52"/>
@@ -297,7 +297,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="185"/>
       <source>Anchor Virtual Space</source>
-      <translation>Espace virtuel d'ancrage</translation>
+      <translation>Espace virtuel d’ancrage</translation>
     </message>
   </context>
   <context>
@@ -464,13 +464,13 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="322"/>
       <source>No more occurrences were found</source>
-      <translation>Aucune autre occurrence n'a été trouvée</translation>
+      <translation>Aucune autre occurrence n’a été trouvée</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="352"/>
       <source>Found %Ln matches</source>
       <translation>
-        <numerusform>%Ln correspondance trouvée</numerusform>
+        <numerusform>%Ln correspondances trouvées</numerusform>
         <numerusform>%Ln correspondances trouvées</numerusform>
       </translation>
     </message>
@@ -480,7 +480,7 @@
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="14"/>
       <source>Folder as Workspace</source>
-      <translation>Dossier en tant qu'espace de travail</translation>
+      <translation>Dossier en tant qu’espace de travail</translation>
     </message>
   </context>
   <context>
@@ -593,22 +593,22 @@
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="95"/>
       <source>Insert Macro Step</source>
-      <translation>Insérer l'étape de la Macro</translation>
+      <translation>Insérer l’étape de la Macro</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="110"/>
       <source>Delete Selected Macro Step</source>
-      <translation>Supprimer l'étape de la Macro sélectionnée</translation>
+      <translation>Supprimer l’étape de la Macro sélectionnée</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="125"/>
       <source>Move Selected Macro Step Up</source>
-      <translation>Déplacer l'étape de la Macro sélectionnée vers le haut</translation>
+      <translation>Déplacer l’étape de la Macro sélectionnée vers le haut</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="140"/>
       <source>Move Selected Macro Step Down</source>
-      <translation>Déplacer l'étape de la Macro sélectionnée vers le bas</translation>
+      <translation>Déplacer l’étape de la Macro sélectionnée vers le bas</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="176"/>
@@ -651,7 +651,7 @@
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="56"/>
       <source>Run Until End of File</source>
-      <translation>Exécuter jusqu'à la fin du fichier</translation>
+      <translation>Exécuter jusqu’à la fin du fichier</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="63"/>
@@ -684,7 +684,7 @@
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="25"/>
       <source>Name:</source>
-      <translation>Nom :</translation>
+      <translation>Nom:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="39"/>
@@ -771,132 +771,132 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="124"/>
       <source>Convert Case</source>
-      <translation type="unfinished">Convert Case</translation>
+      <translation>Majuscule/Minuscule</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="131"/>
       <source>Line Operations</source>
-      <translation type="unfinished">Line Operations</translation>
+      <translation>Opérations de ligne</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="145"/>
       <source>Comment/Uncomment</source>
-      <translation type="unfinished">Comment/Uncomment</translation>
+      <translation>Commenter/Décommenter</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="153"/>
       <source>Copy As</source>
-      <translation type="unfinished">Copy As</translation>
+      <translation>Copier en tant que</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="160"/>
       <source>Encoding/Decoding</source>
-      <translation type="unfinished">Encoding/Decoding</translation>
+      <translation>Encodage/Décodage</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="191"/>
       <source>Search</source>
-      <translation type="unfinished">Search</translation>
+      <translation>Recherche</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="195"/>
       <source>Bookmarks</source>
-      <translation type="unfinished">Bookmarks</translation>
+      <translation>Favoris</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="211"/>
       <source>Mark All Occurrences</source>
-      <translation type="unfinished">Mark All Occurrences</translation>
+      <translation>Marquer toutes les occurrences</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="219"/>
       <source>Clear Marks</source>
-      <translation type="unfinished">Clear Marks</translation>
+      <translation>Effacer les marques</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="242"/>
       <source>&amp;View</source>
-      <translation type="unfinished">&amp;View</translation>
+      <translation>&amp;Voir</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="246"/>
       <source>&amp;Zoom</source>
-      <translation type="unfinished">&amp;Zoom</translation>
+      <translation>&amp;Zoom</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="255"/>
       <source>Show Symbol</source>
-      <translation type="unfinished">Show Symbol</translation>
+      <translation>Afficher les symboles</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="266"/>
       <source>Fold Level</source>
-      <translation type="unfinished">Fold Level</translation>
+      <translation>Plier le niveau</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="280"/>
       <source>Unfold Level</source>
-      <translation type="unfinished">Unfold Level</translation>
+      <translation>Déplier le niveau</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="306"/>
       <source>Language</source>
-      <translation type="unfinished">Language</translation>
+      <translation>Langue</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="311"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Réglages</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="317"/>
       <source>Macro</source>
-      <translation type="unfinished">Macro</translation>
+      <translation>Macro</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="328"/>
       <source>Help</source>
-      <translation type="unfinished">Help</translation>
+      <translation>Aide</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="339"/>
       <source>Encoding</source>
-      <translation type="unfinished">Encoding</translation>
+      <translation>Encodage</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="355"/>
       <source>Main Tool Bar</source>
-      <translation type="unfinished">Main Tool Bar</translation>
+      <translation>Barre d’outils principale</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="415"/>
       <source>&amp;New</source>
-      <translation type="unfinished">&amp;New</translation>
+      <translation>&amp;Nouveau</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="418"/>
       <source>Create a new file</source>
-      <translation type="unfinished">Create a new file</translation>
+      <translation>Créer un nouveau fichier</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="421"/>
       <source>Ctrl+N</source>
-      <translation type="unfinished">Ctrl+N</translation>
+      <translation>Ctrl+N</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="431"/>
       <source>&amp;Open...</source>
-      <translation type="unfinished">&amp;Open...</translation>
+      <translation>&amp;Ouvrir...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="434"/>
       <source>Ctrl+O</source>
-      <translation type="unfinished">Ctrl+O</translation>
+      <translation>Ctrl+O</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="447"/>
       <source>&amp;Save</source>
-      <translation type="unfinished">&amp;Save</translation>
+      <translation>&amp;Enregistrer</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="450"/>
@@ -1041,12 +1041,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="606"/>
       <source>Increase Indent</source>
-      <translation>Augmenter l'indentation</translation>
+      <translation>Augmenter l’indentation</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="615"/>
       <source>Decrease Indent</source>
-      <translation>Diminuer l'indentation</translation>
+      <translation>Diminuer l’indentation</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="620"/>
@@ -1086,37 +1086,37 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="666"/>
       <source>lower case</source>
-      <translation type="unfinished">lower case</translation>
+      <translation>minuscules</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="669"/>
       <source>Convert text to lower case</source>
-      <translation type="unfinished">Convert text to lower case</translation>
+      <translation>Convertir le texte en minuscules</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="674"/>
       <source>Duplicate Current Line</source>
-      <translation type="unfinished">Duplicate Current Line</translation>
+      <translation>Dupliquer la ligne actuelle</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="677"/>
       <source>Alt+Down</source>
-      <translation type="unfinished">Alt+Down</translation>
+      <translation>Alt+Bas</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="682"/>
       <source>Split Lines</source>
-      <translation type="unfinished">Split Lines</translation>
+      <translation>Séparer les lignes</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="687"/>
       <source>Join Lines</source>
-      <translation type="unfinished">Join Lines</translation>
+      <translation>Fusionner les lignes</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="690"/>
       <source>Ctrl+J</source>
-      <translation type="unfinished">Ctrl+J</translation>
+      <translation>Ctrl+J</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="695"/>
@@ -1226,7 +1226,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="832"/>
       <source>Show Indent Guide</source>
-      <translation>Afficher le guide d'indentation</translation>
+      <translation>Afficher le guide d’indentation</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="840"/>
@@ -1312,7 +1312,7 @@
       <location filename="../src/dialogs/MainWindow.ui" line="939"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="717"/>
       <source>Start Recording</source>
-      <translation>Démarrer l'enregistrement</translation>
+      <translation>Démarrer l’enregistrement</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="951"/>
@@ -1352,7 +1352,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1003"/>
       <source>Select Next Instance</source>
-      <translation>Sélectionnez l'instance suivante</translation>
+      <translation>Sélectionnez l’instance suivante</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1006"/>
@@ -1397,12 +1397,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1048"/>
       <source>Open Folder as Workspace...</source>
-      <translation>Ouvrir le dossier en tant qu'espace de travail...</translation>
+      <translation>Ouvrir le dossier en tant qu’espace de travail...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1053"/>
       <source>Toggle Single Line Comment</source>
-      <translation>Activer/désactiver le commentaire d'une seule ligne</translation>
+      <translation>Activer/désactiver le commentaire d’une seule ligne</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1056"/>
