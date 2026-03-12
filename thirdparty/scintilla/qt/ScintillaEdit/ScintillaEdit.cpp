@@ -23,7 +23,7 @@ QByteArray ScintillaEdit::TextReturner(int message, uptr_t wParam) const {
     return ba;
 }
 
-QPair<int, int>ScintillaEdit::find_text(int flags, const char *text, int cpMin, int cpMax) {
+QPair<int, int>ScintillaEdit::find_text(int flags, const char *text, int cpMin, int cpMax) const {
     struct Sci_TextToFind ft = {{0, 0}, 0, {0, 0}};
     ft.chrg.cpMin = cpMin;
     ft.chrg.cpMax = cpMax;
@@ -36,7 +36,7 @@ QPair<int, int>ScintillaEdit::find_text(int flags, const char *text, int cpMin, 
     return QPair<int,int>(start, ft.chrgText.cpMax);
 }
 
-QByteArray ScintillaEdit::get_text_range(int start, int end) {
+QByteArray ScintillaEdit::get_text_range(int start, int end) const {
     if (start > end)
         start = end;
 
@@ -50,7 +50,7 @@ QByteArray ScintillaEdit::get_text_range(int start, int end) {
     return ba;
 }
 
-ScintillaDocument *ScintillaEdit::get_doc() {
+ScintillaDocument *ScintillaEdit::get_doc() const {
     return new ScintillaDocument(0, (void *)send(SCI_GETDOCPOINTER, 0, 0));
 }
 
@@ -60,7 +60,7 @@ void ScintillaEdit::set_doc(ScintillaDocument *pdoc_) {
 
 long ScintillaEdit::format_range(bool draw, QPaintDevice* target, QPaintDevice* measure,
                                  const QRect& print_rect, const QRect& page_rect,
-                                 long range_start, long range_end)
+                                 long range_start, long range_end) const
 {
     Sci_RangeToFormat to_format;
 
@@ -3182,6 +3182,14 @@ sptr_t ScintillaEdit::lineFromIndexPosition(sptr_t pos, sptr_t lineCharacterInde
 
 sptr_t ScintillaEdit::indexPositionFromLine(sptr_t line, sptr_t lineCharacterIndex) {
     return send(SCI_INDEXPOSITIONFROMLINE, line, lineCharacterIndex);
+}
+
+bool ScintillaEdit::dragDropEnabled() const {
+    return send(SCI_GETDRAGDROPENABLED, 0, 0);
+}
+
+void ScintillaEdit::setDragDropEnabled(bool dragDropEnabled) {
+    send(SCI_SETDRAGDROPENABLED, dragDropEnabled, 0);
 }
 
 void ScintillaEdit::startRecord() {

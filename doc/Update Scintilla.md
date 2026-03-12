@@ -1,4 +1,4 @@
-1. Delete all files in `src\scintilla`
-1. Copy new release of Scintilla into `src\scintilla`
-1. Run `python src\scintilla\qt\ScintillaEdit\WidgetGen.py`
-1. Update `src\scintilla.pri` as needed
+1. Delete all files in `thirdparty\scintilla` except `CMakeLists.txt`
+1. Copy new release of Scintilla into `thirdparty\scintilla`
+1. Change directory into `thirdparty\scintilla\qt\ScintillaEdit\` and run `python WidgetGen.py`
+1. Update `thirdparty\scintilla\CMakeLists.txt` as needed
