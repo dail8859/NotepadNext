@@ -2,8 +2,30 @@ message(STATUS "Configuring macOS packaging")
 
 set(INSTALL_DIR ${CMAKE_BINARY_DIR}/install)
 
+# Custom Info.plist
+set_target_properties(NotepadNext PROPERTIES
+    MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/deploy/macos/info.plist
+)
+
+# Application icon
+set(APP_ICON_MACOS ${CMAKE_SOURCE_DIR}/icon/NotepadNext.icns)
+
+set_source_files_properties(${APP_ICON_MACOS}
+    PROPERTIES MACOSX_PACKAGE_LOCATION "Resources"
+)
+
+target_sources(NotepadNext PRIVATE ${APP_ICON_MACOS})
+
+set_target_properties(NotepadNext PROPERTIES
+    MACOSX_BUNDLE_ICON_FILE NotepadNext.icns
+)
+
 install(TARGETS NotepadNext
     BUNDLE DESTINATION .
+)
+
+install(FILES ${APP_ICON_MACOS}
+    DESTINATION NotepadNext.app/Contents/Resources
 )
 
 add_custom_target(install_local
