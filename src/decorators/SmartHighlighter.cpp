@@ -61,16 +61,13 @@ void SmartHighlighter::highlightCurrentView()
         return;
     }
 
+    const QByteArray selText = editor->get_text_range(selectionStart, selectionEnd);
+
+    // Determine if the selection aligns to word boundaries
     const int curPos = editor->currentPos();
     const int wordStart = editor->wordStartPosition(curPos, true);
     const int wordEnd = editor->wordEndPosition(wordStart, true);
-
-    // Make sure the selection is on word boundaries
-    if (wordStart == wordEnd || wordStart != selectionStart || wordEnd != selectionEnd) {
-        return;
-    }
-
-    const QByteArray selText = editor->get_text_range(selectionStart, selectionEnd);
+    const bool isWholeWord = (wordStart == selectionStart && wordEnd == selectionEnd && wordStart != wordEnd);
 
     // TODO: Handle large files. By default Notepad++ only monitors the text on screen. However,
     // that will not work when using a highlighted scroll bar. Testing with small files seems to
@@ -85,7 +82,7 @@ void SmartHighlighter::highlightCurrentView()
     // TODO: skip hidden or folded lines?
 
     Sci_TextToFind ttf {{0, (Sci_PositionCR)editor->length()}, selText.constData(), {-1, -1}};
-    const int flags = SCFIND_MATCHCASE | SCFIND_WHOLEWORD;
+    const int flags = isWholeWord ? (SCFIND_MATCHCASE | SCFIND_WHOLEWORD) : SCFIND_MATCHCASE;
 
     while (editor->send(SCI_FINDTEXT, flags, (sptr_t)&ttf) != -1) {
         editor->indicatorFillRange(ttf.chrgText.cpMin, ttf.chrgText.cpMax - ttf.chrgText.cpMin);
