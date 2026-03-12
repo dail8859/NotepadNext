@@ -1121,87 +1121,87 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="695"/>
       <source>Move Selected Lines Up</source>
-      <translation type="unfinished">Move Selected Lines Up</translation>
+      <translation>Déplacer les lignes sélectionnées vers le haut</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="698"/>
       <source>Ctrl+Shift+Up</source>
-      <translation type="unfinished">Ctrl+Shift+Up</translation>
+      <translation>Ctrl+Maj+Haut</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="703"/>
       <source>Move Selected Lines Down</source>
-      <translation type="unfinished">Move Selected Lines Down</translation>
+      <translation>Déplacer les lignes sélectionnées vers le bas</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="706"/>
       <source>Ctrl+Shift+Down</source>
-      <translation type="unfinished">Ctrl+Shift+Down</translation>
+      <translation>Ctrl+Maj+Bas</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="715"/>
       <source>Clos&amp;e All</source>
-      <translation type="unfinished">Clos&amp;e All</translation>
+      <translation>Tout f&amp;ermer</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="718"/>
       <source>Close All files</source>
-      <translation type="unfinished">Close All files</translation>
+      <translation>Fermer tous les fichiers</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="721"/>
       <source>Ctrl+Shift+W</source>
-      <translation type="unfinished">Ctrl+Shift+W</translation>
+      <translation>Ctrl+Maj+W</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="726"/>
       <source>Close All Except Active Document</source>
-      <translation type="unfinished">Close All Except Active Document</translation>
+      <translation>Fermer tout sauf le document actif</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="731"/>
       <source>Close All to the Left</source>
-      <translation type="unfinished">Close All to the Left</translation>
+      <translation>Tout fermer à gauche</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="736"/>
       <source>Close All to the Right</source>
-      <translation type="unfinished">Close All to the Right</translation>
+      <translation>Tout fermer à droite</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="746"/>
       <source>Zoom &amp;In</source>
-      <translation type="unfinished">Zoom &amp;In</translation>
+      <translation>Zoom avant</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="749"/>
       <source>Ctrl++</source>
-      <translation type="unfinished">Ctrl++</translation>
+      <translation>Ctrl++</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="759"/>
       <source>Zoom &amp;Out</source>
-      <translation type="unfinished">Zoom &amp;Out</translation>
+      <translation>Zoom arrière</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="762"/>
       <source>Ctrl+-</source>
-      <translation type="unfinished">Ctrl+-</translation>
+      <translation>Ctrl+-</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="767"/>
       <source>Reset Zoom</source>
-      <translation type="unfinished">Reset Zoom</translation>
+      <translation>Réinitialiser le zoom</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="770"/>
       <source>Ctrl+0</source>
-      <translation type="unfinished">Ctrl+0</translation>
+      <translation>Ctrl+0</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="775"/>
       <source>About Qt</source>
-      <translation type="unfinished">About Qt</translation>
+      <translation>À propos de Qt</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="787"/>
@@ -1457,17 +1457,17 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1112"/>
       <source>Copy as HTML</source>
-      <translation type="unfinished">Copy as HTML</translation>
+      <translation>Copier en tant que HTML</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1117"/>
       <source>Copy as RTF</source>
-      <translation type="unfinished">Copy as RTF</translation>
+      <translation>Copier en tant que RTF</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1122"/>
       <source>Base 64 Encode</source>
-      <translation type="unfinished">Base 64 Encode</translation>
+      <translation>Encodage Base 64</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1127"/>
@@ -1477,7 +1477,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1132"/>
       <source>Base 64 Decode</source>
-      <translation type="unfinished">Base 64 Decode</translation>
+      <translation>Décodage Base 64</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1137"/>
@@ -1892,7 +1892,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1159"/>
       <source>Open Folder as Workspace</source>
-      <translation type="unfinished">Open Folder as Workspace</translation>
+      <translation>Ouvrir le dossier en tant qu’espace de travail</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1182"/>
@@ -1908,7 +1908,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1373"/>
       <source>Save a Copy As</source>
-      <translation type="unfinished">Save a Copy As</translation>
+      <translation>Enregistrer une copie sous</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1449"/>
@@ -1929,7 +1929,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1486"/>
       <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
-      <translation type="unfinished">Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</translation>
+      <translation>Êtes-vous sûr de vouloir déplacer &lt;b&gt;%1&lt;/b&gt; vers la corbeille ?</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1496"/>
@@ -1949,7 +1949,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1854"/>
       <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
-      <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</translation>
+      <translation>&lt;b&gt;%1&lt;/b&gt; a été modifié par un autre programme. Voulez-vous le recharger ?</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1880"/>
@@ -2102,7 +2102,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="123"/>
       <source>Exit on last tab closed</source>
-      <translation type="unfinished">Exit on last tab closed</translation>
+      <translation>Quitter lorsque le dernier onglet est fermé</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="132"/>
