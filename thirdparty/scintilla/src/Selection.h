@@ -20,7 +20,7 @@ public:
 		if (virtualSpace < 0)
 			virtualSpace = 0;
 	}
-	explicit SelectionPosition(std::string_view sv);
+	explicit SelectionPosition(std::string_view &sv);
 	void Reset() noexcept {
 		position = 0;
 		virtualSpace = 0;
@@ -121,7 +121,7 @@ struct SelectionRange {
 	}
 	constexpr SelectionRange(Sci::Position caret_, Sci::Position anchor_) noexcept : caret(caret_), anchor(anchor_) {
 	}
-	explicit SelectionRange(std::string_view sv);
+	explicit SelectionRange(std::string_view &sv);
 	SelectionSegment AsSegment() const noexcept {
 		return {caret, anchor};
 	}
@@ -156,6 +156,8 @@ struct SelectionRange {
 	SelectionPosition End() const noexcept {
 		return (anchor < caret) ? caret : anchor;
 	}
+	void StartSet(SelectionPosition sp) noexcept;
+	void EndSet(SelectionPosition sp) noexcept;
 	void Swap() noexcept;
 	bool Trim(SelectionRange range) noexcept;
 	void Truncate(Sci::Position length) noexcept;
