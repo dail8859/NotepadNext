@@ -55,25 +55,31 @@ QColor MarkerAppDecorator::markerColor(int i) const
 
 void MarkerAppDecorator::mark(ScintillaNext *editor, int i)
 {
-    //const int mainSelection = editor->mainSelection();
-    //const int selectionStart = editor->selectionNStart(mainSelection);
-    //const int selectionEnd = editor->selectionNEnd(mainSelection);
+    const int mainSelection = editor->mainSelection();
+    const int selectionStart = editor->selectionNStart(mainSelection);
+    const int selectionEnd = editor->selectionNEnd(mainSelection);
 
-    const int curPos = editor->currentPos();
-    const int wordStart = editor->wordStartPosition(curPos, true);
-    const int wordEnd = editor->wordEndPosition(wordStart, true);
+    // If there is a selection, use it verbatim; otherwise fall back to the word at the cursor
+    int textStart, textEnd;
+    if (selectionStart != selectionEnd) {
+        textStart = selectionStart;
+        textEnd = selectionEnd;
+    } else {
+        const int curPos = editor->currentPos();
+        textStart = editor->wordStartPosition(curPos, true);
+        textEnd = editor->wordEndPosition(textStart, true);
+    }
 
-    // Make sure the selection is on word boundaries
-    if (wordStart == wordEnd) {
+    if (textStart == textEnd) {
         return;
     }
 
     int indicator = editor->allocateIndicator(QString("marker_%1").arg(i));
     editor->setIndicatorCurrent(indicator);
 
-    const QByteArray selText = editor->get_text_range(wordStart, wordEnd);
+    const QByteArray selText = editor->get_text_range(textStart, textEnd);
     Sci_TextToFind ttf {{0, (Sci_PositionCR)editor->length()}, selText.constData(), {-1, -1}};
-    const int flags = SCFIND_WHOLEWORD;
+    const int flags = (selectionStart != selectionEnd) ? SCFIND_MATCHCASE : SCFIND_WHOLEWORD;
 
     while (editor->send(SCI_FINDTEXT, flags, (sptr_t)&ttf) != -1) {
         editor->indicatorFillRange(ttf.chrgText.cpMin, ttf.chrgText.cpMax - ttf.chrgText.cpMin);
