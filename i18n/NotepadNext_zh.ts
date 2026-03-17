@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_TW" sourcelanguage="en">
+<TS version="2.1" language="zh_CN" sourcelanguage="en">
   <context>
     <name>ColumnEditorDialog</name>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="20"/>
       <source>Column Mode</source>
-      <translation>欄編輯模式</translation>
+      <translation>列编辑模式</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="32"/>
       <source>Text</source>
-      <translation>文字</translation>
+      <translation>文本</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="47"/>
       <source>Numbers</source>
-      <translation>數字</translation>
+      <translation>数字</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="59"/>
       <source>Start:</source>
-      <translation>開始：</translation>
+      <translation>开始:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="76"/>
       <source>Step:</source>
-      <translation>步驟：</translation>
+      <translation>步长:</translation>
     </message>
   </context>
   <context>
@@ -34,7 +34,7 @@
     <message>
       <location filename="../src/docks/DebugLogDock.ui" line="14"/>
       <source>Debug Log</source>
-      <translation>除錯日誌</translation>
+      <translation>调试日志</translation>
     </message>
   </context>
   <context>
@@ -42,17 +42,17 @@
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="100"/>
       <source>Length: %L1    Lines: %L2</source>
-      <translation>長度：%L1    行數：%L2</translation>
+      <translation>长度：%L1    行数：%L2</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="109"/>
       <source>Sel: N/A</source>
-      <translation>選擇：N/A</translation>
+      <translation>选择：N/A</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="119"/>
       <source>Sel: %L1 | %L2</source>
-      <translation>選擇：%L1 | %L2</translation>
+      <translation>选择：%L1 | %L2</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="123"/>
@@ -62,27 +62,27 @@
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="139"/>
       <source>Macintosh (CR)</source>
-      <translation>Macintosh (CR)</translation>
+      <translation type="unfinished">Macintosh (CR)</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="142"/>
       <source>Windows (CR LF)</source>
-      <translation>Windows (CR LF)</translation>
+      <translation type="unfinished">Windows (CR LF)</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="145"/>
       <source>Unix (LF)</source>
-      <translation>Unix (LF)</translation>
+      <translation type="unfinished">Unix (LF)</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="155"/>
       <source>ANSI</source>
-      <translation>ANSI</translation>
+      <translation type="unfinished">ANSI</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="159"/>
       <source>UTF-8</source>
-      <translation>UTF-8</translation>
+      <translation type="unfinished">UTF-8</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="160"/>
@@ -117,22 +117,22 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.ui" line="14"/>
       <source>Editor Inspector</source>
-      <translation>編輯器檢視器</translation>
+      <translation>编辑查看器</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="36"/>
       <source>Position Information</source>
-      <translation>位置資訊</translation>
+      <translation>位置信息</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="39"/>
       <source>Current Position</source>
-      <translation>目前位置</translation>
+      <translation>当前位置</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="40"/>
       <source>Current Position (x, y)</source>
-      <translation>目前位置 (x, y)</translation>
+      <translation>当前位置 (x, y)</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="41"/>
@@ -142,17 +142,17 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="43"/>
       <source>Current Style</source>
-      <translation>目前樣式</translation>
+      <translation>当前样式</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="44"/>
       <source>Current Line</source>
-      <translation>目前這行</translation>
+      <translation>当前行</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="45"/>
       <source>Line Length</source>
-      <translation>行長</translation>
+      <translation>行长</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="46"/>
@@ -162,17 +162,17 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="47"/>
       <source>Line Indentation</source>
-      <translation>行縮排</translation>
+      <translation>行缩进</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="48"/>
       <source>Line Indent Position</source>
-      <translation>行縮排位置</translation>
+      <translation>行缩进位置</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="52"/>
       <source>Selection Information</source>
-      <translation>選取資訊</translation>
+      <translation>选择信息</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="55"/>
@@ -182,57 +182,57 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="69"/>
       <source>Is Rectangle</source>
-      <translation>是否為矩形</translation>
+      <translation>矩形选择</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="70"/>
       <source>Selection Empty</source>
-      <translation>選取是否為空</translation>
+      <translation>已选择空</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="71"/>
       <source>Main Selection</source>
-      <translation>主要選取</translation>
+      <translation>主光标编号</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="72"/>
       <source># of Selections</source>
-      <translation>選取數量</translation>
+      <translation>光标数</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="75"/>
       <source>Multiple Selections</source>
-      <translation>多重選取</translation>
+      <translation>光标列表</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="80"/>
       <source>Document Information</source>
-      <translation>文件資訊</translation>
+      <translation>文档信息</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="83"/>
       <source>Length</source>
-      <translation>長度</translation>
+      <translation>长度</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="84"/>
       <source>Line Count</source>
-      <translation>行數</translation>
+      <translation>行数</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="88"/>
       <source>View Information</source>
-      <translation>檢視資訊</translation>
+      <translation>视图信息</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="91"/>
       <source>Lines on Screen</source>
-      <translation>螢幕上的行數</translation>
+      <translation>屏幕上行数</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="92"/>
       <source>First Visible Line</source>
-      <translation>第一可見行</translation>
+      <translation>第一可视行</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="93"/>
@@ -242,62 +242,62 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="97"/>
       <source>Fold Information</source>
-      <translation>折疊資訊</translation>
+      <translation>折叠信息</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="100"/>
       <source>Visible From Doc Line</source>
-      <translation>從文件行可見</translation>
+      <translation>从文档行可见</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="101"/>
       <source>Doc Line From Visible</source>
-      <translation>可見文件行</translation>
+      <translation>可见文档行</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="102"/>
       <source>Fold Level</source>
-      <translation>折疊層級</translation>
+      <translation>折叠层级</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="103"/>
       <source>Is Fold Header</source>
-      <translation>是否為折疊標頭</translation>
+      <translation>是折叠组标题行</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="104"/>
       <source>Fold Parent</source>
-      <translation>折疊父項</translation>
+      <translation>折叠组父级</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="105"/>
       <source>Last Child</source>
-      <translation>最後子項</translation>
+      <translation>最后子节点</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="106"/>
       <source>Contracted Fold Next</source>
-      <translation>下一個已折疊項</translation>
+      <translation>下一个已折叠项</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="173"/>
       <source>Caret</source>
-      <translation>游標位置</translation>
+      <translation>光标位置</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="177"/>
       <source>Anchor</source>
-      <translation>錨點位置</translation>
+      <translation>锚点位置</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="181"/>
       <source>Caret Virtual Space</source>
-      <translation>插入虛擬空格</translation>
+      <translation>插入虚拟空格</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="185"/>
       <source>Anchor Virtual Space</source>
-      <translation>定位虛擬空格</translation>
+      <translation>定位虚拟空格</translation>
     </message>
   </context>
   <context>
@@ -305,7 +305,7 @@
     <message>
       <location filename="../src/docks/FileListDock.ui" line="14"/>
       <source>File List</source>
-      <translation>檔案列表</translation>
+      <translation>文件列表</translation>
     </message>
     <message>
       <location filename="../src/docks/FileListDock.ui" line="51"/>
@@ -325,12 +325,12 @@
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="247"/>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="59"/>
       <source>Find</source>
-      <translation>查詢</translation>
+      <translation>查找</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="69"/>
       <source>Search Mode</source>
-      <translation>搜尋模式</translation>
+      <translation>搜索模式</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="90"/>
@@ -340,17 +340,17 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="106"/>
       <source>E&amp;xtended (\n, \r, \t, \0, \x...)</source>
-      <translation>擴充套件模式(&amp;E) (\n, \r, \t, \0, \x...)</translation>
+      <translation>扩展模式(&amp;E) (\n, \r, \t, \0, \x...)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="124"/>
       <source>Re&amp;gular expression</source>
-      <translation>正則表達式 (&amp;g)</translation>
+      <translation>正则表达式 (&amp;g)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="140"/>
       <source>&amp;. matches newline</source>
-      <translation>&amp;. 符合換行符號</translation>
+      <translation>&amp;. 匹配换行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="179"/>
@@ -360,116 +360,116 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="200"/>
       <source>On losing focus</source>
-      <translation>失去焦點時</translation>
+      <translation>失去焦点时</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="210"/>
       <source>Always</source>
-      <translation>總是</translation>
+      <translation>总是</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="260"/>
       <source>Coun&amp;t</source>
-      <translation>計數(&amp;t)</translation>
+      <translation>计数(&amp;t)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="270"/>
       <source>&amp;Replace</source>
-      <translation>取代(&amp;R)</translation>
+      <translation>替换(&amp;R)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="277"/>
       <source>Replace &amp;All</source>
-      <translation>全部取代(&amp;A)</translation>
+      <translation>全部替换(&amp;A)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="284"/>
       <source>Replace All in &amp;Opened Documents</source>
-      <translation>取代所有開啟檔案(&amp;O)</translation>
+      <translation>替换所有打开文件(&amp;O)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="291"/>
       <source>Find All in All &amp;Opened Documents</source>
-      <translation>查詢所有開啟檔案(&amp;O)</translation>
+      <translation>查找所有打开文件(&amp;O)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="301"/>
       <source>Find All in Current Document</source>
-      <translation>查詢目前文件</translation>
+      <translation>查找当前文档</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="311"/>
       <source>Close</source>
-      <translation>關閉</translation>
+      <translation>关闭</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="367"/>
       <source>&amp;Find:</source>
-      <translation>&amp;查詢：</translation>
+      <translation>&amp;查找：</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="399"/>
       <source>Replace:</source>
-      <translation>取代：</translation>
+      <translation>替换：</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="445"/>
       <source>Backward direction</source>
-      <translation>反向搜尋</translation>
+      <translation>反向搜索</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="452"/>
       <source>Match &amp;whole word only</source>
-      <translation>全詞符合(&amp;w)</translation>
+      <translation>全词匹配(&amp;w)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="459"/>
       <source>Match &amp;case</source>
-      <translation>大小寫相符(&amp;c)</translation>
+      <translation>匹配大小写(&amp;c)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="466"/>
       <source>Wra&amp;p Around</source>
-      <translation>迴圈搜尋(&amp;p)</translation>
+      <translation>循环搜索(&amp;p)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="60"/>
       <source>Replace</source>
-      <translation>取代</translation>
+      <translation>替换</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="144"/>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="341"/>
       <source>Replaced %Ln matches</source>
       <translation>
-        <numerusform>已取代 %Ln 個符合項目</numerusform>
+        <numerusform>已替换 %Ln 个匹配项</numerusform>
       </translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="239"/>
       <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
-      <translation>已經到達文件的末尾。從頂端找到第一個符合項目。</translation>
+      <translation>已经到达文档的末尾。从顶部找到第一个匹配项。</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="250"/>
       <source>No matches found.</source>
-      <translation>沒有找到符合項目。</translation>
+      <translation>没有找到匹配项。</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="313"/>
       <source>1 occurrence was replaced</source>
-      <translation>已取代 1 個符合項目</translation>
+      <translation>已替换 1 个匹配项</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="322"/>
       <source>No more occurrences were found</source>
-      <translation>沒有找到更多符合項目</translation>
+      <translation>没有找到更多匹配项</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="352"/>
       <source>Found %Ln matches</source>
       <translation>
-        <numerusform>找到 %Ln 個符合項目</numerusform>
+        <numerusform>找到 %Ln 个匹配项</numerusform>
       </translation>
     </message>
   </context>
@@ -478,7 +478,7 @@
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="14"/>
       <source>Folder as Workspace</source>
-      <translation>資料夾作為工作區</translation>
+      <translation>文件夹工作区</translation>
     </message>
   </context>
   <context>
@@ -486,7 +486,7 @@
     <message>
       <location filename="../src/docks/HexViewerDock.ui" line="14"/>
       <source>Hex Viewer</source>
-      <translation>Hex 檢視器</translation>
+      <translation>Hex 查看器</translation>
     </message>
   </context>
   <context>
@@ -494,32 +494,32 @@
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="14"/>
       <source>Language Inspector</source>
-      <translation>語言檢視器</translation>
+      <translation>语言查看器</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="56"/>
       <source>Language:</source>
-      <translation>語言：</translation>
+      <translation>语言：</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="70"/>
       <source>Lexer:</source>
-      <translation>詞法分析器：</translation>
+      <translation>词法分析器：</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="86"/>
       <source>Properties:</source>
-      <translation>屬性：</translation>
+      <translation>属性：</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="100"/>
       <source>Property</source>
-      <translation>屬性</translation>
+      <translation>属性</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="105"/>
       <source>Type</source>
-      <translation>類型</translation>
+      <translation>类型</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="110"/>
@@ -535,27 +535,27 @@
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="123"/>
       <source>Keywords:</source>
-      <translation>關鍵詞：</translation>
+      <translation>关键词：</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="146"/>
       <source>ID</source>
-      <translation>ID</translation>
+      <translation type="unfinished">ID</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="159"/>
       <source>Styles:</source>
-      <translation>樣式：</translation>
+      <translation>样式：</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="166"/>
       <source>TextLabel</source>
-      <translation>文字標籤</translation>
+      <translation>文本标签</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.cpp" line="146"/>
       <source>Position %1 Style %2</source>
-      <translation>位置 %1 樣式 %2</translation>
+      <translation>位置 %1 样式 %2</translation>
     </message>
   </context>
   <context>
@@ -563,7 +563,7 @@
     <message>
       <location filename="../src/docks/LuaConsoleDock.ui" line="17"/>
       <source>Lua Console</source>
-      <translation>Lua 控制台</translation>
+      <translation>Lua 终端</translation>
     </message>
   </context>
   <context>
@@ -571,67 +571,67 @@
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="14"/>
       <source>Macro Editor</source>
-      <translation>巨集編輯器</translation>
+      <translation>宏编辑器</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="48"/>
       <source>Name</source>
-      <translation>名稱</translation>
+      <translation>名称</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="58"/>
       <source>Shortcut</source>
-      <translation>快捷鍵</translation>
+      <translation>快捷方式</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="67"/>
       <source>Steps:</source>
-      <translation>步驟：</translation>
+      <translation>步骤：</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="95"/>
       <source>Insert Macro Step</source>
-      <translation>插入巨集步驟</translation>
+      <translation>插入宏步</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="110"/>
       <source>Delete Selected Macro Step</source>
-      <translation>刪除選取的巨集步驟</translation>
+      <translation>删除已选宏步</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="125"/>
       <source>Move Selected Macro Step Up</source>
-      <translation>向上移動選取的巨集步驟</translation>
+      <translation>向上移动已选宏步</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="140"/>
       <source>Move Selected Macro Step Down</source>
-      <translation>向下移動選取的巨集步驟</translation>
+      <translation>向下移动已选宏步</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="176"/>
       <source>Copy Selected Macro</source>
-      <translation>複製選取的巨集</translation>
+      <translation>复制已选宏步</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="191"/>
       <source>Delete Selected Macro</source>
-      <translation>刪除選取的巨集</translation>
+      <translation>清空已选宏</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.cpp" line="129"/>
       <source>Delete Macro</source>
-      <translation>刪除巨集</translation>
+      <translation>删除宏</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.cpp" line="129"/>
       <source>Are you sure you want to delete &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation>您確定要刪除 &lt;b&gt;%1&lt;/b&gt; 嗎？</translation>
+      <translation>你确定想要删掉&lt;b&gt;%1&lt;/b&gt;吗？</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.cpp" line="150"/>
       <source>(Copy)</source>
-      <translation>(複製)</translation>
+      <translation>(复制)</translation>
     </message>
   </context>
   <context>
@@ -639,22 +639,22 @@
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="14"/>
       <source>Run a Macro Multiple Times</source>
-      <translation>多次執行巨集</translation>
+      <translation>多次运行宏</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="31"/>
       <source>Macro:</source>
-      <translation>巨集：</translation>
+      <translation>宏：</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="56"/>
       <source>Run Until End of File</source>
-      <translation>執行至檔案結尾</translation>
+      <translation>运行至文件末尾</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="63"/>
       <source>Execute...</source>
-      <translation>執行...</translation>
+      <translation>执行...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="116"/>
@@ -664,7 +664,7 @@
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="166"/>
       <source>Run</source>
-      <translation>執行</translation>
+      <translation>运行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="173"/>
@@ -677,22 +677,22 @@
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="14"/>
       <source>Save Macro</source>
-      <translation>儲存巨集</translation>
+      <translation>保存宏</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="25"/>
       <source>Name:</source>
-      <translation>名稱：</translation>
+      <translation>宏名：</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="39"/>
       <source>Shortcut:</source>
-      <translation>快捷鍵：</translation>
+      <translation>快捷键：</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="82"/>
       <source>OK</source>
-      <translation>確定</translation>
+      <translation>确定</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="89"/>
@@ -705,12 +705,12 @@
     <message>
       <location filename="../src/MacroStepTableModel.cpp" line="34"/>
       <source>Name</source>
-      <translation>名稱</translation>
+      <translation>名称</translation>
     </message>
     <message>
       <location filename="../src/MacroStepTableModel.cpp" line="36"/>
       <source>Text</source>
-      <translation>文字</translation>
+      <translation>文本</translation>
     </message>
   </context>
   <context>
@@ -718,58 +718,58 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="17"/>
       <source>Notepad Next[*]</source>
-      <translation>Notepad Next[*]</translation>
+      <translation type="unfinished">Notepad Next[*]</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="33"/>
       <source>+</source>
-      <translation>+</translation>
+      <translation type="unfinished">+</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="48"/>
       <source>&amp;File</source>
-      <translation>檔案(&amp;F)</translation>
+      <translation>文件(&amp;F)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="52"/>
       <source>Close More</source>
-      <translation>關閉更多</translation>
+      <translation>更多关闭方式</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="60"/>
       <source>&amp;Recent Files</source>
-      <translation>最近開啟的檔案(&amp;R)</translation>
+      <translation>最近打开的文件(&amp;R)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1408"/>
       <source>Export As</source>
-      <translation>匯出為</translation>
+      <translation>导出为</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="97"/>
       <source>&amp;Edit</source>
-      <translation>編輯(&amp;E)</translation>
+      <translation>编辑(&amp;E)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="101"/>
       <source>Copy More</source>
-      <translation>更多複製方式</translation>
+      <translation>更多复制方式</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="109"/>
       <source>Indent</source>
-      <translation>縮排</translation>
+      <translation>缩进</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="116"/>
       <source>EOL Conversion</source>
-      <translation>行尾序列(EOL)轉換</translation>
+      <translation>行尾序列(EOL)转换</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="124"/>
       <source>Convert Case</source>
-      <translation>大小寫轉換</translation>
+      <translation>大小写转换</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="131"/>
@@ -779,27 +779,27 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="145"/>
       <source>Comment/Uncomment</source>
-      <translation>註解/取消註解</translation>
+      <translation>注释/取消注释</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="153"/>
       <source>Copy As</source>
-      <translation>複製為</translation>
+      <translation>复制为</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="160"/>
       <source>Encoding/Decoding</source>
-      <translation>編碼/解碼</translation>
+      <translation>编码/解码</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="191"/>
       <source>Search</source>
-      <translation>搜尋</translation>
+      <translation>搜索</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="195"/>
       <source>Bookmarks</source>
-      <translation>書籤</translation>
+      <translation>书签</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="211"/>
@@ -814,57 +814,57 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="242"/>
       <source>&amp;View</source>
-      <translation>檢視(&amp;V)</translation>
+      <translation>视图(&amp;V)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="246"/>
       <source>&amp;Zoom</source>
-      <translation>縮放(&amp;Z)</translation>
+      <translation>缩放(&amp;Z)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="255"/>
       <source>Show Symbol</source>
-      <translation>顯示符號標記</translation>
+      <translation>显示符号标记</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="266"/>
       <source>Fold Level</source>
-      <translation>折疊層級</translation>
+      <translation>折叠层级</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="280"/>
       <source>Unfold Level</source>
-      <translation>展開層級</translation>
+      <translation type="unfinished">Unfold Level</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="306"/>
       <source>Language</source>
-      <translation>語言</translation>
+      <translation>语言</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="311"/>
       <source>Settings</source>
-      <translation>設定</translation>
+      <translation>选项</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="317"/>
       <source>Macro</source>
-      <translation>巨集</translation>
+      <translation>宏</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="328"/>
       <source>Help</source>
-      <translation>幫助</translation>
+      <translation>帮助</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="339"/>
       <source>Encoding</source>
-      <translation>編碼</translation>
+      <translation>编码</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="355"/>
       <source>Main Tool Bar</source>
-      <translation>主工具列</translation>
+      <translation>主工具栏</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="415"/>
@@ -874,52 +874,52 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="418"/>
       <source>Create a new file</source>
-      <translation>建立新檔案</translation>
+      <translation>新建文件</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="421"/>
       <source>Ctrl+N</source>
-      <translation>Ctrl+N</translation>
+      <translation type="unfinished">Ctrl+N</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="431"/>
       <source>&amp;Open...</source>
-      <translation>開啟(&amp;O)...</translation>
+      <translation>打开(&amp;O)...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="434"/>
       <source>Ctrl+O</source>
-      <translation>Ctrl+O</translation>
+      <translation type="unfinished">Ctrl+O</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="447"/>
       <source>&amp;Save</source>
-      <translation>儲存(&amp;S)</translation>
+      <translation>保存(&amp;S)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="450"/>
       <source>Save</source>
-      <translation>儲存</translation>
+      <translation>保存</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="453"/>
       <source>Ctrl+S</source>
-      <translation>Ctrl+S</translation>
+      <translation type="unfinished">Ctrl+S</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="458"/>
       <source>E&amp;xit</source>
-      <translation>離開(&amp;E)</translation>
+      <translation>退出(&amp;E)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="471"/>
       <source>&amp;Undo</source>
-      <translation>復原(&amp;U)</translation>
+      <translation>撤销(&amp;U)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="474"/>
       <source>Ctrl+Z</source>
-      <translation>Ctrl+Z</translation>
+      <translation type="unfinished">Ctrl+Z</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="484"/>
@@ -929,132 +929,132 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="487"/>
       <source>Ctrl+Y</source>
-      <translation>Ctrl+Y</translation>
+      <translation type="unfinished">Ctrl+Y</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="497"/>
       <source>Cu&amp;t</source>
-      <translation>剪下(&amp;t)</translation>
+      <translation>剪切(&amp;t)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="500"/>
       <source>Ctrl+X</source>
-      <translation>Ctrl+X</translation>
+      <translation type="unfinished">Ctrl+X</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="510"/>
       <source>&amp;Copy</source>
-      <translation>複製(&amp;C)</translation>
+      <translation>复制(&amp;C)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="513"/>
       <source>Ctrl+C</source>
-      <translation>Ctrl+C</translation>
+      <translation type="unfinished">Ctrl+C</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="523"/>
       <source>&amp;Paste</source>
-      <translation>貼上(&amp;P)</translation>
+      <translation>粘贴(&amp;P)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="526"/>
       <source>Ctrl+V</source>
-      <translation>Ctrl+V</translation>
+      <translation type="unfinished">Ctrl+V</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="531"/>
       <source>&amp;Delete</source>
-      <translation>刪除(&amp;D)</translation>
+      <translation>删除(&amp;D)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="534"/>
       <source>Del</source>
-      <translation>Del</translation>
+      <translation type="unfinished">Del</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="539"/>
       <source>Copy Full Path</source>
-      <translation>複製完整路徑</translation>
+      <translation>复制完整路径</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="544"/>
       <source>Copy File Name</source>
-      <translation>複製檔名</translation>
+      <translation>复制文件名</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="549"/>
       <source>Copy File Directory</source>
-      <translation>複製資料夾路徑</translation>
+      <translation>复制文件夹路径</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="558"/>
       <source>&amp;Close</source>
-      <translation>關閉(&amp;C)</translation>
+      <translation>关闭(&amp;C)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="561"/>
       <source>Close the current file</source>
-      <translation>關閉目前檔案</translation>
+      <translation>关闭当前文件</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="564"/>
       <source>Ctrl+W</source>
-      <translation>Ctrl+W</translation>
+      <translation type="unfinished">Ctrl+W</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="569"/>
       <source>Save &amp;As...</source>
-      <translation>另存新檔(&amp;A)...</translation>
+      <translation>另存为(&amp;A)...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="572"/>
       <source>Ctrl+Alt+S</source>
-      <translation>Ctrl+Alt+S</translation>
+      <translation type="unfinished">Ctrl+Alt+S</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="577"/>
       <source>Save a Copy As...</source>
-      <translation>另存副本為...</translation>
+      <translation>副本另存为...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="586"/>
       <source>Sav&amp;e All</source>
-      <translation>全部儲存(&amp;e)</translation>
+      <translation>保存所有(&amp;e)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="589"/>
       <source>Ctrl+Shift+S</source>
-      <translation>Ctrl+Shift+S</translation>
+      <translation type="unfinished">Ctrl+Shift+S</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="594"/>
       <source>Select A&amp;ll</source>
-      <translation>全選(&amp;A)</translation>
+      <translation>选择所有(&amp;A)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="597"/>
       <source>Ctrl+A</source>
-      <translation>Ctrl+A</translation>
+      <translation type="unfinished">Ctrl+A</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="606"/>
       <source>Increase Indent</source>
-      <translation>增加縮排</translation>
+      <translation>增加缩进</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="615"/>
       <source>Decrease Indent</source>
-      <translation>減少縮排</translation>
+      <translation>减少缩进</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="620"/>
       <source>Rename...</source>
-      <translation>重新命名...</translation>
+      <translation>重命名...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="629"/>
       <source>Re&amp;load</source>
-      <translation>重新載入(&amp;l)</translation>
+      <translation>重新加载(&amp;l)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="637"/>
@@ -1074,97 +1074,97 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="658"/>
       <source>UPPER CASE</source>
-      <translation>轉換為大寫</translation>
+      <translation>转换为大写</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="661"/>
       <source>Convert text to upper case</source>
-      <translation>轉換文字為大寫</translation>
+      <translation>转换文本到大写</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="666"/>
       <source>lower case</source>
-      <translation>轉換為小寫</translation>
+      <translation>转换为小写</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="669"/>
       <source>Convert text to lower case</source>
-      <translation>轉換文字為小寫</translation>
+      <translation>转换文本到小写</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="674"/>
       <source>Duplicate Current Line</source>
-      <translation>複製並插入目前這行</translation>
+      <translation>复制并插入当前行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="677"/>
       <source>Alt+Down</source>
-      <translation>Alt+Down</translation>
+      <translation type="unfinished">Alt+Down</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="682"/>
       <source>Split Lines</source>
-      <translation>分行處理</translation>
+      <translation>拆分当前行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="687"/>
       <source>Join Lines</source>
-      <translation>合併多行</translation>
+      <translation>合并多行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="690"/>
       <source>Ctrl+J</source>
-      <translation>Ctrl+J</translation>
+      <translation type="unfinished">Ctrl+J</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="695"/>
       <source>Move Selected Lines Up</source>
-      <translation>向下移動選中的行</translation>
+      <translation>向下移动选中的行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="698"/>
       <source>Ctrl+Shift+Up</source>
-      <translation>Ctrl+Shift+Up</translation>
+      <translation type="unfinished">Ctrl+Shift+Up</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="703"/>
       <source>Move Selected Lines Down</source>
-      <translation>向上移動選中的行</translation>
+      <translation>向上移动选中的行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="706"/>
       <source>Ctrl+Shift+Down</source>
-      <translation>Ctrl+Shift+Down</translation>
+      <translation type="unfinished">Ctrl+Shift+Down</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="715"/>
       <source>Clos&amp;e All</source>
-      <translation>關閉所有(&amp;e)</translation>
+      <translation>关闭所有(&amp;e)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="718"/>
       <source>Close All files</source>
-      <translation>關閉所有檔案</translation>
+      <translation>关闭所有文件</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="721"/>
       <source>Ctrl+Shift+W</source>
-      <translation>Ctrl+Shift+W</translation>
+      <translation type="unfinished">Ctrl+Shift+W</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="726"/>
       <source>Close All Except Active Document</source>
-      <translation>關閉其他</translation>
+      <translation>关闭其他</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="731"/>
       <source>Close All to the Left</source>
-      <translation>關閉至左側</translation>
+      <translation>关闭至左侧</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="736"/>
       <source>Close All to the Right</source>
-      <translation>關閉至右側</translation>
+      <translation>关闭至右侧</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="746"/>
@@ -1174,329 +1174,329 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="749"/>
       <source>Ctrl++</source>
-      <translation>Ctrl++</translation>
+      <translation type="unfinished">Ctrl++</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="759"/>
       <source>Zoom &amp;Out</source>
-      <translation>縮小(&amp;O)</translation>
+      <translation>缩小(&amp;O)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="762"/>
       <source>Ctrl+-</source>
-      <translation>Ctrl+-</translation>
+      <translation type="unfinished">Ctrl+-</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="767"/>
       <source>Reset Zoom</source>
-      <translation>重置縮放</translation>
+      <translation>重置缩放</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="770"/>
       <source>Ctrl+0</source>
-      <translation>Ctrl+0</translation>
+      <translation type="unfinished">Ctrl+0</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="775"/>
       <source>About Qt</source>
-      <translation>關於 Qt</translation>
+      <translation>关于 Qt</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="787"/>
       <source>About Notepad Next</source>
-      <translation>關於 Notepad Next</translation>
+      <translation>关于 Notepad Next</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="798"/>
       <source>Show Whitespace</source>
-      <translation>顯示空格</translation>
+      <translation>显示空格</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="806"/>
       <source>Show End of Line</source>
-      <translation>顯示行尾</translation>
+      <translation>显示行尾</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="819"/>
       <source>Show All Characters</source>
-      <translation>顯示所有字元</translation>
+      <translation>显示所有字符</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="832"/>
       <source>Show Indent Guide</source>
-      <translation>顯示縮排指引</translation>
+      <translation>显示缩进指引</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="840"/>
       <source>Show Wrap Symbol</source>
-      <translation>顯示換行符號</translation>
+      <translation>显示换行标记</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="853"/>
       <source>Word Wrap</source>
-      <translation>自動換行</translation>
+      <translation>自动换行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="858"/>
       <source>Restore Recently Closed File</source>
-      <translation>恢復最近關閉的檔案</translation>
+      <translation>恢复最近关闭的文件</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="861"/>
       <source>Ctrl+Shift+T</source>
-      <translation>Ctrl+Shift+T</translation>
+      <translation type="unfinished">Ctrl+Shift+T</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="866"/>
       <source>Open All Recent Files</source>
-      <translation>開啟所有最近的檔案</translation>
+      <translation>打开所有最近关闭的文件</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="871"/>
       <source>Clear Recent Files List</source>
-      <translation>清除最近開啟的檔案清單</translation>
+      <translation>清除最近打开的文件</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="881"/>
       <source>&amp;Find...</source>
-      <translation>尋找(&amp;F)...</translation>
+      <translation>查找(&amp;F)...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="884"/>
       <source>Ctrl+F</source>
-      <translation>Ctrl+F</translation>
+      <translation type="unfinished">Ctrl+F</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="889"/>
       <source>Find in Files...</source>
-      <translation>在檔案中尋找...</translation>
+      <translation>在文件中查找...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="894"/>
       <source>Find &amp;Next</source>
-      <translation>尋找下一個(&amp;N)</translation>
+      <translation>查找下一个(&amp;N)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="897"/>
       <source>F3</source>
-      <translation>F3</translation>
+      <translation type="unfinished">F3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="902"/>
       <source>Find &amp;Previous</source>
-      <translation>尋找上一個(&amp;P)</translation>
+      <translation>查找上一个(&amp;P)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="912"/>
       <source>&amp;Replace...</source>
-      <translation>取代(&amp;R)...</translation>
+      <translation>替换(&amp;R)...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="915"/>
       <source>Ctrl+H</source>
-      <translation>Ctrl+H</translation>
+      <translation type="unfinished">Ctrl+H</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="923"/>
       <source>Full Screen</source>
-      <translation>全螢幕</translation>
+      <translation>全屏</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="926"/>
       <source>F11</source>
-      <translation>F11</translation>
+      <translation type="unfinished">F11</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="939"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="717"/>
       <source>Start Recording</source>
-      <translation>開始錄製</translation>
+      <translation>开始录制</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="951"/>
       <source>Playback</source>
-      <translation>播放</translation>
+      <translation>重放宏</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="954"/>
       <source>Ctrl+Shift+P</source>
-      <translation>Ctrl+Shift+P</translation>
+      <translation type="unfinished">Ctrl+Shift+P</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="966"/>
       <source>Save Current Recorded Macro...</source>
-      <translation>儲存目前錄製的巨集...</translation>
+      <translation>保存当前已录制的宏...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="978"/>
       <source>Run a Macro Multiple Times...</source>
-      <translation>多次執行巨集...</translation>
+      <translation>多次运行宏...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="987"/>
       <source>Preferences...</source>
-      <translation>偏好設定...</translation>
+      <translation>偏好设置....</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="995"/>
       <source>Quick Find</source>
-      <translation>快速尋找</translation>
+      <translation>快速查找</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="998"/>
       <source>Ctrl+Alt+I</source>
-      <translation>Ctrl+Alt+I</translation>
+      <translation type="unfinished">Ctrl+Alt+I</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1003"/>
       <source>Select Next Instance</source>
-      <translation>選擇下一個實例</translation>
+      <translation>选择下一个实例</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1006"/>
       <source>Ctrl+D</source>
-      <translation>Ctrl+D</translation>
+      <translation type="unfinished">Ctrl+D</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1015"/>
       <source>Move to Trash...</source>
-      <translation>移至垃圾桶...</translation>
+      <translation>移动至回收站...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1018"/>
       <source>Move to Trash</source>
-      <translation>移至垃圾桶</translation>
+      <translation>移动至回收站</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1023"/>
       <source>Check for Updates...</source>
-      <translation>檢查更新...</translation>
+      <translation>检查更新...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1028"/>
       <source>&amp;Go to Line...</source>
-      <translation>跳轉到行(&amp;G)...</translation>
+      <translation>转跳到行(&amp;G)...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1031"/>
       <source>Ctrl+G</source>
-      <translation>Ctrl+G</translation>
+      <translation type="unfinished">Ctrl+G</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1040"/>
       <source>Print...</source>
-      <translation>列印...</translation>
+      <translation>打印...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1043"/>
       <source>Ctrl+P</source>
-      <translation>Ctrl+P</translation>
+      <translation type="unfinished">Ctrl+P</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1048"/>
       <source>Open Folder as Workspace...</source>
-      <translation>以工作區方式開啟資料夾...</translation>
+      <translation>打开文件夹为工作区...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1053"/>
       <source>Toggle Single Line Comment</source>
-      <translation>切換單行註解</translation>
+      <translation>切换单行注释</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1056"/>
       <source>Ctrl+/</source>
-      <translation>Ctrl+/</translation>
+      <translation type="unfinished">Ctrl+/</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1061"/>
       <source>Single Line Comment</source>
-      <translation>單行註解</translation>
+      <translation>单行注释</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1064"/>
       <source>Ctrl+K</source>
-      <translation>Ctrl+K</translation>
+      <translation type="unfinished">Ctrl+K</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1069"/>
       <source>Single Line Uncomment</source>
-      <translation>取消單行註解</translation>
+      <translation>取消单行注释</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1072"/>
       <source>Ctrl+Shift+K</source>
-      <translation>Ctrl+Shift+K</translation>
+      <translation type="unfinished">Ctrl+Shift+K</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1084"/>
       <source>Edit Macros...</source>
-      <translation>編輯巨集...</translation>
+      <translation>编辑宏...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1092"/>
       <source>This is not currently implemented</source>
-      <translation>此功能尚未實現</translation>
+      <translation>此功能尚未实现</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1097"/>
       <source>Column Mode...</source>
-      <translation>列編輯模式...</translation>
+      <translation>列编辑模式...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1102"/>
       <source>Export as HTML...</source>
-      <translation>匯出為 HTML...</translation>
+      <translation>导出为 HTML...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1107"/>
       <source>Export as RTF...</source>
-      <translation>匯出為 RTF...</translation>
+      <translation>导出为 RTF...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1112"/>
       <source>Copy as HTML</source>
-      <translation>複製為 HTML</translation>
+      <translation>复制为 HTML</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1117"/>
       <source>Copy as RTF</source>
-      <translation>複製為 RTF</translation>
+      <translation>复制为 RTF</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1122"/>
       <source>Base 64 Encode</source>
-      <translation>Base 64 編碼</translation>
+      <translation>Base 64 编码</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1127"/>
       <source>URL Encode</source>
-      <translation>URL 編碼</translation>
+      <translation>URL 编码</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1132"/>
       <source>Base 64 Decode</source>
-      <translation>Base 64 解碼</translation>
+      <translation>Base 64 解码</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1137"/>
       <source>URL Decode</source>
-      <translation>URL 解碼</translation>
+      <translation>URL 解码</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1142"/>
       <source>Copy URL</source>
-      <translation>複製 URL</translation>
+      <translation>复制 URL</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1147"/>
       <source>Remove Empty Lines</source>
-      <translation>移除空行</translation>
+      <translation>删除空行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1156"/>
       <location filename="../src/dialogs/MainWindow.ui" line="1159"/>
       <source>Show in Explorer</source>
-      <translation>在檔案總管中顯示</translation>
+      <translation>在资源管理器中查看</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1168"/>
@@ -1506,262 +1506,262 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1173"/>
       <source>Toggle Bookmark</source>
-      <translation>切換書籤</translation>
+      <translation>切换书签</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1176"/>
       <source>Ctrl+F2</source>
-      <translation>Ctrl+F2</translation>
+      <translation type="unfinished">Ctrl+F2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1181"/>
       <source>Next Bookmark</source>
-      <translation>下一個書籤</translation>
+      <translation>下一个书签</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1184"/>
       <source>F2</source>
-      <translation>F2</translation>
+      <translation type="unfinished">F2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1189"/>
       <source>Previous Bookmark</source>
-      <translation>上一個書籤</translation>
+      <translation>上一个书签</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1192"/>
       <source>Shift+F2</source>
-      <translation>Shift+F2</translation>
+      <translation type="unfinished">Shift+F2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1197"/>
       <source>Clear Bookmarks</source>
-      <translation>清除書籤</translation>
+      <translation>清除书签</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1202"/>
       <source>Invert Bookmarks</source>
-      <translation>反轉書籤</translation>
+      <translation>反转书签</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1207"/>
       <source>Next Tab</source>
-      <translation>下一個分頁</translation>
+      <translation type="unfinished">Next Tab</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1210"/>
       <source>Ctrl+Tab</source>
-      <translation>Ctrl+Tab</translation>
+      <translation type="unfinished">Ctrl+Tab</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1218"/>
       <source>Previous Tab</source>
-      <translation>上一個分頁</translation>
+      <translation type="unfinished">Previous Tab</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1221"/>
       <source>Ctrl+Shift+Tab</source>
-      <translation>Ctrl+Shift+Tab</translation>
+      <translation type="unfinished">Ctrl+Shift+Tab</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1229"/>
       <source>Fold Level 1</source>
-      <translation>摺疊層級 1</translation>
+      <translation type="unfinished">Fold Level 1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1232"/>
       <source>Alt+1</source>
-      <translation>Alt+1</translation>
+      <translation type="unfinished">Alt+1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1237"/>
       <source>Fold Level 2</source>
-      <translation>摺疊層級 2</translation>
+      <translation type="unfinished">Fold Level 2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1240"/>
       <source>Alt+2</source>
-      <translation>Alt+2</translation>
+      <translation type="unfinished">Alt+2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1245"/>
       <source>Fold Level 3</source>
-      <translation>摺疊層級 3</translation>
+      <translation type="unfinished">Fold Level 3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1248"/>
       <source>Alt+3</source>
-      <translation>Alt+3</translation>
+      <translation type="unfinished">Alt+3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1253"/>
       <source>Fold Level 4</source>
-      <translation>摺疊層級 4</translation>
+      <translation type="unfinished">Fold Level 4</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1256"/>
       <source>Alt+4</source>
-      <translation>Alt+4</translation>
+      <translation type="unfinished">Alt+4</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1261"/>
       <source>Unfold Level 1</source>
-      <translation>展開層級 1</translation>
+      <translation type="unfinished">Unfold Level 1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1264"/>
       <source>Alt+Shift+1</source>
-      <translation>Alt+Shift+1</translation>
+      <translation type="unfinished">Alt+Shift+1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1269"/>
       <source>Unfold Level 2</source>
-      <translation>展開層級 2</translation>
+      <translation type="unfinished">Unfold Level 2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1272"/>
       <source>Alt+Shift+2</source>
-      <translation>Alt+Shift+2</translation>
+      <translation type="unfinished">Alt+Shift+2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1277"/>
       <source>Unfold Level 3</source>
-      <translation>展開層級 3</translation>
+      <translation type="unfinished">Unfold Level 3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1280"/>
       <source>Alt+Shift+3</source>
-      <translation>Alt+Shift+3</translation>
+      <translation type="unfinished">Alt+Shift+3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1285"/>
       <source>Unfold Level 4</source>
-      <translation>展開層級 4</translation>
+      <translation type="unfinished">Unfold Level 4</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1288"/>
       <source>Alt+Shift+4</source>
-      <translation>Alt+Shift+4</translation>
+      <translation type="unfinished">Alt+Shift+4</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1293"/>
       <source>Fold All</source>
-      <translation>全部摺疊</translation>
+      <translation type="unfinished">Fold All</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1296"/>
       <source>Alt+0</source>
-      <translation>Alt+0</translation>
+      <translation type="unfinished">Alt+0</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1301"/>
       <source>Unfold All</source>
-      <translation>全部展開</translation>
+      <translation type="unfinished">Unfold All</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1304"/>
       <source>Alt+Shift+0</source>
-      <translation>Alt+Shift+0</translation>
+      <translation type="unfinished">Alt+Shift+0</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1309"/>
       <source>Fold Level 5</source>
-      <translation>摺疊層級 5</translation>
+      <translation type="unfinished">Fold Level 5</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1312"/>
       <source>Alt+5</source>
-      <translation>Alt+5</translation>
+      <translation type="unfinished">Alt+5</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1317"/>
       <source>Fold Level 6</source>
-      <translation>摺疊層級 6</translation>
+      <translation type="unfinished">Fold Level 6</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1320"/>
       <source>Alt+6</source>
-      <translation>Alt+6</translation>
+      <translation type="unfinished">Alt+6</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1325"/>
       <source>Fold Level 7</source>
-      <translation>摺疊層級 7</translation>
+      <translation type="unfinished">Fold Level 7</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1328"/>
       <source>Alt+7</source>
-      <translation>Alt+7</translation>
+      <translation type="unfinished">Alt+7</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1333"/>
       <source>Fold Level 8</source>
-      <translation>摺疊層級 8</translation>
+      <translation type="unfinished">Fold Level 8</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1336"/>
       <source>Alt+8</source>
-      <translation>Alt+8</translation>
+      <translation type="unfinished">Alt+8</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1341"/>
       <source>Fold Level 9</source>
-      <translation>摺疊層級 9</translation>
+      <translation type="unfinished">Fold Level 9</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1344"/>
       <source>Alt+9</source>
-      <translation>Alt+9</translation>
+      <translation type="unfinished">Alt+9</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1349"/>
       <source>Unfold Level 5</source>
-      <translation>展開層級 5</translation>
+      <translation type="unfinished">Unfold Level 5</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1352"/>
       <source>Alt+Shift+5</source>
-      <translation>Alt+Shift+5</translation>
+      <translation type="unfinished">Alt+Shift+5</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1357"/>
       <source>Unfold Level 6</source>
-      <translation>展開層級 6</translation>
+      <translation type="unfinished">Unfold Level 6</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1360"/>
       <source>Alt+Shift+6</source>
-      <translation>Alt+Shift+6</translation>
+      <translation type="unfinished">Alt+Shift+6</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1365"/>
       <source>Unfold Level 7</source>
-      <translation>展開層級 7</translation>
+      <translation type="unfinished">Unfold Level 7</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1368"/>
       <source>Alt+Shift+7</source>
-      <translation>Alt+Shift+7</translation>
+      <translation type="unfinished">Alt+Shift+7</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1373"/>
       <source>Unfold Level 8</source>
-      <translation>展開層級 8</translation>
+      <translation type="unfinished">Unfold Level 8</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1376"/>
       <source>Alt+Shift+8</source>
-      <translation>Alt+Shift+8</translation>
+      <translation type="unfinished">Alt+Shift+8</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1381"/>
       <source>Unfold Level 9</source>
-      <translation>展開層級 9</translation>
+      <translation type="unfinished">Unfold Level 9</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1384"/>
       <source>Alt+Shift+9</source>
-      <translation>Alt+Shift+9</translation>
+      <translation type="unfinished">Alt+Shift+9</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1389"/>
@@ -1843,17 +1843,17 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="375"/>
       <source>Go to line</source>
-      <translation>跳轉到行</translation>
+      <translation>转跳到行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="375"/>
       <source>Line Number (1 - %1)</source>
-      <translation>行號（1 - %1）</translation>
+      <translation>行号（1 - %1）</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="708"/>
       <source>Stop Recording</source>
-      <translation>停止錄製</translation>
+      <translation>停止录制</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="813"/>
@@ -1863,86 +1863,86 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1016"/>
       <source>New %1</source>
-      <translation>新檔案 %1</translation>
+      <translation>新文件 %1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1076"/>
       <source>Create File</source>
-      <translation>建立檔案</translation>
+      <translation>新建文件</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1076"/>
       <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
-      <translation>&lt;b&gt;%1&lt;/b&gt; 目前不存在，你想要建立一個嗎？</translation>
+      <translation>&lt;b&gt;%1&lt;/b&gt; 尚不存在，你想要新建一个吗？</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1117"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1208"/>
       <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation>儲存檔案 &lt;b&gt;%1&lt;/b&gt;？</translation>
+      <translation>保存文件 &lt;b&gt;%1&lt;/b&gt;？</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1118"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1209"/>
       <source>Save File</source>
-      <translation>儲存檔案</translation>
+      <translation>保存文件</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1159"/>
       <source>Open Folder as Workspace</source>
-      <translation>以工作區方式開啟資料夾</translation>
+      <translation>打开文件夹作为工作区</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1182"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1854"/>
       <source>Reload File</source>
-      <translation>重新載入檔案</translation>
+      <translation>重新加载文件</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1182"/>
       <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
-      <translation>你確定要重新載入 &lt;b&gt;%1&lt;/b&gt;？任何未儲存的修改都會遺失。</translation>
+      <translation>你确定要重新加载 &lt;b&gt;%1&lt;/b&gt;？任何未保存的修改都会丢失。</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1373"/>
       <source>Save a Copy As</source>
-      <translation>副本另存為</translation>
+      <translation>副本另存为</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1449"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1466"/>
       <source>Rename</source>
-      <translation>重新命名</translation>
+      <translation>重命名</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1466"/>
       <source>Name:</source>
-      <translation>巨集名稱：</translation>
+      <translation>宏名：</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1486"/>
       <source>Delete File</source>
-      <translation>刪除檔案</translation>
+      <translation>删除文件</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1486"/>
       <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
-      <translation>你確定要將 &lt;b&gt;%1&lt;/b&gt; 移至垃圾桶？</translation>
+      <translation>你确定要将 &lt;b&gt;%1&lt;/b&gt; 移至回收站？</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1496"/>
       <source>Error Deleting File</source>
-      <translation>刪除檔案時出錯</translation>
+      <translation>删除文件时出错</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1496"/>
       <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation>刪除 &lt;b&gt;%1&lt;/b&gt; 時出錯了？</translation>
+      <translation>删除  &lt;b&gt;%1&lt;/b&gt; 时出错了？</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1593"/>
       <source>Administrator</source>
-      <translation>Administrator</translation>
+      <translation type="unfinished">Administrator</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1854"/>
@@ -2027,12 +2027,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1897"/>
       <source>Error Saving File</source>
-      <translation>儲存檔案時出錯</translation>
+      <translation>保存文件时出错</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1898"/>
       <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
-      <translation>儲存 &lt;b&gt;%1&lt;/b&gt; 時發生了錯誤&lt;br&gt;&lt;br&gt;錯誤：%2</translation>
+      <translation>保存 &lt;b&gt;%1&lt;/b&gt; 时发生了错误&lt;br&gt;&lt;br&gt;错误：%2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1904"/>
@@ -2042,7 +2042,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2071"/>
       <source>No updates are available at this time.</source>
-      <translation>目前沒有可用的更新。</translation>
+      <translation>本次无可用更新。</translation>
     </message>
   </context>
   <context>
@@ -2050,37 +2050,37 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="14"/>
       <source>Preferences</source>
-      <translation>偏好設定</translation>
+      <translation>偏好设置</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="37"/>
       <source>Show menu bar</source>
-      <translation>顯示選單列</translation>
+      <translation type="unfinished">Show menu bar</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="44"/>
       <source>Show toolbar</source>
-      <translation>顯示工具列</translation>
+      <translation type="unfinished">Show toolbar</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="51"/>
       <source>Show status bar</source>
-      <translation>顯示狀態列</translation>
+      <translation type="unfinished">Show status bar</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="58"/>
       <source>Restore previous session</source>
-      <translation>還原上一次的工作階段</translation>
+      <translation type="unfinished">Restore previous session</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="70"/>
       <source>Unsaved changes</source>
-      <translation>未儲存的變更</translation>
+      <translation>未保存的更改</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="77"/>
       <source>Temporary files</source>
-      <translation>暫存檔案</translation>
+      <translation type="unfinished">Temporary files</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="89"/>
@@ -2090,37 +2090,37 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="96"/>
       <source>Combine search results</source>
-      <translation>合併搜尋結果</translation>
+      <translation>结合搜索结果</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="114"/>
       <source>Translation:</source>
-      <translation>翻譯：</translation>
+      <translation type="unfinished">Translation:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="123"/>
       <source>Exit on last tab closed</source>
-      <translation>關閉最後一個分頁時結束程式</translation>
+      <translation type="unfinished">Exit on last tab closed</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="132"/>
       <source>Default Font</source>
-      <translation>預設字體</translation>
+      <translation type="unfinished">Default Font</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="138"/>
       <source>Font</source>
-      <translation>字體</translation>
+      <translation type="unfinished">Font</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="148"/>
       <source>Font Size</source>
-      <translation>字體大小</translation>
+      <translation type="unfinished">Font Size</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="155"/>
       <source>pt</source>
-      <translation>點</translation>
+      <translation type="unfinished">pt</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="188"/>
@@ -2161,12 +2161,12 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="277"/>
       <source>TextLabel</source>
-      <translation>文字標籤</translation>
+      <translation>文本标签</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="289"/>
       <source>An application restart is required to apply certain settings.</source>
-      <translation>某些設定需要重新啟動應用程式才能生效。</translation>
+      <translation type="unfinished">An application restart is required to apply certain settings.</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="56"/>
@@ -2176,7 +2176,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="56"/>
       <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
-      <translation>此功能為實驗性質，對於重要的工作可能並不安全，可能導致資料遺失，請自行承擔風險。</translation>
+      <translation>本功能是实验性的。对于关键性的重要工作开启本功能并不安全，可能导致数据丢失，使用时风险自负。</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="85"/>
@@ -2201,7 +2201,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="185"/>
       <source>&lt;System Default&gt;</source>
-      <translation>&lt;系統預設&gt;</translation>
+      <translation type="unfinished">&lt;System Default&gt;</translation>
     </message>
   </context>
   <context>
@@ -2214,47 +2214,47 @@
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="32"/>
       <source>Find...</source>
-      <translation>尋找...</translation>
+      <translation>查找...</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="44"/>
       <source>Match case</source>
-      <translation>區分大小寫</translation>
+      <translation>区分大小写</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="47"/>
       <source>Aa</source>
-      <translation>Aa</translation>
+      <translation type="unfinished">Aa</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="57"/>
       <source>Match whole word</source>
-      <translation>全字符合</translation>
+      <translation>全词匹配</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="60"/>
       <source>|A|</source>
-      <translation>|A|</translation>
+      <translation type="unfinished">|A|</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="70"/>
       <source>Use regular expression</source>
-      <translation>使用正規表達式</translation>
+      <translation>使用正则表达式</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="73"/>
       <source>. *</source>
-      <translation>. *</translation>
+      <translation type="unfinished">. *</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="76"/>
       <source>Alt+E</source>
-      <translation>Alt+E</translation>
+      <translation type="unfinished">Alt+E</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.cpp" line="238"/>
       <source>%L1/%L2</source>
-      <translation>%L1/%L2</translation>
+      <translation type="unfinished">%L1/%L2</translation>
     </message>
   </context>
   <context>
@@ -2262,7 +2262,7 @@
     <message>
       <location filename="../src/docks/SearchResultsDock.ui" line="14"/>
       <source>Search Results</source>
-      <translation>搜尋結果</translation>
+      <translation>搜索结果</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.ui" line="38"/>
@@ -2272,22 +2272,22 @@
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="57"/>
       <source>Collapse All</source>
-      <translation>全部摺疊</translation>
+      <translation>全部折叠</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="58"/>
       <source>Expand All</source>
-      <translation>全部展開</translation>
+      <translation>全部展开</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="60"/>
       <source>Delete Entry</source>
-      <translation>刪除項目</translation>
+      <translation>删除条目</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="62"/>
       <source>Delete All</source>
-      <translation>全部刪除</translation>
+      <translation>删除所有</translation>
     </message>
   </context>
 </TS>
