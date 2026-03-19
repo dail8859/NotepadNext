@@ -41,7 +41,7 @@ add_custom_target(appimage
         OUTPUT=NotepadNext-v${PROJECT_VERSION}-x86_64.AppImage
         ${LINUXDEPLOY}
         --appdir ${INSTALL_DIR}
-        --executable ${INSTALL_DIR}/usr/bin/NotepadNext
+        --executable ${INSTALL_DIR}/bin/NotepadNext
         --plugin qt
         --output appimage
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
