@@ -5,19 +5,19 @@ set(LINUXDEPLOY ${CMAKE_BINARY_DIR}/linuxdeploy-x86_64.AppImage)
 set(LINUXDEPLOY_QT ${CMAKE_BINARY_DIR}/linuxdeploy-plugin-qt-x86_64.AppImage)
 
 install(TARGETS NotepadNext
-    RUNTIME DESTINATION usr/bin
+    RUNTIME DESTINATION bin
 )
 install(FILES
     ${PROJECT_SOURCE_DIR}/deploy/linux/NotepadNext.desktop
-    DESTINATION usr/share/applications
+    DESTINATION share/applications
 )
 install(FILES
     ${PROJECT_SOURCE_DIR}/icon/NotepadNext.svg
-    DESTINATION usr/share/icons/hicolor/scalable/apps
+    DESTINATION share/icons/hicolor/scalable/apps
 )
 install(FILES
     ${PROJECT_SOURCE_DIR}/icon/NotepadNext.svg
-    DESTINATION usr/share/icons/hicolor/scalable/mimetypes
+    DESTINATION share/icons/hicolor/scalable/mimetypes
 )
 
 add_custom_target(appdir
