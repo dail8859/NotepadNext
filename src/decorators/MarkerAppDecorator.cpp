@@ -55,30 +55,39 @@ QColor MarkerAppDecorator::markerColor(int i) const
 
 void MarkerAppDecorator::mark(ScintillaNext *editor, int i)
 {
-    //const int mainSelection = editor->mainSelection();
-    //const int selectionStart = editor->selectionNStart(mainSelection);
-    //const int selectionEnd = editor->selectionNEnd(mainSelection);
+    int selectionStart = editor->selectionStart();
+    int selectionEnd = editor->selectionEnd();
+    bool isWholeWord = false;
 
-    const int curPos = editor->currentPos();
-    const int wordStart = editor->wordStartPosition(curPos, true);
-    const int wordEnd = editor->wordEndPosition(wordStart, true);
+    // If there is no selection, get the word at the cursor, else use it verbatim
+    if (selectionStart == selectionEnd) {
+        isWholeWord = true;
+        const int curPos = editor->currentPos();
+        selectionStart = editor->wordStartPosition(curPos, true);
+        selectionEnd = editor->wordEndPosition(curPos, true);
 
-    // Make sure the selection is on word boundaries
-    if (wordStart == wordEnd) {
+        // If they are still in the same location, just abort
+        if (selectionStart == selectionEnd) {
+            return;
+        }
+    }
+
+    // Limit the size of the selection
+    if ((selectionEnd - selectionStart) > 1024) {
         return;
     }
 
-    int indicator = editor->allocateIndicator(QString("marker_%1").arg(i));
+    int indicator = editor->allocateIndicator(QStringLiteral("marker_%1").arg(i));
     editor->setIndicatorCurrent(indicator);
 
-    const QByteArray selText = editor->get_text_range(wordStart, wordEnd);
-    Sci_TextToFind ttf {{0, (Sci_PositionCR)editor->length()}, selText.constData(), {-1, -1}};
-    const int flags = SCFIND_WHOLEWORD;
+    const QByteArray selText = editor->get_text_range(selectionStart, selectionEnd);
+    const int flags = isWholeWord ? SCFIND_WHOLEWORD : 0;
 
-    while (editor->send(SCI_FINDTEXT, flags, (sptr_t)&ttf) != -1) {
-        editor->indicatorFillRange(ttf.chrgText.cpMin, ttf.chrgText.cpMax - ttf.chrgText.cpMin);
-        ttf.chrg.cpMin = ttf.chrgText.cpMax;
-    }
+    editor->setSearchFlags(flags);
+    editor->forEachMatch(selText, [&](int start, int end) {
+        editor->indicatorFillRange(start, end - start);
+        return end;
+    });
 }
 
 void MarkerAppDecorator::clear(ScintillaNext *editor, int i)
