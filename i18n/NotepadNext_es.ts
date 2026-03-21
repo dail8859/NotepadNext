@@ -87,29 +87,29 @@
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="160"/>
       <source>UTF-8 BOM</source>
-      <translation type="unfinished">UTF-8 BOM</translation>
+      <translation>UTF-8 BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="161"/>
       <source>UTF-16LE BOM</source>
-      <translation type="unfinished">UTF-16LE BOM</translation>
+      <translation>UTF-16LE BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="162"/>
       <source>UTF-16BE BOM</source>
-      <translation type="unfinished">UTF-16BE BOM</translation>
+      <translation>UTF-16BE BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="178"/>
       <source>OVR</source>
       <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
-      <translation type="unfinished">OVR</translation>
+      <translation>OVR</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="182"/>
       <source>INS</source>
       <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
-      <translation type="unfinished">INS</translation>
+      <translation>INS</translation>
     </message>
   </context>
   <context>
@@ -806,12 +806,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="211"/>
       <source>Mark All Occurrences</source>
-      <translation type="unfinished">Mark All Occurrences</translation>
+      <translation>Mark All Occurrences</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="219"/>
       <source>Clear Marks</source>
-      <translation type="unfinished">Clear Marks</translation>
+      <translation>Clear Marks</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="242"/>
@@ -1774,7 +1774,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1395"/>
       <source>Ins</source>
-      <translation type="unfinished">Ins</translation>
+      <translation>Ins</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1403"/>
@@ -1799,48 +1799,48 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1423"/>
       <source>Mark Style 1</source>
-      <translation type="unfinished">Mark Style 1</translation>
+      <translation>Mark Style 1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1431"/>
       <source>Mark Style 2</source>
-      <translation type="unfinished">Mark Style 2</translation>
+      <translation>Mark Style 2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1439"/>
       <source>Clear Style 1</source>
-      <translation type="unfinished">Clear Style 1</translation>
+      <translation>Clear Style 1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1447"/>
       <source>Clear Style 2</source>
-      <translation type="unfinished">Clear Style 2</translation>
+      <translation>Clear Style 2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1455"/>
       <source>Mark Style 3</source>
-      <translation type="unfinished">Mark Style 3</translation>
+      <translation>Mark Style 3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1463"/>
       <source>Clear Style 3</source>
-      <translation type="unfinished">Clear Style 3</translation>
+      <translation>Clear Style 3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1471"/>
       <location filename="../src/dialogs/MainWindow.ui" line="1474"/>
       <source>Clear All Styles</source>
-      <translation type="unfinished">Clear All Styles</translation>
+      <translation>Clear All Styles</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1479"/>
       <source>Remove Duplicate Lines</source>
-      <translation type="unfinished">Remove Duplicate Lines</translation>
+      <translation>Remove Duplicate Lines</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1484"/>
       <source>Remove Consecutive Duplicate Lines</source>
-      <translation type="unfinished">Remove Consecutive Duplicate Lines</translation>
+      <translation>Remove Consecutive Duplicate Lines</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="375"/>
@@ -1949,82 +1949,82 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1854"/>
       <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
-      <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</translation>
+      <translation>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1880"/>
       <source>Read error</source>
-      <translation type="unfinished">Read error</translation>
+      <translation>Read error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1881"/>
       <source>Write error</source>
-      <translation type="unfinished">Write error</translation>
+      <translation>Write error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1882"/>
       <source>Fatal error</source>
-      <translation type="unfinished">Fatal error</translation>
+      <translation>Fatal error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1883"/>
       <source>Resource error</source>
-      <translation type="unfinished">Resource error</translation>
+      <translation>Resource error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1884"/>
       <source>Open error</source>
-      <translation type="unfinished">Open error</translation>
+      <translation>Open error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1885"/>
       <source>Abort error</source>
-      <translation type="unfinished">Abort error</translation>
+      <translation>Abort error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1886"/>
       <source>Timeout error</source>
-      <translation type="unfinished">Timeout error</translation>
+      <translation>Timeout error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1887"/>
       <source>Unspecified error</source>
-      <translation type="unfinished">Unspecified error</translation>
+      <translation>Unspecified error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1888"/>
       <source>Remove error</source>
-      <translation type="unfinished">Remove error</translation>
+      <translation>Remove error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1889"/>
       <source>Rename error</source>
-      <translation type="unfinished">Rename error</translation>
+      <translation>Rename error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1890"/>
       <source>Position error</source>
-      <translation type="unfinished">Position error</translation>
+      <translation>Position error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1891"/>
       <source>Resize error</source>
-      <translation type="unfinished">Resize error</translation>
+      <translation>Resize error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1892"/>
       <source>Permissions error</source>
-      <translation type="unfinished">Permissions error</translation>
+      <translation>Permissions error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1893"/>
       <source>Copy error</source>
-      <translation type="unfinished">Copy error</translation>
+      <translation>Copy error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1894"/>
       <source>Unknown error (%1)</source>
-      <translation type="unfinished">Unknown error (%1)</translation>
+      <translation>Unknown error (%1)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1897"/>
@@ -2132,28 +2132,28 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="200"/>
       <source>Highlight URLs</source>
-      <translation type="unfinished">Highlight URLs</translation>
+      <translation>Highlight URLs</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="207"/>
       <source>Show Line Numbers</source>
-      <translation type="unfinished">Show Line Numbers</translation>
+      <translation>Show Line Numbers</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="214"/>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="122"/>
       <source>Default Directory</source>
-      <translation type="unfinished">Default Directory</translation>
+      <translation>Default Directory</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="220"/>
       <source>Follow Current Document</source>
-      <translation type="unfinished">Follow Current Document</translation>
+      <translation>Follow Current Document</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="227"/>
       <source>Last Used Directory</source>
-      <translation type="unfinished">Last Used Directory</translation>
+      <translation>Last Used Directory</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="246"/>
