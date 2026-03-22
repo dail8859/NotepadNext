@@ -1,6 +1,8 @@
 message(STATUS "Configuring Linux packaging")
 
-set(INSTALL_DIR ${CMAKE_BINARY_DIR}/AppDir)
+set(APPDIR ${CMAKE_BINARY_DIR}/AppDir)
+set(APPDIR_USR ${APPDIR}/usr)
+
 set(LINUXDEPLOY ${CMAKE_BINARY_DIR}/linuxdeploy-x86_64.AppImage)
 set(LINUXDEPLOY_QT ${CMAKE_BINARY_DIR}/linuxdeploy-plugin-qt-x86_64.AppImage)
 
@@ -23,7 +25,7 @@ install(FILES
 add_custom_target(appdir
     COMMAND ${CMAKE_COMMAND}
         --install .
-        --prefix ${INSTALL_DIR}
+        --prefix ${APPDIR_USR}
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     DEPENDS NotepadNext
 )
@@ -38,10 +40,12 @@ add_custom_target(download_linuxdeploy
 
 add_custom_target(appimage
     COMMAND ${CMAKE_COMMAND} -E env
-        OUTPUT=NotepadNext-v${PROJECT_VERSION}-x86_64.AppImage
+        LDAI_OUTPUT=NotepadNext-v${PROJECT_VERSION}-x86_64.AppImage
         ${LINUXDEPLOY}
-        --appdir ${INSTALL_DIR}
-        --executable ${INSTALL_DIR}/bin/NotepadNext
+        --appdir ${APPDIR}
+        --executable ${APPDIR_USR}/bin/NotepadNext
+        --desktop-file ${APPDIR_USR}/share/applications/NotepadNext.desktop
+        --icon-file ${APPDIR_USR}/share/icons/hicolor/scalable/apps/NotepadNext.svg
         --plugin qt
         --output appimage
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
