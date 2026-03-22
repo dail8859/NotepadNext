@@ -32,7 +32,7 @@ qt_add_executable(NotepadNext
 	MacroStepTableModel.h
 	NotepadNextApplication.h
 	NppImporter.h
-	QRegexSearch.h
+
 	RangeAllocator.h
 	RecentFilesListManager.h
 	RecentFilesListMenuBuilder.h
@@ -79,7 +79,7 @@ qt_add_executable(NotepadNext
 	main.cpp
 	NotepadNextApplication.cpp
 	NppImporter.cpp
-	QRegexSearch.cpp
+
 	RangeAllocator.cpp
 	RecentFilesListManager.cpp
 	RecentFilesListMenuBuilder.cpp
@@ -179,6 +179,7 @@ qt_add_executable(NotepadNext
 	widgets/QuickFindWidget.ui
 	widgets/StatusLabel.cpp
 	widgets/StatusLabel.h
+	PCRE2Search.h PCRE2Search.cpp
 )
 
 set_target_properties(NotepadNext PROPERTIES
@@ -234,6 +235,7 @@ target_link_libraries(NotepadNext
         lexilla
         scintilla
         uchardet
+        pcre2-8
 )
 
 target_compile_definitions(NotepadNext
