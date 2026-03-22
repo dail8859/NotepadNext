@@ -87,17 +87,17 @@
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="160"/>
       <source>UTF-8 BOM</source>
-      <translation type="unfinished">UTF-8 BOM</translation>
+      <translation>UTF-8 BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="161"/>
       <source>UTF-16LE BOM</source>
-      <translation type="unfinished">UTF-16LE BOM</translation>
+      <translation>UTF-16LE BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="162"/>
       <source>UTF-16BE BOM</source>
-      <translation type="unfinished">UTF-16BE BOM</translation>
+      <translation>UTF-16BE BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="178"/>
@@ -277,7 +277,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="106"/>
       <source>Contracted Fold Next</source>
-      <translation type="unfinished">Contracted Fold Next</translation>
+      <translation>Contracted Fold Next</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="173"/>
@@ -481,14 +481,6 @@
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="14"/>
       <source>Folder as Workspace</source>
       <translation>Cartella come area di lavoro</translation>
-    </message>
-  </context>
-  <context>
-    <name>HexViewerDock</name>
-    <message>
-      <location filename="../src/docks/HexViewerDock.ui" line="14"/>
-      <source>Hex Viewer</source>
-      <translation>Visualizzatore esadecimale</translation>
     </message>
   </context>
   <context>
@@ -744,7 +736,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1408"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1402"/>
       <source>Export As</source>
       <translation>Esporta come</translation>
     </message>
@@ -1310,7 +1302,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="939"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="717"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="716"/>
       <source>Start Recording</source>
       <translation>Inizia la registrazione</translation>
     </message>
@@ -1835,214 +1827,214 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1479"/>
       <source>Remove Duplicate Lines</source>
-      <translation type="unfinished">Remove Duplicate Lines</translation>
+      <translation>Remove Duplicate Lines</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1484"/>
       <source>Remove Consecutive Duplicate Lines</source>
-      <translation type="unfinished">Remove Consecutive Duplicate Lines</translation>
+      <translation>Remove Consecutive Duplicate Lines</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="375"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="374"/>
       <source>Go to line</source>
       <translation>Vai alla riga</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="375"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="374"/>
       <source>Line Number (1 - %1)</source>
       <translation>Numerodi riga (1 - %1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="708"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="707"/>
       <source>Stop Recording</source>
       <translation>Interrompi la registrazione</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="813"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="812"/>
       <source>Debug Info</source>
       <translation>Informazioni di debug</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1016"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1010"/>
       <source>New %1</source>
       <translation>Nuovo %1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1076"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1070"/>
       <source>Create File</source>
       <translation>Crea file</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1076"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1070"/>
       <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt; non esiste. Vuoi crearlo?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1117"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1208"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1111"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1202"/>
       <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation>Salvare il file &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1118"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1209"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1112"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1203"/>
       <source>Save File</source>
       <translation>Salva file</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1159"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1153"/>
       <source>Open Folder as Workspace</source>
       <translation>Apri cartella come area di lavoro</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1182"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1854"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1176"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1848"/>
       <source>Reload File</source>
       <translation>Ricarica file</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1182"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1176"/>
       <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
       <translation>Vuoi davvero ricaricare &lt;b&gt;%1&lt;/b&gt;? Tutte le modifiche non salvate andranno perse.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1373"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1367"/>
       <source>Save a Copy As</source>
       <translation>Salva una copia come</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1449"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1466"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1443"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1460"/>
       <source>Rename</source>
       <translation>Rinomina</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1466"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1460"/>
       <source>Name:</source>
       <translation>Nome:</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1486"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1480"/>
       <source>Delete File</source>
       <translation>Elimina file</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1486"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1480"/>
       <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
       <translation>Vuoi davvero spostare &lt;b&gt;%1&lt;/b&gt; nel cestino?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1496"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1490"/>
       <source>Error Deleting File</source>
       <translation>Errore durante l&apos;eliminazione del file</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1496"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1490"/>
       <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation>Si è verificato un errore durante l&apos;eliminazione di &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1593"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1587"/>
       <source>Administrator</source>
       <translation>Amministratore</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1854"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1848"/>
       <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
-      <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</translation>
+      <translation>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1874"/>
+      <source>Read error</source>
+      <translation>Read error</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1875"/>
+      <source>Write error</source>
+      <translation>Write error</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1876"/>
+      <source>Fatal error</source>
+      <translation>Fatal error</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1877"/>
+      <source>Resource error</source>
+      <translation>Resource error</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1878"/>
+      <source>Open error</source>
+      <translation>Open error</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1879"/>
+      <source>Abort error</source>
+      <translation>Abort error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1880"/>
-      <source>Read error</source>
-      <translation type="unfinished">Read error</translation>
+      <source>Timeout error</source>
+      <translation>Timeout error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1881"/>
-      <source>Write error</source>
-      <translation type="unfinished">Write error</translation>
+      <source>Unspecified error</source>
+      <translation>Unspecified error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1882"/>
-      <source>Fatal error</source>
-      <translation type="unfinished">Fatal error</translation>
+      <source>Remove error</source>
+      <translation>Remove error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1883"/>
-      <source>Resource error</source>
-      <translation type="unfinished">Resource error</translation>
+      <source>Rename error</source>
+      <translation>Rename error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1884"/>
-      <source>Open error</source>
-      <translation type="unfinished">Open error</translation>
+      <source>Position error</source>
+      <translation>Position error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1885"/>
-      <source>Abort error</source>
-      <translation type="unfinished">Abort error</translation>
+      <source>Resize error</source>
+      <translation>Resize error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1886"/>
-      <source>Timeout error</source>
-      <translation type="unfinished">Timeout error</translation>
+      <source>Permissions error</source>
+      <translation>Permissions error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1887"/>
-      <source>Unspecified error</source>
-      <translation type="unfinished">Unspecified error</translation>
+      <source>Copy error</source>
+      <translation>Copy error</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1888"/>
-      <source>Remove error</source>
-      <translation type="unfinished">Remove error</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1889"/>
-      <source>Rename error</source>
-      <translation type="unfinished">Rename error</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1890"/>
-      <source>Position error</source>
-      <translation type="unfinished">Position error</translation>
+      <source>Unknown error (%1)</source>
+      <translation>Unknown error (%1)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1891"/>
-      <source>Resize error</source>
-      <translation type="unfinished">Resize error</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1892"/>
-      <source>Permissions error</source>
-      <translation type="unfinished">Permissions error</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1893"/>
-      <source>Copy error</source>
-      <translation type="unfinished">Copy error</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1894"/>
-      <source>Unknown error (%1)</source>
-      <translation type="unfinished">Unknown error (%1)</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1897"/>
       <source>Error Saving File</source>
       <translation>Errore durante il salvataggio del file</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1898"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1892"/>
       <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
       <translation>Si è verificato un errore durante il salvataggio di &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Errore: %2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1904"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1898"/>
       <source>Zoom: %1%</source>
       <translation>Ingrandimento: %1%</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2071"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2065"/>
       <source>No updates are available at this time.</source>
       <translation>Al momento non sono disponibili aggiornamenti.</translation>
     </message>
