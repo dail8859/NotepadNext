@@ -11,5 +11,4 @@ for %%s in (%ICON_SIZES%) do (
 for %%s in (%ICON_SIZES%) do del nn%%s.png
 
 "C:\Program Files\Inkscape\bin\inkscape.exe" NotepadNext.svg --export-type=png --export-dpi=96 --export-background-opacity=0 
-".\png2icons.exe" NotepadNext.png NotepadNext -icns
 copy NotepadNext.png ..\src\NotepadNext\icons\NotepadNext.png
