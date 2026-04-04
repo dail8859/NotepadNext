@@ -94,7 +94,9 @@ void SearchResultsDock::newSearch(const QString searchTerm)
         ui->treeWidget->collapseItem(topLevelItem);
     }
 
-    currentSearch = new QTreeWidgetItem(ui->treeWidget);
+    currentSearch = new QTreeWidgetItem();
+    ui->treeWidget->insertTopLevelItem(0, currentSearch);
+
     currentSearch->setBackground(0, QColor(232, 232, 255));
     currentSearch->setForeground(0, QColor(0, 0, 170));
     currentSearch->setExpanded(true);
