@@ -901,6 +901,9 @@
    <property name="text">
     <string>Find &amp;Previous</string>
    </property>
+   <property name="shortcut">
+    <string>Shift+F3</string>
+   </property>
   </action>
   <action name="actionReplace">
    <property name="icon">

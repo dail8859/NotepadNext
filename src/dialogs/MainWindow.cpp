@@ -343,7 +343,15 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         FindReplaceDialog *f = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (f) {
-            f->performLastSearch();
+            f->performNextSearch();
+        }
+    });
+
+    connect(ui->actionFindPrevious, &QAction::triggered, this, [=]() {
+        FindReplaceDialog *f = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
+
+        if (f) {
+            f->performPrevSearch();
         }
     });
 

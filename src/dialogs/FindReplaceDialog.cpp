@@ -359,9 +359,14 @@ void FindReplaceDialog::setEditor(ScintillaNext *editor)
     finder->setEditor(editor);
 }
 
-void FindReplaceDialog::performLastSearch()
+void FindReplaceDialog::performNextSearch()
 {
     editor->goToRange(finder->findNext());
+}
+
+void FindReplaceDialog::performPrevSearch()
+{
+    editor->goToRange(finder->findPrev());
 }
 
 void FindReplaceDialog::adjustOpacity(int value)
