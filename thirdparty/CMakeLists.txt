@@ -30,6 +30,18 @@ CPMAddPackage(
     GIT_TAG ab62f0554abf2bbe4d45427b36a8b2f81ca7b4ab
 )
 
+CPMAddPackage(
+    NAME PCRE2
+    GITHUB_REPOSITORY PCRE2Project/pcre2
+    GIT_TAG pcre2-10.47
+    OPTIONS
+        "PCRE2_BUILD_PCRE2_8:BOOL=ON"
+        "PCRE2_BUILD_PCRE2_16:BOOL=OFF"
+        "PCRE2_BUILD_PCRE2_32:BOOL=OFF"
+        "BUILD_SHARED_LIBS:BOOL=OFF"
+        "PCRE2_SUPPORT_JIT:BOOL=ON"
+)
+
 add_subdirectory(lua)
 add_subdirectory(scintilla)
 add_subdirectory(lexilla)

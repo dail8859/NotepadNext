@@ -26,6 +26,8 @@
 #include <QKeyEvent>
 
 #include "ScintillaNext.h"
+#include "PCRE2Search.h"
+
 #include "MainWindow.h"
 
 
@@ -623,6 +625,8 @@ int FindReplaceDialog::computeSearchFlags()
         flags |= SCFIND_MATCHCASE;
     if (ui->radioRegexSearch->isChecked())
         flags |= SCFIND_REGEXP;
+    if (ui->checkBoxRegexMatchesNewline->isChecked())
+        flags |= SCFIND_REGEXP_DOTMATCHESNL;
 
     return flags;
 }
