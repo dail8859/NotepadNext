@@ -68,7 +68,8 @@ signals:
     void windowDeactivated();
 
 public slots:
-    void performLastSearch();
+    void performNextSearch();
+    void performPrevSearch();
 
     void find();
     void findAllInCurrentDocument();
