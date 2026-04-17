@@ -139,6 +139,9 @@
      <addaction name="actionRemoveEmptyLines"/>
      <addaction name="actionRemoveDuplicateLines"/>
      <addaction name="actionRemoveConsecutiveDuplicateLines"/>
+     <addaction name="separator"/>
+     <addaction name="actionSortLinesAscending"/>
+     <addaction name="actionSortLinesDescending"/>
     </widget>
     <widget class="QMenu" name="menuCommentUncomment">
      <property name="title">
@@ -1482,6 +1485,16 @@
   <action name="actionRemoveConsecutiveDuplicateLines">
    <property name="text">
     <string>Remove Consecutive Duplicate Lines</string>
+   </property>
+  </action>
+  <action name="actionSortLinesAscending">
+   <property name="text">
+    <string>Sort Lines Ascending</string>
+   </property>
+  </action>
+  <action name="actionSortLinesDescending">
+   <property name="text">
+    <string>Sort Lines Descending</string>
    </property>
   </action>
  </widget>

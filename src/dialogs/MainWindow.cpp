@@ -21,6 +21,7 @@
 #include "BookMarkDecorator.h"
 #include "DefaultDirectoryManager.h"
 #include "MarkerAppDecorator.h"
+#include "ScintillaSorter.h"
 #include "URLFinder.h"
 #include "SessionManager.h"
 #include "UndoAction.h"
@@ -257,6 +258,14 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
     connect(ui->actionRemoveConsecutiveDuplicateLines, &QAction::triggered, this, [=]() {
         currentEditor()->removeConsecutiveDuplicateLines();
+    });
+    connect(ui->actionSortLinesAscending, &QAction::triggered, this, [=, this]() {
+        ScintillaSorter scintillaSorter(currentEditor());
+        scintillaSorter.sort(LexicographicSorter(Sorter::Direction::Descending));
+    });
+    connect(ui->actionSortLinesDescending, &QAction::triggered, this, [=, this]() {
+        ScintillaSorter scintillaSorter(currentEditor());
+        scintillaSorter.sort(LexicographicSorter(Sorter::Direction::Descending));
     });
 
     connect(ui->actionColumnMode, &QAction::triggered, this, [=]() {
