@@ -39,10 +39,25 @@ protected:
 };
 
 
-class LexicographicSorter : public Sorter
+class CaseInsensitiveSorter : public Sorter
 {
 public:
     using Sorter::Sorter;
+    void sort(QVector<QByteArrayView> &lines) const override;
+};
 
+
+class CaseSensitiveSorter : public Sorter
+{
+public:
+    using Sorter::Sorter;
+    void sort(QVector<QByteArrayView> &lines) const override;
+};
+
+
+class LineLengthSorter : public Sorter
+{
+public:
+    using Sorter::Sorter;
     void sort(QVector<QByteArrayView> &lines) const override;
 };
