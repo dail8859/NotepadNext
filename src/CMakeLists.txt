@@ -179,6 +179,8 @@ qt_add_executable(NotepadNext
 	widgets/QuickFindWidget.ui
 	widgets/StatusLabel.cpp
 	widgets/StatusLabel.h
+	Sorter.h Sorter.cpp
+	ScintillaSorter.h ScintillaSorter.cpp
 )
 
 set_target_properties(NotepadNext PROPERTIES

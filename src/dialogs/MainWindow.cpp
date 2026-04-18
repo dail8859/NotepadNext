@@ -21,6 +21,7 @@
 #include "BookMarkDecorator.h"
 #include "DefaultDirectoryManager.h"
 #include "MarkerAppDecorator.h"
+#include "ScintillaSorter.h"
 #include "URLFinder.h"
 #include "SessionManager.h"
 #include "UndoAction.h"
@@ -257,6 +258,30 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
     connect(ui->actionRemoveConsecutiveDuplicateLines, &QAction::triggered, this, [=]() {
         currentEditor()->removeConsecutiveDuplicateLines();
+    });
+    connect(ui->actionSortLinesAsc, &QAction::triggered, this, [=, this]() {
+        ScintillaSorter scintillaSorter(currentEditor());
+        scintillaSorter.sort(CaseSensitiveSorter(Sorter::Direction::Ascending));
+    });
+    connect(ui->actionSortLinesAscCaseInsensitive, &QAction::triggered, this, [=, this]() {
+        ScintillaSorter scintillaSorter(currentEditor());
+        scintillaSorter.sort(CaseInsensitiveSorter(Sorter::Direction::Ascending));
+    });
+    connect(ui->actionSortLinesbyLengthAsc, &QAction::triggered, this, [=, this]() {
+        ScintillaSorter scintillaSorter(currentEditor());
+        scintillaSorter.sort(LineLengthSorter(Sorter::Direction::Ascending));
+    });
+    connect(ui->actionSortLinesDesc, &QAction::triggered, this, [=, this]() {
+        ScintillaSorter scintillaSorter(currentEditor());
+        scintillaSorter.sort(CaseSensitiveSorter(Sorter::Direction::Descending));
+    });
+    connect(ui->actionSortLinesDescCaseInsensitive, &QAction::triggered, this, [=, this]() {
+        ScintillaSorter scintillaSorter(currentEditor());
+        scintillaSorter.sort(CaseInsensitiveSorter(Sorter::Direction::Descending));
+    });
+    connect(ui->actionSortLinesbyLengthDesc, &QAction::triggered, this, [=, this]() {
+        ScintillaSorter scintillaSorter(currentEditor());
+        scintillaSorter.sort(LineLengthSorter(Sorter::Direction::Descending));
     });
 
     connect(ui->actionColumnMode, &QAction::triggered, this, [=]() {
