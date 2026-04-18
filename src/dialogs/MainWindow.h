@@ -42,6 +42,7 @@ class QuickFindWidget;
 class ZoomEventWatcher;
 class Converter;
 class DefaultDirectoryManager;
+class QuickActionsBar;
 
 class MainWindow : public QMainWindow
 {
@@ -166,6 +167,8 @@ private:
     ISearchResultsHandler *determineSearchResultsHandler();
 
     QActionGroup *languageActionGroup;
+
+    QuickActionsBar *quickActionsBar = nullptr;
 
     //NppImporter *npp;
 
