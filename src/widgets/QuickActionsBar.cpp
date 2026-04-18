@@ -4,9 +4,9 @@
 #include "QuickActionsBar.h"
 
 namespace {
-    constexpr char* IconPlusPath = "://icons/plus.svg";
-    constexpr char* IconListPath = "://icons/list_with_icons.svg";
-    constexpr char* IconCrossPath = "://icons/cross.svg";
+    constexpr QLatin1StringView IconPlusPath("://icons/plus.svg");
+    constexpr QLatin1StringView IconListPath("://icons/list_with_icons.svg");
+    constexpr QLatin1StringView IconCrossPath("://icons/cross.svg");
 }
 
 struct QuickActionsBar::QuickActionsBarPrivate
