@@ -390,7 +390,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="291"/>
       <source>Find All in All &amp;Opened Documents</source>
-      <translation>Vind in alle ge&amp;opende documenten</translation>
+      <translation>Zoek in alle ge&amp;opende documenten</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="301"/>
@@ -938,7 +938,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="518"/>
       <source>&amp;Copy</source>
-      <translation>Kopieren</translation>
+      <translation>Kopiëren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="521"/>
@@ -1143,7 +1143,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="729"/>
       <source>Ctrl+Shift+W</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="734"/>
@@ -1902,7 +1902,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1103"/>
       <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
-      <translation>&lt;b&gt;%1&lt;/b&gt; bestaat niet. Wilt u het maken?</translation>
+      <translation>&lt;b&gt;%1&lt;/b&gt; bestaat niet. Wilt u deze aanmaken?</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1144"/>
@@ -2104,7 +2104,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="70"/>
       <source>Unsaved changes</source>
-      <translation>Onbewaarde wijzigingen</translation>
+      <translation>Niet-opgeslagen wijzigingen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="77"/>
@@ -2159,7 +2159,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="200"/>
       <source>Highlight URLs</source>
-      <translation>URLś markeren</translation>
+      <translation>URL's markeren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="207"/>
@@ -2205,7 +2205,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="56"/>
       <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
-      <translation>Deze functie is experimenteel en is niet veilig voor belangrijk werk. Het kan tot ongewenst verlies van gegevens leiden. Gebruik voor eigen risico.</translation>
+      <translation>Deze functie is experimenteel en is niet veilig voor belangrijk werk. Het kan leiden tot ongewenst verlies van gegevens. Gebruik voor eigen risico.</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="85"/>
@@ -2215,12 +2215,12 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="86"/>
       <source>Windows (CR LF)</source>
-      <translation type="unfinished"/>
+      <translation>Windows (CR LF)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="87"/>
       <source>Linux (LF)</source>
-      <translation>Unix (LF)</translation>
+      <translation>Linux (LF)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="88"/>
@@ -2243,7 +2243,7 @@
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="32"/>
       <source>Find...</source>
-      <translation>Vind...</translation>
+      <translation>Zoeken...</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="44"/>
