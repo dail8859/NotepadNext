@@ -1844,7 +1844,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1500"/>
       <source>Sort Lines Ascending</source>
-      <translation type="unfinished"/>
+      <translation/>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1505"/>
