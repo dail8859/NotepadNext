@@ -21,7 +21,7 @@
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="59"/>
       <source>Start:</source>
-      <translation type="unfinished"/>
+      <translation>Start:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="76"/>
@@ -34,7 +34,7 @@
     <message>
       <location filename="../src/docks/DebugLogDock.ui" line="14"/>
       <source>Debug Log</source>
-      <translation type="unfinished"/>
+      <translation>Debug Log</translation>
     </message>
   </context>
   <context>
@@ -47,12 +47,12 @@
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="109"/>
       <source>Sel: N/A</source>
-      <translation type="unfinished"/>
+      <translation>Sel: N/A</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="119"/>
       <source>Sel: %L1 | %L2</source>
-      <translation type="unfinished"/>
+      <translation>Sel: %L1 | %L2</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="123"/>
@@ -62,54 +62,54 @@
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="139"/>
       <source>Macintosh (CR)</source>
-      <translation type="unfinished"/>
+      <translation>Macintosh (CR)</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="142"/>
       <source>Windows (CR LF)</source>
-      <translation type="unfinished"/>
+      <translation>Windows (CR LF)</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="145"/>
       <source>Unix (LF)</source>
-      <translation type="unfinished"/>
+      <translation>Unix (LF)</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="155"/>
       <source>ANSI</source>
-      <translation type="unfinished"/>
+      <translation>ANSI</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="159"/>
       <source>UTF-8</source>
-      <translation type="unfinished"/>
+      <translation>UTF-8</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="160"/>
       <source>UTF-8 BOM</source>
-      <translation type="unfinished"/>
+      <translation>UTF-8 BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="161"/>
       <source>UTF-16LE BOM</source>
-      <translation type="unfinished"/>
+      <translation>UTF-16LE BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="162"/>
       <source>UTF-16BE BOM</source>
-      <translation type="unfinished"/>
+      <translation>UTF-16BE BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="178"/>
       <source>OVR</source>
       <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
-      <translation type="unfinished"/>
+      <translation>OVR</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="182"/>
       <source>INS</source>
       <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
-      <translation type="unfinished"/>
+      <translation>INS</translation>
     </message>
   </context>
   <context>
@@ -122,7 +122,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="36"/>
       <source>Position Information</source>
-      <translation>Positieinformatie</translation>
+      <translation>Positie informatie</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="39"/>
@@ -172,7 +172,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="52"/>
       <source>Selection Information</source>
-      <translation>Selectieinformatie</translation>
+      <translation>Selectie informatie</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="55"/>
@@ -222,7 +222,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="88"/>
       <source>View Information</source>
-      <translation>Vensterinformatie</translation>
+      <translation>Venster informatie</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="91"/>
@@ -282,7 +282,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="173"/>
       <source>Caret</source>
-      <translation type="unfinished"/>
+      <translation>Caret</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="177"/>
@@ -310,7 +310,7 @@
     <message>
       <location filename="../src/docks/FileListDock.ui" line="51"/>
       <source>...</source>
-      <translation type="unfinished"/>
+      <translation>...</translation>
     </message>
     <message>
       <location filename="../src/docks/FileListDock.ui" line="90"/>
@@ -325,7 +325,7 @@
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="247"/>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="59"/>
       <source>Find</source>
-      <translation>Vinden</translation>
+      <translation>Zoeken</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="69"/>
@@ -498,7 +498,7 @@
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="70"/>
       <source>Lexer:</source>
-      <translation type="unfinished"/>
+      <translation>Lexer:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="86"/>
@@ -513,7 +513,7 @@
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="105"/>
       <source>Type</source>
-      <translation type="unfinished"/>
+      <translation>Type</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="110"/>
@@ -534,7 +534,7 @@
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="146"/>
       <source>ID</source>
-      <translation type="unfinished"/>
+      <translation>ID</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="159"/>
@@ -557,7 +557,7 @@
     <message>
       <location filename="../src/docks/LuaConsoleDock.ui" line="17"/>
       <source>Lua Console</source>
-      <translation type="unfinished"/>
+      <translation>Lua Console</translation>
     </message>
   </context>
   <context>
@@ -565,7 +565,7 @@
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="14"/>
       <source>Macro Editor</source>
-      <translation type="unfinished"/>
+      <translation>Macro Editor</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="48"/>
@@ -633,12 +633,12 @@
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="14"/>
       <source>Run a Macro Multiple Times</source>
-      <translation>Voer een macro meerdere keren uit</translation>
+      <translation>Macro meerdere keren uitvoeren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="31"/>
       <source>Macro:</source>
-      <translation type="unfinished"/>
+      <translation>Macro:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="56"/>
@@ -658,7 +658,7 @@
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="166"/>
       <source>Run</source>
-      <translation type="unfinished"/>
+      <translation>Run</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="173"/>
@@ -686,7 +686,7 @@
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="82"/>
       <source>OK</source>
-      <translation type="unfinished"/>
+      <translation>OK</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="89"/>
@@ -712,12 +712,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="17"/>
       <source>Notepad Next[*]</source>
-      <translation type="unfinished"/>
+      <translation>Notepad Next[*]</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="33"/>
       <source>+</source>
-      <translation type="unfinished"/>
+      <translation>+</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="48"/>
@@ -813,7 +813,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="254"/>
       <source>&amp;Zoom</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Zoomen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="263"/>
@@ -843,12 +843,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="325"/>
       <source>Macro</source>
-      <translation type="unfinished"/>
+      <translation>Macro</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="336"/>
       <source>Help</source>
-      <translation type="unfinished"/>
+      <translation>Help</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="347"/>
@@ -873,7 +873,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="429"/>
       <source>Ctrl+N</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+N</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="439"/>
@@ -883,7 +883,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="442"/>
       <source>Ctrl+O</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+O</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="455"/>
@@ -898,7 +898,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="461"/>
       <source>Ctrl+S</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+S</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="466"/>
@@ -913,17 +913,17 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="482"/>
       <source>Ctrl+Z</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Z</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="492"/>
       <source>&amp;Redo</source>
-      <translation>Opnieuw uitvoeren</translation>
+      <translation>Opnieuw uitvoe&amp;ren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="495"/>
       <source>Ctrl+Y</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Y</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="505"/>
@@ -933,7 +933,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="508"/>
       <source>Ctrl+X</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+X</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="518"/>
@@ -943,7 +943,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="521"/>
       <source>Ctrl+C</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+C</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="531"/>
@@ -953,7 +953,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="534"/>
       <source>Ctrl+V</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+V</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="539"/>
@@ -963,12 +963,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="542"/>
       <source>Del</source>
-      <translation type="unfinished"/>
+      <translation>Del</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="547"/>
       <source>Copy Full Path</source>
-      <translation>Volledige pad kopieren</translation>
+      <translation>Volledige pad kopiëren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="552"/>
@@ -993,7 +993,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="572"/>
       <source>Ctrl+W</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+W</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="577"/>
@@ -1003,7 +1003,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="580"/>
       <source>Ctrl+Alt+S</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Alt+S</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="585"/>
@@ -1018,7 +1018,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="597"/>
       <source>Ctrl+Shift+S</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="602"/>
@@ -1028,7 +1028,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="605"/>
       <source>Ctrl+A</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+A</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="614"/>
@@ -1053,17 +1053,17 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="645"/>
       <source>Windows (CR LF)</source>
-      <translation type="unfinished"/>
+      <translation>Windows (CR LF)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="653"/>
       <source>Unix (LF)</source>
-      <translation type="unfinished"/>
+      <translation>Unix (LF)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="661"/>
       <source>Macintosh (CR)</source>
-      <translation type="unfinished"/>
+      <translation>Macintosh (CR)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="666"/>
@@ -1093,7 +1093,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="685"/>
       <source>Alt+Down</source>
-      <translation type="unfinished"/>
+      <translation>Alt+Down</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="690"/>
@@ -1108,7 +1108,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="698"/>
       <source>Ctrl+J</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+J</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="703"/>
@@ -1118,7 +1118,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="706"/>
       <source>Ctrl+Shift+Up</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Shift+Up</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="711"/>
@@ -1128,7 +1128,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="714"/>
       <source>Ctrl+Shift+Down</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Shift+Down</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="723"/>
@@ -1168,7 +1168,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="757"/>
       <source>Ctrl++</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl++</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="767"/>
@@ -1178,7 +1178,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="770"/>
       <source>Ctrl+-</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+-</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="775"/>
@@ -1188,7 +1188,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="778"/>
       <source>Ctrl+0</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+0</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="783"/>
@@ -1238,7 +1238,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="869"/>
       <source>Ctrl+Shift+T</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Shift+T</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="874"/>
@@ -1258,7 +1258,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="892"/>
       <source>Ctrl+F</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+F</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="897"/>
@@ -1273,7 +1273,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="905"/>
       <source>F3</source>
-      <translation type="unfinished"/>
+      <translation>F3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="910"/>
@@ -1283,7 +1283,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="913"/>
       <source>Shift+F3</source>
-      <translation type="unfinished"/>
+      <translation>Shift+F3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="923"/>
@@ -1293,7 +1293,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="926"/>
       <source>Ctrl+H</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+H</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="934"/>
@@ -1303,7 +1303,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="937"/>
       <source>F11</source>
-      <translation type="unfinished"/>
+      <translation>F11</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="950"/>
@@ -1319,7 +1319,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="965"/>
       <source>Ctrl+Shift+P</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Shift+P</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="977"/>
@@ -1344,7 +1344,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1009"/>
       <source>Ctrl+Alt+I</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Alt+I</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1014"/>
@@ -1354,7 +1354,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1017"/>
       <source>Ctrl+D</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+D</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1026"/>
@@ -1379,7 +1379,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1042"/>
       <source>Ctrl+G</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+G</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1051"/>
@@ -1389,7 +1389,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1054"/>
       <source>Ctrl+P</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+P</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1059"/>
@@ -1404,7 +1404,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1067"/>
       <source>Ctrl+/</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+/</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1072"/>
@@ -1414,7 +1414,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1075"/>
       <source>Ctrl+K</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+K</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1080"/>
@@ -1424,7 +1424,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1083"/>
       <source>Ctrl+Shift+K</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Shift+K</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1095"/>
@@ -1434,7 +1434,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1103"/>
       <source>This is not currently implemented</source>
-      <translation>Dit is nog niet geimplementeerd</translation>
+      <translation>Dit is nog niet geïmplementeerd</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1108"/>
@@ -1510,7 +1510,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1187"/>
       <source>Ctrl+F2</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+F2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1192"/>
@@ -1520,7 +1520,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1195"/>
       <source>F2</source>
-      <translation type="unfinished"/>
+      <translation>F2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1200"/>
@@ -1530,7 +1530,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1203"/>
       <source>Shift+F2</source>
-      <translation type="unfinished"/>
+      <translation>Shift+F2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1208"/>
@@ -1550,7 +1550,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1221"/>
       <source>Ctrl+Tab</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Tab</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1229"/>
@@ -1560,7 +1560,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1232"/>
       <source>Ctrl+Shift+Tab</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Shift+Tab</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1240"/>
@@ -1570,7 +1570,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1243"/>
       <source>Alt+1</source>
-      <translation type="unfinished"/>
+      <translation>Alt+1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1248"/>
@@ -1580,7 +1580,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1251"/>
       <source>Alt+2</source>
-      <translation type="unfinished"/>
+      <translation>Alt+2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1256"/>
@@ -1590,7 +1590,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1259"/>
       <source>Alt+3</source>
-      <translation type="unfinished"/>
+      <translation>Alt+3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1264"/>
@@ -1600,7 +1600,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1267"/>
       <source>Alt+4</source>
-      <translation type="unfinished"/>
+      <translation>Alt+4</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1272"/>
@@ -1610,7 +1610,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1275"/>
       <source>Alt+Shift+1</source>
-      <translation type="unfinished"/>
+      <translation>Alt+Shift+1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1280"/>
@@ -1620,7 +1620,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1283"/>
       <source>Alt+Shift+2</source>
-      <translation type="unfinished"/>
+      <translation>Alt+Shift+2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1288"/>
@@ -1630,7 +1630,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1291"/>
       <source>Alt+Shift+3</source>
-      <translation type="unfinished"/>
+      <translation>Alt+Shift+3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1296"/>
@@ -1640,7 +1640,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1299"/>
       <source>Alt+Shift+4</source>
-      <translation type="unfinished"/>
+      <translation>Alt+Shift+4</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1304"/>
@@ -1650,7 +1650,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1307"/>
       <source>Alt+0</source>
-      <translation type="unfinished"/>
+      <translation>Alt+0</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1312"/>
@@ -1660,7 +1660,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1315"/>
       <source>Alt+Shift+0</source>
-      <translation type="unfinished"/>
+      <translation>Alt+Shift+0</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1320"/>
@@ -1670,7 +1670,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1323"/>
       <source>Alt+5</source>
-      <translation type="unfinished"/>
+      <translation>Alt+5</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1328"/>
@@ -1680,7 +1680,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1331"/>
       <source>Alt+6</source>
-      <translation type="unfinished"/>
+      <translation>Alt+6</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1336"/>
@@ -1690,7 +1690,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1339"/>
       <source>Alt+7</source>
-      <translation type="unfinished"/>
+      <translation>Alt+7</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1344"/>
@@ -1700,7 +1700,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1347"/>
       <source>Alt+8</source>
-      <translation type="unfinished"/>
+      <translation>Alt+8</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1352"/>
@@ -1710,7 +1710,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1355"/>
       <source>Alt+9</source>
-      <translation type="unfinished"/>
+      <translation>Alt+9</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1360"/>
@@ -1720,7 +1720,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1363"/>
       <source>Alt+Shift+5</source>
-      <translation type="unfinished"/>
+      <translation>Alt+Shift+5</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1368"/>
@@ -1730,7 +1730,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1371"/>
       <source>Alt+Shift+6</source>
-      <translation type="unfinished"/>
+      <translation>Alt+Shift+6</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1376"/>
@@ -1740,7 +1740,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1379"/>
       <source>Alt+Shift+7</source>
-      <translation type="unfinished"/>
+      <translation>Alt+Shift+7</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1384"/>
@@ -1750,7 +1750,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1387"/>
       <source>Alt+Shift+8</source>
-      <translation type="unfinished"/>
+      <translation>Alt+Shift+8</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1392"/>
@@ -1771,7 +1771,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1406"/>
       <source>Ins</source>
-      <translation type="unfinished"/>
+      <translation>Ins</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1414"/>
@@ -1842,32 +1842,32 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1500"/>
       <source>Sort Lines Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Regels oplopend sorteren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1505"/>
       <source>Sort Lines Descending</source>
-      <translation type="unfinished"/>
+      <translation>Regels aflopend sorteren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1510"/>
       <source>Sort Lines Ascending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>Sorteer regels oplopend (ongevoelig)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1515"/>
       <source>Sort Lines Descending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>Sorteer regels aflopend (ongevoelig)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1520"/>
       <source>Sort Lines by Length Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Sorteer regels op lengte oplopend</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1525"/>
       <source>Sort Lines by Length Descending</source>
-      <translation type="unfinished"/>
+      <translation>Sorteer regels op lengte aflopend</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="407"/>
@@ -2061,7 +2061,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1925"/>
       <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
-      <translation>Een fout trad op bij het bewaren &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Fout: %2</translation>
+      <translation>Een fout trad op bij het bewaren van &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Fout: %2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1931"/>
@@ -2149,7 +2149,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="155"/>
       <source>pt</source>
-      <translation type="unfinished"/>
+      <translation>pt</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="188"/>
@@ -2185,7 +2185,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="246"/>
       <source>...</source>
-      <translation type="unfinished"/>
+      <translation>...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="277"/>
@@ -2225,12 +2225,12 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="88"/>
       <source>Macintosh (CR)</source>
-      <translation type="unfinished"/>
+      <translation>Macintosh (CR)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="185"/>
       <source>&lt;System Default&gt;</source>
-      <translation type="unfinished"/>
+      <translation>&lt;Overnemen van systeem&gt;</translation>
     </message>
   </context>
   <context>
@@ -2238,7 +2238,7 @@
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="17"/>
       <source>Frame</source>
-      <translation type="unfinished"/>
+      <translation>Frame</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="32"/>
@@ -2253,7 +2253,7 @@
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="47"/>
       <source>Aa</source>
-      <translation type="unfinished"/>
+      <translation>Aa</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="57"/>
@@ -2263,7 +2263,7 @@
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="60"/>
       <source>|A|</source>
-      <translation type="unfinished"/>
+      <translation>|A|</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="70"/>
@@ -2278,12 +2278,12 @@
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="76"/>
       <source>Alt+E</source>
-      <translation type="unfinished"/>
+      <translation>Alt+E</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.cpp" line="238"/>
       <source>%L1/%L2</source>
-      <translation type="unfinished"/>
+      <translation>%L1/%L2</translation>
     </message>
   </context>
   <context>
