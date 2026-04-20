@@ -73,7 +73,7 @@
 #include "PreferencesDialog.h"
 #include "ColumnEditorDialog.h"
 
-#include "QuickActionsBar.h"
+#include "TabsQuickActionsBar.h"
 
 #include "QuickFindWidget.h"
 
@@ -852,13 +852,13 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
     {
-        quickActionsBar = new QuickActionsBar(ui->menuBar);
+        quickActionsBar = new TabsQuickActionsBar(ui->menuBar);
 
-        connect(quickActionsBar, &QuickActionsBar::newTabClicked,
+        connect(quickActionsBar, &TabsQuickActionsBar::createNewTabClicked,
                 this,            &MainWindow::newFile);
-        connect(quickActionsBar, &QuickActionsBar::closeCurrentTabClicked,
+        connect(quickActionsBar, &TabsQuickActionsBar::closeCurrentTabClicked,
                 this,            &MainWindow::closeCurrentFile);
-        connect(quickActionsBar, &QuickActionsBar::tabsListAboutToShow, [this](QMenu *editorsMenu) {
+        connect(quickActionsBar, &TabsQuickActionsBar::tabsMenuAboutToShow, [this](QMenu *editorsMenu) {
             const auto editorsList = editors();
 
             editorsMenu->clear();

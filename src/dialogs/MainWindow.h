@@ -42,7 +42,7 @@ class QuickFindWidget;
 class ZoomEventWatcher;
 class Converter;
 class DefaultDirectoryManager;
-class QuickActionsBar;
+class TabsQuickActionsBar;
 
 class MainWindow : public QMainWindow
 {
@@ -168,7 +168,7 @@ private:
 
     QActionGroup *languageActionGroup;
 
-    QuickActionsBar *quickActionsBar = nullptr;
+    TabsQuickActionsBar *quickActionsBar = nullptr;
 
     //NppImporter *npp;
 
