@@ -33,25 +33,40 @@ public:
     LuaState();
     ~LuaState();
 
-    void execute(const char *statement, bool clear = true);
+    void setVariable(const char *name, const QString &value);
+    void setVariable(const char *name, const char *value);
+    void setVariable(const char *name, bool value);
+
     void executeFile(const QString &fileName);
-
-    template<typename T>
-    T executeAndReturn(const char *statement);
-
     void clearStack();
 
     void raiseError(const char *errorMessage = Q_NULLPTR);
 
     lua_State *L = Q_NULLPTR;
 
+    // Require literal char pointers
+    template<size_t N>
+    void execute(const char (&statement)[N], bool clear = true) {
+        internal_execute(statement, clear);
+    }
+
+    // Require literal char pointers
+    template<typename T, size_t N>
+    T executeAndReturn(const char (&statement)[N]) {
+        return internal_executeAndReturn<T>(statement);
+    }
+
 private:
+    void internal_execute(const char *statement, bool clear);
+
+    template<typename T>
+    T internal_executeAndReturn(const char *statement);
 };
 
 template<>
-inline bool LuaState::executeAndReturn(const char *statement)
+inline bool LuaState::internal_executeAndReturn<bool>(const char *statement)
 {
-    execute(statement, false);
+    internal_execute(statement, false);
     luaL_checktype(L, 1, LUA_TBOOLEAN);
 
     bool b = lua_toboolean(L, 1);
@@ -61,21 +76,21 @@ inline bool LuaState::executeAndReturn(const char *statement)
 }
 
 template<>
-inline QString LuaState::executeAndReturn(const char *statement)
+inline QString LuaState::internal_executeAndReturn<QString>(const char *statement)
 {
-    execute(statement, false);
+    internal_execute(statement, false);
     luaL_checktype(L, 1, LUA_TSTRING);
 
-    QString s(lua_tostring(L, 1));
+    QString s = QString::fromUtf8(lua_tostring(L, 1));
     lua_pop(L, 1);
 
     return s;
 }
 
 template<>
-inline QStringList LuaState::executeAndReturn(const char *statement)
+inline QStringList LuaState::internal_executeAndReturn<QStringList>(const char *statement)
 {
-    execute(statement, false);
+    internal_execute(statement, false);
     luaL_checktype(L, 1, LUA_TTABLE);
 
     QStringList list;
@@ -83,7 +98,7 @@ inline QStringList LuaState::executeAndReturn(const char *statement)
     /* table is in the stack at index 't' */
     lua_pushnil(L);  /* first key */
     while (lua_next(L, 1) != 0) {
-        list << lua_tostring(L, -1);
+        list << QString::fromUtf8(lua_tostring(L, -1));
         lua_pop(L, 1);
     }
     lua_pop(L, 1);

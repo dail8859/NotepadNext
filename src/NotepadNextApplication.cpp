@@ -254,7 +254,8 @@ QString NotepadNextApplication::getFileDialogFilter() const
 
 QString NotepadNextApplication::getFileDialogFilterForLanguage(const QString &language) const
 {
-    return getLuaState()->executeAndReturn<QString>(QString("return FilterForLanguage(\"%1\")").arg(language).toLatin1().constData());
+    getLuaState()->setVariable("langForFilter", language);
+    return getLuaState()->executeAndReturn<QString>("return FilterForLanguage(langForFilter)");
 }
 
 QStringList NotepadNextApplication::getLanguages() const
@@ -272,7 +273,7 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 {
     LuaExtension::Instance().setEditor(editor);
 
-    getLuaState()->execute(QString("languageName = \"%1\"").arg(languageName).toLatin1().constData());
+    getLuaState()->setVariable("languageName", languageName);
     const QString lexer = getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
 
     editor->languageName = languageName;
@@ -287,10 +288,13 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 
     // Dynamic properties can be used to skip part of the default initialization. The value in the
     // property doesn't currently matter, but may be used at a later point.
-    getLuaState()->execute(QString("skip_tabs = %1").arg(editor->QObject::property("nn_skip_usetabs").isValid() ? "true" : "false").toLatin1().constData());
-    getLuaState()->execute(QString("skip_tabwidth = %1").arg(editor->QObject::property("nn_skip_tabwidth").isValid() ? "true" : "false").toLatin1().constData());
+    bool skipTabs = editor->QObject::property("nn_skip_usetabs").isValid();
+    bool skipTabWidth = editor->QObject::property("nn_skip_tabwidth").isValid();
 
-    getLuaState()->execute(QString("SetLanguage(languageName)").toLatin1().constData());
+    getLuaState()->setVariable("skip_tabs", skipTabs);
+    getLuaState()->setVariable("skip_tabwidth", skipTabWidth);
+
+    getLuaState()->execute("SetLanguage(languageName)");
 }
 
 QString NotepadNextApplication::detectLanguage(ScintillaNext *editor) const
@@ -314,8 +318,9 @@ QString NotepadNextApplication::detectLanguageFromExtension(const QString &exten
 {
     qInfo(Q_FUNC_INFO);
 
-    return getLuaState()->executeAndReturn<QString>(QString(R"(
-    local ext = "%1"
+    getLuaState()->setVariable("ext", extension);
+
+    return getLuaState()->executeAndReturn<QString>(R"(
     for name, L in pairs(languages) do
         if L.extensions then
             for _, v in ipairs(L.extensions) do
@@ -326,7 +331,7 @@ QString NotepadNextApplication::detectLanguageFromExtension(const QString &exten
         end
     end
     return "Text"
-    )").arg(extension).toLatin1().constData());
+    )");
 }
 
 QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor) const
@@ -335,7 +340,7 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
 
     LuaExtension::Instance().setEditor(editor);
 
-    return getLuaState()->executeAndReturn<QString>(QString(R"(
+    return getLuaState()->executeAndReturn<QString>(R"(
     -- Grab a small chunk
     if editor.Length > 0 then
         editor:SetTargetRange(0, math.min(64, editor.Length))
@@ -343,7 +348,7 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
     end
 
     return "Text"
-    )").toLatin1().constData());
+    )");
 }
 
 void NotepadNextApplication::sendInfoToPrimaryInstance()

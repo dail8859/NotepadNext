@@ -116,7 +116,24 @@ LuaState::~LuaState()
     }
 }
 
-void LuaState::execute(const char *statement, bool clear)
+void LuaState::setVariable(const char* name, const QString& value)
+{
+    setVariable(name, value.toUtf8().constData());
+}
+
+void LuaState::setVariable(const char *name, const char *value)
+{
+    lua_pushstring(L, value);
+    lua_setglobal(L, name);
+}
+
+void LuaState::setVariable(const char *name, bool value)
+{
+    lua_pushboolean(L, value ? 1 : 0);
+    lua_setglobal(L, name);
+}
+
+void LuaState::internal_execute(const char *statement, bool clear)
 {
     // There may be other things on the stack so save the top of it
     const int stacktop = lua_gettop(L);
@@ -152,7 +169,7 @@ void LuaState::executeFile(const QString &fileName)
         qFatal("Cannot execute file: %s", fileName.toLatin1().constData());
     }
 
-    execute(ff.readAll().constData());
+    internal_execute(ff.readAll().constData(), true);
 
     ff.close();
 }
