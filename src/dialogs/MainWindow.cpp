@@ -259,6 +259,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionRemoveConsecutiveDuplicateLines, &QAction::triggered, this, [=]() {
         currentEditor()->removeConsecutiveDuplicateLines();
     });
+    connect(ui->actionReverseLineOrder, &QAction::triggered, this, [=, this]() {
+        ScintillaSorter scintillaSorter(currentEditor());
+        scintillaSorter.sort(ReverseSorter(Sorter::Direction::Ascending));
+    });
     connect(ui->actionSortLinesAsc, &QAction::triggered, this, [=, this]() {
         ScintillaSorter scintillaSorter(currentEditor());
         scintillaSorter.sort(CaseSensitiveSorter(Sorter::Direction::Ascending));

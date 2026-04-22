@@ -43,3 +43,8 @@ void LineLengthSorter::sort(QVector<QByteArrayView> &lines) const
             return dir == Direction::Ascending ? (a.size() < b.size()) : (a.size() > b.size());
         });
 }
+
+void ReverseSorter::sort(QVector<QByteArrayView> &lines) const
+{
+    std::reverse(lines.begin(), lines.end());
+}
