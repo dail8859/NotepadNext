@@ -61,3 +61,12 @@ public:
     using Sorter::Sorter;
     void sort(QVector<QByteArrayView> &lines) const override;
 };
+
+
+class ReverseSorter : public Sorter
+{
+public:
+    using Sorter::Sorter;
+    void sort(QVector<QByteArrayView> &lines) const override;
+};
+
