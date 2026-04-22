@@ -72,6 +72,7 @@
 #include "MacroRunDialog.h"
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
+#include "PreferencesDialog2.h"
 #include "ColumnEditorDialog.h"
 
 #include "QuickFindWidget.h"
@@ -726,6 +727,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         pd->raise();
         pd->activateWindow();
     });
+
+    // (new PreferencesDialog2(app->getSettings(), this))->show();
 
     // The macro manager has already loaded any saved macros, so it might have some already
     ui->actionRunMacroMultipleTimes->setEnabled(macroManager.availableMacros().size() > 0);
