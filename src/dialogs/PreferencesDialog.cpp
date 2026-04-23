@@ -62,6 +62,23 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
 
     MapSettingToCheckBox(ui->checkBoxCombineSearchResults, &ApplicationSettings::combineSearchResults, &ApplicationSettings::setCombineSearchResults, &ApplicationSettings::combineSearchResultsChanged);
 
+    ui->comboBoxTheme->addItem(tr("System"), static_cast<int>(ApplicationSettings::FollowSystemTheme));
+    ui->comboBoxTheme->addItem(tr("Light"), static_cast<int>(ApplicationSettings::LightTheme));
+    ui->comboBoxTheme->addItem(tr("Dark"), static_cast<int>(ApplicationSettings::DarkTheme));
+
+    int themeIndex = ui->comboBoxTheme->findData(static_cast<int>(settings->themeMode()));
+    ui->comboBoxTheme->setCurrentIndex(themeIndex == -1 ? 0 : themeIndex);
+    connect(ui->comboBoxTheme, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+        ApplicationSettings::ThemeModeEnum themeMode = static_cast<ApplicationSettings::ThemeModeEnum>(ui->comboBoxTheme->itemData(index).toInt());
+        settings->setThemeMode(themeMode);
+    });
+    connect(settings, &ApplicationSettings::themeModeChanged, this, [=](ApplicationSettings::ThemeModeEnum themeMode) {
+        int index = ui->comboBoxTheme->findData(static_cast<int>(themeMode));
+        if (index != -1 && index != ui->comboBoxTheme->currentIndex()) {
+            ui->comboBoxTheme->setCurrentIndex(index);
+        }
+    });
+
     populateTranslationComboBox();
     connect(ui->comboBoxTranslation, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
         settings->setTranslation(ui->comboBoxTranslation->itemData(index).toString());

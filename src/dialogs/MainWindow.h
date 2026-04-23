@@ -150,6 +150,8 @@ private:
 
     QScopedPointer<SearchResultsCollector> searchResults;
 
+    bool isDarkThemeActive() const;
+    void applyTheme();
     void applyStyleSheet();
     void applyCustomShortcuts();
     void initUpdateCheck();

@@ -76,6 +76,13 @@ public:
     };
     Q_ENUM(DefaultDirectoryBehaviorEnum)
 
+    enum ThemeModeEnum {
+        FollowSystemTheme,
+        LightTheme,
+        DarkTheme
+    };
+    Q_ENUM(ThemeModeEnum)
+
     template <typename T>
     T get(const char *key, const T &defaultValue) const
     { return value(QLatin1String(key), defaultValue).template value<T>(); }
@@ -93,6 +100,7 @@ public:
     DEFINE_SETTING(ShowTabBar, showTabBar, bool)
     DEFINE_SETTING(ShowStatusBar, showStatusBar, bool)
     DEFINE_SETTING(CenterSearchDialog, centerSearchDialog, bool)
+    DEFINE_SETTING(ThemeMode, themeMode, ThemeModeEnum)
 
     DEFINE_SETTING(TabsClosable, tabsClosable, bool)
     DEFINE_SETTING(ExitOnLastTabClosed, exitOnLastTabClosed, bool)

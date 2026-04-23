@@ -2,6 +2,47 @@ function rgb(x)
     return ((x & 0xFF) << 16) | (x & 0xFF00) | ((x & 0xFF0000) >> 16)
 end
 
+local DARK_BACKGROUND = rgb(0x1E1E1E)
+local DARK_FOREGROUND = rgb(0xD4D4D4)
+
+local function bgrToRgb(color)
+    local red = color & 0xFF
+    local green = (color >> 8) & 0xFF
+    local blue = (color >> 16) & 0xFF
+    return red, green, blue
+end
+
+local function rgbToBgr(red, green, blue)
+    return (blue << 16) | (green << 8) | red
+end
+
+local function luminance(red, green, blue)
+    return (red * 299 + green * 587 + blue * 114) / 1000
+end
+
+local function darkThemeBackground(color)
+    local red, green, blue = bgrToRgb(color)
+
+    if luminance(red, green, blue) > 160 then
+        return DARK_BACKGROUND
+    end
+
+    return color
+end
+
+local function darkThemeForeground(color)
+    local red, green, blue = bgrToRgb(color)
+
+    if luminance(red, green, blue) < 96 then
+        local boost = 110
+        red = math.min(255, red + boost)
+        green = math.min(255, green + boost)
+        blue = math.min(255, blue + boost)
+    end
+
+    return rgbToBgr(red, green, blue)
+end
+
 function DetectLanguageFromContents(contents)
     for name, L in pairs(languages) do
         if L.first_line then
@@ -50,9 +91,22 @@ end
 
 function SetStyle(L)
     if L.styles then
-        for _, style in pairs(L.styles) do
-            editor.StyleFore[style.id] = style.fgColor
-            editor.StyleBack[style.id] = style.bgColor
+        for styleName, style in pairs(L.styles) do
+            local fgColor = style.fgColor
+            local bgColor = style.bgColor
+
+            if dark_theme then
+                fgColor = darkThemeForeground(fgColor or DARK_FOREGROUND)
+                bgColor = darkThemeBackground(bgColor or DARK_BACKGROUND)
+
+                if styleName == "DEFAULT" then
+                    fgColor = DARK_FOREGROUND
+                    bgColor = DARK_BACKGROUND
+                end
+            end
+
+            editor.StyleFore[style.id] = fgColor
+            editor.StyleBack[style.id] = bgColor
 
             if style.fontStyle then
                 editor.StyleBold[style.id] = (style.fontStyle & 1 == 1)

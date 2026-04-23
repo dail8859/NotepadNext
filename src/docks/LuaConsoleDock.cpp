@@ -32,9 +32,15 @@
 #include "LuaExtension.h"
 
 #include <QKeyEvent>
+#include <QPalette>
 #include <QVBoxLayout>
 
 #define INDIC_BRACEHIGHLIGHT INDIC_CONTAINER
+
+static inline int colorFromRgb(int rgb)
+{
+    return ((rgb & 0x0000FF) << 16) | (rgb & 0x00FF00) | ((rgb & 0xFF0000) >> 16);
+}
 
 static bool inline isBrace(int ch) {
     return strchr("[]{}()", ch) != NULL;
@@ -180,10 +186,7 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
     input->marginSetText(0, ">");
     input->marginSetStyle(0, STYLE_LINENUMBER);
 
-    setupStyle(input);
-    setupStyle(output);
-
-    output->styleSetFore(39, 0x0000FF); // For error messages
+    applyTheme();
 
     input->setExtraAscent(2);
     input->setExtraDescent(2);
@@ -222,6 +225,15 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
 LuaConsoleDock::~LuaConsoleDock()
 {
     delete ui;
+}
+
+void LuaConsoleDock::applyTheme()
+{
+    setupStyle(input);
+    setupStyle(output);
+
+    const bool dark = palette().color(QPalette::Base).lightness() < 128;
+    output->styleSetFore(39, dark ? colorFromRgb(0xFF5370) : 0x0000FF); // For error messages
 }
 
 void LuaConsoleDock::writeToOutput(const char *s)
@@ -377,10 +389,12 @@ bool LuaConsoleDock::eventFilter(QObject *obj, QEvent *event)
 
 void LuaConsoleDock::setupStyle(ScintillaNext *editor)
 {
+    const bool dark = palette().color(QPalette::Base).lightness() < 128;
+
     editor->setEOLMode(SC_EOL_CRLF);
 
-    editor->styleSetFore(STYLE_DEFAULT, 0x000000);
-    editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
+    editor->styleSetFore(STYLE_DEFAULT, dark ? colorFromRgb(0xD4D4D4) : 0x000000);
+    editor->styleSetBack(STYLE_DEFAULT, dark ? colorFromRgb(0x1E1E1E) : 0xFFFFFF);
     editor->styleSetFont(STYLE_DEFAULT, "Courier New");
     editor->styleSetSize(STYLE_DEFAULT, 10);
     editor->styleClearAll();
@@ -392,29 +406,29 @@ void LuaConsoleDock::setupStyle(ScintillaNext *editor)
     editor->setMarginWidthN(4, 0);
 
     editor->setCodePage(SC_CP_UTF8);
-    editor->styleSetFore(SCE_LUA_COMMENT, 0x008000);
-    editor->styleSetFore(SCE_LUA_COMMENTLINE, 0x008000);
-    editor->styleSetFore(SCE_LUA_COMMENTDOC, 0x808000);
-    editor->styleSetFore(SCE_LUA_LITERALSTRING, 0x4A0095);
-    editor->styleSetFore(SCE_LUA_PREPROCESSOR, 0x004080); // Technically not used since this is lua 5+
-    editor->styleSetFore(SCE_LUA_WORD, 0xFF0000);
+    editor->styleSetFore(SCE_LUA_COMMENT, dark ? colorFromRgb(0x6A9955) : 0x008000);
+    editor->styleSetFore(SCE_LUA_COMMENTLINE, dark ? colorFromRgb(0x6A9955) : 0x008000);
+    editor->styleSetFore(SCE_LUA_COMMENTDOC, dark ? colorFromRgb(0x6A9955) : 0x808000);
+    editor->styleSetFore(SCE_LUA_LITERALSTRING, dark ? colorFromRgb(0xCE9178) : 0x4A0095);
+    editor->styleSetFore(SCE_LUA_PREPROCESSOR, dark ? colorFromRgb(0xC586C0) : 0x004080); // Technically not used since this is lua 5+
+    editor->styleSetFore(SCE_LUA_WORD, dark ? colorFromRgb(0x569CD6) : 0xFF0000);
     editor->styleSetBold(SCE_LUA_WORD, 1); // for SCI_SETKEYWORDS, 0
-    editor->styleSetFore(SCE_LUA_NUMBER, 0x0080FF);
-    editor->styleSetFore(SCE_LUA_STRING, 0x808080);
-    editor->styleSetFore(SCE_LUA_CHARACTER, 0x808080);
-    editor->styleSetFore(SCE_LUA_OPERATOR, 0x800000);
+    editor->styleSetFore(SCE_LUA_NUMBER, dark ? colorFromRgb(0xB5CEA8) : 0x0080FF);
+    editor->styleSetFore(SCE_LUA_STRING, dark ? colorFromRgb(0xCE9178) : 0x808080);
+    editor->styleSetFore(SCE_LUA_CHARACTER, dark ? colorFromRgb(0xCE9178) : 0x808080);
+    editor->styleSetFore(SCE_LUA_OPERATOR, dark ? colorFromRgb(0xD4D4D4) : 0x800000);
     editor->styleSetBold(SCE_LUA_OPERATOR, 1);
-    editor->styleSetFore(SCE_LUA_WORD2, 0xC08000);
+    editor->styleSetFore(SCE_LUA_WORD2, dark ? colorFromRgb(0x4EC9B0) : 0xC08000);
     editor->styleSetBold(SCE_LUA_WORD2, 1); // for SCI_SETKEYWORDS, 1
-    editor->styleSetFore(SCE_LUA_WORD3, 0xFF0080);
+    editor->styleSetFore(SCE_LUA_WORD3, dark ? colorFromRgb(0xDCDCAA) : 0xFF0080);
     editor->styleSetBold(SCE_LUA_WORD3, 1); // for SCI_SETKEYWORDS, 2
-    editor->styleSetFore(SCE_LUA_WORD4, 0xA00000);
+    editor->styleSetFore(SCE_LUA_WORD4, dark ? colorFromRgb(0xC586C0) : 0xA00000);
     editor->styleSetBold(SCE_LUA_WORD4, 1);
     editor->styleSetItalic(SCE_LUA_WORD4, 1); // for SCI_SETKEYWORDS, 3
-    editor->styleSetFore(SCE_LUA_LABEL, 0x008080);
+    editor->styleSetFore(SCE_LUA_LABEL, dark ? colorFromRgb(0x4FC1FF) : 0x008080);
     editor->styleSetBold(SCE_LUA_LABEL, 1);
-    editor->styleSetFore(SCE_LUA_WORD5, 0x004080); // for SCI_SETKEYWORDS, 4, Scintilla defines
+    editor->styleSetFore(SCE_LUA_WORD5, dark ? colorFromRgb(0xD7BA7D) : 0x004080); // for SCI_SETKEYWORDS, 4, Scintilla defines
     editor->styleSetBold(SCE_LUA_WORD5, 1);
-    editor->styleSetFore(SCE_LUA_WORD6, 0x004080); // for SCI_SETKEYWORDS, 5, Notepad++ defines
+    editor->styleSetFore(SCE_LUA_WORD6, dark ? colorFromRgb(0xD7BA7D) : 0x004080); // for SCI_SETKEYWORDS, 5, Notepad++ defines
     editor->styleSetBold(SCE_LUA_WORD6, 1);
 }

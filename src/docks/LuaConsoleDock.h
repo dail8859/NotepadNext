@@ -37,6 +37,8 @@ public:
     explicit LuaConsoleDock(LuaState *l, QWidget *parent = 0);
     ~LuaConsoleDock();
 
+    void applyTheme();
+
     void writeToOutput(const char *s);
     void writeErrorToOutput(const char *s);
     LuaState *L = Q_NULLPTR;

@@ -35,7 +35,9 @@
 #include "ILexer.h"
 #include "Lexilla.h"
 
+#include <QApplication>
 #include <QCommandLineParser>
+#include <QStyleHints>
 
 #include <QDirIterator>
 
@@ -67,6 +69,11 @@ static QString toLocalFileName(const QString file)
 {
     QUrl fileUrl(file);
     return fileUrl.isValid() && fileUrl.isLocalFile() ? fileUrl.toLocalFile() : file;
+}
+
+static bool systemColorSchemeIsDark()
+{
+    return qApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark;
 }
 
 NotepadNextApplication::NotepadNextApplication(int &argc, char **argv)
@@ -273,7 +280,22 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
 {
     LuaExtension::Instance().setEditor(editor);
 
+    bool darkTheme = false;
+    switch (settings->themeMode()) {
+    case ApplicationSettings::DarkTheme:
+        darkTheme = true;
+        break;
+    case ApplicationSettings::FollowSystemTheme:
+        darkTheme = systemColorSchemeIsDark();
+        break;
+    case ApplicationSettings::LightTheme:
+    default:
+        darkTheme = false;
+        break;
+    }
+
     getLuaState()->setVariable("languageName", languageName);
+    getLuaState()->setVariable("dark_theme", darkTheme);
     const QString lexer = getLuaState()->executeAndReturn<QString>("return languages[languageName].lexer");
 
     editor->languageName = languageName;

@@ -30,6 +30,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QStringList>
+#include <QApplication>
 #include <QClipboard>
 #include <QStandardPaths>
 #include <QWindow>
@@ -42,6 +43,10 @@
 #include <QProcess>
 #include <QScreen>
 #include <QFontDatabase>
+#include <QColor>
+#include <QPalette>
+#include <QStyle>
+#include <QStyleHints>
 
 
 #ifdef Q_OS_WIN
@@ -88,6 +93,35 @@
 #include "FadingIndicator.h"
 
 #include "ActionUtils.h"
+
+static inline bool systemColorSchemeIsDark()
+{
+    return qApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark;
+}
+
+static QPalette createDarkPalette()
+{
+    QPalette palette;
+    palette.setColor(QPalette::Window, QColor(30, 30, 30));
+    palette.setColor(QPalette::WindowText, QColor(212, 212, 212));
+    palette.setColor(QPalette::Base, QColor(37, 37, 38));
+    palette.setColor(QPalette::AlternateBase, QColor(45, 45, 45));
+    palette.setColor(QPalette::ToolTipBase, QColor(37, 37, 38));
+    palette.setColor(QPalette::ToolTipText, QColor(212, 212, 212));
+    palette.setColor(QPalette::Text, QColor(212, 212, 212));
+    palette.setColor(QPalette::Button, QColor(45, 45, 45));
+    palette.setColor(QPalette::ButtonText, QColor(212, 212, 212));
+    palette.setColor(QPalette::BrightText, QColor(255, 83, 112));
+    palette.setColor(QPalette::Highlight, QColor(79, 140, 255));
+    palette.setColor(QPalette::HighlightedText, QColor(255, 255, 255));
+    palette.setColor(QPalette::Link, QColor(110, 168, 255));
+
+    palette.setColor(QPalette::Disabled, QPalette::Text, QColor(130, 130, 130));
+    palette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(130, 130, 130));
+    palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor(130, 130, 130));
+
+    return palette;
+}
 
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
@@ -912,6 +946,14 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
     connect(app->getSettings(), &ApplicationSettings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
     connect(app->getSettings(), &ApplicationSettings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
+    connect(app->getSettings(), &ApplicationSettings::themeModeChanged, this, [=](ApplicationSettings::ThemeModeEnum) {
+        applyTheme();
+    });
+    connect(qApp->styleHints(), &QStyleHints::colorSchemeChanged, this, [=](Qt::ColorScheme) {
+        if (app->getSettings()->themeMode() == ApplicationSettings::FollowSystemTheme) {
+            applyTheme();
+        }
+    });
     connect(ui->statusBar, &EditorInfoStatusBar::customContextMenuRequestedForEOLLabel, this, [=](const QPoint &pos){
         ui->menuEOLConversion->popup(pos);
     });
@@ -921,7 +963,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     setupLanguageMenu();
 
-    applyStyleSheet();
+    applyTheme();
 
     restoreSettings();
 
@@ -1793,22 +1835,67 @@ void MainWindow::activateEditor(ScintillaNext *editor)
     emit editorActivated(editor);
 }
 
+bool MainWindow::isDarkThemeActive() const
+{
+    switch (app->getSettings()->themeMode()) {
+    case ApplicationSettings::DarkTheme:
+        return true;
+    case ApplicationSettings::LightTheme:
+        return false;
+    case ApplicationSettings::FollowSystemTheme:
+    default:
+        return systemColorSchemeIsDark();
+    }
+}
+
+void MainWindow::applyTheme()
+{
+    applyStyleSheet();
+
+    for (LuaConsoleDock *luaConsoleDock : findChildren<LuaConsoleDock *>(QString(), Qt::FindDirectChildrenOnly)) {
+        luaConsoleDock->applyTheme();
+    }
+
+    app->getEditorManager()->applyThemeToAllEditors();
+
+    for (ScintillaNext *editor : editors()) {
+        if (!editor) {
+            continue;
+        }
+
+        const QString languageName = editor->languageName.isEmpty() ? QStringLiteral("Text") : editor->languageName;
+        app->setEditorLanguage(editor, languageName);
+    }
+}
+
 void MainWindow::applyStyleSheet()
 {
     qInfo(Q_FUNC_INFO);
 
+    const bool dark = isDarkThemeActive();
+    qApp->setPalette(dark ? createDarkPalette() : qApp->style()->standardPalette());
+
     QString sheet;
-    QFile f(":/stylesheets/npp.css");
+    QFile f(dark ? QStringLiteral(":/stylesheets/npp_dark.css") : QStringLiteral(":/stylesheets/npp.css"));
     qInfo() << "Loading stylesheet:" << f.fileName();
 
     f.open(QFile::ReadOnly);
     sheet = f.readAll();
     f.close();
 
-    // If there is a "custom.css" file where the ini is located, load it as a style sheet addition
+    // If there are custom stylesheet files where the ini is located, load them as additions
     QString directoryPath = QFileInfo(app->getSettings()->fileName()).absolutePath();
-    QString fullPath = QDir(directoryPath).filePath("custom.css");
-    if (QFile::exists(fullPath)) {
+    QStringList styleNames = {QStringLiteral("custom.css")};
+    if (dark) {
+        styleNames << QStringLiteral("custom_dark.css");
+    }
+
+    for (const QString &styleName : styleNames) {
+        QString fullPath = QDir(directoryPath).filePath(styleName);
+        if (!QFile::exists(fullPath)) {
+            continue;
+        }
+
         QFile custom(fullPath);
         qInfo() << "Loading stylesheet:" << custom.fileName();
 

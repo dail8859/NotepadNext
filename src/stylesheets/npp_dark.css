@@ -1,0 +1,71 @@
+QStatusBar {
+    border-top: 1px solid #3a3a3a;
+}
+
+ads--CDockWidgetTab ads--CElidingLabel {
+    color: #d4d4d4;
+}
+
+ads--CDockWidgetTab {
+    background: #2c2c2c;
+    margin-top: 2px;
+    border-left: 1px solid #424242;
+    border-top: 2px solid #4a4a4a;
+    border-right: 2px solid #1f1f1f;
+    padding: 2px 2px 0 2px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+ads--CDockWidgetTab[activeTab="true"] {
+    background: #3a3a3a;
+    border-top: 4px solid #4f8cff;
+    padding-bottom: 2px;
+    margin-top: 1px;
+}
+
+ads--CDockWidgetTab[focused="true"] {
+    background: #3a3a3a;
+    border-top: 4px solid #8bc5ff;
+    padding-bottom: 2px;
+    margin-top: 1px;
+}
+
+ads--CDockWidgetTab:hover[activeTab="false"] {
+    background: #333333;
+}
+
+ads--CDockAreaTitleBar {
+    background: transparent;
+    border-bottom: 1px solid #3a3a3a;
+    padding-bottom: 0;
+}
+
+ads--CDockWidgetTab[activeTab="false"] QLabel {
+    color: #9a9a9a;
+}
+
+#tabCloseButton {
+    background: rgba(255, 255, 255, 20);
+    margin-bottom: 1px;
+    margin-left: 4px;
+    border: none;
+    padding: 0 -2px;
+}
+
+#tabCloseButton:hover {
+    border: 1px solid rgba(255, 255, 255, 40);
+    background-color: #c65252;
+    color: #f2f2f2;
+}
+
+#tabCloseButton:pressed {
+    background: #a13c3c;
+}
+
+#QuickFindWidget {
+    border-left: 1px solid #3a3a3a;
+    border-right: 1px solid #3a3a3a;
+    border-bottom: 3px solid #4f8cff;
+    background: palette(window);
+}

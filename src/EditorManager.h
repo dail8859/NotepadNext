@@ -40,12 +40,15 @@ public:
     ScintillaNext *getEditorByFilePath(const QString &filePath);
 
     void manageEditor(ScintillaNext *editor);
+    void applyThemeToAllEditors();
 
 signals:
     void editorCreated(ScintillaNext *editor);
     void editorClosed(ScintillaNext *editor);
 
 private:
+    bool isDarkThemeActive() const;
+    void applyVisualTheme(ScintillaNext *editor) const;
     void setupEditor(ScintillaNext *editor);
     void purgeOldEditorPointers();
     QList<QPointer<ScintillaNext>> getEditors();

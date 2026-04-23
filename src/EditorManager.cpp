@@ -17,6 +17,7 @@
  */
 
 #include <QApplication>
+#include <QStyleHints>
 
 #include "ApplicationSettings.h"
 
@@ -41,6 +42,16 @@
 const int MARK_HIDELINESBEGIN = 23;
 const int MARK_HIDELINESEND = 22;
 const int MARK_HIDELINESUNDERLINE = 21;
+
+static inline int colorFromRgb(int rgb)
+{
+    return ((rgb & 0x0000FF) << 16) | (rgb & 0x00FF00) | ((rgb & 0xFF0000) >> 16);
+}
+
+static bool systemColorSchemeIsDark()
+{
+    return qApp->styleHints()->colorScheme() == Qt::ColorScheme::Dark;
+}
 
 
 EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
@@ -175,6 +186,97 @@ void EditorManager::manageEditor(ScintillaNext *editor)
     emit editorCreated(editor);
 }
 
+void EditorManager::applyThemeToAllEditors()
+{
+    for (auto &editor : getEditors()) {
+        applyVisualTheme(editor);
+    }
+}
+
+bool EditorManager::isDarkThemeActive() const
+{
+    switch (settings->themeMode()) {
+    case ApplicationSettings::DarkTheme:
+        return true;
+    case ApplicationSettings::LightTheme:
+        return false;
+    case ApplicationSettings::FollowSystemTheme:
+    default:
+        return systemColorSchemeIsDark();
+    }
+}
+
+void EditorManager::applyVisualTheme(ScintillaNext *editor) const
+{
+    const bool dark = isDarkThemeActive();
+
+    if (dark) {
+        for (int i = SC_MARKNUM_FOLDEREND; i <= SC_MARKNUM_FOLDEROPEN; ++i) {
+            editor->markerSetFore(i, colorFromRgb(0x2f2f2f));
+            editor->markerSetBack(i, colorFromRgb(0xa0a0a0));
+            editor->markerSetBackSelected(i, colorFromRgb(0x4f8cff));
+        }
+
+        editor->setEdgeColour(colorFromRgb(0x3b4a6b));
+        editor->setElementColour(SC_ELEMENT_SELECTION_INACTIVE_BACK, colorFromRgb(0x3a3d41));
+        editor->setElementColour(SC_ELEMENT_CARET_LINE_BACK, colorFromRgb(0x2a2d2e));
+        editor->setElementColour(SC_ELEMENT_WHITE_SPACE, colorFromRgb(0x5c6370));
+        editor->setElementColour(SC_ELEMENT_FOLD_LINE, colorFromRgb(0x4a4f57));
+
+        editor->setFoldMarginColour(true, colorFromRgb(0x1e1e1e));
+        editor->setFoldMarginHiColour(true, colorFromRgb(0x252526));
+
+        editor->styleSetFore(STYLE_DEFAULT, colorFromRgb(0xd4d4d4));
+        editor->styleSetBack(STYLE_DEFAULT, colorFromRgb(0x1e1e1e));
+    }
+    else {
+        for (int i = SC_MARKNUM_FOLDEREND; i <= SC_MARKNUM_FOLDEROPEN; ++i) {
+            editor->markerSetFore(i, 0xF3F3F3);
+            editor->markerSetBack(i, 0x808080);
+            editor->markerSetBackSelected(i, 0x0000FF);
+        }
+
+        editor->setEdgeColour(0x80FFFF);
+        editor->setElementColour(SC_ELEMENT_SELECTION_INACTIVE_BACK, 0xFFE0E0E0);
+        editor->setElementColour(SC_ELEMENT_CARET_LINE_BACK, 0xFFFFE8E8);
+        editor->setElementColour(SC_ELEMENT_WHITE_SPACE, 0xFFD0D0D0);
+        editor->setElementColour(SC_ELEMENT_FOLD_LINE, 0xFFA0A0A0);
+
+        editor->setFoldMarginColour(true, 0xFFFFFF);
+        editor->setFoldMarginHiColour(true, 0xE9E9E9);
+
+        editor->styleSetFore(STYLE_DEFAULT, 0x000000);
+        editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
+    }
+
+    editor->styleSetSize(STYLE_DEFAULT, settings->fontSize());
+    editor->styleSetFont(STYLE_DEFAULT, settings->fontName().toUtf8().data());
+    editor->styleClearAll();
+
+    if (dark) {
+        editor->styleSetFore(STYLE_LINENUMBER, colorFromRgb(0x8f8f8f));
+        editor->styleSetBack(STYLE_LINENUMBER, colorFromRgb(0x252526));
+        editor->styleSetFore(STYLE_BRACELIGHT, colorFromRgb(0x4fc1ff));
+        editor->styleSetBack(STYLE_BRACELIGHT, colorFromRgb(0x1e1e1e));
+        editor->styleSetFore(STYLE_BRACEBAD, colorFromRgb(0xff5370));
+        editor->styleSetBack(STYLE_BRACEBAD, colorFromRgb(0x1e1e1e));
+        editor->styleSetFore(STYLE_INDENTGUIDE, colorFromRgb(0x3f3f46));
+        editor->styleSetBack(STYLE_INDENTGUIDE, colorFromRgb(0x1e1e1e));
+    }
+    else {
+        editor->styleSetFore(STYLE_LINENUMBER, 0x808080);
+        editor->styleSetBack(STYLE_LINENUMBER, 0xE4E4E4);
+        editor->styleSetFore(STYLE_BRACELIGHT, 0x0000FF);
+        editor->styleSetBack(STYLE_BRACELIGHT, 0xFFFFFF);
+        editor->styleSetFore(STYLE_BRACEBAD, 0x000080);
+        editor->styleSetBack(STYLE_BRACEBAD, 0xFFFFFF);
+        editor->styleSetFore(STYLE_INDENTGUIDE, 0xC0C0C0);
+        editor->styleSetBack(STYLE_INDENTGUIDE, 0xFFFFFF);
+    }
+
+    editor->styleSetBold(STYLE_LINENUMBER, false);
+}
+
 void EditorManager::setupEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
@@ -223,7 +325,13 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setCaretLineVisibleAlways(true);
     editor->setCaretWidth(2);
 
-    editor->setEdgeColour(0x80FFFF);
+    editor->setWhitespaceSize(2);
+
+    editor->setAutomaticFold(SC_AUTOMATICFOLD_SHOW | SC_AUTOMATICFOLD_CLICK | SC_AUTOMATICFOLD_CHANGE);
+    editor->markerEnableHighlight(true);
+
+    editor->setCharsDefault();
+    editor->setWordChars(editor->wordChars() + settings->additionalWordChars().toLatin1());
 
     // https://www.scintilla.org/ScintillaDoc.html#ElementColours
     // SC_ELEMENT_SELECTION_TEXT
@@ -233,50 +341,16 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     // SC_ELEMENT_SELECTION_SECONDARY_TEXT
     // SC_ELEMENT_SELECTION_SECONDARY_BACK
     // SC_ELEMENT_SELECTION_INACTIVE_TEXT
-    editor->setElementColour(SC_ELEMENT_SELECTION_INACTIVE_BACK, 0xFFE0E0E0);
     // SC_ELEMENT_CARET
     // SC_ELEMENT_CARET_ADDITIONAL
-    editor->setElementColour(SC_ELEMENT_CARET_LINE_BACK, 0xFFFFE8E8);
-    editor->setElementColour(SC_ELEMENT_WHITE_SPACE, 0xFFD0D0D0);
     // SC_ELEMENT_WHITE_SPACE_BACK
     // SC_ELEMENT_HOT_SPOT_ACTIVE
     // SC_ELEMENT_HOT_SPOT_ACTIVE_BACK
-    editor->setElementColour(SC_ELEMENT_FOLD_LINE, 0xFFA0A0A0);
     // SC_ELEMENT_HIDDEN_LINE
-
-    editor->setWhitespaceSize(2);
-
-    editor->setFoldMarginColour(true, 0xFFFFFF);
-    editor->setFoldMarginHiColour(true, 0xE9E9E9);
-
-    editor->setAutomaticFold(SC_AUTOMATICFOLD_SHOW | SC_AUTOMATICFOLD_CLICK | SC_AUTOMATICFOLD_CHANGE);
-    editor->markerEnableHighlight(true);
-
-    editor->setCharsDefault();
-    editor->setWordChars(editor->wordChars() + settings->additionalWordChars().toLatin1());
-
-    editor->styleSetFore(STYLE_DEFAULT, 0x000000);
-    editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
-    editor->styleSetSize(STYLE_DEFAULT, settings->fontSize());
-    editor->styleSetFont(STYLE_DEFAULT, settings->fontName().toUtf8().data());
-    editor->styleClearAll();
-
-    editor->styleSetFore(STYLE_LINENUMBER, 0x808080);
-    editor->styleSetBack(STYLE_LINENUMBER, 0xE4E4E4);
-    editor->styleSetBold(STYLE_LINENUMBER, false);
-
-    editor->styleSetFore(STYLE_BRACELIGHT, 0x0000FF);
-    editor->styleSetBack(STYLE_BRACELIGHT, 0xFFFFFF);
-
-    editor->styleSetFore(STYLE_BRACEBAD, 0x000080);
-    editor->styleSetBack(STYLE_BRACEBAD, 0xFFFFFF);
-
-    editor->styleSetFore(STYLE_INDENTGUIDE, 0xC0C0C0);
-    editor->styleSetBack(STYLE_INDENTGUIDE, 0xFFFFFF);
-
     // STYLE_CONTROLCHAR
     // STYLE_CALLTIP
     // STYLE_FOLDDISPLAYTEXT
+    applyVisualTheme(editor);
 
     editor->setViewWS(settings->showWhitespace() ? SCWS_VISIBLEALWAYS : SCWS_INVISIBLE);
     editor->setViewEOL(settings->showEndOfLine());
