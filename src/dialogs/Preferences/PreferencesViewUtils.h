@@ -13,7 +13,7 @@
 
 #include <ApplicationSettings.h>
 
-#define POPULATE_PROPERTY_FUNCTIONS(name, Name) \
+#define PREFERENCES_BIND_PROPERTY(name, Name) \
     &ApplicationSettings::name, \
     &ApplicationSettings::set##Name, \
     &ApplicationSettings::name##Changed

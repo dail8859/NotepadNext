@@ -62,14 +62,6 @@ namespace
             pathBrowseButton->setEnabled(state);
         };
 
-        {// Load actual path
-            const auto selectedPath = QDir::toNativeSeparators(settings->defaultDirectory());
-            if (!selectedPath.isEmpty())
-                selectedPathEdit->setText(selectedPath);
-            else
-                selectedPathEdit->setText(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
-        }
-
         const auto selectedLayout = new QHBoxLayout;
         selectedLayout->addWidget(selectedRadio);
         selectedLayout->addWidget(selectedPathEdit, 1);
@@ -82,6 +74,14 @@ namespace
         layout->addLayout(selectedLayout);
         layout->setContentsMargins(MARGINS_6);
         layout->setSpacing(SPACING_6);
+
+        {// Load actual path
+            const auto selectedPath = QDir::toNativeSeparators(settings->defaultDirectory());
+            if (!selectedPath.isEmpty())
+                selectedPathEdit->setText(selectedPath);
+            else
+                selectedPathEdit->setText(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+        }
 
         QObject::connect(selectedPathEdit, &QLineEdit::textChanged,
                          settings,         [selectedPathEdit, settings](const QString &text) {
@@ -147,7 +147,7 @@ namespace
             setPathInputEnabled(value == BehaviourEnum::HardCoded);
         });
 
-        // Load current selection
+        // Load current selection AFTER QObject::connect's
         const auto checkableRadio = buttonGroup->button(settings->defaultDirectoryBehavior());
         if (checkableRadio) checkableRadio->click();
 
@@ -158,21 +158,22 @@ namespace
     {
         const auto group = new QGroupBox(QObject::tr("Restore previous session"));
         group->setCheckable(true);
-        group->setChecked(settings->restorePreviousSession());
 
         const auto layout = new QVBoxLayout(group);
         layout->addWidget(CreateCheckBox(
             QObject::tr("Unsaved changes"),
             settings,
-            POPULATE_PROPERTY_FUNCTIONS(restoreUnsavedFiles, RestoreUnsavedFiles)
+            PREFERENCES_BIND_PROPERTY(restoreUnsavedFiles, RestoreUnsavedFiles)
         ));
         layout->addWidget(CreateCheckBox(
             QObject::tr("Temporary files"),
             settings,
-            POPULATE_PROPERTY_FUNCTIONS(restoreTempFiles, RestoreTempFiles)
+            PREFERENCES_BIND_PROPERTY(restoreTempFiles, RestoreTempFiles)
         ));
         layout->setContentsMargins(MARGINS_6);
         layout->setSpacing(SPACING_6);
+
+        group->setChecked(settings->restorePreviousSession());
 
         QObject::connect(settings, &ApplicationSettings::restorePreviousSessionChanged,
                          group,    &QGroupBox::setChecked);
@@ -274,17 +275,17 @@ QWidget *BehaviorCategoryItem::contentView(ApplicationSettings *settings) const
     layout->addWidget(CreateCheckBox(
         QObject::tr("Recenter find/replace dialog when opened"),
         settings,
-        POPULATE_PROPERTY_FUNCTIONS(centerSearchDialog, CenterSearchDialog)
+        PREFERENCES_BIND_PROPERTY(centerSearchDialog, CenterSearchDialog)
     ));
     layout->addWidget(CreateCheckBox(
         QObject::tr("Combine search results"),
         settings,
-        POPULATE_PROPERTY_FUNCTIONS(combineSearchResults, CombineSearchResults)
+        PREFERENCES_BIND_PROPERTY(combineSearchResults, CombineSearchResults)
     ));
     layout->addWidget(CreateCheckBox(
         QObject::tr("Exit on last tab closed"),
         settings,
-        POPULATE_PROPERTY_FUNCTIONS(exitOnLastTabClosed, ExitOnLastTabClosed)
+        PREFERENCES_BIND_PROPERTY(exitOnLastTabClosed, ExitOnLastTabClosed)
     ));
     layout->addStretch(1);
     layout->setContentsMargins(MARGINS_6);

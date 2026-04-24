@@ -25,7 +25,7 @@ public:
      */
     void addCategory(PreferencesCategoryItem *category, int row = -1);
     void removeCategory(int row);
-    PreferencesCategoryItem* category(int row) const;
+    PreferencesCategoryItem *category(int row) const;
 
 private:
     std::vector<std::unique_ptr<PreferencesCategoryItem>> mItems;

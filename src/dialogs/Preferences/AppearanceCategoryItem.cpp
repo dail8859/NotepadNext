@@ -13,7 +13,7 @@ using namespace Preferences;
 
 namespace
 {
-    inline QGroupBox *WindowAppearanceGroup(ApplicationSettings *settings)
+    inline QGroupBox *WindowAppearanceView(ApplicationSettings *settings)
     {
         const auto group = new QGroupBox(QObject::tr("Window"));
 
@@ -21,17 +21,17 @@ namespace
         layout->addWidget(CreateCheckBox(
             QObject::tr("Show menu bar"),
             settings,
-            POPULATE_PROPERTY_FUNCTIONS(showMenuBar, ShowMenuBar)
+            PREFERENCES_BIND_PROPERTY(showMenuBar, ShowMenuBar)
         ));
         layout->addWidget(CreateCheckBox(
             QObject::tr("Show toolbar"),
             settings,
-            POPULATE_PROPERTY_FUNCTIONS(showToolBar, ShowToolBar)
+            PREFERENCES_BIND_PROPERTY(showToolBar, ShowToolBar)
         ));
         layout->addWidget(CreateCheckBox(
             QObject::tr("Show status bar"),
             settings,
-            POPULATE_PROPERTY_FUNCTIONS(showStatusBar, ShowStatusBar)
+            PREFERENCES_BIND_PROPERTY(showStatusBar, ShowStatusBar)
         ));
         layout->setContentsMargins(MARGINS_6);
         layout->setSpacing(SPACING_6);
@@ -39,12 +39,11 @@ namespace
         return group;
     }
 
-    inline QGroupBox *FontAppearanceGroup(ApplicationSettings *settings)
+    inline QGroupBox *FontAppearanceView(ApplicationSettings *settings)
     {
         const auto group = new QGroupBox(QObject::tr("Font"));
 
         const auto familyCombo = new QFontComboBox;
-        familyCombo->setCurrentFont(QFont(settings->fontName()));
 
         const auto sizeCombo = new QComboBox;
         sizeCombo->addItems({
@@ -53,7 +52,6 @@ namespace
             "20", "22", "24", "26", "28",
             "36", "48", "72"
         });
-        sizeCombo->setCurrentText(QString("%1").arg(settings->fontSize()));
         sizeCombo->setValidator(new QIntValidator(4, 200, sizeCombo));
         sizeCombo->setEditable(true);
 
@@ -69,6 +67,9 @@ namespace
         layout->addWidget(sizeCombo);
         layout->setContentsMargins(MARGINS_6);
         layout->setSpacing(3);
+
+        familyCombo->setCurrentFont(QFont(settings->fontName()));
+        sizeCombo->setCurrentText(QString("%1").arg(settings->fontSize()));
 
         QObject::connect(familyCombo, &QFontComboBox::currentFontChanged,
                          settings,    [settings](const QFont &font) {
@@ -91,21 +92,21 @@ namespace
         return group;
     }
 
-    inline QGroupBox *EditorAppearanceGroup(ApplicationSettings *settings)
+    inline QGroupBox *EditorAppearanceView(ApplicationSettings *settings)
     {
         const auto group = new QGroupBox(QObject::tr("Editor"));
 
         const auto layout = new QVBoxLayout(group);
-        layout->addWidget(FontAppearanceGroup(settings));
+        layout->addWidget(FontAppearanceView(settings));
         layout->addWidget(CreateCheckBox(
             QObject::tr("Highlight URLs"),
             settings,
-            POPULATE_PROPERTY_FUNCTIONS(urlHighlighting, URLHighlighting)
+            PREFERENCES_BIND_PROPERTY(urlHighlighting, URLHighlighting)
         ));
         layout->addWidget(CreateCheckBox(
             QObject::tr("Show Line Numbers"),
             settings,
-            POPULATE_PROPERTY_FUNCTIONS(showLineNumbers, ShowLineNumbers)
+            PREFERENCES_BIND_PROPERTY(showLineNumbers, ShowLineNumbers)
         ));
         layout->setContentsMargins(MARGINS_6);
         layout->setSpacing(SPACING_6);
@@ -119,8 +120,8 @@ QWidget *AppearanceCategoryItem::contentView(ApplicationSettings *settings) cons
     const auto widget = new QWidget;
     const auto layout = new QVBoxLayout(widget);
 
-    layout->addWidget(WindowAppearanceGroup(settings));
-    layout->addWidget(EditorAppearanceGroup(settings));
+    layout->addWidget(WindowAppearanceView(settings));
+    layout->addWidget(EditorAppearanceView(settings));
     layout->addStretch(1);
     layout->setContentsMargins(MARGINS_6);
     layout->setSpacing(SPACING_6);

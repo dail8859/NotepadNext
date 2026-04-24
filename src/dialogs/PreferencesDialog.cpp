@@ -1,4 +1,6 @@
 #include <QDialogButtonBox>
+#include <QTemporaryFile>
+#include <QApplication>
 #include <QMessageBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -14,10 +16,9 @@
 #include "Preferences/PreferencesCategoryListModel.h"
 #include "Preferences/AppearanceCategoryItem.h"
 #include "Preferences/BehaviorCategoryItem.h"
-#include "Preferences/PreferencesViewUtils.h"
 #include "PreferencesDialog.h"
 
-using namespace Preferences;
+#include "ApplicationSettings.h"
 
 namespace
 {
@@ -46,27 +47,22 @@ public:
     }
     inline void makeSettingsReset() const
     {
-        const auto tempSettings = createTemporarySettings(nullptr);
-        if (tempSettings)
-        {
-            settings.actual->fillFrom(tempSettings);
-            delete tempSettings;
-        }
+        std::unique_ptr<ApplicationSettings> tempSettings(createTemporarySettings(nullptr));
+        if (tempSettings) settings.actual->fillFrom(tempSettings.get());
     }
 
     inline ApplicationSettings *createTemporarySettings(QObject *parent) const
     {
-        const auto tempFile = new QTemporaryFile;
+        auto tempFile = std::make_unique<QTemporaryFile>();
 
         if (!tempFile->open())
         {
             qWarning() << "Unable to create temporary file:"
                        << tempFile->errorString();
-            delete tempFile;
             return nullptr;
         }
 
-        return new ApplicationSettings(tempFile, parent);
+        return new ApplicationSettings(tempFile.release(), parent);
     }
 
 public: /* Logic */
@@ -147,7 +143,6 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     p->mainLayout->addWidget(p->content.widget, 0, 1);
     p->mainLayout->addWidget(p->controlsBox, 1, 1);
 
-    // SS-stuf
     connect(p->category.listView->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this,                                   &PreferencesDialog::onCategoryChanged);
 
@@ -155,10 +150,10 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
             this,           [this](QAbstractButton *button) {
         switch (p->controlsBox->buttonRole(button))
         {
-        case QDialogButtonBox::ResetRole:  onResetClicked();  break;
-        case QDialogButtonBox::AcceptRole: onOkClicked();     break;
-        case QDialogButtonBox::RejectRole: onCancelClicked(); break;
-        default: break;
+            case QDialogButtonBox::ResetRole:  onResetClicked();  break;
+            case QDialogButtonBox::AcceptRole: onOkClicked();     break;
+            case QDialogButtonBox::RejectRole: onCancelClicked(); break;
+            default: break;
         }
     });
 
@@ -196,6 +191,7 @@ void PreferencesDialog::onCategoryChanged(const QModelIndex &index)
 
 void PreferencesDialog::onOkClicked()
 {
+    p->settings.actual->sync();
     accept();
 }
 
@@ -220,6 +216,7 @@ void PreferencesDialog::onCancelClicked()
                 p->makeSettingsRestore();
                 [[fallthrough]];
             default:
+                p->settings.actual->sync();
                 break;
         }
     }
