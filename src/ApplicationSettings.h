@@ -26,6 +26,7 @@
 #include <QString>
 #include <QMetaEnum>
 
+class QTemporaryFile;
 
 template<typename T>
 class ApplicationSetting
@@ -53,39 +54,54 @@ private:
 };
 
 
-#define DEFINE_SETTING(name, lname, type)\
-public:\
-    type lname() const;\
-public slots:\
-    void set##name(type lname);\
-Q_SIGNAL\
-    void lname##Changed(type lname);\
-
+#define DEFINE_SETTING(name, lname, type) \
+    Q_PROPERTY(type lname READ lname WRITE set##name NOTIFY lname##Changed FINAL) \
+    public: \
+        type lname() const; \
+    public slots: \
+        void set##name(type lname); \
+    Q_SIGNAL \
+        void lname##Changed(type lname);
 
 class ApplicationSettings : public QSettings
 {
     Q_OBJECT
-
 public:
-    explicit ApplicationSettings(QObject *parent = nullptr);
-
-    enum DefaultDirectoryBehaviorEnum {
+    enum DefaultDirectoryBehaviorEnum
+    {
         FollowCurrentDocument,
         RememberLastUsed,
         HardCoded
     };
     Q_ENUM(DefaultDirectoryBehaviorEnum)
 
+public:
+    explicit ApplicationSettings(QObject *parent = nullptr);
+
+    /**
+     * @brief Create temporary instance with default settings.
+     * @param tempFile Temporary file instance to be used.
+     * @warning Ensure tempFile->open() was called before passing it.
+     * @note The instance takes ownership of tempFile.
+     */
+    ApplicationSettings(QTemporaryFile *tempFile, QObject *parent = nullptr);
+
+    inline void copyTo(ApplicationSettings *other) const {
+        other->fillFrom(const_cast<ApplicationSettings*>(this));
+    }
+    void fillFrom(ApplicationSettings *other);
+    bool isEquals(ApplicationSettings *other) const;
+
     template <typename T>
-    T get(const char *key, const T &defaultValue) const
+    inline T get(const char *key, const T &defaultValue) const
     { return value(QLatin1String(key), defaultValue).template value<T>(); }
 
     template <typename T>
-    T get(const ApplicationSetting<T> &setting) const
+    inline T get(const ApplicationSetting<T> &setting) const
     { return get(setting.key(), setting.getDefault()); }
 
     template <typename T>
-    void set(const ApplicationSetting<T> &setting, const T &value)
+    inline void set(const ApplicationSetting<T> &setting, const T &value)
     { setValue(QLatin1String(setting.key()), value); }
 
     DEFINE_SETTING(ShowMenuBar, showMenuBar, bool)

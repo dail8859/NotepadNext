@@ -72,7 +72,6 @@
 #include "MacroRunDialog.h"
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
-#include "PreferencesDialog2.h"
 #include "ColumnEditorDialog.h"
 
 #include "QuickFindWidget.h"
@@ -717,18 +716,26 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     languageActionGroup->setExclusive(true);
 
     connect(ui->actionPreferences, &QAction::triggered, this, [=] {
-        PreferencesDialog *pd = findChild<PreferencesDialog *>(QString(), Qt::FindDirectChildrenOnly);
+        auto pd = findChild<PreferencesDialog*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (pd == Q_NULLPTR) {
             pd = new PreferencesDialog(app->getSettings(), this);
         }
 
+        pd->resize(700, 400);
+        pd->setGeometry(
+            QStyle::alignedRect(
+                Qt::LeftToRight,
+                Qt::AlignCenter,
+                pd->size(),
+                geometry()
+            )
+        );
+
         pd->show();
         pd->raise();
         pd->activateWindow();
     });
-
-    // (new PreferencesDialog2(app->getSettings(), this))->show();
 
     // The macro manager has already loaded any saved macros, so it might have some already
     ui->actionRunMacroMultipleTimes->setEnabled(macroManager.availableMacros().size() > 0);

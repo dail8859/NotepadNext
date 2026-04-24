@@ -14,7 +14,9 @@ public:
 
     inline virtual QString title() const override { return mTitle; }
     inline virtual QString icon() const override { return mIcon; }
-    inline virtual T *view() const override { return new T; }
+    inline virtual T *contentView(ApplicationSettings *settings) const override {
+        return new T(settings);
+    }
 
 private:
     QString mTitle;

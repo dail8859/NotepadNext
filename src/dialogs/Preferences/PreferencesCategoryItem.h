@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class ApplicationSettings;
+
 class PreferencesCategoryItem
 {
 public:
@@ -11,7 +13,8 @@ public:
 
     virtual QString title() const = 0;
     virtual QString icon() const = 0;
-    virtual QWidget *view() const = 0;
+    /// @warning Caller becomes owner.
+    virtual QWidget *contentView(ApplicationSettings *settings) const = 0;
 };
 
 #endif // PREFERENCESCATEGORYITEM_H

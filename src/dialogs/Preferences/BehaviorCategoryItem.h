@@ -11,7 +11,7 @@ public:
 
     virtual QString title() const override { return QObject::tr("Behavior"); }
     virtual QString icon() const override { return "://icons/audio-waveform.svg"; }
-    virtual QWidget *view() const override;
+    virtual QWidget *contentView(ApplicationSettings *settings) const override;
 };
 
 #endif // BEHAVIORCATEGORYITEM_H

@@ -1,6 +1,7 @@
 #include "PreferencesCategoryListModel.h"
 
-namespace {
+namespace
+{
     using ItemPtr = std::unique_ptr<PreferencesCategoryItem>;
 
     constexpr unsigned int RowHeight = 32;
