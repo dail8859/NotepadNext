@@ -1,200 +1,230 @@
-/*
- * This file is part of Notepad Next.
- * Copyright 2019 Justin Dailey
- *
- * Notepad Next is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Notepad Next is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-
-#include "PreferencesDialog.h"
-#include "NotepadNextApplication.h"
-#include "TranslationManager.h"
-#include "ui_PreferencesDialog.h"
-#include "ScintillaNext.h"
-
-#include <QButtonGroup>
-#include <QFileDialog>
+#include <QDialogButtonBox>
+#include <QTemporaryFile>
+#include <QApplication>
 #include <QMessageBox>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QSpacerItem>
+#include <QPushButton>
+#include <QScrollArea>
+#include <QTabWidget>
+#include <QCheckBox>
+#include <QListView>
+#include <QSplitter>
+#include <QLabel>
 
+#include "Preferences/PreferencesCategoryListModel.h"
+#include "Preferences/AppearanceCategoryItem.h"
+#include "Preferences/BehaviorCategoryItem.h"
+#include "PreferencesDialog.h"
 
-PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *parent) :
-    QDialog(parent, Qt::Tool),
-    ui(new Ui::PreferencesDialog),
-    settings(settings)
+#include "ApplicationSettings.h"
+
+namespace
 {
-    ui->setupUi(this);
+    using ListModel = PreferencesCategoryListModel;
 
-    QIcon icon = style()->standardIcon(QStyle::SP_MessageBoxInformation);
-    QPixmap pixmap = icon.pixmap(QSize(16, 16));
-    ui->labelAppRestartIcon->setPixmap(pixmap);
-    ui->labelAppRestartIcon->hide();
-    ui->labelAppRestart->hide();
+    inline QFont ContentTitleFont() noexcept
+    {
+        auto font = QApplication::font("QLabel");
+        font.setPointSize(16);
+        font.setBold(true);
+        return font;
+    }
+}
 
-    MapSettingToCheckBox(ui->checkBoxMenuBar, &ApplicationSettings::showMenuBar, &ApplicationSettings::setShowMenuBar, &ApplicationSettings::showMenuBarChanged);
-    MapSettingToCheckBox(ui->checkBoxToolBar, &ApplicationSettings::showToolBar, &ApplicationSettings::setShowToolBar, &ApplicationSettings::showToolBarChanged);
-    MapSettingToCheckBox(ui->checkBoxStatusBar, &ApplicationSettings::showStatusBar, &ApplicationSettings::setShowStatusBar, &ApplicationSettings::showStatusBarChanged);
-    MapSettingToCheckBox(ui->checkBoxRecenterSearchDialog, &ApplicationSettings::centerSearchDialog, &ApplicationSettings::setCenterSearchDialog, &ApplicationSettings::centerSearchDialogChanged);
+struct PreferencesDialog::PreferencesDialogPrivate
+{
+public:
+    inline bool hasUnsavedChanges() const {
+        return (settings.backup) ? !settings.actual->isEquals(settings.backup) : false;
+    }
+    inline void makeSettingsBackup() {
+        if (settings.backup) settings.backup->fillFrom(settings.actual);
+    }
+    inline void makeSettingsRestore() {
+        if (settings.backup) settings.actual->fillFrom(settings.backup);
+    }
+    inline void makeSettingsReset() const
+    {
+        std::unique_ptr<ApplicationSettings> tempSettings(createTemporarySettings(nullptr));
+        if (tempSettings) settings.actual->fillFrom(tempSettings.get());
+    }
 
-    MapSettingToGroupBox(ui->gbxRestorePreviousSession, &ApplicationSettings::restorePreviousSession, &ApplicationSettings::setRestorePreviousSession, &ApplicationSettings::restorePreviousSessionChanged);
-    connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, this, [=](bool checked) {
-        if (!checked) {
-            ui->checkBoxUnsavedFiles->setChecked(false);
-            ui->checkBoxRestoreTempFiles->setChecked(false);
+    inline ApplicationSettings *createTemporarySettings(QObject *parent) const
+    {
+        auto tempFile = std::make_unique<QTemporaryFile>();
+
+        if (!tempFile->open())
+        {
+            qWarning() << "Unable to create temporary file:"
+                       << tempFile->errorString();
+            return nullptr;
         }
-        else {
-            QMessageBox::warning(this, tr("Warning"), tr("This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk."));
+
+        return new ApplicationSettings(tempFile.release(), parent);
+    }
+
+public: /* Logic */
+    struct {
+        /// @brief Actual settings populated in-app.
+        ApplicationSettings *actual = nullptr;
+        /// @brief Settings backup on latest show event.
+        ApplicationSettings *backup = nullptr;
+    } settings;
+
+public: /* View */
+    QGridLayout *mainLayout = nullptr;
+
+    struct {
+        QListView *listView = nullptr;
+        ListModel *model = nullptr;
+    } category;
+
+    struct {
+        QWidget     *widget = nullptr;
+        QVBoxLayout *layout = nullptr;
+
+        QLabel      *title = nullptr;
+        QScrollArea *viewport = nullptr;
+    } content;
+
+    QDialogButtonBox *controlsBox = nullptr;
+};
+
+PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *parent)
+    : QDialog(parent, Qt::Tool),
+      p(new PreferencesDialogPrivate)
+{
+    setWindowTitle(tr("Preferences"));
+
+    p->settings.actual = settings;
+    p->settings.backup = p->createTemporarySettings(this);
+
+    // Category
+    p->category.listView = new QListView;
+    p->category.listView->setFixedWidth(180);
+    p->category.listView->setIconSize({ 20, 20 });
+
+    p->category.model = new ListModel(p->category.listView);
+    p->category.model->addCategory(new BehaviorCategoryItem);
+    p->category.model->addCategory(new AppearanceCategoryItem);
+
+    p->category.listView->setModel(p->category.model);
+
+    // Content
+    p->content.title = new QLabel(tr("Default title"));
+    p->content.title->setFont(ContentTitleFont());
+
+    p->content.viewport = new QScrollArea;
+
+    p->content.widget = new QWidget;
+    p->content.widget->setSizePolicy(
+        QSizePolicy::Expanding,
+        QSizePolicy::Expanding
+    );
+
+    p->content.layout = new QVBoxLayout(p->content.widget);
+    p->content.layout->setContentsMargins(0, 0, 0, 0);
+    p->content.layout->addWidget(p->content.title);
+    p->content.layout->addWidget(p->content.viewport);
+
+    // Controls
+    p->controlsBox = new QDialogButtonBox(Qt::Horizontal);
+    p->controlsBox->setStandardButtons(
+        QDialogButtonBox::RestoreDefaults
+        | QDialogButtonBox::Ok
+        | QDialogButtonBox::Cancel
+    );
+
+    // Main assembly
+    p->mainLayout = new QGridLayout(this);
+    p->mainLayout->addWidget(p->category.listView, 0, 0, 2, 1);
+    p->mainLayout->addWidget(p->content.widget, 0, 1);
+    p->mainLayout->addWidget(p->controlsBox, 1, 1);
+
+    connect(p->category.listView->selectionModel(), &QItemSelectionModel::currentRowChanged,
+            this,                                   &PreferencesDialog::onCategoryChanged);
+
+    connect(p->controlsBox, &QDialogButtonBox::clicked,
+            this,           [this](QAbstractButton *button) {
+        switch (p->controlsBox->buttonRole(button))
+        {
+            case QDialogButtonBox::ResetRole:  onResetClicked();  break;
+            case QDialogButtonBox::AcceptRole: onOkClicked();     break;
+            case QDialogButtonBox::RejectRole: onCancelClicked(); break;
+            default: break;
         }
     });
 
-    MapSettingToCheckBox(ui->checkBoxUnsavedFiles, &ApplicationSettings::restoreUnsavedFiles, &ApplicationSettings::setRestoreUnsavedFiles, &ApplicationSettings::restoreUnsavedFilesChanged);
-    MapSettingToCheckBox(ui->checkBoxRestoreTempFiles, &ApplicationSettings::restoreTempFiles, &ApplicationSettings::setRestoreTempFiles, &ApplicationSettings::restoreTempFilesChanged);
-
-    MapSettingToCheckBox(ui->checkBoxCombineSearchResults, &ApplicationSettings::combineSearchResults, &ApplicationSettings::setCombineSearchResults, &ApplicationSettings::combineSearchResultsChanged);
-
-    populateTranslationComboBox();
-    connect(ui->comboBoxTranslation, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
-        settings->setTranslation(ui->comboBoxTranslation->itemData(index).toString());
-        showApplicationRestartRequired();
-    });
-
-    MapSettingToCheckBox(ui->checkBoxExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosed, &ApplicationSettings::setExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosedChanged);
-
-    ui->fcbDefaultFont->setCurrentFont(QFont(settings->fontName()));
-    connect(ui->fcbDefaultFont, &QFontComboBox::currentFontChanged, this, [=](const QFont &f) {
-        settings->setFontName(f.family());
-    });
-    connect(settings, &ApplicationSettings::fontNameChanged, this, [=](QString fontName){
-        ui->fcbDefaultFont->setCurrentFont(QFont(fontName));
-    });
-
-    ui->spbDefaultFontSize->setValue(settings->fontSize());
-    connect(ui->spbDefaultFontSize, QOverload<int>::of(&QSpinBox::valueChanged), settings, &ApplicationSettings::setFontSize);
-    connect(settings, &ApplicationSettings::fontSizeChanged, ui->spbDefaultFontSize, &QSpinBox::setValue);
-
-    ui->comboBoxLineEndings->addItem(tr("System Default"), QString(""));
-    ui->comboBoxLineEndings->addItem(tr("Windows (CR LF)"), ScintillaNext::eolModeToString(SC_EOL_CRLF));
-    ui->comboBoxLineEndings->addItem(tr("Linux (LF)"), ScintillaNext::eolModeToString(SC_EOL_LF));
-    ui->comboBoxLineEndings->addItem(tr("Macintosh (CR)"), ScintillaNext::eolModeToString(SC_EOL_CR));
-
-    // Select the current one
-    int index = ui->comboBoxLineEndings->findData(settings->defaultEOLMode());
-    ui->comboBoxLineEndings->setCurrentIndex(index == -1 ? 0 : index);
-
-    connect(ui->comboBoxLineEndings, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
-        settings->setDefaultEOLMode(ui->comboBoxLineEndings->itemData(index).toString());
-    });
-    connect(settings, &ApplicationSettings::defaultEOLModeChanged, this, [=](QString defaultEOLMode) {
-        int index = ui->comboBoxLineEndings->findData(defaultEOLMode);
-        ui->comboBoxLineEndings->setCurrentIndex(index == -1 ? 0 : index);
-    });
-
-    MapSettingToCheckBox(ui->checkBoxHighlightURLs, &ApplicationSettings::urlHighlighting, &ApplicationSettings::setURLHighlighting, &ApplicationSettings::urlHighlightingChanged);
-    MapSettingToCheckBox(ui->checkBoxShowLineNumbers, &ApplicationSettings::showLineNumbers, &ApplicationSettings::setShowLineNumbers, &ApplicationSettings::showLineNumbersChanged);
-
-
-    QButtonGroup *buttonGroup = new QButtonGroup(this);
-    buttonGroup->addButton(ui->radioFollowCurrentDirectory, ApplicationSettings::FollowCurrentDocument);
-    buttonGroup->addButton(ui->radioLastUsedDirectory, ApplicationSettings::RememberLastUsed);
-    buttonGroup->addButton(ui->radioHardCoded, ApplicationSettings::HardCoded);
-
-    connect(buttonGroup, &QButtonGroup::idClicked, this, [=](int id) {
-        ApplicationSettings::DefaultDirectoryBehaviorEnum e = static_cast<ApplicationSettings::DefaultDirectoryBehaviorEnum>(id);
-        settings->setDefaultDirectoryBehavior(e);
-    });
-
-    connect(ui->radioHardCoded, &QRadioButton::toggled, this, [=](bool checked){
-        ui->btnSelectHardCodedPath->setEnabled(checked);
-        ui->txtHardCodedPath->setEnabled(checked);
-    });
-
-    connect(ui->btnSelectHardCodedPath, &QToolButton::clicked, this, [=]() {
-        QString dir = QFileDialog::getExistingDirectory(this, tr("Default Directory"));
-        if (dir.isEmpty()) return; // user cancelled
-
-        settings->setDefaultDirectory(QDir::fromNativeSeparators(dir));
-        ui->txtHardCodedPath->setText(QDir::toNativeSeparators(dir));
-    });
-
-    connect(ui->txtHardCodedPath, &QLineEdit::editingFinished, this, [=]() {
-        QString dir = ui->txtHardCodedPath->text();
-        settings->setDefaultDirectory(QDir::fromNativeSeparators(dir));
-        ui->txtHardCodedPath->setText(QDir::toNativeSeparators(dir));
-    });
-
-    if (auto b = buttonGroup->button(settings->defaultDirectoryBehavior())) {
-        b->setChecked(true);
-    }
-
-    if (settings->defaultDirectoryBehavior() == ApplicationSettings::HardCoded) {
-        ui->txtHardCodedPath->setText((QDir::toNativeSeparators(settings->defaultDirectory())));
-    }
-    else {
-        ui->txtHardCodedPath->setText(QString());
-    }
+    // Force switch to first category
+    QMetaObject::invokeMethod(this, [this](){
+        p->category.listView->setCurrentIndex(p->category.model->index(0));
+    }, Qt::QueuedConnection);
 }
 
 PreferencesDialog::~PreferencesDialog()
 {
-    delete ui;
+    delete p;
 }
 
-void PreferencesDialog::showApplicationRestartRequired() const
+void PreferencesDialog::showEvent(QShowEvent *event)
 {
-    ui->labelAppRestartIcon->show();
-    ui->labelAppRestart->show();
+    p->makeSettingsBackup();
+    QDialog::showEvent(event);
 }
 
-template<typename Func1, typename Func2, typename Func3>
-void PreferencesDialog::MapSettingToCheckBox(QCheckBox *checkBox, Func1 getter, Func2 setter, Func3 notifier) const
+void PreferencesDialog::onCategoryChanged(const QModelIndex &index)
 {
-    // Get the value and set the checkbox state
-    checkBox->setChecked(std::bind(getter, settings)());
+    if (!index.isValid()) return;
 
-    // Set up two way connection
-    connect(settings, notifier, checkBox, &QCheckBox::setChecked);
-    connect(checkBox, &QCheckBox::toggled, settings, setter);
+    const auto item = p->category.model->category(index.row());
+    if (!item) return;
+
+    p->content.title->setText(item->title());
+    p->content.viewport->setWidget(item->contentView(p->settings.actual));
+    p->content.viewport->widget()->setSizePolicy(
+        QSizePolicy::Expanding, QSizePolicy::Expanding
+    );
+    p->content.viewport->setWidgetResizable(true);
 }
 
-template<typename Func1, typename Func2, typename Func3>
-void PreferencesDialog::MapSettingToGroupBox(QGroupBox *groupBox, Func1 getter, Func2 setter, Func3 notifier) const
+void PreferencesDialog::onOkClicked()
 {
-    // Get the value and set the checkbox state
-    groupBox->setChecked(std::bind(getter, settings)());
-
-    // Set up two way connection
-    connect(settings, notifier, groupBox, &QGroupBox::setChecked);
-    connect(groupBox, &QGroupBox::toggled, settings, setter);
+    p->settings.actual->sync();
+    accept();
 }
 
-void PreferencesDialog::populateTranslationComboBox()
+void PreferencesDialog::onCancelClicked()
 {
-    NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
+    if (p->hasUnsavedChanges()) {
+        const auto reply = QMessageBox::question(
+            this,
+            tr("Unsaved Changes"),
+            tr("You have unsaved changes.\n"
+               "Do you want to save them before closing?"),
+            QMessageBox::Save
+            | QMessageBox::Discard
+            | QMessageBox::Cancel
+        );
 
-    // Add the system default at the top
-    ui->comboBoxTranslation->addItem(tr("<System Default>"), QStringLiteral(""));
-
-    // TODO: sort this list and keep the system default at the top
-    for (const auto &localeName : app->getTranslationManager()->availableTranslations())
-    {
-        QLocale locale(localeName);
-        const QString localeDisplay = TranslationManager::FormatLocaleTerritoryAndLanguage(locale);
-        ui->comboBoxTranslation->addItem(localeDisplay, localeName);
+        switch (reply)
+        {
+            case QMessageBox::Cancel:
+                return;
+            case QMessageBox::Discard:
+                p->makeSettingsRestore();
+                [[fallthrough]];
+            default:
+                p->settings.actual->sync();
+                break;
+        }
     }
 
-    // Select the current one
-    int index = ui->comboBoxTranslation->findData(settings->translation());
-    if (index != -1) {
-        ui->comboBoxTranslation->setCurrentIndex(index);
-    }
+    accept();
+}
+
+void PreferencesDialog::onResetClicked()
+{
+    p->makeSettingsReset();
 }

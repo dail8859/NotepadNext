@@ -42,5 +42,7 @@
         <file>icons/application_osx_terminal.png</file>
         <file>icons/folder_go.png</file>
         <file>icons/wrapindicator.png</file>
+        <file>icons/audio-waveform.svg</file>
+        <file>icons/paintbrush.svg</file>
     </qresource>
 </RCC>

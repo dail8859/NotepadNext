@@ -125,6 +125,17 @@ qt_add_executable(NotepadNext
 	decorators/SurroundSelection.h
 	decorators/URLFinder.cpp
 	decorators/URLFinder.h
+	dialogs/Preferences/PreferencesCategoryListModel.cpp
+	dialogs/Preferences/PreferencesCategoryListModel.h
+	dialogs/Preferences/BehaviorCategoryItem.cpp
+	dialogs/Preferences/BehaviorCategoryItem.h
+	dialogs/Preferences/PreferencesViewUtils.h
+	dialogs/Preferences/PreferencesCategoryItem.h
+	dialogs/Preferences/PreferencesCategoryItemT.h
+	dialogs/Preferences/AppearanceCategoryItem.cpp
+	dialogs/Preferences/AppearanceCategoryItem.h
+	dialogs/PreferencesDialog.cpp
+	dialogs/PreferencesDialog.h
 	dialogs/ColumnEditorDialog.cpp
 	dialogs/ColumnEditorDialog.h
 	dialogs/ColumnEditorDialog.ui
@@ -143,9 +154,9 @@ qt_add_executable(NotepadNext
 	dialogs/MainWindow.cpp
 	dialogs/MainWindow.h
 	dialogs/MainWindow.ui
-	dialogs/PreferencesDialog.cpp
-	dialogs/PreferencesDialog.h
-	dialogs/PreferencesDialog.ui
+
+
+
 	docks/DebugLogDock.cpp
 	docks/DebugLogDock.h
 	docks/DebugLogDock.ui
