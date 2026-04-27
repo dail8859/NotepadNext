@@ -1283,7 +1283,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="914"/>
       <source>Shift+F3</source>
-      <translation type="unfinished"/>
+      <translation>Maj+F3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="924"/>
@@ -1842,37 +1842,37 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1501"/>
       <source>Sort Lines Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Trier les lignes par ordre croissant</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1506"/>
       <source>Sort Lines Descending</source>
-      <translation type="unfinished"/>
+      <translation>Trier les lignes par ordre décroissant</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1511"/>
       <source>Sort Lines Ascending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>Trier les lignes par ordre croissant (Insensible à la casse)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1516"/>
       <source>Sort Lines Descending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>Trier les lignes par ordre décroissant (Insensible à la casse)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1521"/>
       <source>Sort Lines by Length Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Trier les lignes par longueur croissante</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1526"/>
       <source>Sort Lines by Length Descending</source>
-      <translation type="unfinished"/>
+      <translation>Trier les lignes par longueur décroissante</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1531"/>
       <source>Reverse Line Order</source>
-      <translation type="unfinished"/>
+      <translation>Inverser l'ordre des lignes</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="411"/>
