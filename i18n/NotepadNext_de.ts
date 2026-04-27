@@ -1285,7 +1285,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="914"/>
       <source>Shift+F3</source>
-      <translation type="unfinished"/>
+      <translation>Umschalt+F3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="924"/>
@@ -1874,7 +1874,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1531"/>
       <source>Reverse Line Order</source>
-      <translation type="unfinished"/>
+      <translation>Linienreihenfolge umkehren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="411"/>
