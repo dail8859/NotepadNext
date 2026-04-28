@@ -87,17 +87,17 @@
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="160"/>
       <source>UTF-8 BOM</source>
-      <translation type="unfinished"/>
+      <translation>UTF-8 BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="161"/>
       <source>UTF-16LE BOM</source>
-      <translation type="unfinished"/>
+      <translation/>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="162"/>
       <source>UTF-16BE BOM</source>
-      <translation type="unfinished"/>
+      <translation>UTF-16BE BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="178"/>
@@ -464,7 +464,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="322"/>
       <source>No more occurrences were found</source>
-      <translation type="unfinished"/>
+      <translation>Não foram encontradas mais ocorrências</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="352"/>
@@ -1283,7 +1283,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="914"/>
       <source>Shift+F3</source>
-      <translation type="unfinished"/>
+      <translation>Shift+F3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="924"/>
@@ -1832,22 +1832,22 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1491"/>
       <source>Remove Duplicate Lines</source>
-      <translation type="unfinished"/>
+      <translation>Remover linhas duplicadas</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1496"/>
       <source>Remove Consecutive Duplicate Lines</source>
-      <translation type="unfinished"/>
+      <translation>Remover linhas duplicadas consecutivas</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1501"/>
       <source>Sort Lines Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Ordem de linhas ascendente</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1506"/>
       <source>Sort Lines Descending</source>
-      <translation type="unfinished"/>
+      <translation>Ordem de linhas descendente</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1511"/>
@@ -1986,32 +1986,32 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1911"/>
       <source>Read error</source>
-      <translation type="unfinished"/>
+      <translation>Erro de leitura</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1912"/>
       <source>Write error</source>
-      <translation type="unfinished"/>
+      <translation>Erro na escrita</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1913"/>
       <source>Fatal error</source>
-      <translation type="unfinished"/>
+      <translation>Erro fatal</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1914"/>
       <source>Resource error</source>
-      <translation type="unfinished"/>
+      <translation>Erro de recurso</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1915"/>
       <source>Open error</source>
-      <translation type="unfinished"/>
+      <translation>Erro ao Abrir</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1916"/>
       <source>Abort error</source>
-      <translation type="unfinished"/>
+      <translation>Erro ao abortar</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1917"/>
