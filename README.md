@@ -30,6 +30,15 @@ Linux packages can be obtained by downloading the stand-alone AppImage on the [r
 flatpak install flathub com.github.dail8859.NotepadNext
 ```
 
+If you are using Ubuntu and prefer an up-to-date deb version, you can use the [PPA supporting Ubuntu 22.04 and newer](https://launchpad.net/~quentiumyt/+archive/ubuntu/notepadnext) provided by
+[Quentin Lienhardt](https://github.com/QuentiumYT). You can add it by executing:
+
+```bash
+sudo add-apt-repository ppa:quentiumyt/notepadnext
+sudo apt update
+sudo apt install notepadnext
+```
+
 ## MacOS
 MacOS disk images can be downloaded from the [release](https://github.com/dail8859/NotepadNext/releases) page.
 
