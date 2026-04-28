@@ -5,7 +5,7 @@ on:
     branches:
       - master
     tags:
-      - '*'
+      - "*"
   pull_request:
 
 env:
@@ -29,7 +29,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ matrix.qt_version }}
-          modules: 'qt5compat'
+          modules: "qt5compat"
           cache: true
 
       - name: Setup Visual Studio Tools
@@ -42,12 +42,13 @@ jobs:
         if: runner.os == 'Windows'
         uses: repolevedavaj/install-nsis@v1.1.0
         with:
-          nsis-version: '3.11'
+          nsis-version: "3.11"
 
       - name: Setup Linux
         if: runner.os == 'Linux'
         run: |
           echo "DISTRIBUTION=AppImage" >> "$GITHUB_ENV"
+          echo "EXTRA_PLATFORM_PLUGINS=libqwayland-generic.so" >> "$GITHUB_ENV"
           sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev libcups2-dev
 
       - name: Configure
@@ -102,7 +103,7 @@ jobs:
     needs: [build]
 
     if: github.repository == 'dail8859/NotepadNext' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-    
+
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
