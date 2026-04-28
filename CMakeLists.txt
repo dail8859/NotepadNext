@@ -37,7 +37,6 @@ find_package(Qt6
             Network
             PrintSupport
             Core5Compat
-            WaylandClient #Majority of the linux desktop uses wayland.
 )
 
 set(CMAKE_AUTORCC ON)
