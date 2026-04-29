@@ -2031,7 +2031,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1920"/>
       <source>Rename error</source>
-      <translation type="unfinished"/>
+      <translation>Erro ao renomear</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1921"/>
@@ -2185,7 +2185,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="227"/>
       <source>Last Used Directory</source>
-      <translation type="unfinished"/>
+      <translation>Último diretório utilizado</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="246"/>
