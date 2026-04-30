@@ -48,7 +48,14 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           echo "DISTRIBUTION=AppImage" >> "$GITHUB_ENV"
-          echo "EXTRA_PLATFORM_PLUGINS=libqwayland-generic.so" >> "$GITHUB_ENV"
+
+          # Qt 6.10+ renamed wayland plugins
+          if [[ "${{ matrix.qt_version }}" == "6.10" ]]; then
+            echo "EXTRA_PLATFORM_PLUGINS=libqwayland.so" >> "$GITHUB_ENV"
+          else
+            echo "EXTRA_PLATFORM_PLUGINS=libqwayland-generic.so" >> "$GITHUB_ENV"
+          fi
+
           sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev libcups2-dev
 
       - name: Configure
