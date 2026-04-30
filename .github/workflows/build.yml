@@ -1,6 +1,7 @@
 name: Build Notepad Next
 
 on:
+  workflow_dispatch: 
   push:
     branches:
       - master
