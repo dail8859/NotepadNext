@@ -17,15 +17,15 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_compile_definitions(SCI_OWNREGEX)
 
 if(MSVC)
-  # https://stackoverflow.com/questions/78598141/first-stdmutexlock-crashes-in-application-built-with-latest-visual-studio
-  add_compile_definitions(_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR)
-  add_compile_options(/guard:cf)
-  add_link_options(/guard:cf)
+    # https://stackoverflow.com/questions/78598141/first-stdmutexlock-crashes-in-application-built-with-latest-visual-studio
+    add_compile_definitions(_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR)
+    add_compile_options(/guard:cf)
+    add_link_options(/guard:cf)
 endif()
 
 if(UNIX AND NOT APPLE)
-  add_compile_options(-fstack-protector-strong -D_FORTIFY_SOURCE=2)
-  add_link_options(-Wl,-z,relro -Wl,-z,now)
+    add_compile_options(-fstack-protector-strong -D_FORTIFY_SOURCE=2)
+    add_link_options(-Wl,-z,relro -Wl,-z,now)
 endif()
 
 find_package(Qt6
