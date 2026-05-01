@@ -563,6 +563,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     // The action needs added to the window so it can be triggered via the keyboard
     addAction(ui->actionNextTab);
+    ui->actionNextTab->setShortcuts(ui->actionNextTab->shortcuts() << QKeySequence(Qt::CTRL | Qt::Key_PageDown));
     connect(ui->actionNextTab, &QAction::triggered, this, [=]() {
         int index = dockedEditor->currentDockArea()->currentIndex();
         int total = dockedEditor->currentDockArea()->dockWidgetsCount();
@@ -573,6 +574,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     // The action needs added to the window so it can be triggered via the keyboard
     addAction(ui->actionPreviousTab);
+    ui->actionPreviousTab->setShortcuts(ui->actionPreviousTab->shortcuts() << QKeySequence(Qt::CTRL | Qt::Key_PageUp));
     connect(ui->actionPreviousTab, &QAction::triggered, this, [=]() {
         int index = dockedEditor->currentDockArea()->currentIndex();
         int total = dockedEditor->currentDockArea()->dockWidgetsCount();
