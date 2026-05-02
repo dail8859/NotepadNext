@@ -19,7 +19,7 @@ endif()
 if(NOT APPIMAGE_QMAKE)
     message(FATAL_ERROR
         "Could not find qmake for AppImage packaging.\n"
-        "Please configure with a Qt 6 qmake, for example:\n"
+        "Please install the QT 6 qmake or set the QMAKE variable to a Qt 6 qmake and re-run CMake, for example:\n"
         "  QMAKE=$(which qmake6) cmake -S . -B build -DAPP_DISTRIBUTION=AppImage"
     )
 endif()
@@ -38,7 +38,7 @@ if(NOT APPIMAGE_QMAKE_RESULT EQUAL 0 OR NOT APPIMAGE_QT_VERSION MATCHES "^6\\.")
         "  ${APPIMAGE_QMAKE}\n"
         "Reported Qt version:\n"
         "  ${APPIMAGE_QT_VERSION}\n"
-        "Please re-run CMake with a Qt 6 qmake, for example:\n"
+        "Please set the QMAKE variable to a Qt 6 qmake and re-run CMake, for example:\n"
         "  QMAKE=$(which qmake6) cmake -S . -B build -DAPP_DISTRIBUTION=AppImage"
     )
 endif()
