@@ -6,59 +6,45 @@ set(APPDIR_USR ${APPDIR}/usr)
 set(LINUXDEPLOY ${CMAKE_BINARY_DIR}/linuxdeploy-x86_64.AppImage)
 set(LINUXDEPLOY_QT ${CMAKE_BINARY_DIR}/linuxdeploy-plugin-qt-x86_64.AppImage)
 
-function(resolve_qt6_qmake out_var)
-    set(qt6_qmake_candidates "")
+set(APPIMAGE_ENV_VARS
+    LDAI_OUTPUT=NotepadNext-v${PROJECT_VERSION}-x86_64.AppImage
+)
 
-    find_package(Qt6CoreTools QUIET)
-    if(TARGET Qt6::qmake)
-        get_target_property(qt6_qmake_target Qt6::qmake IMPORTED_LOCATION)
-        if(qt6_qmake_target)
-            list(APPEND qt6_qmake_candidates "${qt6_qmake_target}")
-        endif()
-    endif()
-
-    find_program(qmake6_executable
-        NAMES qmake6 qmake-qt6 qmake
-        HINTS
-            /usr/lib/qt6/bin
-            /usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}/qt6/bin
-    )
-    if(qmake6_executable)
-        list(APPEND qt6_qmake_candidates "${qmake6_executable}")
-    endif()
-
-    list(REMOVE_DUPLICATES qt6_qmake_candidates)
-
-    foreach(qmake_candidate IN LISTS qt6_qmake_candidates)
-        execute_process(
-            COMMAND "${qmake_candidate}" -query QT_VERSION
-            OUTPUT_VARIABLE qmake_qt_version
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-            ERROR_QUIET
-            RESULT_VARIABLE qmake_result
-        )
-        if(qmake_result EQUAL 0 AND qmake_qt_version MATCHES "^6\\.")
-            set(${out_var} "${qmake_candidate}" PARENT_SCOPE)
-            return()
-        endif()
-    endforeach()
-
-    set(${out_var} "" PARENT_SCOPE)
-endfunction()
-
-resolve_qt6_qmake(QT6_QMAKE)
-if(QT6_QMAKE)
-    message(STATUS "Using Qt qmake for AppImage packaging: ${QT6_QMAKE}")
-    set(APPIMAGE_ENV_VARS
-        LDAI_OUTPUT=NotepadNext-v${PROJECT_VERSION}-x86_64.AppImage
-        QMAKE=${QT6_QMAKE}
-    )
+if(DEFINED ENV{QMAKE} AND NOT "$ENV{QMAKE}" STREQUAL "")
+    set(APPIMAGE_QMAKE "$ENV{QMAKE}")
 else()
-    message(WARNING "Could not locate a Qt 6 qmake binary for AppImage packaging")
-    set(APPIMAGE_ENV_VARS
-        LDAI_OUTPUT=NotepadNext-v${PROJECT_VERSION}-x86_64.AppImage
+    find_program(APPIMAGE_QMAKE NAMES qmake)
+endif()
+
+if(NOT APPIMAGE_QMAKE)
+    message(FATAL_ERROR
+        "Could not find qmake for AppImage packaging.\n"
+        "Please configure with a Qt 6 qmake, for example:\n"
+        "  QMAKE=$(which qmake6) cmake -S . -B build -DAPP_DISTRIBUTION=AppImage"
     )
 endif()
+
+execute_process(
+    COMMAND "${APPIMAGE_QMAKE}" -query QT_VERSION
+    OUTPUT_VARIABLE APPIMAGE_QT_VERSION
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+    RESULT_VARIABLE APPIMAGE_QMAKE_RESULT
+)
+
+if(NOT APPIMAGE_QMAKE_RESULT EQUAL 0 OR NOT APPIMAGE_QT_VERSION MATCHES "^6\\.")
+    message(FATAL_ERROR
+        "AppImage packaging requires a Qt 6 qmake, but CMake found:\n"
+        "  ${APPIMAGE_QMAKE}\n"
+        "Reported Qt version:\n"
+        "  ${APPIMAGE_QT_VERSION}\n"
+        "Please re-run CMake with a Qt 6 qmake, for example:\n"
+        "  QMAKE=$(which qmake6) cmake -S . -B build -DAPP_DISTRIBUTION=AppImage"
+    )
+endif()
+
+message(STATUS "Using qmake for AppImage packaging: ${APPIMAGE_QMAKE}")
+list(APPEND APPIMAGE_ENV_VARS QMAKE=${APPIMAGE_QMAKE})
 
 install(TARGETS NotepadNext
     RUNTIME DESTINATION bin
