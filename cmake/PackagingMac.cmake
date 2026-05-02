@@ -1,4 +1,5 @@
 message(STATUS "Configuring macOS packaging")
+message(STATUS "Building for macOS architecture: ${CMAKE_OSX_ARCHITECTURES}")
 
 set(INSTALL_DIR ${CMAKE_BINARY_DIR}/install)
 
