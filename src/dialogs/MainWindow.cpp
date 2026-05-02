@@ -1479,7 +1479,7 @@ void MainWindow::renameFile()
     if (editor->isFile()) {
         const QString filter = app->getFileDialogFilter();
         QString selectedFilter = app->getFileDialogFilterForLanguage(editor->languageName);
-        QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), defaultDirectoryManager->getDefaultDirectory(), filter, &selectedFilter);
+        QString fileName = FileDialogHelpers::getSaveFileName(this, tr("Rename"), editor->getFilePath(), filter, &selectedFilter);
 
         if (fileName.isEmpty()) {
             return;
