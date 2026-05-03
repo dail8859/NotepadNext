@@ -9,7 +9,7 @@ class TabsQuickActionsBar : public QToolBar
 
     Q_PROPERTY(
         Buttons visibileButtons
-        READ    visibileButtons
+        READ    getVisibileButtons
         WRITE   setVisibileButtons
         NOTIFY  visibileButtonsChanged
     )
@@ -42,16 +42,16 @@ public:
     explicit TabsQuickActionsBar(const Buttons &visibileButtons = Button::All, QWidget *parent = nullptr);
     virtual ~TabsQuickActionsBar() = default;
 
-    inline Buttons visibileButtons() const { return mVisibileButtons; }
+    inline Buttons getVisibileButtons() const { return visibileButtons; }
     void setVisibileButtons(const Buttons &buttons);
     void setVisibileButton(Button button, bool on = true);
 
 private:
-    Buttons mVisibileButtons = TabsQuickActionsBar::All;
+    Buttons visibileButtons = TabsQuickActionsBar::All;
 
-    QAction *mCreateNewTabAction = nullptr;
-    QAction *mShowTabsMenuAction = nullptr;
-    QAction *mCloseCurrentTabAction = nullptr;
+    QAction *createNewTabAction = nullptr;
+    QAction *showTabsMenuAction = nullptr;
+    QAction *closeCurrentTabAction = nullptr;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(TabsQuickActionsBar::Buttons);

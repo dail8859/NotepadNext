@@ -851,14 +851,14 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         mb.exec();
     });
 
-    quickActionsBar = new TabsQuickActionsBar(ui->menuBar);
-    ui->menuBar->setCornerWidget(quickActionsBar, Qt::TopRightCorner);
-    connect(quickActionsBar, &TabsQuickActionsBar::createNewTabClicked,
-            this,            &MainWindow::newFile);
-    connect(quickActionsBar, &TabsQuickActionsBar::closeCurrentTabClicked,
-            this,            &MainWindow::closeCurrentFile);
-    connect(quickActionsBar, &TabsQuickActionsBar::tabsMenuAboutToShow,
-            this,            [this](QMenu *editorsMenu) {
+    tabsQuickActionsBar = new TabsQuickActionsBar(ui->menuBar);
+    ui->menuBar->setCornerWidget(tabsQuickActionsBar, Qt::TopRightCorner);
+    connect(tabsQuickActionsBar, &TabsQuickActionsBar::createNewTabClicked,
+            this,                &MainWindow::newFile);
+    connect(tabsQuickActionsBar, &TabsQuickActionsBar::closeCurrentTabClicked,
+            this,                &MainWindow::closeCurrentFile);
+    connect(tabsQuickActionsBar, &TabsQuickActionsBar::tabsMenuAboutToShow,
+            this,                [this](QMenu *editorsMenu) {
         const auto editorsList = editors();
 
         editorsMenu->clear();
@@ -871,7 +871,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
             if (editor->isActiveWindow())
             {
-                QFont font = action->font();
+                auto font = action->font();
                 font.setBold(true);
                 action->setFont(font);
             }
