@@ -851,31 +851,34 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         mb.exec();
     });
 
-    {
-        quickActionsBar = new TabsQuickActionsBar(ui->menuBar);
+    quickActionsBar = new TabsQuickActionsBar(ui->menuBar);
+    ui->menuBar->setCornerWidget(quickActionsBar, Qt::TopRightCorner);
+    connect(quickActionsBar, &TabsQuickActionsBar::createNewTabClicked,
+            this,            &MainWindow::newFile);
+    connect(quickActionsBar, &TabsQuickActionsBar::closeCurrentTabClicked,
+            this,            &MainWindow::closeCurrentFile);
+    connect(quickActionsBar, &TabsQuickActionsBar::tabsMenuAboutToShow,
+            this,            [this](QMenu *editorsMenu) {
+        const auto editorsList = editors();
 
-        connect(quickActionsBar, &TabsQuickActionsBar::createNewTabClicked,
-                this,            &MainWindow::newFile);
-        connect(quickActionsBar, &TabsQuickActionsBar::closeCurrentTabClicked,
-                this,            &MainWindow::closeCurrentFile);
-        connect(quickActionsBar, &TabsQuickActionsBar::tabsMenuAboutToShow, [this](QMenu *editorsMenu) {
-            const auto editorsList = editors();
+        editorsMenu->clear();
 
-            editorsMenu->clear();
+        for (const auto editor : editorsList)
+        {
+            const auto iconPath = editor->isSavedToDisk() ?
+                ":/icons/saved.png" : ":/icons/unsaved.png";
+            const auto action = editorsMenu->addAction(QIcon(iconPath), editor->getName());
 
-            for (const auto editor : editorsList)
+            if (editor->isActiveWindow())
             {
-                const auto action = editorsMenu->addAction(
-                    QIcon(editor->isSavedToDisk() ? ":/icons/saved.png" : ":/icons/unsaved.png"),
-                    (editor->isActiveWindow() ? "> " : "") + editor->getName()
-                );
-
-                connect(action, &QAction::triggered, [this, editor]() { switchToEditor(editor); });
+                QFont font = action->font();
+                font.setBold(true);
+                action->setFont(font);
             }
-        });
 
-        ui->menuBar->setCornerWidget(quickActionsBar, Qt::TopRightCorner);
-    }
+            connect(action, &QAction::triggered, this, [this, editor]() { switchToEditor(editor); });
+        }
+    });
 
 #ifdef Q_OS_WIN
     connect(ui->actionShowInExplorer, &QAction::triggered, this, [=]() {

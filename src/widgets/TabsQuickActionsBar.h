@@ -40,15 +40,18 @@ signals: /*public*/
 public:
     inline TabsQuickActionsBar(QWidget *parent = nullptr) : TabsQuickActionsBar(Button::All, parent) { }
     explicit TabsQuickActionsBar(const Buttons &visibileButtons = Button::All, QWidget *parent = nullptr);
-    virtual ~TabsQuickActionsBar();
+    virtual ~TabsQuickActionsBar() = default;
 
-    Buttons visibileButtons() const;
+    inline Buttons visibileButtons() const { return mVisibileButtons; }
     void setVisibileButtons(const Buttons &buttons);
     void setVisibileButton(Button button, bool on = true);
 
 private:
-    struct Private;
-    Private *p = nullptr;
+    Buttons mVisibileButtons = TabsQuickActionsBar::All;
+
+    QAction *mCreateNewTabAction = nullptr;
+    QAction *mShowTabsMenuAction = nullptr;
+    QAction *mCloseCurrentTabAction = nullptr;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(TabsQuickActionsBar::Buttons);
