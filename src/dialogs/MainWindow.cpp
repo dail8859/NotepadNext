@@ -718,11 +718,21 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     languageActionGroup->setExclusive(true);
 
     connect(ui->actionPreferences, &QAction::triggered, this, [=] {
-        PreferencesDialog *pd = findChild<PreferencesDialog *>(QString(), Qt::FindDirectChildrenOnly);
+        auto pd = findChild<PreferencesDialog*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (pd == Q_NULLPTR) {
             pd = new PreferencesDialog(app->getSettings(), this);
         }
+
+        pd->resize(700, 400);
+        pd->setGeometry(
+            QStyle::alignedRect(
+                Qt::LeftToRight,
+                Qt::AlignCenter,
+                pd->size(),
+                geometry()
+            )
+        );
 
         pd->show();
         pd->raise();

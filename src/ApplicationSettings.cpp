@@ -18,6 +18,7 @@
 
 #include "ApplicationSettings.h"
 
+#include <QTemporaryFile>
 #include <QApplication>
 #include <QFont>
 
@@ -36,8 +37,45 @@ ApplicationSetting<type> name{#group "/" #name, default};\
 
 
 ApplicationSettings::ApplicationSettings(QObject *parent)
-    : QSettings{parent}
+    : QSettings(parent)
+{ }
+
+ApplicationSettings::ApplicationSettings(QTemporaryFile *tempFile, QObject *parent)
+    : QSettings(tempFile->fileName(), QSettings::NativeFormat, parent)
 {
+    tempFile->setParent(this);
+}
+
+void ApplicationSettings::fillFrom(ApplicationSettings *other)
+{
+    if (!other) return;
+
+    const auto meta = metaObject();
+
+    for (auto i = meta->propertyOffset(); i < meta->propertyCount(); ++i)
+    {
+        const auto property = meta->property(i);
+
+        if (property.isWritable() && property.isReadable())
+            property.write(this, property.read(other));
+    }
+}
+
+bool ApplicationSettings::isEquals(ApplicationSettings *other) const
+{
+    if (!other) return false;
+
+    const auto meta = metaObject();
+
+    for (auto i = meta->propertyOffset(); i < meta->propertyCount(); ++i)
+    {
+        const auto property = meta->property(i);
+
+        if (property.read(this) != property.read(other))
+            return false;
+    }
+
+    return true;
 }
 
 CREATE_SETTING(Gui, ShowMenuBar, showMenuBar, bool, true)
