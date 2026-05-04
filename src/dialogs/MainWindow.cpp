@@ -916,7 +916,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
     connect(app->getSettings(), &ApplicationSettings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
     connect(app->getSettings(), &ApplicationSettings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
-    connect(app->getSettings(), &ApplicationSettings::darkModeChanged, this, &MainWindow::applyStyleSheet);
+    connect(app->getSettings(), &ApplicationSettings::effectiveDarkModeChanged, this, &MainWindow::applyStyleSheet);
     connect(ui->statusBar, &EditorInfoStatusBar::customContextMenuRequestedForEOLLabel, this, [=](const QPoint &pos){
         ui->menuEOLConversion->popup(pos);
     });
@@ -1802,7 +1802,7 @@ void MainWindow::applyStyleSheet()
 {
     qInfo(Q_FUNC_INFO);
 
-    const bool dark = app->getSettings()->darkMode();
+    const bool dark = app->getSettings()->effectiveDarkMode();
 
     // Apply Fusion palette for all standard Qt widgets
     QApplication::setStyle(QStyleFactory::create("Fusion"));

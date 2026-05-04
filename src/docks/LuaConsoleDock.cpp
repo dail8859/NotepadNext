@@ -185,17 +185,17 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, ApplicationSettings *settings, QWidg
     setupStyle(input);
     setupStyle(output);
 
-    output->styleSetFore(39, settings->darkMode() ? 0xFF6B6B : 0x0000FF); // For error messages
+    output->styleSetFore(39, settings->effectiveDarkMode() ? 0xFF6B6B : 0x0000FF); // For error messages
 
     input->setExtraAscent(2);
     input->setExtraDescent(2);
     input->setMaximumHeight(input->textHeight(0));
     input->installEventFilter(this);
 
-    connect(settings, &ApplicationSettings::darkModeChanged, this, [=](bool) {
+    connect(settings, &ApplicationSettings::effectiveDarkModeChanged, this, [=](bool) {
         setupStyle(input);
         setupStyle(output);
-        output->styleSetFore(39, settings->darkMode() ? 0xFF6B6B : 0x0000FF);
+        output->styleSetFore(39, settings->effectiveDarkMode() ? 0xFF6B6B : 0x0000FF);
     });
 
     connect(input, &ScintillaNext::updateUi, [=](Scintilla::Update flags) {
@@ -385,7 +385,7 @@ bool LuaConsoleDock::eventFilter(QObject *obj, QEvent *event)
 
 void LuaConsoleDock::setupStyle(ScintillaNext *editor)
 {
-    const bool dark = settings->darkMode();
+    const bool dark = settings->effectiveDarkMode();
 
     editor->setEOLMode(SC_EOL_CRLF);
 

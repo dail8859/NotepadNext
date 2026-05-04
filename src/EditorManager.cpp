@@ -129,7 +129,7 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         }
     });
 
-    connect(settings, &ApplicationSettings::darkModeChanged, this, [=](bool) {
+    connect(settings, &ApplicationSettings::effectiveDarkModeChanged, this, [=](bool) {
         for (auto &editor : getEditors())
             applyEditorTheme(editor);
     });
@@ -305,7 +305,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
 
 void EditorManager::applyEditorTheme(ScintillaNext *editor)
 {
-    const bool dark = settings->darkMode();
+    const bool dark = settings->effectiveDarkMode();
 
     // Fold markers (not affected by styleClearAll)
     for (int i = SC_MARKNUM_FOLDEREND; i <= SC_MARKNUM_FOLDEROPEN; ++i) {
@@ -336,7 +336,7 @@ void EditorManager::applyEditorTheme(ScintillaNext *editor)
 
 void EditorManager::applyEditorNamedStyles(ScintillaNext *editor)
 {
-    const bool dark = settings->darkMode();
+    const bool dark = settings->effectiveDarkMode();
 
     editor->styleSetFore(STYLE_LINENUMBER, dark ? 0x858585 : 0x808080);
     editor->styleSetBack(STYLE_LINENUMBER, dark ? 0x252526 : 0xE4E4E4);

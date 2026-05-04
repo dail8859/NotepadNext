@@ -53,11 +53,47 @@
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBoxDarkMode">
-           <property name="text">
-            <string>Dark mode</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="layoutTheme">
+           <item>
+            <widget class="QLabel" name="labelTheme">
+             <property name="text">
+              <string>Theme:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBoxTheme">
+             <item>
+              <property name="text">
+               <string>Follow system</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Light</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Dark</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <spacer name="themeSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QGroupBox" name="gbxRestorePreviousSession">
