@@ -42,6 +42,7 @@ public:
     void manageEditor(ScintillaNext *editor);
 
     void applyEditorTheme(ScintillaNext *editor);
+    void applyEditorNamedStyles(ScintillaNext *editor);
 
     QList<QPointer<ScintillaNext>> getEditors();
 

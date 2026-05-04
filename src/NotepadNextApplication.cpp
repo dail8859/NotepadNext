@@ -298,6 +298,10 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     getLuaState()->setVariable("skip_tabwidth", skipTabWidth);
 
     getLuaState()->execute("SetLanguage(languageName)");
+
+    // Restore line number, brace match, and indent guide colors that the
+    // Lua-side styleClearAll wiped.
+    editorManager->applyEditorNamedStyles(editor);
 }
 
 QString NotepadNextApplication::detectLanguage(ScintillaNext *editor) const
