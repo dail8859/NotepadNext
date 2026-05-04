@@ -43,7 +43,6 @@
 #include <QScreen>
 #include <QFontDatabase>
 #include <QPalette>
-#include <QStyleFactory>
 
 
 #ifdef Q_OS_WIN
@@ -1805,14 +1804,11 @@ void MainWindow::applyStyleSheet()
     auto *settings = app->getSettings();
     const bool dark = settings->effectiveDarkMode();
 
-    QApplication::setStyle(QStyleFactory::create("Fusion"));
-
     if (settings->theme() == ApplicationSettings::SystemTheme) {
-        // Follow the desktop environment: Fusion's standardPalette() in Qt 6.5+
-        // adapts to QStyleHints::colorScheme().
-        QApplication::setPalette(QApplication::style()->standardPalette());
+        // Follow the desktop environment - leave the Qt-default palette alone.
+        // Qt 6.5+ already syncs the palette with QStyleHints::colorScheme().
     } else {
-        // Explicit Light or Dark override - hardcoded palettes so the app
+        // Explicit Light or Dark override - hardcoded palette so the app
         // theme is independent of the system color scheme.
         QPalette p;
         if (dark) {
