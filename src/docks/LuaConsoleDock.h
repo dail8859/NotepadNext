@@ -24,6 +24,7 @@
 
 class ScintillaNext;
 class LuaState;
+class ApplicationSettings;
 
 namespace Ui {
 class LuaConsoleDock;
@@ -34,7 +35,7 @@ class LuaConsoleDock : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit LuaConsoleDock(LuaState *l, QWidget *parent = 0);
+    explicit LuaConsoleDock(LuaState *l, ApplicationSettings *settings, QWidget *parent = 0);
     ~LuaConsoleDock();
 
     void writeToOutput(const char *s);
@@ -55,6 +56,7 @@ protected:
 private:
     Ui::LuaConsoleDock *ui;
 
+    ApplicationSettings *settings;
     ScintillaNext *output;
     ScintillaNext *input;
 

@@ -149,8 +149,11 @@ bool NotepadNextApplication::init()
     MarkerAppDecorator *mad = new MarkerAppDecorator(this);
     mad->setEnabled(true);
 
+    luaState->setVariable("dark_mode", settings->effectiveDarkMode());
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
+
+    connect(settings, &ApplicationSettings::effectiveDarkModeChanged, this, &NotepadNextApplication::refreshEditorTheme);
 
     createNewWindow();
     connect(editorManager, &EditorManager::editorCreated, window, &MainWindow::addEditor);
@@ -295,6 +298,10 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     getLuaState()->setVariable("skip_tabwidth", skipTabWidth);
 
     getLuaState()->execute("SetLanguage(languageName)");
+
+    // Restore line number, brace match, and indent guide colors that the
+    // Lua-side styleClearAll wiped.
+    editorManager->applyEditorNamedStyles(editor);
 }
 
 QString NotepadNextApplication::detectLanguage(ScintillaNext *editor) const
@@ -507,4 +514,15 @@ QStringList NotepadNextApplication::debugInfo() const
     info.append(QStringLiteral("Config File: %1").arg(ApplicationSettings().fileName()));
 
     return info;
+}
+
+void NotepadNextApplication::refreshEditorTheme()
+{
+    getLuaState()->setVariable("dark_mode", settings->effectiveDarkMode());
+    getLuaState()->execute("UpdateTheme()");
+
+    for (auto &editor : editorManager->getEditors()) {
+        if (!editor->languageName.isEmpty())
+            setEditorLanguage(editor, editor->languageName);
+    }
 }

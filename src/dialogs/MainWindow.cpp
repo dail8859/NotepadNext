@@ -42,6 +42,7 @@
 #include <QProcess>
 #include <QScreen>
 #include <QFontDatabase>
+#include <QPalette>
 
 
 #ifdef Q_OS_WIN
@@ -882,7 +883,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     languageInspectorDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
 
-    LuaConsoleDock *luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
+    LuaConsoleDock *luaConsoleDock = new LuaConsoleDock(app->getLuaState(), app->getSettings(), this);
     luaConsoleDock->hide();
     addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
 
@@ -914,6 +915,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
     connect(app->getSettings(), &ApplicationSettings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
     connect(app->getSettings(), &ApplicationSettings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
+    connect(app->getSettings(), &ApplicationSettings::effectiveDarkModeChanged, this, &MainWindow::applyStyleSheet);
     connect(ui->statusBar, &EditorInfoStatusBar::customContextMenuRequestedForEOLLabel, this, [=](const QPoint &pos){
         ui->menuEOLConversion->popup(pos);
     });
@@ -1799,10 +1801,56 @@ void MainWindow::applyStyleSheet()
 {
     qInfo(Q_FUNC_INFO);
 
-    QString sheet;
-    QFile f(":/stylesheets/npp.css");
-    qInfo() << "Loading stylesheet:" << f.fileName();
+    auto *settings = app->getSettings();
+    const bool dark = settings->effectiveDarkMode();
 
+    if (settings->theme() == ApplicationSettings::SystemTheme) {
+        // Follow the desktop environment - leave the Qt-default palette alone.
+        // Qt 6.5+ already syncs the palette with QStyleHints::colorScheme().
+    } else {
+        // Explicit Light or Dark override - hardcoded palette so the app
+        // theme is independent of the system color scheme.
+        QPalette p;
+        if (dark) {
+            p.setColor(QPalette::Window,          QColor(0x1E, 0x1E, 0x1E));
+            p.setColor(QPalette::WindowText,      QColor(0xD4, 0xD4, 0xD4));
+            p.setColor(QPalette::Base,            QColor(0x25, 0x25, 0x26));
+            p.setColor(QPalette::AlternateBase,   QColor(0x2D, 0x2D, 0x2D));
+            p.setColor(QPalette::Text,            QColor(0xD4, 0xD4, 0xD4));
+            p.setColor(QPalette::Button,          QColor(0x3C, 0x3C, 0x3C));
+            p.setColor(QPalette::ButtonText,      QColor(0xD4, 0xD4, 0xD4));
+            p.setColor(QPalette::Highlight,       QColor(0x00, 0x7A, 0xCC));
+            p.setColor(QPalette::HighlightedText, QColor(0xFF, 0xFF, 0xFF));
+            p.setColor(QPalette::ToolTipBase,     QColor(0x25, 0x25, 0x26));
+            p.setColor(QPalette::ToolTipText,     QColor(0xD4, 0xD4, 0xD4));
+            p.setColor(QPalette::Link,            QColor(0x40, 0xA0, 0xFF));
+            p.setColor(QPalette::Disabled, QPalette::Text,       QColor(0x66, 0x66, 0x66));
+            p.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(0x66, 0x66, 0x66));
+        } else {
+            p.setColor(QPalette::Window,          QColor(0xF0, 0xF0, 0xF0));
+            p.setColor(QPalette::WindowText,      QColor(0x00, 0x00, 0x00));
+            p.setColor(QPalette::Base,            QColor(0xFF, 0xFF, 0xFF));
+            p.setColor(QPalette::AlternateBase,   QColor(0xF7, 0xF7, 0xF7));
+            p.setColor(QPalette::Text,            QColor(0x00, 0x00, 0x00));
+            p.setColor(QPalette::Button,          QColor(0xE6, 0xE6, 0xE6));
+            p.setColor(QPalette::ButtonText,      QColor(0x00, 0x00, 0x00));
+            p.setColor(QPalette::Highlight,       QColor(0x33, 0x99, 0xFF));
+            p.setColor(QPalette::HighlightedText, QColor(0xFF, 0xFF, 0xFF));
+            p.setColor(QPalette::ToolTipBase,     QColor(0xFF, 0xFF, 0xDC));
+            p.setColor(QPalette::ToolTipText,     QColor(0x00, 0x00, 0x00));
+            p.setColor(QPalette::Link,            QColor(0x00, 0x00, 0xEE));
+            p.setColor(QPalette::Disabled, QPalette::Text,       QColor(0x99, 0x99, 0x99));
+            p.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(0x99, 0x99, 0x99));
+        }
+        QApplication::setPalette(p);
+    }
+
+    // Targeted CSS for custom widgets (ADS dock tabs, QuickFindWidget, status bar)
+    const QString cssResource = dark ? QStringLiteral(":/stylesheets/npp-dark.css")
+                                     : QStringLiteral(":/stylesheets/npp.css");
+    QString sheet;
+    QFile f(cssResource);
+    qInfo() << "Loading stylesheet:" << f.fileName();
     f.open(QFile::ReadOnly);
     sheet = f.readAll();
     f.close();
