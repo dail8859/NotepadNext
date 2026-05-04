@@ -10,7 +10,7 @@ public:
     virtual ~BehaviorCategoryItem() = default;
 
     virtual QString title() const override { return QObject::tr("Behavior"); }
-    virtual QString icon() const override { return "://icons/audio-waveform.svg"; }
+    virtual QString iconPath() const override { return "://icons/audio-waveform.svg"; }
     virtual QWidget *contentView(ApplicationSettings *settings) const override;
 };
 

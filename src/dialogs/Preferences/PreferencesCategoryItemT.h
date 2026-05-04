@@ -13,7 +13,7 @@ public:
     virtual ~PreferencesCategoryItemT() = default;
 
     inline virtual QString title() const override { return mTitle; }
-    inline virtual QString icon() const override { return mIcon; }
+    inline virtual QString iconPath() const override { return mIcon; }
     inline virtual T *contentView(ApplicationSettings *settings) const override {
         return new T(settings);
     }

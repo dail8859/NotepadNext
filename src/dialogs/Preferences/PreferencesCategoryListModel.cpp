@@ -20,18 +20,16 @@ QVariant PreferencesCategoryListModel::data(const QModelIndex &index, int role) 
 
     const auto &item = mItems.at(index.row());
 
-    switch (role) {
-    case Qt::DisplayRole:
-        return item->title();
-
-    case Qt::DecorationRole:
-        return QIcon(item->icon());
-
-    case Qt::SizeHintRole:
-        return QSize(0, RowHeight);
-
-    case Qt::TextAlignmentRole:
-        return Qt::AlignVCenter;
+    switch (role)
+    {
+        case Qt::DisplayRole:
+            return item->title();
+        case Qt::DecorationRole:
+            return QIcon(item->iconPath());
+        case Qt::SizeHintRole:
+            return QSize(0, RowHeight);
+        case Qt::TextAlignmentRole:
+            return Qt::AlignVCenter;
     }
 
     return {};

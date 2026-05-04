@@ -59,16 +59,18 @@ namespace Preferences
     {
     public:
         RestartRequiredLabel(QWidget *parent = nullptr)
-            : QWidget()
+            : QWidget(parent)
         {
+            const auto iconSize = qApp->style()->pixelMetric(QStyle::PM_SmallIconSize);
+
             const auto icon = new QLabel;
             icon->setPixmap(
                 qApp->style()->standardIcon(
                     QStyle::SP_MessageBoxInformation
-                ).pixmap(14, 14)
+                ).pixmap(iconSize, iconSize)
             );
 
-            mLabel = new QLabel(QObject::tr("Restart required to apply changes."));
+            mLabel = new QLabel(QObject::tr("Application restart required to apply changes."));
             mLabel->setWordWrap(true);
 
             auto infoFont = mLabel->font();
@@ -79,7 +81,7 @@ namespace Preferences
             const auto layout = new QHBoxLayout(this);
             layout->addWidget(icon, 0, Qt::AlignTop);
             layout->addWidget(mLabel, 1);
-            layout->setContentsMargins(9, 0, 3, 0);
+            layout->setContentsMargins(9, 0, 3, 6);
             layout->setSpacing(SPACING_3);
         }
 

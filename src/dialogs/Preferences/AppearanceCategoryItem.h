@@ -10,7 +10,7 @@ public:
     virtual ~AppearanceCategoryItem() = default;
 
     virtual QString title() const override { return QObject::tr("Appearance"); }
-    virtual QString icon() const override { return "://icons/paintbrush.svg"; }
+    virtual QString iconPath() const override { return "://icons/paintbrush.svg"; }
     virtual QWidget *contentView(ApplicationSettings *settings) const override;
 };
 

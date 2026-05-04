@@ -200,7 +200,6 @@ namespace
         wheelSuppressor->setupFor(languageCombo);
 
         const auto restartNotification = new RestartRequiredLabel;
-        restartNotification->setVisible(false);
 
         const auto layout = new QGridLayout;
         layout->addWidget(new QLabel(QObject::tr("Language:")), 0, 0);
@@ -218,9 +217,8 @@ namespace
         setComboByData(settings->translation());
 
         QObject::connect(languageCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
-                         settings,      [settings, languageCombo, restartNotification](int index) {
+                         settings,      [settings, languageCombo](int index) {
             settings->setTranslation(languageCombo->itemData(index).toString());
-            restartNotification->setVisible(true);
         });
         QObject::connect(settings,      &ApplicationSettings::translationChanged,
                          languageCombo, setComboByData);

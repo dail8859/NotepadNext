@@ -7,6 +7,7 @@
 #include <QSpacerItem>
 #include <QPushButton>
 #include <QScrollArea>
+#include <QCloseEvent>
 #include <QTabWidget>
 #include <QCheckBox>
 #include <QListView>
@@ -104,7 +105,6 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     // Category
     p->category.listView = new QListView;
     p->category.listView->setFixedWidth(180);
-    p->category.listView->setIconSize({ 20, 20 });
 
     p->category.model = new ListModel(p->category.listView);
     p->category.model->addCategory(new BehaviorCategoryItem);
@@ -174,6 +174,39 @@ void PreferencesDialog::showEvent(QShowEvent *event)
     QDialog::showEvent(event);
 }
 
+void PreferencesDialog::closeEvent(QCloseEvent *event)
+{
+    if (p->hasUnsavedChanges())
+    {
+        const auto reply = QMessageBox::question(
+            this,
+            tr("Unsaved Changes"),
+            tr("You have unsaved changes.\n"
+               "Do you want to save them before closing?"),
+            QMessageBox::Save
+            | QMessageBox::Discard
+            | QMessageBox::Cancel
+        );
+
+        switch (reply)
+        {
+            case QMessageBox::Cancel:
+                event->ignore();
+                return;
+            case QMessageBox::Discard:
+                p->makeSettingsRestore();
+                [[fallthrough]];
+            case QMessageBox::Save:
+                p->settings.actual->sync();
+                break;
+            default:
+                break;
+        }
+    }
+
+    QDialog::closeEvent(event);
+}
+
 void PreferencesDialog::onCategoryChanged(const QModelIndex &index)
 {
     if (!index.isValid()) return;
@@ -197,31 +230,7 @@ void PreferencesDialog::onOkClicked()
 
 void PreferencesDialog::onCancelClicked()
 {
-    if (p->hasUnsavedChanges()) {
-        const auto reply = QMessageBox::question(
-            this,
-            tr("Unsaved Changes"),
-            tr("You have unsaved changes.\n"
-               "Do you want to save them before closing?"),
-            QMessageBox::Save
-            | QMessageBox::Discard
-            | QMessageBox::Cancel
-        );
-
-        switch (reply)
-        {
-            case QMessageBox::Cancel:
-                return;
-            case QMessageBox::Discard:
-                p->makeSettingsRestore();
-                [[fallthrough]];
-            default:
-                p->settings.actual->sync();
-                break;
-        }
-    }
-
-    accept();
+    close();
 }
 
 void PreferencesDialog::onResetClicked()

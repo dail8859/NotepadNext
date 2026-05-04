@@ -44,6 +44,7 @@ namespace
         const auto group = new QGroupBox(QObject::tr("Font"));
 
         const auto familyCombo = new QFontComboBox;
+        familyCombo->setMinimumWidth(120);
 
         const auto sizeCombo = new QComboBox;
         sizeCombo->addItems({
