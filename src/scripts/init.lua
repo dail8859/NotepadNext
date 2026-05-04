@@ -2,6 +2,30 @@ function rgb(x)
     return ((x & 0xFF) << 16) | (x & 0xFF00) | ((x & 0xFF0000) >> 16)
 end
 
+local STYLE_DEFAULT = 32
+
+-- Build the active theme table from the dark_mode global injected by C++.
+-- Also called by NotepadNextApplication::refreshEditorTheme() on toggle.
+function UpdateTheme()
+    if dark_mode then
+        theme = {
+            default_fg = rgb(0xD4D4D4),
+            default_bg = rgb(0x1E1E1E),
+            light_fg   = rgb(0x000000),
+            light_bg   = rgb(0xFFFFFF),
+        }
+    else
+        theme = {
+            default_fg = rgb(0x000000),
+            default_bg = rgb(0xFFFFFF),
+            light_fg   = rgb(0x000000),
+            light_bg   = rgb(0xFFFFFF),
+        }
+    end
+end
+
+UpdateTheme()
+
 function DetectLanguageFromContents(contents)
     for name, L in pairs(languages) do
         if L.first_line then
@@ -49,10 +73,23 @@ function DialogFilters()
 end
 
 function SetStyle(L)
+    -- Apply theme base: STYLE_DEFAULT sets the canvas for styleClearAll().
+    -- This ensures every style slot starts with the correct background color
+    -- even for styles not explicitly listed in the language definition.
+    editor.StyleFore[STYLE_DEFAULT] = theme.default_fg
+    editor.StyleBack[STYLE_DEFAULT] = theme.default_bg
+    editor:StyleClearAll()
+
     if L.styles then
         for _, style in pairs(L.styles) do
-            editor.StyleFore[style.id] = style.fgColor
-            editor.StyleBack[style.id] = style.bgColor
+            -- Translate canonical light-mode colors to theme equivalents.
+            -- Language files that specify black text on white background get
+            -- auto-converted; deliberate syntax colors (blue, green, etc.)
+            -- pass through unchanged since they are readable on dark backgrounds.
+            local fg = (style.fgColor == theme.light_fg) and theme.default_fg or style.fgColor
+            local bg = (style.bgColor == theme.light_bg) and theme.default_bg or style.bgColor
+            editor.StyleFore[style.id] = fg
+            editor.StyleBack[style.id] = bg
 
             if style.fontStyle then
                 editor.StyleBold[style.id] = (style.fontStyle & 1 == 1)

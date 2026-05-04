@@ -53,6 +53,13 @@
           </widget>
          </item>
          <item>
+          <widget class="QCheckBox" name="checkBoxDarkMode">
+           <property name="text">
+            <string>Dark mode</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QGroupBox" name="gbxRestorePreviousSession">
            <property name="title">
             <string>Restore previous session</string>

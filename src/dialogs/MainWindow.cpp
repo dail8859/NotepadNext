@@ -42,6 +42,8 @@
 #include <QProcess>
 #include <QScreen>
 #include <QFontDatabase>
+#include <QPalette>
+#include <QStyleFactory>
 
 
 #ifdef Q_OS_WIN
@@ -882,7 +884,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     languageInspectorDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, languageInspectorDock);
 
-    LuaConsoleDock *luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
+    LuaConsoleDock *luaConsoleDock = new LuaConsoleDock(app->getLuaState(), app->getSettings(), this);
     luaConsoleDock->hide();
     addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
 
@@ -914,6 +916,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
     connect(app->getSettings(), &ApplicationSettings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
     connect(app->getSettings(), &ApplicationSettings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
+    connect(app->getSettings(), &ApplicationSettings::darkModeChanged, this, &MainWindow::applyStyleSheet);
     connect(ui->statusBar, &EditorInfoStatusBar::customContextMenuRequestedForEOLLabel, this, [=](const QPoint &pos){
         ui->menuEOLConversion->popup(pos);
     });
@@ -1799,10 +1802,38 @@ void MainWindow::applyStyleSheet()
 {
     qInfo(Q_FUNC_INFO);
 
-    QString sheet;
-    QFile f(":/stylesheets/npp.css");
-    qInfo() << "Loading stylesheet:" << f.fileName();
+    const bool dark = app->getSettings()->darkMode();
 
+    // Apply Fusion palette for all standard Qt widgets
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
+
+    if (dark) {
+        QPalette p;
+        p.setColor(QPalette::Window,          QColor(0x1E, 0x1E, 0x1E));
+        p.setColor(QPalette::WindowText,      QColor(0xD4, 0xD4, 0xD4));
+        p.setColor(QPalette::Base,            QColor(0x25, 0x25, 0x26));
+        p.setColor(QPalette::AlternateBase,   QColor(0x2D, 0x2D, 0x2D));
+        p.setColor(QPalette::Text,            QColor(0xD4, 0xD4, 0xD4));
+        p.setColor(QPalette::Button,          QColor(0x3C, 0x3C, 0x3C));
+        p.setColor(QPalette::ButtonText,      QColor(0xD4, 0xD4, 0xD4));
+        p.setColor(QPalette::Highlight,       QColor(0x00, 0x7A, 0xCC));
+        p.setColor(QPalette::HighlightedText, QColor(0xFF, 0xFF, 0xFF));
+        p.setColor(QPalette::ToolTipBase,     QColor(0x25, 0x25, 0x26));
+        p.setColor(QPalette::ToolTipText,     QColor(0xD4, 0xD4, 0xD4));
+        p.setColor(QPalette::Link,            QColor(0x40, 0xA0, 0xFF));
+        p.setColor(QPalette::Disabled, QPalette::Text,       QColor(0x66, 0x66, 0x66));
+        p.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(0x66, 0x66, 0x66));
+        QApplication::setPalette(p);
+    } else {
+        QApplication::setPalette(QApplication::style()->standardPalette());
+    }
+
+    // Targeted CSS for custom widgets (ADS dock tabs, QuickFindWidget, status bar)
+    const QString cssResource = dark ? QStringLiteral(":/stylesheets/npp-dark.css")
+                                     : QStringLiteral(":/stylesheets/npp.css");
+    QString sheet;
+    QFile f(cssResource);
+    qInfo() << "Loading stylesheet:" << f.fileName();
     f.open(QFile::ReadOnly);
     sheet = f.readAll();
     f.close();

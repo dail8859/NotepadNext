@@ -119,4 +119,6 @@ public:
     DEFINE_SETTING(DefaultEOLMode, defaultEOLMode, QString)
     DEFINE_SETTING(URLHighlighting, urlHighlighting, bool)
     DEFINE_SETTING(ShowLineNumbers, showLineNumbers, bool)
+
+    DEFINE_SETTING(DarkMode, darkMode, bool)
 };

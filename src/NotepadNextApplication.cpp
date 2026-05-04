@@ -149,8 +149,11 @@ bool NotepadNextApplication::init()
     MarkerAppDecorator *mad = new MarkerAppDecorator(this);
     mad->setEnabled(true);
 
+    luaState->setVariable("dark_mode", settings->darkMode());
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
+
+    connect(settings, &ApplicationSettings::darkModeChanged, this, &NotepadNextApplication::refreshEditorTheme);
 
     createNewWindow();
     connect(editorManager, &EditorManager::editorCreated, window, &MainWindow::addEditor);
@@ -507,4 +510,15 @@ QStringList NotepadNextApplication::debugInfo() const
     info.append(QStringLiteral("Config File: %1").arg(ApplicationSettings().fileName()));
 
     return info;
+}
+
+void NotepadNextApplication::refreshEditorTheme()
+{
+    getLuaState()->setVariable("dark_mode", settings->darkMode());
+    getLuaState()->execute("UpdateTheme()");
+
+    for (auto &editor : editorManager->getEditors()) {
+        if (!editor->languageName.isEmpty())
+            setEditorLanguage(editor, editor->languageName);
+    }
 }
