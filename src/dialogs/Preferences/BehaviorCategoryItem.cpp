@@ -188,7 +188,7 @@ namespace
         const auto app = qobject_cast<NotepadNextApplication*>(qApp);
 
         const auto languageCombo = new QComboBox;
-        languageCombo->addItem(QObject::tr("<System Language>"), QStringLiteral(""));
+        languageCombo->addItem(QObject::tr("Like in system"), QStringLiteral(""));
         for (const auto &languageData : app->getTranslationManager()->availableTranslations())
         {
             QLocale locale(languageData);
@@ -229,7 +229,7 @@ namespace
     inline QHBoxLayout *EOLTypeView(ApplicationSettings *settings)
     {
         const auto eolCombo = new QComboBox;
-        eolCombo->addItem(QObject::tr("System Default"),  QString(""));
+        eolCombo->addItem(QObject::tr("System default"),  QString(""));
         eolCombo->addItem(QObject::tr("Windows (CR LF)"), ScintillaNext::eolModeToString(SC_EOL_CRLF));
         eolCombo->addItem(QObject::tr("Unix (LF)"),       ScintillaNext::eolModeToString(SC_EOL_LF));
         eolCombo->addItem(QObject::tr("Macintosh (CR)"),  ScintillaNext::eolModeToString(SC_EOL_CR));

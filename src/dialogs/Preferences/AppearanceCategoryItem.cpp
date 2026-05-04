@@ -15,7 +15,7 @@ namespace
 {
     inline QGroupBox *WindowAppearanceView(ApplicationSettings *settings)
     {
-        const auto group = new QGroupBox(QObject::tr("Window"));
+        const auto group = new QGroupBox(QObject::tr("Main window"));
 
         const auto layout = new QVBoxLayout(group);
         layout->addWidget(CreateCheckBox(
@@ -105,7 +105,7 @@ namespace
             PREFERENCES_BIND_PROPERTY(urlHighlighting, URLHighlighting)
         ));
         layout->addWidget(CreateCheckBox(
-            QObject::tr("Show Line Numbers"),
+            QObject::tr("Show line numbers"),
             settings,
             PREFERENCES_BIND_PROPERTY(showLineNumbers, ShowLineNumbers)
         ));

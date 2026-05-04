@@ -113,7 +113,7 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     p->category.listView->setModel(p->category.model);
 
     // Content
-    p->content.title = new QLabel(tr("Default title"));
+    p->content.title = new QLabel;
     p->content.title->setFont(ContentTitleFont());
 
     p->content.viewport = new QScrollArea;
@@ -176,11 +176,11 @@ void PreferencesDialog::showEvent(QShowEvent *event)
 
 void PreferencesDialog::closeEvent(QCloseEvent *event)
 {
-    if (p->hasUnsavedChanges())
+    if (isVisible() && p->hasUnsavedChanges())
     {
         const auto reply = QMessageBox::question(
             this,
-            tr("Unsaved Changes"),
+            tr("Unsaved сhanges"),
             tr("You have unsaved changes.\n"
                "Do you want to save them before closing?"),
             QMessageBox::Save
