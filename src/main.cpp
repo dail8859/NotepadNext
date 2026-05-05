@@ -29,6 +29,25 @@ int main(int argc, char *argv[])
 {
     qSetMessagePattern("[%{time process}] %{if-debug}D%{endif}%{if-info}I%{endif}%{if-warning}W%{endif}%{if-critical}C%{endif}%{if-fatal}F%{endif}: %{message}");
 
+#ifdef Q_OS_LINUX
+    // Qt Advanced Docking System positions its drop-indicator overlays as
+    // top-level Qt::Tool windows using mapToGlobal() + move() to absolute
+    // coordinates. Wayland does not let clients position top-level windows,
+    // so during a tab drag the indicators appear at wrong locations. Run
+    // through XWayland where the positioning works correctly. Honor an
+    // explicit QT_QPA_PLATFORM and an opt-out escape hatch.
+    if (qEnvironmentVariableIsEmpty("QT_QPA_PLATFORM")
+        && !qEnvironmentVariableIsSet("NOTEPADNEXT_FORCE_NATIVE_WAYLAND"))
+    {
+        const QByteArray sessionType = qgetenv("XDG_SESSION_TYPE");
+        const bool isWayland = (sessionType == "wayland")
+                            || qEnvironmentVariableIsSet("WAYLAND_DISPLAY");
+        if (isWayland) {
+            qputenv("QT_QPA_PLATFORM", "xcb;wayland");
+        }
+    }
+#endif
+
     // Set these since other parts of the app references these
     QApplication::setOrganizationName("NotepadNext");
     QApplication::setApplicationName("NotepadNext");
