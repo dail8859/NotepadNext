@@ -42,5 +42,8 @@
         <file>icons/application_osx_terminal.png</file>
         <file>icons/folder_go.png</file>
         <file>icons/wrapindicator.png</file>
+        <file>icons/cross.svg</file>
+        <file>icons/plus.svg</file>
+        <file>icons/list_with_icons.svg</file>
     </qresource>
 </RCC>
