@@ -43,7 +43,6 @@
 #include <QScreen>
 #include <QFontDatabase>
 
-
 #ifdef Q_OS_WIN
 #include <QSimpleUpdater.h>
 #include <Windows.h>
@@ -73,6 +72,8 @@
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
 #include "ColumnEditorDialog.h"
+
+#include "TabsQuickActionsBar.h"
 
 #include "QuickFindWidget.h"
 
@@ -854,6 +855,29 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         mb.setTextInteractionFlags(Qt::TextSelectableByMouse);
 
         mb.exec();
+    });
+
+    tabsQuickActionsBar = new TabsQuickActionsBar(ui->menuBar);
+    ui->menuBar->setCornerWidget(tabsQuickActionsBar, Qt::TopRightCorner);
+    connect(tabsQuickActionsBar, &TabsQuickActionsBar::createNewTabClicked, this, &MainWindow::newFile);
+    connect(tabsQuickActionsBar, &TabsQuickActionsBar::closeCurrentTabClicked, this, &MainWindow::closeCurrentFile);
+    connect(tabsQuickActionsBar, &TabsQuickActionsBar::tabsMenuAboutToShow, this, [this](QMenu *editorsMenu) {
+        const auto editorsList = editors();
+
+        editorsMenu->clear();
+
+        for (const auto editor : editorsList) {
+            const auto iconPath = editor->isSavedToDisk() ? ":/icons/saved.png" : ":/icons/unsaved.png";
+            const auto action = editorsMenu->addAction(QIcon(iconPath), editor->getName());
+
+            if (editor->isActiveWindow()) {
+                auto font = action->font();
+                font.setBold(true);
+                action->setFont(font);
+            }
+
+            connect(action, &QAction::triggered, this, [this, editor]() { switchToEditor(editor); });
+        }
     });
 
 #ifdef Q_OS_WIN
