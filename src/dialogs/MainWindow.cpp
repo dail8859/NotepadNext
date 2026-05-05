@@ -853,24 +853,18 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     tabsQuickActionsBar = new TabsQuickActionsBar(ui->menuBar);
     ui->menuBar->setCornerWidget(tabsQuickActionsBar, Qt::TopRightCorner);
-    connect(tabsQuickActionsBar, &TabsQuickActionsBar::createNewTabClicked,
-            this,                &MainWindow::newFile);
-    connect(tabsQuickActionsBar, &TabsQuickActionsBar::closeCurrentTabClicked,
-            this,                &MainWindow::closeCurrentFile);
-    connect(tabsQuickActionsBar, &TabsQuickActionsBar::tabsMenuAboutToShow,
-            this,                [this](QMenu *editorsMenu) {
+    connect(tabsQuickActionsBar, &TabsQuickActionsBar::createNewTabClicked, this, &MainWindow::newFile);
+    connect(tabsQuickActionsBar, &TabsQuickActionsBar::closeCurrentTabClicked, this, &MainWindow::closeCurrentFile);
+    connect(tabsQuickActionsBar, &TabsQuickActionsBar::tabsMenuAboutToShow, this, [this](QMenu *editorsMenu) {
         const auto editorsList = editors();
 
         editorsMenu->clear();
 
-        for (const auto editor : editorsList)
-        {
-            const auto iconPath = editor->isSavedToDisk() ?
-                ":/icons/saved.png" : ":/icons/unsaved.png";
+        for (const auto editor : editorsList) {
+            const auto iconPath = editor->isSavedToDisk() ? ":/icons/saved.png" : ":/icons/unsaved.png";
             const auto action = editorsMenu->addAction(QIcon(iconPath), editor->getName());
 
-            if (editor->isActiveWindow())
-            {
+            if (editor->isActiveWindow()) {
                 auto font = action->font();
                 font.setBold(true);
                 action->setFont(font);
