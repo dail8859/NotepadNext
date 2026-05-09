@@ -72,21 +72,17 @@ namespace
         familyCombo->setCurrentFont(QFont(settings->fontName()));
         sizeCombo->setCurrentText(QString("%1").arg(settings->fontSize()));
 
-        QObject::connect(familyCombo, &QFontComboBox::currentFontChanged,
-                         settings,    [settings](const QFont &font) {
+        QObject::connect(familyCombo, &QFontComboBox::currentFontChanged, settings, [settings](const QFont &font) {
             settings->setFontName(font.family());
         });
-        QObject::connect(settings,    &ApplicationSettings::fontNameChanged,
-                         familyCombo, [familyCombo](const QString &fontName){
+        QObject::connect(settings, &ApplicationSettings::fontNameChanged, familyCombo, [familyCombo](const QString &fontName){
             familyCombo->setCurrentFont(QFont(fontName));
         });
 
-        QObject::connect(sizeCombo, &QComboBox::currentTextChanged,
-                         settings,  [settings](const QString &value) {
+        QObject::connect(sizeCombo, &QComboBox::currentTextChanged, settings, [settings](const QString &value) {
             settings->setFontSize(value.toInt());
         });
-        QObject::connect(settings,  &ApplicationSettings::fontSizeChanged,
-                         sizeCombo, [sizeCombo](int size) {
+        QObject::connect(settings, &ApplicationSettings::fontSizeChanged, sizeCombo, [sizeCombo](int size) {
             sizeCombo->setCurrentText(QString("%1").arg(size));
         });
 

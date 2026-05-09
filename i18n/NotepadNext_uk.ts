@@ -934,7 +934,7 @@
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1449"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1442"/>
         <source>Export As</source>
         <translation>Експортувати як</translation>
     </message>
@@ -1505,7 +1505,7 @@
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="951"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="763"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="756"/>
         <source>Start Recording</source>
         <translation>Почати запис</translation>
     </message>
@@ -2083,196 +2083,196 @@
         <translation>Номер рядку (1 - %1)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="754"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="747"/>
         <source>Stop Recording</source>
         <translation>Зупинити запис</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="859"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="852"/>
         <source>Debug Info</source>
         <translation>Інформація про налагодження</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1057"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1050"/>
         <source>New %1</source>
         <translation>Новий %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1117"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1110"/>
         <source>Create File</source>
         <translation>Створити файл</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1117"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1110"/>
         <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; не існує. Бажаєте створити його ?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1158"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1249"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1151"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1242"/>
         <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Зберегти файл &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1159"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1250"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1152"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1243"/>
         <source>Save File</source>
         <translation>Зберегти файл</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1200"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1193"/>
         <source>Open Folder as Workspace</source>
         <translation>Відкрити каталог як робочий простір</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1223"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1895"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1216"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1888"/>
         <source>Reload File</source>
         <translation>Перезавантажити файл</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1223"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1216"/>
         <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
         <translation>Ви дійсно хочете перезавантажити файл&lt;b&gt;%1&lt;/b&gt;? Всі не збережені зміни будут втрачені.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1414"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1407"/>
         <source>Save a Copy As</source>
         <translation>Зберегти копію як</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1490"/>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1507"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1483"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1500"/>
         <source>Rename</source>
         <translation>Перейменувати</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1507"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1500"/>
         <source>Name:</source>
         <translation>Назва:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1527"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1520"/>
         <source>Delete File</source>
         <translation>Видалити файл</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1527"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1520"/>
         <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
         <translation>Ви дійсно хочете перемістити файл &lt;b&gt;%1&lt;/b&gt; до смітника ?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1537"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1530"/>
         <source>Error Deleting File</source>
         <translation>Помилка видалення файлу</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1537"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1530"/>
         <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
         <translation>Під час видалення щось пішло не так &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1634"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1627"/>
         <source>Administrator</source>
         <translation>Адміністратор</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1895"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1888"/>
         <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
         <translation>&lt;b&gt;%1&lt;/b&gt; був змінений. Бажаєте завантажити актуальну версію?</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1921"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1914"/>
         <source>Read error</source>
         <translation type="unfinished">Read error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1922"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1915"/>
         <source>Write error</source>
         <translation type="unfinished">Write error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1923"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1916"/>
         <source>Fatal error</source>
         <translation type="unfinished">Fatal error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1924"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1917"/>
         <source>Resource error</source>
         <translation type="unfinished">Resource error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1925"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1918"/>
         <source>Open error</source>
         <translation type="unfinished">Open error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1926"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1919"/>
         <source>Abort error</source>
         <translation type="unfinished">Abort error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1927"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1920"/>
         <source>Timeout error</source>
         <translation type="unfinished">Timeout error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1928"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1921"/>
         <source>Unspecified error</source>
         <translation type="unfinished">Unspecified error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1929"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1922"/>
         <source>Remove error</source>
         <translation type="unfinished">Remove error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1930"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1923"/>
         <source>Rename error</source>
         <translation type="unfinished">Rename error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1931"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1924"/>
         <source>Position error</source>
         <translation type="unfinished">Position error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1932"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1925"/>
         <source>Resize error</source>
         <translation type="unfinished">Resize error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1933"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1926"/>
         <source>Permissions error</source>
         <translation type="unfinished">Permissions error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1934"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1927"/>
         <source>Copy error</source>
         <translation type="unfinished">Copy error</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1935"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1928"/>
         <source>Unknown error (%1)</source>
         <translation type="unfinished">Unknown error (%1)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1938"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1931"/>
         <source>Error Saving File</source>
         <translation>Помилка збереження файлу</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1939"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1932"/>
         <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
         <translation>Під час збереження виникла помилка&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Помилка: %2</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="1945"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="1938"/>
         <source>Zoom: %1%</source>
         <translation>Масштаб: %1%</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2112"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2105"/>
         <source>No updates are available at this time.</source>
         <translation>На цю мить не має ніяких оновлень.</translation>
     </message>
@@ -2285,12 +2285,12 @@
         <translation>Налаштування</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="183"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="178"/>
         <source>Unsaved сhanges</source>
         <translation>Незбережені зміни</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/PreferencesDialog.cpp" line="184"/>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="179"/>
         <source>You have unsaved changes.
 Do you want to save them before closing?</source>
         <translation>Зберегти внесені зміни?</translation>
@@ -2439,82 +2439,82 @@ Do you want to save them before closing?</source>
         <translation>Закрити вкладку</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="30"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="45"/>
         <source>Default directory</source>
         <translation>Каталог за замовчуванням</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="34"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="49"/>
         <source>Current document directory</source>
         <translation>Поточний каталог документу</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="35"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="50"/>
         <source>Last used directory</source>
         <translation>Останній використаний каталог</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="36"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="51"/>
         <source>Selected directory:</source>
         <translation>Обраний каталог:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="45"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="60"/>
         <source>Selected directory path here...</source>
         <translation>Шлях до обраного каталогу...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="58"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="67"/>
         <source>Open directory select dialog</source>
         <translation>Відкрити вікно вибору каталогу</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="107"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="115"/>
         <source>Not exists</source>
         <translation>Не існує</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="109"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="117"/>
         <source>Not a directory</source>
         <translation>Не є каталогом</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="111"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="119"/>
         <source>No write access</source>
         <translation>Немає дозволу на запис</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="119"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="127"/>
         <source>Please, use absolute path</source>
         <translation>Будь ласка, використовуйте повний шлях</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="128"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="135"/>
         <source>Select default directory</source>
         <translation>Вибрати каталог за замовчуванням</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="159"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="164"/>
         <source>Restore previous session</source>
         <translation>Відновлювати попередній сеанс</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="164"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="169"/>
         <source>Unsaved changes</source>
         <translation>Незбережені зміни</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="169"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="174"/>
         <source>Temporary files</source>
         <translation>Тимчасові файли</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="191"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="194"/>
         <source>Like in system</source>
         <translation>Як у системі</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="232"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="233"/>
         <source>System default</source>
         <translatorcomment>Окінчення рядків</translatorcomment>
         <translation>Системні</translation>
@@ -2532,7 +2532,7 @@ Do you want to save them before closing?</source>
         <translation type="vanished">&lt;Системна&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="205"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="208"/>
         <source>Language:</source>
         <translation>Мова:</translation>
     </message>
@@ -2541,37 +2541,37 @@ Do you want to save them before closing?</source>
         <translation type="vanished">Системний</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="233"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="234"/>
         <source>Windows (CR LF)</source>
         <translation>Windows (CR LF)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="234"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="235"/>
         <source>Unix (LF)</source>
         <translation>Unix (LF)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="235"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="236"/>
         <source>Macintosh (CR)</source>
         <translation>Macintosh (CR)</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="241"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="242"/>
         <source>Default line endings:</source>
         <translation>Символ кінця рядку за замовчуванням:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="274"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="273"/>
         <source>Recenter find/replace dialog when opened</source>
         <translation>Центрувати вікно пошуку/заміни під час відкриття</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="279"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="278"/>
         <source>Combine search results</source>
         <translation>Об&apos;єднувати результати пошуку</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="284"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="283"/>
         <source>Exit on last tab closed</source>
         <translation>Закривати програму при закритті останньої вкладки</translation>
     </message>
@@ -2581,7 +2581,7 @@ Do you want to save them before closing?</source>
         <translation>Поведінка</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/PreferencesViewUtils.h" line="73"/>
+        <location filename="../src/dialogs/Preferences/BehaviorCategoryItem.cpp" line="205"/>
         <source>Application restart required to apply changes.</source>
         <translation>Потребує перезапуск додатку.</translation>
     </message>
@@ -2625,17 +2625,17 @@ Do you want to save them before closing?</source>
         <translation>Розмір:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/AppearanceCategoryItem.cpp" line="98"/>
+        <location filename="../src/dialogs/Preferences/AppearanceCategoryItem.cpp" line="94"/>
         <source>Editor</source>
         <translation>Редактор</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/AppearanceCategoryItem.cpp" line="103"/>
+        <location filename="../src/dialogs/Preferences/AppearanceCategoryItem.cpp" line="99"/>
         <source>Highlight URLs</source>
         <translation>Підсвічувати посилання</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/Preferences/AppearanceCategoryItem.cpp" line="108"/>
+        <location filename="../src/dialogs/Preferences/AppearanceCategoryItem.cpp" line="104"/>
         <source>Show line numbers</source>
         <translation>Показувати номера рядків</translation>
     </message>

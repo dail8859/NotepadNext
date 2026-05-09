@@ -10,15 +10,15 @@ namespace
 PreferencesCategoryListModel::PreferencesCategoryListModel(QObject *parent)
     : QAbstractListModel(parent)
 {
-    mItems.reserve(5);
+    items.reserve(5);
 }
 
 QVariant PreferencesCategoryListModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() >= mItems.size())
+    if (!index.isValid() || index.row() >= items.size())
         return {};
 
-    const auto &item = mItems.at(index.row());
+    const auto &item = items.at(index.row());
 
     switch (role)
     {
@@ -37,28 +37,28 @@ QVariant PreferencesCategoryListModel::data(const QModelIndex &index, int role) 
 
 void PreferencesCategoryListModel::addCategory(PreferencesCategoryItem *category, int row)
 {
-    if (row < 0 || row > mItems.size())
-        row = mItems.size();
+    if (row < 0 || row > items.size())
+        row = items.size();
 
     beginInsertRows(index(row), row, row + 1);
-    mItems.insert(mItems.cbegin() + row, std::move(ItemPtr(category)));
+    items.insert(items.cbegin() + row, std::move(ItemPtr(category)));
     endInsertRows();
 }
 
 void PreferencesCategoryListModel::removeCategory(int row)
 {
-    if (row < 0 || row >= mItems.size())
+    if (row < 0 || row >= items.size())
         return;
 
     beginRemoveRows(index(row), row, row + 1);
-    mItems.erase(mItems.cbegin() + row);
+    items.erase(items.cbegin() + row);
     endRemoveRows();
 }
 
 PreferencesCategoryItem *PreferencesCategoryListModel::category(int row) const
 {
-    if (row < 0 || row >= mItems.size())
+    if (row < 0 || row >= items.size())
         return nullptr;
 
-    return mItems.at(row).get();
+    return items.at(row).get();
 }

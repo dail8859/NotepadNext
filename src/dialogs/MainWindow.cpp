@@ -723,14 +723,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
 
         pd->resize(700, 400);
-        pd->setGeometry(
-            QStyle::alignedRect(
-                Qt::LeftToRight,
-                Qt::AlignCenter,
-                pd->size(),
-                geometry()
-            )
-        );
+        pd->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, pd->size(), geometry()));
 
         pd->show();
         pd->raise();

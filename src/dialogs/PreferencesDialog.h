@@ -25,7 +25,7 @@ private slots:
 
 private:
     struct PreferencesDialogPrivate;
-    PreferencesDialogPrivate *p;
+    PreferencesDialogPrivate *d;
 };
 
 #endif // PREFERENCESDIALOG_H

@@ -13,7 +13,7 @@ public:
     virtual ~PreferencesCategoryListModel() = default;
 
     inline virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override {
-        return mItems.size();
+        return items.size();
     }
 
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -28,7 +28,7 @@ public:
     PreferencesCategoryItem *category(int row) const;
 
 private:
-    std::vector<std::unique_ptr<PreferencesCategoryItem>> mItems;
+    std::vector<std::unique_ptr<PreferencesCategoryItem>> items;
 };
 
 #endif // PREFERENCESCATEGORYLISTMODEL_H

@@ -5,13 +5,12 @@
 #include <QApplication>
 #include <QHBoxLayout>
 #include <QLineEdit>
-#include <QCompleter>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QLabel>
 #include <QEvent>
 
-#include <ApplicationSettings.h>
+#include "ApplicationSettings.h"
 
 #define PREFERENCES_BIND_PROPERTY(name, Name) \
     &ApplicationSettings::name, \
@@ -55,61 +54,39 @@ namespace Preferences
         }
     };
 
-    class RestartRequiredLabel : public QWidget
+    class NotificationLabel : public QWidget
     {
     public:
-        RestartRequiredLabel(QWidget *parent = nullptr)
+        NotificationLabel(const QString &text, QWidget *parent = nullptr)
             : QWidget(parent)
         {
             const auto iconSize = qApp->style()->pixelMetric(QStyle::PM_SmallIconSize);
 
             const auto icon = new QLabel;
-            icon->setPixmap(
-                qApp->style()->standardIcon(
-                    QStyle::SP_MessageBoxInformation
-                ).pixmap(iconSize, iconSize)
-            );
+            icon->setPixmap(qApp->style()->standardIcon(QStyle::SP_MessageBoxInformation).pixmap(iconSize, iconSize));
 
-            mLabel = new QLabel(QObject::tr("Application restart required to apply changes."));
-            mLabel->setWordWrap(true);
+            label = new QLabel(text);
+            label->setWordWrap(true);
 
-            auto infoFont = mLabel->font();
+            auto infoFont = label->font();
             infoFont.setPointSize(infoFont.pointSize() - 1);
             infoFont.setItalic(true);
-            mLabel->setFont(infoFont);
+            label->setFont(infoFont);
 
             const auto layout = new QHBoxLayout(this);
             layout->addWidget(icon, 0, Qt::AlignTop);
-            layout->addWidget(mLabel, 1);
+            layout->addWidget(label, 1);
             layout->setContentsMargins(9, 0, 3, 6);
             layout->setSpacing(SPACING_3);
         }
 
-        inline const QLabel *label() const {
-            return mLabel;
+        inline const QLabel *getLabel() const {
+            return label;
         }
 
     private:
-        QLabel *mLabel = nullptr;
+        QLabel *label = nullptr;
     };
-
-#if QT_CONFIG(completer)
-    inline QCompleter *FilesystemCompliter(QObject *parent,
-                                           Qt::CaseSensitivity caseSensivity = Qt::CaseInsensitive,
-                                           QCompleter::CompletionMode completionMode = QCompleter::InlineCompletion,
-                                           const QDir::Filters &filters = QDir::AllDirs | QDir::NoDotAndDotDot)
-    {
-        const auto fsModel = new QFileSystemModel(parent);
-        fsModel->setRootPath("");
-        fsModel->setFilter(filters);
-
-        const auto completer = new QCompleter(fsModel, parent);
-        completer->setCompletionMode(completionMode);
-        completer->setCaseSensitivity(caseSensivity);
-
-        return completer;
-    }
-#endif
 
     template<typename G, typename S, typename N>
     inline QCheckBox *CreateCheckBox(const QString &title,

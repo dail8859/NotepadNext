@@ -83,10 +83,10 @@ public: /* View */
     } category;
 
     struct {
-        QWidget     *widget = nullptr;
+        QWidget *widget = nullptr;
         QVBoxLayout *layout = nullptr;
 
-        QLabel      *title = nullptr;
+        QLabel *title = nullptr;
         QScrollArea *viewport = nullptr;
     } content;
 
@@ -95,60 +95,55 @@ public: /* View */
 
 PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *parent)
     : QDialog(parent, Qt::Tool),
-      p(new PreferencesDialogPrivate)
+      d(new PreferencesDialogPrivate)
 {
     setWindowTitle(tr("Preferences"));
 
-    p->settings.actual = settings;
-    p->settings.backup = p->createTemporarySettings(this);
+    d->settings.actual = settings;
+    d->settings.backup = d->createTemporarySettings(this);
 
     // Category
-    p->category.listView = new QListView;
-    p->category.listView->setFixedWidth(180);
+    d->category.listView = new QListView;
+    d->category.listView->setFixedWidth(180);
 
-    p->category.model = new ListModel(p->category.listView);
-    p->category.model->addCategory(new BehaviorCategoryItem);
-    p->category.model->addCategory(new AppearanceCategoryItem);
+    d->category.model = new ListModel(d->category.listView);
+    d->category.model->addCategory(new BehaviorCategoryItem);
+    d->category.model->addCategory(new AppearanceCategoryItem);
 
-    p->category.listView->setModel(p->category.model);
+    d->category.listView->setModel(d->category.model);
 
     // Content
-    p->content.title = new QLabel;
-    p->content.title->setFont(ContentTitleFont());
+    d->content.title = new QLabel;
+    d->content.title->setFont(ContentTitleFont());
 
-    p->content.viewport = new QScrollArea;
+    d->content.viewport = new QScrollArea;
 
-    p->content.widget = new QWidget;
-    p->content.widget->setSizePolicy(
-        QSizePolicy::Expanding,
-        QSizePolicy::Expanding
-    );
+    d->content.widget = new QWidget;
+    d->content.widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    p->content.layout = new QVBoxLayout(p->content.widget);
-    p->content.layout->setContentsMargins(0, 0, 0, 0);
-    p->content.layout->addWidget(p->content.title);
-    p->content.layout->addWidget(p->content.viewport);
+    d->content.layout = new QVBoxLayout(d->content.widget);
+    d->content.layout->setContentsMargins(0, 0, 0, 0);
+    d->content.layout->addWidget(d->content.title);
+    d->content.layout->addWidget(d->content.viewport);
 
     // Controls
-    p->controlsBox = new QDialogButtonBox(Qt::Horizontal);
-    p->controlsBox->setStandardButtons(
+    d->controlsBox = new QDialogButtonBox(Qt::Horizontal);
+    d->controlsBox->setStandardButtons(
         QDialogButtonBox::RestoreDefaults
         | QDialogButtonBox::Ok
         | QDialogButtonBox::Cancel
     );
 
     // Main assembly
-    p->mainLayout = new QGridLayout(this);
-    p->mainLayout->addWidget(p->category.listView, 0, 0, 2, 1);
-    p->mainLayout->addWidget(p->content.widget, 0, 1);
-    p->mainLayout->addWidget(p->controlsBox, 1, 1);
+    d->mainLayout = new QGridLayout(this);
+    d->mainLayout->addWidget(d->category.listView, 0, 0, 2, 1);
+    d->mainLayout->addWidget(d->content.widget, 0, 1);
+    d->mainLayout->addWidget(d->controlsBox, 1, 1);
 
-    connect(p->category.listView->selectionModel(), &QItemSelectionModel::currentRowChanged,
-            this,                                   &PreferencesDialog::onCategoryChanged);
+    connect(d->category.listView->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &PreferencesDialog::onCategoryChanged);
 
-    connect(p->controlsBox, &QDialogButtonBox::clicked,
-            this,           [this](QAbstractButton *button) {
-        switch (p->controlsBox->buttonRole(button))
+    connect(d->controlsBox, &QDialogButtonBox::clicked, this, [this](QAbstractButton *button) {
+        switch (d->controlsBox->buttonRole(button))
         {
             case QDialogButtonBox::ResetRole:  onResetClicked();  break;
             case QDialogButtonBox::AcceptRole: onOkClicked();     break;
@@ -159,24 +154,24 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
 
     // Force switch to first category
     QMetaObject::invokeMethod(this, [this](){
-        p->category.listView->setCurrentIndex(p->category.model->index(0));
+        d->category.listView->setCurrentIndex(d->category.model->index(0));
     }, Qt::QueuedConnection);
 }
 
 PreferencesDialog::~PreferencesDialog()
 {
-    delete p;
+    delete d;
 }
 
 void PreferencesDialog::showEvent(QShowEvent *event)
 {
-    p->makeSettingsBackup();
+    d->makeSettingsBackup();
     QDialog::showEvent(event);
 }
 
 void PreferencesDialog::closeEvent(QCloseEvent *event)
 {
-    if (isVisible() && p->hasUnsavedChanges())
+    if (isVisible() && d->hasUnsavedChanges())
     {
         const auto reply = QMessageBox::question(
             this,
@@ -194,10 +189,10 @@ void PreferencesDialog::closeEvent(QCloseEvent *event)
                 event->ignore();
                 return;
             case QMessageBox::Discard:
-                p->makeSettingsRestore();
+                d->makeSettingsRestore();
                 [[fallthrough]];
             case QMessageBox::Save:
-                p->settings.actual->sync();
+                d->settings.actual->sync();
                 break;
             default:
                 break;
@@ -211,20 +206,18 @@ void PreferencesDialog::onCategoryChanged(const QModelIndex &index)
 {
     if (!index.isValid()) return;
 
-    const auto item = p->category.model->category(index.row());
+    const auto item = d->category.model->category(index.row());
     if (!item) return;
 
-    p->content.title->setText(item->title());
-    p->content.viewport->setWidget(item->contentView(p->settings.actual));
-    p->content.viewport->widget()->setSizePolicy(
-        QSizePolicy::Expanding, QSizePolicy::Expanding
-    );
-    p->content.viewport->setWidgetResizable(true);
+    d->content.title->setText(item->title());
+    d->content.viewport->setWidget(item->contentView(d->settings.actual));
+    d->content.viewport->widget()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    d->content.viewport->setWidgetResizable(true);
 }
 
 void PreferencesDialog::onOkClicked()
 {
-    p->settings.actual->sync();
+    d->settings.actual->sync();
     accept();
 }
 
@@ -235,5 +228,5 @@ void PreferencesDialog::onCancelClicked()
 
 void PreferencesDialog::onResetClicked()
 {
-    p->makeSettingsReset();
+    d->makeSettingsReset();
 }

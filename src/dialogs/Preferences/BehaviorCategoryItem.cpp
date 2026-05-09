@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QFileDialog>
+#include <QCompleter>
 #include <QLineEdit>
 #include <QGroupBox>
 #include <QCheckBox>
@@ -22,6 +23,20 @@ namespace
 {
     const QLatin1StringView PathStyleValid("QLineEdit { border: 1px solid #2ecc71; }");
     const QLatin1StringView PathStyleInvalid("QLineEdit { border: 1px solid #e74c3c; }");
+
+#if QT_CONFIG(completer)
+    inline QCompleter *CreateDefaultFolderCompleter(QObject *parent)
+    {
+        const auto fsModel = new QFileSystemModel(parent);
+        fsModel->setFilter(QDir::AllDirs | QDir::NoDotAndDotDot);
+
+        const auto completer = new QCompleter(fsModel, parent);
+        completer->setCompletionMode(QCompleter::PopupCompletion);
+        completer->setCaseSensitivity(Qt::CaseInsensitive);
+
+        return completer;
+    }
+#endif
 
     inline QGroupBox *DefaultFolderView(ApplicationSettings *settings)
     {
@@ -44,13 +59,7 @@ namespace
         selectedPathEdit->setClearButtonEnabled(true);
         selectedPathEdit->setPlaceholderText(QObject::tr("Selected directory path here..."));
 #if QT_CONFIG(completer)
-        selectedPathEdit->setCompleter(
-            FilesystemCompliter(
-                selectedPathEdit,
-                Qt::CaseInsensitive,
-                QCompleter::PopupCompletion
-            )
-        );
+        selectedPathEdit->setCompleter(CreateDefaultFolderCompleter(selectedPathEdit));
 #endif
 
         const auto pathBrowseButton = new QPushButton;
@@ -83,8 +92,7 @@ namespace
                 selectedPathEdit->setText(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
         }
 
-        QObject::connect(selectedPathEdit, &QLineEdit::textChanged,
-                         settings,         [selectedPathEdit, settings](const QString &text) {
+        QObject::connect(selectedPathEdit, &QLineEdit::textChanged, settings, [selectedPathEdit, settings](const QString &text) {
             QFileInfo checkDir(text);
             QString toolTip;
             QString style;
@@ -121,8 +129,7 @@ namespace
             selectedPathEdit->setStyleSheet(style);
             selectedPathEdit->setToolTip(toolTip);
         });
-        QObject::connect(pathBrowseButton, &QPushButton::clicked,
-                         group,            [group, selectedPathEdit]() {
+        QObject::connect(pathBrowseButton, &QPushButton::clicked, group, [group, selectedPathEdit]() {
             const auto selected = QFileDialog::getExistingDirectory(
                 group,
                 QObject::tr("Select default directory"),
@@ -134,13 +141,11 @@ namespace
                 selectedPathEdit->setText(selected);
         });
 
-        QObject::connect(buttonGroup, &QButtonGroup::idClicked,
-                         settings,    [settings, setPathInputEnabled](int id) {
+        QObject::connect(buttonGroup, &QButtonGroup::idClicked, settings, [settings, setPathInputEnabled](int id) {
             setPathInputEnabled(id == BehaviourEnum::HardCoded);
             settings->setDefaultDirectoryBehavior((BehaviourEnum)id);
         });
-        QObject::connect(settings,    &ApplicationSettings::defaultDirectoryBehaviorChanged,
-                         buttonGroup, [buttonGroup, setPathInputEnabled](BehaviourEnum value) {
+        QObject::connect(settings, &ApplicationSettings::defaultDirectoryBehaviorChanged, buttonGroup, [buttonGroup, setPathInputEnabled](BehaviourEnum value) {
             const auto button = buttonGroup->button(value);
             const QSignalBlocker block(buttonGroup); // Prevent ss-loop
             if (button) button->click();
@@ -175,10 +180,8 @@ namespace
 
         group->setChecked(settings->restorePreviousSession());
 
-        QObject::connect(settings, &ApplicationSettings::restorePreviousSessionChanged,
-                         group,    &QGroupBox::setChecked);
-        QObject::connect(group,    &QGroupBox::toggled,
-                         settings, &ApplicationSettings::setRestorePreviousSession);
+        QObject::connect(settings, &ApplicationSettings::restorePreviousSessionChanged, group, &QGroupBox::setChecked);
+        QObject::connect(group, &QGroupBox::toggled, settings, &ApplicationSettings::setRestorePreviousSession);
 
         return group;
     }
@@ -188,7 +191,7 @@ namespace
         const auto app = qobject_cast<NotepadNextApplication*>(qApp);
 
         const auto languageCombo = new QComboBox;
-        languageCombo->addItem(QObject::tr("Like in system"), QStringLiteral(""));
+        languageCombo->addItem(QObject::tr("Like in system"), "");
         for (const auto &languageData : app->getTranslationManager()->availableTranslations())
         {
             QLocale locale(languageData);
@@ -199,7 +202,7 @@ namespace
         const auto wheelSuppressor = new WheelEventSuppressFilter(languageCombo);
         wheelSuppressor->setupFor(languageCombo);
 
-        const auto restartNotification = new RestartRequiredLabel;
+        const auto restartNotification = new NotificationLabel(QObject::tr("Application restart required to apply changes."));
 
         const auto layout = new QGridLayout;
         layout->addWidget(new QLabel(QObject::tr("Language:")), 0, 0);
@@ -216,12 +219,10 @@ namespace
 
         setComboByData(settings->translation());
 
-        QObject::connect(languageCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
-                         settings,      [settings, languageCombo](int index) {
+        QObject::connect(languageCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), settings, [settings, languageCombo](int index) {
             settings->setTranslation(languageCombo->itemData(index).toString());
         });
-        QObject::connect(settings,      &ApplicationSettings::translationChanged,
-                         languageCombo, setComboByData);
+        QObject::connect(settings, &ApplicationSettings::translationChanged, languageCombo, setComboByData);
 
         return layout;
     }
@@ -250,12 +251,10 @@ namespace
 
         setComboByData(settings->defaultEOLMode());
 
-        QObject::connect(eolCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
-                         settings, [settings, eolCombo](int index) {
+        QObject::connect(eolCombo, QOverload<int>::of(&QComboBox::currentIndexChanged), settings, [settings, eolCombo](int index) {
             settings->setDefaultEOLMode(eolCombo->itemData(index).toString());
         });
-        QObject::connect(settings, &ApplicationSettings::defaultEOLModeChanged,
-                         eolCombo, setComboByData);
+        QObject::connect(settings, &ApplicationSettings::defaultEOLModeChanged, eolCombo, setComboByData);
 
         return layout;
     }
