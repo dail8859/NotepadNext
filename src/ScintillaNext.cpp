@@ -456,7 +456,7 @@ bool ScintillaNext::rename(const QString &newFilePath)
     emit aboutToSave();
 
     // Write out the buffer to the new path
-    if (saveCopyAs(newFilePath)) {
+    if (saveCopyAs(newFilePath) == QFileDevice::NoError) {
         // Remove the old file
         const QString oldPath = fileInfo.canonicalFilePath();
         QFile::remove(oldPath);
