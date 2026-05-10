@@ -42,9 +42,14 @@ bool BookMarkDecorator::isBookmarkSet(int line) const
     return editor->markerGet(line) & (1 << MARK_BOOKMARK);
 }
 
-void BookMarkDecorator::addBookmark(int line)
+int BookMarkDecorator::addBookmark(int line)
 {
-    editor->markerAdd(line, MARK_BOOKMARK);
+    return editor->markerAdd(line, MARK_BOOKMARK);
+}
+
+void BookMarkDecorator::removeBookmarkHandle(int markerHandle)
+{
+    editor->markerDeleteHandle(markerHandle);
 }
 
 void BookMarkDecorator::removeBookmark(int line)

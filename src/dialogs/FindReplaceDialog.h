@@ -22,6 +22,8 @@
 
 #include <QDialog>
 #include <QEvent>
+#include <QHash>
+#include <QList>
 #include <QStatusBar>
 #include <QTabBar>
 
@@ -31,6 +33,7 @@
 
 class ScintillaNext;
 class MainWindow;
+class BookMarkDecorator;
 
 namespace Ui {
 class FindReplaceDialog;
@@ -44,8 +47,7 @@ public:
     enum {
         FIND_TAB = 0,
         REPLACE_TAB = 1,
-        FIND_IN_FILES_TAB = 2,
-        MARK_TAB = 3
+        MARK_TAB = 2
     };
 
     explicit FindReplaceDialog(ISearchResultsHandler *searchResults, MainWindow *window = nullptr);
@@ -77,6 +79,9 @@ public slots:
     void count();
     void replace();
     void replaceAll();
+    void markAll();
+    void clearAllMarks();
+    void copyMarkedText();
 
 private slots:
     void setEditor(ScintillaNext *edit);
@@ -99,12 +104,17 @@ private:
     int computeSearchFlags();
 
     void showMessage(const QString &message, const QString &color);
+    void ensureMarkIndicator();
+    BookMarkDecorator *bookMarkDecorator() const;
+    void clearMarkedBookmarks();
 
     void updateFindList(const QString &text);
     void updateReplaceList(const QString &text);
 
     bool isFirstTime = true;
     QPoint lastClosedPosition;
+    int markIndicator = -1;
+    QHash<ScintillaNext *, QList<int>> markedBookmarkHandles;
     Ui::FindReplaceDialog *ui;
 
     ScintillaNext *editor;

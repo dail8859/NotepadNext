@@ -30,7 +30,8 @@ public:
     explicit BookMarkDecorator(ScintillaNext *editor);
 
     bool isBookmarkSet(int line) const;
-    void addBookmark(int line);
+    int addBookmark(int line);
+    void removeBookmarkHandle(int markerHandle);
     void removeBookmark(int line);
     void toggleBookmark(int line);
 
