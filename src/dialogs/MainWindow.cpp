@@ -1139,72 +1139,28 @@ void MainWindow::openFileList(const QStringList &fileNames)
 
 bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
 {
-    QVector<ScintillaNext *> unsavedEditors;
-    for (ScintillaNext *editor : editors) {
-        if (!editor->isSavedToDisk()) {
-            unsavedEditors.append(editor);
-        }
+    QVector<ScintillaNext *> unsaved;
+    for (auto *e : editors) {
+        if (!e->isSavedToDisk()) unsaved.append(e);
     }
 
-    if (unsavedEditors.size() > 1) {
-        QMessageBox msgBox(this);
-        msgBox.setWindowTitle(tr("Save File"));
-        msgBox.setText(tr("%1 files have unsaved changes.").arg(unsavedEditors.size()));
-        msgBox.setIcon(QMessageBox::Question);
+    if (unsaved.isEmpty()) return true;
 
-        QPushButton *discardAllButton = msgBox.addButton(tr("Discard All"), QMessageBox::DestructiveRole);
-        QPushButton *saveAllButton = msgBox.addButton(tr("Save All"), QMessageBox::AcceptRole);
-        msgBox.addButton(QMessageBox::Cancel);
+    // Focus the user's attention on the first unsaved file
+    dockedEditor->switchToEditor(unsaved.first());
 
-        msgBox.setDefaultButton(saveAllButton);
-        msgBox.exec();
+    // Single point of interaction
+    UserSaveAction action = promptForSave(unsaved);
 
-        if (msgBox.clickedButton() == discardAllButton) {
+    switch (action) {
+        case UserSaveAction::DiscardAll:
             return true;
-        }
-
-        if (msgBox.clickedButton() == saveAllButton) {
-            for (ScintillaNext *editor : unsavedEditors) {
-                bool didFileGetSaved = saveFile(editor);
-
-                if (didFileGetSaved == false) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    if (unsavedEditors.size() == 1) {
-        ScintillaNext *editor = unsavedEditors.first();
-
-        // Switch to it
-        dockedEditor->switchToEditor(editor);
-
-        // Ask the user what to do
-        QString message = tr("Save file <b>%1</b>?").arg(editor->getName());
-        auto reply = QMessageBox::question(this, tr("Save File"), message, QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save);
-
-        if (reply == QMessageBox::Cancel) {
-            // Stop checking and let the caller know
+        case UserSaveAction::SaveAll:
+            return saveAllEditors(unsaved);
+        case UserSaveAction::Cancel:
+        default:
             return false;
-        }
-        else if (reply == QMessageBox::Save) {
-            bool didFileGetSaved = saveFile(editor);
-
-            // The user might have canceled the save file dialog so just stop now
-            if (didFileGetSaved == false) {
-                // Stop checking and let the caller know
-                return false;
-            }
-        }
     }
-
-    // Everything is fine
-    return true;
 }
 
 void MainWindow::openFileDialog()
@@ -1268,30 +1224,11 @@ void MainWindow::closeFile(ScintillaNext *editor)
         return;
     }
 
-    if(editor->isSavedToDisk()) {
-        editor->close();
+    if (!checkEditorsBeforeClose({editor})) {
+        return;
     }
-    else {
-        // The user needs be asked what to do about this file, so switch to it
-        dockedEditor->switchToEditor(editor);
 
-        QString message = tr("Save file <b>%1</b>?").arg(editor->getName());
-        auto reply = QMessageBox::question(this, tr("Save File"), message, QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save);
-
-        if (reply == QMessageBox::Cancel) {
-            return;
-        }
-
-        if (reply == QMessageBox::Save) {
-            bool didFileGetSaved = saveFile(editor);
-
-            // The user might have canceled the save file dialog so just stop now
-            if (didFileGetSaved == false)
-                return;
-        }
-
-        editor->close();
-    }
+    editor->close();
 
     // If the last document was closed, figure out what to do next
     if (editorCount() == 0) {
@@ -1466,11 +1403,20 @@ bool MainWindow::saveCopyAs(const QString &fileName)
     }
 }
 
-void MainWindow::saveAll()
+bool MainWindow::saveAll()
 {
-    for (ScintillaNext *editor : editors()) {
-        saveFile(editor);
+    return saveAllEditors(editors());
+}
+
+bool MainWindow::saveAllEditors(const QVector<ScintillaNext *> &editors)
+{
+    for (ScintillaNext *editor : editors) {
+        if (!saveFile(editor)){
+            return false;
+        }
     }
+
+    return true;
 }
 
 void MainWindow::exportAsFormat(Converter *converter, const QString &filter)
@@ -1972,6 +1918,31 @@ void MainWindow::showEditorZoomLevelIndicator()
 {
     // Not sure if Scintilla's zoom level matches up to an exact percentage, but visibly this is close
     FadingIndicator::showText(currentEditor(), tr("Zoom: %1%").arg(zoomLevel * 10 + 100));
+}
+
+MainWindow::UserSaveAction MainWindow::promptForSave(const QVector<ScintillaNext *> &editors)
+{
+    const int count = editors.count();
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle(tr("Save File"));
+    msgBox.setIcon(QMessageBox::Question);
+
+    // Using pluralization for the main text
+    QString text = (count == 1)
+                       ? tr("Save changes to <b>%1</b>?").arg(editors.first()->getName())
+                       : tr("There are %n files with unsaved changes. Save them?", "", count);
+    msgBox.setText(text);
+
+    auto *saveBtn = msgBox.addButton(count > 1 ? tr("Save All") : tr("Save"), QMessageBox::AcceptRole);
+    auto *discardBtn = msgBox.addButton(count > 1 ? tr("Discard All") : tr("Discard"), QMessageBox::DestructiveRole);
+    msgBox.addButton(QMessageBox::Cancel);
+
+    msgBox.setDefaultButton(saveBtn);
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == saveBtn)    return UserSaveAction::SaveAll;
+    if (msgBox.clickedButton() == discardBtn) return UserSaveAction::DiscardAll;
+    return UserSaveAction::Cancel;
 }
 
 void MainWindow::saveSettings() const
