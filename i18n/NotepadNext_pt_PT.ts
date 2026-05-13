@@ -2329,17 +2329,17 @@
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="40"/>
       <source>Create a new file</source>
-      <translation type="unfinished"/>
+      <translation>Criar um novo ficheiro</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="43"/>
       <source>Show opened files list</source>
-      <translation type="unfinished"/>
+      <translation>Mostrar lista de ficheiros abertos</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="49"/>
       <source>Close the current file</source>
-      <translation type="unfinished"/>
+      <translation>Fechar o ficheiro atual</translation>
     </message>
   </context>
 </TS>
