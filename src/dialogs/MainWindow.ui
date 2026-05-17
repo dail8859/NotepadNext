@@ -412,6 +412,8 @@
    <addaction name="actionPlayback"/>
    <addaction name="actionRunMacroMultipleTimes"/>
    <addaction name="actionSaveCurrentRecordedMacro"/>
+   <addaction name="actionFormatWithGemini"/>
+   <addaction name="actionGeminiApiSettings"/>
   </widget>
   <widget class="EditorInfoStatusBar" name="statusBar"/>
   <action name="actionNew">
@@ -976,6 +978,24 @@
    </property>
    <property name="text">
     <string>Save Current Recorded Macro...</string>
+   </property>
+  </action>
+  <action name="actionFormatWithGemini">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/NotepadNext.png</normaloff>:/icons/NotepadNext.png</iconset>
+   </property>
+   <property name="text">
+    <string>Format with Gemini</string>
+   </property>
+  </action>
+  <action name="actionGeminiApiSettings">
+   <property name="icon">
+    <iconset resource="../resources.qrc">
+     <normaloff>:/icons/cog.png</normaloff>:/icons/cog.png</iconset>
+   </property>
+   <property name="text">
+    <string>Gemini API</string>
    </property>
   </action>
   <action name="actionRunMacroMultipleTimes">

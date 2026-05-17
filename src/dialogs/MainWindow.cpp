@@ -27,6 +27,7 @@
 #include "UndoAction.h"
 #include "ui_MainWindow.h"
 
+#include <algorithm>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QStringList>
@@ -68,6 +69,9 @@
 #include "FileListDock.h"
 
 #include "FindReplaceDialog.h"
+#include "GeminiClient.h"
+#include "GeminiCredentialStore.h"
+#include "GeminiSettingsPopup.h"
 #include "MacroRunDialog.h"
 #include "MacroSaveDialog.h"
 #include "PreferencesDialog.h"
@@ -107,8 +111,13 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     qInfo("setupUi Completed");
 
     defaultDirectoryManager = new DefaultDirectoryManager(this, app->getSettings(), this);
+    geminiCredentialStore = new GeminiCredentialStore(app->getSettings(), this);
+    geminiClient = new GeminiClient(this);
+    geminiSettingsPopup = new GeminiSettingsPopup(app->getSettings(), geminiCredentialStore, this);
 
     connect(this, &MainWindow::aboutToClose, this, &MainWindow::saveSettings);
+    connect(geminiClient, &GeminiClient::formatSucceeded, this, &MainWindow::applyGeminiFormattedMarkdown);
+    connect(geminiClient, &GeminiClient::formatFailed, this, &MainWindow::handleGeminiFormatError);
 
     // Create and set up the connections to the docked editor
     dockedEditor = new DockedEditor(this);
@@ -142,6 +151,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionSaveCopyAs, &QAction::triggered, this, &MainWindow::saveCopyAsDialog);
     connect(ui->actionSaveAll, &QAction::triggered, this, &MainWindow::saveAll);
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
+    connect(ui->actionFormatWithGemini, &QAction::triggered, this, &MainWindow::formatCurrentDocumentWithGemini);
+    connect(ui->actionGeminiApiSettings, &QAction::triggered, this, &MainWindow::showGeminiSettingsPopup);
 
     connect(ui->actionExportHtml, &QAction::triggered, this, [=]() {
         HtmlConverter html(currentEditor());
@@ -957,6 +968,84 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::showGeminiSettingsPopup()
+{
+    geminiSettingsPopup->refreshStatus();
+
+    const QRect actionGeometry = ui->mainToolBar->actionGeometry(ui->actionGeminiApiSettings);
+    const QPoint popupPosition = ui->mainToolBar->mapToGlobal(actionGeometry.bottomLeft());
+
+    geminiSettingsPopup->move(popupPosition);
+    geminiSettingsPopup->show();
+}
+
+void MainWindow::formatCurrentDocumentWithGemini()
+{
+    ScintillaNext *editor = currentEditor();
+    if (!editor || !shouldFormatWithGemini(editor)) {
+        return;
+    }
+
+    int start = 0;
+    int end = editor->length();
+    if (!editor->selectionEmpty()) {
+        const int selection = editor->mainSelection();
+        start = editor->selectionNStart(selection);
+        end = editor->selectionNEnd(selection);
+    }
+
+    if (start > end) {
+        std::swap(start, end);
+    }
+
+    const QString text = QString::fromUtf8(editor->get_text_range(start, end));
+    if (text.trimmed().isEmpty()) {
+        QMessageBox::information(this, tr("Gemini Markdown Formatting"), tr("There is no text to format."));
+        return;
+    }
+
+    QString errorMessage;
+    const auto apiKey = geminiCredentialStore->loadApiKey(&errorMessage);
+    if (!apiKey) {
+        QMessageBox::warning(this, tr("Gemini API"), errorMessage.isEmpty() ? tr("Save a Gemini API key before formatting text.") : errorMessage);
+        showGeminiSettingsPopup();
+        return;
+    }
+
+    pendingGeminiEditor = editor;
+    pendingGeminiTargetStart = start;
+    pendingGeminiTargetEnd = end;
+
+    ui->actionFormatWithGemini->setEnabled(false);
+    geminiClient->formatMarkdown(text, geminiSettingsPopup->modelName(), *apiKey);
+}
+
+void MainWindow::applyGeminiFormattedMarkdown(const QString &markdown)
+{
+    ui->actionFormatWithGemini->setEnabled(true);
+
+    if (!pendingGeminiEditor) {
+        QMessageBox::warning(this, tr("Gemini Markdown Formatting"), tr("The document was closed before Gemini returned a response."));
+        return;
+    }
+
+    ScintillaNext *editor = pendingGeminiEditor;
+    const UndoAction undoAction(editor);
+
+    editor->setTargetRange(pendingGeminiTargetStart, pendingGeminiTargetEnd);
+    const QByteArray markdownBytes = markdown.toUtf8();
+    editor->replaceTarget(markdownBytes.length(), markdownBytes.constData());
+
+    pendingGeminiEditor = Q_NULLPTR;
+}
+
+void MainWindow::handleGeminiFormatError(const QString &errorMessage)
+{
+    ui->actionFormatWithGemini->setEnabled(true);
+    pendingGeminiEditor = Q_NULLPTR;
+    QMessageBox::warning(this, tr("Gemini Markdown Formatting"), tr("Gemini formatting failed: %1").arg(errorMessage));
 }
 
 void MainWindow::applyCustomShortcuts()
@@ -1991,6 +2080,8 @@ void MainWindow::restoreSettings()
 
     zoomLevel = settings->value("Editor/ZoomLevel", 0).toInt();
 
+    migrateToolbarSettingsForGemini();
+
     if (settings->contains("Gui/ToolBar")) {
         QStringList actionNames;
         actionNames = settings->value("Gui/ToolBar").toStringList();
@@ -1999,6 +2090,57 @@ void MainWindow::restoreSettings()
 
         ActionUtils::populateActionContainer(ui->mainToolBar, this, actionNames);
     }
+}
+
+void MainWindow::migrateToolbarSettingsForGemini()
+{
+    ApplicationSettings *settings = app->getSettings();
+
+    if (!settings->contains("Gui/ToolBar") || settings->value("Gui/GeminiToolBarMigrated", false).toBool()) {
+        return;
+    }
+
+    QStringList actionNames = settings->value("Gui/ToolBar").toStringList();
+    if (!actionNames.contains(QStringLiteral("FormatWithGemini")) || !actionNames.contains(QStringLiteral("GeminiApiSettings"))) {
+        const int macroSaveIndex = actionNames.indexOf(QStringLiteral("SaveCurrentRecordedMacro"));
+        const int insertIndex = macroSaveIndex == -1 ? actionNames.size() : macroSaveIndex + 1;
+
+        if (!actionNames.contains(QStringLiteral("GeminiApiSettings"))) {
+            actionNames.insert(insertIndex, QStringLiteral("GeminiApiSettings"));
+        }
+        if (!actionNames.contains(QStringLiteral("FormatWithGemini"))) {
+            actionNames.insert(insertIndex, QStringLiteral("FormatWithGemini"));
+        }
+    }
+
+    settings->setValue("Gui/ToolBar", actionNames);
+    settings->setValue("Gui/GeminiToolBarMigrated", true);
+}
+
+bool MainWindow::shouldFormatWithGemini(ScintillaNext *editor)
+{
+    const QString languageName = editor->languageName;
+    const QString suffix = editor->isFile() ? editor->getFileInfo().suffix().toLower() : QString();
+    const bool safeTextDocument = languageName == QStringLiteral("Markdown")
+            || languageName == QStringLiteral("Text")
+            || suffix.isEmpty()
+            || suffix == QStringLiteral("md")
+            || suffix == QStringLiteral("markdown")
+            || suffix == QStringLiteral("txt");
+
+    if (safeTextDocument) {
+        return true;
+    }
+
+    const auto reply = QMessageBox::warning(
+        this,
+        tr("Gemini Markdown Formatting"),
+        tr("This document is detected as %1. Formatting it with Gemini may replace code or structured content with Markdown. Continue?")
+            .arg(languageName.isEmpty() ? tr("an unknown file type") : languageName),
+        QMessageBox::Yes | QMessageBox::No,
+        QMessageBox::No);
+
+    return reply == QMessageBox::Yes;
 }
 
 ISearchResultsHandler *MainWindow::determineSearchResultsHandler()

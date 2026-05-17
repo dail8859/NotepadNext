@@ -17,6 +17,9 @@ qt_add_executable(NotepadNext
 	FileDialogHelpers.h
 	Finder.h
 	FocusWatcher.h
+	GeminiClient.h
+	GeminiCredentialStore.h
+	GeminiSettingsPopup.h
 	HtmlConverter.h
 	IFaceTable.h
 	IFaceTableMixer.h
@@ -64,6 +67,9 @@ qt_add_executable(NotepadNext
 	EditorPrintPreviewRenderer.cpp
 	FileDialogHelpers.cpp
 	Finder.cpp
+	GeminiClient.cpp
+	GeminiCredentialStore.cpp
+	GeminiSettingsPopup.cpp
 	HtmlConverter.cpp
 	IFaceTable.cpp
 	IFaceTableMixer.cpp
@@ -239,6 +245,15 @@ target_link_libraries(NotepadNext
         scintilla
         uchardet
 )
+
+if(WIN32)
+    target_link_libraries(NotepadNext PRIVATE Crypt32)
+elseif(APPLE)
+    target_link_libraries(NotepadNext PRIVATE "-framework Security")
+elseif(UNIX)
+    find_package(Qt6 REQUIRED COMPONENTS DBus)
+    target_link_libraries(NotepadNext PRIVATE Qt6::DBus)
+endif()
 
 target_compile_definitions(NotepadNext
     PRIVATE

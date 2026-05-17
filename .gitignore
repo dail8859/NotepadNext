@@ -53,6 +53,8 @@ __cmake_systeminformation
 
 /build
 /build*
+/build-*/
+/build-mingw/
 /icon/*.png
 /icon/ImageMagick
 
@@ -65,6 +67,11 @@ __cmake_systeminformation
 ._*
 
 .cpm-cache/
+aqtinstall.log
+
+# Local AI/research archives
+issue_reports/
+project_context/
 
 # ninja
 .ninja_deps

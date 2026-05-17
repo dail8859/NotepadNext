@@ -23,6 +23,7 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QActionGroup>
+#include <QPointer>
 
 #include "DockedEditor.h"
 
@@ -43,6 +44,9 @@ class ZoomEventWatcher;
 class Converter;
 class DefaultDirectoryManager;
 class TabsQuickActionsBar;
+class GeminiClient;
+class GeminiCredentialStore;
+class GeminiSettingsPopup;
 
 class MainWindow : public QMainWindow
 {
@@ -124,6 +128,7 @@ public slots:
     void addEditor(ScintillaNext *editor);
 
     void checkForUpdates(bool silent = false);
+    void formatCurrentDocumentWithGemini();
 
     void restoreWindowState();
 
@@ -144,6 +149,8 @@ private slots:
     void languageMenuTriggered();
     void checkForUpdatesFinished(QString url);
     void activateEditor(ScintillaNext *editor);
+    void applyGeminiFormattedMarkdown(const QString &markdown);
+    void handleGeminiFormatError(const QString &errorMessage);
 
 private:
     Ui::MainWindow *ui = Q_NULLPTR;
@@ -167,6 +174,9 @@ private:
 
     void saveSettings() const;
     void restoreSettings();
+    void migrateToolbarSettingsForGemini();
+    void showGeminiSettingsPopup();
+    bool shouldFormatWithGemini(ScintillaNext *editor);
 
     ISearchResultsHandler *determineSearchResultsHandler();
 
@@ -183,6 +193,14 @@ private:
     int zoomLevel = 0;
     int contextMenuPos = 0;
     QMenu *buildMenu(QStringList actionNames);
+
+    GeminiCredentialStore *geminiCredentialStore = Q_NULLPTR;
+    GeminiClient *geminiClient = Q_NULLPTR;
+    GeminiSettingsPopup *geminiSettingsPopup = Q_NULLPTR;
+
+    QPointer<ScintillaNext> pendingGeminiEditor;
+    int pendingGeminiTargetStart = 0;
+    int pendingGeminiTargetEnd = 0;
 };
 
 #endif // MAINWINDOW_H
