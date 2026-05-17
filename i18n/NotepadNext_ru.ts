@@ -740,7 +740,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1465"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1450"/>
       <source>Export As</source>
       <translation>Экспортировать как</translation>
     </message>
@@ -896,6 +896,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="459"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1962"/>
       <source>Save</source>
       <translation>Сохранить</translation>
     </message>
@@ -1914,171 +1915,189 @@
       <translation>&lt;b&gt;%1&lt;/b&gt; не существует. Хотите создать его?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1174"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1265"/>
-      <source>Save file &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation>Сохранить файл &lt;b&gt;%1&lt;/b&gt;?</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1175"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1266"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1953"/>
       <source>Save File</source>
       <translation>Сохранить файл</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1216"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1211"/>
       <source>Open Folder as Workspace</source>
       <translation>Открыть папку как Проект</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1239"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1911"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1234"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1896"/>
       <source>Reload File</source>
       <translation>Перезагрузить файл</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1239"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1234"/>
       <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
       <translation>Уверены, что хотите перезагрузить &lt;b&gt;%1&lt;/b&gt;? Все несохранённые изменения будут потеряны.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1430"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1406"/>
       <source>Save a Copy As</source>
       <translation>Сохранить копию как</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1506"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1523"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1491"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1508"/>
       <source>Rename</source>
       <translation>Переименовать</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1523"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1508"/>
       <source>Name:</source>
       <translation>Имя:</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1543"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1528"/>
       <source>Delete File</source>
       <translation>Удалить файл</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1543"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1528"/>
       <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
       <translation>Уверены, что хотите переместить &lt;b&gt;%1&lt;/b&gt; в корзину?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1553"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1538"/>
       <source>Error Deleting File</source>
       <translation>Ошибка при удалении файла</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1553"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1538"/>
       <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation>Что-то пошло не так при удалении &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1650"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1635"/>
       <source>Administrator</source>
       <translation>Администратор</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1911"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1896"/>
       <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt; был изменён другой программой. Хотите перезагрузить его?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1937"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1922"/>
       <source>Read error</source>
       <translation>Ошибка чтения</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1938"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1923"/>
       <source>Write error</source>
       <translation>Ошибка записи</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1939"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1924"/>
       <source>Fatal error</source>
       <translation>Фатальная ошибка</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1940"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1925"/>
       <source>Resource error</source>
       <translation>Ошибка ресурса</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1941"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1926"/>
       <source>Open error</source>
       <translation>Ошибка открытия</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1942"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1927"/>
       <source>Abort error</source>
       <translation>Ошибка прерывания</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1943"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1928"/>
       <source>Timeout error</source>
       <translation>Ошибка тайм-аута</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1944"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1929"/>
       <source>Unspecified error</source>
       <translation>Неопределённая ошибка</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1945"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1930"/>
       <source>Remove error</source>
       <translation>Ошибка удаления</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1946"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1931"/>
       <source>Rename error</source>
       <translation>Ошибка переименования</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1947"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1932"/>
       <source>Position error</source>
       <translation>Ошибка позиции</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1948"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1933"/>
       <source>Resize error</source>
       <translation>Ошибка изменения размера</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1949"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1934"/>
       <source>Permissions error</source>
       <translation>Ошибка прав доступа</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1950"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1935"/>
       <source>Copy error</source>
       <translation>Ошибка копирования</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1951"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1936"/>
       <source>Unknown error (%1)</source>
       <translation>Неизвестная ошибка (%1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1954"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1939"/>
       <source>Error Saving File</source>
       <translation>Ошибка при сохранении файла</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1955"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1940"/>
       <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
       <translation>Произошла ошибка при сохранении &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Ошибка: %2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1961"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1946"/>
       <source>Zoom: %1%</source>
       <translation>Масштаб: %1%</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2128"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1958"/>
+      <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
+      <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+      <location filename="../src/dialogs/MainWindow.cpp" line="1959"/>
+      <source>There are %n files with unsaved changes. Save them?</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1962"/>
+      <source>Save All</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1963"/>
+      <source>Discard All</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1963"/>
+      <source>Discard</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2138"/>
       <source>No updates are available at this time.</source>
       <translation>В настоящее время обновлений нет.</translation>
     </message>
