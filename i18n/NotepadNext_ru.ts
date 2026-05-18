@@ -2074,27 +2074,32 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1958"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation type="unfinished"/>
+      <translation>Сохранить изменения в &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/MainWindow.cpp" line="1959"/>
       <source>There are %n files with unsaved changes. Save them?</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Есть %n файл с несохранёнными изменениями. Сохранить?</numerusform>
+        <numerusform>Есть %n файла с несохранёнными изменениями. Сохранить?</numerusform>
+        <numerusform>Есть %n файлов с несохранёнными изменениями. Сохранить?</numerusform>
+        <numerusform>Есть %n файлов с несохранёнными изменениями. Сохранить?</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1962"/>
       <source>Save All</source>
-      <translation type="unfinished"/>
+      <translation>Сохранить все</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1963"/>
       <source>Discard All</source>
-      <translation type="unfinished"/>
+      <translation>Отклонить все</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1963"/>
       <source>Discard</source>
-      <translation type="unfinished"/>
+      <translation>Отклонить</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2138"/>
