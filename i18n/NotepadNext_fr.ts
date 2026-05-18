@@ -2070,27 +2070,30 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1958"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation type="unfinished"/>
+      <translation>Enregistrer les modifications de &lt;b&gt;%1&lt;/b&gt; ?</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/MainWindow.cpp" line="1959"/>
       <source>There are %n files with unsaved changes. Save them?</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Il y a %n fichier avec des modifications non enregistrées. L'enregistrer ?</numerusform>
+        <numerusform>Il y a %n fichiers avec des modifications non enregistrées. Les enregistrer ?</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1962"/>
       <source>Save All</source>
-      <translation type="unfinished"/>
+      <translation>Tout enregistrer</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1963"/>
       <source>Discard All</source>
-      <translation type="unfinished"/>
+      <translation>Tout abandonner</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1963"/>
       <source>Discard</source>
-      <translation type="unfinished"/>
+      <translation>Abandonner</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2138"/>
@@ -2348,17 +2351,17 @@
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="40"/>
       <source>Create a new file</source>
-      <translation type="unfinished"/>
+      <translation>Créer un nouveau fichier</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="43"/>
       <source>Show opened files list</source>
-      <translation type="unfinished"/>
+      <translation>Afficher la liste des fichiers ouverts</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="49"/>
       <source>Close the current file</source>
-      <translation type="unfinished"/>
+      <translation>Fermer le fichier actuel</translation>
     </message>
   </context>
 </TS>
