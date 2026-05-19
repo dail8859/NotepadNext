@@ -1284,7 +1284,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="914"/>
       <source>Shift+F3</source>
-      <translation type="unfinished"/>
+      <translation>Mayús + F3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="924"/>
@@ -1843,37 +1843,37 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1501"/>
       <source>Sort Lines Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Ordenar renglones ascendentemente</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1506"/>
       <source>Sort Lines Descending</source>
-      <translation type="unfinished"/>
+      <translation>Ordenar renglones descendente</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1511"/>
       <source>Sort Lines Ascending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>Ordenar líneas ascendentes (mayúsculas y minúsculas)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1516"/>
       <source>Sort Lines Descending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>Ordenar líneas descendentes (mayúsculas y minúsculas)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1521"/>
       <source>Sort Lines by Length Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Ordenar líneas por longitud ascendente</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1526"/>
       <source>Sort Lines by Length Descending</source>
-      <translation type="unfinished"/>
+      <translation>Ordenar líneas por longitud descendente</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1531"/>
       <source>Reverse Line Order</source>
-      <translation type="unfinished"/>
+      <translation>Invertir orden de línea</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="412"/>
@@ -2070,27 +2070,30 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1958"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation type="unfinished"/>
+      <translation>¿Guardar cambios en &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/MainWindow.cpp" line="1959"/>
       <source>There are %n files with unsaved changes. Save them?</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Hay archivos %n con cambios sin guardar. ¿Desea guardarlos?</numerusform>
+        <numerusform>Hay archivos %n con cambios sin guardar. ¿Desea guardarlos?</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1962"/>
       <source>Save All</source>
-      <translation type="unfinished"/>
+      <translation>Guardar Todo</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1963"/>
       <source>Discard All</source>
-      <translation type="unfinished"/>
+      <translation>Descartar Todo</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1963"/>
       <source>Discard</source>
-      <translation type="unfinished"/>
+      <translation>Descartar</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2138"/>
@@ -2348,17 +2351,17 @@
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="40"/>
       <source>Create a new file</source>
-      <translation type="unfinished"/>
+      <translation>Crear un nuevo archivo</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="43"/>
       <source>Show opened files list</source>
-      <translation type="unfinished"/>
+      <translation>Mostrar lista de archivos abiertos</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="49"/>
       <source>Close the current file</source>
-      <translation type="unfinished"/>
+      <translation>Cerrar el archivo actual</translation>
     </message>
   </context>
 </TS>
