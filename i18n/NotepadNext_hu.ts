@@ -2202,7 +2202,7 @@
     <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="220"/>
         <source>Follow Current Document</source>
-        <translation>Az aktuális dokumentum mappájának követése</translation>
+        <translation>Az aktuális mappa</translation>
     </message>
     <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="227"/>
