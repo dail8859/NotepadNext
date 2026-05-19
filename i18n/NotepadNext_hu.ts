@@ -242,7 +242,7 @@
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="97"/>
         <source>Fold Information</source>
-        <translation>Összehajtás információk</translation>
+        <translation>Összecsukás információk</translation>
     </message>
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="100"/>
@@ -257,12 +257,12 @@
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="102"/>
         <source>Fold Level</source>
-        <translation>Összehajtási szint</translation>
+        <translation>Összecsukási szint</translation>
     </message>
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="103"/>
         <source>Is Fold Header</source>
-        <translation>Összehajtási fejléc</translation>
+        <translation>Összecsukási fejléc</translation>
     </message>
     <message>
         <location filename="../src/docks/EditorInspectorDock.cpp" line="104"/>
@@ -823,7 +823,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="275"/>
         <source>Fold Level</source>
-        <translation>Összehajtási szint</translation>
+        <translation>Összecsukási szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="289"/>
@@ -999,7 +999,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="578"/>
         <source>Save &amp;As...</source>
-        <translation>Mentés &amp;más névvel...</translation>
+        <translation>Mentés &amp;más néven...</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="581"/>
@@ -1009,7 +1009,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="586"/>
         <source>Save a Copy As...</source>
-        <translation>Másolat mentése más névvel...</translation>
+        <translation>Másolat mentése más néven...</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="595"/>
@@ -1566,7 +1566,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1241"/>
         <source>Fold Level 1</source>
-        <translation>Összehajtás: 1. szint</translation>
+        <translation>Összecsukás: 1. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1244"/>
@@ -1576,7 +1576,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1249"/>
         <source>Fold Level 2</source>
-        <translation>Összehajtás: 2. szint</translation>
+        <translation>Összecsukás: 2. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1252"/>
@@ -1586,7 +1586,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1257"/>
         <source>Fold Level 3</source>
-        <translation>Összehajtás: 3. szint</translation>
+        <translation>Összecsukás: 3. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1260"/>
@@ -1596,7 +1596,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1265"/>
         <source>Fold Level 4</source>
-        <translation>Összehajtás: 4. szint</translation>
+        <translation>Összecsukás: 4. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1268"/>
@@ -1666,7 +1666,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1321"/>
         <source>Fold Level 5</source>
-        <translation>Összehajtás: 5. szint</translation>
+        <translation>Összecsukás: 5. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1324"/>
@@ -1676,7 +1676,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1329"/>
         <source>Fold Level 6</source>
-        <translation>Összehajtás: 6. szint</translation>
+        <translation>Összecsukás: 6. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1332"/>
@@ -1686,7 +1686,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1337"/>
         <source>Fold Level 7</source>
-        <translation>Összehajtás: 7. szint</translation>
+        <translation>Összecsukás: 7. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1340"/>
@@ -1696,7 +1696,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1345"/>
         <source>Fold Level 8</source>
-        <translation>Összehajtás: 8. szint</translation>
+        <translation>Összecsukás: 8. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1348"/>
@@ -1706,7 +1706,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1353"/>
         <source>Fold Level 9</source>
-        <translation>Összehajtás: 9. szint</translation>
+        <translation>Összecsukás: 9. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1356"/>
@@ -1934,7 +1934,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="1406"/>
         <source>Save a Copy As</source>
-        <translation>Másolat mentése más névvel</translation>
+        <translation>Másolat mentése más néven</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.cpp" line="1491"/>
