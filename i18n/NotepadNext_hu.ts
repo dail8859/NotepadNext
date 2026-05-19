@@ -415,7 +415,7 @@
     <message>
         <location filename="../src/dialogs/FindReplaceDialog.ui" line="445"/>
         <source>Backward direction</source>
-        <translation>Visszafelé irány</translation>
+        <translation>Visszafelé</translation>
     </message>
     <message>
         <location filename="../src/dialogs/FindReplaceDialog.ui" line="452"/>
@@ -565,7 +565,7 @@
     <message>
         <location filename="../src/dialogs/MacroEditorDialog.ui" line="14"/>
         <source>Macro Editor</source>
-        <translation>Makrószerkeztő</translation>
+        <translation>Makrószerkesztő</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MacroEditorDialog.ui" line="48"/>
@@ -828,7 +828,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="289"/>
         <source>Unfold Level</source>
-        <translation>Kihajtási szint</translation>
+        <translation>Kibontási szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="315"/>
@@ -1229,7 +1229,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="862"/>
         <source>Word Wrap</source>
-        <translation>Szótörés</translation>
+        <translation>Sortörés</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="867"/>
@@ -1606,7 +1606,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1273"/>
         <source>Unfold Level 1</source>
-        <translation>Kihajtás: 1. szint</translation>
+        <translation>Kibontás: 1. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1276"/>
@@ -1616,7 +1616,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1281"/>
         <source>Unfold Level 2</source>
-        <translation>Kihajtás: 2. szint</translation>
+        <translation>Kibontás: 2. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1284"/>
@@ -1626,7 +1626,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1289"/>
         <source>Unfold Level 3</source>
-        <translation>Kihajtás: 3. szint</translation>
+        <translation>Kibontás: 3. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1292"/>
@@ -1636,7 +1636,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1297"/>
         <source>Unfold Level 4</source>
-        <translation>Kihajtás: 4. szint</translation>
+        <translation>Kibontás: 4. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1300"/>
@@ -1656,7 +1656,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1313"/>
         <source>Unfold All</source>
-        <translation>Összes kihajtása</translation>
+        <translation>Összes kibontása</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1316"/>
@@ -1716,7 +1716,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1361"/>
         <source>Unfold Level 5</source>
-        <translation>Kihajtás: 5. szint</translation>
+        <translation>Kibontás: 5. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1364"/>
@@ -1726,7 +1726,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1369"/>
         <source>Unfold Level 6</source>
-        <translation>Kihajtás: 6. szint</translation>
+        <translation>Kibontás: 6. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1372"/>
@@ -1736,7 +1736,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1377"/>
         <source>Unfold Level 7</source>
-        <translation>Kihajtás: 7. szint</translation>
+        <translation>Kibontás: 7. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1380"/>
@@ -1746,7 +1746,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1385"/>
         <source>Unfold Level 8</source>
-        <translation>Kihajtás: 8. szint</translation>
+        <translation>Kibontás: 8. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1388"/>
@@ -1756,7 +1756,7 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1393"/>
         <source>Unfold Level 9</source>
-        <translation>Kihajtás: 9. szint</translation>
+        <translation>Kibontás: 9. szint</translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1396"/>
