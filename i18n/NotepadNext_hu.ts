@@ -2151,7 +2151,7 @@
     <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="114"/>
         <source>Translation:</source>
-        <translation>Fordítás:</translation>
+        <translation>Felület nyelve:</translation>
     </message>
     <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="123"/>
