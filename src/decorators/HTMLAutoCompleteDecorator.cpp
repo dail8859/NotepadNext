@@ -29,7 +29,7 @@ static const QByteArrayList voidTags = { "area", "base", "br", "col", "embed", "
 HTMLAutoCompleteDecorator::HTMLAutoCompleteDecorator(ScintillaNext *editor)
     : EditorDecorator(editor)
 {
-    connect(editor, &ScintillaNext::lexerChanged, this, [=]() {
+    connect(editor, &ScintillaNext::lexerChanged, this, [this, editor]() {
         QString language = editor->languageName;
         setEnabled(language == "HTML");
     });

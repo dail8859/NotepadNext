@@ -121,7 +121,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     // Create and set up the connections to the docked editor
     dockedEditor = new DockedEditor(this);
-    connect(dockedEditor, &DockedEditor::editorCloseRequested, this, [=](ScintillaNext *editor) { closeFile(editor); });
+    connect(dockedEditor, &DockedEditor::editorCloseRequested, this, [this](ScintillaNext *editor) { closeFile(editor); });
     connect(dockedEditor, &DockedEditor::editorActivated, this, &MainWindow::activateEditor);
     connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
     connect(dockedEditor, &DockedEditor::titleBarDoubleClicked, this, &MainWindow::newFile);
@@ -154,45 +154,45 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionFormatWithGemini, &QAction::triggered, this, &MainWindow::formatCurrentDocumentWithGemini);
     connect(ui->actionGeminiApiSettings, &QAction::triggered, this, &MainWindow::showGeminiSettingsPopup);
 
-    connect(ui->actionExportHtml, &QAction::triggered, this, [=]() {
+    connect(ui->actionExportHtml, &QAction::triggered, this, [this]() {
         HtmlConverter html(currentEditor());
         exportAsFormat(&html, QStringLiteral("HTML files (*.html)"));
     });
 
-    connect(ui->actionExportRtf, &QAction::triggered, this, [=]() {
+    connect(ui->actionExportRtf, &QAction::triggered, this, [this]() {
         RtfConverter rtf(currentEditor());
         exportAsFormat(&rtf, QStringLiteral("RTF Files (*.rtf)"));
     });
 
     connect(ui->actionPrint, &QAction::triggered, this, &MainWindow::print);
 
-    connect(ui->actionToggleSingleLineComment, &QAction::triggered, this, [=]() { currentEditor()->toggleCommentSelection(); });
-    connect(ui->actionSingleLineComment, &QAction::triggered, this, [=]() { currentEditor()->commentLineSelection(); });
-    connect(ui->actionSingleLineUncomment, &QAction::triggered, this, [=]() { currentEditor()->uncommentLineSelection(); });
+    connect(ui->actionToggleSingleLineComment, &QAction::triggered, this, [this]() { currentEditor()->toggleCommentSelection(); });
+    connect(ui->actionSingleLineComment, &QAction::triggered, this, [this]() { currentEditor()->commentLineSelection(); });
+    connect(ui->actionSingleLineUncomment, &QAction::triggered, this, [this]() { currentEditor()->uncommentLineSelection(); });
 
-    connect(ui->actionBase64Encode,&QAction::triggered, this, [=]() {
+    connect(ui->actionBase64Encode,&QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         const QByteArray selection = currentEditor()->getSelText();
         editor->replaceSel(selection.toBase64().constData());
     });
-    connect(ui->actionURLEncode,&QAction::triggered, this, [=]() {
+    connect(ui->actionURLEncode,&QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         const QByteArray selection = currentEditor()->getSelText();
         editor->replaceSel(selection.toPercentEncoding().constData());
     });
-    connect(ui->actionBase64Decode,&QAction::triggered, this, [=]() {
+    connect(ui->actionBase64Decode,&QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         const QByteArray selection = editor->getSelText();
         if (auto result = QByteArray::fromBase64Encoding(selection)) {
             editor->replaceSel((*result).constData());
         }
     });
-    connect(ui->actionURLDecode,&QAction::triggered, this, [=]() {
+    connect(ui->actionURLDecode,&QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         const QByteArray selection = editor->getSelText();
         editor->replaceSel(QByteArray::fromPercentEncoding(selection).constData());
     });
-    connect(ui->actionCopyURL, &QAction::triggered, this, [=]() {
+    connect(ui->actionCopyURL, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         URLFinder *urlFinder = editor->findChild<URLFinder *>(QString(), Qt::FindDirectChildrenOnly);
         if (urlFinder && urlFinder->isEnabled()) {
@@ -205,7 +205,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionMoveToTrash, &QAction::triggered, this, &MainWindow::moveCurrentFileToTrash);
 
     RecentFilesListMenuBuilder *recentFileListMenuBuilder = new RecentFilesListMenuBuilder(app->getRecentFilesListManager());
-    connect(ui->menuRecentFiles, &QMenu::aboutToShow, this, [=]() {
+    connect(ui->menuRecentFiles, &QMenu::aboutToShow, this, [this, recentFileListMenuBuilder]() {
         // NOTE: its unfortunate that this has to be hard coded, but there's no way
         // to easily determine what should or shouldn't be there
         while (ui->menuRecentFiles->actions().size() > 4) {
@@ -215,13 +215,13 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         recentFileListMenuBuilder->populateMenu(ui->menuRecentFiles);
     });
 
-    connect(ui->actionRestoreRecentlyClosedFile, &QAction::triggered, this, [=]() {
+    connect(ui->actionRestoreRecentlyClosedFile, &QAction::triggered, this, [this, app]() {
         if (app->getRecentFilesListManager()->count() > 0) {
             openFileList(QStringList() << app->getRecentFilesListManager()->mostRecentFile());
         }
     });
 
-    connect(ui->actionOpenAllRecentFiles, &QAction::triggered, this, [=]() {
+    connect(ui->actionOpenAllRecentFiles, &QAction::triggered, this, [this, app]() {
         openFileList(app->getRecentFilesListManager()->fileList());
     });
 
@@ -232,25 +232,25 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     eolActionGroup->addAction(ui->actionUnix);
     eolActionGroup->addAction(ui->actionMacintosh);
 
-    connect(ui->actionWindows, &QAction::triggered, this, [=]() { convertEOLs(SC_EOL_CRLF); });
-    connect(ui->actionUnix, &QAction::triggered, this, [=]() { convertEOLs(SC_EOL_LF); });
-    connect(ui->actionMacintosh, &QAction::triggered, this, [=]() { convertEOLs(SC_EOL_CR); });
+    connect(ui->actionWindows, &QAction::triggered, this, [this]() { convertEOLs(SC_EOL_CRLF); });
+    connect(ui->actionUnix, &QAction::triggered, this, [this]() { convertEOLs(SC_EOL_LF); });
+    connect(ui->actionMacintosh, &QAction::triggered, this, [this]() { convertEOLs(SC_EOL_CR); });
 
-    connect(ui->actionUpperCase, &QAction::triggered, this, [=]() { currentEditor()->upperCase(); });
-    connect(ui->actionLowerCase, &QAction::triggered, this, [=]() { currentEditor()->lowerCase(); });
+    connect(ui->actionUpperCase, &QAction::triggered, this, [this]() { currentEditor()->upperCase(); });
+    connect(ui->actionLowerCase, &QAction::triggered, this, [this]() { currentEditor()->lowerCase(); });
 
-    connect(ui->actionDuplicateCurrentLine, &QAction::triggered, this, [=]() { currentEditor()->lineDuplicate(); });
-    connect(ui->actionMoveSelectedLinesUp, &QAction::triggered, this, [=]() { currentEditor()->moveSelectedLinesUp(); });
-    connect(ui->actionMoveSelectedLinesDown, &QAction::triggered, this, [=]() { currentEditor()->moveSelectedLinesDown(); });
-    connect(ui->actionSplitLines, &QAction::triggered, this, [=]() {
+    connect(ui->actionDuplicateCurrentLine, &QAction::triggered, this, [this]() { currentEditor()->lineDuplicate(); });
+    connect(ui->actionMoveSelectedLinesUp, &QAction::triggered, this, [this]() { currentEditor()->moveSelectedLinesUp(); });
+    connect(ui->actionMoveSelectedLinesDown, &QAction::triggered, this, [this]() { currentEditor()->moveSelectedLinesDown(); });
+    connect(ui->actionSplitLines, &QAction::triggered, this, [this]() {
         currentEditor()->targetFromSelection();
         currentEditor()->linesSplit(0);
     });
-    connect(ui->actionJoinLines, &QAction::triggered, this, [=]()  {
+    connect(ui->actionJoinLines, &QAction::triggered, this, [this]()  {
         currentEditor()->targetFromSelection();
         currentEditor()->linesJoin();
     });
-    connect(ui->actionRemoveEmptyLines, &QAction::triggered, this, [=]() {
+    connect(ui->actionRemoveEmptyLines, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         Finder f(editor);
         const UndoAction ua(editor);
@@ -265,42 +265,42 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         // Regex will also not delete the final blank line
         editor->deleteTrailingEmptyLines();
     });
-    connect(ui->actionRemoveDuplicateLines, &QAction::triggered, this, [=]() {
+    connect(ui->actionRemoveDuplicateLines, &QAction::triggered, this, [this]() {
         currentEditor()->removeDuplicateLines();
     });
-    connect(ui->actionRemoveConsecutiveDuplicateLines, &QAction::triggered, this, [=]() {
+    connect(ui->actionRemoveConsecutiveDuplicateLines, &QAction::triggered, this, [this]() {
         currentEditor()->removeConsecutiveDuplicateLines();
     });
-    connect(ui->actionReverseLineOrder, &QAction::triggered, this, [=, this]() {
+    connect(ui->actionReverseLineOrder, &QAction::triggered, this, [this]() {
         ScintillaSorter scintillaSorter(currentEditor());
         scintillaSorter.sort(ReverseSorter(Sorter::Direction::Ascending));
     });
-    connect(ui->actionSortLinesAsc, &QAction::triggered, this, [=, this]() {
+    connect(ui->actionSortLinesAsc, &QAction::triggered, this, [this]() {
         ScintillaSorter scintillaSorter(currentEditor());
         scintillaSorter.sort(CaseSensitiveSorter(Sorter::Direction::Ascending));
     });
-    connect(ui->actionSortLinesAscCaseInsensitive, &QAction::triggered, this, [=, this]() {
+    connect(ui->actionSortLinesAscCaseInsensitive, &QAction::triggered, this, [this]() {
         ScintillaSorter scintillaSorter(currentEditor());
         scintillaSorter.sort(CaseInsensitiveSorter(Sorter::Direction::Ascending));
     });
-    connect(ui->actionSortLinesbyLengthAsc, &QAction::triggered, this, [=, this]() {
+    connect(ui->actionSortLinesbyLengthAsc, &QAction::triggered, this, [this]() {
         ScintillaSorter scintillaSorter(currentEditor());
         scintillaSorter.sort(LineLengthSorter(Sorter::Direction::Ascending));
     });
-    connect(ui->actionSortLinesDesc, &QAction::triggered, this, [=, this]() {
+    connect(ui->actionSortLinesDesc, &QAction::triggered, this, [this]() {
         ScintillaSorter scintillaSorter(currentEditor());
         scintillaSorter.sort(CaseSensitiveSorter(Sorter::Direction::Descending));
     });
-    connect(ui->actionSortLinesDescCaseInsensitive, &QAction::triggered, this, [=, this]() {
+    connect(ui->actionSortLinesDescCaseInsensitive, &QAction::triggered, this, [this]() {
         ScintillaSorter scintillaSorter(currentEditor());
         scintillaSorter.sort(CaseInsensitiveSorter(Sorter::Direction::Descending));
     });
-    connect(ui->actionSortLinesbyLengthDesc, &QAction::triggered, this, [=, this]() {
+    connect(ui->actionSortLinesbyLengthDesc, &QAction::triggered, this, [this]() {
         ScintillaSorter scintillaSorter(currentEditor());
         scintillaSorter.sort(LineLengthSorter(Sorter::Direction::Descending));
     });
 
-    connect(ui->actionColumnMode, &QAction::triggered, this, [=]() {
+    connect(ui->actionColumnMode, &QAction::triggered, this, [this]() {
         ColumnEditorDialog *columnEditor = findChild<ColumnEditorDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (columnEditor == Q_NULLPTR) {
@@ -312,51 +312,51 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         columnEditor->activateWindow();
     });
 
-    connect(ui->actionUndo, &QAction::triggered, this, [=]() { currentEditor()->undo(); });
-    connect(ui->actionRedo, &QAction::triggered, this, [=]() { currentEditor()->redo(); });
-    connect(ui->actionCut, &QAction::triggered, this, [=]() { currentEditor()->cutAllowLine(); });
-    connect(ui->actionCopy, &QAction::triggered, this, [=]() { currentEditor()->copyAllowLine(); });
-    connect(ui->actionDelete, &QAction::triggered, this, [=]() { currentEditor()->clear(); });
-    connect(ui->actionPaste, &QAction::triggered, this, [=]() { currentEditor()->paste(); });
-    connect(ui->actionSelectAll, &QAction::triggered, this, [=]() { currentEditor()->selectAll(); });
-    connect(ui->actionSelectNext, &QAction::triggered, this, [=]() {
+    connect(ui->actionUndo, &QAction::triggered, this, [this]() { currentEditor()->undo(); });
+    connect(ui->actionRedo, &QAction::triggered, this, [this]() { currentEditor()->redo(); });
+    connect(ui->actionCut, &QAction::triggered, this, [this]() { currentEditor()->cutAllowLine(); });
+    connect(ui->actionCopy, &QAction::triggered, this, [this]() { currentEditor()->copyAllowLine(); });
+    connect(ui->actionDelete, &QAction::triggered, this, [this]() { currentEditor()->clear(); });
+    connect(ui->actionPaste, &QAction::triggered, this, [this]() { currentEditor()->paste(); });
+    connect(ui->actionSelectAll, &QAction::triggered, this, [this]() { currentEditor()->selectAll(); });
+    connect(ui->actionSelectNext, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
 
         editor->setSearchFlags(SCFIND_NONE);
         editor->targetWholeDocument();
         editor->multipleSelectAddNext();
     });
-    connect(ui->actionCopyFullPath, &QAction::triggered, this, [=]() {
+    connect(ui->actionCopyFullPath, &QAction::triggered, this, [this]() {
         auto editor = currentEditor();
         if (editor->isFile()) {
             QApplication::clipboard()->setText(editor->getFilePath());
         }
     });
-    connect(ui->actionCopyFileName, &QAction::triggered, this, [=]() {
+    connect(ui->actionCopyFileName, &QAction::triggered, this, [this]() {
         QApplication::clipboard()->setText(currentEditor()->getName());
     });
-    connect(ui->actionCopyFileDirectory, &QAction::triggered, this, [=]() {
+    connect(ui->actionCopyFileDirectory, &QAction::triggered, this, [this]() {
         auto editor = currentEditor();
         if (editor->isFile()) {
             QApplication::clipboard()->setText(editor->getPath());
         }
     });
 
-    connect(ui->actionCopyAsHtml, &QAction::triggered, this, [=]() {
+    connect(ui->actionCopyAsHtml, &QAction::triggered, this, [this]() {
         HtmlConverter html(currentEditor());
         copyAsFormat(&html, "text/html");
     });
 
-    connect(ui->actionCopyAsRtf, &QAction::triggered, this, [=]() {
+    connect(ui->actionCopyAsRtf, &QAction::triggered, this, [this]() {
         RtfConverter rtf(currentEditor());
         copyAsFormat(&rtf, "Rich Text Format");
     });
 
-    connect(ui->actionIncreaseIndent, &QAction::triggered, this, [=]() { currentEditor()->tab(); });
-    connect(ui->actionDecreaseIndent, &QAction::triggered, this, [=]() { currentEditor()->backTab(); });
+    connect(ui->actionIncreaseIndent, &QAction::triggered, this, [this]() { currentEditor()->tab(); });
+    connect(ui->actionDecreaseIndent, &QAction::triggered, this, [this]() { currentEditor()->backTab(); });
 
     addAction(ui->actionToggleOverType);
-    connect(ui->actionToggleOverType, &QAction::triggered, this, [=]() {
+    connect(ui->actionToggleOverType, &QAction::triggered, this, [this]() {
         currentEditor()->editToggleOvertype();
         ui->statusBar->refresh(currentEditor());
     });
@@ -366,7 +366,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     srDock->toggleViewAction()->setShortcut(Qt::Key_F7);
     ui->menuView->addAction(srDock->toggleViewAction());
 
-    connect(srDock, &SearchResultsDock::searchResultActivated, this, [=](ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning) {
+    connect(srDock, &SearchResultsDock::searchResultActivated, this, [this](ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning) {
         dockedEditor->switchToEditor(editor);
 
         int linePos = editor->positionFromLine(lineNumber);
@@ -376,11 +376,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         editor->grabFocus();
     });
 
-    connect(ui->actionFind, &QAction::triggered, this, [=]() {
+    connect(ui->actionFind, &QAction::triggered, this, [this]() {
         showFindReplaceDialog(FindReplaceDialog::FIND_TAB);
     });
 
-    connect(ui->actionFindNext, &QAction::triggered, this, [=]() {
+    connect(ui->actionFindNext, &QAction::triggered, this, [this]() {
         FindReplaceDialog *f = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (f) {
@@ -388,7 +388,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionFindPrevious, &QAction::triggered, this, [=]() {
+    connect(ui->actionFindPrevious, &QAction::triggered, this, [this]() {
         FindReplaceDialog *f = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (f) {
@@ -396,7 +396,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionQuickFind, &QAction::triggered, this, [=]() {
+    connect(ui->actionQuickFind, &QAction::triggered, this, [this]() {
         QuickFindWidget *quickFind = findChild<QuickFindWidget *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (quickFind == Q_NULLPTR) {
@@ -408,11 +408,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         quickFind->show();
     });
 
-    connect(ui->actionReplace, &QAction::triggered, this, [=]() {
+    connect(ui->actionReplace, &QAction::triggered, this, [this]() {
         showFindReplaceDialog(FindReplaceDialog::REPLACE_TAB);
     });
 
-    connect(ui->actionGoToLine, &QAction::triggered, this, [=]() {
+    connect(ui->actionGoToLine, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         const int currentLine = editor->lineFromPosition(editor->currentPos()) + 1;
         const int maxLine = editor->lineCount();
@@ -438,7 +438,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     }
 
-    auto mark_callback = [=]() {
+    auto mark_callback = [this, app]() {
         MarkerAppDecorator *markerAppDecorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (markerAppDecorator && markerAppDecorator->isEnabled()) {
@@ -449,7 +449,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     };
 
-    auto clear_mark_callback = [=]() {
+    auto clear_mark_callback = [this, app]() {
         MarkerAppDecorator *markerAppDecorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (markerAppDecorator && markerAppDecorator->isEnabled()) {
@@ -468,7 +468,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionClearStyle2, &QAction::triggered, this, clear_mark_callback);
     connect(ui->actionClearStyle3, &QAction::triggered, this, clear_mark_callback);
 
-    connect(ui->actionClearAllStyles, &QAction::triggered, this, [=]() {
+    connect(ui->actionClearAllStyles, &QAction::triggered, this, [this, app]() {
         MarkerAppDecorator *markerAppDecorator = app->findChild<MarkerAppDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
         if (markerAppDecorator && markerAppDecorator->isEnabled()) {
@@ -476,7 +476,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionToggleBookmark, &QAction::triggered, this, [=]() {
+    connect(ui->actionToggleBookmark, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
@@ -487,7 +487,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionNextBookmark, &QAction::triggered, this, [=]() {
+    connect(ui->actionNextBookmark, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
@@ -502,7 +502,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionClearBookmarks, &QAction::triggered, this, [=]() {
+    connect(ui->actionClearBookmarks, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
@@ -511,7 +511,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionInvertBookmarks, &QAction::triggered, this, [=]() {
+    connect(ui->actionInvertBookmarks, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
@@ -522,7 +522,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionPreviousBookmark, &QAction::triggered, this, [=]() {
+    connect(ui->actionPreviousBookmark, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
@@ -537,7 +537,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionCutBookmarkedLines, &QAction::triggered, this, [=]() {
+    connect(ui->actionCutBookmarkedLines, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
@@ -550,7 +550,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionCopyBookmarkedLines, &QAction::triggered, this, [=]() {
+    connect(ui->actionCopyBookmarkedLines, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
@@ -563,7 +563,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionDeleteBookmarkedLines, &QAction::triggered, this, [=]() {
+    connect(ui->actionDeleteBookmarkedLines, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
         BookMarkDecorator *bookMarkDecorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
 
@@ -576,7 +576,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     // The action needs added to the window so it can be triggered via the keyboard
     addAction(ui->actionNextTab);
     ui->actionNextTab->setShortcuts(ui->actionNextTab->shortcuts() << QKeySequence(Qt::CTRL | Qt::Key_PageDown));
-    connect(ui->actionNextTab, &QAction::triggered, this, [=]() {
+    connect(ui->actionNextTab, &QAction::triggered, this, [this]() {
         int index = dockedEditor->currentDockArea()->currentIndex();
         int total = dockedEditor->currentDockArea()->dockWidgetsCount();
 
@@ -587,7 +587,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     // The action needs added to the window so it can be triggered via the keyboard
     addAction(ui->actionPreviousTab);
     ui->actionPreviousTab->setShortcuts(ui->actionPreviousTab->shortcuts() << QKeySequence(Qt::CTRL | Qt::Key_PageUp));
-    connect(ui->actionPreviousTab, &QAction::triggered, this, [=]() {
+    connect(ui->actionPreviousTab, &QAction::triggered, this, [this]() {
         int index = dockedEditor->currentDockArea()->currentIndex();
         int total = dockedEditor->currentDockArea()->dockWidgetsCount();
 
@@ -598,7 +598,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->pushExitFullScreen->setParent(this); // This is important
     ui->pushExitFullScreen->setVisible(false);
     connect(ui->pushExitFullScreen, &QPushButton::clicked, ui->actionFullScreen, &QAction::trigger);
-    connect(ui->actionFullScreen, &QAction::triggered, this, [=](bool b) {
+    connect(ui->actionFullScreen, &QAction::triggered, this, [this](bool b) {
         static bool wasMaximized;
 
         if (b) {
@@ -645,7 +645,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(app->getSettings(), &ApplicationSettings::showWhitespaceChanged, ui->actionShowWhitespace, &QAction::setChecked);
     connect(ui->actionShowWhitespace, &QAction::toggled, app->getSettings(), &ApplicationSettings::setShowWhitespace);
     // Update the "Show All Character" action
-    connect(ui->actionShowWhitespace, &QAction::toggled, this, [=](bool b) {
+    connect(ui->actionShowWhitespace, &QAction::toggled, this, [this](bool b) {
         ui->actionShowAllCharacters->setChecked(b && ui->actionShowEndofLine->isChecked());
     });
 
@@ -654,7 +654,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(app->getSettings(), &ApplicationSettings::showEndOfLineChanged, ui->actionShowEndofLine, &QAction::setChecked);
     connect(ui->actionShowEndofLine, &QAction::toggled, app->getSettings(), &ApplicationSettings::setShowEndOfLine);
     // Update the "Show All Character" action
-    connect(ui->actionShowEndofLine, &QAction::toggled, this, [=](bool b) {
+    connect(ui->actionShowEndofLine, &QAction::toggled, this, [this](bool b) {
         ui->actionShowAllCharacters->setChecked(b && ui->actionShowWhitespace->isChecked());
     });
 
@@ -674,7 +674,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionWordWrap, &QAction::toggled, app->getSettings(), &ApplicationSettings::setWordWrap);
 
     // Zooming controls all editors simulaneously
-    connect(ui->actionZoomIn, &QAction::triggered, this, [=]() {
+    connect(ui->actionZoomIn, &QAction::triggered, this, [this]() {
         for (ScintillaNext *editor : editors()) {
             editor->zoomIn();
         }
@@ -682,7 +682,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
         showEditorZoomLevelIndicator();
     });
-    connect(ui->actionZoomOut, &QAction::triggered, this, [=]() {
+    connect(ui->actionZoomOut, &QAction::triggered, this, [this]() {
         for (ScintillaNext *editor : editors()) {
             editor->zoomOut();
         }
@@ -690,7 +690,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
         showEditorZoomLevelIndicator();
     });
-    connect(ui->actionZoomReset, &QAction::triggered, this, [=]() {
+    connect(ui->actionZoomReset, &QAction::triggered, this, [this]() {
         for (ScintillaNext *editor : editors()) {
             editor->setZoom(0);
         }
@@ -703,33 +703,33 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(zoomEventWatcher, &ZoomEventWatcher::zoomIn, ui->actionZoomIn, &QAction::trigger);
     connect(zoomEventWatcher, &ZoomEventWatcher::zoomOut, ui->actionZoomOut, &QAction::trigger);
 
-    connect(ui->actionFoldAll, &QAction::triggered, this, [=]() { currentEditor()->foldAll(SC_FOLDACTION_CONTRACT | SC_FOLDACTION_CONTRACT_EVERY_LEVEL); });
-    connect(ui->actionUnfoldAll, &QAction::triggered, this, [=]() { currentEditor()->foldAll(SC_FOLDACTION_EXPAND | SC_FOLDACTION_CONTRACT_EVERY_LEVEL); });
+    connect(ui->actionFoldAll, &QAction::triggered, this, [this]() { currentEditor()->foldAll(SC_FOLDACTION_CONTRACT | SC_FOLDACTION_CONTRACT_EVERY_LEVEL); });
+    connect(ui->actionUnfoldAll, &QAction::triggered, this, [this]() { currentEditor()->foldAll(SC_FOLDACTION_EXPAND | SC_FOLDACTION_CONTRACT_EVERY_LEVEL); });
 
-    connect(ui->actionFoldLevel1, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(0); });
-    connect(ui->actionFoldLevel2, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(1); });
-    connect(ui->actionFoldLevel3, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(2); });
-    connect(ui->actionFoldLevel4, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(3); });
-    connect(ui->actionFoldLevel5, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(4); });
-    connect(ui->actionFoldLevel6, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(5); });
-    connect(ui->actionFoldLevel7, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(6); });
-    connect(ui->actionFoldLevel8, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(7); });
-    connect(ui->actionFoldLevel9, &QAction::triggered, this, [=]() { currentEditor()->foldAllLevels(8); });
+    connect(ui->actionFoldLevel1, &QAction::triggered, this, [this]() { currentEditor()->foldAllLevels(0); });
+    connect(ui->actionFoldLevel2, &QAction::triggered, this, [this]() { currentEditor()->foldAllLevels(1); });
+    connect(ui->actionFoldLevel3, &QAction::triggered, this, [this]() { currentEditor()->foldAllLevels(2); });
+    connect(ui->actionFoldLevel4, &QAction::triggered, this, [this]() { currentEditor()->foldAllLevels(3); });
+    connect(ui->actionFoldLevel5, &QAction::triggered, this, [this]() { currentEditor()->foldAllLevels(4); });
+    connect(ui->actionFoldLevel6, &QAction::triggered, this, [this]() { currentEditor()->foldAllLevels(5); });
+    connect(ui->actionFoldLevel7, &QAction::triggered, this, [this]() { currentEditor()->foldAllLevels(6); });
+    connect(ui->actionFoldLevel8, &QAction::triggered, this, [this]() { currentEditor()->foldAllLevels(7); });
+    connect(ui->actionFoldLevel9, &QAction::triggered, this, [this]() { currentEditor()->foldAllLevels(8); });
 
-    connect(ui->actionUnfoldLevel1, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(0); });
-    connect(ui->actionUnfoldLevel2, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(1); });
-    connect(ui->actionUnfoldLevel3, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(2); });
-    connect(ui->actionUnfoldLevel4, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(3); });
-    connect(ui->actionUnfoldLevel5, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(4); });
-    connect(ui->actionUnfoldLevel6, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(5); });
-    connect(ui->actionUnfoldLevel7, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(6); });
-    connect(ui->actionUnfoldLevel8, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(7); });
-    connect(ui->actionUnfoldLevel9, &QAction::triggered, this, [=]() { currentEditor()->unFoldAllLevels(8); });
+    connect(ui->actionUnfoldLevel1, &QAction::triggered, this, [this]() { currentEditor()->unFoldAllLevels(0); });
+    connect(ui->actionUnfoldLevel2, &QAction::triggered, this, [this]() { currentEditor()->unFoldAllLevels(1); });
+    connect(ui->actionUnfoldLevel3, &QAction::triggered, this, [this]() { currentEditor()->unFoldAllLevels(2); });
+    connect(ui->actionUnfoldLevel4, &QAction::triggered, this, [this]() { currentEditor()->unFoldAllLevels(3); });
+    connect(ui->actionUnfoldLevel5, &QAction::triggered, this, [this]() { currentEditor()->unFoldAllLevels(4); });
+    connect(ui->actionUnfoldLevel6, &QAction::triggered, this, [this]() { currentEditor()->unFoldAllLevels(5); });
+    connect(ui->actionUnfoldLevel7, &QAction::triggered, this, [this]() { currentEditor()->unFoldAllLevels(6); });
+    connect(ui->actionUnfoldLevel8, &QAction::triggered, this, [this]() { currentEditor()->unFoldAllLevels(7); });
+    connect(ui->actionUnfoldLevel9, &QAction::triggered, this, [this]() { currentEditor()->unFoldAllLevels(8); });
 
     languageActionGroup = new QActionGroup(this);
     languageActionGroup->setExclusive(true);
 
-    connect(ui->actionPreferences, &QAction::triggered, this, [=] {
+    connect(ui->actionPreferences, &QAction::triggered, this, [this, app] {
         PreferencesDialog *pd = findChild<PreferencesDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (pd == Q_NULLPTR) {
@@ -745,7 +745,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->actionRunMacroMultipleTimes->setEnabled(macroManager.availableMacros().size() > 0);
     ui->actionEditMacros->setEnabled(macroManager.availableMacros().size() > 0);
 
-    connect(ui->actionMacroRecording, &QAction::triggered, this, [=](bool b) {
+    connect(ui->actionMacroRecording, &QAction::triggered, this, [this](bool b) {
         if (b) {
             macroManager.startRecording(currentEditor());
         }
@@ -754,7 +754,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(&macroManager, &MacroManager::recordingStarted, this, [=]() {
+    connect(&macroManager, &MacroManager::recordingStarted, this, [this]() {
         ui->actionMacroRecording->setText(tr("Stop Recording"));
 
         // A macro is being recorded so disable some macro options
@@ -763,7 +763,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ui->actionSaveCurrentRecordedMacro->setEnabled(false);
     });
 
-    connect(&macroManager, &MacroManager::recordingStopped, this, [=]() {
+    connect(&macroManager, &MacroManager::recordingStopped, this, [this]() {
         ui->actionMacroRecording->setText(tr("Start Recording"));
 
         // Only enable these if the macro manager recorded a valid macro
@@ -774,11 +774,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ui->actionRunMacroMultipleTimes->setEnabled(macroManager.availableMacros().size() > 0 || macroManager.hasCurrentUnsavedMacro());
     });
 
-    connect(ui->actionPlayback, &QAction::triggered, this, [=]() {
+    connect(ui->actionPlayback, &QAction::triggered, this, [this]() {
         macroManager.replayCurrentMacro(currentEditor());
     });
 
-    connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, this, [=, this]() {
+    connect(ui->actionSaveCurrentRecordedMacro, &QAction::triggered, this, [this]() {
         MacroSaveDialog macroSaveDialog;
 
         macroSaveDialog.show();
@@ -803,13 +803,13 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
-    connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, this, [=]() {
+    connect(ui->actionRunMacroMultipleTimes, &QAction::triggered, this, [this]() {
         MacroRunDialog *macroRunDialog = findChild<MacroRunDialog *>(QString(), Qt::FindDirectChildrenOnly);
 
         if (macroRunDialog == Q_NULLPTR) {
             macroRunDialog = new MacroRunDialog(this, &macroManager);
 
-            connect(macroRunDialog, &MacroRunDialog::execute, this, [=](Macro *macro, int times) {
+            connect(macroRunDialog, &MacroRunDialog::execute, this, [this](Macro *macro, int times) {
                 if (times > 0)
                     macro->replay(currentEditor(), times);
                 else if (times == -1)
@@ -822,7 +822,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         macroRunDialog->activateWindow();
     });
 
-    connect(ui->actionEditMacros, &QAction::triggered, this, [=]() {
+    connect(ui->actionEditMacros, &QAction::triggered, this, [this]() {
         MacroEditorDialog med(this, &macroManager);
 
         med.show();
@@ -834,7 +834,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ui->actionEditMacros->setEnabled(macroManager.availableMacros().size() > 0);
     });
 
-    connect(ui->menuMacro, &QMenu::aboutToShow, this, [=]() {
+    connect(ui->menuMacro, &QMenu::aboutToShow, this, [this]() {
         // NOTE: its unfortunate that this has to be hard coded, but there's no way
         // to easily determine what should or shouldn't be there
         while (ui->menuMacro->actions().size() > 6) {
@@ -842,7 +842,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
 
         for (const Macro *m : macroManager.availableMacros()) {
-            ui->menuMacro->addAction(m->getName(), [=]() { m->replay(currentEditor()); });
+            ui->menuMacro->addAction(m->getName(), [this, m]() { m->replay(currentEditor()); });
         }
     });
 
@@ -850,7 +850,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionAboutQt, &QAction::triggered, &QApplication::aboutQt);
 
     ui->actionAboutNotepadNext->setShortcut(QKeySequence::HelpContents);
-    connect(ui->actionAboutNotepadNext, &QAction::triggered, this, [=]() {
+    connect(ui->actionAboutNotepadNext, &QAction::triggered, this, [this]() {
         QMessageBox::about(this, QString(),
                             QStringLiteral("<h3>%1 v%2 %3</h3>"
                                     "<p>%4</p>"
@@ -859,7 +859,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
                                 .arg(QApplication::applicationDisplayName(), APP_VERSION, APP_DISTRIBUTION, QStringLiteral(APP_COPYRIGHT).toHtmlEscaped()));
     });
 
-    connect(ui->actionDebugInfo, &QAction::triggered, this, [=]() {
+    connect(ui->actionDebugInfo, &QAction::triggered, this, [this, app]() {
         QMessageBox mb(QMessageBox::Information, tr("Debug Info"), app->debugInfo().join('\n'), QMessageBox::Ok, this);
 
         mb.setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont).family());
@@ -892,7 +892,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 
 #ifdef Q_OS_WIN
-    connect(ui->actionShowInExplorer, &QAction::triggered, this, [=]() {
+    connect(ui->actionShowInExplorer, &QAction::triggered, this, [this]() {
         QString filePath = QDir::toNativeSeparators(currentEditor()->getFileInfo().canonicalFilePath());
         QStringList arguments = {"/select,", filePath};
         QProcess::startDetached("explorer", arguments);
@@ -901,7 +901,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     QString terminalName = app->getSettings()->value("App/TerminalName", "Command Prompt").toString();
     ui->actionOpenTerminalHere->setText(ui->actionOpenTerminalHere->text().arg(terminalName));
 
-    connect(ui->actionOpenTerminalHere, &QAction::triggered, this, [=]() {
+    connect(ui->actionOpenTerminalHere, &QAction::triggered, this, [this, app]() {
         QString command = app->getSettings()->value("App/TerminalCommand", "cmd").toString();
         QString filePath = QDir::toNativeSeparators(currentEditor()->getFileInfo().dir().canonicalPath());
         QStringList arguments = {"/c", "start", "/d", filePath, command};
@@ -943,13 +943,13 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     addDockWidget(Qt::LeftDockWidgetArea, fileListDock);
     ui->menuView->addAction(fileListDock->toggleViewAction());
 
-    connect(app->getSettings(), &ApplicationSettings::showMenuBarChanged, this, [=](bool showMenuBar) {
+    connect(app->getSettings(), &ApplicationSettings::showMenuBarChanged, this, [this](bool showMenuBar) {
         // Don't 'hide' it, else the actions won't be enabled
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
     });
     connect(app->getSettings(), &ApplicationSettings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
     connect(app->getSettings(), &ApplicationSettings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
-    connect(ui->statusBar, &EditorInfoStatusBar::customContextMenuRequestedForEOLLabel, this, [=](const QPoint &pos){
+    connect(ui->statusBar, &EditorInfoStatusBar::customContextMenuRequestedForEOLLabel, this, [this](const QPoint &pos){
         ui->menuEOLConversion->popup(pos);
     });
 
@@ -2195,9 +2195,9 @@ void MainWindow::addEditor(ScintillaNext *editor)
     // These should only ever occur for the focused editor??
     // TODO: look at editor inspector as an example to ensure updates are only coming from one editor.
     // Can save the connection objects and disconnected from them and only connect to the editor as it is activated.
-    connect(editor, &ScintillaNext::savePointChanged, this, [=]() { updateSaveStatusBasedUi(editor); });
-    connect(editor, &ScintillaNext::renamed, this, [=]() { detectLanguage(editor); });
-    connect(editor, &ScintillaNext::renamed, this, [=]() { updateFileStatusBasedUi(editor); });
+    connect(editor, &ScintillaNext::savePointChanged, this, [this, editor]() { updateSaveStatusBasedUi(editor); });
+    connect(editor, &ScintillaNext::renamed, this, [this, editor]() { detectLanguage(editor); });
+    connect(editor, &ScintillaNext::renamed, this, [this, editor]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
 
     // Watch for any zoom events (Ctrl+Scroll or pinch-to-zoom (Qt translates it as Ctrl+Scroll)) so that the event
@@ -2208,7 +2208,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
     editor->setZoom(zoomLevel);
 
     editor->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(editor, &ScintillaNext::customContextMenuRequested, this, [=](const QPoint &pos) {
+    connect(editor, &ScintillaNext::customContextMenuRequested, this, [this, editor](const QPoint &pos) {
         contextMenuPos = editor->positionFromPoint(pos.x(), pos.y());
 
         QStringList actionNames = {
@@ -2297,7 +2297,7 @@ void MainWindow::initUpdateCheck()
         connect(ui->actionCheckForUpdates, &QAction::triggered, this, &MainWindow::checkForUpdates);
 
         // A bit after startup, see if we need to automatically check for an update
-        QTimer::singleShot(15000, this, [=]() {
+        QTimer::singleShot(15000, this, [this]() {
             ApplicationSettings settings;
             QDateTime dt = settings.value("App/LastUpdateCheck", QDateTime::currentDateTime()).toDateTime();
 

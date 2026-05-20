@@ -38,7 +38,7 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
     eolFormat = new StatusLabel(100);
     addPermanentWidget(eolFormat, 0);
     eolFormat->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(qobject_cast<StatusLabel*>(eolFormat), &StatusLabel::customContextMenuRequested, this, [=](const QPoint &pos) {
+    connect(qobject_cast<StatusLabel*>(eolFormat), &StatusLabel::customContextMenuRequested, this, [this](const QPoint &pos) {
         emit customContextMenuRequestedForEOLLabel(eolFormat->mapToGlobal(pos));
     });
 
@@ -52,7 +52,7 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
 
     connect(w, &MainWindow::editorActivated, this, &EditorInfoStatusBar::connectToEditor);
 
-    connect(qobject_cast<StatusLabel*>(overType), &StatusLabel::clicked, w, [=]() {
+    connect(qobject_cast<StatusLabel*>(overType), &StatusLabel::clicked, w, [this, w]() {
         ScintillaNext *editor = w->currentEditor();
         editor->editToggleOvertype();
         updateOverType(editor);
@@ -77,7 +77,7 @@ void EditorInfoStatusBar::connectToEditor(ScintillaNext *editor)
 
     // Connect to the new editor
     editorUiUpdated = connect(editor, &ScintillaNext::updateUi, this, &EditorInfoStatusBar::editorUpdated);
-    documentLexerChanged = connect(editor, &ScintillaNext::lexerChanged, this, [=]() { updateLanguage(editor); });
+    documentLexerChanged = connect(editor, &ScintillaNext::lexerChanged, this, [this, editor]() { updateLanguage(editor); });
 
     refresh(editor);
 }

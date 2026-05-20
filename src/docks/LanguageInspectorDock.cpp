@@ -101,7 +101,7 @@ LanguageInspectorDock::LanguageInspectorDock(MainWindow *parent) :
     ComboBoxDelegate *fontComboDelegate = new ComboBoxDelegate(fontNames, this);
     ui->tblStyles->setItemDelegateForColumn(4, fontComboDelegate);
 
-    connect(this, &QDockWidget::visibilityChanged, this, [=](bool visible) {
+    connect(this, &QDockWidget::visibilityChanged, this, [this, parent](bool visible) {
         if (visible) {
             connectToEditor(parent->currentEditor());
             connect(parent, &MainWindow::editorActivated, this, &LanguageInspectorDock::connectToEditor);
@@ -123,7 +123,7 @@ void LanguageInspectorDock::connectToEditor(ScintillaNext *editor)
     disconnectFromEditor();
 
     editorConnection = connect(editor, &ScintillaNext::updateUi, this, &LanguageInspectorDock::updatePositionInfo);
-    documentConnection = connect(editor, &ScintillaNext::lexerChanged, this, [=]() { updateLexerInfo(editor); });
+    documentConnection = connect(editor, &ScintillaNext::lexerChanged, this, [this, editor]() { updateLexerInfo(editor); });
 
     updateLexerInfo(editor);
 }
@@ -209,7 +209,7 @@ void LanguageInspectorDock::updatePropertyInfo(ScintillaNext *editor)
     ui->tblProperties->resizeColumnToContents(3);
 
     ui->tblProperties->disconnect();
-    connect(ui->tblProperties, &QTableWidget::itemChanged, this, [=](QTableWidgetItem *item) {
+    connect(ui->tblProperties, &QTableWidget::itemChanged, this, [this, editor](QTableWidgetItem *item) {
         const QString property = ui->tblProperties->item(item->row(), 0)->text();
 
         editor->setProperty(property.toLatin1().constData(), item->text().toLatin1().constData());

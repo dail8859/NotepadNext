@@ -40,16 +40,16 @@ FileListDock::FileListDock(MainWindow *parent) :
     ui->actionSortbyFileName->setChecked(settings.get(sortByName));
 
     // Track it if it changes
-    connect(ui->actionSortbyFileName, &QAction::toggled, this, [=](bool b) {
+    connect(ui->actionSortbyFileName, &QAction::toggled, this, [this](bool b) {
         ApplicationSettings settings;
         settings.set(sortByName, b);
         refreshList();
     });
 
-    connect(this, &QDockWidget::visibilityChanged, this, [=](bool visible) {
+    connect(this, &QDockWidget::visibilityChanged, this, [this](bool visible) {
         if (visible) {
             // Only get events when the dock is visible
-            connect(window->getDockedEditor(), &DockedEditor::editorAdded, this, [=](ScintillaNext *editor) {
+            connect(window->getDockedEditor(), &DockedEditor::editorAdded, this, [this](ScintillaNext *editor) {
                 Q_UNUSED(editor);
 
                 // The editor could get added on any DockArea and doesn't necessarily get appended to the end of the FileList, so refresh everything

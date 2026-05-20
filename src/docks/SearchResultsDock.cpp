@@ -45,7 +45,7 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
     connect(ui->treeWidget, &QTreeWidget::itemExpanded, this, &SearchResultsDock::itemExpanded);
     connect(ui->btnCopyResults, &QPushButton::released,this, &SearchResultsDock::copySearchResultsToClipboard);
 
-    connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
+    connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, [this](const QPoint &pos) {
         QTreeWidgetItem *item = ui->treeWidget->itemAt(pos);
 
         if (item == Q_NULLPTR) {
@@ -57,7 +57,7 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
         menu.addAction(tr("Collapse All"), this, &SearchResultsDock::collapseAll);
         menu.addAction(tr("Expand All"), this, &SearchResultsDock::expandAll);
         menu.addSeparator();
-        menu.addAction(tr("Delete Entry"), this, [=]() { deleteEntry(item); });
+        menu.addAction(tr("Delete Entry"), this, [this, item]() { deleteEntry(item); });
         menu.addSeparator();
         menu.addAction(tr("Delete All"), this, &SearchResultsDock::deleteAll);
 
@@ -67,7 +67,7 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
     ui->treeWidget->setItemDelegate(new SearchResultHighlighterDelegate(ui->treeWidget));
 
     ApplicationSettings *settings = qobject_cast<NotepadNextApplication*>(qApp)->getSettings();
-    auto updateTreeWidgetFont = [=]() {
+    auto updateTreeWidgetFont = [this, settings]() {
         QFont f(settings->fontName(), settings->fontSize());
         ui->treeWidget->setFont(f);
         ui->treeWidget->resizeColumnToContents(0);

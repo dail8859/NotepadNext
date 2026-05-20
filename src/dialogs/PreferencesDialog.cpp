@@ -47,7 +47,7 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     MapSettingToCheckBox(ui->checkBoxRecenterSearchDialog, &ApplicationSettings::centerSearchDialog, &ApplicationSettings::setCenterSearchDialog, &ApplicationSettings::centerSearchDialogChanged);
 
     MapSettingToGroupBox(ui->gbxRestorePreviousSession, &ApplicationSettings::restorePreviousSession, &ApplicationSettings::setRestorePreviousSession, &ApplicationSettings::restorePreviousSessionChanged);
-    connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, this, [=](bool checked) {
+    connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, this, [this](bool checked) {
         if (!checked) {
             ui->checkBoxUnsavedFiles->setChecked(false);
             ui->checkBoxRestoreTempFiles->setChecked(false);
@@ -63,7 +63,7 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     MapSettingToCheckBox(ui->checkBoxCombineSearchResults, &ApplicationSettings::combineSearchResults, &ApplicationSettings::setCombineSearchResults, &ApplicationSettings::combineSearchResultsChanged);
 
     populateTranslationComboBox();
-    connect(ui->comboBoxTranslation, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+    connect(ui->comboBoxTranslation, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this, settings](int index) {
         settings->setTranslation(ui->comboBoxTranslation->itemData(index).toString());
         showApplicationRestartRequired();
     });
@@ -71,10 +71,10 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     MapSettingToCheckBox(ui->checkBoxExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosed, &ApplicationSettings::setExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosedChanged);
 
     ui->fcbDefaultFont->setCurrentFont(QFont(settings->fontName()));
-    connect(ui->fcbDefaultFont, &QFontComboBox::currentFontChanged, this, [=](const QFont &f) {
+    connect(ui->fcbDefaultFont, &QFontComboBox::currentFontChanged, this, [settings](const QFont &f) {
         settings->setFontName(f.family());
     });
-    connect(settings, &ApplicationSettings::fontNameChanged, this, [=](QString fontName){
+    connect(settings, &ApplicationSettings::fontNameChanged, this, [this](QString fontName){
         ui->fcbDefaultFont->setCurrentFont(QFont(fontName));
     });
 
@@ -91,10 +91,10 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     int index = ui->comboBoxLineEndings->findData(settings->defaultEOLMode());
     ui->comboBoxLineEndings->setCurrentIndex(index == -1 ? 0 : index);
 
-    connect(ui->comboBoxLineEndings, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+    connect(ui->comboBoxLineEndings, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this, settings](int index) {
         settings->setDefaultEOLMode(ui->comboBoxLineEndings->itemData(index).toString());
     });
-    connect(settings, &ApplicationSettings::defaultEOLModeChanged, this, [=](QString defaultEOLMode) {
+    connect(settings, &ApplicationSettings::defaultEOLModeChanged, this, [this](QString defaultEOLMode) {
         int index = ui->comboBoxLineEndings->findData(defaultEOLMode);
         ui->comboBoxLineEndings->setCurrentIndex(index == -1 ? 0 : index);
     });
@@ -108,17 +108,17 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     buttonGroup->addButton(ui->radioLastUsedDirectory, ApplicationSettings::RememberLastUsed);
     buttonGroup->addButton(ui->radioHardCoded, ApplicationSettings::HardCoded);
 
-    connect(buttonGroup, &QButtonGroup::idClicked, this, [=](int id) {
+    connect(buttonGroup, &QButtonGroup::idClicked, this, [settings](int id) {
         ApplicationSettings::DefaultDirectoryBehaviorEnum e = static_cast<ApplicationSettings::DefaultDirectoryBehaviorEnum>(id);
         settings->setDefaultDirectoryBehavior(e);
     });
 
-    connect(ui->radioHardCoded, &QRadioButton::toggled, this, [=](bool checked){
+    connect(ui->radioHardCoded, &QRadioButton::toggled, this, [this](bool checked){
         ui->btnSelectHardCodedPath->setEnabled(checked);
         ui->txtHardCodedPath->setEnabled(checked);
     });
 
-    connect(ui->btnSelectHardCodedPath, &QToolButton::clicked, this, [=]() {
+    connect(ui->btnSelectHardCodedPath, &QToolButton::clicked, this, [this, settings]() {
         QString dir = QFileDialog::getExistingDirectory(this, tr("Default Directory"));
         if (dir.isEmpty()) return; // user cancelled
 
@@ -126,7 +126,7 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
         ui->txtHardCodedPath->setText(QDir::toNativeSeparators(dir));
     });
 
-    connect(ui->txtHardCodedPath, &QLineEdit::editingFinished, this, [=]() {
+    connect(ui->txtHardCodedPath, &QLineEdit::editingFinished, this, [this, settings]() {
         QString dir = ui->txtHardCodedPath->text();
         settings->setDefaultDirectory(QDir::fromNativeSeparators(dir));
         ui->txtHardCodedPath->setText(QDir::toNativeSeparators(dir));

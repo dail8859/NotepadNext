@@ -229,7 +229,7 @@ void BetterMultiSelection::EditSelections(std::function<void(Selection &selectio
 }
 
 std::function<void(Selection &selection)> BetterMultiSelection::SimpleEdit(int message) {
-    return [=](Selection &selection) {
+    return [this, message](Selection &selection) {
         editor->setSelection(selection.caret, selection.anchor);
         editor->send(message);
 

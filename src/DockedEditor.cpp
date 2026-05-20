@@ -67,7 +67,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     dockManager = new ads::CDockManager(parent);
     dockManager->setStyleSheet("");
 
-    connect(dockManager, &ads::CDockManager::focusedDockWidgetChanged, this, [=](ads::CDockWidget* old, ads::CDockWidget* now) {
+    connect(dockManager, &ads::CDockManager::focusedDockWidgetChanged, this, [this](ads::CDockWidget* old, ads::CDockWidget* now) {
         Q_UNUSED(old)
 
         ScintillaNext *editor = qobject_cast<ScintillaNext *>(now->widget());
@@ -77,11 +77,11 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
         emit editorActivated(editor);
     });
 
-    connect(dockManager, &ads::CDockManager::dockAreaCreated, this, [=](ads::CDockAreaWidget* DockArea) {
+    connect(dockManager, &ads::CDockManager::dockAreaCreated, this, [this](ads::CDockAreaWidget* DockArea) {
         DockedEditorTitleBar *titleBar = qobject_cast<DockedEditorTitleBar *>(DockArea->titleBar());
         connect(titleBar, &DockedEditorTitleBar::doubleClicked, this, &DockedEditor::titleBarDoubleClicked);
 
-        connect(DockArea->titleBar()->tabBar(), &ads::CDockAreaTabBar::tabMoved, this, [=](int from, int to) {
+        connect(DockArea->titleBar()->tabBar(), &ads::CDockAreaTabBar::tabMoved, this, [this](int from, int to) {
             Q_UNUSED(from);
             Q_UNUSED(to);
 
@@ -175,7 +175,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     dockWidget->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetFloatable, false);
 
     dockWidget->tabWidget()->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(dockWidget->tabWidget(), &QWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
+    connect(dockWidget->tabWidget(), &QWidget::customContextMenuRequested, this, [this, editor](const QPoint &pos) {
         Q_UNUSED(pos)
 
         emit contextMenuRequestedForEditor(editor);
@@ -195,7 +195,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     }
     else {
         dockWidget->tabWidget()->setIcon(QIcon(editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png"));
-        connect(editor, &ScintillaNext::savePointChanged, dockWidget, [=](bool dirty) {
+        connect(editor, &ScintillaNext::savePointChanged, dockWidget, [editor, dockWidget](bool dirty) {
             Q_UNUSED(dirty)
             const bool actuallyDirty = editor->canSaveToDisk();
             const QString iconPath = actuallyDirty ? ":/icons/unsaved.png" : ":/icons/saved.png";
@@ -204,8 +204,8 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     }
 
     connect(editor, &ScintillaNext::closed, dockWidget, &ads::CDockWidget::closeDockWidget);
-    connect(editor, &ScintillaNext::closed, this, [=]() { emit editorClosed(editor); });
-    connect(editor, &ScintillaNext::renamed, this, [=]() { editorRenamed(editor); });
+    connect(editor, &ScintillaNext::closed, this, [this, editor]() { emit editorClosed(editor); });
+    connect(editor, &ScintillaNext::renamed, this, [this, editor]() { editorRenamed(editor); });
 
     connect(dockWidget, &ads::CDockWidget::closeRequested, this, &DockedEditor::dockWidgetCloseRequested);
 

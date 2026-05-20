@@ -41,7 +41,7 @@ LineNumbers::LineNumbers(ScintillaNext *editor) :
 {
     editor->setMarginWidthN(0, 0);
 
-    connect(this, &EditorDecorator::stateChanged, editor, [=](bool b) {
+    connect(this, &EditorDecorator::stateChanged, editor, [this, editor](bool b) {
         if (b) {
             adjustMarginWidth();
         }

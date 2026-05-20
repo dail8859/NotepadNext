@@ -105,7 +105,7 @@ EditorInspectorDock::EditorInspectorDock(MainWindow *parent) :
     newItem(foldInfo, tr("Last Child"), [](ScintillaNext *editor) { return QString::number(editor->lastChild(editor->lineFromPosition(editor->currentPos()), -1) + 1); });
     newItem(foldInfo, tr("Contracted Fold Next"), [](ScintillaNext *editor) { return QString::number(editor->contractedFoldNext(editor->lineFromPosition(editor->currentPos())) + 1); });
 
-    connect(this, &QDockWidget::visibilityChanged, this, [=](bool visible) {
+    connect(this, &QDockWidget::visibilityChanged, this, [this, parent](bool visible) {
         if (visible) {
             connectToEditor(parent->currentEditor());
             connect(parent, &MainWindow::editorActivated, this, &EditorInspectorDock::connectToEditor);

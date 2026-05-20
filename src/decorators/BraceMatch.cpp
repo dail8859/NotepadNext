@@ -46,7 +46,7 @@ BraceMatch::BraceMatch(ScintillaNext *editor) :
     editor->indicSetUnder(braceBadlight, true);
     editor->braceBadLightIndicator(true, braceBadlight);
 
-    connect(this, &EditorDecorator::stateChanged, [=](bool b) {
+    connect(this, &EditorDecorator::stateChanged, [this](bool b) {
         if (b) {
             doHighlighting();
         }

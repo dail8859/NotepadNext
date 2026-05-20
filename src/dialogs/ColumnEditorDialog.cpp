@@ -37,17 +37,17 @@ ColumnEditorDialog::ColumnEditorDialog(MainWindow *parent) :
     ui->sbxStep->setMaximum(std::numeric_limits<int>::max());
     ui->sbxStep->setMinimum(std::numeric_limits<int>::min());
 
-    connect(ui->gbxText, &QGroupBox::toggled, ui->gbxNumbers, [=](bool on) {
+    connect(ui->gbxText, &QGroupBox::toggled, ui->gbxNumbers, [this](bool on) {
         ui->gbxNumbers->setChecked(!on);
     });
 
-    connect(ui->gbxNumbers, &QGroupBox::toggled, ui->gbxText, [=](bool on) {
+    connect(ui->gbxNumbers, &QGroupBox::toggled, ui->gbxText, [this](bool on) {
         ui->gbxText->setChecked(!on);
     });
 
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [=]() {
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [this]() {
         if (ui->gbxText->isChecked() && !ui->txtText->text().isEmpty()) {
-            insertTextStartingAtCurrentColumn([=]() { return ui->txtText->text(); });
+            insertTextStartingAtCurrentColumn([this]() { return ui->txtText->text(); });
         }
         else if (ui->gbxNumbers->isChecked()) {
             int currentValue = ui->sbxStart->value();

@@ -28,7 +28,7 @@ MacroSaveDialog::MacroSaveDialog(QWidget *parent) :
 
     ui->setupUi(this);
 
-    connect(ui->editName, &QLineEdit::textChanged, [=](const QString &text) {
+    connect(ui->editName, &QLineEdit::textChanged, [this](const QString &text) {
         ui->buttonOk->setEnabled(text.trimmed().size() > 0);
     });
 }

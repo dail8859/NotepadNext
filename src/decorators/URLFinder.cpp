@@ -43,7 +43,7 @@ URLFinder::URLFinder(ScintillaNext *editor) :
     timer->setSingleShot(true);
     connect(timer, &QTimer::timeout, this, &URLFinder::findURLs);
 
-    connect(this, &EditorDecorator::stateChanged, this, [=](bool b) {
+    connect(this, &EditorDecorator::stateChanged, this, [this, editor](bool b) {
         if (b) {
             connect(editor, &ScintillaNext::resized, timer, qOverload<>(&QTimer::start));
             connect(editor, &ScintillaNext::reloaded, timer, qOverload<>(&QTimer::start));

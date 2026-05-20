@@ -190,7 +190,7 @@ LuaConsoleDock::LuaConsoleDock(LuaState *l, QWidget *parent) :
     input->setMaximumHeight(input->textHeight(0));
     input->installEventFilter(this);
 
-    connect(input, &ScintillaNext::updateUi, [=](Scintilla::Update flags) {
+    connect(input, &ScintillaNext::updateUi, [this](Scintilla::Update flags) {
         Q_UNUSED(flags);
         int curPos = input->currentPos();
         int bracePos = INVALID_POSITION;

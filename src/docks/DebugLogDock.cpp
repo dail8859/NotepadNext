@@ -39,7 +39,7 @@ DebugLogDock::DebugLogDock(QWidget *parent) :
     output = ui->txtDebugOutput;
     DebugManager::addMessageHandler(debugLogDockMessageHandler);
 
-    connect(this, &QDockWidget::visibilityChanged, this, [=](bool visible) {
+    connect(this, &QDockWidget::visibilityChanged, this, [this](bool visible) {
         if (visible) {
             ui->txtDebugOutput->horizontalScrollBar()->setValue(0);
         }
