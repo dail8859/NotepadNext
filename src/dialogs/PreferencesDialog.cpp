@@ -68,6 +68,16 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
         showApplicationRestartRequired();
     });
 
+    populateThemeComboBox();
+    connect(ui->comboBoxTheme, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this, settings](int index) {
+        settings->setThemeMode(static_cast<ApplicationSettings::ThemeModeEnum>(ui->comboBoxTheme->itemData(index).toInt()));
+        showApplicationRestartRequired();
+    });
+    connect(settings, &ApplicationSettings::themeModeChanged, this, [this](ApplicationSettings::ThemeModeEnum themeMode) {
+        int index = ui->comboBoxTheme->findData(static_cast<int>(themeMode));
+        ui->comboBoxTheme->setCurrentIndex(index == -1 ? 0 : index);
+    });
+
     MapSettingToCheckBox(ui->checkBoxExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosed, &ApplicationSettings::setExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosedChanged);
 
     ui->fcbDefaultFont->setCurrentFont(QFont(settings->fontName()));
@@ -197,4 +207,13 @@ void PreferencesDialog::populateTranslationComboBox()
     if (index != -1) {
         ui->comboBoxTranslation->setCurrentIndex(index);
     }
+}
+
+void PreferencesDialog::populateThemeComboBox()
+{
+    ui->comboBoxTheme->addItem(tr("Light"), static_cast<int>(ApplicationSettings::LightTheme));
+    ui->comboBoxTheme->addItem(tr("Use system theme"), static_cast<int>(ApplicationSettings::SystemTheme));
+
+    int index = ui->comboBoxTheme->findData(static_cast<int>(settings->themeMode()));
+    ui->comboBoxTheme->setCurrentIndex(index == -1 ? 0 : index);
 }

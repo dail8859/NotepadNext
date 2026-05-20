@@ -2154,6 +2154,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/dialogs/PreferencesDialog.ui" line="121"/>
+        <source>Theme:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/dialogs/PreferencesDialog.ui" line="123"/>
         <source>Exit on last tab closed</source>
         <translation type="unfinished"></translation>
@@ -2257,6 +2262,16 @@
     <message>
         <location filename="../src/dialogs/PreferencesDialog.cpp" line="185"/>
         <source>&lt;System Default&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="214"/>
+        <source>Light</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/PreferencesDialog.cpp" line="215"/>
+        <source>Use system theme</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

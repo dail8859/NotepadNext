@@ -2343,6 +2343,11 @@
             <translation>Tulkojums:</translation>
         </message>
         <message>
+            <location filename="../src/dialogs/PreferencesDialog.ui" line="121" />
+            <source>Theme:</source>
+            <translation>Tēma:</translation>
+        </message>
+        <message>
             <location filename="../src/dialogs/PreferencesDialog.ui" line="123" />
             <source>Exit on last tab closed</source>
             <translation>Iziet, aizverot pēdējo cilni</translation>
@@ -2447,6 +2452,16 @@
             <location filename="../src/dialogs/PreferencesDialog.cpp" line="185" />
             <source>&lt;System Default&gt;</source>
             <translation>&lt;Sistēmas noklusējums&gt;</translation>
+        </message>
+        <message>
+            <location filename="../src/dialogs/PreferencesDialog.cpp" line="214" />
+            <source>Light</source>
+            <translation>Gaiša</translation>
+        </message>
+        <message>
+            <location filename="../src/dialogs/PreferencesDialog.cpp" line="215" />
+            <source>Use system theme</source>
+            <translation>Izmantot sistēmas tēmu</translation>
         </message>
     </context>
     <context>

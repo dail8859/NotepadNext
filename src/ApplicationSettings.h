@@ -76,6 +76,12 @@ public:
     };
     Q_ENUM(DefaultDirectoryBehaviorEnum)
 
+    enum ThemeModeEnum {
+        LightTheme,
+        SystemTheme
+    };
+    Q_ENUM(ThemeModeEnum)
+
     template <typename T>
     T get(const char *key, const T &defaultValue) const
     { return value(QLatin1String(key), defaultValue).template value<T>(); }
@@ -107,6 +113,7 @@ public:
     DEFINE_SETTING(DefaultDirectory, defaultDirectory, QString)
 
     DEFINE_SETTING(Translation, translation, QString)
+    DEFINE_SETTING(ThemeMode, themeMode, ThemeModeEnum)
 
     DEFINE_SETTING(ShowWhitespace, showWhitespace, bool);
     DEFINE_SETTING(ShowEndOfLine, showEndOfLine, bool);
