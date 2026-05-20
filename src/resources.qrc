@@ -33,6 +33,8 @@
         <file>icons/printer.png</file>
         <file>icons/NotepadNext.png</file>
         <file>icons/cog.png</file>
+        <file>icons/gemini_icon.png</file>
+        <file>icons/Gemini_api.png</file>
         <file>icons/table_delete.png</file>
         <file>icons/table_row_delete.png</file>
         <file>icons/table_row_insert.png</file>

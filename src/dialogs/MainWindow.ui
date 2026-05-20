@@ -983,7 +983,7 @@
   <action name="actionFormatWithGemini">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/icons/NotepadNext.png</normaloff>:/icons/NotepadNext.png</iconset>
+     <normaloff>:/icons/gemini_icon.png</normaloff>:/icons/gemini_icon.png</iconset>
    </property>
    <property name="text">
     <string>Format with Gemini</string>
@@ -992,7 +992,7 @@
   <action name="actionGeminiApiSettings">
    <property name="icon">
     <iconset resource="../resources.qrc">
-     <normaloff>:/icons/cog.png</normaloff>:/icons/cog.png</iconset>
+     <normaloff>:/icons/Gemini_api.png</normaloff>:/icons/Gemini_api.png</iconset>
    </property>
    <property name="text">
     <string>Gemini API</string>
