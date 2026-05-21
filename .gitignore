@@ -57,6 +57,7 @@ __cmake_systeminformation
 /build-mingw/
 /icon/*.png
 /icon/ImageMagick
+/installer/*.exe
 
 # JetBrains IDE prefs
 .idea/
