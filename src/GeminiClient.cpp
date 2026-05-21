@@ -94,13 +94,28 @@ void GeminiClient::formatMarkdown(const QString &text, const QString &model, con
 
     QJsonObject systemInstruction;
     systemInstruction.insert(QStringLiteral("parts"), QJsonArray{
-        textPart(QStringLiteral("Return only Markdown. Do not wrap the response in a code fence and do not add explanations. Preserve facts, language, URLs, quotes, and code blocks. Structure the text with headings, lists, tables, quotes, links, and other Markdown syntax only when it fits the content."))
+        textPart(QStringLiteral(
+            "Convert the provided text into well-structured Markdown.\n\n"
+            "Rules:\n"
+            "- Return only Markdown.\n"
+            "- Preserve the original language.\n"
+            "- Preserve the original meaning and wording as much as possible.\n"
+            "- Do not translate.\n"
+            "- Do not add new facts or remove existing content.\n"
+            "- Detect likely section titles and convert them to Markdown headings.\n"
+            "- Use paragraphs, lists, tables, blockquotes, and code fences only when they fit the content.\n"
+            "- Detect commands, code, configuration snippets, and terminal output, and place them in fenced code blocks.\n"
+            "- Use the correct code fence language when obvious, such as powershell, bash, sh, json, xml, cpp, python, ini, yaml, or toml.\n"
+            "- Preserve command order.\n"
+            "- Preserve URLs, package names, identifiers, file paths, product names, numbers, and dates exactly.\n"
+            "- Do not wrap the entire response in one code fence.\n"
+            "- Do not add explanations before or after the Markdown."))
     });
 
     QJsonObject content;
     content.insert(QStringLiteral("role"), QStringLiteral("user"));
     content.insert(QStringLiteral("parts"), QJsonArray{
-        textPart(QStringLiteral("Format this text as clean Markdown:\n\n%1").arg(text))
+        textPart(QStringLiteral("Convert this text into well-structured Markdown:\n\n%1").arg(text))
     });
 
     QJsonObject body;
