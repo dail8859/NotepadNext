@@ -17,8 +17,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, windows-latest, macos-latest]
+        os: [ubuntu-24.04, windows-latest, macos-15, macos-15-intel]
         qt_version: ["6.5", "6.8", "6.10"]
+        include:
+          - os: macos-15
+            arch: arm64
+          - os: macos-15-intel
+            arch: x86_64
+          - os: ubuntu-24.04
+            arch: x86_64
+          - os: windows-latest
+            arch: x86_64
 
     runs-on: ${{ matrix.os }}
 
@@ -60,7 +69,7 @@ jobs:
           sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev libcups2-dev
 
       - name: Configure
-        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION=${{ env.DISTRIBUTION }}
+        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION=${{ env.DISTRIBUTION }} ${{ runner.os == 'macOS' && format('-DCMAKE_OSX_ARCHITECTURES={0}', matrix.arch) || '' }}
 
       - name: Build
         run: cmake --build build --parallel
@@ -95,7 +104,7 @@ jobs:
         uses: actions/upload-artifact@v6
         if: runner.os == 'macOS'
         with:
-          name: NotepadNext-macOS-Qt${{ matrix.qt_version }}
+          name: NotepadNext-macOS-${{ matrix.arch }}-Qt${{ matrix.qt_version }}
           path: ${{ github.workspace }}/build/NotepadNext*.dmg
 
       - name: Upload Linux AppImage
@@ -141,6 +150,12 @@ jobs:
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt$QT_RELEASE_VER-AppImage/NotepadNext-${{ github.ref_name }}-x86_64.AppImage
 
-      - name: Upload macOS App
+      - name: Upload macOS arm64 DMG
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt$QT_RELEASE_VER/NotepadNext-${{ github.ref_name }}.dmg
+          gh release upload ${{ github.ref_name }} \
+            NotepadNext-macOS-arm64-Qt$QT_RELEASE_VER/*.dmg#NotepadNext-${{ github.ref_name }}-macOS-arm64.dmg
+      
+      - name: Upload macOS x86_64 DMG
+        run: |
+          gh release upload ${{ github.ref_name }} \
+            NotepadNext-macOS-x86_64-Qt$QT_RELEASE_VER/*.dmg#NotepadNext-${{ github.ref_name }}-macOS-x86_64.dmg
