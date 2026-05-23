@@ -17,11 +17,12 @@ CPMAddPackage(
         "QSIMPLE_UPDATER_BUILD_TESTS OFF"
 )
 
+set(QT_DEFAULT_MAJOR_VERSION 6 CACHE STRING "" FORCE)
 set(QAPPLICATION_CLASS QApplication CACHE STRING "Inheritance class for SingleApplication" FORCE)
 CPMAddPackage(
     NAME SingleApplication
-    GITHUB_REPOSITORY itay-grudev/SingleApplication
-    GIT_TAG 494772e98cef0aa88124f154feb575cc60b08b38
+    GITHUB_REPOSITORY chen3feng/SingleApplication
+    GIT_TAG 1bb301a46c5727fac959ef35a6bc6d05ef3115be
 )
 
 CPMAddPackage(
