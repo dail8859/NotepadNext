@@ -72,6 +72,7 @@
      <addaction name="actionExportRtf"/>
     </widget>
     <addaction name="actionNew"/>
+    <addaction name="actionNewTab"/>
     <addaction name="actionOpen"/>
     <addaction name="actionOpenFolderasWorkspace"/>
     <addaction name="actionReload"/>
@@ -308,6 +309,9 @@
     <addaction name="actionUnfoldAll"/>
     <addaction name="menuFold_Level"/>
     <addaction name="menuUnfold_Level"/>
+    <addaction name="separator"/>
+    <addaction name="actionSplitHorizontal"/>
+    <addaction name="actionSplitVertical"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuLanguage">
@@ -1529,6 +1533,39 @@
   <action name="actionReverseLineOrder">
    <property name="text">
     <string>Reverse Line Order</string>
+   </property>
+  </action>
+  <action name="actionSplitHorizontal">
+   <property name="text">
+    <string>Split Horizontal</string>
+   </property>
+   <property name="toolTip">
+    <string>Split editor horizontally (left/right)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="actionSplitVertical">
+   <property name="text">
+    <string>Split Vertical</string>
+   </property>
+   <property name="toolTip">
+    <string>Split editor vertically (top/bottom)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+D</string>
+   </property>
+  </action>
+  <action name="actionNewTab">
+   <property name="text">
+    <string>New Tab</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a new tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
    </property>
   </action>
  </widget>

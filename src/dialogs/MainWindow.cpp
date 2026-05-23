@@ -119,11 +119,40 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 
     // Set up the menus
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
+    connect(ui->actionNewTab, &QAction::triggered, this, &MainWindow::newFile);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFileDialog);
     connect(ui->actionReload, &QAction::triggered, this, &MainWindow::reloadFile);
     connect(ui->actionClose, &QAction::triggered, this, &MainWindow::closeCurrentFile);
     connect(ui->actionCloseAll, &QAction::triggered, this, &MainWindow::closeAllFiles);
     connect(ui->actionExit, &QAction::triggered, this, &MainWindow::close);
+
+    // Split editor actions
+    connect(ui->actionSplitHorizontal, &QAction::triggered, this, [=]() {
+        newFile();
+        ScintillaNext *newEditor = currentEditor();
+        if (newEditor) {
+            ads::CDockWidget *newDockWidget = qobject_cast<ads::CDockWidget *>(newEditor->parentWidget());
+            if (newDockWidget) {
+                ads::CDockAreaWidget *currentArea = dockedEditor->currentDockArea();
+                if (currentArea) {
+                    newDockWidget->dockManager()->addDockWidget(ads::RightDockWidgetArea, newDockWidget, currentArea);
+                }
+            }
+        }
+    });
+    connect(ui->actionSplitVertical, &QAction::triggered, this, [=]() {
+        newFile();
+        ScintillaNext *newEditor = currentEditor();
+        if (newEditor) {
+            ads::CDockWidget *newDockWidget = qobject_cast<ads::CDockWidget *>(newEditor->parentWidget());
+            if (newDockWidget) {
+                ads::CDockAreaWidget *currentArea = dockedEditor->currentDockArea();
+                if (currentArea) {
+                    newDockWidget->dockManager()->addDockWidget(ads::BottomDockWidgetArea, newDockWidget, currentArea);
+                }
+            }
+        }
+    });
 
 #ifdef Q_OS_WIN
     ui->actionExit->setShortcut(QKeySequence("Alt+F4"));
