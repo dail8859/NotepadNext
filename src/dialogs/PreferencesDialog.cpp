@@ -25,7 +25,6 @@
 
 #include <QButtonGroup>
 #include <QFileDialog>
-#include <QMessageBox>
 
 
 PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *parent) :
@@ -46,17 +45,20 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     MapSettingToCheckBox(ui->checkBoxStatusBar, &ApplicationSettings::showStatusBar, &ApplicationSettings::setShowStatusBar, &ApplicationSettings::showStatusBarChanged);
     MapSettingToCheckBox(ui->checkBoxRecenterSearchDialog, &ApplicationSettings::centerSearchDialog, &ApplicationSettings::setCenterSearchDialog, &ApplicationSettings::centerSearchDialogChanged);
 
-    MapSettingToGroupBox(ui->gbxRestorePreviousSession, &ApplicationSettings::restorePreviousSession, &ApplicationSettings::setRestorePreviousSession, &ApplicationSettings::restorePreviousSessionChanged);
-    connect(ui->gbxRestorePreviousSession, &QGroupBox::toggled, this, [=](bool checked) {
+    MapSettingToCheckBox(ui->checkBoxSessionSnapshot, &ApplicationSettings::enableSessionSnapshot, &ApplicationSettings::setEnableSessionSnapshot, &ApplicationSettings::enableSessionSnapshotChanged);
+    connect(ui->checkBoxSessionSnapshot, &QCheckBox::toggled, this, [=](bool checked) {
+        ui->gbxRestorePreviousSession->setEnabled(checked);
         if (!checked) {
+            ui->checkBoxRestorePreviousSession->setChecked(false);
             ui->checkBoxUnsavedFiles->setChecked(false);
             ui->checkBoxRestoreTempFiles->setChecked(false);
         }
-        else {
-            QMessageBox::warning(this, tr("Warning"), tr("This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk."));
-        }
     });
 
+    // Initialize the restore group box enabled state
+    ui->gbxRestorePreviousSession->setEnabled(settings->enableSessionSnapshot());
+
+    MapSettingToCheckBox(ui->checkBoxRestorePreviousSession, &ApplicationSettings::restorePreviousSession, &ApplicationSettings::setRestorePreviousSession, &ApplicationSettings::restorePreviousSessionChanged);
     MapSettingToCheckBox(ui->checkBoxUnsavedFiles, &ApplicationSettings::restoreUnsavedFiles, &ApplicationSettings::setRestoreUnsavedFiles, &ApplicationSettings::restoreUnsavedFilesChanged);
     MapSettingToCheckBox(ui->checkBoxRestoreTempFiles, &ApplicationSettings::restoreTempFiles, &ApplicationSettings::setRestoreTempFiles, &ApplicationSettings::restoreTempFilesChanged);
 

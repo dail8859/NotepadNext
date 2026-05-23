@@ -146,7 +146,12 @@ void SessionManager::saveSession(MainWindow *window)
     for (const auto &editor : window->editors()) {
         SessionFileType editorType = determineType(editor);
 
-        if (fileTypes.testFlag(editorType)) {
+        // UnsavedFile and TempFile are always saved as a safety net;
+        // SavedFile is only saved when the corresponding flag is set
+        bool shouldSave = (editorType == SessionManager::UnsavedFile || editorType == SessionManager::TempFile)
+                          || fileTypes.testFlag(editorType);
+
+        if (shouldSave) {
             settings.setArrayIndex(index);
 
             if (editorType == SessionManager::SavedFile) {
@@ -189,9 +194,9 @@ void SessionManager::loadSession(MainWindow *window)
     const int currentEditorIndex = settings.value("CurrentEditorIndex").toInt();
     const int size = settings.beginReadArray("OpenedFiles");
 
-    // NOTE: In theory the fileTypes should determine what is loaded, however if the session fileTypes
-    // change from the last time it was saved then it means the settings were manually altered outside of the app,
-    // which is non-standard behavior, so just load anything in the file
+    // NOTE: fileTypes determines what is loaded based on user settings.
+    // UnsavedFile and TempFile restore is gated by restoreUnsavedFiles/restoreTempFiles,
+    // but they are always saved so content is never lost.
 
     for (int index = 0; index < size; ++index) {
         settings.setArrayIndex(index);
@@ -202,13 +207,16 @@ void SessionManager::loadSession(MainWindow *window)
             const QString type = settings.value("Type").toString();
 
             if (type == QStringLiteral("File")) {
-                editor = loadFileDetails(settings);
+                if (fileTypes.testFlag(SessionManager::SavedFile))
+                    editor = loadFileDetails(settings);
             }
             else if (type == QStringLiteral("UnsavedFile")) {
-                editor = loadUnsavedFileDetails(settings);
+                if (fileTypes.testFlag(SessionManager::UnsavedFile))
+                    editor = loadUnsavedFileDetails(settings);
             }
             else if (type == QStringLiteral("Temp")) {
-                editor = loadTempFile(settings);
+                if (fileTypes.testFlag(SessionManager::TempFile))
+                    editor = loadTempFile(settings);
             }
             else {
                 qDebug("Unknown session entry type: %s", qUtf8Printable(type));
@@ -237,6 +245,11 @@ void SessionManager::loadSession(MainWindow *window)
 bool SessionManager::willFileGetStoredInSession(ScintillaNext *editor) const
 {
     SessionFileType editorType = determineType(editor);
+
+    // UnsavedFile and TempFile are always persisted as a safety net
+    if (editorType == SessionManager::UnsavedFile || editorType == SessionManager::TempFile) {
+        return true;
+    }
 
     // See if the editor type is in the currently supported file types
     return fileTypes.testFlag(editorType);

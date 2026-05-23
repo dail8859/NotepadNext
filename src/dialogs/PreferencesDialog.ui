@@ -53,17 +53,28 @@
           </widget>
          </item>
          <item>
+          <widget class="QCheckBox" name="checkBoxSessionSnapshot">
+           <property name="text">
+            <string>Enable Session Snapshot</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QGroupBox" name="gbxRestorePreviousSession">
            <property name="title">
             <string>Restore previous session</string>
            </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>false</bool>
-           </property>
            <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QCheckBox" name="checkBoxRestorePreviousSession">
+              <property name="text">
+               <string>Previously open files</string>
+              </property>
+             </widget>
+            </item>
             <item>
              <widget class="QCheckBox" name="checkBoxUnsavedFiles">
               <property name="text">

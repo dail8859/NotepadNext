@@ -183,7 +183,10 @@ bool NotepadNextApplication::init()
         }
     });
 
-    if (settings->restorePreviousSession()) {
+    // Initialize session manager file types from settings before loading session
+    getSessionManager();
+
+    if (settings->enableSessionSnapshot()) {
         qInfo("Restoring previous session");
 
         sessionManager->loadSession(window);
@@ -229,16 +232,14 @@ SessionManager *NotepadNextApplication::getSessionManager() const
 {
     SessionManager::SessionFileTypes fileTypes;
 
+    if (settings->enableSessionSnapshot()) {
+        // Safety net: always persist unsaved and temp file content, regardless of restore settings
+        fileTypes |= SessionManager::UnsavedFile;
+        fileTypes |= SessionManager::TempFile;
+    }
+
     if (settings->restorePreviousSession()) {
         fileTypes |= SessionManager::SavedFile;
-    }
-
-    if (settings->restoreUnsavedFiles()) {
-        fileTypes |= SessionManager::UnsavedFile;
-    }
-
-    if (settings->restoreTempFiles()) {
-        fileTypes |= SessionManager::TempFile;
     }
 
     // Update the file types supported in case something has changed in the settings
@@ -487,7 +488,12 @@ MainWindow *NotepadNextApplication::createNewWindow()
 
     // Timer to autosave the session
     connect(&autoSaveTimer, &QTimer::timeout, this, &NotepadNextApplication::saveSession);
-    autoSaveTimer.start(60 * 1000);
+    autoSaveTimer.start(7 * 1000);
+
+    // Backup session when switching between editors
+    connect(window, &MainWindow::editorActivated, this, [=](ScintillaNext *) {
+        saveSession();
+    });
 
     return window;
 }

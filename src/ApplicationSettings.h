@@ -99,6 +99,7 @@ public:
 
     DEFINE_SETTING(CombineSearchResults, combineSearchResults, bool)
 
+    DEFINE_SETTING(EnableSessionSnapshot, enableSessionSnapshot, bool)
     DEFINE_SETTING(RestorePreviousSession, restorePreviousSession, bool)
     DEFINE_SETTING(RestoreUnsavedFiles, restoreUnsavedFiles, bool)
     DEFINE_SETTING(RestoreTempFiles, restoreTempFiles, bool)
