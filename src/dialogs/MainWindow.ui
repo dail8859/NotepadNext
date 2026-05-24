@@ -72,7 +72,6 @@
      <addaction name="actionExportRtf"/>
     </widget>
     <addaction name="actionNew"/>
-    <addaction name="actionNewTab"/>
     <addaction name="actionOpen"/>
     <addaction name="actionOpenFolderasWorkspace"/>
     <addaction name="actionReload"/>
@@ -1543,7 +1542,7 @@
     <string>Split editor horizontally (left/right)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+D</string>
+    <string>Ctrl+Alt+Right</string>
    </property>
   </action>
   <action name="actionSplitVertical">
@@ -1554,18 +1553,7 @@
     <string>Split editor vertically (top/bottom)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+D</string>
-   </property>
-  </action>
-  <action name="actionNewTab">
-   <property name="text">
-    <string>New Tab</string>
-   </property>
-   <property name="toolTip">
-    <string>Create a new tab</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+T</string>
+    <string>Ctrl+Alt+Down</string>
    </property>
   </action>
  </widget>
