@@ -229,3 +229,29 @@ void DockedEditor::editorRenamed(ScintillaNext *editor)
         dockWidget->tabWidget()->setToolTip(editor->getName());
     }
 }
+
+void DockedEditor::splitToRight(ScintillaNext *editor)
+{
+    Q_ASSERT(editor != Q_NULLPTR);
+
+    ads::CDockWidget *newDockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+    if (newDockWidget) {
+        ads::CDockAreaWidget *currentArea = currentDockArea();
+        if (currentArea) {
+            dockManager->addDockWidget(ads::RightDockWidgetArea, newDockWidget, currentArea);
+        }
+    }
+}
+
+void DockedEditor::splitToBottom(ScintillaNext *editor)
+{
+    Q_ASSERT(editor != Q_NULLPTR);
+
+    ads::CDockWidget *newDockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+    if (newDockWidget) {
+        ads::CDockAreaWidget *currentArea = currentDockArea();
+        if (currentArea) {
+            dockManager->addDockWidget(ads::BottomDockWidgetArea, newDockWidget, currentArea);
+        }
+    }
+}

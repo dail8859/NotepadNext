@@ -125,6 +125,22 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionCloseAll, &QAction::triggered, this, &MainWindow::closeAllFiles);
     connect(ui->actionExit, &QAction::triggered, this, &MainWindow::close);
 
+    // Split editor actions
+    connect(ui->actionSplitHorizontal, &QAction::triggered, this, [this]() {
+        newFile();
+        ScintillaNext *newEditor = currentEditor();
+        if (newEditor) {
+            dockedEditor->splitToRight(newEditor);
+        }
+    });
+    connect(ui->actionSplitVertical, &QAction::triggered, this, [this]() {
+        newFile();
+        ScintillaNext *newEditor = currentEditor();
+        if (newEditor) {
+            dockedEditor->splitToBottom(newEditor);
+        }
+    });
+
 #ifdef Q_OS_WIN
     ui->actionExit->setShortcut(QKeySequence("Alt+F4"));
 #else

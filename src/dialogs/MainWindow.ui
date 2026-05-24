@@ -309,6 +309,9 @@
     <addaction name="menuFold_Level"/>
     <addaction name="menuUnfold_Level"/>
     <addaction name="separator"/>
+    <addaction name="actionSplitHorizontal"/>
+    <addaction name="actionSplitVertical"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuLanguage">
     <property name="title">
@@ -1529,6 +1532,28 @@
   <action name="actionReverseLineOrder">
    <property name="text">
     <string>Reverse Line Order</string>
+   </property>
+  </action>
+  <action name="actionSplitHorizontal">
+   <property name="text">
+    <string>Split Horizontal</string>
+   </property>
+   <property name="toolTip">
+    <string>Split editor horizontally (left/right)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Right</string>
+   </property>
+  </action>
+  <action name="actionSplitVertical">
+   <property name="text">
+    <string>Split Vertical</string>
+   </property>
+   <property name="toolTip">
+    <string>Split editor vertically (top/bottom)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Down</string>
    </property>
   </action>
  </widget>
