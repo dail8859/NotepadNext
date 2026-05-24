@@ -46,6 +46,9 @@ public:
 
     int count() const;
 
+    void splitToRight(ScintillaNext *editor);
+    void splitToBottom(ScintillaNext *editor);
+
 public slots:
     void addEditor(ScintillaNext *editor);
 
