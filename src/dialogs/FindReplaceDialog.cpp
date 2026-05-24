@@ -704,19 +704,11 @@ BookMarkDecorator *FindReplaceDialog::bookMarkDecorator() const
     return nullptr;
 }
 
-void FindReplaceDialog::clearMarkedBookmarks()
+void FindReplaceDialog::clearAllBookmarks()
 {
-    QList<int> handles = markedBookmarkHandles.take(editor);
-
-    if (handles.isEmpty())
-        return;
-
     BookMarkDecorator *decorator = bookMarkDecorator();
-    if (!decorator)
-        return;
-
-    for (const int handle : handles) {
-        decorator->removeBookmarkHandle(handle);
+    if (decorator) {
+        decorator->clearAllBookmarks();
     }
 }
 
@@ -731,7 +723,7 @@ void FindReplaceDialog::markAll()
 
     if (ui->checkBoxPurgeForEachSearch->isChecked()) {
         editor->indicatorClearRange(0, editor->length());
-        clearMarkedBookmarks();
+        clearAllBookmarks();
     }
 
     BookMarkDecorator *bookMarkDecorator = nullptr;
@@ -747,7 +739,7 @@ void FindReplaceDialog::markAll()
         if (bookMarkDecorator) {
             const int line = editor->lineFromPosition(start);
             if (!bookMarkDecorator->isBookmarkSet(line)) {
-                markedBookmarkHandles[editor].append(bookMarkDecorator->addBookmark(line));
+                bookMarkDecorator->addBookmark(line);
             }
         }
 
@@ -764,7 +756,7 @@ void FindReplaceDialog::clearAllMarks()
     ensureMarkIndicator();
     editor->setIndicatorCurrent(markIndicator);
     editor->indicatorClearRange(0, editor->length());
-    clearMarkedBookmarks();
+    clearAllBookmarks();
     showMessage(tr("All marks cleared"), "green");
 }
 

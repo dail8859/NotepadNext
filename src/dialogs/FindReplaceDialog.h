@@ -22,8 +22,6 @@
 
 #include <QDialog>
 #include <QEvent>
-#include <QHash>
-#include <QList>
 #include <QStatusBar>
 #include <QTabBar>
 
@@ -106,7 +104,7 @@ private:
     void showMessage(const QString &message, const QString &color);
     void ensureMarkIndicator();
     BookMarkDecorator *bookMarkDecorator() const;
-    void clearMarkedBookmarks();
+    void clearAllBookmarks();
 
     void updateFindList(const QString &text);
     void updateReplaceList(const QString &text);
@@ -114,7 +112,6 @@ private:
     bool isFirstTime = true;
     QPoint lastClosedPosition;
     int markIndicator = -1;
-    QHash<ScintillaNext *, QList<int>> markedBookmarkHandles;
     Ui::FindReplaceDialog *ui;
 
     ScintillaNext *editor;
