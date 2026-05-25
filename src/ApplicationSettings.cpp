@@ -20,6 +20,7 @@
 
 #include <QApplication>
 #include <QFont>
+#include <QStyleHints>
 
 #define CREATE_SETTING(group, name, lname, type, default) \
 ApplicationSetting<type> name{#group "/" #name, default};\
@@ -38,6 +39,28 @@ ApplicationSetting<type> name{#group "/" #name, default};\
 ApplicationSettings::ApplicationSettings(QObject *parent)
     : QSettings{parent}
 {
+    // Translate user-facing theme changes and OS-level color-scheme changes
+    // into a single effectiveDarkModeChanged signal that consumers listen for.
+    connect(this, &ApplicationSettings::themeChanged, this, [this](ThemeMode) {
+        emit effectiveDarkModeChanged(effectiveDarkMode());
+    });
+    if (auto *hints = QGuiApplication::styleHints()) {
+        connect(hints, &QStyleHints::colorSchemeChanged, this, [this](Qt::ColorScheme) {
+            if (theme() == SystemTheme)
+                emit effectiveDarkModeChanged(effectiveDarkMode());
+        });
+    }
+}
+
+bool ApplicationSettings::effectiveDarkMode() const
+{
+    switch (theme()) {
+    case LightTheme: return false;
+    case DarkTheme:  return true;
+    case SystemTheme:
+    default:
+        return QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark;
+    }
 }
 
 CREATE_SETTING(Gui, ShowMenuBar, showMenuBar, bool, true)
@@ -71,3 +94,5 @@ CREATE_SETTING(Editor, AdditionalWordChars, additionalWordChars, QString, QStrin
 CREATE_SETTING(Editor, DefaultEOLMode, defaultEOLMode, QString, QStringLiteral(""))
 CREATE_SETTING(Editor, URLHighlighting, urlHighlighting, bool, true)
 CREATE_SETTING(Editor, ShowLineNumbers, showLineNumbers, bool, true)
+
+CREATE_SETTING(Gui, Theme, theme, ApplicationSettings::ThemeMode, ApplicationSettings::SystemTheme)

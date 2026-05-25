@@ -73,6 +73,9 @@ public:
 protected:
     bool event(QEvent *event) override;
 
+public slots:
+    void refreshEditorTheme();
+
 private slots:
     void saveSettings();
     void receiveInfoFromSecondaryInstance(quint32 instanceId, QByteArray message);
