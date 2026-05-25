@@ -128,13 +128,13 @@ bool NotepadNextApplication::init()
     editorManager = new EditorManager(settings, this);
     sessionManager = new SessionManager(this);
 
-    connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [=](ScintillaNext *editor) {
+    connect(editorManager, &EditorManager::editorCreated, recentFilesListManager, [this](ScintillaNext *editor) {
         if (editor->isFile()) {
             recentFilesListManager->removeFile(editor->getFilePath());
         }
     });
 
-    connect(editorManager, &EditorManager::editorClosed, recentFilesListManager, [=](ScintillaNext *editor) {
+    connect(editorManager, &EditorManager::editorClosed, recentFilesListManager, [this](ScintillaNext *editor) {
         if (editor->isFile()) {
             recentFilesListManager->addFile(editor->getFilePath());
         }

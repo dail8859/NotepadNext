@@ -152,6 +152,22 @@ private:
 
     QScopedPointer<SearchResultsCollector> searchResults;
 
+    template <typename Method>
+    void connectEditorAction(QAction* action, Method method) {
+        connect(action, &QAction::triggered, this, [this, method]() {
+            if (auto* editor = currentEditor()) {
+                (editor->*method)();
+            }
+        });
+    }
+    template <typename Method, typename Arg>
+    void connectEditorAction(QAction* action, Method method, Arg value) {
+        connect(action, &QAction::triggered, this, [this, method, value]() {
+            if (auto* editor = currentEditor()) {
+                (editor->*method)(value);
+            }
+        });
+    }
     void applyStyleSheet();
     void applyCustomShortcuts();
     void initUpdateCheck();

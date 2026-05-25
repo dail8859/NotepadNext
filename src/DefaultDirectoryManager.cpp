@@ -19,8 +19,8 @@
 #include "DefaultDirectoryManager.h"
 #include "ApplicationSettings.h"
 
-DefaultDirectoryManager::DefaultDirectoryManager(MainWindow *window, ApplicationSettings *settings, QObject *parent)
-    : QObject{parent}, window(window), settings(settings)
+DefaultDirectoryManager::DefaultDirectoryManager(MainWindow *window, ApplicationSettings *settings)
+    : QObject{window}, window(window), settings(settings)
 {
     connect(window, &MainWindow::editorActivated, this, &DefaultDirectoryManager::editorActivated);
     connect(window, &MainWindow::fileDialogAccepted, this, &DefaultDirectoryManager::fileDialogAccepted);
