@@ -362,7 +362,6 @@ void FindReplaceDialog::count()
 void FindReplaceDialog::setEditor(ScintillaNext *editor)
 {
     this->editor = editor;
-    markIndicator = -1;
 
     finder->setEditor(editor);
 }
@@ -681,17 +680,16 @@ int FindReplaceDialog::computeSearchFlags()
     return flags;
 }
 
-void FindReplaceDialog::ensureMarkIndicator()
+int FindReplaceDialog::ensureMarkIndicator()
 {
-    if (markIndicator != -1)
-        return;
-
-    markIndicator = editor->allocateIndicator(QStringLiteral("find_mark_highlight"));
+    int markIndicator = editor->allocateIndicator(QStringLiteral("find_mark_highlight"));
     editor->indicSetFore(markIndicator, 0xFFCC00);
     editor->indicSetStyle(markIndicator, INDIC_FULLBOX);
     editor->indicSetOutlineAlpha(markIndicator, 200);
     editor->indicSetAlpha(markIndicator, 100);
     editor->indicSetUnder(markIndicator, true);
+
+    return markIndicator;
 }
 
 BookMarkDecorator *FindReplaceDialog::bookMarkDecorator() const
@@ -717,7 +715,7 @@ void FindReplaceDialog::markAll()
     qInfo(Q_FUNC_INFO);
 
     prepareToPerformSearch();
-    ensureMarkIndicator();
+    int markIndicator = ensureMarkIndicator();
 
     editor->setIndicatorCurrent(markIndicator);
 
@@ -753,7 +751,7 @@ void FindReplaceDialog::clearAllMarks()
 {
     qInfo(Q_FUNC_INFO);
 
-    ensureMarkIndicator();
+    int markIndicator = ensureMarkIndicator();
     editor->setIndicatorCurrent(markIndicator);
     editor->indicatorClearRange(0, editor->length());
     clearAllBookmarks();
@@ -764,7 +762,7 @@ void FindReplaceDialog::copyMarkedText()
 {
     qInfo(Q_FUNC_INFO);
 
-    ensureMarkIndicator();
+    int markIndicator = ensureMarkIndicator();
 
     QStringList markedTexts;
     int pos = 0;

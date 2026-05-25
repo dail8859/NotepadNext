@@ -1193,6 +1193,9 @@
    <property name="text">
     <string>Search and Bookmark Lines...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
   </action>
   <action name="actionNextBookmark">
    <property name="text">

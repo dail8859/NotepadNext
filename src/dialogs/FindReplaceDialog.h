@@ -102,7 +102,7 @@ private:
     int computeSearchFlags();
 
     void showMessage(const QString &message, const QString &color);
-    void ensureMarkIndicator();
+    int ensureMarkIndicator();
     BookMarkDecorator *bookMarkDecorator() const;
     void clearAllBookmarks();
 
@@ -111,7 +111,6 @@ private:
 
     bool isFirstTime = true;
     QPoint lastClosedPosition;
-    int markIndicator = -1;
     Ui::FindReplaceDialog *ui;
 
     ScintillaNext *editor;
