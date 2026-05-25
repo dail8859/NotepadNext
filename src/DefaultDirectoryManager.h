@@ -27,7 +27,7 @@ class DefaultDirectoryManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit DefaultDirectoryManager(MainWindow *window, ApplicationSettings *settings, QObject *parent = nullptr);
+    explicit DefaultDirectoryManager(MainWindow *window, ApplicationSettings *settings);
 
     QString getDefaultDirectory() const;
 
