@@ -204,6 +204,7 @@
       <string>Bookmarks</string>
      </property>
      <addaction name="actionToggleBookmark"/>
+     <addaction name="actionSearchAndBookmark"/>
      <addaction name="separator"/>
      <addaction name="actionNextBookmark"/>
      <addaction name="actionPreviousBookmark"/>
@@ -1189,6 +1190,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+F2</string>
+   </property>
+  </action>
+  <action name="actionSearchAndBookmark">
+   <property name="text">
+    <string>Search and Bookmark Lines...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
    </property>
   </action>
   <action name="actionNextBookmark">
