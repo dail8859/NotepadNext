@@ -24,9 +24,12 @@
 #include <QStatusBar>
 #include <QLineEdit>
 #include <QKeyEvent>
+#include <QClipboard>
+#include <QGuiApplication>
 
 #include "ScintillaNext.h"
 #include "MainWindow.h"
+#include "BookMarkDecorator.h"
 
 
 static void convertToExtended(QString &str)
@@ -58,6 +61,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     tabBar = new QTabBar();
     tabBar->addTab(tr("Find"));
     tabBar->addTab(tr("Replace"));
+    tabBar->addTab(tr("Mark"));
     tabBar->setExpanding(false);
     qobject_cast<QVBoxLayout *>(layout())->insertWidget(0, tabBar);
     connect(tabBar, &QTabBar::currentChanged, this, &FindReplaceDialog::changeTab);
@@ -144,6 +148,9 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
         showMessage(tr("Replaced %Ln matches", "", count), "green");
     });
     connect(ui->buttonClose, &QPushButton::clicked, this, &FindReplaceDialog::close);
+    connect(ui->buttonMarkAll, &QPushButton::clicked, this, &FindReplaceDialog::markAll);
+    connect(ui->buttonClearAllMarks, &QPushButton::clicked, this, &FindReplaceDialog::clearAllMarks);
+    connect(ui->buttonCopyMarkedText, &QPushButton::clicked, this, &FindReplaceDialog::copyMarkedText);
 
     loadSettings();
 
@@ -431,32 +438,78 @@ void FindReplaceDialog::adjustOpacityAlways(bool checked)
 
 void FindReplaceDialog::changeTab(int index)
 {
-    if (index == 0) {
+    if (index == FIND_TAB) {
         ui->labelReplaceWith->setMaximumHeight(0);
         ui->comboReplace->setMaximumHeight(0);
         // The combo box isn't actually "hidden", so adjust the focus policy so it does not get tabbed to
         ui->comboReplace->setFocusPolicy(Qt::NoFocus);
 
+        ui->buttonFind->show();
+
         ui->buttonReplace->hide();
         ui->buttonReplaceAll->hide();
         ui->buttonReplaceAllInDocuments->hide();
+        ui->buttonMarkAll->hide();
+        ui->buttonClearAllMarks->hide();
+        ui->buttonCopyMarkedText->hide();
 
         ui->buttonCount->show();
         ui->buttonFindAllInCurrent->show();
         ui->buttonFindAllInDocuments->show();
+
+        ui->checkBoxBookmarkLine->hide();
+        ui->checkBoxPurgeForEachSearch->hide();
+
+        ui->checkBoxBackwardsDirection->setEnabled(!ui->radioRegexSearch->isChecked());
+        ui->checkBoxWrapAround->setEnabled(true);
     }
-    else if (index == 1) {
+    else if (index == REPLACE_TAB) {
         ui->labelReplaceWith->setMaximumHeight(QWIDGETSIZE_MAX);
         ui->comboReplace->setMaximumHeight(QWIDGETSIZE_MAX);
         ui->comboReplace->setFocusPolicy(Qt::StrongFocus); // Reset its focus policy
 
+        ui->buttonFind->show();
+
         ui->buttonReplace->show();
         ui->buttonReplaceAll->show();
         ui->buttonReplaceAllInDocuments->show();
+        ui->buttonMarkAll->hide();
+        ui->buttonClearAllMarks->hide();
+        ui->buttonCopyMarkedText->hide();
 
         ui->buttonCount->hide();
         ui->buttonFindAllInCurrent->hide();
         ui->buttonFindAllInDocuments->hide();
+
+        ui->checkBoxBookmarkLine->hide();
+        ui->checkBoxPurgeForEachSearch->hide();
+
+        ui->checkBoxBackwardsDirection->setEnabled(!ui->radioRegexSearch->isChecked());
+        ui->checkBoxWrapAround->setEnabled(true);
+    }
+    else if (index == MARK_TAB) {
+        ui->labelReplaceWith->setMaximumHeight(0);
+        ui->comboReplace->setMaximumHeight(0);
+        ui->comboReplace->setFocusPolicy(Qt::NoFocus);
+
+        ui->buttonFind->hide();
+
+        ui->buttonReplace->hide();
+        ui->buttonReplaceAll->hide();
+        ui->buttonReplaceAllInDocuments->hide();
+        ui->buttonCount->hide();
+        ui->buttonFindAllInCurrent->hide();
+        ui->buttonFindAllInDocuments->hide();
+
+        ui->buttonMarkAll->show();
+        ui->buttonClearAllMarks->show();
+        ui->buttonCopyMarkedText->show();
+
+        ui->checkBoxBookmarkLine->show();
+        ui->checkBoxPurgeForEachSearch->show();
+
+        ui->checkBoxBackwardsDirection->setEnabled(!ui->radioRegexSearch->isChecked());
+        ui->checkBoxWrapAround->setEnabled(true);
     }
 
     ui->comboFind->setFocus();
@@ -625,6 +678,113 @@ int FindReplaceDialog::computeSearchFlags()
         flags |= SCFIND_REGEXP;
 
     return flags;
+}
+
+int FindReplaceDialog::ensureMarkIndicator()
+{
+    int markIndicator = editor->allocateIndicator(QStringLiteral("find_mark_highlight"));
+    editor->indicSetFore(markIndicator, 0xFFCC00);
+    editor->indicSetStyle(markIndicator, INDIC_FULLBOX);
+    editor->indicSetOutlineAlpha(markIndicator, 200);
+    editor->indicSetAlpha(markIndicator, 100);
+    editor->indicSetUnder(markIndicator, true);
+
+    return markIndicator;
+}
+
+BookMarkDecorator *FindReplaceDialog::bookMarkDecorator() const
+{
+    BookMarkDecorator *decorator = editor->findChild<BookMarkDecorator *>(QString(), Qt::FindDirectChildrenOnly);
+
+    if (decorator && decorator->isEnabled())
+        return decorator;
+
+    return nullptr;
+}
+
+void FindReplaceDialog::clearAllBookmarks()
+{
+    BookMarkDecorator *decorator = bookMarkDecorator();
+    if (decorator) {
+        decorator->clearAllBookmarks();
+    }
+}
+
+void FindReplaceDialog::markAll()
+{
+    qInfo(Q_FUNC_INFO);
+
+    prepareToPerformSearch();
+    int markIndicator = ensureMarkIndicator();
+
+    editor->setIndicatorCurrent(markIndicator);
+
+    if (ui->checkBoxPurgeForEachSearch->isChecked()) {
+        editor->indicatorClearRange(0, editor->length());
+        clearAllBookmarks();
+    }
+
+    BookMarkDecorator *bookMarkDecorator = nullptr;
+    if (ui->checkBoxBookmarkLine->isChecked()) {
+        bookMarkDecorator = this->bookMarkDecorator();
+    }
+
+    int count = 0;
+    finder->forEachMatch([&](int start, int end) {
+        editor->indicatorFillRange(start, end - start);
+        count++;
+
+        if (bookMarkDecorator) {
+            const int line = editor->lineFromPosition(start);
+            if (!bookMarkDecorator->isBookmarkSet(line)) {
+                bookMarkDecorator->addBookmark(line);
+            }
+        }
+
+        return end;
+    });
+
+    showMessage(tr("Mark: %Ln match in entire file", "", count), "green");
+}
+
+void FindReplaceDialog::clearAllMarks()
+{
+    qInfo(Q_FUNC_INFO);
+
+    int markIndicator = ensureMarkIndicator();
+    editor->setIndicatorCurrent(markIndicator);
+    editor->indicatorClearRange(0, editor->length());
+    clearAllBookmarks();
+    showMessage(tr("All marks cleared"), "green");
+}
+
+void FindReplaceDialog::copyMarkedText()
+{
+    qInfo(Q_FUNC_INFO);
+
+    int markIndicator = ensureMarkIndicator();
+
+    QStringList markedTexts;
+    int pos = 0;
+    const int len = editor->length();
+
+    while (pos < len) {
+        if (editor->indicatorValueAt(markIndicator, pos)) {
+            const int end = static_cast<int>(editor->indicatorEnd(markIndicator, pos));
+            markedTexts << QString::fromUtf8(editor->get_text_range(pos, end));
+            pos = end;
+        } else {
+            pos++;
+        }
+    }
+
+    if (markedTexts.isEmpty()) {
+        showMessage(tr("No marks to copy"), "red");
+        return;
+    }
+
+    QGuiApplication::clipboard()->setText(markedTexts.join("\n"));
+    showMessage(tr("Copied %Ln marked text(s)", "", markedTexts.size()), "green");
 }
 
 void FindReplaceDialog::showMessage(const QString &message, const QString &color)
