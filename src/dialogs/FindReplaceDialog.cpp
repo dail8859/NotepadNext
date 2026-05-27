@@ -798,8 +798,14 @@ void FindReplaceDialog::markAll()
 
     editor->setIndicatorCurrent(markIndicator);
 
+    const bool inSelection = finder->hasSelectionRange();
+
     if (ui->checkBoxPurgeForEachSearch->isChecked()) {
-        editor->indicatorClearRange(0, editor->length());
+        if (inSelection)
+            editor->indicatorClearRange(capturedSelectionRange.cpMin,
+                                        capturedSelectionRange.cpMax - capturedSelectionRange.cpMin);
+        else
+            editor->indicatorClearRange(0, editor->length());
         clearAllBookmarks();
     }
 
@@ -809,7 +815,7 @@ void FindReplaceDialog::markAll()
     }
 
     int count = 0;
-    finder->forEachMatch([&](int start, int end) {
+    auto callback = [&](int start, int end) {
         editor->indicatorFillRange(start, end - start);
         count++;
 
@@ -821,9 +827,15 @@ void FindReplaceDialog::markAll()
         }
 
         return end;
-    });
+    };
 
-    showMessage(tr("Mark: %Ln match in entire file", "", count), "green");
+    if (inSelection) {
+        finder->forEachMatchInRange(callback, capturedSelectionRange);
+        showMessage(tr("Mark: %Ln match in selection", "", count), "green");
+    } else {
+        finder->forEachMatch(callback);
+        showMessage(tr("Mark: %Ln match in entire file", "", count), "green");
+    }
 }
 
 void FindReplaceDialog::clearAllMarks()
