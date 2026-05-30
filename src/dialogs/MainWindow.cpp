@@ -1188,14 +1188,15 @@ void MainWindow::openFileList(const QStringList &fileNames)
         }
     }
 
-    // If any were successful, switch to the last one
+    // If any were successful
     if (!openedEditors.empty()) {
         dockedEditor->switchToEditor(openedEditors.last());
+
+        if (initialEditor) {
+            initialEditor->close();
+        }
     }
 
-    if (initialEditor) {
-        initialEditor->close();
-    }
 }
 
 bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
