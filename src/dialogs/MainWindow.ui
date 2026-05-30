@@ -304,6 +304,7 @@
     <addaction name="menuShowSymbol"/>
     <addaction name="menuZoom"/>
     <addaction name="actionWordWrap"/>
+    <addaction name="actionAutoCompletion"/>
     <addaction name="separator"/>
     <addaction name="actionFoldAll"/>
     <addaction name="actionUnfoldAll"/>
@@ -864,6 +865,14 @@
    </property>
    <property name="text">
     <string>Word Wrap</string>
+   </property>
+  </action>
+  <action name="actionAutoCompletion">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Auto Completion</string>
    </property>
   </action>
   <action name="actionRestoreRecentlyClosedFile">

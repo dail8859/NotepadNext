@@ -697,6 +697,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(app->getSettings(), &ApplicationSettings::wordWrapChanged, ui->actionWordWrap, &QAction::setChecked);
     connect(ui->actionWordWrap, &QAction::toggled, app->getSettings(), &ApplicationSettings::setWordWrap);
 
+    // Auto Completion
+    ui->actionAutoCompletion->setChecked(app->getSettings()->autoCompletion());
+    connect(app->getSettings(), &ApplicationSettings::autoCompletionChanged, ui->actionAutoCompletion, &QAction::setChecked);
+    connect(ui->actionAutoCompletion, &QAction::toggled, app->getSettings(), &ApplicationSettings::setAutoCompletion);
+
     // Zooming controls all editors simulaneously
     connect(ui->actionZoomIn, &QAction::triggered, this, [this]() {
         for (ScintillaNext *editor : editors()) {
