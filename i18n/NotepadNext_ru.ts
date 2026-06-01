@@ -511,7 +511,12 @@
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="747"/>
       <source>Mark: %Ln match in entire file</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Метка: %Ln совпадение во всём файле</numerusform>
+        <numerusform>Метка: %Ln совпадения во всём файле</numerusform>
+        <numerusform>Метка: %Ln совпадениий во всём файле</numerusform>
+        <numerusform>Метка: %Ln совпадениий во всём файле</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="758"/>
@@ -526,7 +531,12 @@
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="787"/>
       <source>Copied %Ln marked text(s)</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Скопирован %Ln отмеченный текст</numerusform>
+        <numerusform>Скопировано %Ln отмеченных текста</numerusform>
+        <numerusform>Скопировано %Ln отмеченных текстов</numerusform>
+        <numerusform>Скопировано %Ln отмеченных текстов</numerusform>
+      </translation>
     </message>
   </context>
   <context>
