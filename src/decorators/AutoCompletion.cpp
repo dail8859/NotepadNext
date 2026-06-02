@@ -20,6 +20,8 @@
 #include "AutoCompletion.h"
 
 #include <QSet>
+#include <QString>
+#include <Qt>
 
 
 using namespace Scintilla;
@@ -70,6 +72,14 @@ void AutoCompletion::showAutoCompletion()
         words.insert(editor->get_text_range(start, end));
         return end;
     }, { endPos, (Sci_PositionCR)editor->length()});
+
+    // Add matching language keywords
+    const QString currentWordStr = QString::fromUtf8(current_word);
+    for (const QString &kw : editor->languageKeywords) {
+        if (kw.startsWith(currentWordStr, Qt::CaseSensitive)) {
+            words.insert(kw.toUtf8());
+        }
+    }
 
     if (!words.isEmpty()) {
         editor->autoCShow(current_word.length(), words.values().join(' '));
