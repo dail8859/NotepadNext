@@ -3,9 +3,9 @@
 # -*- makefile -*-
 
 # Raw cmake (not dh_auto_configure) so CPM can fetch bundled deps at configure time
-# (dh_auto_configure forces FETCHCONTENT_FULLY_DISCONNECTED=ON). Serial build avoids
-# OOM. Install only the 'notepadnext' component so the bundled ADS library's own
-# install rules (headers, static lib, cmake config) are left out.
+# (dh_auto_configure forces FETCHCONTENT_FULLY_DISCONNECTED=ON). Install only the
+# 'notepadnext' component so the bundled ADS library's own install rules (headers,
+# static lib, cmake config) are left out.
 %:
 	dh $@
 
@@ -13,7 +13,7 @@ override_dh_auto_configure:
 	cmake -S . -B _build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
 
 override_dh_auto_build:
-	cmake --build _build
+	cmake --build _build --parallel
 
 override_dh_auto_test:
 
