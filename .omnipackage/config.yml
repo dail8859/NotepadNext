@@ -57,7 +57,7 @@ repositories:
     <<: *common
     s3:
       bucket: repositories-test
-      path_in_bucket: "rssguard"
+      path_in_bucket: "notepadnext"
       bucket_public_url: "https://repositories-test.omnipackage.org"
       endpoint: "${CLOUDFLARE_R2_ENDPOINT}"
       access_key_id: "${CLOUDFLARE_R2_ACCESS_KEY_ID}"
