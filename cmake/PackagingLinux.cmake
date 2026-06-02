@@ -46,22 +46,8 @@ endif()
 message(STATUS "Using qmake for AppImage packaging: ${APPIMAGE_QMAKE}")
 list(APPEND APPIMAGE_ENV_VARS QMAKE=${APPIMAGE_QMAKE})
 
-install(TARGETS NotepadNext
-    RUNTIME DESTINATION bin
-)
-install(FILES
-    ${PROJECT_SOURCE_DIR}/deploy/linux/NotepadNext.desktop
-    DESTINATION share/applications
-)
-install(FILES
-    ${PROJECT_SOURCE_DIR}/icon/NotepadNext.svg
-    DESTINATION share/icons/hicolor/scalable/apps
-)
-install(FILES
-    ${PROJECT_SOURCE_DIR}/icon/NotepadNext.svg
-    DESTINATION share/icons/hicolor/scalable/mimetypes
-)
-
+# Install rules live in Packaging.cmake (always-on for Linux); this file is the
+# AppImage builder only. The targets below reuse those install rules via AppDir.
 add_custom_target(appdir
     COMMAND ${CMAKE_COMMAND}
         --install .

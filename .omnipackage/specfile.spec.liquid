@@ -1,0 +1,52 @@
+# RPM spec template rendered at build time. Adjust install paths for any
+# additional resources your CMake project installs (icons, .desktop files).
+Name:       {{ package_name }}
+Version:    {{ version }}
+Release:    1%{?dist}
+Summary:    {{ description }}
+License:    GPL-3.0-or-later
+URL:        {{ homepage }}
+Source0:    {{ source_folder_name }}.tar.gz
+Vendor:     OmniPackage
+
+BuildRequires: {{ build_dependencies | join: ' ' }}
+{% if runtime_dependencies.size > 0 %}
+Requires: {{ runtime_dependencies | join: ', ' }}
+{% endif %}
+
+%define debug_package %{nil}
+%define _build_id_links none
+
+%description
+{{ description }}
+
+
+%prep
+%setup -q
+
+
+%build
+# CPM fetches bundled deps from GitHub at configure time (needs git + network).
+cmake -S . -B _build \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr
+cmake --build _build %{?_smp_mflags}
+
+
+%install
+# --component notepadnext: ship only the app, not the bundled ADS lib's install files.
+DESTDIR=%{buildroot} cmake --install _build --component notepadnext
+
+
+%files
+%license LICENSE
+%{_bindir}/NotepadNext
+%{_datadir}/applications/NotepadNext.desktop
+%{_datadir}/icons/hicolor/scalable/apps/NotepadNext.svg
+%{_datadir}/icons/hicolor/scalable/mimetypes/NotepadNext.svg
+%{_datadir}/metainfo/com.github.dail8859.NotepadNext.metainfo.xml
+
+
+%changelog
+* Tue Jun 02 2026 {{ maintainer }}
+- Initial package release

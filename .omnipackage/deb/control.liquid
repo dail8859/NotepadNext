@@ -1,0 +1,11 @@
+Source: {{ package_name }}
+Priority: optional
+Maintainer: {{ maintainer }}
+Build-Depends: debhelper (>= 8.0.0), {{ build_dependencies | join: ', ' }}
+Standards-Version: 3.9.4
+Homepage: {{ homepage }}
+
+Package: {{ package_name }}
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, {{ runtime_dependencies | join: ', ' }}
+Description: {{ description }}
