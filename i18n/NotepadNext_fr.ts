@@ -400,7 +400,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="311"/>
       <source>Mark All</source>
-      <translation type="unfinished"/>
+      <translation>Tout marquer</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="321"/>
