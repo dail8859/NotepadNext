@@ -405,12 +405,12 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="321"/>
       <source>Clear all marks</source>
-      <translation type="unfinished"/>
+      <translation>Effacer toutes les marques</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="331"/>
       <source>Copy Marked Text</source>
-      <translation type="unfinished"/>
+      <translation>Copier le texte marqué</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="341"/>
@@ -430,12 +430,12 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="475"/>
       <source>&amp;Bookmark line</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Ligne de favori</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="482"/>
       <source>&amp;Purge for each search</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Purger à chaque recherche</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="489"/>
@@ -465,7 +465,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
       <source>Mark</source>
-      <translation type="unfinished"/>
+      <translation>Marquer</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="148"/>
@@ -507,22 +507,28 @@
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="747"/>
       <source>Mark: %Ln match in entire file</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Marque : %Ln correspondance dans le fichier entier</numerusform>
+        <numerusform>Marque : %Ln correspondances dans le fichier entier</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="758"/>
       <source>All marks cleared</source>
-      <translation type="unfinished"/>
+      <translation>Toutes les marques ont été effacées</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="782"/>
       <source>No marks to copy</source>
-      <translation type="unfinished"/>
+      <translation>Aucune marque à copier</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="787"/>
       <source>Copied %Ln marked text(s)</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>%Ln texte marqué copié</numerusform>
+        <numerusform>%Ln textes marqués copiés</numerusform>
+      </translation>
     </message>
   </context>
   <context>
@@ -1566,12 +1572,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1197"/>
       <source>Search and Bookmark Lines...</source>
-      <translation type="unfinished"/>
+      <translation>Rechercher et marquer les lignes...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1200"/>
       <source>Ctrl+M</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+M</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1205"/>
@@ -1938,32 +1944,32 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1548"/>
       <source>Split Horizontal</source>
-      <translation type="unfinished"/>
+      <translation>Diviser horizontalement</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1551"/>
       <source>Split editor horizontally (left/right)</source>
-      <translation type="unfinished"/>
+      <translation>Diviser l'éditeur horizontalement (gauche/droite)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1554"/>
       <source>Ctrl+Alt+Right</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Alt+Droite</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1559"/>
       <source>Split Vertical</source>
-      <translation type="unfinished"/>
+      <translation>Diviser verticalement</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1562"/>
       <source>Split editor vertically (top/bottom)</source>
-      <translation type="unfinished"/>
+      <translation>Diviser l'éditeur verticalement (haut/bas)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1565"/>
       <source>Ctrl+Alt+Down</source>
-      <translation type="unfinished"/>
+      <translation>Ctrl+Alt+Bas</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="447"/>
@@ -2286,7 +2292,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="214"/>
       <source>Auto Completion</source>
-      <translation type="unfinished"/>
+      <translation>Complètement automatique</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="221"/>
