@@ -947,6 +947,8 @@ sptr_t ScintillaGTK::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) {
 		}
 	} catch (std::bad_alloc &) {
 		errorStatus = Status::BadAlloc;
+	} catch (Failure &failure) {
+		errorStatus = failure.status;
 	} catch (...) {
 		errorStatus = Status::Failure;
 	}
@@ -1588,7 +1590,7 @@ void ScintillaGTK::InsertSelection(GtkClipboard *clipBoard, GtkSelectionData *se
 			SetSelection(posPrimary, posPrimary);
 		}
 
-		InsertPasteShape(selText.Data(), selText.Length(),
+		InsertPasteShape(selText.AsView(),
 				 selText.rectangular ? PasteShape::rectangular : PasteShape::stream);
 		EnsureCaretVisible();
 	} else {
@@ -1650,7 +1652,7 @@ void ScintillaGTK::ReceivedDrop(GtkSelectionData *selection_data) {
 		if (LengthOfGSD(selection_data) > 0) {
 			SelectionText selText;
 			GetGtkSelectionText(selection_data, selText);
-			DropAt(posDrop, selText.Data(), selText.Length(), false, selText.rectangular);
+			DropAt(posDrop, selText.AsView(), false, selText.rectangular);
 		}
 	} else if (LengthOfGSD(selection_data) > 0) {
 		//~ fprintf(stderr, "ReceivedDrop other %p\n", static_cast<void *>(selection_data->type));
@@ -1667,7 +1669,7 @@ void ScintillaGTK::GetSelection(GtkSelectionData *selection_data, guint info, Se
 	// from code below
 	std::unique_ptr<SelectionText> newline_normalized;
 	{
-		std::string tmpstr = Document::TransformLineEnds(text->Data(), text->Length(), EndOfLine::Lf);
+		std::string tmpstr = Document::TransformLineEnds(text->AsView(), EndOfLine::Lf);
 		newline_normalized = std::make_unique<SelectionText>();
 		newline_normalized->Copy(tmpstr, CpUtf8, CharacterSet::Ansi, text->rectangular, false);
 		text = newline_normalized.get();
