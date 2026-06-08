@@ -2105,6 +2105,12 @@ void MainWindow::addEditor(ScintillaNext *editor)
     connect(editor, &ScintillaNext::customContextMenuRequested, this, [=, this](const QPoint &pos) {
         contextMenuPos = editor->positionFromPoint(pos.x(), pos.y());
 
+        // If the click landed outside the current selection, move the caret there
+        // and clear the selection so caret-based actions use the clicked location.
+        if (editor->selectionFromPoint(pos.x(), pos.y()) == -1) {
+            editor->setEmptySelection(contextMenuPos);
+        }
+
         QStringList actionNames = {
             "Cut",
             "Copy",
