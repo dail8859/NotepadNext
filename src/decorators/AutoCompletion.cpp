@@ -18,7 +18,9 @@
 
 
 #include "AutoCompletion.h"
+#include "NotepadNextApplication.h"
 
+#include <QApplication>
 #include <QSet>
 #include <QString>
 #include <Qt>
@@ -31,6 +33,11 @@ AutoCompletion::AutoCompletion(ScintillaNext *editor) :
 {
     editor->autoCSetOrder(SC_ORDER_PERFORMSORT);
     editor->autoCSetMaxHeight(10);
+
+    connect(editor, &ScintillaNext::lexerChanged, this, [this]() {
+        NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
+        keywords = app->getLanguageKeywords(this->editor->languageName);
+    });
 }
 
 void AutoCompletion::notify(const NotificationData *pscn)
@@ -75,7 +82,7 @@ void AutoCompletion::showAutoCompletion()
 
     // Add matching language keywords
     const QString currentWordStr = QString::fromUtf8(current_word);
-    for (const QString &kw : editor->languageKeywords) {
+    for (const QString &kw : keywords) {
         if (kw.startsWith(currentWordStr, Qt::CaseSensitive)) {
             words.insert(kw.toUtf8());
         }

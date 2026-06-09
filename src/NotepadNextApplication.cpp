@@ -295,7 +295,12 @@ void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QStr
     getLuaState()->setVariable("skip_tabwidth", skipTabWidth);
 
     getLuaState()->execute("SetLanguage(languageName)");
-    editor->languageKeywords = getLuaState()->executeAndReturn<QStringList>("return GetLanguageKeywords(languageName)");
+}
+
+QStringList NotepadNextApplication::getLanguageKeywords(const QString &languageName) const
+{
+    getLuaState()->setVariable("languageName", languageName);
+    return getLuaState()->executeAndReturn<QStringList>("return GetLanguageKeywords(languageName)");
 }
 
 QString NotepadNextApplication::detectLanguage(ScintillaNext *editor) const

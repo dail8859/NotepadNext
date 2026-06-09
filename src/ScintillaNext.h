@@ -26,7 +26,6 @@
 #include <QDateTime>
 #include <QFile>
 #include <QFileInfo>
-#include <QStringList>
 
 
 
@@ -124,7 +123,6 @@ public:
 
     QString languageName;
     QByteArray languageSingleLineComment;
-    QStringList languageKeywords;
 
     #include "ScintillaEnums.h"
 
