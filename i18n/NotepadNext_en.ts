@@ -2192,7 +2192,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.cpp" line="2174"/>
+        <location filename="../src/dialogs/MainWindow.cpp" line="2180"/>
         <source>No updates are available at this time.</source>
         <translation type="unfinished"></translation>
     </message>
