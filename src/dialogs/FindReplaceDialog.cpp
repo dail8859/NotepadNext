@@ -82,6 +82,16 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     connect(this, &FindReplaceDialog::windowActivated, [=]() {
         ui->comboFind->setFocus();
         ui->comboFind->lineEdit()->selectAll();
+        updateInSelectionCheckbox();
+    });
+
+    // "In selection" checkbox: capture selection bounds when checked
+    ui->checkBoxInSelection->setEnabled(false);
+    connect(ui->checkBoxInSelection, &QCheckBox::toggled, this, [=](bool checked) {
+        if (checked) {
+            capturedSelectionRange = {static_cast<Sci_PositionCR>(editor->selectionStart()),
+                                      static_cast<Sci_PositionCR>(editor->selectionEnd())};
+        }
     });
 
     connect(this, &QDialog::rejected, [=]() {
@@ -195,6 +205,8 @@ void FindReplaceDialog::showEvent(QShowEvent *event)
 
     isFirstTime = false;
 
+    updateInSelectionCheckbox();
+
     QDialog::showEvent(event);
 }
 
@@ -267,7 +279,8 @@ void FindReplaceDialog::findAllInCurrentDocument()
     QString text = findString();
 
     finder->setSearchText(text);
-    finder->forEachMatch([&](int start, int end){
+
+    auto matchHandler = [&](int start, int end){
         // Only add the file entry if there was a valid search result
         if (firstMatch) {
             searchResultsHandler->newFileEntry(editor);
@@ -284,7 +297,12 @@ void FindReplaceDialog::findAllInCurrentDocument()
         searchResultsHandler->newResultsEntry(lineText, line, startPositionFromBeginning, endPositionFromBeginning);
 
         return end;
-    });
+    };
+
+    if (finder->hasSelectionRange())
+        finder->forEachMatchInRange(matchHandler, capturedSelectionRange);
+    else
+        finder->forEachMatch(matchHandler);
 }
 
 void FindReplaceDialog::findAllInDocuments()
@@ -314,9 +332,15 @@ void FindReplaceDialog::replace()
         convertToExtended(replaceText);
     }
 
+    const bool inSelection = ui->checkBoxInSelection->isChecked() && ui->checkBoxInSelection->isEnabled();
+    const int originalDocLength = inSelection ? editor->length() : 0;
+
     Sci_CharacterRange range = finder->replaceSelectionIfMatch(replaceText);
 
     if (ScintillaNext::isRangeValid(range)) {
+        if (inSelection)
+            capturedSelectionRange.cpMax += editor->length() - originalDocLength;
+
         showMessage(tr("1 occurrence was replaced"), "blue");
     }
 
@@ -344,8 +368,24 @@ void FindReplaceDialog::replaceAll()
         convertToExtended(replaceText);
     }
 
+    const bool inSelection = ui->checkBoxInSelection->isChecked() && ui->checkBoxInSelection->isEnabled();
+    const int originalDocLength = inSelection ? editor->length() : 0;
+
     int count = finder->replaceAll(replaceText);
     showMessage(tr("Replaced %Ln matches", "", count), "green");
+
+    // After replacing in selection, re-apply a selection covering the modified region
+    if (inSelection) {
+        const int lengthDelta = editor->length() - originalDocLength;
+        const int newEnd = capturedSelectionRange.cpMax + lengthDelta;
+        editor->setSelection(newEnd, capturedSelectionRange.cpMin);
+        capturedSelectionRange.cpMax = newEnd;
+        // If the selection collapsed (all text deleted), uncheck
+        if (newEnd == capturedSelectionRange.cpMin) {
+            ui->checkBoxInSelection->setChecked(false);
+            updateInSelectionCheckbox();
+        }
+    }
 }
 
 void FindReplaceDialog::count()
@@ -364,6 +404,12 @@ void FindReplaceDialog::setEditor(ScintillaNext *editor)
     this->editor = editor;
 
     finder->setEditor(editor);
+
+    // Reset the in-selection state when the editor changes
+    capturedSelectionRange = {0, 0};
+    ui->checkBoxInSelection->setChecked(false);
+    ui->checkBoxInSelection->setEnabled(false);
+    finder->clearSelectionRange();
 }
 
 void FindReplaceDialog::performNextSearch()
@@ -553,6 +599,12 @@ void FindReplaceDialog::prepareToPerformSearch(bool replace)
     finder->setWrap(ui->checkBoxWrapAround->isChecked());
     finder->setSearchFlags(computeSearchFlags());
     finder->setSearchText(findText);
+
+    if (ui->checkBoxInSelection->isChecked() && ui->checkBoxInSelection->isEnabled()) {
+        finder->setSelectionRange(capturedSelectionRange);
+    } else {
+        finder->clearSelectionRange();
+    }
 }
 
 void FindReplaceDialog::loadSettings()
@@ -666,6 +718,33 @@ void FindReplaceDialog::restorePosition()
     }
 }
 
+void FindReplaceDialog::updateInSelectionCheckbox()
+{
+    if (!editor) {
+        ui->checkBoxInSelection->setEnabled(false);
+        return;
+    }
+
+    const int selStart = editor->selectionStart();
+    const int selEnd   = editor->selectionEnd();
+    const bool hasSelection    = (selStart != selEnd);
+    const bool isRectangular   = editor->selectionIsRectangle();
+    const bool isMultiple      = (editor->selections() > 1);
+
+    if (hasSelection && !isRectangular && !isMultiple) {
+        ui->checkBoxInSelection->setEnabled(true);
+        // Capture the current selection bounds (only update if not already checked)
+        if (!ui->checkBoxInSelection->isChecked()) {
+            capturedSelectionRange = {static_cast<Sci_PositionCR>(selStart),
+                                      static_cast<Sci_PositionCR>(selEnd)};
+        }
+    } else {
+        ui->checkBoxInSelection->setChecked(false);
+        ui->checkBoxInSelection->setEnabled(false);
+        finder->clearSelectionRange();
+    }
+}
+
 int FindReplaceDialog::computeSearchFlags()
 {
     int flags = 0;
@@ -719,8 +798,14 @@ void FindReplaceDialog::markAll()
 
     editor->setIndicatorCurrent(markIndicator);
 
+    const bool inSelection = finder->hasSelectionRange();
+
     if (ui->checkBoxPurgeForEachSearch->isChecked()) {
-        editor->indicatorClearRange(0, editor->length());
+        if (inSelection)
+            editor->indicatorClearRange(capturedSelectionRange.cpMin,
+                                        capturedSelectionRange.cpMax - capturedSelectionRange.cpMin);
+        else
+            editor->indicatorClearRange(0, editor->length());
         clearAllBookmarks();
     }
 
@@ -730,7 +815,7 @@ void FindReplaceDialog::markAll()
     }
 
     int count = 0;
-    finder->forEachMatch([&](int start, int end) {
+    auto callback = [&](int start, int end) {
         editor->indicatorFillRange(start, end - start);
         count++;
 
@@ -742,9 +827,15 @@ void FindReplaceDialog::markAll()
         }
 
         return end;
-    });
+    };
 
-    showMessage(tr("Mark: %Ln match in entire file", "", count), "green");
+    if (inSelection) {
+        finder->forEachMatchInRange(callback, capturedSelectionRange);
+        showMessage(tr("Mark: %Ln match in selection", "", count), "green");
+    } else {
+        finder->forEachMatch(callback);
+        showMessage(tr("Mark: %Ln match in entire file", "", count), "green");
+    }
 }
 
 void FindReplaceDialog::clearAllMarks()
