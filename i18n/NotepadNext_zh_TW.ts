@@ -919,19 +919,9 @@
       <translation>建立新檔案</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="434"/>
-      <source>Ctrl+N</source>
-      <translation>Ctrl+N</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="444"/>
       <source>&amp;Open...</source>
       <translation>開啟(&amp;O)...</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="447"/>
-      <source>Ctrl+O</source>
-      <translation>Ctrl+O</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="460"/>
@@ -945,11 +935,6 @@
       <translation>儲存</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="466"/>
-      <source>Ctrl+S</source>
-      <translation>Ctrl+S</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="471"/>
       <source>E&amp;xit</source>
       <translation>離開(&amp;E)</translation>
@@ -960,19 +945,9 @@
       <translation>復原(&amp;U)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="487"/>
-      <source>Ctrl+Z</source>
-      <translation>Ctrl+Z</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="497"/>
       <source>&amp;Redo</source>
       <translation>重做(&amp;R)</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="500"/>
-      <source>Ctrl+Y</source>
-      <translation>Ctrl+Y</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="510"/>
@@ -980,19 +955,9 @@
       <translation>剪下(&amp;t)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="513"/>
-      <source>Ctrl+X</source>
-      <translation>Ctrl+X</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="523"/>
       <source>&amp;Copy</source>
       <translation>複製(&amp;C)</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="526"/>
-      <source>Ctrl+C</source>
-      <translation>Ctrl+C</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="536"/>
@@ -1000,19 +965,9 @@
       <translation>貼上(&amp;P)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="539"/>
-      <source>Ctrl+V</source>
-      <translation>Ctrl+V</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="544"/>
       <source>&amp;Delete</source>
       <translation>刪除(&amp;D)</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="547"/>
-      <source>Del</source>
-      <translation>Del</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="552"/>
@@ -1040,19 +995,9 @@
       <translation>關閉目前檔案</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="577"/>
-      <source>Ctrl+W</source>
-      <translation>Ctrl+W</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="582"/>
       <source>Save &amp;As...</source>
       <translation>另存新檔(&amp;A)...</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="585"/>
-      <source>Ctrl+Alt+S</source>
-      <translation>Ctrl+Alt+S</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="590"/>
@@ -1065,19 +1010,9 @@
       <translation>全部儲存(&amp;e)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="602"/>
-      <source>Ctrl+Shift+S</source>
-      <translation>Ctrl+Shift+S</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="607"/>
       <source>Select A&amp;ll</source>
       <translation>全選(&amp;A)</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="610"/>
-      <source>Ctrl+A</source>
-      <translation>Ctrl+A</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="619"/>
@@ -1140,11 +1075,6 @@
       <translation>複製並插入目前這行</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="690"/>
-      <source>Alt+Down</source>
-      <translation>Alt+Down</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="695"/>
       <source>Split Lines</source>
       <translation>分行處理</translation>
@@ -1155,29 +1085,14 @@
       <translation>合併多行</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="703"/>
-      <source>Ctrl+J</source>
-      <translation>Ctrl+J</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="708"/>
       <source>Move Selected Lines Up</source>
       <translation>向下移動選中的行</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="711"/>
-      <source>Ctrl+Shift+Up</source>
-      <translation>Ctrl+Shift+Up</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="716"/>
       <source>Move Selected Lines Down</source>
       <translation>向上移動選中的行</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="719"/>
-      <source>Ctrl+Shift+Down</source>
-      <translation>Ctrl+Shift+Down</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="728"/>
@@ -1188,11 +1103,6 @@
       <location filename="../src/dialogs/MainWindow.ui" line="731"/>
       <source>Close All files</source>
       <translation>關閉所有檔案</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="734"/>
-      <source>Ctrl+Shift+W</source>
-      <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="739"/>
@@ -1215,29 +1125,14 @@
       <translation>放大(&amp;I)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="762"/>
-      <source>Ctrl++</source>
-      <translation>Ctrl++</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="772"/>
       <source>Zoom &amp;Out</source>
       <translation>縮小(&amp;O)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="775"/>
-      <source>Ctrl+-</source>
-      <translation>Ctrl+-</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="780"/>
       <source>Reset Zoom</source>
       <translation>重置縮放</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="783"/>
-      <source>Ctrl+0</source>
-      <translation>Ctrl+0</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="788"/>
@@ -1285,11 +1180,6 @@
       <translation>恢復最近關閉的檔案</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="874"/>
-      <source>Ctrl+Shift+T</source>
-      <translation>Ctrl+Shift+T</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="879"/>
       <source>Open All Recent Files</source>
       <translation>開啟所有最近的檔案</translation>
@@ -1305,11 +1195,6 @@
       <translation>尋找(&amp;F)...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="897"/>
-      <source>Ctrl+F</source>
-      <translation>Ctrl+F</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="902"/>
       <source>Find in Files...</source>
       <translation>在檔案中尋找...</translation>
@@ -1320,19 +1205,9 @@
       <translation>尋找下一個(&amp;N)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="910"/>
-      <source>F3</source>
-      <translation>F3</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="915"/>
       <source>Find &amp;Previous</source>
       <translation>尋找上一個(&amp;P)</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="918"/>
-      <source>Shift+F3</source>
-      <translation type="unfinished"/>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="928"/>
@@ -1340,19 +1215,9 @@
       <translation>取代(&amp;R)...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="931"/>
-      <source>Ctrl+H</source>
-      <translation>Ctrl+H</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="939"/>
       <source>Full Screen</source>
       <translation>全螢幕</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="942"/>
-      <source>F11</source>
-      <translation>F11</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="955"/>
@@ -1364,11 +1229,6 @@
       <location filename="../src/dialogs/MainWindow.ui" line="967"/>
       <source>Playback</source>
       <translation>播放</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="970"/>
-      <source>Ctrl+Shift+P</source>
-      <translation>Ctrl+Shift+P</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="982"/>
@@ -1391,19 +1251,9 @@
       <translation>快速尋找</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1014"/>
-      <source>Ctrl+Alt+I</source>
-      <translation>Ctrl+Alt+I</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1019"/>
       <source>Select Next Instance</source>
       <translation>選擇下一個實例</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1022"/>
-      <source>Ctrl+D</source>
-      <translation>Ctrl+D</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1031"/>
@@ -1426,19 +1276,9 @@
       <translation>跳轉到行(&amp;G)...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1047"/>
-      <source>Ctrl+G</source>
-      <translation>Ctrl+G</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1056"/>
       <source>Print...</source>
       <translation>列印...</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1059"/>
-      <source>Ctrl+P</source>
-      <translation>Ctrl+P</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1064"/>
@@ -1451,29 +1291,14 @@
       <translation>切換單行註解</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1072"/>
-      <source>Ctrl+/</source>
-      <translation>Ctrl+/</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1077"/>
       <source>Single Line Comment</source>
       <translation>單行註解</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1080"/>
-      <source>Ctrl+K</source>
-      <translation>Ctrl+K</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1085"/>
       <source>Single Line Uncomment</source>
       <translation>取消單行註解</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1088"/>
-      <source>Ctrl+Shift+K</source>
-      <translation>Ctrl+Shift+K</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1100"/>
@@ -1557,19 +1382,9 @@
       <translation>切換書籤</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1192"/>
-      <source>Ctrl+F2</source>
-      <translation>Ctrl+F2</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1197"/>
       <source>Search and Bookmark Lines...</source>
       <translation type="unfinished"/>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1200"/>
-      <source>Ctrl+M</source>
-      <translation>Ctrl+M</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1205"/>
@@ -1577,19 +1392,9 @@
       <translation>下一個書籤</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1208"/>
-      <source>F2</source>
-      <translation>F2</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1213"/>
       <source>Previous Bookmark</source>
       <translation>上一個書籤</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1216"/>
-      <source>Shift+F2</source>
-      <translation>Shift+F2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1221"/>
@@ -1607,19 +1412,9 @@
       <translation>下一個分頁</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1234"/>
-      <source>Ctrl+Tab</source>
-      <translation>Ctrl+Tab</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1242"/>
       <source>Previous Tab</source>
       <translation>上一個分頁</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1245"/>
-      <source>Ctrl+Shift+Tab</source>
-      <translation>Ctrl+Shift+Tab</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1253"/>
@@ -1627,19 +1422,9 @@
       <translation>摺疊層級 1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1256"/>
-      <source>Alt+1</source>
-      <translation>Alt+1</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1261"/>
       <source>Fold Level 2</source>
       <translation>摺疊層級 2</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1264"/>
-      <source>Alt+2</source>
-      <translation>Alt+2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1269"/>
@@ -1647,19 +1432,9 @@
       <translation>摺疊層級 3</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1272"/>
-      <source>Alt+3</source>
-      <translation>Alt+3</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1277"/>
       <source>Fold Level 4</source>
       <translation>摺疊層級 4</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1280"/>
-      <source>Alt+4</source>
-      <translation>Alt+4</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1285"/>
@@ -1667,19 +1442,9 @@
       <translation>展開層級 1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1288"/>
-      <source>Alt+Shift+1</source>
-      <translation>Alt+Shift+1</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1293"/>
       <source>Unfold Level 2</source>
       <translation>展開層級 2</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1296"/>
-      <source>Alt+Shift+2</source>
-      <translation>Alt+Shift+2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1301"/>
@@ -1687,19 +1452,9 @@
       <translation>展開層級 3</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1304"/>
-      <source>Alt+Shift+3</source>
-      <translation>Alt+Shift+3</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1309"/>
       <source>Unfold Level 4</source>
       <translation>展開層級 4</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1312"/>
-      <source>Alt+Shift+4</source>
-      <translation>Alt+Shift+4</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1317"/>
@@ -1707,19 +1462,9 @@
       <translation>全部摺疊</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1320"/>
-      <source>Alt+0</source>
-      <translation>Alt+0</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1325"/>
       <source>Unfold All</source>
       <translation>全部展開</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1328"/>
-      <source>Alt+Shift+0</source>
-      <translation>Alt+Shift+0</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1333"/>
@@ -1727,19 +1472,9 @@
       <translation>摺疊層級 5</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1336"/>
-      <source>Alt+5</source>
-      <translation>Alt+5</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1341"/>
       <source>Fold Level 6</source>
       <translation>摺疊層級 6</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1344"/>
-      <source>Alt+6</source>
-      <translation>Alt+6</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1349"/>
@@ -1747,19 +1482,9 @@
       <translation>摺疊層級 7</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1352"/>
-      <source>Alt+7</source>
-      <translation>Alt+7</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1357"/>
       <source>Fold Level 8</source>
       <translation>摺疊層級 8</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1360"/>
-      <source>Alt+8</source>
-      <translation>Alt+8</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1365"/>
@@ -1767,19 +1492,9 @@
       <translation>摺疊層級 9</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1368"/>
-      <source>Alt+9</source>
-      <translation>Alt+9</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1373"/>
       <source>Unfold Level 5</source>
       <translation>展開層級 5</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1376"/>
-      <source>Alt+Shift+5</source>
-      <translation>Alt+Shift+5</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1381"/>
@@ -1787,19 +1502,9 @@
       <translation>展開層級 6</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1384"/>
-      <source>Alt+Shift+6</source>
-      <translation>Alt+Shift+6</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1389"/>
       <source>Unfold Level 7</source>
       <translation>展開層級 7</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1392"/>
-      <source>Alt+Shift+7</source>
-      <translation>Alt+Shift+7</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1397"/>
@@ -1807,30 +1512,15 @@
       <translation>展開層級 8</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1400"/>
-      <source>Alt+Shift+8</source>
-      <translation>Alt+Shift+8</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1405"/>
       <source>Unfold Level 9</source>
       <translation>展開層級 9</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1408"/>
-      <source>Alt+Shift+9</source>
-      <translation>Alt+Shift+9</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1413"/>
       <location filename="../src/dialogs/MainWindow.ui" line="1416"/>
       <source>Toggle Overtype</source>
       <translation>Toggle Overtype</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1419"/>
-      <source>Ins</source>
-      <translation>Ins</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1427"/>
@@ -1944,11 +1634,6 @@
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1554"/>
-      <source>Ctrl+Alt+Right</source>
-      <translation>Ctrl+Alt+Right</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1559"/>
       <source>Split Vertical</source>
       <translation>垂直分割</translation>
@@ -1956,11 +1641,6 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1562"/>
       <source>Split editor vertically (top/bottom)</source>
-      <translation type="unfinished"/>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1565"/>
-      <source>Ctrl+Alt+Down</source>
       <translation type="unfinished"/>
     </message>
     <message>
@@ -2181,7 +1861,7 @@
       <translation>放棄</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2174"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2180"/>
       <source>No updates are available at this time.</source>
       <translation>目前沒有可用的更新。</translation>
     </message>
@@ -2391,11 +2071,6 @@
       <location filename="../src/widgets/QuickFindWidget.ui" line="73"/>
       <source>. *</source>
       <translation>. *</translation>
-    </message>
-    <message>
-      <location filename="../src/widgets/QuickFindWidget.ui" line="76"/>
-      <source>Alt+E</source>
-      <translation>Alt+E</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.cpp" line="238"/>
