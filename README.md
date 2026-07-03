@@ -48,6 +48,12 @@ brew tap dail8859/notepadnext
 brew install notepadnext
 ```
 
+If you receive warnings that Notepad Next is "damaged", this is an Apple complaining that the I have not paid them money to "trust" me. You can bypass this by running:
+
+```bash
+xattr -d com.apple.quarantine /Applications/NotepadNext.app
+```
+
 #### MacOS Tweaks
 
 By default, MacOS enables font smoothing which causes text to appear quite differently from the Windows version. This can be disabled system-wide using the following command:
