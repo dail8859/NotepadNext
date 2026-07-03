@@ -102,6 +102,44 @@ function SetLanguage(languageName)
     editor.Property["fold.compact"] = "0"
 end
 
+function GetLanguageKeywords(languageName)
+    local L = languages[languageName]
+
+    if not L or not L.keywords then
+        return {}
+    end
+
+    local seen = {}
+
+    local function collectKeywords(lang)
+        if not lang then return end
+        if lang.keywords then
+            for _, kwString in pairs(lang.keywords) do
+                for token in kwString:gmatch("%S+") do
+                    seen[token] = true
+                end
+            end
+        end
+    end
+
+    collectKeywords(L)
+
+    if L.additionalLanguages then
+        for _, language in pairs(L.additionalLanguages) do
+            collectKeywords(languages[language])
+        end
+    end
+
+    local result = {}
+    for token, _ in pairs(seen) do
+        result[#result + 1] = token
+    end
+
+    table.sort(result)
+
+    return result
+end
+
 languages = {}
 languages["ActionScript"] = require("actionscript")
 languages["ADA"] = require("ada")

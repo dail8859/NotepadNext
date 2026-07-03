@@ -22,6 +22,8 @@
 
 #include "EditorDecorator.h"
 
+#include <QStringList>
+
 
 class AutoCompletion : public EditorDecorator
 {
@@ -33,6 +35,9 @@ public:
 public slots:
     void notify(const Scintilla::NotificationData *pscn) override;
     void showAutoCompletion();
+
+private:
+    QStringList keywords;
 };
 
 #endif // AUTOCOMPLETION_H
