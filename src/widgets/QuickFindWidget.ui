@@ -73,7 +73,7 @@
         <string>. *</string>
        </property>
        <property name="shortcut">
-        <string>Alt+E</string>
+        <string notr="true">Alt+E</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
