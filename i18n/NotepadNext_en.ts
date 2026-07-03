@@ -927,18 +927,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="434"/>
-        <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="444"/>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="447"/>
-        <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -953,11 +943,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="466"/>
-        <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="471"/>
         <source>E&amp;xit</source>
         <translation type="unfinished"></translation>
@@ -968,18 +953,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="487"/>
-        <source>Ctrl+Z</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="497"/>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="500"/>
-        <source>Ctrl+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -988,18 +963,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="513"/>
-        <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="523"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="526"/>
-        <source>Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1008,18 +973,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="539"/>
-        <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="544"/>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="547"/>
-        <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1048,18 +1003,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="577"/>
-        <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="582"/>
         <source>Save &amp;As...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="585"/>
-        <source>Ctrl+Alt+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1073,18 +1018,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="602"/>
-        <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="607"/>
         <source>Select A&amp;ll</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="610"/>
-        <source>Ctrl+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1148,11 +1083,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="690"/>
-        <source>Alt+Down</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="695"/>
         <source>Split Lines</source>
         <translation type="unfinished"></translation>
@@ -1163,28 +1093,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="703"/>
-        <source>Ctrl+J</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="708"/>
         <source>Move Selected Lines Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="711"/>
-        <source>Ctrl+Shift+Up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="716"/>
         <source>Move Selected Lines Down</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="719"/>
-        <source>Ctrl+Shift+Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1195,11 +1110,6 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="731"/>
         <source>Close All files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="734"/>
-        <source>Ctrl+Shift+W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1223,28 +1133,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="762"/>
-        <source>Ctrl++</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="772"/>
         <source>Zoom &amp;Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="775"/>
-        <source>Ctrl+-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="780"/>
         <source>Reset Zoom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="783"/>
-        <source>Ctrl+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1293,11 +1188,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="874"/>
-        <source>Ctrl+Shift+T</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="879"/>
         <source>Open All Recent Files</source>
         <translation type="unfinished"></translation>
@@ -1313,11 +1203,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="897"/>
-        <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="902"/>
         <source>Find in Files...</source>
         <translation type="unfinished"></translation>
@@ -1328,18 +1213,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="910"/>
-        <source>F3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="915"/>
         <source>Find &amp;Previous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="918"/>
-        <source>Shift+F3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1348,18 +1223,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="931"/>
-        <source>Ctrl+H</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="939"/>
         <source>Full Screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="942"/>
-        <source>F11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1371,11 +1236,6 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="967"/>
         <source>Playback</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="970"/>
-        <source>Ctrl+Shift+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1399,18 +1259,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1014"/>
-        <source>Ctrl+Alt+I</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1019"/>
         <source>Select Next Instance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1022"/>
-        <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1434,18 +1284,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1047"/>
-        <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1056"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1059"/>
-        <source>Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1459,28 +1299,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1072"/>
-        <source>Ctrl+/</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1077"/>
         <source>Single Line Comment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1080"/>
-        <source>Ctrl+K</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1085"/>
         <source>Single Line Uncomment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1088"/>
-        <source>Ctrl+Shift+K</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1565,18 +1390,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1192"/>
-        <source>Ctrl+F2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1197"/>
         <source>Search and Bookmark Lines...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1200"/>
-        <source>Ctrl+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1585,18 +1400,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1208"/>
-        <source>F2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1213"/>
         <source>Previous Bookmark</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1216"/>
-        <source>Shift+F2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1615,18 +1420,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1234"/>
-        <source>Ctrl+Tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1242"/>
         <source>Previous Tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1245"/>
-        <source>Ctrl+Shift+Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1635,18 +1430,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1256"/>
-        <source>Alt+1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1261"/>
         <source>Fold Level 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1264"/>
-        <source>Alt+2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1655,18 +1440,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1272"/>
-        <source>Alt+3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1277"/>
         <source>Fold Level 4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1280"/>
-        <source>Alt+4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1675,18 +1450,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1288"/>
-        <source>Alt+Shift+1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1293"/>
         <source>Unfold Level 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1296"/>
-        <source>Alt+Shift+2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1695,18 +1460,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1304"/>
-        <source>Alt+Shift+3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1309"/>
         <source>Unfold Level 4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1312"/>
-        <source>Alt+Shift+4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1715,18 +1470,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1320"/>
-        <source>Alt+0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1325"/>
         <source>Unfold All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1328"/>
-        <source>Alt+Shift+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1735,18 +1480,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1336"/>
-        <source>Alt+5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1341"/>
         <source>Fold Level 6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1344"/>
-        <source>Alt+6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1755,18 +1490,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1352"/>
-        <source>Alt+7</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1357"/>
         <source>Fold Level 8</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1360"/>
-        <source>Alt+8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1775,18 +1500,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1368"/>
-        <source>Alt+9</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1373"/>
         <source>Unfold Level 5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1376"/>
-        <source>Alt+Shift+5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1795,18 +1510,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1384"/>
-        <source>Alt+Shift+6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1389"/>
         <source>Unfold Level 7</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1392"/>
-        <source>Alt+Shift+7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1815,29 +1520,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1400"/>
-        <source>Alt+Shift+8</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1405"/>
         <source>Unfold Level 9</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1408"/>
-        <source>Alt+Shift+9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1413"/>
         <location filename="../src/dialogs/MainWindow.ui" line="1416"/>
         <source>Toggle Overtype</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1419"/>
-        <source>Ins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1952,11 +1642,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1554"/>
-        <source>Ctrl+Alt+Right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1559"/>
         <source>Split Vertical</source>
         <translation type="unfinished"></translation>
@@ -1964,11 +1649,6 @@
     <message>
         <location filename="../src/dialogs/MainWindow.ui" line="1562"/>
         <source>Split editor vertically (top/bottom)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/MainWindow.ui" line="1565"/>
-        <source>Ctrl+Alt+Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2401,11 +2081,6 @@
     <message>
         <location filename="../src/widgets/QuickFindWidget.ui" line="73"/>
         <source>. *</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/QuickFindWidget.ui" line="76"/>
-        <source>Alt+E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
