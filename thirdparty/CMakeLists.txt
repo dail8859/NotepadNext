@@ -21,7 +21,7 @@ set(QAPPLICATION_CLASS QApplication CACHE STRING "Inheritance class for SingleAp
 CPMAddPackage(
     NAME SingleApplication
     GITHUB_REPOSITORY itay-grudev/SingleApplication
-    GIT_TAG 494772e98cef0aa88124f154feb575cc60b08b38
+    GIT_TAG v3.5.6
 )
 
 CPMAddPackage(
