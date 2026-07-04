@@ -3,7 +3,7 @@ include(${CMAKE_SOURCE_DIR}/cmake/CPM.cmake)
 CPMAddPackage(
     NAME ads
     GITHUB_REPOSITORY githubuser0xFFFF/Qt-Advanced-Docking-System
-    GIT_TAG 34b68d6eab1556cf851d24e033909332771f3dfe
+    GIT_TAG 5.0.0
     OPTIONS
         "BUILD_STATIC ON"
         "BUILD_EXAMPLES OFF"
