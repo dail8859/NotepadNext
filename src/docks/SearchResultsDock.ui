@@ -33,12 +33,12 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="btnCopyResults">
+       <widget class="QToolButton" name="btnCopyResults">
         <property name="toolTip">
-         <string>Copy Results to Clipboard</string>
+         <string>Copy All Results to Clipboard</string>
         </property>
         <property name="text">
-         <string/>
+         <string>Copy All Results to Clipboard</string>
         </property>
         <property name="icon">
          <iconset resource="../resources.qrc">
@@ -75,6 +75,9 @@
       </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::ExtendedSelection</enum>
       </property>
       <property name="verticalScrollMode">
        <enum>QAbstractItemView::ScrollPerItem</enum>
