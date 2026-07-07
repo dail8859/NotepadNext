@@ -240,6 +240,12 @@ target_link_libraries(NotepadNext
         uchardet
 )
 
+if(APPLE)
+    # Workaround for Qt 6.5/6.8 on macOS with newer Xcode that removed deprecated AGL framework
+    # These linker flags prevent the linker from failing when Qt tries to reference AGL
+    target_link_options(NotepadNext PRIVATE "LINKER:-flat_namespace" "LINKER:-undefined,suppress")
+endif()
+
 target_compile_definitions(NotepadNext
     PRIVATE
         ADS_STATIC
