@@ -242,8 +242,8 @@ target_link_libraries(NotepadNext
 
 if(APPLE)
     # Workaround for Qt 6.5 on macOS trying to link deprecated AGL framework
-    target_link_options(NotepadNext PRIVATE -Wl,-undefined,error)
-    target_link_options(NotepadNext PRIVATE -Wl,-flat_namespace)
+    # Suppress the linker error from newer Xcode versions that removed AGL
+    target_link_options(NotepadNext PRIVATE "LINKER:-undefined,suppress")
 endif()
 
 target_compile_definitions(NotepadNext
