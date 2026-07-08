@@ -17,8 +17,76 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, windows-2022, macos-latest]
-        qt_version: ["6.5", "6.8", "6.10"]
+        include:
+          # Windows
+          - os: windows-2022
+            platform: windows
+            qt_version: "6.5"
+
+          - os: windows-2022
+            platform: windows
+            qt_version: "6.8"
+
+          - os: windows-2022
+            platform: windows
+            qt_version: "6.10"
+
+          # Linux
+          - os: ubuntu-24.04
+            platform: linux
+            qt_version: "6.5"
+
+          - os: ubuntu-24.04
+            platform: linux
+            qt_version: "6.8"
+
+          - os: ubuntu-24.04
+            platform: linux
+            qt_version: "6.10"
+
+          # macOS Intel
+          - os: macos-15-intel
+            platform: mac
+            arch: x64
+            cmake_arch: x86_64
+            qt_version: "6.5"
+            deployment_target: "11.0"
+
+          - os: macos-15-intel
+            platform: mac
+            arch: x64
+            cmake_arch: x86_64
+            qt_version: "6.8"
+            deployment_target: "12.0"
+
+          - os: macos-15-intel
+            platform: mac
+            arch: x64
+            cmake_arch: x86_64
+            qt_version: "6.10"
+            deployment_target: "13.0"
+
+          # macOS Apple Silicon
+          - os: macos-latest
+            platform: mac
+            arch: arm64
+            cmake_arch: arm64
+            qt_version: "6.5"
+            deployment_target: "11.0"
+
+          - os: macos-latest
+            platform: mac
+            arch: arm64
+            cmake_arch: arm64
+            qt_version: "6.8"
+            deployment_target: "12.0"
+
+          - os: macos-latest
+            platform: mac
+            arch: arm64
+            cmake_arch: arm64
+            qt_version: "6.10"
+            deployment_target: "13.0"
 
     runs-on: ${{ matrix.os }}
 
@@ -34,19 +102,19 @@ jobs:
           cache: true
 
       - name: Setup Visual Studio Tools
-        if: runner.os == 'Windows'
+        if: matrix.platform == 'windows'
         uses: egor-tensin/vs-shell@v2
         with:
           arch: x64
 
       - name: Install NSIS
-        if: runner.os == 'Windows'
+        if: matrix.platform == 'windows'
         uses: repolevedavaj/install-nsis@v1.2.1
         with:
           nsis-version: '3.11'
 
       - name: Setup Linux
-        if: runner.os == 'Linux'
+        if: matrix.platform == 'linux'
         run: |
           echo "DISTRIBUTION=AppImage" >> "$GITHUB_ENV"
 
@@ -59,48 +127,58 @@ jobs:
 
           sudo apt-get install libxkbcommon-dev libxkbcommon-x11-0 fuse libxcb-cursor-dev libcups2-dev
 
+      - name: Setup macOS
+        if: matrix.platform == 'mac'
+        run: |
+          echo "DISTRIBUTION=dmg" >> "$GITHUB_ENV"
+
       - name: Configure
-        run: cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION=${{ env.DISTRIBUTION }}
+        run: |
+          CMAKE_OPTS="-S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION=${{ env.DISTRIBUTION }}"
+          if [ "${{ matrix.platform }}" = "mac" ]; then
+            CMAKE_OPTS="$CMAKE_OPTS -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake_arch }} -DCMAKE_OSX_DEPLOYMENT_TARGET=${{ matrix.deployment_target }}"
+          fi
+          cmake $CMAKE_OPTS
 
       - name: Build
         run: cmake --build build --parallel
 
       - name: Build Windows Targets
-        if: runner.os == 'Windows'
+        if: matrix.platform == 'windows'
         run: cmake --build build --target package zip installer --parallel
 
       - name: Build MacOS Targets
-        if: runner.os == 'macOS'
+        if: matrix.platform == 'mac'
         run: cmake --build build --target dmg --parallel
 
       - name: Build Linux Targets
-        if: runner.os == 'Linux'
+        if: matrix.platform == 'linux'
         run: cmake --build build --target appimage --parallel
 
       - name: Upload Windows zip Package
         uses: actions/upload-artifact@v7
-        if: runner.os == 'Windows'
+        if: matrix.platform == 'windows'
         with:
           name: NotepadNext-Windows-Qt${{ matrix.qt_version }}-Zip
           path: ${{ github.workspace }}/build/package/
 
       - name: Upload Windows Installer
         uses: actions/upload-artifact@v7
-        if: runner.os == 'Windows'
+        if: matrix.platform == 'windows'
         with:
           name: NotepadNext-Windows-Qt${{ matrix.qt_version }}-Installer
           path: ${{ github.workspace }}/installer/NotepadNext*.exe
 
       - name: Upload MacOS dmg
         uses: actions/upload-artifact@v7
-        if: runner.os == 'macOS'
+        if: matrix.platform == 'mac'
         with:
-          name: NotepadNext-macOS-Qt${{ matrix.qt_version }}
+          name: NotepadNext-macOS-${{ matrix.arch }}-Qt${{ matrix.qt_version }}
           path: ${{ github.workspace }}/build/NotepadNext*.dmg
 
       - name: Upload Linux AppImage
         uses: actions/upload-artifact@v7
-        if: runner.os == 'Linux'
+        if: matrix.platform == 'linux'
         with:
           name: NotepadNext-Linux-Qt${{ matrix.qt_version }}-AppImage
           path: ${{ github.workspace }}/build/NotepadNext*.AppImage
@@ -141,6 +219,10 @@ jobs:
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt$QT_RELEASE_VER-AppImage/NotepadNext-${{ github.ref_name }}-x86_64.AppImage
 
-      - name: Upload macOS App
+      - name: Upload macOS App (Intel x64)
         run: |
-          gh release upload ${{ github.ref_name }} NotepadNext-macOS-Qt$QT_RELEASE_VER/NotepadNext-${{ github.ref_name }}.dmg
+          gh release upload ${{ github.ref_name }} "NotepadNext-macOS-x64-Qt${QT_RELEASE_VER}/NotepadNext-${{ github.ref_name }}.dmg"
+
+      - name: Upload macOS App (Apple Silicon arm64)
+        run: |
+          gh release upload ${{ github.ref_name }} "NotepadNext-macOS-arm64-Qt${QT_RELEASE_VER}/NotepadNext-${{ github.ref_name }}.dmg"
