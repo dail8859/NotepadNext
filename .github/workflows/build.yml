@@ -133,6 +133,7 @@ jobs:
           echo "DISTRIBUTION=dmg" >> "$GITHUB_ENV"
 
       - name: Configure
+        shell: bash
         run: |
           CMAKE_OPTS="-S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION=${{ env.DISTRIBUTION }}"
           if [ "${{ matrix.platform }}" = "mac" ]; then
