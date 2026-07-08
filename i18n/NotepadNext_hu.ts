@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN" sourcelanguage="en">
+<TS version="2.1" language="hu_HU" sourcelanguage="en">
   <context>
     <name>ColumnEditorDialog</name>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="20"/>
       <source>Column Mode</source>
-      <translation>列编辑模式</translation>
+      <translation>Oszlop mód</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="32"/>
       <source>Text</source>
-      <translation>文本</translation>
+      <translation>Szöveg</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="47"/>
       <source>Numbers</source>
-      <translation>数字</translation>
+      <translation>Számok</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="59"/>
       <source>Start:</source>
-      <translation>开始:</translation>
+      <translation>Kezdőérték:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="76"/>
       <source>Step:</source>
-      <translation>步长:</translation>
+      <translation>Lépésköz:</translation>
     </message>
   </context>
   <context>
@@ -34,7 +34,7 @@
     <message>
       <location filename="../src/docks/DebugLogDock.ui" line="14"/>
       <source>Debug Log</source>
-      <translation>调试日志</translation>
+      <translation>Hibakeresési napló</translation>
     </message>
   </context>
   <context>
@@ -42,74 +42,74 @@
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="100"/>
       <source>Length: %L1    Lines: %L2</source>
-      <translation>长度：%L1    行数：%L2</translation>
+      <translation>Hossz: %L1    Sorok: %L2</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="109"/>
       <source>Sel: N/A</source>
-      <translation>选择：N/A</translation>
+      <translation>Kijel.: –</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="119"/>
       <source>Sel: %L1 | %L2</source>
-      <translation>选择：%L1 | %L2</translation>
+      <translation>Kijel.: %L1 | %L2</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="123"/>
       <source>Ln: %L1    Col: %L2    </source>
-      <translation>行：%L1    列：%L2    </translation>
+      <translation>Sor: %L1    Oszlop: %L2    </translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="139"/>
       <source>Macintosh (CR)</source>
-      <translation type="unfinished"/>
+      <translation>Macintosh (CR)</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="142"/>
       <source>Windows (CR LF)</source>
-      <translation type="unfinished"/>
+      <translation>Windows (CR LF)</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="145"/>
       <source>Unix (LF)</source>
-      <translation type="unfinished"/>
+      <translation>Unix (LF)</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="155"/>
       <source>ANSI</source>
-      <translation type="unfinished"/>
+      <translation>ANSI</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="159"/>
       <source>UTF-8</source>
-      <translation type="unfinished"/>
+      <translation>UTF-8</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="160"/>
       <source>UTF-8 BOM</source>
-      <translation type="unfinished"/>
+      <translation>UTF-8 BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="161"/>
       <source>UTF-16LE BOM</source>
-      <translation type="unfinished"/>
+      <translation>UTF-16LE BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="162"/>
       <source>UTF-16BE BOM</source>
-      <translation type="unfinished"/>
+      <translation>UTF-16BE BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="178"/>
       <source>OVR</source>
       <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
-      <translation type="unfinished"/>
+      <translation>ÁTÍ</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="182"/>
       <source>INS</source>
       <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
-      <translation type="unfinished"/>
+      <translation>BESZ</translation>
     </message>
   </context>
   <context>
@@ -117,187 +117,187 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.ui" line="14"/>
       <source>Editor Inspector</source>
-      <translation>编辑查看器</translation>
+      <translation>Szerkesztő vizsgáló</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="36"/>
       <source>Position Information</source>
-      <translation>位置信息</translation>
+      <translation>Pozícióinformációk</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="39"/>
       <source>Current Position</source>
-      <translation>当前位置</translation>
+      <translation>Aktuális pozíció</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="40"/>
       <source>Current Position (x, y)</source>
-      <translation>当前位置 (x, y)</translation>
+      <translation>Aktuális pozíció (x, y)</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="41"/>
       <source>Column</source>
-      <translation>列</translation>
+      <translation>Oszlop</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="43"/>
       <source>Current Style</source>
-      <translation>当前样式</translation>
+      <translation>Aktuális stílus</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="44"/>
       <source>Current Line</source>
-      <translation>当前行</translation>
+      <translation>Aktuális sor</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="45"/>
       <source>Line Length</source>
-      <translation>行长</translation>
+      <translation>Sor hossza</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="46"/>
       <source>Line End Position</source>
-      <translation>行尾位置</translation>
+      <translation>Sorvég pozíciója</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="47"/>
       <source>Line Indentation</source>
-      <translation>行缩进</translation>
+      <translation>Sor behúzása</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="48"/>
       <source>Line Indent Position</source>
-      <translation>行缩进位置</translation>
+      <translation>Sor behúzásának pozíciója</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="52"/>
       <source>Selection Information</source>
-      <translation>选择信息</translation>
+      <translation>Kijelölés információk</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="55"/>
       <source>Mode</source>
-      <translation>模式</translation>
+      <translation>Mód</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="69"/>
       <source>Is Rectangle</source>
-      <translation>矩形选择</translation>
+      <translation>Téglalap alakú</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="70"/>
       <source>Selection Empty</source>
-      <translation>已选择空</translation>
+      <translation>Kijelölés üres</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="71"/>
       <source>Main Selection</source>
-      <translation>主光标编号</translation>
+      <translation>Fő kijelölés</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="72"/>
       <source># of Selections</source>
-      <translation>光标数</translation>
+      <translation>Kijelölések száma</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="75"/>
       <source>Multiple Selections</source>
-      <translation>光标列表</translation>
+      <translation>Többszörös kijelölés</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="80"/>
       <source>Document Information</source>
-      <translation>文档信息</translation>
+      <translation>Dokumentuminformációk</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="83"/>
       <source>Length</source>
-      <translation>长度</translation>
+      <translation>Hossz</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="84"/>
       <source>Line Count</source>
-      <translation>行数</translation>
+      <translation>Sorok száma</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="88"/>
       <source>View Information</source>
-      <translation>视图信息</translation>
+      <translation>Nézet információk</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="91"/>
       <source>Lines on Screen</source>
-      <translation>屏幕上行数</translation>
+      <translation>Képernyőn látható sorok</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="92"/>
       <source>First Visible Line</source>
-      <translation>第一可视行</translation>
+      <translation>Első látható sor</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="93"/>
       <source>X Offset</source>
-      <translation>X 偏移</translation>
+      <translation>X eltolás</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="97"/>
       <source>Fold Information</source>
-      <translation>折叠信息</translation>
+      <translation>Összecsukás információk</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="100"/>
       <source>Visible From Doc Line</source>
-      <translation>从文档行可见</translation>
+      <translation>Látható dokumentumsor</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="101"/>
       <source>Doc Line From Visible</source>
-      <translation>可见文档行</translation>
+      <translation>Dokumentumsor a láthatóból</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="102"/>
       <source>Fold Level</source>
-      <translation>折叠层级</translation>
+      <translation>Összecsukási szint</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="103"/>
       <source>Is Fold Header</source>
-      <translation>是折叠组标题行</translation>
+      <translation>Összecsukási fejléc</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="104"/>
       <source>Fold Parent</source>
-      <translation>折叠组父级</translation>
+      <translation>Szülő összehajtás</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="105"/>
       <source>Last Child</source>
-      <translation>最后子节点</translation>
+      <translation>Utolsó alárendelt elem</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="106"/>
       <source>Contracted Fold Next</source>
-      <translation>下一个已折叠项</translation>
+      <translation>Következő összecsukott rész</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="173"/>
       <source>Caret</source>
-      <translation>光标位置</translation>
+      <translation>Kurzor</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="177"/>
       <source>Anchor</source>
-      <translation>锚点位置</translation>
+      <translation>Horgony</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="181"/>
       <source>Caret Virtual Space</source>
-      <translation>插入虚拟空格</translation>
+      <translation>Kurzor virtuális térköze</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="185"/>
       <source>Anchor Virtual Space</source>
-      <translation>定位虚拟空格</translation>
+      <translation>Horgony virtuális térköze</translation>
     </message>
   </context>
   <context>
@@ -305,17 +305,17 @@
     <message>
       <location filename="../src/docks/FileListDock.ui" line="14"/>
       <source>File List</source>
-      <translation>文件列表</translation>
+      <translation>Fájllista</translation>
     </message>
     <message>
       <location filename="../src/docks/FileListDock.ui" line="51"/>
       <source>...</source>
-      <translation type="unfinished"/>
+      <translation>...</translation>
     </message>
     <message>
       <location filename="../src/docks/FileListDock.ui" line="90"/>
       <source>Sort by File Name</source>
-      <translation type="unfinished"/>
+      <translation>Rendezés fájlnév szerint</translation>
     </message>
   </context>
   <context>
@@ -325,77 +325,77 @@
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="247"/>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="62"/>
       <source>Find</source>
-      <translation>查找</translation>
+      <translation>Keresés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="69"/>
       <source>Search Mode</source>
-      <translation>搜索模式</translation>
+      <translation>Keresési mód</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="90"/>
       <source>&amp;Normal</source>
-      <translation>正常模式(&amp;N)</translation>
+      <translation>&amp;Normál</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="106"/>
       <source>E&amp;xtended (\n, \r, \t, \0, \x...)</source>
-      <translation>扩展模式(&amp;E) (\n, \r, \t, \0, \x...)</translation>
+      <translation>K&amp;iterjesztett (\n, \r, \t, \0, \x...)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="124"/>
       <source>Re&amp;gular expression</source>
-      <translation>正则表达式 (&amp;g)</translation>
+      <translation>Re&amp;guláris kifejezés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="140"/>
       <source>&amp;. matches newline</source>
-      <translation>&amp;. 匹配换行</translation>
+      <translation>&amp;. illeszkedik az újsorra</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="179"/>
       <source>Transparenc&amp;y</source>
-      <translation>透明度(&amp;y)</translation>
+      <translation>Átlátszósá&amp;g</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="200"/>
       <source>On losing focus</source>
-      <translation>失去焦点时</translation>
+      <translation>Fókuszvesztéskor</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="210"/>
       <source>Always</source>
-      <translation>总是</translation>
+      <translation>Mindig</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="260"/>
       <source>Coun&amp;t</source>
-      <translation>计数(&amp;t)</translation>
+      <translation>S&amp;zámlálás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="270"/>
       <source>&amp;Replace</source>
-      <translation>替换(&amp;R)</translation>
+      <translation>&amp;Csere</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="277"/>
       <source>Replace &amp;All</source>
-      <translation>全部替换(&amp;A)</translation>
+      <translation>Összes &amp;cseréje</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="284"/>
       <source>Replace All in &amp;Opened Documents</source>
-      <translation>替换所有打开文件(&amp;O)</translation>
+      <translation>Összes csere a megi&amp;nyitott dokumentumokban</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="291"/>
       <source>Find All in All &amp;Opened Documents</source>
-      <translation>查找所有打开文件(&amp;O)</translation>
+      <translation>Keresés az összes megi&amp;nyitott dokumentumban</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="301"/>
       <source>Find All in Current Document</source>
-      <translation>查找当前文档</translation>
+      <translation>Keresés az aktuális dokumentumban</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="311"/>
@@ -415,17 +415,17 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="341"/>
       <source>Close</source>
-      <translation>关闭</translation>
+      <translation>Bezárás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="397"/>
       <source>&amp;Find:</source>
-      <translation>&amp;查找：</translation>
+      <translation>&amp;Keresés:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="429"/>
       <source>Replace:</source>
-      <translation>替换：</translation>
+      <translation>Csere:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="475"/>
@@ -440,27 +440,27 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="489"/>
       <source>Backward direction</source>
-      <translation>反向搜索</translation>
+      <translation>Visszafelé</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="496"/>
       <source>Match &amp;whole word only</source>
-      <translation>全词匹配(&amp;w)</translation>
+      <translation>Csak &amp;teljes szó</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="503"/>
       <source>Match &amp;case</source>
-      <translation>匹配大小写(&amp;c)</translation>
+      <translation>Kis-/nagy&amp;betű érzékeny</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="510"/>
       <source>Wra&amp;p Around</source>
-      <translation>循环搜索(&amp;p)</translation>
+      <translation>K&amp;örbeforduló keresés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
       <source>Replace</source>
-      <translation>替换</translation>
+      <translation>Csere</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
@@ -472,34 +472,36 @@
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="348"/>
       <source>Replaced %Ln matches</source>
       <translation>
-        <numerusform>已替换 %Ln 个匹配项</numerusform>
+        <numerusform>%Ln egyezés lecserélve</numerusform>
+        <numerusform>%Ln egyezés lecserélve</numerusform>
       </translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="246"/>
       <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
-      <translation>已经到达文档的末尾。从顶部找到第一个匹配项。</translation>
+      <translation>A dokumentum végéhez értünk. Az első előfordulás felülről megtalálva.</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="257"/>
       <source>No matches found.</source>
-      <translation>没有找到匹配项。</translation>
+      <translation>Nincs találat.</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="320"/>
       <source>1 occurrence was replaced</source>
-      <translation>已替换 1 个匹配项</translation>
+      <translation>1 előfordulás lecserélve</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="329"/>
       <source>No more occurrences were found</source>
-      <translation>没有找到更多匹配项</translation>
+      <translation>Nincs több előfordulás</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="359"/>
       <source>Found %Ln matches</source>
       <translation>
-        <numerusform>找到 %Ln 个匹配项</numerusform>
+        <numerusform>%Ln egyezés található</numerusform>
+        <numerusform>%Ln egyezés található</numerusform>
       </translation>
     </message>
     <message numerus="yes">
@@ -528,7 +530,7 @@
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="14"/>
       <source>Folder as Workspace</source>
-      <translation>文件夹工作区</translation>
+      <translation>Mappa mint munkaterület</translation>
     </message>
   </context>
   <context>
@@ -536,68 +538,68 @@
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="14"/>
       <source>Language Inspector</source>
-      <translation>语言查看器</translation>
+      <translation>Nyelvi vizsgáló</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="56"/>
       <source>Language:</source>
-      <translation>语言：</translation>
+      <translation>Nyelv:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="70"/>
       <source>Lexer:</source>
-      <translation>词法分析器：</translation>
+      <translation>Lexer:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="86"/>
       <source>Properties:</source>
-      <translation>属性：</translation>
+      <translation>Tulajdonságok:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="100"/>
       <source>Property</source>
-      <translation>属性</translation>
+      <translation>Tulajdonság</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="105"/>
       <source>Type</source>
-      <translation>类型</translation>
+      <translation>Típus</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="110"/>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="151"/>
       <source>Description</source>
-      <translation>描述</translation>
+      <translation>Leírás</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="115"/>
       <source>Value</source>
-      <translation>值</translation>
+      <translation>Érték</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="123"/>
       <source>Keywords:</source>
-      <translation>关键词：</translation>
+      <translation>Kulcsszavak:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="146"/>
       <source>ID</source>
-      <translation type="unfinished"/>
+      <translation>Azonosító</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="159"/>
       <source>Styles:</source>
-      <translation>样式：</translation>
+      <translation>Stílusok:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="166"/>
       <source>TextLabel</source>
-      <translation>文本标签</translation>
+      <translation>Szövegcímke</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.cpp" line="146"/>
       <source>Position %1 Style %2</source>
-      <translation>位置 %1 样式 %2</translation>
+      <translation>Pozíció: %1, stílus: %2</translation>
     </message>
   </context>
   <context>
@@ -605,7 +607,7 @@
     <message>
       <location filename="../src/docks/LuaConsoleDock.ui" line="17"/>
       <source>Lua Console</source>
-      <translation>Lua 终端</translation>
+      <translation>Lua konzol</translation>
     </message>
   </context>
   <context>
@@ -613,67 +615,67 @@
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="14"/>
       <source>Macro Editor</source>
-      <translation>宏编辑器</translation>
+      <translation>Makrószerkesztő</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="48"/>
       <source>Name</source>
-      <translation>名称</translation>
+      <translation>Név</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="58"/>
       <source>Shortcut</source>
-      <translation>快捷方式</translation>
+      <translation>Gyorsbillentyű</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="67"/>
       <source>Steps:</source>
-      <translation>步骤：</translation>
+      <translation>Lépések:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="95"/>
       <source>Insert Macro Step</source>
-      <translation>插入宏步</translation>
+      <translation>Makrólépés beszúrása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="110"/>
       <source>Delete Selected Macro Step</source>
-      <translation>删除已选宏步</translation>
+      <translation>Kijelölt makrólépés törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="125"/>
       <source>Move Selected Macro Step Up</source>
-      <translation>向上移动已选宏步</translation>
+      <translation>Kijelölt makrólépés mozgatása felfelé</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="140"/>
       <source>Move Selected Macro Step Down</source>
-      <translation>向下移动已选宏步</translation>
+      <translation>Kijelölt makrólépés mozgatása lefelé</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="176"/>
       <source>Copy Selected Macro</source>
-      <translation>复制已选宏步</translation>
+      <translation>Kijelölt makró másolása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="191"/>
       <source>Delete Selected Macro</source>
-      <translation>清空已选宏</translation>
+      <translation>Kijelölt makró törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.cpp" line="129"/>
       <source>Delete Macro</source>
-      <translation>删除宏</translation>
+      <translation>Makró törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.cpp" line="129"/>
       <source>Are you sure you want to delete &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation>你确定想要删掉&lt;b&gt;%1&lt;/b&gt;吗？</translation>
+      <translation>Biztosan törölni szeretné a(z) &lt;b&gt;%1&lt;/b&gt; makrót?</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.cpp" line="150"/>
       <source>(Copy)</source>
-      <translation>(复制)</translation>
+      <translation>(Másolat)</translation>
     </message>
   </context>
   <context>
@@ -681,37 +683,37 @@
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="14"/>
       <source>Run a Macro Multiple Times</source>
-      <translation>多次运行宏</translation>
+      <translation>Makró futtatása többször</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="31"/>
       <source>Macro:</source>
-      <translation>宏：</translation>
+      <translation>Makró:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="56"/>
       <source>Run Until End of File</source>
-      <translation>运行至文件末尾</translation>
+      <translation>Futtatás a fájl végéig</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="63"/>
       <source>Execute...</source>
-      <translation>执行...</translation>
+      <translation>Végrehajtás...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="116"/>
       <source>times</source>
-      <translation>次</translation>
+      <translation>alkalommal</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="166"/>
       <source>Run</source>
-      <translation>运行</translation>
+      <translation>Futtatás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="173"/>
       <source>Cancel</source>
-      <translation>取消</translation>
+      <translation>Mégse</translation>
     </message>
   </context>
   <context>
@@ -719,27 +721,27 @@
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="14"/>
       <source>Save Macro</source>
-      <translation>保存宏</translation>
+      <translation>Makró mentése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="25"/>
       <source>Name:</source>
-      <translation>宏名：</translation>
+      <translation>Név:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="39"/>
       <source>Shortcut:</source>
-      <translation>快捷键：</translation>
+      <translation>Gyorsbillentyű:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="82"/>
       <source>OK</source>
-      <translation>确定</translation>
+      <translation>OK</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="89"/>
       <source>Cancel</source>
-      <translation>取消</translation>
+      <translation>Mégse</translation>
     </message>
   </context>
   <context>
@@ -747,12 +749,12 @@
     <message>
       <location filename="../src/MacroStepTableModel.cpp" line="34"/>
       <source>Name</source>
-      <translation>名称</translation>
+      <translation>Név</translation>
     </message>
     <message>
       <location filename="../src/MacroStepTableModel.cpp" line="36"/>
       <source>Text</source>
-      <translation>文本</translation>
+      <translation>Szöveg</translation>
     </message>
   </context>
   <context>
@@ -760,279 +762,279 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="17"/>
       <source>Notepad Next[*]</source>
-      <translation type="unfinished"/>
+      <translation>Notepad Next[*]</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="33"/>
       <source>+</source>
-      <translation type="unfinished"/>
+      <translation>+</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="48"/>
       <source>&amp;File</source>
-      <translation>文件(&amp;F)</translation>
+      <translation>&amp;Fájl</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="52"/>
       <source>Close More</source>
-      <translation>更多关闭方式</translation>
+      <translation>Több bezárása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="60"/>
       <source>&amp;Recent Files</source>
-      <translation>最近打开的文件(&amp;R)</translation>
+      <translation>&amp;Legutóbbi fájlok</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1486"/>
       <source>Export As</source>
-      <translation>导出为</translation>
+      <translation>Exportálás mint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="97"/>
       <source>&amp;Edit</source>
-      <translation>编辑(&amp;E)</translation>
+      <translation>&amp;Szerkesztés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="101"/>
       <source>Copy More</source>
-      <translation>更多复制方式</translation>
+      <translation>Speciális másolás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="109"/>
       <source>Indent</source>
-      <translation>缩进</translation>
+      <translation>Behúzás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="116"/>
       <source>EOL Conversion</source>
-      <translation>行尾序列(EOL)转换</translation>
+      <translation>Sortörés átalakítása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="124"/>
       <source>Convert Case</source>
-      <translation>大小写转换</translation>
+      <translation>Betűméret átalakítása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="131"/>
       <source>Line Operations</source>
-      <translation>行操作</translation>
+      <translation>Sorműveletek</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="154"/>
       <source>Comment/Uncomment</source>
-      <translation>注释/取消注释</translation>
+      <translation>Megjegyzés/Megjegyzés törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="162"/>
       <source>Copy As</source>
-      <translation>复制为</translation>
+      <translation>Másolás mint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="169"/>
       <source>Encoding/Decoding</source>
-      <translation>编码/解码</translation>
+      <translation>Kódolás/Dekódolás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="200"/>
       <source>Search</source>
-      <translation>搜索</translation>
+      <translation>Keresés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="204"/>
       <source>Bookmarks</source>
-      <translation>书签</translation>
+      <translation>Könyvjelzők</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="221"/>
       <source>Mark All Occurrences</source>
-      <translation type="unfinished"/>
+      <translation>Összes előfordulás megjelölése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="229"/>
       <source>Clear Marks</source>
-      <translation type="unfinished"/>
+      <translation>Jelölések törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="252"/>
       <source>&amp;View</source>
-      <translation>视图(&amp;V)</translation>
+      <translation>&amp;Nézet</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="256"/>
       <source>&amp;Zoom</source>
-      <translation>缩放(&amp;Z)</translation>
+      <translation>&amp;Nagyítás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="265"/>
       <source>Show Symbol</source>
-      <translation>显示符号标记</translation>
+      <translation>Szimbólum megjelenítése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="276"/>
       <source>Fold Level</source>
-      <translation>折叠层级</translation>
+      <translation>Összecsukási szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="290"/>
       <source>Unfold Level</source>
-      <translation type="unfinished"/>
+      <translation>Kibontási szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="319"/>
       <source>Language</source>
-      <translation>语言</translation>
+      <translation>Nyelv</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="324"/>
       <source>Settings</source>
-      <translation>选项</translation>
+      <translation>Beállítások</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="330"/>
       <source>Macro</source>
-      <translation>宏</translation>
+      <translation>Makró</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="341"/>
       <source>Help</source>
-      <translation>帮助</translation>
+      <translation>Súgó</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="352"/>
       <source>Encoding</source>
-      <translation>编码</translation>
+      <translation>Kódolás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="368"/>
       <source>Main Tool Bar</source>
-      <translation>主工具栏</translation>
+      <translation>Fő eszköztár</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="428"/>
       <source>&amp;New</source>
-      <translation>新建(&amp;N)</translation>
+      <translation>Ú&amp;j</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="431"/>
       <source>Create a new file</source>
-      <translation>新建文件</translation>
+      <translation>Új fájl létrehozása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="444"/>
       <source>&amp;Open...</source>
-      <translation>打开(&amp;O)...</translation>
+      <translation>&amp;Megnyitás...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="460"/>
       <source>&amp;Save</source>
-      <translation>保存(&amp;S)</translation>
+      <translation>&amp;Mentés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="463"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
       <source>Save</source>
-      <translation>保存</translation>
+      <translation>Mentés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="471"/>
       <source>E&amp;xit</source>
-      <translation>退出(&amp;E)</translation>
+      <translation>K&amp;ilépés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="484"/>
       <source>&amp;Undo</source>
-      <translation>撤销(&amp;U)</translation>
+      <translation>&amp;Visszavonás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="497"/>
       <source>&amp;Redo</source>
-      <translation>重做(&amp;R)</translation>
+      <translation>&amp;Újra</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="510"/>
       <source>Cu&amp;t</source>
-      <translation>剪切(&amp;t)</translation>
+      <translation>Ki&amp;vágás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="523"/>
       <source>&amp;Copy</source>
-      <translation>复制(&amp;C)</translation>
+      <translation>&amp;Másolás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="536"/>
       <source>&amp;Paste</source>
-      <translation>粘贴(&amp;P)</translation>
+      <translation>&amp;Beillesztés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="544"/>
       <source>&amp;Delete</source>
-      <translation>删除(&amp;D)</translation>
+      <translation>&amp;Törlés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="552"/>
       <source>Copy Full Path</source>
-      <translation>复制完整路径</translation>
+      <translation>Teljes elérési út másolása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="557"/>
       <source>Copy File Name</source>
-      <translation>复制文件名</translation>
+      <translation>Fájlnév másolása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="562"/>
       <source>Copy File Directory</source>
-      <translation>复制文件夹路径</translation>
+      <translation>Fájl mappájának másolása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="571"/>
       <source>&amp;Close</source>
-      <translation>关闭(&amp;C)</translation>
+      <translation>&amp;Bezárás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="574"/>
       <source>Close the current file</source>
-      <translation>关闭当前文件</translation>
+      <translation>Az aktuális fájl bezárása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="582"/>
       <source>Save &amp;As...</source>
-      <translation>另存为(&amp;A)...</translation>
+      <translation>Mentés &amp;más néven...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="590"/>
       <source>Save a Copy As...</source>
-      <translation>副本另存为...</translation>
+      <translation>Másolat mentése más néven...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="599"/>
       <source>Sav&amp;e All</source>
-      <translation>保存所有(&amp;e)</translation>
+      <translation>Össz&amp;es mentése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="607"/>
       <source>Select A&amp;ll</source>
-      <translation>选择所有(&amp;A)</translation>
+      <translation>Összes ki&amp;jelölése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="619"/>
       <source>Increase Indent</source>
-      <translation>增加缩进</translation>
+      <translation>Behúzás növelése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="628"/>
       <source>Decrease Indent</source>
-      <translation>减少缩进</translation>
+      <translation>Behúzás csökkentése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="633"/>
       <source>Rename...</source>
-      <translation>重命名...</translation>
+      <translation>Átnevezés...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="642"/>
       <source>Re&amp;load</source>
-      <translation>重新加载(&amp;l)</translation>
+      <translation>Újratö&amp;ltés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="650"/>
@@ -1052,334 +1054,334 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="671"/>
       <source>UPPER CASE</source>
-      <translation>转换为大写</translation>
+      <translation>NAGYBETŰS</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="674"/>
       <source>Convert text to upper case</source>
-      <translation>转换文本到大写</translation>
+      <translation>Szöveg átalakítása nagybetűssé</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="679"/>
       <source>lower case</source>
-      <translation>转换为小写</translation>
+      <translation>kisbetűs</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="682"/>
       <source>Convert text to lower case</source>
-      <translation>转换文本到小写</translation>
+      <translation>Szöveg átalakítása kisbetűssé</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="687"/>
       <source>Duplicate Current Line</source>
-      <translation>复制并插入当前行</translation>
+      <translation>Aktuális sor megkettőzése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="695"/>
       <source>Split Lines</source>
-      <translation>拆分当前行</translation>
+      <translation>Sorok felosztása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="700"/>
       <source>Join Lines</source>
-      <translation>合并多行</translation>
+      <translation>Sorok egyesítése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="708"/>
       <source>Move Selected Lines Up</source>
-      <translation>向下移动选中的行</translation>
+      <translation>Kijelölt sorok mozgatása felfelé</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="716"/>
       <source>Move Selected Lines Down</source>
-      <translation>向上移动选中的行</translation>
+      <translation>Kijelölt sorok mozgatása lefelé</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="728"/>
       <source>Clos&amp;e All</source>
-      <translation>关闭所有(&amp;e)</translation>
+      <translation>Össz&amp;es bezárása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="731"/>
       <source>Close All files</source>
-      <translation>关闭所有文件</translation>
+      <translation>Minden fájl bezárása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="739"/>
       <source>Close All Except Active Document</source>
-      <translation>关闭其他</translation>
+      <translation>Összes bezárása az aktív dokumentum kivételével</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="744"/>
       <source>Close All to the Left</source>
-      <translation>关闭至左侧</translation>
+      <translation>Összes bezárása balra</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="749"/>
       <source>Close All to the Right</source>
-      <translation>关闭至右侧</translation>
+      <translation>Összes bezárása jobbra</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="759"/>
       <source>Zoom &amp;In</source>
-      <translation>放大(&amp;I)</translation>
+      <translation>Nagyítás &amp;be</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="772"/>
       <source>Zoom &amp;Out</source>
-      <translation>缩小(&amp;O)</translation>
+      <translation>Nagyítás &amp;ki</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="780"/>
       <source>Reset Zoom</source>
-      <translation>重置缩放</translation>
+      <translation>Nagyítás visszaállítása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="788"/>
       <source>About Qt</source>
-      <translation>关于 Qt</translation>
+      <translation>A Qt névjegye</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="800"/>
       <source>About Notepad Next</source>
-      <translation>关于 Notepad Next</translation>
+      <translation>A Notepad Next névjegye</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="811"/>
       <source>Show Whitespace</source>
-      <translation>显示空格</translation>
+      <translation>Szóközök megjelenítése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="819"/>
       <source>Show End of Line</source>
-      <translation>显示行尾</translation>
+      <translation>Sorvég megjelenítése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="832"/>
       <source>Show All Characters</source>
-      <translation>显示所有字符</translation>
+      <translation>Összes karakter megjelenítése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="845"/>
       <source>Show Indent Guide</source>
-      <translation>显示缩进指引</translation>
+      <translation>Behúzásvezető megjelenítése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="853"/>
       <source>Show Wrap Symbol</source>
-      <translation>显示换行标记</translation>
+      <translation>Sortörés szimbólum megjelenítése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="866"/>
       <source>Word Wrap</source>
-      <translation>自动换行</translation>
+      <translation>Sortörés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="871"/>
       <source>Restore Recently Closed File</source>
-      <translation>恢复最近关闭的文件</translation>
+      <translation>Nemrég bezárt fájl visszaállítása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="879"/>
       <source>Open All Recent Files</source>
-      <translation>打开所有最近关闭的文件</translation>
+      <translation>Összes legutóbbi fájl megnyitása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="884"/>
       <source>Clear Recent Files List</source>
-      <translation>清除最近打开的文件</translation>
+      <translation>Legutóbbi fájlok listájának törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="894"/>
       <source>&amp;Find...</source>
-      <translation>查找(&amp;F)...</translation>
+      <translation>&amp;Keresés...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="902"/>
       <source>Find in Files...</source>
-      <translation>在文件中查找...</translation>
+      <translation>Keresés fájlokban...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="907"/>
       <source>Find &amp;Next</source>
-      <translation>查找下一个(&amp;N)</translation>
+      <translation>Következő &amp;találat</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="915"/>
       <source>Find &amp;Previous</source>
-      <translation>查找上一个(&amp;P)</translation>
+      <translation>&amp;Előző találat</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="928"/>
       <source>&amp;Replace...</source>
-      <translation>替换(&amp;R)...</translation>
+      <translation>&amp;Csere...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="939"/>
       <source>Full Screen</source>
-      <translation>全屏</translation>
+      <translation>Teljes képernyő</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="955"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="791"/>
       <source>Start Recording</source>
-      <translation>开始录制</translation>
+      <translation>Rögzítés indítása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="967"/>
       <source>Playback</source>
-      <translation>重放宏</translation>
+      <translation>Lejátszás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="982"/>
       <source>Save Current Recorded Macro...</source>
-      <translation>保存当前已录制的宏...</translation>
+      <translation>Aktuálisan rögzített makró mentése...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="994"/>
       <source>Run a Macro Multiple Times...</source>
-      <translation>多次运行宏...</translation>
+      <translation>Makró futtatása többször...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1003"/>
       <source>Preferences...</source>
-      <translation>偏好设置....</translation>
+      <translation>Beállítások...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1011"/>
       <source>Quick Find</source>
-      <translation>快速查找</translation>
+      <translation>Gyorskeresés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1019"/>
       <source>Select Next Instance</source>
-      <translation>选择下一个实例</translation>
+      <translation>Következő előfordulás kijelölése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1031"/>
       <source>Move to Trash...</source>
-      <translation>移动至回收站...</translation>
+      <translation>Áthelyezés a kukába...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1034"/>
       <source>Move to Trash</source>
-      <translation>移动至回收站</translation>
+      <translation>Áthelyezés a kukába</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1039"/>
       <source>Check for Updates...</source>
-      <translation>检查更新...</translation>
+      <translation>Frissítések keresése...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1044"/>
       <source>&amp;Go to Line...</source>
-      <translation>转跳到行(&amp;G)...</translation>
+      <translation>&amp;Ugrás sorra...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1056"/>
       <source>Print...</source>
-      <translation>打印...</translation>
+      <translation>Nyomtatás...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1064"/>
       <source>Open Folder as Workspace...</source>
-      <translation>打开文件夹为工作区...</translation>
+      <translation>Mappa megnyitása munkaterületként...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1069"/>
       <source>Toggle Single Line Comment</source>
-      <translation>切换单行注释</translation>
+      <translation>Egysoros megjegyzés ki-/bekapcsolása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1077"/>
       <source>Single Line Comment</source>
-      <translation>单行注释</translation>
+      <translation>Egysoros megjegyzés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1085"/>
       <source>Single Line Uncomment</source>
-      <translation>取消单行注释</translation>
+      <translation>Egysoros megjegyzés törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1100"/>
       <source>Edit Macros...</source>
-      <translation>编辑宏...</translation>
+      <translation>Makrók szerkesztése...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1108"/>
       <source>This is not currently implemented</source>
-      <translation>此功能尚未实现</translation>
+      <translation>Ez jelenleg nincs megvalósítva</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1113"/>
       <source>Column Mode...</source>
-      <translation>列编辑模式...</translation>
+      <translation>Oszlop mód...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1118"/>
       <source>Export as HTML...</source>
-      <translation>导出为 HTML...</translation>
+      <translation>Exportálás HTML-ként...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1123"/>
       <source>Export as RTF...</source>
-      <translation>导出为 RTF...</translation>
+      <translation>Exportálás RTF-ként...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1128"/>
       <source>Copy as HTML</source>
-      <translation>复制为 HTML</translation>
+      <translation>Másolás HTML-ként</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1133"/>
       <source>Copy as RTF</source>
-      <translation>复制为 RTF</translation>
+      <translation>Másolás RTF-ként</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1138"/>
       <source>Base 64 Encode</source>
-      <translation>Base 64 编码</translation>
+      <translation>Base64 kódolás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1143"/>
       <source>URL Encode</source>
-      <translation>URL 编码</translation>
+      <translation>URL kódolás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1148"/>
       <source>Base 64 Decode</source>
-      <translation>Base 64 解码</translation>
+      <translation>Base64 dekódolás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1153"/>
       <source>URL Decode</source>
-      <translation>URL 解码</translation>
+      <translation>URL dekódolás</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1158"/>
       <source>Copy URL</source>
-      <translation>复制 URL</translation>
+      <translation>URL másolása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1163"/>
       <source>Remove Empty Lines</source>
-      <translation>删除空行</translation>
+      <translation>Üres sorok törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1172"/>
       <location filename="../src/dialogs/MainWindow.ui" line="1175"/>
       <source>Show in Explorer</source>
-      <translation>在资源管理器中查看</translation>
+      <translation>Megjelenítés a fájlkezelőben</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1184"/>
       <source>Open %1 Here</source>
-      <translation>在此处打开 %1</translation>
+      <translation>%1 megnyitása itt</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1189"/>
       <source>Toggle Bookmark</source>
-      <translation>切换书签</translation>
+      <translation>Könyvjelző ki-/bekapcsolása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1197"/>
@@ -1389,239 +1391,239 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1205"/>
       <source>Next Bookmark</source>
-      <translation>下一个书签</translation>
+      <translation>Következő könyvjelző</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1213"/>
       <source>Previous Bookmark</source>
-      <translation>上一个书签</translation>
+      <translation>Előző könyvjelző</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1221"/>
       <source>Clear Bookmarks</source>
-      <translation>清除书签</translation>
+      <translation>Könyvjelzők törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1226"/>
       <source>Invert Bookmarks</source>
-      <translation>反转书签</translation>
+      <translation>Könyvjelzők megfordítása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1231"/>
       <source>Next Tab</source>
-      <translation type="unfinished"/>
+      <translation>Következő lap</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1242"/>
       <source>Previous Tab</source>
-      <translation type="unfinished"/>
+      <translation>Előző lap</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1253"/>
       <source>Fold Level 1</source>
-      <translation type="unfinished"/>
+      <translation>Összecsukás: 1. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1261"/>
       <source>Fold Level 2</source>
-      <translation type="unfinished"/>
+      <translation>Összecsukás: 2. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1269"/>
       <source>Fold Level 3</source>
-      <translation type="unfinished"/>
+      <translation>Összecsukás: 3. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1277"/>
       <source>Fold Level 4</source>
-      <translation type="unfinished"/>
+      <translation>Összecsukás: 4. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1285"/>
       <source>Unfold Level 1</source>
-      <translation type="unfinished"/>
+      <translation>Kibontás: 1. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1293"/>
       <source>Unfold Level 2</source>
-      <translation type="unfinished"/>
+      <translation>Kibontás: 2. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1301"/>
       <source>Unfold Level 3</source>
-      <translation type="unfinished"/>
+      <translation>Kibontás: 3. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1309"/>
       <source>Unfold Level 4</source>
-      <translation type="unfinished"/>
+      <translation>Kibontás: 4. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1317"/>
       <source>Fold All</source>
-      <translation type="unfinished"/>
+      <translation>Összes összehajtása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1325"/>
       <source>Unfold All</source>
-      <translation type="unfinished"/>
+      <translation>Összes kibontása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1333"/>
       <source>Fold Level 5</source>
-      <translation type="unfinished"/>
+      <translation>Összecsukás: 5. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1341"/>
       <source>Fold Level 6</source>
-      <translation type="unfinished"/>
+      <translation>Összecsukás: 6. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1349"/>
       <source>Fold Level 7</source>
-      <translation type="unfinished"/>
+      <translation>Összecsukás: 7. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1357"/>
       <source>Fold Level 8</source>
-      <translation type="unfinished"/>
+      <translation>Összecsukás: 8. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1365"/>
       <source>Fold Level 9</source>
-      <translation type="unfinished"/>
+      <translation>Összecsukás: 9. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1373"/>
       <source>Unfold Level 5</source>
-      <translation type="unfinished"/>
+      <translation>Kibontás: 5. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1381"/>
       <source>Unfold Level 6</source>
-      <translation type="unfinished"/>
+      <translation>Kibontás: 6. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1389"/>
       <source>Unfold Level 7</source>
-      <translation type="unfinished"/>
+      <translation>Kibontás: 7. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1397"/>
       <source>Unfold Level 8</source>
-      <translation type="unfinished"/>
+      <translation>Kibontás: 8. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1405"/>
       <source>Unfold Level 9</source>
-      <translation type="unfinished"/>
+      <translation>Kibontás: 9. szint</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1413"/>
       <location filename="../src/dialogs/MainWindow.ui" line="1416"/>
       <source>Toggle Overtype</source>
-      <translation type="unfinished"/>
+      <translation>Átírás mód ki-/bekapcsolása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1427"/>
       <source>Debug Info...</source>
-      <translation type="unfinished"/>
+      <translation>Hibakeresési információ...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1432"/>
       <source>Cut Bookmarked Lines</source>
-      <translation type="unfinished"/>
+      <translation>Könyvjelzőzött sorok kivágása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1437"/>
       <source>Copy Bookmarked Lines</source>
-      <translation type="unfinished"/>
+      <translation>Könyvjelzőzött sorok másolása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1442"/>
       <source>Delete Bookmarked Lines</source>
-      <translation type="unfinished"/>
+      <translation>Könyvjelzőzött sorok törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1447"/>
       <source>Mark Style 1</source>
-      <translation type="unfinished"/>
+      <translation>Jelölési stílus 1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1455"/>
       <source>Mark Style 2</source>
-      <translation type="unfinished"/>
+      <translation>Jelölési stílus 2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1463"/>
       <source>Clear Style 1</source>
-      <translation type="unfinished"/>
+      <translation>1. stílus törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1471"/>
       <source>Clear Style 2</source>
-      <translation type="unfinished"/>
+      <translation>2. stílus törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1479"/>
       <source>Mark Style 3</source>
-      <translation type="unfinished"/>
+      <translation>Jelölési stílus 3</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1487"/>
       <source>Clear Style 3</source>
-      <translation type="unfinished"/>
+      <translation>3. stílus törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1495"/>
       <location filename="../src/dialogs/MainWindow.ui" line="1498"/>
       <source>Clear All Styles</source>
-      <translation type="unfinished"/>
+      <translation>Összes stílus törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1503"/>
       <source>Remove Duplicate Lines</source>
-      <translation type="unfinished"/>
+      <translation>Ismétlődő sorok eltávolítása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1508"/>
       <source>Remove Consecutive Duplicate Lines</source>
-      <translation type="unfinished"/>
+      <translation>Egymást követő ismétlődő sorok eltávolítása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1513"/>
       <source>Sort Lines Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Sorok rendezése növekvő sorrendbe</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1518"/>
       <source>Sort Lines Descending</source>
-      <translation type="unfinished"/>
+      <translation>Sorok rendezése csökkenő sorrendbe</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1523"/>
       <source>Sort Lines Ascending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>Sorok rendezése növekvő sorrendbe (kis-/nagybetű érzékenység nélkül)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1528"/>
       <source>Sort Lines Descending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>Sorok rendezése csökkenő sorrendbe (kis-/nagybetű érzékenység nélkül)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1533"/>
       <source>Sort Lines by Length Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Sorok rendezése hossz szerint növekvő sorrendbe</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1538"/>
       <source>Sort Lines by Length Descending</source>
-      <translation type="unfinished"/>
+      <translation>Sorok rendezése hossz szerint csökkenő sorrendbe</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1543"/>
       <source>Reverse Line Order</source>
-      <translation type="unfinished"/>
+      <translation>Sorok sorrendjének megfordítása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1548"/>
@@ -1646,224 +1648,227 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="447"/>
       <source>Go to line</source>
-      <translation>转跳到行</translation>
+      <translation>Ugrás sorra</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="447"/>
       <source>Line Number (1 - %1)</source>
-      <translation>行号（1 - %1）</translation>
+      <translation>Sorszám (1 - %1)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="782"/>
       <source>Stop Recording</source>
-      <translation>停止录制</translation>
+      <translation>Rögzítés leállítása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="887"/>
       <source>Debug Info</source>
-      <translation type="unfinished"/>
+      <translation>Hibakeresési információ</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1108"/>
       <source>New %1</source>
-      <translation>新文件 %1</translation>
+      <translation>Új %1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1168"/>
       <source>Create File</source>
-      <translation>新建文件</translation>
+      <translation>Fájl létrehozása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1168"/>
       <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
-      <translation>&lt;b&gt;%1&lt;/b&gt; 尚不存在，你想要新建一个吗？</translation>
+      <translation>A(z) &lt;b&gt;%1&lt;/b&gt; nem létezik. Szeretné létrehozni?</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1989"/>
       <source>Save File</source>
-      <translation>保存文件</translation>
+      <translation>Fájl mentése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1247"/>
       <source>Open Folder as Workspace</source>
-      <translation>打开文件夹作为工作区</translation>
+      <translation>Mappa megnyitása munkaterületként</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1270"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1932"/>
       <source>Reload File</source>
-      <translation>重新加载文件</translation>
+      <translation>Fájl újratöltése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1270"/>
       <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
-      <translation>你确定要重新加载 &lt;b&gt;%1&lt;/b&gt;？任何未保存的修改都会丢失。</translation>
+      <translation>Biztosan újra szeretné tölteni a(z) &lt;b&gt;%1&lt;/b&gt; fájlt? A nem mentett módosítások elvesznek.</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1442"/>
       <source>Save a Copy As</source>
-      <translation>副本另存为</translation>
+      <translation>Másolat mentése más néven</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1527"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1544"/>
       <source>Rename</source>
-      <translation>重命名</translation>
+      <translation>Átnevezés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1544"/>
       <source>Name:</source>
-      <translation>宏名：</translation>
+      <translation>Név:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1564"/>
       <source>Delete File</source>
-      <translation>删除文件</translation>
+      <translation>Fájl törlése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1564"/>
       <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
-      <translation>你确定要将 &lt;b&gt;%1&lt;/b&gt; 移至回收站？</translation>
+      <translation>Biztosan a kukába szeretné helyezni a(z) &lt;b&gt;%1&lt;/b&gt; fájlt?</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1574"/>
       <source>Error Deleting File</source>
-      <translation>删除文件时出错</translation>
+      <translation>Hiba a fájl törlésekor</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1574"/>
       <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation>删除  &lt;b&gt;%1&lt;/b&gt; 时出错了？</translation>
+      <translation>Hiba történt a(z) &lt;b&gt;%1&lt;/b&gt; törlése közben.</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1671"/>
       <source>Administrator</source>
-      <translation type="unfinished"/>
+      <translation>Rendszergazda</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1932"/>
       <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
-      <translation type="unfinished"/>
+      <translation>A(z) &lt;b&gt;%1&lt;/b&gt; fájlt egy másik program módosította. Szeretné újratölteni?</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1958"/>
       <source>Read error</source>
-      <translation type="unfinished"/>
+      <translation>Olvasási hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1959"/>
       <source>Write error</source>
-      <translation type="unfinished"/>
+      <translation>Írási hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1960"/>
       <source>Fatal error</source>
-      <translation type="unfinished"/>
+      <translation>Végzetes hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1961"/>
       <source>Resource error</source>
-      <translation type="unfinished"/>
+      <translation>Erőforrás-hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1962"/>
       <source>Open error</source>
-      <translation type="unfinished"/>
+      <translation>Megnyitási hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1963"/>
       <source>Abort error</source>
-      <translation type="unfinished"/>
+      <translation>Megszakítási hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1964"/>
       <source>Timeout error</source>
-      <translation type="unfinished"/>
+      <translation>Időtúllépési hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1965"/>
       <source>Unspecified error</source>
-      <translation type="unfinished"/>
+      <translation>Meghatározatlan hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1966"/>
       <source>Remove error</source>
-      <translation type="unfinished"/>
+      <translation>Eltávolítási hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1967"/>
       <source>Rename error</source>
-      <translation type="unfinished"/>
+      <translation>Átnevezési hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1968"/>
       <source>Position error</source>
-      <translation type="unfinished"/>
+      <translation>Pozicionálási hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1969"/>
       <source>Resize error</source>
-      <translation type="unfinished"/>
+      <translation>Átméretezési hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1970"/>
       <source>Permissions error</source>
-      <translation type="unfinished"/>
+      <translation>Jogosultsági hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1971"/>
       <source>Copy error</source>
-      <translation type="unfinished"/>
+      <translation>Másolási hiba</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1972"/>
       <source>Unknown error (%1)</source>
-      <translation type="unfinished"/>
+      <translation>Ismeretlen hiba (%1)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1975"/>
       <source>Error Saving File</source>
-      <translation>保存文件时出错</translation>
+      <translation>Hiba a fájl mentésekor</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1976"/>
       <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
-      <translation>保存 &lt;b&gt;%1&lt;/b&gt; 时发生了错误&lt;br&gt;&lt;br&gt;错误：%2</translation>
+      <translation>Hiba történt a(z) &lt;b&gt;%1&lt;/b&gt; mentése közben.&lt;br&gt;&lt;br&gt;Hiba: %2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1982"/>
       <source>Zoom: %1%</source>
-      <translation type="unfinished"/>
+      <translation>Nagyítás: %1%</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1994"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation type="unfinished"/>
+      <translation>Menti a(z) &lt;b&gt;%1&lt;/b&gt; módosításait?</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
       <source>There are %n files with unsaved changes. Save them?</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>%n fájlnak vannak nem mentett módosításai. Menti őket?</numerusform>
+        <numerusform>%n fájlnak vannak nem mentett módosításai. Menti őket?</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
       <source>Save All</source>
-      <translation type="unfinished"/>
+      <translation>Összes mentése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
       <source>Discard All</source>
-      <translation type="unfinished"/>
+      <translation>Összes elvetése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
       <source>Discard</source>
-      <translation type="unfinished"/>
+      <translation>Elvetés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2180"/>
       <source>No updates are available at this time.</source>
-      <translation>本次无可用更新。</translation>
+      <translation>Jelenleg nem érhetők el frissítések.</translation>
     </message>
   </context>
   <context>
@@ -1871,92 +1876,92 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="14"/>
       <source>Preferences</source>
-      <translation>偏好设置</translation>
+      <translation>Beállítások</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="37"/>
       <source>Show menu bar</source>
-      <translation type="unfinished"/>
+      <translation>Menüsor megjelenítése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="44"/>
       <source>Show toolbar</source>
-      <translation type="unfinished"/>
+      <translation>Eszköztár megjelenítése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="51"/>
       <source>Show status bar</source>
-      <translation type="unfinished"/>
+      <translation>Állapotsor megjelenítése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="58"/>
       <source>Restore previous session</source>
-      <translation type="unfinished"/>
+      <translation>Előző munkamenet visszaállítása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="70"/>
       <source>Unsaved changes</source>
-      <translation>未保存的更改</translation>
+      <translation>Nem mentett módosítások</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="77"/>
       <source>Temporary files</source>
-      <translation type="unfinished"/>
+      <translation>Ideiglenes fájlok</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="89"/>
       <source>Recenter find/replace dialog when opened</source>
-      <translation type="unfinished"/>
+      <translation>Keresés/csere párbeszédablak középre igazítása megnyitáskor</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="96"/>
       <source>Combine search results</source>
-      <translation>结合搜索结果</translation>
+      <translation>Keresési eredmények összevonása</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="114"/>
       <source>Translation:</source>
-      <translation type="unfinished"/>
+      <translation>Felület nyelve:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="123"/>
       <source>Exit on last tab closed</source>
-      <translation type="unfinished"/>
+      <translation>Kilépés az utolsó lap bezárásakor</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="132"/>
       <source>Default Font</source>
-      <translation type="unfinished"/>
+      <translation>Alapértelmezett betűtípus</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="138"/>
       <source>Font</source>
-      <translation type="unfinished"/>
+      <translation>Betűtípus</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="148"/>
       <source>Font Size</source>
-      <translation type="unfinished"/>
+      <translation>Betűméret</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="155"/>
       <source>pt</source>
-      <translation type="unfinished"/>
+      <translation>pt</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="188"/>
       <source>Default Line Endings</source>
-      <translation type="unfinished"/>
+      <translation>Alapértelmezett sortörés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="200"/>
       <source>Highlight URLs</source>
-      <translation type="unfinished"/>
+      <translation>URL-ek kiemelése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="207"/>
       <source>Show Line Numbers</source>
-      <translation type="unfinished"/>
+      <translation>Sorszámok megjelenítése</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="214"/>
@@ -1967,47 +1972,47 @@
       <location filename="../src/dialogs/PreferencesDialog.ui" line="221"/>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="122"/>
       <source>Default Directory</source>
-      <translation type="unfinished"/>
+      <translation>Alapértelmezett mappa</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="227"/>
       <source>Follow Current Document</source>
-      <translation type="unfinished"/>
+      <translation>Az aktuális mappa</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="234"/>
       <source>Last Used Directory</source>
-      <translation type="unfinished"/>
+      <translation>Utoljára használt mappa</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="253"/>
       <source>...</source>
-      <translation type="unfinished"/>
+      <translation>...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="284"/>
       <source>TextLabel</source>
-      <translation>文本标签</translation>
+      <translation>Szövegcímke</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="296"/>
       <source>An application restart is required to apply certain settings.</source>
-      <translation type="unfinished"/>
+      <translation>Egyes beállítások alkalmazásához az alkalmazás újraindítása szükséges.</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="56"/>
       <source>Warning</source>
-      <translation>警告</translation>
+      <translation>Figyelmeztetés</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="56"/>
       <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
-      <translation>本功能是实验性的。对于关键性的重要工作开启本功能并不安全，可能导致数据丢失，使用时风险自负。</translation>
+      <translation>Ez a funkció kísérleti jellegű, és kritikusan fontos munkánál nem tekinthető biztonságosnak. Adatvesztést okozhat. Saját felelősségére használja.</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="85"/>
       <source>System Default</source>
-      <translation type="unfinished"/>
+      <translation>Rendszer alapértelmezett</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="86"/>
@@ -2017,7 +2022,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="87"/>
       <source>Linux (LF)</source>
-      <translation type="unfinished"/>
+      <translation>Linux (LF)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="88"/>
@@ -2027,7 +2032,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="185"/>
       <source>&lt;System Default&gt;</source>
-      <translation type="unfinished"/>
+      <translation>&lt;Rendszer alapértelmezett&gt;</translation>
     </message>
   </context>
   <context>
@@ -2035,47 +2040,47 @@
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="17"/>
       <source>Frame</source>
-      <translation type="unfinished"/>
+      <translation>Keret</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="32"/>
       <source>Find...</source>
-      <translation>查找...</translation>
+      <translation>Keresés...</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="44"/>
       <source>Match case</source>
-      <translation>区分大小写</translation>
+      <translation>Kis-/nagybetű érzékeny</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="47"/>
       <source>Aa</source>
-      <translation type="unfinished"/>
+      <translation>Aa</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="57"/>
       <source>Match whole word</source>
-      <translation>全词匹配</translation>
+      <translation>Teljes szó egyezés</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="60"/>
       <source>|A|</source>
-      <translation type="unfinished"/>
+      <translation>|A|</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="70"/>
       <source>Use regular expression</source>
-      <translation>使用正则表达式</translation>
+      <translation>Reguláris kifejezés használata</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="73"/>
       <source>. *</source>
-      <translation type="unfinished"/>
+      <translation>. *</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.cpp" line="238"/>
       <source>%L1/%L2</source>
-      <translation type="unfinished"/>
+      <translation>%L1/%L2</translation>
     </message>
   </context>
   <context>
@@ -2083,32 +2088,32 @@
     <message>
       <location filename="../src/docks/SearchResultsDock.ui" line="14"/>
       <source>Search Results</source>
-      <translation>搜索结果</translation>
+      <translation>Keresési eredmények</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.ui" line="38"/>
       <source>Copy Results to Clipboard</source>
-      <translation type="unfinished"/>
+      <translation>Eredmények másolása a vágólapra</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="57"/>
       <source>Collapse All</source>
-      <translation>全部折叠</translation>
+      <translation>Összes összecsukása</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="58"/>
       <source>Expand All</source>
-      <translation>全部展开</translation>
+      <translation>Összes kinyitása</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="60"/>
       <source>Delete Entry</source>
-      <translation>删除条目</translation>
+      <translation>Bejegyzés törlése</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="62"/>
       <source>Delete All</source>
-      <translation>删除所有</translation>
+      <translation>Összes törlése</translation>
     </message>
   </context>
   <context>
@@ -2116,17 +2121,17 @@
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="40"/>
       <source>Create a new file</source>
-      <translation type="unfinished"/>
+      <translation>Új fájl létrehozása</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="43"/>
       <source>Show opened files list</source>
-      <translation type="unfinished"/>
+      <translation>Megnyitott fájlok listájának megjelenítése</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="49"/>
       <source>Close the current file</source>
-      <translation type="unfinished"/>
+      <translation>Az aktuális fájl bezárása</translation>
     </message>
   </context>
 </TS>
