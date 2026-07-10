@@ -21,27 +21,33 @@ jobs:
           # Windows
           - os: windows-2022
             platform: windows
+            qt_arch: win64_msvc2022_64
             qt_version: "6.5"
 
           - os: windows-2022
             platform: windows
+            qt_arch: win64_msvc2022_64
             qt_version: "6.8"
 
           - os: windows-2022
             platform: windows
+            qt_arch: win64_msvc2022_64
             qt_version: "6.10"
 
           # Linux
           - os: ubuntu-24.04
             platform: linux
+            qt_arch: gcc_64
             qt_version: "6.5"
 
           - os: ubuntu-24.04
             platform: linux
+            qt_arch: gcc_64
             qt_version: "6.8"
 
           - os: ubuntu-24.04
             platform: linux
+            qt_arch: gcc_64
             qt_version: "6.10"
 
           # macOS Intel
@@ -101,11 +107,13 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Install Qt
-        uses: jurplel/install-qt-action@v4
+        uses: jdpurcell/install-qt-action@v5
         with:
           version: ${{ matrix.qt_version }}
+          host: ${{ matrix.platform }}
+          target: desktop
           arch: ${{ matrix.qt_arch }}
-          modules: 'qt5compat'
+          modules: qt5compat
           cache: true
 
       - name: Setup Visual Studio Tools
@@ -146,6 +154,7 @@ jobs:
           if [ "${{ matrix.platform }}" = "mac" ]; then
             CMAKE_OPTS="$CMAKE_OPTS -DCMAKE_OSX_ARCHITECTURES=${{ matrix.cmake_arch }} -DCMAKE_OSX_DEPLOYMENT_TARGET=${{ matrix.deployment_target }}"
           fi
+          echo "CMAKE_OPTS=$CMAKE_OPTS"
           cmake $CMAKE_OPTS
 
       - name: Build
