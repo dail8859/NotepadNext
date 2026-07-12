@@ -23,7 +23,7 @@
 
 #include <QStatusBar>
 #include <QLineEdit>
-#include <QKeyEvent>
+#include <QShortcut>
 #include <QClipboard>
 #include <QGuiApplication>
 
@@ -152,6 +152,14 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     connect(ui->buttonClearAllMarks, &QPushButton::clicked, this, &FindReplaceDialog::clearAllMarks);
     connect(ui->buttonCopyMarkedText, &QPushButton::clicked, this, &FindReplaceDialog::copyMarkedText);
 
+    const auto findPrevious = [this]() {
+        if (ui->buttonFind->isVisible()) {
+            performFind(!ui->radioRegexSearch->isChecked());
+        }
+    };
+    new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Return), this, this, findPrevious, Qt::WidgetWithChildrenShortcut);
+    new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Enter), this, this, findPrevious, Qt::WidgetWithChildrenShortcut);
+
     loadSettings();
 
     changeTab(tabBar->currentIndex());
@@ -229,17 +237,16 @@ void FindReplaceDialog::updateReplaceList(const QString &text)
 
 void FindReplaceDialog::find()
 {
+    performFind(ui->checkBoxBackwardsDirection->isChecked());
+}
+
+void FindReplaceDialog::performFind(bool backwards)
+{
     qInfo(Q_FUNC_INFO);
 
     prepareToPerformSearch();
 
-    Sci_CharacterRange range;
-    if(!ui->checkBoxBackwardsDirection->isChecked()) {
-        range = finder->findNext();
-    }
-    else{
-         range = finder->findPrev();
-    }
+    Sci_CharacterRange range = backwards ? finder->findPrev() : finder->findNext();
 
     if (ScintillaNext::isRangeValid(range)) {
         if (finder->didLatestSearchWrapAround()) {

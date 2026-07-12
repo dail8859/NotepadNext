@@ -92,6 +92,7 @@ private slots:
 
 private:
     QString findString();
+    void performFind(bool backwards);
     void prepareToPerformSearch(bool replace=false);
     void loadSettings();
     void saveSettings();
