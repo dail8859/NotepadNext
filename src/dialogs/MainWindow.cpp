@@ -2094,8 +2094,8 @@ void MainWindow::addEditor(ScintillaNext *editor)
     connect(editor, &ScintillaNext::renamed, this, [=, this]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
 
-    // Watch for any zoom events (Ctrl+Scroll or pinch-to-zoom (Qt translates it as Ctrl+Scroll)) so that the event
-    // can be handled before the ScintillaEditBase widget, so that it can be applied to all editors to keep zoom level equal.
+    // Watch for wheel events that need handling before the ScintillaEditBase widget: Ctrl+Scroll and pinch-to-zoom
+    // keep the zoom level equal across all editors, while Shift+Scroll is translated to horizontal scrolling.
     // NOTE: Need to install this on the scroll area's viewport, not on the editor widget itself...that was painful to learn
     editor->viewport()->installEventFilter(zoomEventWatcher);
 

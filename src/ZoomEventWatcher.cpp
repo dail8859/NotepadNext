@@ -20,6 +20,7 @@
 #include "ZoomEventWatcher.h"
 
 #include <QEvent>
+#include <QMouseEvent>
 #include <QWheelEvent>
 #include <QApplication>
 
@@ -48,11 +49,24 @@ ZoomEventWatcher::ZoomEventWatcher(QObject *parent)
 
 bool ZoomEventWatcher::eventFilter(QObject *obj, QEvent *event)
 {
+    if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick) {
+        QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+
+        // Scintilla pastes the primary selection on middle-click. Suppress an
+        // accidental wheel-button press while Shift is held for horizontal scrolling.
+        if (mouseEvent->button() == Qt::MiddleButton
+                && (mouseEvent->modifiers() & Qt::ShiftModifier)) {
+            return true;
+        }
+    }
+
     if (event->type() == QEvent::Wheel) {
         QWheelEvent *wheelEvent = static_cast<QWheelEvent *>(event);
+        const bool horizontal = isWheelEventHorizontal(wheelEvent);
+        const Qt::KeyboardModifiers modifiers = wheelEvent->modifiers();
 
-        if (!isWheelEventHorizontal(wheelEvent)) {
-            if (QApplication::keyboardModifiers() & Qt::ControlModifier) {
+        if (!horizontal) {
+            if (modifiers & Qt::ControlModifier) {
                 if (wheelEventYDelta(wheelEvent) > 0) {
                     emit zoomIn();
                 } else {
@@ -60,6 +74,23 @@ bool ZoomEventWatcher::eventFilter(QObject *obj, QEvent *event)
                 }
                 return true;
             }
+        }
+
+        if ((modifiers & Qt::ShiftModifier) && !(modifiers & Qt::ControlModifier)) {
+            const QPoint angleDelta = horizontal
+                    ? wheelEvent->angleDelta()
+                    : QPoint(wheelEvent->angleDelta().y(), wheelEvent->angleDelta().x());
+            const QPoint pixelDelta = horizontal
+                    ? wheelEvent->pixelDelta()
+                    : QPoint(wheelEvent->pixelDelta().y(), wheelEvent->pixelDelta().x());
+
+            QWheelEvent horizontalEvent(wheelEvent->position(), wheelEvent->globalPosition(),
+                                        pixelDelta, angleDelta, wheelEvent->buttons(),
+                                        modifiers & ~Qt::ShiftModifier, wheelEvent->phase(),
+                                        wheelEvent->inverted(), wheelEvent->source(),
+                                        wheelEvent->pointingDevice());
+            QApplication::sendEvent(obj, &horizontalEvent);
+            return true;
         }
     }
 
