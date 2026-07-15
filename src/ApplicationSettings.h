@@ -114,6 +114,7 @@ public:
     DEFINE_SETTING(ShowIndentGuide, showIndentGuide, bool)
     DEFINE_SETTING(WordWrap, wordWrap, bool);
     DEFINE_SETTING(FontName, fontName, QString);
+    DEFINE_SETTING(FontStyle, fontStyle, QString);
     DEFINE_SETTING(FontSize, fontSize, int);
     DEFINE_SETTING(AdditionalWordChars, additionalWordChars, QString);
     DEFINE_SETTING(DefaultEOLMode, defaultEOLMode, QString)

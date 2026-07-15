@@ -65,7 +65,7 @@ public:
     QString detectLanguageFromExtension(const QString &extension) const;
     QString detectLanguageFromContents(ScintillaNext *editor) const;
 
-    void sendInfoToPrimaryInstance();
+    bool sendInfoToPrimaryInstance();
 
     bool isRunningAsAdmin() const;
 

@@ -357,7 +357,7 @@ QString NotepadNextApplication::detectLanguageFromContents(ScintillaNext *editor
     )");
 }
 
-void NotepadNextApplication::sendInfoToPrimaryInstance()
+bool NotepadNextApplication::sendInfoToPrimaryInstance()
 {
     qInfo(Q_FUNC_INFO);
 
@@ -378,10 +378,23 @@ void NotepadNextApplication::sendInfoToPrimaryInstance()
     QDataStream stream(&buffer, QIODevice::WriteOnly);
     stream << argsToSend;
 
-    const bool success = sendMessage(buffer);
-    if (!success) {
-        qWarning("sendMessage() unsuccessful");
+    // The default sendMessage() timeout of 100ms is insufficient when the
+    // primary instance's event loop is temporarily blocked by session auto-save,
+    // file-change detection, or modal dialogs. Use a generous timeout with
+    // retries to handle these transient conditions.
+    const int maxAttempts = 3;
+    const int timeout = 1000; // ms per attempt
+
+    for (int attempt = 1; attempt <= maxAttempts; ++attempt) {
+        if (sendMessage(buffer, timeout)) {
+            qInfo("sendMessage() successful on attempt %d", attempt);
+            return true;
+        }
+        qWarning("sendMessage() attempt %d of %d failed", attempt, maxAttempts);
     }
+
+    qCritical("Failed to send message to primary instance after %d attempts", maxAttempts);
+    return false;
 }
 
 void NotepadNextApplication::receiveInfoFromSecondaryInstance(quint32 instanceId, QByteArray message)

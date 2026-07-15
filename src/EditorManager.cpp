@@ -17,6 +17,7 @@
  */
 
 #include <QApplication>
+#include <QFontDatabase>
 
 #include "ApplicationSettings.h"
 
@@ -107,6 +108,16 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         for (auto &editor : getEditors()) {
             for (int i = 0; i <= STYLE_MAX; ++i) {
                 editor->styleSetSize(i, fontSize);
+            }
+        }
+    });
+
+    connect(settings, &ApplicationSettings::fontStyleChanged, this, [=](QString fontStyle){
+        QFont selectedFont = QFontDatabase::font(settings->fontName(), fontStyle, settings->fontSize());
+        for (auto &editor : getEditors()) {
+            for (int i = 0; i <= STYLE_MAX; ++i) {
+                editor->styleSetWeight(i, selectedFont.weight());
+                editor->styleSetItalic(i, selectedFont.italic());
             }
         }
     });
@@ -270,6 +281,14 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->styleSetBack(STYLE_DEFAULT, 0xFFFFFF);
     editor->styleSetSize(STYLE_DEFAULT, settings->fontSize());
     editor->styleSetFont(STYLE_DEFAULT, settings->fontName().toUtf8().data());
+
+    // Apply font style (weight and italic) from settings
+    if (!settings->fontStyle().isEmpty()) {
+        QFont selectedFont = QFontDatabase::font(settings->fontName(), settings->fontStyle(), settings->fontSize());
+        editor->styleSetWeight(STYLE_DEFAULT, selectedFont.weight());
+        editor->styleSetItalic(STYLE_DEFAULT, selectedFont.italic());
+    }
+
     editor->styleClearAll();
 
     editor->styleSetFore(STYLE_LINENUMBER, 0x808080);

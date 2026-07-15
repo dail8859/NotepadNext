@@ -25,6 +25,7 @@
 
 #include <QButtonGroup>
 #include <QFileDialog>
+#include <QFontDatabase>
 #include <QMessageBox>
 
 
@@ -70,12 +71,54 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
 
     MapSettingToCheckBox(ui->checkBoxExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosed, &ApplicationSettings::setExitOnLastTabClosed, &ApplicationSettings::exitOnLastTabClosedChanged);
 
-    ui->fcbDefaultFont->setCurrentFont(QFont(settings->fontName()));
-    connect(ui->fcbDefaultFont, &QFontComboBox::currentFontChanged, this, [=](const QFont &f) {
-        settings->setFontName(f.family());
+    // Populate font family combo box with all system fonts
+    for (const QString &family : QFontDatabase::families()) {
+        ui->comboBoxFont->addItem(family);
+    }
+
+    // Helper to populate the font style combo for the currently selected family
+    auto populateFontStyles = [this](const QString &family) {
+        ui->comboBoxFontStyle->blockSignals(true);
+        ui->comboBoxFontStyle->clear();
+        for (const QString &style : QFontDatabase::styles(family)) {
+            ui->comboBoxFontStyle->addItem(style);
+        }
+        // Try to select the saved style, fall back to "Regular", then first item
+        QString savedStyle = this->settings->fontStyle();
+        int idx = ui->comboBoxFontStyle->findText(savedStyle);
+        if (idx == -1) {
+            idx = ui->comboBoxFontStyle->findText(QStringLiteral("Regular"));
+        }
+        ui->comboBoxFontStyle->setCurrentIndex(qMax(idx, 0));
+        ui->comboBoxFontStyle->blockSignals(false);
+    };
+
+    // Set initial font family selection and populate styles
+    ui->comboBoxFont->setCurrentText(settings->fontName());
+    populateFontStyles(settings->fontName());
+
+    // When the user picks a different font family
+    connect(ui->comboBoxFont, &QComboBox::currentTextChanged, this, [this, populateFontStyles](const QString &family) {
+        this->settings->setFontName(family);
+        populateFontStyles(family);
+        // Update font style setting to the newly selected style
+        this->settings->setFontStyle(ui->comboBoxFontStyle->currentText());
     });
-    connect(settings, &ApplicationSettings::fontNameChanged, this, [=](QString fontName){
-        ui->fcbDefaultFont->setCurrentFont(QFont(fontName));
+
+    // When the user picks a different font style
+    connect(ui->comboBoxFontStyle, &QComboBox::currentTextChanged, this, [this](const QString &style) {
+        this->settings->setFontStyle(style);
+    });
+
+    // Two-way bindings: settings → widgets
+    connect(settings, &ApplicationSettings::fontNameChanged, this, [this](QString fontName) {
+        ui->comboBoxFont->setCurrentText(fontName);
+    });
+    connect(settings, &ApplicationSettings::fontStyleChanged, this, [this](QString fontStyle) {
+        int idx = ui->comboBoxFontStyle->findText(fontStyle);
+        if (idx != -1) {
+            ui->comboBoxFontStyle->setCurrentIndex(idx);
+        }
     });
 
     ui->spbDefaultFontSize->setValue(settings->fontSize());

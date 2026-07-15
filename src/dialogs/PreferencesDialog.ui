@@ -140,7 +140,17 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QFontComboBox" name="fcbDefaultFont"/>
+             <widget class="QComboBox" name="comboBoxFont"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="labelFontStyle">
+              <property name="text">
+               <string>Style</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QComboBox" name="comboBoxFontStyle"/>
             </item>
             <item row="3" column="0">
              <widget class="QLabel" name="label_3">

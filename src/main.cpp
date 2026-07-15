@@ -22,6 +22,7 @@
 #include <QSysInfo>
 #include <QApplication>
 #include <QDataStream>
+#include <QMessageBox>
 
 #include "NotepadNextApplication.h"
 
@@ -61,7 +62,14 @@ int main(int argc, char *argv[])
     else {
         qInfo() << "Primary instance already running. PID:" << app.primaryPid();
 
-        app.sendInfoToPrimaryInstance();
+        if (!app.sendInfoToPrimaryInstance()) {
+            qCritical() << "Failed to communicate with primary instance";
+
+            QMessageBox::warning(nullptr,
+                QGuiApplication::applicationDisplayName(),
+                QObject::tr("Unable to open the file(s) in the running Notepad Next window.\n\n"
+                            "Please try again, or close and reopen Notepad Next."));
+        }
 
         qInfo() << "Secondary instance closing...";
 

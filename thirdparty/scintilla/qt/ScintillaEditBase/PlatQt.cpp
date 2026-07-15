@@ -150,7 +150,7 @@ public:
 		pfont->setStyleStrategy(ChooseStrategy(fp.extraFontFlag));
 		pfont->setFamily(QString::fromUtf8(fp.faceName));
 		pfont->setPointSizeF(fp.size);
-		pfont->setBold(static_cast<int>(fp.weight) > 500);
+		pfont->setWeight(static_cast<QFont::Weight>(static_cast<int>(fp.weight)));
 		pfont->setStretch(QStretchFromFontStretch(fp.stretch));
 		pfont->setItalic(fp.italic);
 	}
