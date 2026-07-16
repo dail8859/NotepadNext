@@ -400,17 +400,17 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="311"/>
       <source>Mark All</source>
-      <translation>Marcar tudo</translation>
+      <translation>Selecionar tudo</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="321"/>
       <source>Clear all marks</source>
-      <translation>Limpar todas as marcações</translation>
+      <translation>Limpar toda a seleção</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="331"/>
       <source>Copy Marked Text</source>
-      <translation>Copiar texto marcado</translation>
+      <translation>Copiar texto selecionado</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="341"/>
@@ -430,12 +430,12 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="475"/>
       <source>&amp;Bookmark line</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Selecionar linha</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="482"/>
       <source>&amp;Purge for each search</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Limpar após cada pesquisa</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="489"/>
@@ -465,7 +465,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
       <source>Mark</source>
-      <translation>Marcar</translation>
+      <translation>Selecionar</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="148"/>
@@ -507,22 +507,28 @@
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="747"/>
       <source>Mark: %Ln match in entire file</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Selecionar: %Ln correspondência em todo o ficheiro</numerusform>
+        <numerusform>Selecionar: %Ln correspondências em todo o ficheiro</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="758"/>
       <source>All marks cleared</source>
-      <translation>Todas as marcações foram limpas</translation>
+      <translation>Toda a seleção foi limpa</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="782"/>
       <source>No marks to copy</source>
-      <translation>Não há marcações a copiar</translation>
+      <translation>Não há seleções a copiar</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="787"/>
       <source>Copied %Ln marked text(s)</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Copiado %Ln texto selecionado</numerusform>
+        <numerusform>Copiados %Ln textos selecionados</numerusform>
+      </translation>
     </message>
   </context>
   <context>
@@ -1386,7 +1392,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1197"/>
       <source>Search and Bookmark Lines...</source>
-      <translation type="unfinished"/>
+      <translation>Pesquisar e marcar linhas...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1205"/>
@@ -1633,7 +1639,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1551"/>
       <source>Split editor horizontally (left/right)</source>
-      <translation type="unfinished"/>
+      <translation>Dividir editor horizontalmente (esquerda/direita)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1559"/>
