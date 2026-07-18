@@ -48,6 +48,12 @@ public:
         MARK_TAB = 2
     };
 
+    enum class SearchDirection
+    {
+        Forwards,
+        Backwards
+    };
+
     explicit FindReplaceDialog(ISearchResultsHandler *searchResults, MainWindow *window = nullptr);
     ~FindReplaceDialog() override;
 
@@ -92,6 +98,7 @@ private slots:
 
 private:
     QString findString();
+    void performFind(SearchDirection direction);
     void prepareToPerformSearch(bool replace=false);
     void loadSettings();
     void saveSettings();
