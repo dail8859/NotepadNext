@@ -511,6 +511,13 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxInSelection">
+           <property name="text">
+            <string>In &amp;selection</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
@@ -526,6 +533,8 @@
   <tabstop>radioExtendedSearch</tabstop>
   <tabstop>radioRegexSearch</tabstop>
   <tabstop>checkBoxRegexMatchesNewline</tabstop>
+  <tabstop>checkBoxWrapAround</tabstop>
+  <tabstop>checkBoxInSelection</tabstop>
   <tabstop>buttonFind</tabstop>
   <tabstop>buttonCount</tabstop>
   <tabstop>buttonReplace</tabstop>

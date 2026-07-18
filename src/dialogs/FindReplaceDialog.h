@@ -116,6 +116,8 @@ private:
     void updateFindList(const QString &text);
     void updateReplaceList(const QString &text);
 
+    void updateInSelectionCheckbox();
+
     bool isFirstTime = true;
     QPoint lastClosedPosition;
     Ui::FindReplaceDialog *ui;
@@ -125,6 +127,8 @@ private:
     QTabBar *tabBar;
     ISearchResultsHandler *searchResultsHandler;
     Finder *finder;
+
+    Sci_CharacterRange capturedSelectionRange = {0, 0};
 };
 
 #endif // FINDREPLACEDIALOG_H
