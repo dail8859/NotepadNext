@@ -43,9 +43,9 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
 
     connect(ui->treeWidget, &QTreeWidget::itemActivated, this, &SearchResultsDock::itemActivated);
     connect(ui->treeWidget, &QTreeWidget::itemExpanded, this, &SearchResultsDock::itemExpanded);
-    connect(ui->btnCopyResults, &QPushButton::released,this, &SearchResultsDock::copySearchResultsToClipboard);
+    connect(ui->btnCopyResults, &QToolButton::released,this, &SearchResultsDock::copyAllSearchResultsToClipboard);
 
-    connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
+    connect(ui->treeWidget, &QTreeWidget::customContextMenuRequested, this, [this](const QPoint &pos) {
         QTreeWidgetItem *item = ui->treeWidget->itemAt(pos);
 
         if (item == Q_NULLPTR) {
@@ -54,10 +54,12 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
 
         // Create the menu and show it
         QMenu menu(this);
+        menu.addAction(tr("Copy"), this, &SearchResultsDock::copySelectedSearchResultsToClipboard);
+        menu.addSeparator();
         menu.addAction(tr("Collapse All"), this, &SearchResultsDock::collapseAll);
         menu.addAction(tr("Expand All"), this, &SearchResultsDock::expandAll);
         menu.addSeparator();
-        menu.addAction(tr("Delete Entry"), this, [=]() { deleteEntry(item); });
+        menu.addAction(tr("Delete Entry"), this, [=, this]() { deleteEntry(item); });
         menu.addSeparator();
         menu.addAction(tr("Delete All"), this, &SearchResultsDock::deleteAll);
 
@@ -67,7 +69,7 @@ SearchResultsDock::SearchResultsDock(QWidget *parent) :
     ui->treeWidget->setItemDelegate(new SearchResultHighlighterDelegate(ui->treeWidget));
 
     ApplicationSettings *settings = qobject_cast<NotepadNextApplication*>(qApp)->getSettings();
-    auto updateTreeWidgetFont = [=]() {
+    auto updateTreeWidgetFont = [=, this]() {
         QFont f(settings->fontName(), settings->fontSize());
         ui->treeWidget->setFont(f);
         ui->treeWidget->resizeColumnToContents(0);
@@ -220,17 +222,34 @@ void SearchResultsDock::updateSearchStatus()
         currentFile->setText(0, QStringLiteral("%1 (%L2 hits)").arg(currentFilePath).arg(totalFileHitCount));
 }
 
-void SearchResultsDock::copySearchResultsToClipboard()
+void SearchResultsDock::copyAllSearchResultsToClipboard()
 {
     QStringList results;
     QTreeWidgetItemIterator it(ui->treeWidget);
 
     while (*it) {
         const QTreeWidgetItem *item = *it;
-        results.append(QStringLiteral("%1 %2").arg(item->text(0)).arg(item->text(1)));
+        results.append(QStringLiteral("%1 %2").arg(item->text(0), item->text(1)));
         ++it;
     }
 
     QGuiApplication::clipboard()->setText(results.join('\n'));
 }
 
+void SearchResultsDock::copySelectedSearchResultsToClipboard()
+{
+    QStringList results;
+    QTreeWidgetItemIterator it(ui->treeWidget);
+
+    while (*it) {
+        const QTreeWidgetItem *item = *it;
+
+        if (item->isSelected()) {
+            results.append(QStringLiteral("%1 %2").arg(item->text(0), item->text(1)));
+        }
+
+        ++it;
+    }
+
+    QGuiApplication::clipboard()->setText(results.join('\n'));
+}
