@@ -6,12 +6,12 @@
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="20"/>
       <source>Column Mode</source>
-      <translation type="unfinished"/>
+      <translation>열 모드</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="32"/>
       <source>Text</source>
-      <translation type="unfinished"/>
+      <translation>텍스트</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="47"/>
@@ -21,7 +21,7 @@
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="59"/>
       <source>Start:</source>
-      <translation type="unfinished"/>
+      <translation>시작:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="76"/>
@@ -34,7 +34,7 @@
     <message>
       <location filename="../src/docks/DebugLogDock.ui" line="14"/>
       <source>Debug Log</source>
-      <translation type="unfinished"/>
+      <translation>디버그 로그</translation>
     </message>
   </context>
   <context>
@@ -62,42 +62,42 @@
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="139"/>
       <source>Macintosh (CR)</source>
-      <translation type="unfinished"/>
+      <translation>Macintosh (CR)</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="142"/>
       <source>Windows (CR LF)</source>
-      <translation type="unfinished"/>
+      <translation>Windows (CR LF)</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="145"/>
       <source>Unix (LF)</source>
-      <translation type="unfinished"/>
+      <translation>Unix (LF)</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="155"/>
       <source>ANSI</source>
-      <translation type="unfinished"/>
+      <translation>ANSI</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="159"/>
       <source>UTF-8</source>
-      <translation type="unfinished"/>
+      <translation>UTF-8</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="160"/>
       <source>UTF-8 BOM</source>
-      <translation type="unfinished"/>
+      <translation>UTF-8 BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="161"/>
       <source>UTF-16LE BOM</source>
-      <translation type="unfinished"/>
+      <translation>UTF-16LE BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="162"/>
       <source>UTF-16BE BOM</source>
-      <translation type="unfinished"/>
+      <translation>UTF-16BE BOM</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="178"/>
@@ -109,7 +109,7 @@
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="182"/>
       <source>INS</source>
       <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
-      <translation type="unfinished"/>
+      <translation>INS</translation>
     </message>
   </context>
   <context>
@@ -122,17 +122,17 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="36"/>
       <source>Position Information</source>
-      <translation type="unfinished"/>
+      <translation>위치 정보</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="39"/>
       <source>Current Position</source>
-      <translation type="unfinished"/>
+      <translation>현재 위치</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="40"/>
       <source>Current Position (x, y)</source>
-      <translation type="unfinished"/>
+      <translation>현재 위치 (x, y)</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="41"/>
@@ -142,17 +142,17 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="43"/>
       <source>Current Style</source>
-      <translation type="unfinished"/>
+      <translation>현재 스타일</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="44"/>
       <source>Current Line</source>
-      <translation type="unfinished"/>
+      <translation>현재 줄</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="45"/>
       <source>Line Length</source>
-      <translation type="unfinished"/>
+      <translation>줄 길이</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="46"/>
@@ -212,7 +212,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="83"/>
       <source>Length</source>
-      <translation type="unfinished"/>
+      <translation>길이</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="84"/>
@@ -310,7 +310,7 @@
     <message>
       <location filename="../src/docks/FileListDock.ui" line="51"/>
       <source>...</source>
-      <translation type="unfinished"/>
+      <translation>...</translation>
     </message>
     <message>
       <location filename="../src/docks/FileListDock.ui" line="90"/>
@@ -400,7 +400,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="311"/>
       <source>Mark All</source>
-      <translation type="unfinished"/>
+      <translation>모두 표시</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="321"/>
