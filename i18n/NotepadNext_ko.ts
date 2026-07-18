@@ -26,7 +26,7 @@
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="76"/>
       <source>Step:</source>
-      <translation type="unfinished"/>
+      <translation/>
     </message>
   </context>
   <context>
@@ -117,7 +117,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.ui" line="14"/>
       <source>Editor Inspector</source>
-      <translation type="unfinished"/>
+      <translation/>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="36"/>
@@ -217,7 +217,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="84"/>
       <source>Line Count</source>
-      <translation type="unfinished"/>
+      <translation>줄 수</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="88"/>
