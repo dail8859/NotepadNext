@@ -153,8 +153,11 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     connect(ui->buttonCopyMarkedText, &QPushButton::clicked, this, &FindReplaceDialog::copyMarkedText);
 
     const auto findPrevious = [this]() {
-        if (ui->buttonFind->isVisible()) {
-            performFind(!ui->radioRegexSearch->isChecked());
+        const int curTab = tabBar->currentIndex();
+        if (curTab == FIND_TAB || curTab == REPLACE_TAB) {
+            // Always default to forward if regex search is checked
+            const bool regex = ui->radioRegexSearch->isChecked();
+            performFind(regex ? SearchDirection::Forwards : SearchDirection::Backwards);
         }
     };
     new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Return), this, this, findPrevious, Qt::WidgetWithChildrenShortcut);
@@ -237,16 +240,16 @@ void FindReplaceDialog::updateReplaceList(const QString &text)
 
 void FindReplaceDialog::find()
 {
-    performFind(ui->checkBoxBackwardsDirection->isChecked());
+    performFind(ui->checkBoxBackwardsDirection->isChecked() ? SearchDirection::Backwards : SearchDirection::Forwards);
 }
 
-void FindReplaceDialog::performFind(bool backwards)
+void FindReplaceDialog::performFind(SearchDirection direction)
 {
     qInfo(Q_FUNC_INFO);
 
     prepareToPerformSearch();
 
-    Sci_CharacterRange range = backwards ? finder->findPrev() : finder->findNext();
+    Sci_CharacterRange range = direction == SearchDirection::Forwards ? finder->findNext() : finder->findPrev();
 
     if (ScintillaNext::isRangeValid(range)) {
         if (finder->didLatestSearchWrapAround()) {
