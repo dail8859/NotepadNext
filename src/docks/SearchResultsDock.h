@@ -53,7 +53,8 @@ public slots:
 private slots:
     void itemActivated(QTreeWidgetItem *item, int column);
     void itemExpanded(QTreeWidgetItem *item);
-    void copySearchResultsToClipboard() ;
+    void copyAllSearchResultsToClipboard();
+    void copySelectedSearchResultsToClipboard();
 
 
 signals:
