@@ -1098,14 +1098,13 @@ void MainWindow::newFile()
 {
     qInfo(Q_FUNC_INFO);
 
-    static int count = 1;
-
     // NOTE: in theory need to check all editors in the editorManager to future proof this.
     // If there is another window it would need to check those too to see if New X exists. The editor
     // manager would encompass all editors
 
+    int count = 1;
     forever {
-        QString newFileName = tr("New %1").arg(count++);
+        QString newFileName = tr("New %1").arg(count);
         bool canUseName = true;
 
         for (const ScintillaNext *editor : editors()) {
@@ -1120,6 +1119,8 @@ void MainWindow::newFile()
             editor->grabFocus();
             break;
         }
+
+        count++;
     }
 }
 
