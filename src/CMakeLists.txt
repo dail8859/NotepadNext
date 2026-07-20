@@ -183,6 +183,8 @@ qt_add_executable(NotepadNext
 	ScintillaSorter.h ScintillaSorter.cpp
 	widgets/TabsQuickActionsBar.cpp
 	widgets/TabsQuickActionsBar.h
+	ShiftMiddleClickBlocker.h ShiftMiddleClickBlocker.cpp
+	ShiftWheelToHorizontalScrollFilter.h ShiftWheelToHorizontalScrollFilter.cpp
 )
 
 set_target_properties(NotepadNext PROPERTIES
