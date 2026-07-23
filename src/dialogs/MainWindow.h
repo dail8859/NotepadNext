@@ -40,6 +40,8 @@ class Macro;
 class Settings;
 class QuickFindWidget;
 class ZoomEventWatcher;
+class ShiftMiddleClickBlocker;
+class ShiftWheelToHorizontalScrollFilter;
 class Converter;
 class DefaultDirectoryManager;
 class TabsQuickActionsBar;
@@ -196,6 +198,8 @@ private:
     DefaultDirectoryManager *defaultDirectoryManager;
 
     ZoomEventWatcher *zoomEventWatcher;
+    ShiftMiddleClickBlocker *shiftMiddleClickBlocker;
+    ShiftWheelToHorizontalScrollFilter *shiftWheelToHorizontalScrollFilter;
     int zoomLevel = 0;
     int contextMenuPos = 0;
     QMenu *buildMenu(QStringList actionNames);
