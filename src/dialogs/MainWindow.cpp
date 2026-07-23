@@ -81,6 +81,9 @@
 #include "MacroEditorDialog.h"
 
 #include "ZoomEventWatcher.h"
+#include "ShiftMiddleClickBlocker.h"
+#include "ShiftWheelToHorizontalScrollFilter.h"
+
 #include "FileDialogHelpers.h"
 
 #include "HtmlConverter.h"
@@ -94,7 +97,9 @@
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
     app(app),
-    zoomEventWatcher(new ZoomEventWatcher(this))
+    zoomEventWatcher(new ZoomEventWatcher(this)),
+    shiftMiddleClickBlocker(new ShiftMiddleClickBlocker(this)),
+    shiftWheelToHorizontalScrollFilter(new ShiftWheelToHorizontalScrollFilter(this))
 {
     qInfo(Q_FUNC_INFO);
 
@@ -2094,6 +2099,13 @@ void MainWindow::addEditor(ScintillaNext *editor)
     connect(editor, &ScintillaNext::renamed, this, [= ,this]() { detectLanguage(editor); });
     connect(editor, &ScintillaNext::renamed, this, [=, this]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
+
+    // Scintilla pastes the primary selection on middle-click. Suppress an
+    // accidental wheel-button press while Shift is held for horizontal scrolling.
+    editor->viewport()->installEventFilter(shiftMiddleClickBlocker);
+
+    // Translate shift+vertical wheel to vertical
+    editor->viewport()->installEventFilter(shiftWheelToHorizontalScrollFilter);
 
     // Watch for any zoom events (Ctrl+Scroll or pinch-to-zoom (Qt translates it as Ctrl+Scroll)) so that the event
     // can be handled before the ScintillaEditBase widget, so that it can be applied to all editors to keep zoom level equal.
