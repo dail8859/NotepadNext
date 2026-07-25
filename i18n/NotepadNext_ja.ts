@@ -6,27 +6,27 @@
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="20"/>
       <source>Column Mode</source>
-      <translation type="unfinished"/>
+      <translation>矩形編集</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="32"/>
       <source>Text</source>
-      <translation type="unfinished"/>
+      <translation>文字列</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="47"/>
       <source>Numbers</source>
-      <translation type="unfinished"/>
+      <translation>数字</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="59"/>
       <source>Start:</source>
-      <translation type="unfinished"/>
+      <translation>初期値:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/ColumnEditorDialog.ui" line="76"/>
       <source>Step:</source>
-      <translation type="unfinished"/>
+      <translation>増分:</translation>
     </message>
   </context>
   <context>
@@ -34,7 +34,7 @@
     <message>
       <location filename="../src/docks/DebugLogDock.ui" line="14"/>
       <source>Debug Log</source>
-      <translation type="unfinished"/>
+      <translation>デバッグログ</translation>
     </message>
   </context>
   <context>
@@ -42,22 +42,22 @@
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="100"/>
       <source>Length: %L1    Lines: %L2</source>
-      <translation type="unfinished"/>
+      <translation>長さ: %L1    行数: %L2</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="109"/>
       <source>Sel: N/A</source>
-      <translation type="unfinished"/>
+      <translation>選択: なし</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="119"/>
       <source>Sel: %L1 | %L2</source>
-      <translation type="unfinished"/>
+      <translation>選択: %L1 | %L2</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="123"/>
       <source>Ln: %L1    Col: %L2    </source>
-      <translation type="unfinished"/>
+      <translation>行: %L1    桁: %L2    </translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="139"/>
@@ -103,13 +103,13 @@
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="178"/>
       <source>OVR</source>
       <extracomment>This is a short abbreviation to indicate characters will be replaced when typing</extracomment>
-      <translation type="unfinished"/>
+      <translation>上書</translation>
     </message>
     <message>
       <location filename="../src/widgets/EditorInfoStatusBar.cpp" line="182"/>
       <source>INS</source>
       <extracomment>This is a short abbreviation to indicate characters will be inserted when typing</extracomment>
-      <translation type="unfinished"/>
+      <translation>挿入</translation>
     </message>
   </context>
   <context>
@@ -117,187 +117,187 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.ui" line="14"/>
       <source>Editor Inspector</source>
-      <translation type="unfinished"/>
+      <translation>エディタインスペクタ</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="36"/>
       <source>Position Information</source>
-      <translation type="unfinished"/>
+      <translation>位置情報</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="39"/>
       <source>Current Position</source>
-      <translation type="unfinished"/>
+      <translation>現在位置</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="40"/>
       <source>Current Position (x, y)</source>
-      <translation type="unfinished"/>
+      <translation>現在位置 (x, y)</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="41"/>
       <source>Column</source>
-      <translation type="unfinished"/>
+      <translation>列</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="43"/>
       <source>Current Style</source>
-      <translation type="unfinished"/>
+      <translation>現在のスタイル</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="44"/>
       <source>Current Line</source>
-      <translation type="unfinished"/>
+      <translation>現在行</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="45"/>
       <source>Line Length</source>
-      <translation type="unfinished"/>
+      <translation>行の長さ</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="46"/>
       <source>Line End Position</source>
-      <translation type="unfinished"/>
+      <translation>行末位置</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="47"/>
       <source>Line Indentation</source>
-      <translation type="unfinished"/>
+      <translation>行のインデント</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="48"/>
       <source>Line Indent Position</source>
-      <translation type="unfinished"/>
+      <translation>行インデント位置</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="52"/>
       <source>Selection Information</source>
-      <translation type="unfinished"/>
+      <translation>選択情報</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="55"/>
       <source>Mode</source>
-      <translation type="unfinished"/>
+      <translation>モード</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="69"/>
       <source>Is Rectangle</source>
-      <translation type="unfinished"/>
+      <translation>矩形選択</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="70"/>
       <source>Selection Empty</source>
-      <translation type="unfinished"/>
+      <translation>選択範囲が空</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="71"/>
       <source>Main Selection</source>
-      <translation type="unfinished"/>
+      <translation>メイン選択</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="72"/>
       <source># of Selections</source>
-      <translation type="unfinished"/>
+      <translation>選択数</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="75"/>
       <source>Multiple Selections</source>
-      <translation type="unfinished"/>
+      <translation>複数選択</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="80"/>
       <source>Document Information</source>
-      <translation type="unfinished"/>
+      <translation>文書情報</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="83"/>
       <source>Length</source>
-      <translation type="unfinished"/>
+      <translation>長さ</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="84"/>
       <source>Line Count</source>
-      <translation type="unfinished"/>
+      <translation>行数</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="88"/>
       <source>View Information</source>
-      <translation type="unfinished"/>
+      <translation>表示情報</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="91"/>
       <source>Lines on Screen</source>
-      <translation type="unfinished"/>
+      <translation>画面上の行数</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="92"/>
       <source>First Visible Line</source>
-      <translation type="unfinished"/>
+      <translation>最初の表示行</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="93"/>
       <source>X Offset</source>
-      <translation type="unfinished"/>
+      <translation>Xオフセット</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="97"/>
       <source>Fold Information</source>
-      <translation type="unfinished"/>
+      <translation>折りたたみ情報</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="100"/>
       <source>Visible From Doc Line</source>
-      <translation type="unfinished"/>
+      <translation>文書行に対応する表示行</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="101"/>
       <source>Doc Line From Visible</source>
-      <translation type="unfinished"/>
+      <translation>表示行に対応する文書行</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="102"/>
       <source>Fold Level</source>
-      <translation type="unfinished"/>
+      <translation>折りたたみレベル</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="103"/>
       <source>Is Fold Header</source>
-      <translation type="unfinished"/>
+      <translation>折りたたみヘッダー</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="104"/>
       <source>Fold Parent</source>
-      <translation type="unfinished"/>
+      <translation>親の折りたたみヘッダー行</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="105"/>
       <source>Last Child</source>
-      <translation type="unfinished"/>
+      <translation>最後の子行</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="106"/>
       <source>Contracted Fold Next</source>
-      <translation type="unfinished"/>
+      <translation>次の折りたたまれたヘッダー行</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="173"/>
       <source>Caret</source>
-      <translation type="unfinished"/>
+      <translation>キャレット</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="177"/>
       <source>Anchor</source>
-      <translation type="unfinished"/>
+      <translation>アンカー</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="181"/>
       <source>Caret Virtual Space</source>
-      <translation type="unfinished"/>
+      <translation>キャレットの仮想空白</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="185"/>
       <source>Anchor Virtual Space</source>
-      <translation type="unfinished"/>
+      <translation>アンカーの仮想空白</translation>
     </message>
   </context>
   <context>
@@ -305,7 +305,7 @@
     <message>
       <location filename="../src/docks/FileListDock.ui" line="14"/>
       <source>File List</source>
-      <translation type="unfinished"/>
+      <translation>ファイル一覧</translation>
     </message>
     <message>
       <location filename="../src/docks/FileListDock.ui" line="51"/>
@@ -315,7 +315,7 @@
     <message>
       <location filename="../src/docks/FileListDock.ui" line="90"/>
       <source>Sort by File Name</source>
-      <translation type="unfinished"/>
+      <translation>ファイル名で並べ替え</translation>
     </message>
   </context>
   <context>
@@ -325,198 +325,206 @@
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="247"/>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="62"/>
       <source>Find</source>
-      <translation type="unfinished"/>
+      <translation>検索</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="69"/>
       <source>Search Mode</source>
-      <translation type="unfinished"/>
+      <translation>検索モード</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="90"/>
       <source>&amp;Normal</source>
-      <translation type="unfinished"/>
+      <translation>標準(&amp;N)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="106"/>
       <source>E&amp;xtended (\n, \r, \t, \0, \x...)</source>
-      <translation type="unfinished"/>
+      <translation>拡張(&amp;X) (\n, \r, \t, \0, \x...)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="124"/>
       <source>Re&amp;gular expression</source>
-      <translation type="unfinished"/>
+      <translation>正規表現(&amp;G)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="140"/>
       <source>&amp;. matches newline</source>
-      <translation type="unfinished"/>
+      <translation>「.」を改行にも一致させる(&amp;.)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="179"/>
       <source>Transparenc&amp;y</source>
-      <translation type="unfinished"/>
+      <translation>透明度(&amp;Y)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="200"/>
       <source>On losing focus</source>
-      <translation type="unfinished"/>
+      <translation>フォーカスを失ったとき</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="210"/>
       <source>Always</source>
-      <translation type="unfinished"/>
+      <translation>常に</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="260"/>
       <source>Coun&amp;t</source>
-      <translation type="unfinished"/>
+      <translation>数える(&amp;T)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="270"/>
       <source>&amp;Replace</source>
-      <translation type="unfinished"/>
+      <translation>置換(&amp;R)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="277"/>
       <source>Replace &amp;All</source>
-      <translation type="unfinished"/>
+      <translation>すべて置換(&amp;A)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="284"/>
       <source>Replace All in &amp;Opened Documents</source>
-      <translation type="unfinished"/>
+      <translation>開いているすべての文書で置換(&amp;O)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="291"/>
       <source>Find All in All &amp;Opened Documents</source>
-      <translation type="unfinished"/>
+      <translation>開いているすべての文書から検索(&amp;O)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="301"/>
       <source>Find All in Current Document</source>
-      <translation type="unfinished"/>
+      <translation>現在の文書内で検索</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="311"/>
       <source>Mark All</source>
-      <translation type="unfinished"/>
+      <translation>すべてマーク</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="321"/>
       <source>Clear all marks</source>
-      <translation type="unfinished"/>
+      <translation>すべてのマークを解除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="331"/>
       <source>Copy Marked Text</source>
-      <translation type="unfinished"/>
+      <translation>マークしたテキストをコピー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="341"/>
       <source>Close</source>
-      <translation type="unfinished"/>
+      <translation>閉じる</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="397"/>
       <source>&amp;Find:</source>
-      <translation type="unfinished"/>
+      <translation>検索文字列(&amp;F):</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="429"/>
       <source>Replace:</source>
-      <translation type="unfinished"/>
+      <translation>置換文字列:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="475"/>
       <source>&amp;Bookmark line</source>
-      <translation type="unfinished"/>
+      <translation>行をブックマーク(&amp;B)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="482"/>
       <source>&amp;Purge for each search</source>
-      <translation type="unfinished"/>
+      <translation>検索ごとにマークを消去(&amp;P)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="489"/>
       <source>Backward direction</source>
-      <translation type="unfinished"/>
+      <translation>逆方向に検索する</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="496"/>
       <source>Match &amp;whole word only</source>
-      <translation type="unfinished"/>
+      <translation>単語単位(&amp;W)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="503"/>
       <source>Match &amp;case</source>
-      <translation type="unfinished"/>
+      <translation>大文字/小文字を区別(&amp;C)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="510"/>
       <source>Wra&amp;p Around</source>
-      <translation type="unfinished"/>
+      <translation>先頭/末尾から再検索(&amp;P)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
       <source>Replace</source>
-      <translation type="unfinished"/>
+      <translation>置換</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
       <source>Mark</source>
-      <translation type="unfinished"/>
+      <translation>マーク</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="148"/>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="358"/>
       <source>Replaced %Ln matches</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>%Ln件を置換しました</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="256"/>
       <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
-      <translation type="unfinished"/>
+      <translation>文書の末尾に達しました。先頭から1件目の一致が見つかりました。</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="267"/>
       <source>No matches found.</source>
-      <translation type="unfinished"/>
+      <translation>一致は見つかりませんでした。</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="330"/>
       <source>1 occurrence was replaced</source>
-      <translation type="unfinished"/>
+      <translation>1件を置換しました</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="339"/>
       <source>No more occurrences were found</source>
-      <translation type="unfinished"/>
+      <translation>これ以上一致する箇所はありません</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="369"/>
       <source>Found %Ln matches</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>%Ln件見つかりました</numerusform>
+      </translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="757"/>
       <source>Mark: %Ln match in entire file</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>マーク: ファイル全体で%Ln件をマーク</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="768"/>
       <source>All marks cleared</source>
-      <translation type="unfinished"/>
+      <translation>すべてのマークを解除しました</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="792"/>
       <source>No marks to copy</source>
-      <translation type="unfinished"/>
+      <translation>コピーできるマーク済みテキストがありません</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="797"/>
       <source>Copied %Ln marked text(s)</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>マークしたテキストを%Ln件コピーしました</numerusform>
+      </translation>
     </message>
   </context>
   <context>
@@ -524,7 +532,7 @@
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="14"/>
       <source>Folder as Workspace</source>
-      <translation type="unfinished"/>
+      <translation>ワークスペース フォルダー</translation>
     </message>
   </context>
   <context>
@@ -532,48 +540,48 @@
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="14"/>
       <source>Language Inspector</source>
-      <translation type="unfinished"/>
+      <translation>言語インスペクタ</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="56"/>
       <source>Language:</source>
-      <translation type="unfinished"/>
+      <translation>言語:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="70"/>
       <source>Lexer:</source>
-      <translation type="unfinished"/>
+      <translation>レキサー:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="86"/>
       <source>Properties:</source>
-      <translation type="unfinished"/>
+      <translation>プロパティ:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="100"/>
       <source>Property</source>
-      <translation type="unfinished"/>
+      <translation>プロパティ</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="105"/>
       <source>Type</source>
-      <translation type="unfinished"/>
+      <translation>種類</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="110"/>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="151"/>
       <source>Description</source>
-      <translation type="unfinished"/>
+      <translation>説明</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="115"/>
       <source>Value</source>
-      <translation type="unfinished"/>
+      <translation>値</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="123"/>
       <source>Keywords:</source>
-      <translation type="unfinished"/>
+      <translation>キーワード:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="146"/>
@@ -583,17 +591,17 @@
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="159"/>
       <source>Styles:</source>
-      <translation type="unfinished"/>
+      <translation>スタイル:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="166"/>
       <source>TextLabel</source>
-      <translation type="unfinished"/>
+      <translation>テキストラベル</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.cpp" line="146"/>
       <source>Position %1 Style %2</source>
-      <translation type="unfinished"/>
+      <translation>位置 %1 スタイル %2</translation>
     </message>
   </context>
   <context>
@@ -601,7 +609,7 @@
     <message>
       <location filename="../src/docks/LuaConsoleDock.ui" line="17"/>
       <source>Lua Console</source>
-      <translation type="unfinished"/>
+      <translation>Luaコンソール</translation>
     </message>
   </context>
   <context>
@@ -609,67 +617,67 @@
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="14"/>
       <source>Macro Editor</source>
-      <translation type="unfinished"/>
+      <translation>マクロエディタ</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="48"/>
       <source>Name</source>
-      <translation type="unfinished"/>
+      <translation>名前</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="58"/>
       <source>Shortcut</source>
-      <translation type="unfinished"/>
+      <translation>ショートカット</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="67"/>
       <source>Steps:</source>
-      <translation type="unfinished"/>
+      <translation>手順:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="95"/>
       <source>Insert Macro Step</source>
-      <translation type="unfinished"/>
+      <translation>マクロ手順を挿入</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="110"/>
       <source>Delete Selected Macro Step</source>
-      <translation type="unfinished"/>
+      <translation>選択したマクロ手順を削除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="125"/>
       <source>Move Selected Macro Step Up</source>
-      <translation type="unfinished"/>
+      <translation>選択したマクロ手順を上へ移動</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="140"/>
       <source>Move Selected Macro Step Down</source>
-      <translation type="unfinished"/>
+      <translation>選択したマクロ手順を下へ移動</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="176"/>
       <source>Copy Selected Macro</source>
-      <translation type="unfinished"/>
+      <translation>選択したマクロをコピー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="191"/>
       <source>Delete Selected Macro</source>
-      <translation type="unfinished"/>
+      <translation>選択したマクロを削除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.cpp" line="129"/>
       <source>Delete Macro</source>
-      <translation type="unfinished"/>
+      <translation>マクロを削除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.cpp" line="129"/>
       <source>Are you sure you want to delete &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation type="unfinished"/>
+      <translation>&lt;b&gt;%1&lt;/b&gt;を削除してもよろしいですか？</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.cpp" line="150"/>
       <source>(Copy)</source>
-      <translation type="unfinished"/>
+      <translation>(コピー)</translation>
     </message>
   </context>
   <context>
@@ -677,37 +685,37 @@
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="14"/>
       <source>Run a Macro Multiple Times</source>
-      <translation type="unfinished"/>
+      <translation>マクロを複数回実行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="31"/>
       <source>Macro:</source>
-      <translation type="unfinished"/>
+      <translation>マクロ:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="56"/>
       <source>Run Until End of File</source>
-      <translation type="unfinished"/>
+      <translation>ファイル末尾まで実行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="63"/>
       <source>Execute...</source>
-      <translation type="unfinished"/>
+      <translation>実行...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="116"/>
       <source>times</source>
-      <translation type="unfinished"/>
+      <translation>回</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="166"/>
       <source>Run</source>
-      <translation type="unfinished"/>
+      <translation>実行</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="173"/>
       <source>Cancel</source>
-      <translation type="unfinished"/>
+      <translation>キャンセル</translation>
     </message>
   </context>
   <context>
@@ -715,17 +723,17 @@
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="14"/>
       <source>Save Macro</source>
-      <translation type="unfinished"/>
+      <translation>マクロを保存</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="25"/>
       <source>Name:</source>
-      <translation type="unfinished"/>
+      <translation>名前:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="39"/>
       <source>Shortcut:</source>
-      <translation type="unfinished"/>
+      <translation>ショートカット:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="82"/>
@@ -735,7 +743,7 @@
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="89"/>
       <source>Cancel</source>
-      <translation type="unfinished"/>
+      <translation>キャンセル</translation>
     </message>
   </context>
   <context>
@@ -743,12 +751,12 @@
     <message>
       <location filename="../src/MacroStepTableModel.cpp" line="34"/>
       <source>Name</source>
-      <translation type="unfinished"/>
+      <translation>名前</translation>
     </message>
     <message>
       <location filename="../src/MacroStepTableModel.cpp" line="36"/>
       <source>Text</source>
-      <translation type="unfinished"/>
+      <translation>テキスト</translation>
     </message>
   </context>
   <context>
@@ -766,269 +774,269 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="48"/>
       <source>&amp;File</source>
-      <translation type="unfinished"/>
+      <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="52"/>
       <source>Close More</source>
-      <translation type="unfinished"/>
+      <translation>複数のファイルを閉じる</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="60"/>
       <source>&amp;Recent Files</source>
-      <translation type="unfinished"/>
+      <translation>最近使用したファイル(&amp;R)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1487"/>
       <source>Export As</source>
-      <translation type="unfinished"/>
+      <translation>形式を指定してエクスポート</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="97"/>
       <source>&amp;Edit</source>
-      <translation type="unfinished"/>
+      <translation>編集(&amp;E)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="101"/>
       <source>Copy More</source>
-      <translation type="unfinished"/>
+      <translation>クリップボードにコピー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="109"/>
       <source>Indent</source>
-      <translation type="unfinished"/>
+      <translation>インデント</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="116"/>
       <source>EOL Conversion</source>
-      <translation type="unfinished"/>
+      <translation>改行コード変換</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="124"/>
       <source>Convert Case</source>
-      <translation type="unfinished"/>
+      <translation>大文字/小文字変換</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="131"/>
       <source>Line Operations</source>
-      <translation type="unfinished"/>
+      <translation>行の操作</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="154"/>
       <source>Comment/Uncomment</source>
-      <translation type="unfinished"/>
+      <translation>コメント化/解除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="162"/>
       <source>Copy As</source>
-      <translation type="unfinished"/>
+      <translation>形式を指定してコピー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="169"/>
       <source>Encoding/Decoding</source>
-      <translation type="unfinished"/>
+      <translation>エンコード/デコード</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="200"/>
       <source>Search</source>
-      <translation type="unfinished"/>
+      <translation>検索</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="204"/>
       <source>Bookmarks</source>
-      <translation type="unfinished"/>
+      <translation>ブックマーク</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="221"/>
       <source>Mark All Occurrences</source>
-      <translation type="unfinished"/>
+      <translation>すべての一致をマーク</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="229"/>
       <source>Clear Marks</source>
-      <translation type="unfinished"/>
+      <translation>マークを解除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="252"/>
       <source>&amp;View</source>
-      <translation type="unfinished"/>
+      <translation>表示(&amp;V)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="256"/>
       <source>&amp;Zoom</source>
-      <translation type="unfinished"/>
+      <translation>ズーム(&amp;Z)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="265"/>
       <source>Show Symbol</source>
-      <translation type="unfinished"/>
+      <translation>制御文字の表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="276"/>
       <source>Fold Level</source>
-      <translation type="unfinished"/>
+      <translation>指定レベルで畳む</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="290"/>
       <source>Unfold Level</source>
-      <translation type="unfinished"/>
+      <translation>指定レベルで展開</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="319"/>
       <source>Language</source>
-      <translation type="unfinished"/>
+      <translation>言語</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="324"/>
       <source>Settings</source>
-      <translation type="unfinished"/>
+      <translation>設定</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="330"/>
       <source>Macro</source>
-      <translation type="unfinished"/>
+      <translation>マクロ</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="341"/>
       <source>Help</source>
-      <translation type="unfinished"/>
+      <translation>ヘルプ</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="352"/>
       <source>Encoding</source>
-      <translation type="unfinished"/>
+      <translation>エンコード</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="368"/>
       <source>Main Tool Bar</source>
-      <translation type="unfinished"/>
+      <translation>メインツールバー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="428"/>
       <source>&amp;New</source>
-      <translation type="unfinished"/>
+      <translation>新規(&amp;N)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="431"/>
       <source>Create a new file</source>
-      <translation type="unfinished"/>
+      <translation>新しいファイルを作成</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="444"/>
       <source>&amp;Open...</source>
-      <translation type="unfinished"/>
+      <translation>開く(&amp;O)...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="460"/>
       <source>&amp;Save</source>
-      <translation type="unfinished"/>
+      <translation>上書き保存(&amp;S)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="463"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
       <source>Save</source>
-      <translation type="unfinished"/>
+      <translation>上書き保存</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="471"/>
       <source>E&amp;xit</source>
-      <translation type="unfinished"/>
+      <translation>終了(&amp;X)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="484"/>
       <source>&amp;Undo</source>
-      <translation type="unfinished"/>
+      <translation>元に戻す(&amp;U)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="497"/>
       <source>&amp;Redo</source>
-      <translation type="unfinished"/>
+      <translation>やり直し(&amp;R)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="510"/>
       <source>Cu&amp;t</source>
-      <translation type="unfinished"/>
+      <translation>切り取り(&amp;T)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="523"/>
       <source>&amp;Copy</source>
-      <translation type="unfinished"/>
+      <translation>コピー(&amp;C)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="536"/>
       <source>&amp;Paste</source>
-      <translation type="unfinished"/>
+      <translation>貼り付け(&amp;P)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="544"/>
       <source>&amp;Delete</source>
-      <translation type="unfinished"/>
+      <translation>削除(&amp;D)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="552"/>
       <source>Copy Full Path</source>
-      <translation type="unfinished"/>
+      <translation>フルパスをコピー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="557"/>
       <source>Copy File Name</source>
-      <translation type="unfinished"/>
+      <translation>ファイル名をコピー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="562"/>
       <source>Copy File Directory</source>
-      <translation type="unfinished"/>
+      <translation>ディレクトリをコピー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="571"/>
       <source>&amp;Close</source>
-      <translation type="unfinished"/>
+      <translation>閉じる(&amp;C)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="574"/>
       <source>Close the current file</source>
-      <translation type="unfinished"/>
+      <translation>現在のファイルを閉じる</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="582"/>
       <source>Save &amp;As...</source>
-      <translation type="unfinished"/>
+      <translation>名前を付けて保存(&amp;A)...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="590"/>
       <source>Save a Copy As...</source>
-      <translation type="unfinished"/>
+      <translation>複製を別名で保存...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="599"/>
       <source>Sav&amp;e All</source>
-      <translation type="unfinished"/>
+      <translation>すべて保存(&amp;E)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="607"/>
       <source>Select A&amp;ll</source>
-      <translation type="unfinished"/>
+      <translation>すべて選択(&amp;L)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="619"/>
       <source>Increase Indent</source>
-      <translation type="unfinished"/>
+      <translation>インデントを増やす</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="628"/>
       <source>Decrease Indent</source>
-      <translation type="unfinished"/>
+      <translation>インデントを減らす</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="633"/>
       <source>Rename...</source>
-      <translation type="unfinished"/>
+      <translation>名前の変更...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="642"/>
       <source>Re&amp;load</source>
-      <translation type="unfinished"/>
+      <translation>再読み込み(&amp;L)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="650"/>
@@ -1048,818 +1056,820 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="671"/>
       <source>UPPER CASE</source>
-      <translation type="unfinished"/>
+      <translation>大文字</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="674"/>
       <source>Convert text to upper case</source>
-      <translation type="unfinished"/>
+      <translation>テキストを大文字に変換</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="679"/>
       <source>lower case</source>
-      <translation type="unfinished"/>
+      <translation>小文字</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="682"/>
       <source>Convert text to lower case</source>
-      <translation type="unfinished"/>
+      <translation>テキストを小文字に変換</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="687"/>
       <source>Duplicate Current Line</source>
-      <translation type="unfinished"/>
+      <translation>カーソル行を複製</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="695"/>
       <source>Split Lines</source>
-      <translation type="unfinished"/>
+      <translation>折り返し位置で分割</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="700"/>
       <source>Join Lines</source>
-      <translation type="unfinished"/>
+      <translation>選択行を連結</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="708"/>
       <source>Move Selected Lines Up</source>
-      <translation type="unfinished"/>
+      <translation>選択行を上へ移動</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="716"/>
       <source>Move Selected Lines Down</source>
-      <translation type="unfinished"/>
+      <translation>選択行を下へ移動</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="728"/>
       <source>Clos&amp;e All</source>
-      <translation type="unfinished"/>
+      <translation>すべて閉じる(&amp;E)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="731"/>
       <source>Close All files</source>
-      <translation type="unfinished"/>
+      <translation>すべてのファイルを閉じる</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="739"/>
       <source>Close All Except Active Document</source>
-      <translation type="unfinished"/>
+      <translation>現在の文書以外を閉じる</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="744"/>
       <source>Close All to the Left</source>
-      <translation type="unfinished"/>
+      <translation>左をすべて閉じる</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="749"/>
       <source>Close All to the Right</source>
-      <translation type="unfinished"/>
+      <translation>右をすべて閉じる</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="759"/>
       <source>Zoom &amp;In</source>
-      <translation type="unfinished"/>
+      <translation>拡大(&amp;I)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="772"/>
       <source>Zoom &amp;Out</source>
-      <translation type="unfinished"/>
+      <translation>縮小(&amp;O)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="780"/>
       <source>Reset Zoom</source>
-      <translation type="unfinished"/>
+      <translation>標準倍率に戻す</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="788"/>
       <source>About Qt</source>
-      <translation type="unfinished"/>
+      <translation>Qtについて</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="800"/>
       <source>About Notepad Next</source>
-      <translation type="unfinished"/>
+      <translation>Notepad Nextについて</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="811"/>
       <source>Show Whitespace</source>
-      <translation type="unfinished"/>
+      <translation>半角スペースとタブを表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="819"/>
       <source>Show End of Line</source>
-      <translation type="unfinished"/>
+      <translation>改行コードを表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="832"/>
       <source>Show All Characters</source>
-      <translation type="unfinished"/>
+      <translation>制御文字をすべて表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="845"/>
       <source>Show Indent Guide</source>
-      <translation type="unfinished"/>
+      <translation>インデントガイドを表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="853"/>
       <source>Show Wrap Symbol</source>
-      <translation type="unfinished"/>
+      <translation>折り返し位置を表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="866"/>
       <source>Word Wrap</source>
-      <translation type="unfinished"/>
+      <translation>画面端で折り返す</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="871"/>
       <source>Restore Recently Closed File</source>
-      <translation type="unfinished"/>
+      <translation>直前に閉じたファイルを開く</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="879"/>
       <source>Open All Recent Files</source>
-      <translation type="unfinished"/>
+      <translation>最近使用したファイルをすべて開く</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="884"/>
       <source>Clear Recent Files List</source>
-      <translation type="unfinished"/>
+      <translation>最近使用したファイルのリストをクリア</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="894"/>
       <source>&amp;Find...</source>
-      <translation type="unfinished"/>
+      <translation>検索(&amp;F)...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="902"/>
       <source>Find in Files...</source>
-      <translation type="unfinished"/>
+      <translation>複数ファイル内を検索...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="907"/>
       <source>Find &amp;Next</source>
-      <translation type="unfinished"/>
+      <translation>次を検索(&amp;N)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="915"/>
       <source>Find &amp;Previous</source>
-      <translation type="unfinished"/>
+      <translation>前を検索(&amp;P)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="928"/>
       <source>&amp;Replace...</source>
-      <translation type="unfinished"/>
+      <translation>置換(&amp;R)...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="939"/>
       <source>Full Screen</source>
-      <translation type="unfinished"/>
+      <translation>全画面表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="955"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="791"/>
       <source>Start Recording</source>
-      <translation type="unfinished"/>
+      <translation>記録開始</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="967"/>
       <source>Playback</source>
-      <translation type="unfinished"/>
+      <translation>再生</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="982"/>
       <source>Save Current Recorded Macro...</source>
-      <translation type="unfinished"/>
+      <translation>記録したマクロを保存...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="994"/>
       <source>Run a Macro Multiple Times...</source>
-      <translation type="unfinished"/>
+      <translation>マクロを複数回実行...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1003"/>
       <source>Preferences...</source>
-      <translation type="unfinished"/>
+      <translation>環境設定...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1011"/>
       <source>Quick Find</source>
-      <translation type="unfinished"/>
+      <translation>クイック検索</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1019"/>
       <source>Select Next Instance</source>
-      <translation type="unfinished"/>
+      <translation>次の出現箇所を選択</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1031"/>
       <source>Move to Trash...</source>
-      <translation type="unfinished"/>
+      <translation>ごみ箱に移動...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1034"/>
       <source>Move to Trash</source>
-      <translation type="unfinished"/>
+      <translation>ごみ箱に移動</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1039"/>
       <source>Check for Updates...</source>
-      <translation type="unfinished"/>
+      <translation>更新を確認...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1044"/>
       <source>&amp;Go to Line...</source>
-      <translation type="unfinished"/>
+      <translation>行へ移動(&amp;G)...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1056"/>
       <source>Print...</source>
-      <translation type="unfinished"/>
+      <translation>印刷...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1064"/>
       <source>Open Folder as Workspace...</source>
-      <translation type="unfinished"/>
+      <translation>フォルダーをワークスペースとして開く...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1069"/>
       <source>Toggle Single Line Comment</source>
-      <translation type="unfinished"/>
+      <translation>行コメント化/解除の切り替え</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1077"/>
       <source>Single Line Comment</source>
-      <translation type="unfinished"/>
+      <translation>行コメント化</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1085"/>
       <source>Single Line Uncomment</source>
-      <translation type="unfinished"/>
+      <translation>行コメント解除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1100"/>
       <source>Edit Macros...</source>
-      <translation type="unfinished"/>
+      <translation>マクロを編集...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1108"/>
       <source>This is not currently implemented</source>
-      <translation type="unfinished"/>
+      <translation>現在は実装されていません</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1113"/>
       <source>Column Mode...</source>
-      <translation type="unfinished"/>
+      <translation>矩形編集...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1118"/>
       <source>Export as HTML...</source>
-      <translation type="unfinished"/>
+      <translation>HTMLとしてエクスポート...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1123"/>
       <source>Export as RTF...</source>
-      <translation type="unfinished"/>
+      <translation>RTFとしてエクスポート...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1128"/>
       <source>Copy as HTML</source>
-      <translation type="unfinished"/>
+      <translation>HTMLとしてコピー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1133"/>
       <source>Copy as RTF</source>
-      <translation type="unfinished"/>
+      <translation>RTFとしてコピー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1138"/>
       <source>Base 64 Encode</source>
-      <translation type="unfinished"/>
+      <translation>Base64エンコード</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1143"/>
       <source>URL Encode</source>
-      <translation type="unfinished"/>
+      <translation>URLエンコード</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1148"/>
       <source>Base 64 Decode</source>
-      <translation type="unfinished"/>
+      <translation>Base64デコード</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1153"/>
       <source>URL Decode</source>
-      <translation type="unfinished"/>
+      <translation>URLデコード</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1158"/>
       <source>Copy URL</source>
-      <translation type="unfinished"/>
+      <translation>URLをコピー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1163"/>
       <source>Remove Empty Lines</source>
-      <translation type="unfinished"/>
+      <translation>空行をすべて削除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1172"/>
       <location filename="../src/dialogs/MainWindow.ui" line="1175"/>
       <source>Show in Explorer</source>
-      <translation type="unfinished"/>
+      <translation>エクスプローラーで表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1184"/>
       <source>Open %1 Here</source>
-      <translation type="unfinished"/>
+      <translation>ここで%1を開く</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1189"/>
       <source>Toggle Bookmark</source>
-      <translation type="unfinished"/>
+      <translation>ブックマーク設定/解除の切り替え</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1197"/>
       <source>Search and Bookmark Lines...</source>
-      <translation type="unfinished"/>
+      <translation>検索して行をブックマーク...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1205"/>
       <source>Next Bookmark</source>
-      <translation type="unfinished"/>
+      <translation>次のブックマークへ</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1213"/>
       <source>Previous Bookmark</source>
-      <translation type="unfinished"/>
+      <translation>前のブックマークへ</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1221"/>
       <source>Clear Bookmarks</source>
-      <translation type="unfinished"/>
+      <translation>すべてのブックマークを解除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1226"/>
       <source>Invert Bookmarks</source>
-      <translation type="unfinished"/>
+      <translation>ブックマークを反転</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1231"/>
       <source>Next Tab</source>
-      <translation type="unfinished"/>
+      <translation>次のタブを表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1242"/>
       <source>Previous Tab</source>
-      <translation type="unfinished"/>
+      <translation>前のタブを表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1253"/>
       <source>Fold Level 1</source>
-      <translation type="unfinished"/>
+      <translation>レベル1で畳む</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1261"/>
       <source>Fold Level 2</source>
-      <translation type="unfinished"/>
+      <translation>レベル2で畳む</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1269"/>
       <source>Fold Level 3</source>
-      <translation type="unfinished"/>
+      <translation>レベル3で畳む</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1277"/>
       <source>Fold Level 4</source>
-      <translation type="unfinished"/>
+      <translation>レベル4で畳む</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1285"/>
       <source>Unfold Level 1</source>
-      <translation type="unfinished"/>
+      <translation>レベル1で展開する</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1293"/>
       <source>Unfold Level 2</source>
-      <translation type="unfinished"/>
+      <translation>レベル2で展開する</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1301"/>
       <source>Unfold Level 3</source>
-      <translation type="unfinished"/>
+      <translation>レベル3で展開する</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1309"/>
       <source>Unfold Level 4</source>
-      <translation type="unfinished"/>
+      <translation>レベル4で展開する</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1317"/>
       <source>Fold All</source>
-      <translation type="unfinished"/>
+      <translation>すべて畳む</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1325"/>
       <source>Unfold All</source>
-      <translation type="unfinished"/>
+      <translation>すべて展開する</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1333"/>
       <source>Fold Level 5</source>
-      <translation type="unfinished"/>
+      <translation>レベル5で畳む</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1341"/>
       <source>Fold Level 6</source>
-      <translation type="unfinished"/>
+      <translation>レベル6で畳む</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1349"/>
       <source>Fold Level 7</source>
-      <translation type="unfinished"/>
+      <translation>レベル7で畳む</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1357"/>
       <source>Fold Level 8</source>
-      <translation type="unfinished"/>
+      <translation>レベル8で畳む</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1365"/>
       <source>Fold Level 9</source>
-      <translation type="unfinished"/>
+      <translation>レベル9で畳む</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1373"/>
       <source>Unfold Level 5</source>
-      <translation type="unfinished"/>
+      <translation>レベル5で展開する</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1381"/>
       <source>Unfold Level 6</source>
-      <translation type="unfinished"/>
+      <translation>レベル6で展開する</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1389"/>
       <source>Unfold Level 7</source>
-      <translation type="unfinished"/>
+      <translation>レベル7で展開する</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1397"/>
       <source>Unfold Level 8</source>
-      <translation type="unfinished"/>
+      <translation>レベル8で展開する</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1405"/>
       <source>Unfold Level 9</source>
-      <translation type="unfinished"/>
+      <translation>レベル9で展開する</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1413"/>
       <location filename="../src/dialogs/MainWindow.ui" line="1416"/>
       <source>Toggle Overtype</source>
-      <translation type="unfinished"/>
+      <translation>上書きモードを切り替え</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1427"/>
       <source>Debug Info...</source>
-      <translation type="unfinished"/>
+      <translation>デバッグ情報...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1432"/>
       <source>Cut Bookmarked Lines</source>
-      <translation type="unfinished"/>
+      <translation>ブックマークした行を切り取り</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1437"/>
       <source>Copy Bookmarked Lines</source>
-      <translation type="unfinished"/>
+      <translation>ブックマークした行をコピー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1442"/>
       <source>Delete Bookmarked Lines</source>
-      <translation type="unfinished"/>
+      <translation>ブックマークした行を削除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1447"/>
       <source>Mark Style 1</source>
-      <translation type="unfinished"/>
+      <translation>スタイル1を適用</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1455"/>
       <source>Mark Style 2</source>
-      <translation type="unfinished"/>
+      <translation>スタイル2を適用</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1463"/>
       <source>Clear Style 1</source>
-      <translation type="unfinished"/>
+      <translation>スタイル1を解除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1471"/>
       <source>Clear Style 2</source>
-      <translation type="unfinished"/>
+      <translation>スタイル2を解除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1479"/>
       <source>Mark Style 3</source>
-      <translation type="unfinished"/>
+      <translation>スタイル3を適用</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1487"/>
       <source>Clear Style 3</source>
-      <translation type="unfinished"/>
+      <translation>スタイル3を解除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1495"/>
       <location filename="../src/dialogs/MainWindow.ui" line="1498"/>
       <source>Clear All Styles</source>
-      <translation type="unfinished"/>
+      <translation>すべてのスタイルを解除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1503"/>
       <source>Remove Duplicate Lines</source>
-      <translation type="unfinished"/>
+      <translation>重複行を削除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1508"/>
       <source>Remove Consecutive Duplicate Lines</source>
-      <translation type="unfinished"/>
+      <translation>連続する重複行を削除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1513"/>
       <source>Sort Lines Ascending</source>
-      <translation type="unfinished"/>
+      <translation>行を昇順で並べ替え</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1518"/>
       <source>Sort Lines Descending</source>
-      <translation type="unfinished"/>
+      <translation>行を降順で並べ替え</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1523"/>
       <source>Sort Lines Ascending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>行を昇順で並べ替え（大文字/小文字を区別しない）</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1528"/>
       <source>Sort Lines Descending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>行を降順で並べ替え（大文字/小文字を区別しない）</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1533"/>
       <source>Sort Lines by Length Ascending</source>
-      <translation type="unfinished"/>
+      <translation>行の長さで昇順に並べ替え</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1538"/>
       <source>Sort Lines by Length Descending</source>
-      <translation type="unfinished"/>
+      <translation>行の長さで降順に並べ替え</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1543"/>
       <source>Reverse Line Order</source>
-      <translation type="unfinished"/>
+      <translation>行の順序を反転</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1548"/>
       <source>Split Horizontal</source>
-      <translation type="unfinished"/>
+      <translation>左右に分割</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1551"/>
       <source>Split editor horizontally (left/right)</source>
-      <translation type="unfinished"/>
+      <translation>エディタを左右に分割</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1559"/>
       <source>Split Vertical</source>
-      <translation type="unfinished"/>
+      <translation>上下に分割</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1562"/>
       <source>Split editor vertically (top/bottom)</source>
-      <translation type="unfinished"/>
+      <translation>エディタを上下に分割</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="447"/>
       <source>Go to line</source>
-      <translation type="unfinished"/>
+      <translation>行へ移動</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="447"/>
       <source>Line Number (1 - %1)</source>
-      <translation type="unfinished"/>
+      <translation>行番号 (1～%1)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="782"/>
       <source>Stop Recording</source>
-      <translation type="unfinished"/>
+      <translation>記録終了</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="887"/>
       <source>Debug Info</source>
-      <translation type="unfinished"/>
+      <translation>デバッグ情報</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1107"/>
       <source>New %1</source>
-      <translation type="unfinished"/>
+      <translation>新規 %1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1169"/>
       <source>Create File</source>
-      <translation type="unfinished"/>
+      <translation>ファイルの作成</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1169"/>
       <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
-      <translation type="unfinished"/>
+      <translation>&lt;b&gt;%1&lt;/b&gt;は存在しません。作成しますか？</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1990"/>
       <source>Save File</source>
-      <translation type="unfinished"/>
+      <translation>ファイルの保存</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1248"/>
       <source>Open Folder as Workspace</source>
-      <translation type="unfinished"/>
+      <translation>フォルダーをワークスペースとして開く</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1271"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1933"/>
       <source>Reload File</source>
-      <translation type="unfinished"/>
+      <translation>ファイルを再読み込み</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1271"/>
       <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
-      <translation type="unfinished"/>
+      <translation>&lt;b&gt;%1&lt;/b&gt;を再読み込みしてもよろしいですか？未保存の変更は失われます。</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1443"/>
       <source>Save a Copy As</source>
-      <translation type="unfinished"/>
+      <translation>複製を別名で保存</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1528"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1545"/>
       <source>Rename</source>
-      <translation type="unfinished"/>
+      <translation>名前の変更</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1545"/>
       <source>Name:</source>
-      <translation type="unfinished"/>
+      <translation>名前:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1565"/>
       <source>Delete File</source>
-      <translation type="unfinished"/>
+      <translation>ファイルの削除</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1565"/>
       <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
-      <translation type="unfinished"/>
+      <translation>&lt;b&gt;%1&lt;/b&gt;をごみ箱に移動してもよろしいですか？</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1575"/>
       <source>Error Deleting File</source>
-      <translation type="unfinished"/>
+      <translation>ファイルの削除エラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1575"/>
       <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation type="unfinished"/>
+      <translation>&lt;b&gt;%1&lt;/b&gt;の削除中に問題が発生しました。</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1672"/>
       <source>Administrator</source>
-      <translation type="unfinished"/>
+      <translation>管理者</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1933"/>
       <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
-      <translation type="unfinished"/>
+      <translation>&lt;b&gt;%1&lt;/b&gt;は他のプログラムによって変更されました。再読み込みしますか？</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1959"/>
       <source>Read error</source>
-      <translation type="unfinished"/>
+      <translation>読み取りエラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1960"/>
       <source>Write error</source>
-      <translation type="unfinished"/>
+      <translation>書き込みエラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1961"/>
       <source>Fatal error</source>
-      <translation type="unfinished"/>
+      <translation>致命的エラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1962"/>
       <source>Resource error</source>
-      <translation type="unfinished"/>
+      <translation>リソースエラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1963"/>
       <source>Open error</source>
-      <translation type="unfinished"/>
+      <translation>オープンエラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1964"/>
       <source>Abort error</source>
-      <translation type="unfinished"/>
+      <translation>中止エラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1965"/>
       <source>Timeout error</source>
-      <translation type="unfinished"/>
+      <translation>タイムアウトエラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1966"/>
       <source>Unspecified error</source>
-      <translation type="unfinished"/>
+      <translation>未指定のエラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1967"/>
       <source>Remove error</source>
-      <translation type="unfinished"/>
+      <translation>削除エラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1968"/>
       <source>Rename error</source>
-      <translation type="unfinished"/>
+      <translation>名前変更エラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1969"/>
       <source>Position error</source>
-      <translation type="unfinished"/>
+      <translation>位置エラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1970"/>
       <source>Resize error</source>
-      <translation type="unfinished"/>
+      <translation>サイズ変更エラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1971"/>
       <source>Permissions error</source>
-      <translation type="unfinished"/>
+      <translation>権限エラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1972"/>
       <source>Copy error</source>
-      <translation type="unfinished"/>
+      <translation>コピーエラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1973"/>
       <source>Unknown error (%1)</source>
-      <translation type="unfinished"/>
+      <translation>不明なエラー (%1)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1976"/>
       <source>Error Saving File</source>
-      <translation type="unfinished"/>
+      <translation>ファイルの保存エラー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1977"/>
       <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
-      <translation type="unfinished"/>
+      <translation>&lt;b&gt;%1&lt;/b&gt;の保存中にエラーが発生しました&lt;br&gt;&lt;br&gt;エラー: %2</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1983"/>
       <source>Zoom: %1%</source>
-      <translation type="unfinished"/>
+      <translation>ズーム: %1%</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation type="unfinished"/>
+      <translation>&lt;b&gt;%1&lt;/b&gt;の変更を保存しますか？</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/MainWindow.cpp" line="1996"/>
       <source>There are %n files with unsaved changes. Save them?</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>未保存の変更があるファイルが%n件あります。保存しますか？</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
       <source>Save All</source>
-      <translation type="unfinished"/>
+      <translation>すべて保存</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2000"/>
       <source>Discard All</source>
-      <translation type="unfinished"/>
+      <translation>すべて破棄</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2000"/>
       <source>Discard</source>
-      <translation type="unfinished"/>
+      <translation>破棄</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2181"/>
       <source>No updates are available at this time.</source>
-      <translation type="unfinished"/>
+      <translation>現在利用可能な更新はありません。</translation>
     </message>
   </context>
   <context>
@@ -1867,72 +1877,72 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="14"/>
       <source>Preferences</source>
-      <translation type="unfinished"/>
+      <translation>環境設定</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="37"/>
       <source>Show menu bar</source>
-      <translation type="unfinished"/>
+      <translation>メニューバーを表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="44"/>
       <source>Show toolbar</source>
-      <translation type="unfinished"/>
+      <translation>ツールバーを表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="51"/>
       <source>Show status bar</source>
-      <translation type="unfinished"/>
+      <translation>ステータスバーを表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="58"/>
       <source>Restore previous session</source>
-      <translation type="unfinished"/>
+      <translation>前回のセッションを復元</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="70"/>
       <source>Unsaved changes</source>
-      <translation type="unfinished"/>
+      <translation>未保存の変更</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="77"/>
       <source>Temporary files</source>
-      <translation type="unfinished"/>
+      <translation>一時ファイル</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="89"/>
       <source>Recenter find/replace dialog when opened</source>
-      <translation type="unfinished"/>
+      <translation>検索/置換ダイアログを開くときに中央へ配置</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="96"/>
       <source>Combine search results</source>
-      <translation type="unfinished"/>
+      <translation>検索結果をまとめる</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="114"/>
       <source>Translation:</source>
-      <translation type="unfinished"/>
+      <translation>表示言語:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="123"/>
       <source>Exit on last tab closed</source>
-      <translation type="unfinished"/>
+      <translation>最後のタブを閉じたら終了</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="132"/>
       <source>Default Font</source>
-      <translation type="unfinished"/>
+      <translation>既定のフォント</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="138"/>
       <source>Font</source>
-      <translation type="unfinished"/>
+      <translation>フォント</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="148"/>
       <source>Font Size</source>
-      <translation type="unfinished"/>
+      <translation>フォントサイズ</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="155"/>
@@ -1942,38 +1952,38 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="188"/>
       <source>Default Line Endings</source>
-      <translation type="unfinished"/>
+      <translation>既定の改行コード</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="200"/>
       <source>Highlight URLs</source>
-      <translation type="unfinished"/>
+      <translation>URLを強調表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="207"/>
       <source>Show Line Numbers</source>
-      <translation type="unfinished"/>
+      <translation>行番号を表示</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="214"/>
       <source>Auto Completion</source>
-      <translation type="unfinished"/>
+      <translation>自動補完</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="221"/>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="122"/>
       <source>Default Directory</source>
-      <translation type="unfinished"/>
+      <translation>既定のフォルダー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="227"/>
       <source>Follow Current Document</source>
-      <translation type="unfinished"/>
+      <translation>現在の文書のフォルダーを使用</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="234"/>
       <source>Last Used Directory</source>
-      <translation type="unfinished"/>
+      <translation>最後に使用したフォルダー</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="253"/>
@@ -1983,27 +1993,27 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="284"/>
       <source>TextLabel</source>
-      <translation type="unfinished"/>
+      <translation>テキストラベル</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="296"/>
       <source>An application restart is required to apply certain settings.</source>
-      <translation type="unfinished"/>
+      <translation>一部の設定を適用するにはアプリケーションの再起動が必要です。</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="56"/>
       <source>Warning</source>
-      <translation type="unfinished"/>
+      <translation>警告</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="56"/>
       <source>This feature is experimental and it should not be considered safe for critically important work. It may lead to possible data loss. Use at your own risk.</source>
-      <translation type="unfinished"/>
+      <translation>この機能は実験的なものであり、重要な作業に使用するには十分な安全性が確認されていません。データが失われる可能性があります。自己責任で使用してください。</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="85"/>
       <source>System Default</source>
-      <translation type="unfinished"/>
+      <translation>システム既定</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="86"/>
@@ -2023,7 +2033,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="185"/>
       <source>&lt;System Default&gt;</source>
-      <translation type="unfinished"/>
+      <translation>&lt;システム既定&gt;</translation>
     </message>
   </context>
   <context>
@@ -2031,17 +2041,17 @@
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="17"/>
       <source>Frame</source>
-      <translation type="unfinished"/>
+      <translation>フレーム</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="32"/>
       <source>Find...</source>
-      <translation type="unfinished"/>
+      <translation>検索...</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="44"/>
       <source>Match case</source>
-      <translation type="unfinished"/>
+      <translation>大文字/小文字を区別</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="47"/>
@@ -2051,7 +2061,7 @@
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="57"/>
       <source>Match whole word</source>
-      <translation type="unfinished"/>
+      <translation>単語全体に一致</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="60"/>
@@ -2061,7 +2071,7 @@
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="70"/>
       <source>Use regular expression</source>
-      <translation type="unfinished"/>
+      <translation>正規表現を使用</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="73"/>
@@ -2079,38 +2089,38 @@
     <message>
       <location filename="../src/docks/SearchResultsDock.ui" line="14"/>
       <source>Search Results</source>
-      <translation type="unfinished"/>
+      <translation>検索結果</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.ui" line="38"/>
       <location filename="../src/docks/SearchResultsDock.ui" line="41"/>
       <source>Copy All Results to Clipboard</source>
-      <translation type="unfinished"/>
+      <translation>すべての結果をクリップボードにコピー</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="57"/>
       <source>Copy</source>
-      <translation type="unfinished"/>
+      <translation>コピー</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="59"/>
       <source>Collapse All</source>
-      <translation type="unfinished"/>
+      <translation>すべて折りたたむ</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="60"/>
       <source>Expand All</source>
-      <translation type="unfinished"/>
+      <translation>すべて展開する</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="62"/>
       <source>Delete Entry</source>
-      <translation type="unfinished"/>
+      <translation>項目を削除</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="64"/>
       <source>Delete All</source>
-      <translation type="unfinished"/>
+      <translation>すべて削除</translation>
     </message>
   </context>
   <context>
@@ -2118,17 +2128,17 @@
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="40"/>
       <source>Create a new file</source>
-      <translation type="unfinished"/>
+      <translation>新しいファイルを作成</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="43"/>
       <source>Show opened files list</source>
-      <translation type="unfinished"/>
+      <translation>開いているファイルの一覧を表示</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="49"/>
       <source>Close the current file</source>
-      <translation type="unfinished"/>
+      <translation>現在のファイルを閉じる</translation>
     </message>
   </context>
 </TS>
