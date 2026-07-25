@@ -33,6 +33,7 @@
 #include "BetterMultiSelection.h"
 #include "AutoIndentation.h"
 #include "AutoCompletion.h"
+#include "AutoInsertDecorator.h"
 #include "URLFinder.h"
 #include "BookMarkDecorator.h"
 #include "HTMLAutoCompleteDecorator.h"
@@ -138,6 +139,31 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
                     editor->autoCCancel();
             }
         }
+    });
+
+    connect(settings, &ApplicationSettings::autoInsertParenthesesChanged, this, [=](bool b) {
+        for (auto &editor : getEditors())
+            if (auto decorator = editor->findChild<AutoInsertDecorator *>("AutoInsertDecorator", Qt::FindDirectChildrenOnly)) decorator->setParenthesesEnabled(b);
+    });
+    connect(settings, &ApplicationSettings::autoInsertSquareBracketsChanged, this, [=](bool b) {
+        for (auto &editor : getEditors())
+            if (auto decorator = editor->findChild<AutoInsertDecorator *>("AutoInsertDecorator", Qt::FindDirectChildrenOnly)) decorator->setSquareBracketsEnabled(b);
+    });
+    connect(settings, &ApplicationSettings::autoInsertCurlyBracesChanged, this, [=](bool b) {
+        for (auto &editor : getEditors())
+            if (auto decorator = editor->findChild<AutoInsertDecorator *>("AutoInsertDecorator", Qt::FindDirectChildrenOnly)) decorator->setCurlyBracesEnabled(b);
+    });
+    connect(settings, &ApplicationSettings::autoInsertSingleQuotesChanged, this, [=](bool b) {
+        for (auto &editor : getEditors())
+            if (auto decorator = editor->findChild<AutoInsertDecorator *>("AutoInsertDecorator", Qt::FindDirectChildrenOnly)) decorator->setSingleQuotesEnabled(b);
+    });
+    connect(settings, &ApplicationSettings::autoInsertDoubleQuotesChanged, this, [=](bool b) {
+        for (auto &editor : getEditors())
+            if (auto decorator = editor->findChild<AutoInsertDecorator *>("AutoInsertDecorator", Qt::FindDirectChildrenOnly)) decorator->setDoubleQuotesEnabled(b);
+    });
+    connect(settings, &ApplicationSettings::autoInsertHtmlTagsChanged, this, [=](bool b) {
+        for (auto &editor : getEditors())
+            if (auto decorator = editor->findChild<HTMLAutoCompleteDecorator *>(QString(), Qt::FindDirectChildrenOnly)) decorator->setAutoInsertEnabled(b);
     });
 }
 
@@ -336,13 +362,21 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     AutoCompletion *ac = new AutoCompletion(editor);
     ac->setEnabled(settings->autoCompletion());
 
+    AutoInsertDecorator *autoInsert = new AutoInsertDecorator(editor);
+    autoInsert->setParenthesesEnabled(settings->autoInsertParentheses());
+    autoInsert->setSquareBracketsEnabled(settings->autoInsertSquareBrackets());
+    autoInsert->setCurlyBracesEnabled(settings->autoInsertCurlyBraces());
+    autoInsert->setSingleQuotesEnabled(settings->autoInsertSingleQuotes());
+    autoInsert->setDoubleQuotesEnabled(settings->autoInsertDoubleQuotes());
+
     URLFinder *uf = new URLFinder(editor);
     uf->setEnabled(settings->urlHighlighting());
 
     BookMarkDecorator *bm = new BookMarkDecorator(editor);
     bm->setEnabled(true);
 
-    new HTMLAutoCompleteDecorator(editor);
+    HTMLAutoCompleteDecorator *htmlAutoComplete = new HTMLAutoCompleteDecorator(editor);
+    htmlAutoComplete->setAutoInsertEnabled(settings->autoInsertHtmlTags());
 }
 
 void EditorManager::purgeOldEditorPointers()
