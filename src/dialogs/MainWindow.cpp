@@ -733,7 +733,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(zoomEventWatcher, &ZoomEventWatcher::zoomOut, ui->actionZoomOut, &QAction::trigger);
 
     connectEditorAction(ui->actionFoldAll, &ScintillaNext::foldAll, SC_FOLDACTION_CONTRACT | SC_FOLDACTION_CONTRACT_EVERY_LEVEL);
-    connectEditorAction(ui->actionFoldAll, &ScintillaNext::foldAll, SC_FOLDACTION_EXPAND | SC_FOLDACTION_CONTRACT_EVERY_LEVEL);
+    connectEditorAction(ui->actionUnfoldAll, &ScintillaNext::foldAll, SC_FOLDACTION_EXPAND | SC_FOLDACTION_CONTRACT_EVERY_LEVEL);
 
     connectEditorAction(ui->actionFoldLevel1, &ScintillaNext::foldAllLevels, 0);
     connectEditorAction(ui->actionFoldLevel2, &ScintillaNext::foldAllLevels, 1);
