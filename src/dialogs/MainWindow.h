@@ -104,7 +104,7 @@ public slots:
 
     void convertEOLs(int eolMode);
 
-    void showFindReplaceDialog(int index);
+    void showFindReplaceDialog(int index, bool show=true);
 
     void updateFileStatusBasedUi(ScintillaNext *editor);
     void updateEOLBasedUi(ScintillaNext *editor);

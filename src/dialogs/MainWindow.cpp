@@ -421,6 +421,11 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
+    connect(ui->actionQuickFindNext, &QAction::triggered, this, [=,this]() {
+		showFindReplaceDialog(FindReplaceDialog::FIND_TAB, false);
+		FindReplaceDialog *f = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
+	});
+
     connect(ui->actionQuickFind, &QAction::triggered, this, [this]() {
         QuickFindWidget *quickFind = findChild<QuickFindWidget *>(QString(), Qt::FindDirectChildrenOnly);
 
@@ -1616,7 +1621,7 @@ void MainWindow::convertEOLs(int eolMode)
     ui->statusBar->refresh(editor);
 }
 
-void MainWindow::showFindReplaceDialog(int index)
+void MainWindow::showFindReplaceDialog(int index, bool show)
 {
     ScintillaNext *editor = currentEditor();
     FindReplaceDialog *frd = findChild<FindReplaceDialog *>(QString(), Qt::FindDirectChildrenOnly);
@@ -1656,6 +1661,10 @@ void MainWindow::showFindReplaceDialog(int index)
     frd->show();
     frd->raise();
     frd->activateWindow();
+	if (! show) {
+		frd->find();
+		frd->reject(); 
+	}
 }
 
 void MainWindow::updateFileStatusBasedUi(ScintillaNext *editor)

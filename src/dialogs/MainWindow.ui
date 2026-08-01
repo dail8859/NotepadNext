@@ -239,6 +239,7 @@
     <addaction name="actionFindPrevious"/>
     <addaction name="actionReplace"/>
     <addaction name="separator"/>
+    <addaction name="actionQuickFindNext"/>
     <addaction name="actionQuickFind"/>
     <addaction name="actionGoToLine"/>
     <addaction name="separator"/>
@@ -900,6 +901,14 @@
   <action name="actionFindInFiles">
    <property name="text">
     <string>Find in Files...</string>
+   </property>
+  </action>
+  <action name="actionQuickFindNext">
+   <property name="text">
+    <string>Quick Find &amp;Next</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+F3</string>
    </property>
   </action>
   <action name="actionFindNext">
