@@ -418,6 +418,9 @@
            <property name="insertPolicy">
             <enum>QComboBox::NoInsert</enum>
            </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
+           </property>
           </widget>
          </item>
          <item row="1" column="0">
@@ -446,6 +449,9 @@
            </property>
            <property name="insertPolicy">
             <enum>QComboBox::NoInsert</enum>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
            </property>
           </widget>
          </item>
