@@ -26,6 +26,7 @@
 #include <QShortcut>
 #include <QClipboard>
 #include <QGuiApplication>
+#include <QScreen>
 
 #include "ScintillaNext.h"
 #include "MainWindow.h"
@@ -574,6 +575,18 @@ void FindReplaceDialog::loadSettings()
     settings.beginGroup("FindReplaceDialog");
 
     restoreGeometry(settings.value("geometry").toByteArray());
+
+    // Defensively clamp the restored size in case a previously persisted geometry
+    // is larger than the available screen (e.g. from an older version that let the
+    // dialog grow to fit a very long recent search string). This lets users recover
+    // automatically without having to edit or delete notepadnext.ini.
+    if (const QScreen *screen = QGuiApplication::primaryScreen()) {
+        const QSize available = screen->availableGeometry().size();
+        const QSize current = size();
+        const QSize clamped = current.boundedTo(available);
+        if (clamped != current)
+            resize(clamped);
+    }
 
     ui->comboFind->addItems(settings.value("RecentSearchList").toStringList());
     ui->comboReplace->addItems(settings.value("RecentReplaceList").toStringList());
