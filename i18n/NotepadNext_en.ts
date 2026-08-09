@@ -323,7 +323,7 @@
     <message>
         <location filename="../src/dialogs/FindReplaceDialog.ui" line="20"/>
         <location filename="../src/dialogs/FindReplaceDialog.ui" line="247"/>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="62"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
         <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
@@ -423,53 +423,53 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.ui" line="429"/>
+        <location filename="../src/dialogs/FindReplaceDialog.ui" line="432"/>
         <source>Replace:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.ui" line="475"/>
+        <location filename="../src/dialogs/FindReplaceDialog.ui" line="481"/>
         <source>&amp;Bookmark line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.ui" line="482"/>
+        <location filename="../src/dialogs/FindReplaceDialog.ui" line="488"/>
         <source>&amp;Purge for each search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.ui" line="489"/>
+        <location filename="../src/dialogs/FindReplaceDialog.ui" line="495"/>
         <source>Backward direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.ui" line="496"/>
+        <location filename="../src/dialogs/FindReplaceDialog.ui" line="502"/>
         <source>Match &amp;whole word only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.ui" line="503"/>
+        <location filename="../src/dialogs/FindReplaceDialog.ui" line="509"/>
         <source>Match &amp;case</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.ui" line="510"/>
+        <location filename="../src/dialogs/FindReplaceDialog.ui" line="516"/>
         <source>Wra&amp;p Around</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
         <source>Replace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="65"/>
         <source>Mark</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="148"/>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="358"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="149"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="359"/>
         <source>Replaced %Ln matches</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -477,27 +477,27 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="256"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="257"/>
         <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="267"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="268"/>
         <source>No matches found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="330"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="331"/>
         <source>1 occurrence was replaced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="339"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="340"/>
         <source>No more occurrences were found</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="369"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="370"/>
         <source>Found %Ln matches</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -505,7 +505,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="757"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="770"/>
         <source>Mark: %Ln match in entire file</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -513,17 +513,17 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="768"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="781"/>
         <source>All marks cleared</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="792"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="805"/>
         <source>No marks to copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="797"/>
+        <location filename="../src/dialogs/FindReplaceDialog.cpp" line="810"/>
         <source>Copied %Ln marked text(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
