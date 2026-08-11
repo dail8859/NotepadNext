@@ -27,18 +27,33 @@ ScintillaSorter::ScintillaSorter(ScintillaNext *editor)
 void ScintillaSorter::sort(const Sorter &sorter)
 {
     const QByteArray eol = editor->eolString();
-    const QByteArray text = readEditorText();
-    QVector<QByteArrayView> lines = ByteArrayUtils::split(text, eol);
+    QByteArray text = readEditorText();
+    const QByteArray selectedText = editor->getSelText();
+    QVector<QByteArrayView> lines;
+    qsizetype textStartIndex = 0;
+
+    if (!selectedText.isEmpty())
+    {
+        textStartIndex = text.indexOf(selectedText);
+        lines = ByteArrayUtils::split(selectedText, eol);
+    }
+    else
+    {
+        lines = ByteArrayUtils::split(text, eol);
+    }
 
     sorter.sort(lines);
 
     QByteArray result = ByteArrayUtils::join(lines, eol);
-    writeEditorText(result);
+
+    text.replace(textStartIndex, result.size(), result.data());
+    writeEditorText(text);
 }
 
 const QByteArray ScintillaSorter::readEditorText()
 {
     sptr_t pointer = editor->characterPointer();
+
     int len = editor->length();
 
     return QByteArray::fromRawData(reinterpret_cast<const char *>(pointer), len);
