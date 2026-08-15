@@ -44,13 +44,15 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    model->setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
     ui->treeView->setModel(model);
 
     QMenu *menu = new QMenu(ui->toolButton);
     menu->addAction(ui->actionShowSize);
     menu->addAction(ui->actionShowType);
     menu->addAction(ui->actionShowDateModified);
+    menu->addSeparator();
+    menu->addAction(ui->actionShowHidden);
+
     ui->toolButton->setMenu(menu);
     ui->toolButton->setPopupMode(QToolButton::MenuButtonPopup);
 
@@ -61,7 +63,7 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
         });
     };
 
-    auto bindColumnSetting = [](QAction* action, const QString& key) {
+    auto bindActionToSetting = [](QAction* action, const QString& key) {
         ApplicationSettings settings;
 
         action->setChecked(settings.value(key, false).toBool());
@@ -73,12 +75,19 @@ FolderAsWorkspaceDock::FolderAsWorkspaceDock(QWidget *parent) :
 
     auto bindColumn = [&](QAction* action, int column, const QString& key) {
         bindColumnVisibility(action, column);
-        bindColumnSetting(action, key);
+        bindActionToSetting(action, key);
     };
 
     bindColumn(ui->actionShowSize, SizeColumn, "FolderAsWorkspace/ShowSize");
     bindColumn(ui->actionShowType, TypeColumn, "FolderAsWorkspace/ShowType");
     bindColumn(ui->actionShowDateModified, DateColumn, "FolderAsWorkspace/ShowDateModified");
+
+    connect(ui->actionShowHidden, &QAction::toggled, this, [this](bool showHidden) {
+        auto filters = QDir::AllEntries | QDir::AllDirs | QDir::NoDotAndDotDot;
+        if (showHidden) filters |= QDir::Hidden;
+        model->setFilter(filters);
+    });
+    bindActionToSetting(ui->actionShowHidden, "FolderAsWorkspace/ShowHidden");
 
     // Default sorting
     ui->treeView->sortByColumn(0, Qt::AscendingOrder);

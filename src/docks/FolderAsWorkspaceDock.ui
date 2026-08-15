@@ -133,6 +133,17 @@
     <enum>QAction::NoRole</enum>
    </property>
   </action>
+  <action name="actionShowHidden">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hidden</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../resources.qrc"/>
