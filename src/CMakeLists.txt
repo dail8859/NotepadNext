@@ -185,6 +185,7 @@ qt_add_executable(NotepadNext
 	widgets/TabsQuickActionsBar.h
 	ShiftMiddleClickBlocker.h ShiftMiddleClickBlocker.cpp
 	ShiftWheelToHorizontalScrollFilter.h ShiftWheelToHorizontalScrollFilter.cpp
+
 )
 
 set_target_properties(NotepadNext PROPERTIES

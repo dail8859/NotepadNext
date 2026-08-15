@@ -16,9 +16,7 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
-#ifndef FOLDERASWORKSPACEDOCK_H
-#define FOLDERASWORKSPACEDOCK_H
+#pragma once
 
 #include <QDockWidget>
 
@@ -36,7 +34,7 @@ public:
     explicit FolderAsWorkspaceDock(QWidget *parent = nullptr);
     ~FolderAsWorkspaceDock();
 
-    void setRootPath(const QString dir);
+    void setRootPath(const QString &dir);
     QString rootPath() const;
 
 signals:
@@ -47,5 +45,3 @@ private:
 
     QFileSystemModel *model;
 };
-
-#endif // FOLDERASWORKSPACEDOCK_H
