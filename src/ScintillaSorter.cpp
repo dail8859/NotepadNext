@@ -26,26 +26,44 @@ ScintillaSorter::ScintillaSorter(ScintillaNext *editor)
 
 void ScintillaSorter::sort(const Sorter &sorter)
 {
+    QPair<int, int> range = determineTargetRange();
     const QByteArray eol = editor->eolString();
-    const QByteArray text = readEditorText();
+
+    const QByteArray text = readEditorText(range);
     QVector<QByteArrayView> lines = ByteArrayUtils::split(text, eol);
+
+    if (lines.count() <= 1)
+        return;
 
     sorter.sort(lines);
 
     QByteArray result = ByteArrayUtils::join(lines, eol);
-    writeEditorText(result);
+    writeEditorText(result, range);
+
+    editor->setSelection(range.first, range.second);
 }
 
-const QByteArray ScintillaSorter::readEditorText()
+QPair<int, int> ScintillaSorter::determineTargetRange() const
 {
-    sptr_t pointer = editor->characterPointer();
-    int len = editor->length();
+    if (editor->selectionEmpty()) {
+        return {0, editor->length()};
+    } else {
+        const int start = editor->positionFromLine(editor->lineFromPosition(editor->selectionStart()));
+        const int end = editor->lineEndPosition(editor->lineFromPosition(editor->selectionEnd()));
+        return {start, end};
+    }
+}
+
+const QByteArray ScintillaSorter::readEditorText(QPair<int, int> range)
+{
+    int len = range.second - range.first;
+    sptr_t pointer = editor->rangePointer(range.first, len);
 
     return QByteArray::fromRawData(reinterpret_cast<const char *>(pointer), len);
 }
 
-void ScintillaSorter::writeEditorText(const QByteArray &result)
+void ScintillaSorter::writeEditorText(const QByteArray &result, QPair<int, int> range)
 {
-    editor->targetWholeDocument();
+    editor->setTargetRange(range.first, range.second);
     editor->replaceTarget(-1, result.constData());
 }
