@@ -12,7 +12,7 @@ CPMAddPackage(
 CPMAddPackage(
     NAME QSimpleUpdater
     GITHUB_REPOSITORY alex-spataru/QSimpleUpdater
-    GIT_TAG 8e7017f7fbdc2b4b1a26ed1eef9ebcba6a50639c
+    GIT_TAG c5c136c0f79ca6423b0914a2676ae3d0e3811c5b
     OPTIONS
         "QSIMPLE_UPDATER_BUILD_TESTS OFF"
 )
