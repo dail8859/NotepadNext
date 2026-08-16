@@ -31,6 +31,7 @@ public:
 private:
     ScintillaNext *editor;
 
-    const QByteArray readEditorText();
-    void writeEditorText(const QByteArray &result);
+    QPair<int, int> determineTargetRange() const;
+    const QByteArray readEditorText(QPair<int, int> range);
+    void writeEditorText(const QByteArray &result, QPair<int, int> range);
 };
