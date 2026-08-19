@@ -193,11 +193,27 @@ void ScintillaEdit::setTabDrawMode(sptr_t tabDrawMode) {
 }
 
 sptr_t ScintillaEdit::positionFromPoint(sptr_t x, sptr_t y) {
-    return send(SCI_POSITIONFROMPOINT, x, y);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_POSITIONFROMPOINT, qRound64(x * sciScale), qRound64(y * sciScale));
+}
+
+sptr_t ScintillaEdit::positionFromPointF(double x, double y) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_POSITIONFROMPOINT, qRound64(x * sciScale), qRound64(y * sciScale));
 }
 
 sptr_t ScintillaEdit::positionFromPointClose(sptr_t x, sptr_t y) {
-    return send(SCI_POSITIONFROMPOINTCLOSE, x, y);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_POSITIONFROMPOINTCLOSE, qRound64(x * sciScale), qRound64(y * sciScale));
+}
+
+sptr_t ScintillaEdit::positionFromPointCloseF(double x, double y) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_POSITIONFROMPOINTCLOSE, qRound64(x * sciScale), qRound64(y * sciScale));
 }
 
 void ScintillaEdit::gotoLine(sptr_t line) {
@@ -257,11 +273,27 @@ sptr_t ScintillaEdit::tabWidth() const {
 }
 
 void ScintillaEdit::setTabMinimumWidth(sptr_t pixels) {
-    send(SCI_SETTABMINIMUMWIDTH, pixels, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETTABMINIMUMWIDTH, qRound64(pixels * sciScale), 0);
+}
+
+void ScintillaEdit::setTabMinimumWidthF(double pixels) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETTABMINIMUMWIDTH, qRound64(pixels * sciScale), 0);
 }
 
 sptr_t ScintillaEdit::tabMinimumWidth() const {
-    return send(SCI_GETTABMINIMUMWIDTH, 0, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_GETTABMINIMUMWIDTH, 0, 0) / sciScale);
+}
+
+double ScintillaEdit::tabMinimumWidthF() const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_GETTABMINIMUMWIDTH, 0, 0) / sciScale;
 }
 
 void ScintillaEdit::clearTabStops(sptr_t line) {
@@ -325,7 +357,15 @@ void ScintillaEdit::markerSetBackSelectedTranslucent(sptr_t markerNumber, sptr_t
 }
 
 void ScintillaEdit::markerSetStrokeWidth(sptr_t markerNumber, sptr_t hundredths) {
-    send(SCI_MARKERSETSTROKEWIDTH, markerNumber, hundredths);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_MARKERSETSTROKEWIDTH, markerNumber, qRound64(hundredths * sciScale));
+}
+
+void ScintillaEdit::markerSetStrokeWidthF(sptr_t markerNumber, double hundredths) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_MARKERSETSTROKEWIDTH, markerNumber, qRound64(hundredths * sciScale));
 }
 
 void ScintillaEdit::markerEnableHighlight(bool enabled) {
@@ -385,11 +425,27 @@ sptr_t ScintillaEdit::marginTypeN(sptr_t margin) const {
 }
 
 void ScintillaEdit::setMarginWidthN(sptr_t margin, sptr_t pixelWidth) {
-    send(SCI_SETMARGINWIDTHN, margin, pixelWidth);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETMARGINWIDTHN, margin, qRound64(pixelWidth * sciScale));
+}
+
+void ScintillaEdit::setMarginWidthNF(sptr_t margin, double pixelWidth) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETMARGINWIDTHN, margin, qRound64(pixelWidth * sciScale));
 }
 
 sptr_t ScintillaEdit::marginWidthN(sptr_t margin) const {
-    return send(SCI_GETMARGINWIDTHN, margin, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_GETMARGINWIDTHN, margin, 0) / sciScale);
+}
+
+double ScintillaEdit::marginWidthNF(sptr_t margin) const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_GETMARGINWIDTHN, margin, 0) / sciScale;
 }
 
 void ScintillaEdit::setMarginMaskN(sptr_t margin, sptr_t mask) {
@@ -813,11 +869,27 @@ sptr_t ScintillaEdit::indicFlags(sptr_t indicator) const {
 }
 
 void ScintillaEdit::indicSetStrokeWidth(sptr_t indicator, sptr_t hundredths) {
-    send(SCI_INDICSETSTROKEWIDTH, indicator, hundredths);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_INDICSETSTROKEWIDTH, indicator, qRound64(hundredths * sciScale));
+}
+
+void ScintillaEdit::indicSetStrokeWidthF(sptr_t indicator, double hundredths) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_INDICSETSTROKEWIDTH, indicator, qRound64(hundredths * sciScale));
 }
 
 sptr_t ScintillaEdit::indicStrokeWidth(sptr_t indicator) const {
-    return send(SCI_INDICGETSTROKEWIDTH, indicator, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_INDICGETSTROKEWIDTH, indicator, 0) / sciScale);
+}
+
+double ScintillaEdit::indicStrokeWidthF(sptr_t indicator) const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_INDICGETSTROKEWIDTH, indicator, 0) / sciScale;
 }
 
 void ScintillaEdit::setWhitespaceFore(bool useSetting, sptr_t fore) {
@@ -829,11 +901,27 @@ void ScintillaEdit::setWhitespaceBack(bool useSetting, sptr_t back) {
 }
 
 void ScintillaEdit::setWhitespaceSize(sptr_t size) {
-    send(SCI_SETWHITESPACESIZE, size, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETWHITESPACESIZE, qRound64(size * sciScale), 0);
+}
+
+void ScintillaEdit::setWhitespaceSizeF(double size) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETWHITESPACESIZE, qRound64(size * sciScale), 0);
 }
 
 sptr_t ScintillaEdit::whitespaceSize() const {
-    return send(SCI_GETWHITESPACESIZE, 0, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_GETWHITESPACESIZE, 0, 0) / sciScale);
+}
+
+double ScintillaEdit::whitespaceSizeF() const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_GETWHITESPACESIZE, 0, 0) / sciScale;
 }
 
 void ScintillaEdit::setLineState(sptr_t line, sptr_t state) {
@@ -865,11 +953,27 @@ void ScintillaEdit::setCaretLineBack(sptr_t back) {
 }
 
 sptr_t ScintillaEdit::caretLineFrame() const {
-    return send(SCI_GETCARETLINEFRAME, 0, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_GETCARETLINEFRAME, 0, 0) / sciScale);
+}
+
+double ScintillaEdit::caretLineFrameF() const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_GETCARETLINEFRAME, 0, 0) / sciScale;
 }
 
 void ScintillaEdit::setCaretLineFrame(sptr_t width) {
-    send(SCI_SETCARETLINEFRAME, width, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETCARETLINEFRAME, qRound64(width * sciScale), 0);
+}
+
+void ScintillaEdit::setCaretLineFrameF(double width) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETCARETLINEFRAME, qRound64(width * sciScale), 0);
 }
 
 void ScintillaEdit::styleSetChangeable(sptr_t style, bool changeable) {
@@ -1177,19 +1281,51 @@ void ScintillaEdit::allocateLines(sptr_t lines) {
 }
 
 void ScintillaEdit::setMarginLeft(sptr_t pixelWidth) {
-    send(SCI_SETMARGINLEFT, 0, pixelWidth);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETMARGINLEFT, 0, qRound64(pixelWidth * sciScale));
+}
+
+void ScintillaEdit::setMarginLeftF(double pixelWidth) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETMARGINLEFT, 0, qRound64(pixelWidth * sciScale));
 }
 
 sptr_t ScintillaEdit::marginLeft() const {
-    return send(SCI_GETMARGINLEFT, 0, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_GETMARGINLEFT, 0, 0) / sciScale);
+}
+
+double ScintillaEdit::marginLeftF() const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_GETMARGINLEFT, 0, 0) / sciScale;
 }
 
 void ScintillaEdit::setMarginRight(sptr_t pixelWidth) {
-    send(SCI_SETMARGINRIGHT, 0, pixelWidth);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETMARGINRIGHT, 0, qRound64(pixelWidth * sciScale));
+}
+
+void ScintillaEdit::setMarginRightF(double pixelWidth) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETMARGINRIGHT, 0, qRound64(pixelWidth * sciScale));
 }
 
 sptr_t ScintillaEdit::marginRight() const {
-    return send(SCI_GETMARGINRIGHT, 0, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_GETMARGINRIGHT, 0, 0) / sciScale);
+}
+
+double ScintillaEdit::marginRightF() const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_GETMARGINRIGHT, 0, 0) / sciScale;
 }
 
 bool ScintillaEdit::modify() const {
@@ -1213,11 +1349,27 @@ bool ScintillaEdit::selectionHidden() const {
 }
 
 sptr_t ScintillaEdit::pointXFromPosition(sptr_t pos) {
-    return send(SCI_POINTXFROMPOSITION, 0, pos);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_POINTXFROMPOSITION, 0, pos) / sciScale);
+}
+
+double ScintillaEdit::pointXFromPositionF(sptr_t pos) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_POINTXFROMPOSITION, 0, pos) / sciScale;
 }
 
 sptr_t ScintillaEdit::pointYFromPosition(sptr_t pos) {
-    return send(SCI_POINTYFROMPOSITION, 0, pos);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_POINTYFROMPOSITION, 0, pos) / sciScale);
+}
+
+double ScintillaEdit::pointYFromPositionF(sptr_t pos) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_POINTYFROMPOSITION, 0, pos) / sciScale;
 }
 
 sptr_t ScintillaEdit::lineFromPosition(sptr_t pos) {
@@ -1321,11 +1473,27 @@ bool ScintillaEdit::overtype() const {
 }
 
 void ScintillaEdit::setCaretWidth(sptr_t pixelWidth) {
-    send(SCI_SETCARETWIDTH, pixelWidth, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETCARETWIDTH, qRound64(pixelWidth * sciScale), 0);
+}
+
+void ScintillaEdit::setCaretWidthF(double pixelWidth) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETCARETWIDTH, qRound64(pixelWidth * sciScale), 0);
 }
 
 sptr_t ScintillaEdit::caretWidth() const {
-    return send(SCI_GETCARETWIDTH, 0, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_GETCARETWIDTH, 0, 0) / sciScale);
+}
+
+double ScintillaEdit::caretWidthF() const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_GETCARETWIDTH, 0, 0) / sciScale;
 }
 
 void ScintillaEdit::setTargetStart(sptr_t start) {
@@ -1437,7 +1605,15 @@ void ScintillaEdit::callTipSetForeHlt(sptr_t fore) {
 }
 
 void ScintillaEdit::callTipUseStyle(sptr_t tabSize) {
-    send(SCI_CALLTIPUSESTYLE, tabSize, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_CALLTIPUSESTYLE, qRound64(tabSize * sciScale), 0);
+}
+
+void ScintillaEdit::callTipUseStyleF(double tabSize) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_CALLTIPUSESTYLE, qRound64(tabSize * sciScale), 0);
 }
 
 void ScintillaEdit::callTipSetPosition(bool above) {
@@ -1625,11 +1801,27 @@ sptr_t ScintillaEdit::wrapVisualFlagsLocation() const {
 }
 
 void ScintillaEdit::setWrapStartIndent(sptr_t indent) {
-    send(SCI_SETWRAPSTARTINDENT, indent, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETWRAPSTARTINDENT, qRound64(indent * sciScale), 0);
+}
+
+void ScintillaEdit::setWrapStartIndentF(double indent) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETWRAPSTARTINDENT, qRound64(indent * sciScale), 0);
 }
 
 sptr_t ScintillaEdit::wrapStartIndent() const {
-    return send(SCI_GETWRAPSTARTINDENT, 0, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_GETWRAPSTARTINDENT, 0, 0) / sciScale);
+}
+
+double ScintillaEdit::wrapStartIndentF() const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_GETWRAPSTARTINDENT, 0, 0) / sciScale;
 }
 
 void ScintillaEdit::setWrapIndentMode(sptr_t wrapIndentMode) {
@@ -1649,11 +1841,27 @@ sptr_t ScintillaEdit::layoutCache() const {
 }
 
 void ScintillaEdit::setScrollWidth(sptr_t pixelWidth) {
-    send(SCI_SETSCROLLWIDTH, pixelWidth, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETSCROLLWIDTH, qRound64(pixelWidth * sciScale), 0);
+}
+
+void ScintillaEdit::setScrollWidthF(double pixelWidth) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETSCROLLWIDTH, qRound64(pixelWidth * sciScale), 0);
 }
 
 sptr_t ScintillaEdit::scrollWidth() const {
-    return send(SCI_GETSCROLLWIDTH, 0, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_GETSCROLLWIDTH, 0, 0) / sciScale);
+}
+
+double ScintillaEdit::scrollWidthF() const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_GETSCROLLWIDTH, 0, 0) / sciScale;
 }
 
 void ScintillaEdit::setScrollWidthTracking(bool tracking) {
@@ -1665,7 +1873,15 @@ bool ScintillaEdit::scrollWidthTracking() const {
 }
 
 sptr_t ScintillaEdit::textWidth(sptr_t style, const char * text) {
-    return send(SCI_TEXTWIDTH, style, (sptr_t)text);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_TEXTWIDTH, style, (sptr_t)text) / sciScale);
+}
+
+double ScintillaEdit::textWidthF(sptr_t style, const char * text) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_TEXTWIDTH, style, (sptr_t)text) / sciScale;
 }
 
 void ScintillaEdit::setEndAtLastLine(bool endAtLastLine) {
@@ -1677,7 +1893,15 @@ bool ScintillaEdit::endAtLastLine() const {
 }
 
 sptr_t ScintillaEdit::textHeight(sptr_t line) {
-    return send(SCI_TEXTHEIGHT, line, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_TEXTHEIGHT, line, 0) / sciScale);
+}
+
+double ScintillaEdit::textHeightF(sptr_t line) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_TEXTHEIGHT, line, 0) / sciScale;
 }
 
 void ScintillaEdit::setVScrollBar(bool visible) {
@@ -1729,7 +1953,15 @@ void ScintillaEdit::linesJoin() {
 }
 
 void ScintillaEdit::linesSplit(sptr_t pixelWidth) {
-    send(SCI_LINESSPLIT, pixelWidth, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_LINESSPLIT, qRound64(pixelWidth * sciScale), 0);
+}
+
+void ScintillaEdit::linesSplitF(double pixelWidth) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_LINESSPLIT, qRound64(pixelWidth * sciScale), 0);
 }
 
 void ScintillaEdit::setFoldMarginColour(bool useSetting, sptr_t back) {
@@ -2217,11 +2449,27 @@ void ScintillaEdit::delLineRight() {
 }
 
 void ScintillaEdit::setXOffset(sptr_t xOffset) {
-    send(SCI_SETXOFFSET, xOffset, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETXOFFSET, qRound64(xOffset * sciScale), 0);
+}
+
+void ScintillaEdit::setXOffsetF(double xOffset) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETXOFFSET, qRound64(xOffset * sciScale), 0);
 }
 
 sptr_t ScintillaEdit::xOffset() const {
-    return send(SCI_GETXOFFSET, 0, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_GETXOFFSET, 0, 0) / sciScale);
+}
+
+double ScintillaEdit::xOffsetF() const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_GETXOFFSET, 0, 0) / sciScale;
 }
 
 void ScintillaEdit::chooseCaretX() {
@@ -2233,7 +2481,15 @@ void ScintillaEdit::grabFocus() {
 }
 
 void ScintillaEdit::setXCaretPolicy(sptr_t caretPolicy, sptr_t caretSlop) {
-    send(SCI_SETXCARETPOLICY, caretPolicy, caretSlop);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETXCARETPOLICY, caretPolicy, qRound64(caretSlop * sciScale));
+}
+
+void ScintillaEdit::setXCaretPolicyF(sptr_t caretPolicy, double caretSlop) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETXCARETPOLICY, caretPolicy, qRound64(caretSlop * sciScale));
 }
 
 void ScintillaEdit::setYCaretPolicy(sptr_t caretPolicy, sptr_t caretSlop) {
@@ -2633,19 +2889,51 @@ sptr_t ScintillaEdit::indicOutlineAlpha(sptr_t indicator) const {
 }
 
 void ScintillaEdit::setExtraAscent(sptr_t extraAscent) {
-    send(SCI_SETEXTRAASCENT, extraAscent, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETEXTRAASCENT, qRound64(extraAscent * sciScale), 0);
+}
+
+void ScintillaEdit::setExtraAscentF(double extraAscent) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETEXTRAASCENT, qRound64(extraAscent * sciScale), 0);
 }
 
 sptr_t ScintillaEdit::extraAscent() const {
-    return send(SCI_GETEXTRAASCENT, 0, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_GETEXTRAASCENT, 0, 0) / sciScale);
+}
+
+double ScintillaEdit::extraAscentF() const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_GETEXTRAASCENT, 0, 0) / sciScale;
 }
 
 void ScintillaEdit::setExtraDescent(sptr_t extraDescent) {
-    send(SCI_SETEXTRADESCENT, extraDescent, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETEXTRADESCENT, qRound64(extraDescent * sciScale), 0);
+}
+
+void ScintillaEdit::setExtraDescentF(double extraDescent) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    send(SCI_SETEXTRADESCENT, qRound64(extraDescent * sciScale), 0);
 }
 
 sptr_t ScintillaEdit::extraDescent() const {
-    return send(SCI_GETEXTRADESCENT, 0, 0);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return qRound64(send(SCI_GETEXTRADESCENT, 0, 0) / sciScale);
+}
+
+double ScintillaEdit::extraDescentF() const {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_GETEXTRADESCENT, 0, 0) / sciScale;
 }
 
 sptr_t ScintillaEdit::markerSymbolDefined(sptr_t markerNumber) {
@@ -2757,11 +3045,27 @@ void ScintillaEdit::addUndoAction(sptr_t token, sptr_t flags) {
 }
 
 sptr_t ScintillaEdit::charPositionFromPoint(sptr_t x, sptr_t y) {
-    return send(SCI_CHARPOSITIONFROMPOINT, x, y);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_CHARPOSITIONFROMPOINT, qRound64(x * sciScale), qRound64(y * sciScale));
+}
+
+sptr_t ScintillaEdit::charPositionFromPointF(double x, double y) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_CHARPOSITIONFROMPOINT, qRound64(x * sciScale), qRound64(y * sciScale));
 }
 
 sptr_t ScintillaEdit::charPositionFromPointClose(sptr_t x, sptr_t y) {
-    return send(SCI_CHARPOSITIONFROMPOINTCLOSE, x, y);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_CHARPOSITIONFROMPOINTCLOSE, qRound64(x * sciScale), qRound64(y * sciScale));
+}
+
+sptr_t ScintillaEdit::charPositionFromPointCloseF(double x, double y) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_CHARPOSITIONFROMPOINTCLOSE, qRound64(x * sciScale), qRound64(y * sciScale));
 }
 
 void ScintillaEdit::setMouseSelectionRectangularSwitch(bool mouseSelectionRectangularSwitch) {
@@ -2825,7 +3129,15 @@ void ScintillaEdit::addSelection(sptr_t caret, sptr_t anchor) {
 }
 
 sptr_t ScintillaEdit::selectionFromPoint(sptr_t x, sptr_t y) {
-    return send(SCI_SELECTIONFROMPOINT, x, y);
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_SELECTIONFROMPOINT, qRound64(x * sciScale), qRound64(y * sciScale));
+}
+
+sptr_t ScintillaEdit::selectionFromPointF(double x, double y) {
+    const double sciScaleProp = viewport()->property("ScintillaScale").toDouble();
+    const double sciScale = sciScaleProp ? sciScaleProp : 1.0;
+    return send(SCI_SELECTIONFROMPOINT, qRound64(x * sciScale), qRound64(y * sciScale));
 }
 
 void ScintillaEdit::dropSelectionN(sptr_t selection) {
@@ -3310,6 +3622,14 @@ QByteArray ScintillaEdit::descriptionOfStyle(sptr_t style) {
 
 void ScintillaEdit::setILexer(sptr_t ilexer) {
     send(SCI_SETILEXER, 0, ilexer);
+}
+
+void ScintillaEdit::setScaleTechnique(sptr_t technique) {
+    send(SCI_SETSCALETECHNIQUE, technique, 0);
+}
+
+sptr_t ScintillaEdit::scaleTechnique() const {
+    return send(SCI_GETSCALETECHNIQUE, 0, 0);
 }
 
 sptr_t ScintillaEdit::bidirectional() const {

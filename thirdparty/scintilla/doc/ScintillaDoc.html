@@ -130,7 +130,7 @@
 
     <h1>Scintilla Documentation</h1>
 
-    <p>Last edited 29 May 2025 NH</p>
+    <p>Last edited 22 July 2026 NH</p>
 
     <p style="background:#90F0C0">Scintilla 5 has moved the lexers from Scintilla into a new
     <a href="Lexilla.html">Lexilla</a> project.<br />
@@ -5106,6 +5106,8 @@ struct Sci_TextToFindFull {
     </code>
 <div  class="provisional">
     <code>
+     <a class="message" href="#SCI_SETSCALETECHNIQUE">SCI_SETSCALETECHNIQUE(int technique)</a><br />
+     <a class="message" href="#SCI_GETSCALETECHNIQUE">SCI_GETSCALETECHNIQUE &rarr; int</a><br />
      <a class="message" href="#SCI_SETBIDIRECTIONAL"><span class="provisional">SCI_SETBIDIRECTIONAL(int bidirectional)</span></a><br />
      <a class="message" href="#SCI_GETBIDIRECTIONAL">SCI_GETBIDIRECTIONAL &rarr; int</a><br />
     </code>
@@ -5354,6 +5356,35 @@ struct Sci_TextToFindFull {
      <p>When the inline IME mode is active, characters are added tentatively before being finalised and an
      <a class="message" href="#SCN_CHARADDED">SCN_CHARADDED</a>
      notification (with <code class="parameter">characterSource</code> set to <code>SC_CHARACTERSOURCE_TENTATIVE_INPUT</code>) is sent for each character.</p>
+
+<div  class="provisional">
+   <p><b id="SCI_SETSCALETECHNIQUE">SCI_SETSCALETECHNIQUE(int technique)</b><br />
+     <b id="SCI_GETSCALETECHNIQUE">SCI_GETSCALETECHNIQUE &rarr; int</b><br />
+     This setting changes the implementation of display scaling on some platforms.</p>
+
+    <table class="standard" summary="Technology choice">
+      <tbody valign="top">
+        <tr>
+          <th align="left"><code>SCALE_TECHNIQUE_DEFAULT</code></th>
+
+          <td>0</td>
+
+          <td>Default behaviour for the platform.</td>
+        </tr>
+
+        <tr>
+          <th align="left"><code>SCALE_TECHNIQUE_PIXEL_ALIGNED</code></th>
+
+          <td>1</td>
+
+          <td>Align top and bottom of lines to physical pixels and avoid 'seams' between background rectangles for fractional scaling.
+	  Implemented on Qt. This mode may be slower than the default.</td>
+        </tr>
+
+      </tbody>
+    </table>
+</div>
+    <br />
 
 <div  class="provisional">
     <a href="#ProvisionalMessages">These bidirectional features are experimental and incomplete.</a><br />
@@ -9169,7 +9200,7 @@ struct SCNotification {
 	Sci_Position position;
 	/* SCN_STYLENEEDED, SCN_DOUBLECLICK, SCN_MODIFIED, SCN_MARGINCLICK, */
 	/* SCN_MARGINRIGHTCLICK, SCN_NEEDSHOWN, SCN_DWELLSTART, SCN_DWELLEND, */
-	/* SCN_CALLTIPCLICK, */
+	/* SCN_UPDATEUI, SCN_CALLTIPCLICK, */
 	/* SCN_HOTSPOTCLICK, SCN_HOTSPOTDOUBLECLICK, SCN_HOTSPOTRELEASECLICK, */
 	/* SCN_INDICATORCLICK, SCN_INDICATORRELEASE, */
 	/* SCN_USERLISTSELECTION, SCN_AUTOCCOMPLETED, SCN_AUTOCSELECTION, */
@@ -9360,7 +9391,7 @@ struct SCNotification {
     <p><b id="SCN_KEY">SCN_KEY</b><br />
      Reports all keys pressed but not consumed by Scintilla. Used on GTK because of
      some problems with keyboard focus and is not sent by the Windows version. <code>SCNotification::ch</code> holds the key code and
-    <code>SCNotification.modifiers</code> holds the modifiers. This notification is sent if the
+    <code>SCNotification::modifiers</code> holds the modifiers. This notification is sent if the
     modifiers include <code>SCMOD_ALT</code> or <code>SCMOD_CTRL</code> and the key code is less
     than 256.</p>
 
@@ -9375,7 +9406,8 @@ struct SCNotification {
      Now would be a good time to update any container UI elements that depend on document or view state.
      As it is sometimes difficult to determine whether a change has occurred, these events may also fire when there
      has been no actual change.
-     The <code>updated</code> field is set to the bit set of things changed since the previous notification.</p>
+     The <code>updated</code> field is set to the bit set of things changed since the previous notification.
+     For <code>SC_UPDATE_TEXT</code>, <code>position</code> holds the start position of any changes.</p>
     <table class="standard" summary="Modify notification type flags">
       <tbody>
         <tr>
@@ -9432,6 +9464,24 @@ struct SCNotification {
           <td align="center">0x08</td>
 
           <td>May have scrolled horizontally.</td>
+
+        </tr>
+
+        <tr>
+          <td align="left"><code>SC_UPDATE_TEXT</code></td>
+
+          <td align="center">0x10</td>
+
+          <td>Contents may have changed.</td>
+
+        </tr>
+
+        <tr>
+          <td align="left"><code>SC_UPDATE_LINE_COUNT</code></td>
+
+          <td align="center">0x20</td>
+
+          <td>Number of lines may have changed.</td>
 
         </tr>
       </tbody>

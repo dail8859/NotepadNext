@@ -596,9 +596,90 @@
       </tr><tr>
 	<td>Stephan T. Lavavej</td>
 	<td>RealMalWare</td>
+	<td>Schreiner</td>
     </tr>
     </table>
     <h2 id="Releases">Releases</h2>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla566.zip">Release 5.6.6</a>
+    </h3>
+    <ul>
+	<li>
+	Released 12 August 2026.
+	</li>
+	<li>
+	Add position to fields of UpdateUI event in Scintilla.iface.
+	</li>
+	<li>
+	Fix data race bug in multi-threaded word wrap introduced in 5.6.4.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2515/">Bug #2515</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla565.zip">Release 5.6.5</a>
+    </h3>
+    <ul>
+	<li>
+	Released 4 August 2026.
+	</li>
+	<li>
+	Add SC_UPDATE_TEXT and SC_UPDATE_LINE_COUNT flags to SCN_UPDATEUI notifications.
+	This can help improve performance by client code switching from listening for changes with rapid
+	SCN_MODIFIED to delayed SCN_UPDATEUI notifications.
+	</li>
+	<li>
+	On Qt, prepare for drawing asynchronously to avoid styling inside the draw handler.
+	This may improve performance and matches other platforms.
+	</li>
+	<li>
+	On Cocoa, fix problem where styling and update UI notifications were performed inside drawing
+	instead of before drawing which could cause drawing to be abandoned unnecessarily.
+	</li>
+	<li>
+	Increase interior width of MarkerSymbol::Plus and Minus to match stroke width setting.
+	</li>
+	<li>
+	Improve performance of fold discovery in some situations by styling progressively larger
+	blocks of lines.
+	</li>
+	<li>
+	Don't use std::async and std::future in single threaded situations.
+	This avoids crashes with some runtime libraries as well as minor performance costs.
+	<a href="https://github.com/geany/geany/issues/4620">Geany Issue #4620</a>.
+	</li>
+    </ul>
+    <h3>
+       <a href="https://www.scintilla.org/scintilla564.zip">Release 5.6.4</a>
+    </h3>
+    <ul>
+	<li>
+	Released 6 July 2026.
+	</li>
+	<li>
+	On Qt improve display for fractional scaling by providing SCI_SETSCALETECHNIQUE API.
+	The SCALE_TECHNIQUE_PIXEL_ALIGNED value will eliminate potential 'seams' between lines
+	and between runs on a line.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2450/">Bug #2450</a>.
+	</li>
+	<li>
+	Scintilla.iface is augmented with comments indicating which APIs take pixel values so may
+	be automatically scaled by wrappers.
+	For compatibility this is currently indicated in comments after each affected API but this will
+	change to using the 'pixels' type in a future version,
+	Downstream projects should examine this and make any needed changes, such as using floating
+	point types for wrapper methods.
+	To help migration, the scripts/FilterPixels.py script can convert this Scintilla.iface into the previous form
+	with no mention of 'pixels' or into the final form with 'pixels' as the only type for these features.
+	</li>
+	<li>
+	On Qt always place ScintillaEditBase library in scintilla/bin instead of depending on Qt version.
+	</li>
+	<li>
+	Optimize SCI_CHANGEINSERTION that sets empty insertion by not producing empty undo action
+	and potential save point change.
+	<a href="https://sourceforge.net/p/scintilla/feature-requests/1588/">Feature #1588</a>.
+	</li>
+    </ul>
     <h3>
        <a href="https://www.scintilla.org/scintilla563.zip">Release 5.6.3</a>
     </h3>
