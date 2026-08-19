@@ -602,6 +602,8 @@ enum class Update {
 	Selection = 0x2,
 	VScroll = 0x4,
 	HScroll = 0x8,
+	Text = 0x10,
+	LineCount = 0x20,
 };
 
 enum class FocusChange {
@@ -655,6 +657,11 @@ enum class CharacterSource {
 	DirectInput = 0,
 	TentativeInput = 1,
 	ImeResult = 2,
+};
+
+enum class ScaleTechnique {
+	Default = 0,
+	PixelAligned = 1,
 };
 
 enum class Bidirectional {

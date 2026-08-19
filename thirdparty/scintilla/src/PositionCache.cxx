@@ -258,11 +258,6 @@ int LineLayout::FindPositionFromX(XYPOSITION x, Range range, bool charPosition) 
 
 Point LineLayout::PointFromPosition(int posInLine, int lineHeight, PointEnd pe) const noexcept {
 	Point pt;
-	// In case of very long line put x at arbitrary large position
-	if (posInLine > maxLineLength) {
-		pt.x = positions[maxLineLength] - positions[LineStart(lines)];
-	}
-
 	for (int subLine = 0; subLine < lines; subLine++) {
 		const Range rangeSubLine = SubLineRange(subLine, Scope::visibleOnly);
 		if (posInLine >= rangeSubLine.start) {
@@ -604,10 +599,7 @@ std::shared_ptr<LineLayout> LineLayoutCache::Retrieve(Sci::Line lineNumber, Sci:
 	}
 
 	if (pos < cache.size()) {
-		if (cache[pos] && !cache[pos]->CanHold(lineNumber, maxChars)) {
-			cache[pos].reset();
-		}
-		if (!cache[pos]) {
+		if (!cache[pos] || !cache[pos]->CanHold(lineNumber, maxChars)) {
 			cache[pos] = std::make_shared<LineLayout>(lineNumber, maxChars);
 		}
 #ifdef CHECK_LLC
