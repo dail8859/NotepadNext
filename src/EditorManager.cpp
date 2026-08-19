@@ -199,6 +199,8 @@ void EditorManager::setupEditor(ScintillaNext *editor)
         editor->markerSetBackSelected(i, 0x0000FF);
     }
 
+    editor->setScaleTechnique(SCALE_TECHNIQUE_PIXEL_ALIGNED);
+
     editor->setIdleStyling(SC_IDLESTYLING_TOVISIBLE);
     editor->setEndAtLastLine(false);
 
