@@ -18,6 +18,8 @@ list(APPEND LEXILLA_SOURCES ${LEXILLA_SOURCES_EXTRA})
 
 add_library(lexilla STATIC ${LEXILLA_SOURCES} ${LEXILLA_HEADERS})
 
+target_compile_definitions(lexilla PRIVATE LEXILLA_NO_EXPORT)
+
 target_include_directories(lexilla
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
