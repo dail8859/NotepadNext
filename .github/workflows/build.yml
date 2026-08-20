@@ -41,7 +41,7 @@ jobs:
 
       - name: Install NSIS
         if: runner.os == 'Windows'
-        uses: repolevedavaj/install-nsis@v1.2.1
+        uses: repolevedavaj/install-nsis@v1.3.0
         with:
           nsis-version: '3.11'
 
