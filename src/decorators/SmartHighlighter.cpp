@@ -38,7 +38,7 @@ SmartHighlighter::SmartHighlighter(ScintillaNext *editor) :
 
 void SmartHighlighter::notify(const NotificationData *pscn)
 {
-    if (pscn->nmhdr.code == Notification::UpdateUI && (FlagSet(pscn->updated, Update::Content) || FlagSet(pscn->updated, Update::Selection))) {
+    if (pscn->nmhdr.code == Notification::UpdateUI && (FlagSet(pscn->updated, Update::Text) || FlagSet(pscn->updated, Update::Selection))) {
         highlightCurrentView();
     }
 }

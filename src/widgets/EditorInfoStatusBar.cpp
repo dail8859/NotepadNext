@@ -86,11 +86,11 @@ void EditorInfoStatusBar::editorUpdated(Scintilla::Update updated)
 {
     ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
 
-    if (Scintilla::FlagSet(updated, Scintilla::Update::Content)) {
+    if (Scintilla::FlagSet(updated, Scintilla::Update::Text)) {
         updateDocumentSize(editor);
     }
 
-    if (Scintilla::FlagSet(updated, Scintilla::Update::Content) || Scintilla::FlagSet(updated, Scintilla::Update::Selection)) {
+    if (Scintilla::FlagSet(updated, Scintilla::Update::Text) || Scintilla::FlagSet(updated, Scintilla::Update::Selection)) {
         updateSelectionInfo(editor);
     }
 }
