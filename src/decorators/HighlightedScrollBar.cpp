@@ -43,7 +43,7 @@ HighlightedScrollBarDecorator::~HighlightedScrollBarDecorator()
 
 void HighlightedScrollBarDecorator::notify(const NotificationData *pscn)
 {
-    if (pscn->nmhdr.code == Notification::UpdateUI && (FlagSet(pscn->updated, Update::Content) || FlagSet(pscn->updated, Update::Selection))) {
+    if (pscn->nmhdr.code == Notification::UpdateUI && (FlagSet(pscn->updated, Update::Text) || FlagSet(pscn->updated, Update::Selection))) {
         scrollBar->update();
     }
     else if (pscn->nmhdr.code == Notification::Modified && FlagSet(pscn->modificationType, ModificationFlags::ChangeMarker)) {

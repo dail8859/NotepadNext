@@ -105,7 +105,7 @@ void BraceMatch::clearHighlighting()
 void BraceMatch::notify(const NotificationData *pscn)
 {
     if (pscn->nmhdr.code == Notification::UpdateUI) {
-        if (FlagSet(pscn->updated, Update::Content) || FlagSet(pscn->updated, Update::Selection)) {
+        if (FlagSet(pscn->updated, Update::Text) || FlagSet(pscn->updated, Update::Selection)) {
             doHighlighting();
         }
     }

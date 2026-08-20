@@ -1791,11 +1791,11 @@ void MainWindow::updateDocumentBasedUi(Scintilla::Update updated)
 
     // TODO: what if this is triggered by an editor that is not the active editor?
 
-    if (Scintilla::FlagSet(updated, Scintilla::Update::Content)) {
+    if (Scintilla::FlagSet(updated, Scintilla::Update::Text)) {
         updateSelectionBasedUi(editor);
     }
 
-    if (Scintilla::FlagSet(updated, Scintilla::Update::Content) || Scintilla::FlagSet(updated, Scintilla::Update::Selection)) {
+    if (Scintilla::FlagSet(updated, Scintilla::Update::Text) || Scintilla::FlagSet(updated, Scintilla::Update::Selection)) {
         updateContentBasedUi(editor);
     }
 }
