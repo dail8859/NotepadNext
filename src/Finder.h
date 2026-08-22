@@ -41,6 +41,10 @@ public:
     Sci_CharacterRange replaceSelectionIfMatch(const QString &replaceText);
     int replaceAll(const QString &replaceText);
 
+    void setSelectionRange(Sci_CharacterRange range);
+    void clearSelectionRange();
+    bool hasSelectionRange() const { return use_selection_range; }
+
     template<typename Func>
     void forEachMatch(Func callback) { forEachMatchInRange(callback, {0, (Sci_PositionCR)editor->length()}); }
 
@@ -54,6 +58,9 @@ private:
     bool wrap = false;
     int search_flags = 0;
     QString text;
+
+    bool use_selection_range = false;
+    Sci_CharacterRange selection_range = {0, 0};
 };
 
 
