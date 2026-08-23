@@ -323,7 +323,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="20"/>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="247"/>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="62"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
       <source>Find</source>
       <translation>查詢</translation>
     </message>
@@ -423,102 +423,102 @@
       <translation>&amp;查詢：</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="429"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="432"/>
       <source>Replace:</source>
       <translation>取代：</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="475"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="481"/>
       <source>&amp;Bookmark line</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="482"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="488"/>
       <source>&amp;Purge for each search</source>
       <translation>清除所有搜尋</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="489"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="495"/>
       <source>Backward direction</source>
       <translation>反向搜尋</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="496"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="502"/>
       <source>Match &amp;whole word only</source>
       <translation>全詞符合(&amp;w)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="503"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="509"/>
       <source>Match &amp;case</source>
       <translation>大小寫相符(&amp;c)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="510"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="516"/>
       <source>Wra&amp;p Around</source>
       <translation>迴圈搜尋(&amp;p)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
       <source>Replace</source>
       <translation>取代</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="65"/>
       <source>Mark</source>
       <translation>標記</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="148"/>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="358"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="149"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="359"/>
       <source>Replaced %Ln matches</source>
       <translation>
         <numerusform>已取代 %Ln 個符合項目</numerusform>
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="256"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="257"/>
       <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
       <translation>已經到達文件的末尾。從頂端找到第一個符合項目。</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="267"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="268"/>
       <source>No matches found.</source>
       <translation>沒有找到符合項目。</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="330"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="331"/>
       <source>1 occurrence was replaced</source>
       <translation>已取代 1 個符合項目</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="339"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="340"/>
       <source>No more occurrences were found</source>
       <translation>沒有找到更多符合項目</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="369"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="370"/>
       <source>Found %Ln matches</source>
       <translation>
         <numerusform>找到 %Ln 個符合項目</numerusform>
       </translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="757"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="770"/>
       <source>Mark: %Ln match in entire file</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="768"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="781"/>
       <source>All marks cleared</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="792"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="805"/>
       <source>No marks to copy</source>
       <translation type="unfinished"/>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="797"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="810"/>
       <source>Copied %Ln marked text(s)</source>
       <translation type="unfinished"/>
     </message>
@@ -529,6 +529,31 @@
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="14"/>
       <source>Folder as Workspace</source>
       <translation>資料夾作為工作區</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="88"/>
+      <source>...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="108"/>
+      <source>Size</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="119"/>
+      <source>Type</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="130"/>
+      <source>Date Modified</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="141"/>
+      <source>Hidden</source>
+      <translation type="unfinished"/>
     </message>
   </context>
   <context>
@@ -784,7 +809,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1492"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1495"/>
       <source>Export As</source>
       <translation>匯出為</translation>
     </message>
@@ -930,7 +955,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="463"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2004"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
       <source>Save</source>
       <translation>儲存</translation>
     </message>
@@ -1221,7 +1246,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="955"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="796"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="799"/>
       <source>Start Recording</source>
       <translation>開始錄製</translation>
     </message>
@@ -1654,214 +1679,214 @@
       <translation>行號（1 - %1）</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="787"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="790"/>
       <source>Stop Recording</source>
       <translation>停止錄製</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="892"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="895"/>
       <source>Debug Info</source>
       <translation>Debug Info</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1112"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1115"/>
       <source>New %1</source>
       <translation>新檔案 %1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1174"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1177"/>
       <source>Create File</source>
       <translation>建立檔案</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1174"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1177"/>
       <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt; 目前不存在，你想要建立一個嗎？</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
       <source>Save File</source>
       <translation>儲存檔案</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1253"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1256"/>
       <source>Open Folder as Workspace</source>
       <translation>以工作區方式開啟資料夾</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1276"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1938"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1279"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1941"/>
       <source>Reload File</source>
       <translation>重新載入檔案</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1276"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1279"/>
       <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
       <translation>你確定要重新載入 &lt;b&gt;%1&lt;/b&gt;？任何未儲存的修改都會遺失。</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1448"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1451"/>
       <source>Save a Copy As</source>
       <translation>副本另存為</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1533"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1550"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1536"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1553"/>
       <source>Rename</source>
       <translation>重新命名</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1550"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1553"/>
       <source>Name:</source>
       <translation>巨集名稱：</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1570"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1573"/>
       <source>Delete File</source>
       <translation>刪除檔案</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1570"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1573"/>
       <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
       <translation>你確定要將 &lt;b&gt;%1&lt;/b&gt; 移至垃圾桶？</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1583"/>
       <source>Error Deleting File</source>
       <translation>刪除檔案時出錯</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1583"/>
       <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation>刪除 &lt;b&gt;%1&lt;/b&gt; 時出錯了？</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1677"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1680"/>
       <source>Administrator</source>
       <translation>Administrator</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1938"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1941"/>
       <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1964"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1967"/>
       <source>Read error</source>
       <translation>Read error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1965"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1968"/>
       <source>Write error</source>
       <translation>Write error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1966"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1969"/>
       <source>Fatal error</source>
       <translation>Fatal error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1967"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1970"/>
       <source>Resource error</source>
       <translation>Resource error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1968"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1971"/>
       <source>Open error</source>
       <translation>Open error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1969"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1972"/>
       <source>Abort error</source>
       <translation>Abort error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1970"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1973"/>
       <source>Timeout error</source>
       <translation>Timeout error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1971"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1974"/>
       <source>Unspecified error</source>
       <translation>Unspecified error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1972"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1975"/>
       <source>Remove error</source>
       <translation>Remove error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1973"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1976"/>
       <source>Rename error</source>
       <translation>Rename error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1974"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1977"/>
       <source>Position error</source>
       <translation>Position error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1975"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1978"/>
       <source>Resize error</source>
       <translation>Resize error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1976"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1979"/>
       <source>Permissions error</source>
       <translation>Permissions error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1977"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1980"/>
       <source>Copy error</source>
       <translation>Copy error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1978"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1981"/>
       <source>Unknown error (%1)</source>
       <translation>Unknown error (%1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1981"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1984"/>
       <source>Error Saving File</source>
       <translation>儲存檔案時出錯</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1982"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1985"/>
       <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
       <translation>儲存 &lt;b&gt;%1&lt;/b&gt; 時發生了錯誤&lt;br&gt;&lt;br&gt;錯誤：%2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1988"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
       <source>Zoom: %1%</source>
       <translation>Zoom: %1%</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2000"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2003"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation type="unfinished"/>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/MainWindow.cpp" line="2001"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2004"/>
       <source>There are %n files with unsaved changes. Save them?</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2004"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
       <source>Save All</source>
       <translation>全部儲存</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2005"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2008"/>
       <source>Discard All</source>
       <translation>放棄所有</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2005"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2008"/>
       <source>Discard</source>
       <translation>放棄</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2193"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2196"/>
       <source>No updates are available at this time.</source>
       <translation>目前沒有可用的更新。</translation>
     </message>
