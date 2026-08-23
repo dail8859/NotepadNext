@@ -17,51 +17,68 @@
  */
 
 
-#ifndef FINDER_H
-#define FINDER_H
+#pragma once
 
 #include "ScintillaNext.h"
+
+struct FindOptions
+{
+    QString text;
+    Scintilla::FindOption flags = {};
+    bool wrapAround = false;
+};
+
+struct FindResult
+{
+    Sci_CharacterRange range = {INVALID_POSITION, INVALID_POSITION};
+    bool wrapped = false;
+
+    explicit operator bool() const
+    {
+        return range.cpMin != INVALID_POSITION;
+    }
+};
 
 class Finder
 {
 public:
-    explicit Finder(ScintillaNext *edit);
+    explicit Finder(ScintillaNext *editor);
 
     void setEditor(ScintillaNext *editor);
-    void setSearchFlags(int flags);
-    void setWrap(bool wrap);
-    void setSearchText(const QString &text);
 
-    Sci_CharacterRange findNext(int startPos = INVALID_POSITION);
-    Sci_CharacterRange findPrev();
+    FindOptions &options() { return find_options; }
+    const FindOptions &options() const { return find_options; }
+
+    FindResult findNext();
+    FindResult findNextFrom(Sci_Position startPos);
+    FindResult findPrev();
+
     int count();
 
-    bool didLatestSearchWrapAround() const { return did_latest_search_wrap; }
-
-    Sci_CharacterRange replaceSelectionIfMatch(const QString &replaceText);
+    FindResult replaceSelectionIfMatch(const QString &replaceText);
     int replaceAll(const QString &replaceText);
 
     template<typename Func>
-    void forEachMatch(Func callback) { forEachMatchInRange(callback, {0, (Sci_PositionCR)editor->length()}); }
+    void forEachMatch(Func callback)
+    {
+        forEachMatchInRange(callback, {0, static_cast<Sci_PositionCR>(editor->length())});
+    }
 
     template<typename Func>
     void forEachMatchInRange(Func callback, Sci_CharacterRange range);
 
 private:
-    ScintillaNext *editor;
-    bool did_latest_search_wrap = false;
+    int searchFlags() const;
+    Sci_CharacterRange searchTarget(Sci_Position start, Sci_Position end);
+    bool isRegexSearch() const;
 
-    bool wrap = false;
-    int search_flags = 0;
-    QString text;
+    ScintillaNext *editor = nullptr;
+    FindOptions find_options;
 };
-
 
 template<typename Func>
 void Finder::forEachMatchInRange(Func callback, Sci_CharacterRange range)
 {
-    editor->setSearchFlags(search_flags);
-    editor->forEachMatchInRange(text.toUtf8(), callback, range);
+    editor->setSearchFlags(searchFlags());
+    editor->forEachMatchInRange(find_options.text.toUtf8(), callback, range);
 }
-
-#endif // FINDER_H

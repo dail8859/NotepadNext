@@ -250,19 +250,19 @@ void FindReplaceDialog::performFind(SearchDirection direction)
 
     prepareToPerformSearch();
 
-    Sci_CharacterRange range = direction == SearchDirection::Forwards ? finder->findNext() : finder->findPrev();
+    FindResult result = direction == SearchDirection::Forwards ? finder->findNext() : finder->findPrev();
 
-    if (ScintillaNext::isRangeValid(range)) {
-        if (finder->didLatestSearchWrapAround()) {
+    if (result) {
+        if (result.wrapped) {
             showMessage(tr("The end of the document has been reached. Found 1st occurrence from the top."), "green");
         }
 
         // TODO: Handle zero length matches better
-        if (range.cpMin == range.cpMax) {
-            qWarning() << "0 length match at" << range.cpMin;
+        if (result.range.cpMin == result.range.cpMax) {
+            qWarning() << "0 length match at" << result.range.cpMin;
         }
 
-        editor->goToRange(range);
+        editor->goToRange(result.range);
     }
     else {
         showMessage(tr("No matches found."), "red");
@@ -277,7 +277,7 @@ void FindReplaceDialog::findAllInCurrentDocument()
 
     QString text = findString();
 
-    finder->setSearchText(text);
+    finder->options().text = text;
     finder->forEachMatch([&](int start, int end){
         // Only add the file entry if there was a valid search result
         if (firstMatch) {
@@ -325,16 +325,14 @@ void FindReplaceDialog::replace()
         convertToExtended(replaceText);
     }
 
-    Sci_CharacterRange range = finder->replaceSelectionIfMatch(replaceText);
-
-    if (ScintillaNext::isRangeValid(range)) {
+    if (finder->replaceSelectionIfMatch(replaceText)) {
         showMessage(tr("1 occurrence was replaced"), "blue");
     }
 
-    Sci_CharacterRange next_match = finder->findNext();
+    FindResult result = finder->findNext();
 
-    if (ScintillaNext::isRangeValid(next_match)) {
-        editor->goToRange(next_match);
+    if (result) {
+        editor->goToRange(result.range);
     }
     else {
         showMessage(tr("No more occurrences were found"), "red");
@@ -379,12 +377,18 @@ void FindReplaceDialog::setEditor(ScintillaNext *editor)
 
 void FindReplaceDialog::performNextSearch()
 {
-    editor->goToRange(finder->findNext());
+    FindResult result = finder->findNext();
+
+    if (result)
+        editor->goToRange(result.range);
 }
 
 void FindReplaceDialog::performPrevSearch()
 {
-    editor->goToRange(finder->findPrev());
+    FindResult result = finder->findPrev();
+
+    if (result)
+        editor->goToRange(result.range);
 }
 
 void FindReplaceDialog::adjustOpacity(int value)
@@ -527,12 +531,12 @@ void FindReplaceDialog::changeTab(int index)
     ui->comboFind->lineEdit()->selectAll();
 }
 
-QString FindReplaceDialog::findString()
+QString FindReplaceDialog::findString() const
 {
     return ui->comboFind->currentText();
 }
 
-QString FindReplaceDialog::replaceString()
+QString FindReplaceDialog::replaceString() const
 {
     return ui->comboReplace->currentText();
 }
@@ -561,9 +565,7 @@ void FindReplaceDialog::prepareToPerformSearch(bool replace)
         //convertToExtended(replaceText);
     }
 
-    finder->setWrap(ui->checkBoxWrapAround->isChecked());
-    finder->setSearchFlags(computeSearchFlags());
-    finder->setSearchText(findText);
+    finder->options() = findOptions();
 }
 
 void FindReplaceDialog::loadSettings()
@@ -689,18 +691,24 @@ void FindReplaceDialog::restorePosition()
     }
 }
 
-int FindReplaceDialog::computeSearchFlags()
+FindOptions FindReplaceDialog::findOptions() const
 {
-    int flags = 0;
+    FindOptions options;
+
+    options.text = findString();
 
     if (ui->checkBoxMatchWholeWord->isChecked())
-        flags |= SCFIND_WHOLEWORD;
-    if (ui->checkBoxMatchCase->isChecked())
-        flags |= SCFIND_MATCHCASE;
-    if (ui->radioRegexSearch->isChecked())
-        flags |= SCFIND_REGEXP;
+        options.flags |= Scintilla::FindOption::WholeWord;
 
-    return flags;
+    if (ui->checkBoxMatchCase->isChecked())
+        options.flags |= Scintilla::FindOption::MatchCase;
+
+    if (ui->radioRegexSearch->isChecked())
+        options.flags |= Scintilla::FindOption::RegExp;
+
+    options.wrapAround = ui->checkBoxWrapAround->isChecked();
+
+    return options;
 }
 
 int FindReplaceDialog::ensureMarkIndicator()

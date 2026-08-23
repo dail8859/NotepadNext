@@ -60,7 +60,7 @@ public:
     void setFindString(const QString &string);
     void setTab(int tab);
 
-    QString replaceString();
+    QString replaceString() const;
 
     void setSearchResultsHandler(ISearchResultsHandler *searchResultsHandler);
 
@@ -97,7 +97,7 @@ private slots:
     void changeTab(int index);
 
 private:
-    QString findString();
+    QString findString() const;
     void performFind(SearchDirection direction);
     void prepareToPerformSearch(bool replace=false);
     void loadSettings();
@@ -106,7 +106,7 @@ private:
     void savePosition();
     void restorePosition();
 
-    int computeSearchFlags();
+    FindOptions findOptions() const;
 
     void showMessage(const QString &message, const QString &color);
     int ensureMarkIndicator();
