@@ -323,7 +323,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="20"/>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="247"/>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="62"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
       <source>Find</source>
       <translation>Keresés</translation>
     </message>
@@ -423,53 +423,53 @@
       <translation>&amp;Keresés:</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="429"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="432"/>
       <source>Replace:</source>
       <translation>Csere:</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="475"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="481"/>
       <source>&amp;Bookmark line</source>
       <translation>Sor &amp;könyvjelzőzése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="482"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="488"/>
       <source>&amp;Purge for each search</source>
       <translation>Előző jelölések eltávolítása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="489"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="495"/>
       <source>Backward direction</source>
       <translation>Visszafelé</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="496"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="502"/>
       <source>Match &amp;whole word only</source>
       <translation>Csak &amp;teljes szó</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="503"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="509"/>
       <source>Match &amp;case</source>
       <translation>Kis-/nagy&amp;betű érzékeny</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="510"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="516"/>
       <source>Wra&amp;p Around</source>
       <translation>K&amp;örbeforduló keresés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
       <source>Replace</source>
       <translation>Csere</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="65"/>
       <source>Mark</source>
       <translation>Megjelölés</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="148"/>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="358"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="149"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="359"/>
       <source>Replaced %Ln matches</source>
       <translation>
         <numerusform>%Ln egyezés lecserélve</numerusform>
@@ -477,27 +477,27 @@
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="256"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="257"/>
       <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
       <translation>A dokumentum végéhez értünk. Az első előfordulás felülről megtalálva.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="267"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="268"/>
       <source>No matches found.</source>
       <translation>Nincs találat.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="330"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="331"/>
       <source>1 occurrence was replaced</source>
       <translation>1 előfordulás lecserélve</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="339"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="340"/>
       <source>No more occurrences were found</source>
       <translation>Nincs több előfordulás</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="369"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="370"/>
       <source>Found %Ln matches</source>
       <translation>
         <numerusform>%Ln egyezés található</numerusform>
@@ -505,7 +505,7 @@
       </translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="757"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="770"/>
       <source>Mark: %Ln match in entire file</source>
       <translation>
         <numerusform>Jelölés: %Ln egyezés a teljes fájlban</numerusform>
@@ -513,17 +513,17 @@
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="768"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="781"/>
       <source>All marks cleared</source>
       <translation>Az összes jelölés törölve</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="792"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="805"/>
       <source>No marks to copy</source>
       <translation>Nincs másolható jelölés</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="797"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="810"/>
       <source>Copied %Ln marked text(s)</source>
       <translation>
         <numerusform>%Ln megjelölt szövegrész másolva</numerusform>
@@ -537,6 +537,31 @@
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="14"/>
       <source>Folder as Workspace</source>
       <translation>Mappa mint munkaterület</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="88"/>
+      <source>...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="108"/>
+      <source>Size</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="119"/>
+      <source>Type</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="130"/>
+      <source>Date Modified</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="141"/>
+      <source>Hidden</source>
+      <translation type="unfinished"/>
     </message>
   </context>
   <context>
@@ -792,7 +817,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1487"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1495"/>
       <source>Export As</source>
       <translation>Exportálás mint</translation>
     </message>
@@ -938,7 +963,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="463"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
       <source>Save</source>
       <translation>Mentés</translation>
     </message>
@@ -1229,7 +1254,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="955"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="791"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="799"/>
       <source>Start Recording</source>
       <translation>Rögzítés indítása</translation>
     </message>
@@ -1652,204 +1677,204 @@
       <translation>Szerkesztő felosztása függőlegesen (fent/lent)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="447"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="452"/>
       <source>Go to line</source>
       <translation>Ugrás sorra</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="447"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="452"/>
       <source>Line Number (1 - %1)</source>
       <translation>Sorszám (1 - %1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="782"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="790"/>
       <source>Stop Recording</source>
       <translation>Rögzítés leállítása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="887"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="895"/>
       <source>Debug Info</source>
       <translation>Hibakeresési információ</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1107"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1115"/>
       <source>New %1</source>
       <translation>Új %1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1169"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1177"/>
       <source>Create File</source>
       <translation>Fájl létrehozása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1169"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1177"/>
       <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
       <translation>A(z) &lt;b&gt;%1&lt;/b&gt; nem létezik. Szeretné létrehozni?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1990"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
       <source>Save File</source>
       <translation>Fájl mentése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1248"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1256"/>
       <source>Open Folder as Workspace</source>
       <translation>Mappa megnyitása munkaterületként</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1271"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1933"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1279"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1941"/>
       <source>Reload File</source>
       <translation>Fájl újratöltése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1271"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1279"/>
       <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
       <translation>Biztosan újra szeretné tölteni a(z) &lt;b&gt;%1&lt;/b&gt; fájlt? A nem mentett módosítások elvesznek.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1443"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1451"/>
       <source>Save a Copy As</source>
       <translation>Másolat mentése más néven</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1528"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1545"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1536"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1553"/>
       <source>Rename</source>
       <translation>Átnevezés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1545"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1553"/>
       <source>Name:</source>
       <translation>Név:</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1565"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1573"/>
       <source>Delete File</source>
       <translation>Fájl törlése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1565"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1573"/>
       <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
       <translation>Biztosan a kukába szeretné helyezni a(z) &lt;b&gt;%1&lt;/b&gt; fájlt?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1575"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1583"/>
       <source>Error Deleting File</source>
       <translation>Hiba a fájl törlésekor</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1575"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1583"/>
       <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation>Hiba történt a(z) &lt;b&gt;%1&lt;/b&gt; törlése közben.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1672"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1680"/>
       <source>Administrator</source>
       <translation>Rendszergazda</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1933"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1941"/>
       <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
       <translation>A(z) &lt;b&gt;%1&lt;/b&gt; fájlt egy másik program módosította. Szeretné újratölteni?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1959"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1967"/>
       <source>Read error</source>
       <translation>Olvasási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1960"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1968"/>
       <source>Write error</source>
       <translation>Írási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1961"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1969"/>
       <source>Fatal error</source>
       <translation>Végzetes hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1962"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1970"/>
       <source>Resource error</source>
       <translation>Erőforrás-hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1963"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1971"/>
       <source>Open error</source>
       <translation>Megnyitási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1964"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1972"/>
       <source>Abort error</source>
       <translation>Megszakítási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1965"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1973"/>
       <source>Timeout error</source>
       <translation>Időtúllépési hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1966"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1974"/>
       <source>Unspecified error</source>
       <translation>Meghatározatlan hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1967"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1975"/>
       <source>Remove error</source>
       <translation>Eltávolítási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1968"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1976"/>
       <source>Rename error</source>
       <translation>Átnevezési hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1969"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1977"/>
       <source>Position error</source>
       <translation>Pozicionálási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1970"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1978"/>
       <source>Resize error</source>
       <translation>Átméretezési hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1971"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1979"/>
       <source>Permissions error</source>
       <translation>Jogosultsági hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1972"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1980"/>
       <source>Copy error</source>
       <translation>Másolási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1973"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1981"/>
       <source>Unknown error (%1)</source>
       <translation>Ismeretlen hiba (%1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1976"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1984"/>
       <source>Error Saving File</source>
       <translation>Hiba a fájl mentésekor</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1977"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1985"/>
       <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
       <translation>Hiba történt a(z) &lt;b&gt;%1&lt;/b&gt; mentése közben.&lt;br&gt;&lt;br&gt;Hiba: %2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1983"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
       <source>Zoom: %1%</source>
       <translation>Nagyítás: %1%</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2003"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation>Menti a(z) &lt;b&gt;%1&lt;/b&gt; módosításait?</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/MainWindow.cpp" line="1996"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2004"/>
       <source>There are %n files with unsaved changes. Save them?</source>
       <translation>
         <numerusform>%n fájlnak vannak nem mentett módosításai. Menti őket?</numerusform>
@@ -1857,22 +1882,22 @@
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
       <source>Save All</source>
       <translation>Összes mentése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2000"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2008"/>
       <source>Discard All</source>
       <translation>Összes elvetése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2000"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2008"/>
       <source>Discard</source>
       <translation>Elvetés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2181"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2196"/>
       <source>No updates are available at this time.</source>
       <translation>Jelenleg nem érhetők el frissítések.</translation>
     </message>
