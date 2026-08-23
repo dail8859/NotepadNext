@@ -400,17 +400,17 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="311"/>
       <source>Mark All</source>
-      <translation type="unfinished"/>
+      <translation>Contrassegna tutti</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="321"/>
       <source>Clear all marks</source>
-      <translation type="unfinished"/>
+      <translation>Cancella tutti i segni</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="331"/>
       <source>Copy Marked Text</source>
-      <translation type="unfinished"/>
+      <translation>Copia Testo Contrassegnato</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="341"/>
@@ -430,12 +430,12 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="481"/>
       <source>&amp;Bookmark line</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Riga segnalibro</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="488"/>
       <source>&amp;Purge for each search</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Elimina per ogni ricerca</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="495"/>
@@ -465,7 +465,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="65"/>
       <source>Mark</source>
-      <translation type="unfinished"/>
+      <translation>Segna</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="149"/>
@@ -507,22 +507,28 @@
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="770"/>
       <source>Mark: %Ln match in entire file</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Marca: Corrispondenza %Ln in tutto il file</numerusform>
+        <numerusform>Marca: Corrispondenza %Ln in tutto il file</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="781"/>
       <source>All marks cleared</source>
-      <translation type="unfinished"/>
+      <translation>Tutti i segni cancellati</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="805"/>
       <source>No marks to copy</source>
-      <translation type="unfinished"/>
+      <translation>Nessun contrassegno da copiare</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="810"/>
       <source>Copied %Ln marked text(s)</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>%Ln copiato contrassegnato testo(i)</numerusform>
+        <numerusform>%Ln copiato contrassegnato testo(i)</numerusform>
+      </translation>
     </message>
   </context>
   <context>
@@ -535,27 +541,27 @@
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="88"/>
       <source>...</source>
-      <translation type="unfinished"/>
+      <translation>...</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="108"/>
       <source>Size</source>
-      <translation type="unfinished"/>
+      <translation>Dimensione</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="119"/>
       <source>Type</source>
-      <translation type="unfinished"/>
+      <translation>Tipo</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="130"/>
       <source>Date Modified</source>
-      <translation type="unfinished"/>
+      <translation>Modificato il</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="141"/>
       <source>Hidden</source>
-      <translation type="unfinished"/>
+      <translation>Nascosto</translation>
     </message>
   </context>
   <context>
@@ -1411,7 +1417,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1197"/>
       <source>Search and Bookmark Lines...</source>
-      <translation type="unfinished"/>
+      <translation>Cerca e segnalibri linee...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1205"/>
@@ -1618,57 +1624,57 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1513"/>
       <source>Sort Lines Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Ordina Linee Crescenti</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1518"/>
       <source>Sort Lines Descending</source>
-      <translation type="unfinished"/>
+      <translation>Ordina Linee Decrescenti</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1523"/>
       <source>Sort Lines Ascending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>Ordina Linee Ascendenti (Case-Insensitive)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1528"/>
       <source>Sort Lines Descending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>Ordina Linee Decrescenti (Case-Insensitive)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1533"/>
       <source>Sort Lines by Length Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Ordina linee per lunghezza crescente</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1538"/>
       <source>Sort Lines by Length Descending</source>
-      <translation type="unfinished"/>
+      <translation>Ordina linee per lunghezza Decrescente</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1543"/>
       <source>Reverse Line Order</source>
-      <translation type="unfinished"/>
+      <translation>Inverti Ordine Riga</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1548"/>
       <source>Split Horizontal</source>
-      <translation type="unfinished"/>
+      <translation>Dividi orizzontalmente</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1551"/>
       <source>Split editor horizontally (left/right)</source>
-      <translation type="unfinished"/>
+      <translation>Dividi l'editor orizzontalmente (sinistra/destra)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1559"/>
       <source>Split Vertical</source>
-      <translation type="unfinished"/>
+      <translation>Divisione in verticale</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1562"/>
       <source>Split editor vertically (top/bottom)</source>
-      <translation type="unfinished"/>
+      <translation>Dividi l'editor verticalmente (alto/basso)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="452"/>
@@ -1865,27 +1871,30 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2003"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation type="unfinished"/>
+      <translation>Salvare le modifiche a &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/MainWindow.cpp" line="2004"/>
       <source>There are %n files with unsaved changes. Save them?</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Ci sono file %n con modifiche non salvate. Salvarli?</numerusform>
+        <numerusform>Ci sono file %n con modifiche non salvate. Salvarli?</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
       <source>Save All</source>
-      <translation type="unfinished"/>
+      <translation>Salva Tutto</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2008"/>
       <source>Discard All</source>
-      <translation type="unfinished"/>
+      <translation>Scarta Tutto</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2008"/>
       <source>Discard</source>
-      <translation type="unfinished"/>
+      <translation>Scarta</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2196"/>
@@ -1988,7 +1997,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="214"/>
       <source>Auto Completion</source>
-      <translation type="unfinished"/>
+      <translation>Completamento delle parole</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="221"/>
@@ -2116,12 +2125,12 @@
       <location filename="../src/docks/SearchResultsDock.ui" line="38"/>
       <location filename="../src/docks/SearchResultsDock.ui" line="41"/>
       <source>Copy All Results to Clipboard</source>
-      <translation type="unfinished"/>
+      <translation>Copia tutti i risultati negli appunti</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="57"/>
       <source>Copy</source>
-      <translation type="unfinished"/>
+      <translation>Copia</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="59"/>
@@ -2149,17 +2158,17 @@
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="40"/>
       <source>Create a new file</source>
-      <translation type="unfinished"/>
+      <translation>Crea un nuovo file</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="43"/>
       <source>Show opened files list</source>
-      <translation type="unfinished"/>
+      <translation>Mostra l'elenco dei file aperti</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="49"/>
       <source>Close the current file</source>
-      <translation type="unfinished"/>
+      <translation>Chiudi il file attuale</translation>
     </message>
   </context>
 </TS>
