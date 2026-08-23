@@ -549,27 +549,27 @@
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="88"/>
       <source>...</source>
-      <translation type="unfinished"/>
+      <translation>...</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="108"/>
       <source>Size</source>
-      <translation type="unfinished"/>
+      <translation>Размер</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="119"/>
       <source>Type</source>
-      <translation type="unfinished"/>
+      <translation>Тип</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="130"/>
       <source>Date Modified</source>
-      <translation type="unfinished"/>
+      <translation>Дата изменения</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="141"/>
       <source>Hidden</source>
-      <translation type="unfinished"/>
+      <translation>Скрыто</translation>
     </message>
   </context>
   <context>
