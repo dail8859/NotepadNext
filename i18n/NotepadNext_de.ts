@@ -323,7 +323,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="20"/>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="247"/>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="62"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
       <source>Find</source>
       <translation>Finden</translation>
     </message>
@@ -423,53 +423,53 @@
       <translation>&amp;Finden:</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="429"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="432"/>
       <source>Replace:</source>
       <translation>Ersetzen:</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="475"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="481"/>
       <source>&amp;Bookmark line</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="482"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="488"/>
       <source>&amp;Purge for each search</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="489"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="495"/>
       <source>Backward direction</source>
       <translation>Rückwärtsrichtung</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="496"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="502"/>
       <source>Match &amp;whole word only</source>
       <translation>Nur ganze Wörter</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="503"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="509"/>
       <source>Match &amp;case</source>
       <translation>Groß-/Kleinschreibung beachten</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="510"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="516"/>
       <source>Wra&amp;p Around</source>
       <translation>Umwickeln</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
       <source>Replace</source>
       <translation>Ersetzen</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="65"/>
       <source>Mark</source>
       <translation type="unfinished"/>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="148"/>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="358"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="149"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="359"/>
       <source>Replaced %Ln matches</source>
       <translation>
         <numerusform>Ersetzte %Ln Übereinstimmung</numerusform>
@@ -477,27 +477,27 @@
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="256"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="257"/>
       <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
       <translation>Das Ende des Dokuments wurde erreicht. Erste Stelle von oben gefunden.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="267"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="268"/>
       <source>No matches found.</source>
       <translation>Keine Übereinstimmungen gefunden.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="330"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="331"/>
       <source>1 occurrence was replaced</source>
       <translation>1 Vorkommen wurde ersetzt</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="339"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="340"/>
       <source>No more occurrences were found</source>
       <translation>Es wurden keine weiteren Vorkommen gefunden.</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="369"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="370"/>
       <source>Found %Ln matches</source>
       <translation>
         <numerusform>%Ln Übereinstimmung gefunden</numerusform>
@@ -505,22 +505,22 @@
       </translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="757"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="770"/>
       <source>Mark: %Ln match in entire file</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="768"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="781"/>
       <source>All marks cleared</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="792"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="805"/>
       <source>No marks to copy</source>
       <translation type="unfinished"/>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="797"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="810"/>
       <source>Copied %Ln marked text(s)</source>
       <translation type="unfinished"/>
     </message>
@@ -531,6 +531,31 @@
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="14"/>
       <source>Folder as Workspace</source>
       <translation>Ordner als Arbeitsbereich</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="88"/>
+      <source>...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="108"/>
+      <source>Size</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="119"/>
+      <source>Type</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="130"/>
+      <source>Date Modified</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="141"/>
+      <source>Hidden</source>
+      <translation type="unfinished"/>
     </message>
   </context>
   <context>
@@ -786,7 +811,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1492"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1495"/>
       <source>Export As</source>
       <translation>Exportieren als</translation>
     </message>
@@ -933,7 +958,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="463"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2004"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
       <source>Save</source>
       <translation>Speichern</translation>
     </message>
@@ -1224,7 +1249,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="955"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="796"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="799"/>
       <source>Start Recording</source>
       <translation>Aufnahme starten</translation>
     </message>
@@ -1657,214 +1682,214 @@
       <translation>Zeilennummer (1 - %1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="787"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="790"/>
       <source>Stop Recording</source>
       <translation>Aufnahme beenden</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="892"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="895"/>
       <source>Debug Info</source>
       <translation>Debug-Informationen</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1112"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1115"/>
       <source>New %1</source>
       <translation>Neu %1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1174"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1177"/>
       <source>Create File</source>
       <translation>Datei erstellen</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1174"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1177"/>
       <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt; existiert nicht. Möchten Sie es erstellen?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
       <source>Save File</source>
       <translation>Datei speichern</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1253"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1256"/>
       <source>Open Folder as Workspace</source>
       <translation>Ordner als Arbeitsbereich öffnen</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1276"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1938"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1279"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1941"/>
       <source>Reload File</source>
       <translation>Datei neu laden</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1276"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1279"/>
       <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
       <translation>Möchten Sie &lt;b&gt;%1&lt;/b&gt; wirklich neu laden? Alle nicht gespeicherten Änderungen gehen verloren.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1448"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1451"/>
       <source>Save a Copy As</source>
       <translation>Kopie speichern unter</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1533"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1550"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1536"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1553"/>
       <source>Rename</source>
       <translation>Umbenennen</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1550"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1553"/>
       <source>Name:</source>
       <translation>Name:</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1570"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1573"/>
       <source>Delete File</source>
       <translation>Datei löschen</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1570"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1573"/>
       <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
       <translation>Möchten Sie &lt;b&gt;%1&lt;/b&gt; wirklich in den Papierkorb verschieben?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1583"/>
       <source>Error Deleting File</source>
       <translation>Fehler beim Löschen der Datei</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1583"/>
       <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation>Beim Löschen von &lt;b&gt;%1&lt;/b&gt; ist ein Fehler aufgetreten?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1677"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1680"/>
       <source>Administrator</source>
       <translation>Administrator</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1938"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1941"/>
       <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt; wurde von einem anderen Programm geändert. Möchten Sie es neu laden?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1964"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1967"/>
       <source>Read error</source>
       <translation>Read error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1965"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1968"/>
       <source>Write error</source>
       <translation>Write error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1966"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1969"/>
       <source>Fatal error</source>
       <translation>Fatal error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1967"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1970"/>
       <source>Resource error</source>
       <translation>Resource error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1968"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1971"/>
       <source>Open error</source>
       <translation>Open error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1969"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1972"/>
       <source>Abort error</source>
       <translation>Abort error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1970"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1973"/>
       <source>Timeout error</source>
       <translation>Timeout error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1971"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1974"/>
       <source>Unspecified error</source>
       <translation>Unspecified error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1972"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1975"/>
       <source>Remove error</source>
       <translation>Remove error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1973"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1976"/>
       <source>Rename error</source>
       <translation>Rename error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1974"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1977"/>
       <source>Position error</source>
       <translation>Position error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1975"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1978"/>
       <source>Resize error</source>
       <translation>Resize error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1976"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1979"/>
       <source>Permissions error</source>
       <translation>Permissions error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1977"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1980"/>
       <source>Copy error</source>
       <translation>Copy error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1978"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1981"/>
       <source>Unknown error (%1)</source>
       <translation>Unknown error (%1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1981"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1984"/>
       <source>Error Saving File</source>
       <translation>Fehler beim Speichern der Datei</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1982"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1985"/>
       <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
       <translation>Beim Speichern ist ein Fehler aufgetreten &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Fehler: %2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1988"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
       <source>Zoom: %1%</source>
       <translation>Zoom: %1%</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2000"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2003"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation type="unfinished"/>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/MainWindow.cpp" line="2001"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2004"/>
       <source>There are %n files with unsaved changes. Save them?</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2004"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
       <source>Save All</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2005"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2008"/>
       <source>Discard All</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2005"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2008"/>
       <source>Discard</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2193"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2196"/>
       <source>No updates are available at this time.</source>
       <translation>Derzeit sind keine Updates verfügbar.</translation>
     </message>
