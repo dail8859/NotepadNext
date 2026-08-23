@@ -73,7 +73,7 @@ void QuickFindWidget::setEditor(ScintillaNext *editor)
 
     if (finder == Q_NULLPTR) {
         finder = new Finder(editor);
-        finder->setWrap(true); // Always wrap the search
+        finder->options().wrapAround = true; // Always wrap the search
     }
     else {
         finder->setEditor(editor);
@@ -238,20 +238,20 @@ void QuickFindWidget::goToCurrentMatch()
     ui->lblInfo->setText(tr("%L1/%L2").arg(currentMatchIndex + 1).arg(matches.length()));
 }
 
-int QuickFindWidget::computeSearchFlags() const
+Scintilla::FindOption QuickFindWidget::computeSearchFlags() const
 {
-    int searchFlags = 0;
+    Scintilla::FindOption searchFlags = {};
 
     if (ui->buttonMatchCase->isChecked()) {
-        searchFlags |= SCFIND_MATCHCASE;
+        searchFlags |= Scintilla::FindOption::MatchCase;
     }
 
     if (ui->buttonWholeWord->isChecked()) {
-        searchFlags |= SCFIND_WHOLEWORD;
+        searchFlags |= Scintilla::FindOption::WholeWord;
     }
 
     if (ui->buttonRegexp->isChecked()) {
-        searchFlags |= SCFIND_REGEXP;
+        searchFlags |= Scintilla::FindOption::RegExp;
     }
 
     return searchFlags;
@@ -294,8 +294,8 @@ void QuickFindWidget::positionWidget()
 
 void QuickFindWidget::prepareSearch()
 {
-    finder->setSearchText(searchText());
-    finder->setSearchFlags(computeSearchFlags());
+    finder->options().text = searchText();
+    finder->options().flags = computeSearchFlags();
 }
 
 void QuickFindWidget::focusIn()

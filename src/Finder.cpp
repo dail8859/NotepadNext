@@ -16,14 +16,13 @@
  * along with Notepad Next.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-
 #include "Finder.h"
+
 #include "UndoAction.h"
 
-Finder::Finder(ScintillaNext *edit) :
-    editor(edit)
+Finder::Finder(ScintillaNext *editor) :
+    editor(editor)
 {
-    search_flags = editor->searchFlags();
 }
 
 void Finder::setEditor(ScintillaNext *editor)
@@ -31,152 +30,177 @@ void Finder::setEditor(ScintillaNext *editor)
     this->editor = editor;
 }
 
-void Finder::setSearchFlags(int flags)
+int Finder::searchFlags() const
 {
-    this->search_flags = flags;
+    return static_cast<int>(find_options.flags);
 }
 
-void Finder::setWrap(bool wrap)
+bool Finder::isRegexSearch() const
 {
-    this->wrap = wrap;
+    return Scintilla::FlagSet(find_options.flags, Scintilla::FindOption::RegExp);
 }
 
-void Finder::setSearchText(const QString &text)
+Sci_CharacterRange Finder::searchTarget(Sci_Position start, Sci_Position end)
 {
-    this->text = text;
-}
+    const QByteArray searchText = find_options.text.toUtf8();
 
-Sci_CharacterRange Finder::findNext(int startPos)
-{
-    did_latest_search_wrap = false;
+    editor->setTargetRange(start, end);
 
-    if (text.isEmpty())
+    if (editor->searchInTarget(searchText.length(), searchText.constData()) == INVALID_POSITION) {
         return {INVALID_POSITION, INVALID_POSITION};
-
-    const int pos = startPos == INVALID_POSITION ? editor->selectionEnd() : startPos;
-    const QByteArray textData = text.toUtf8();
-
-    editor->setTargetRange(pos, editor->length());
-    editor->setSearchFlags(search_flags);
-
-    if (editor->searchInTarget(textData.length(), textData.constData()) != INVALID_POSITION) {
-        return {static_cast<Sci_PositionCR>(editor->targetStart()), static_cast<Sci_PositionCR>(editor->targetEnd())};
-    }
-    else if (wrap) {
-        editor->setTargetRange(0, pos);
-        if (editor->searchInTarget(textData.length(), textData.constData()) != INVALID_POSITION) {
-            did_latest_search_wrap = true;
-
-            return {static_cast<Sci_PositionCR>(editor->targetStart()), static_cast<Sci_PositionCR>(editor->targetEnd())};
-        }
     }
 
-    return {INVALID_POSITION, INVALID_POSITION};
+    return {
+        static_cast<Sci_PositionCR>(editor->targetStart()),
+        static_cast<Sci_PositionCR>(editor->targetEnd())
+    };
 }
 
-Sci_CharacterRange Finder::findPrev()
+FindResult Finder::findNext()
 {
-    did_latest_search_wrap = false;
-
-    if (text.isEmpty())
-        return {INVALID_POSITION, INVALID_POSITION};
-
-    const int pos = editor->selectionStart();
-    const QByteArray textData = text.toUtf8();
-
-    editor->setTargetRange(pos, editor->length());
-    editor->setSearchFlags(search_flags);
-
-    auto range = editor->findText(editor->searchFlags(), textData.constData(), pos, 0);
-
-    if (range.first != INVALID_POSITION) {
-        return {static_cast<Sci_PositionCR>(range.first), static_cast<Sci_PositionCR>(range.second)};
-    }
-    else if (wrap) {
-        range = editor->findText(editor->searchFlags(), textData.constData(), editor->length(), pos);
-        if (range.first != INVALID_POSITION) {
-            did_latest_search_wrap = true;
-
-            return {static_cast<Sci_PositionCR>(range.first), static_cast<Sci_PositionCR>(range.second)};
-        }
-    }
-
-    return {INVALID_POSITION, INVALID_POSITION};
+    return findNextFrom(editor->selectionEnd());
 }
 
-// Count all occurrences in the document
+FindResult Finder::findNextFrom(Sci_Position startPos)
+{
+    FindResult result;
+
+    if (find_options.text.isEmpty())
+        return result;
+
+    editor->setSearchFlags(searchFlags());
+
+    result.range = searchTarget(startPos, editor->length());
+
+    // Return the valid result, or if not wrap around, go ahead and return it anyways
+    if (result || !find_options.wrapAround)
+        return result;
+
+    result.range = searchTarget(0, startPos);
+
+    if (result)
+        result.wrapped = true;
+
+    return result;
+}
+
+FindResult Finder::findPrev()
+{
+    FindResult result;
+
+    if (find_options.text.isEmpty())
+        return result;
+
+    const Sci_Position startPos = editor->selectionStart();
+
+    editor->setSearchFlags(searchFlags());
+
+    // A target with start > end searches backwards.
+    result.range = searchTarget(startPos, 0);
+
+    // Return the valid result, or if not wrap around, go ahead and return it anyways
+    if (result || !find_options.wrapAround)
+        return result;
+
+    result.range = searchTarget(editor->length(), startPos);
+
+    if (result)
+        result.wrapped = true;
+
+    return result;
+}
+
 int Finder::count()
 {
+    if (find_options.text.isEmpty())
+        return 0;
+
     int total = 0;
 
-    if (text.length() > 0) {
-        forEachMatch([&](int start, int end) {
-            Q_UNUSED(start);
-            total++;
-            return end;
-        });
-    }
+    forEachMatch([&total](int start, int end) {
+        Q_UNUSED(start);
+        ++total;
+        return end;
+    });
 
     return total;
 }
 
-Sci_CharacterRange Finder::replaceSelectionIfMatch(const QString &replaceText)
+FindResult Finder::replaceSelectionIfMatch(const QString &replaceText)
 {
-    const QByteArray textData = text.toUtf8();
-    bool isRegex = editor->searchFlags() & SCFIND_REGEXP;
+    FindResult result;
 
-    // Search just in the selection to see if the current selection is a match
-    editor->setTargetStart(editor->selectionStart());
-    editor->setTargetEnd(editor->selectionEnd());
-    editor->setSearchFlags(search_flags);
+    if (find_options.text.isEmpty())
+        return result;
 
-    if (editor->searchInTarget(textData.length(), textData.constData()) != INVALID_POSITION) {
-        const QByteArray replaceData = replaceText.toUtf8();
+    const Sci_Position selectionStart = editor->selectionStart();
+    const Sci_Position selectionEnd = editor->selectionEnd();
 
-        if (isRegex)
-            editor->replaceTargetRE(replaceData.length(), replaceData.constData());
-        else
-            editor->replaceTarget(replaceData.length(), replaceData.constData());
+    result.range = searchTarget(selectionStart, selectionEnd);
 
-        return {static_cast<Sci_PositionCR>(editor->targetStart()), static_cast<Sci_PositionCR>(editor->targetEnd())};
+    if (!result)
+        return result;
+
+    const QByteArray replacementText = replaceText.toUtf8();
+
+    if (isRegexSearch()) {
+        editor->replaceTargetRE(replacementText.length(), replacementText.constData());
+    }
+    else {
+        editor->replaceTarget(replacementText.length(), replacementText.constData());
     }
 
-    return {INVALID_POSITION, INVALID_POSITION};
+    result.range = {
+        static_cast<Sci_PositionCR>(editor->targetStart()),
+        static_cast<Sci_PositionCR>(editor->targetEnd())
+    };
+
+    return result;
 }
 
 int Finder::replaceAll(const QString &replaceText)
 {
-    if (text.isEmpty())
+    if (find_options.text.isEmpty())
         return 0;
 
-    const QByteArray &replaceData = replaceText.toUtf8();
-    const QByteArray &b = text.toUtf8();
-    const char *c = b.constData();
-    Sci_TextToFind ttf {{0, (Sci_PositionCR)editor->length()}, c, {-1, -1}};
-    const bool isRegex = search_flags & SCFIND_REGEXP;
+    const QByteArray searchText = find_options.text.toUtf8();
+    const QByteArray replacementText = replaceText.toUtf8();
+
+    Sci_TextToFind findText{
+        {0, static_cast<Sci_PositionCR>(editor->length())},
+        searchText.constData(),
+        {-1, -1}
+    };
+
+    editor->setSearchFlags(searchFlags());
+
+    UndoAction undoAction(editor);
+
     int total = 0;
 
-    // Don't technically need to set the search flags here but do it just in case something looks at the search flags later
-    editor->setSearchFlags(search_flags);
-
-    // NOTE: can't use editor->forEachMatch() here since the search range can grow since the document is changing
-
-    const UndoAction ua(editor);
-    while (editor->send(SCI_FINDTEXT, search_flags, reinterpret_cast<sptr_t>(&ttf)) != -1) {
-        const int start = ttf.chrgText.cpMin;
-        const int end = ttf.chrgText.cpMax;
+    // We intentionally use SCI_FINDTEXT here rather than forEachMatch().
+    //
+    // Replacing text changes the document length, so the search range has
+    // to be updated after every replacement.
+    while (editor->send(SCI_FINDTEXT, searchFlags(), reinterpret_cast<sptr_t>(&findText)) != INVALID_POSITION) {
+        const Sci_Position start = findText.chrgText.cpMin;
+        const Sci_Position end = findText.chrgText.cpMax;
 
         editor->setTargetRange(start, end);
 
-        if (isRegex)
-            ttf.chrg.cpMin = start + editor->replaceTargetRE(replaceData.length(), replaceData.constData());
-        else
-            ttf.chrg.cpMin = start + editor->replaceTarget(replaceData.length(), replaceData.constData());
+        Sci_Position replacementLength;
+        if (isRegexSearch()) {
+            replacementLength= editor->replaceTargetRE(replacementText.length(), replacementText.constData());
+        }
+        else {
+            replacementLength = editor->replaceTarget(replacementText.length(), replacementText.constData());
+        }
 
-        // The replace could have changed the document size, so update the end of the search range
-        ttf.chrg.cpMax = editor->length();
+        // Continue searching after the replacement.
+        findText.chrg.cpMin = start + replacementLength;
+        findText.chrg.cpMax = editor->length();
 
-        total++;
+        ++total;
     }
 
     return total;

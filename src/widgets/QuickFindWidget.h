@@ -65,7 +65,7 @@ private:
     void clearCachedMatches();
 
     void prepareSearch();
-    int computeSearchFlags() const;
+    Scintilla::FindOption computeSearchFlags() const;
 
     void setSearchContextColorBad();
     void setSearchContextColorGood();

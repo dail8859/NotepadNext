@@ -282,8 +282,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         Finder f(editor);
         const UndoAction ua(editor);
 
-        f.setSearchText(QStringLiteral("\\R\\R+"));
-        f.setSearchFlags(SCFIND_REGEXP);
+        f.options().text = QStringLiteral("\\R\\R+");
+        f.options().flags = Scintilla::FindOption::RegExp;
         f.replaceAll(editor->eolString());
 
         // The regex will not entirely remove a blank first line

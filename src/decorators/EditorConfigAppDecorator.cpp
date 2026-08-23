@@ -111,8 +111,8 @@ void EditorConfigAppDecorator::trimTrailingWhitespace()
     const PreventUnfolding pu(editor);
 
     // NOTE: see note in QRegexSearch about (*ANYCRLF)
-    f.setSearchText("(*ANYCRLF)[ \t]+$");
-    f.setSearchFlags(SCFIND_REGEXP);
+    f.options().text = "(*ANYCRLF)[ \t]+$";
+    f.options().flags = Scintilla::FindOption::RegExp;
     f.replaceAll("");
 }
 
