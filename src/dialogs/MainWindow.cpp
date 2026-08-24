@@ -421,6 +421,33 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         }
     });
 
+    auto selectAndFind = [this](bool forward) {
+        auto editor = currentEditor();
+        auto range = editor->getContextText();
+
+        if (range.cpMin == range.cpMax)
+            return;
+
+        auto text = editor->get_text_range(range.cpMin, range.cpMax);
+
+        Finder f(editor);
+        f.options().text = QString::fromUtf8(text);
+        f.options().wrapAround = true;
+
+        FindResult result = forward ? f.findNext() : f.findPrev();
+
+        if (result)
+            editor->goToRange(result.range);
+    };
+
+    connect(ui->actionSelectandFindNext, &QAction::triggered, this, [this, selectAndFind]() {
+        selectAndFind(true);
+    });
+
+    connect(ui->actionSelectandFindPrevious, &QAction::triggered, this, [this, selectAndFind]() {
+        selectAndFind(false);
+    });
+
     connect(ui->actionQuickFind, &QAction::triggered, this, [this]() {
         QuickFindWidget *quickFind = findChild<QuickFindWidget *>(QString(), Qt::FindDirectChildrenOnly);
 
@@ -1635,24 +1662,11 @@ void MainWindow::showFindReplaceDialog(int index)
     // the FindReplaceDialog's editor pointer needs updated...
 
     // Get any selected text
-    if (!editor->selectionEmpty()) {
-        int selection = editor->mainSelection();
-        int start = editor->selectionNStart(selection);
-        int end = editor->selectionNEnd(selection);
-        if (end > start) {
-            auto selText = editor->get_text_range(start, end);
-            frd->setFindString(QString::fromUtf8(selText));
-        }
-    }
-    else {
-        int start = editor->wordStartPosition(editor->currentPos(), true);
-        int end = editor->wordEndPosition(editor->currentPos(), true);
-        if (end > start) {
-            editor->setSelectionStart(start);
-            editor->setSelectionEnd(end);
-            auto selText = editor->get_text_range(start, end);
-            frd->setFindString(QString::fromUtf8(selText));
-        }
+    auto range = editor->getContextText();
+    if (range.cpMin != range.cpMax) {
+        editor->goToRange(range);
+        auto text = editor->get_text_range(range.cpMin, range.cpMax);
+        frd->setFindString(QString::fromUtf8(text));
     }
 
     frd->setTab(index);

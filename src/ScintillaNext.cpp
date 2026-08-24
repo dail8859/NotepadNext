@@ -212,6 +212,37 @@ void ScintillaNext::cutAllowLine()
     }
 }
 
+Sci_CharacterRange ScintillaNext::getContextText()
+{
+    if (!selectionEmpty()) {
+        if (selections() == 1) {
+            int start = selectionStart();
+            int end = selectionEnd();
+
+            if (end - start < 1024 &&
+                lineFromPosition(start) == lineFromPosition(end)) {
+                return { start, end };
+            }
+        }
+
+        return { INVALID_POSITION, INVALID_POSITION };
+    }
+
+    return wordAtPosition(currentPos());
+}
+
+Sci_CharacterRange ScintillaNext::wordAtPosition(int pos)
+{
+    int start = wordStartPosition(pos, true);
+    int end = wordEndPosition(pos, true);
+
+    if (end > start) {
+        return { start, end };
+    }
+
+    return { INVALID_POSITION, INVALID_POSITION };
+}
+
 void ScintillaNext::modifyFoldLevels(int level, int action)
 {
     const int totalLines = lineCount();
