@@ -71,6 +71,9 @@ public:
 
     void cutAllowLine();
 
+    Sci_CharacterRange getContextText();
+    Sci_CharacterRange wordAtPosition(int pos);
+
     void modifyFoldLevels(int level, int action);
     void foldAllLevels(int level);
     void unFoldAllLevels(int level);

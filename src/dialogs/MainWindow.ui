@@ -237,6 +237,8 @@
     <addaction name="actionFindInFiles"/>
     <addaction name="actionFindNext"/>
     <addaction name="actionFindPrevious"/>
+    <addaction name="actionSelectandFindNext"/>
+    <addaction name="actionSelectandFindPrevious"/>
     <addaction name="actionReplace"/>
     <addaction name="separator"/>
     <addaction name="actionQuickFind"/>
@@ -1563,6 +1565,22 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+Down</string>
+   </property>
+  </action>
+  <action name="actionSelectandFindNext">
+   <property name="text">
+    <string>Select and Find Next</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+F3</string>
+   </property>
+  </action>
+  <action name="actionSelectandFindPrevious">
+   <property name="text">
+    <string>Select and Find Previous</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+F3</string>
    </property>
   </action>
  </widget>
