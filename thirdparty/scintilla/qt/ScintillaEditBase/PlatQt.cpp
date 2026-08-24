@@ -667,16 +667,29 @@ void SurfaceImpl::MeasureWidths(const Font *font,
 	QTextLine tl = tlay.createLine();
 	tlay.endLayout();
 	if (mode.codePage == SC_CP_UTF8) {
+		// Measure each character's advance width independently and accumulate in
+		// logical (document) order, rather than using QTextLine::cursorToX(), which
+		// returns *visual* bidi-reordered positions. Scintilla's EditView code relies
+		// on positions[] being monotonically non-decreasing in logical order to place
+		// styled runs, the caret, and selection highlights; for RTL text (e.g. Hebrew),
+		// cursorToX() violates that invariant and pushes glyphs outside the visible
+		// clip rectangle, making them appear invisible.
+		QFontMetricsF metrics(*FontPointer(font), GetPaintDevice());
 		int fit = su.size();
 		int ui=0;
 		size_t i=0;
+		XYPOSITION cumulativeWidth = 0;
 		while (ui<fit) {
 			const unsigned char uch = text[i];
 			const unsigned int byteCount = UTF8BytesOfLead[uch];
 			const int codeUnits = UTF16LengthFromUTF8ByteCount(byteCount);
-			qreal xPosition = tl.cursorToX(ui+codeUnits);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+			cumulativeWidth += metrics.horizontalAdvance(su.mid(ui, codeUnits));
+#else
+			cumulativeWidth += metrics.width(su.mid(ui, codeUnits));
+#endif
 			for (size_t bytePos=0; (bytePos<byteCount) && (i<text.length()); bytePos++) {
-				positions[i++] = xPosition;
+				positions[i++] = cumulativeWidth;
 			}
 			ui += codeUnits;
 		}
@@ -765,21 +778,26 @@ void SurfaceImpl::MeasureWidthsUTF8(const Font *font,
 {
 	if (!font)
 		return;
+	// See the comment in MeasureWidths(): measure per-character in logical order
+	// rather than using QTextLine::cursorToX(), which returns visual bidi-reordered
+	// positions and breaks position monotonicity for RTL text.
 	QString su = QString::fromUtf8(text.data(), static_cast<int>(text.length()));
-	QTextLayout tlay(su, *FontPointer(font), GetPaintDevice());
-	tlay.beginLayout();
-	QTextLine tl = tlay.createLine();
-	tlay.endLayout();
+	QFontMetricsF metrics(*FontPointer(font), GetPaintDevice());
 	int fit = su.size();
 	int ui=0;
 	size_t i=0;
+	XYPOSITION cumulativeWidth = 0;
 	while (ui<fit) {
 		const unsigned char uch = text[i];
 		const unsigned int byteCount = UTF8BytesOfLead[uch];
 		const int codeUnits = UTF16LengthFromUTF8ByteCount(byteCount);
-		qreal xPosition = tl.cursorToX(ui+codeUnits);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+		cumulativeWidth += metrics.horizontalAdvance(su.mid(ui, codeUnits));
+#else
+		cumulativeWidth += metrics.width(su.mid(ui, codeUnits));
+#endif
 		for (size_t bytePos=0; (bytePos<byteCount) && (i<text.length()); bytePos++) {
-			positions[i++] = xPosition;
+			positions[i++] = cumulativeWidth;
 		}
 		ui += codeUnits;
 	}
