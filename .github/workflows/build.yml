@@ -19,7 +19,7 @@ jobs:
       matrix:
         include:
           # ─── Windows ───────────────────────────────────────────────
-          - os: windows-2025
+          - os: windows-2022
             platform: windows
             qt_version: "6.5"
           - os: windows-latest
@@ -28,6 +28,18 @@ jobs:
           - os: windows-latest
             platform: windows
             qt_version: "6.10"
+
+          # ─── Windows ARM ───────────────────────────────────────────
+          - os: windows-11-arm
+            platform: windows
+            qt_version: "6.8"
+            qt_arch: win64_msvc2019_arm64
+            cmake_arch: ARM64
+          - os: windows-11-arm
+            platform: windows
+            qt_version: "6.10"
+            qt_arch: win64_msvc2019_arm64
+            cmake_arch: ARM64
 
           # ─── Linux ─────────────────────────────────────────────────
           - os: ubuntu-24.04
@@ -92,24 +104,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v7
 
-      # ─── Install Qt (Windows / Linux via jurplel) ──────────────
+      # ─── Install Qt ────────────────────────────────────────────
       - name: Install Qt
-        if: matrix.platform != 'mac'
+        if: matrix.platform != 'mac' && matrix.os != 'windows-11-arm'
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ matrix.qt_version }}
           modules: 'qt5compat'
           cache: true
 
-      # ─── Install Qt (macOS via jdpurcell for arch support) ─────
-      - name: Install Qt (mac)
-        if: matrix.platform == 'mac'
+      - name: Install Qt
+        if: matrix.platform == 'mac' || matrix.os == 'windows-11-arm'
         uses: jdpurcell/install-qt-action@v5
         with:
           version: ${{ matrix.qt_version }}
-          host: mac
+          host: ${{ matrix.platform == 'mac' && 'mac' || 'windows' }}
           target: desktop
-          arch: ${{ matrix.qt_arch }}
+          arch: ${{ matrix.qt_arch || '' }}
           modules: qt5compat
           cache: true
 
@@ -117,10 +128,10 @@ jobs:
         if: matrix.platform == 'windows'
         uses: egor-tensin/vs-shell@v2
         with:
-          arch: x64
+          arch: ${{ matrix.cmake_arch || 'x64' }}
 
       - name: Install NSIS
-        if: matrix.platform == 'windows'
+        if: matrix.platform == 'windows' && matrix.os != 'windows-11-arm'
         uses: repolevedavaj/install-nsis@v1.3.0
         with:
           nsis-version: '3.11'
@@ -147,6 +158,8 @@ jobs:
           CMAKE_OPTS=(-S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}")
           if [ "${{ matrix.platform }}" = "mac" ]; then
             CMAKE_OPTS+=(-DCMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_arch }}" -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}")
+          elif [ "${{ matrix.os }}" = "windows-11-arm" ]; then
+            CMAKE_OPTS+=(-DCMAKE_SYSTEM_PROCESSOR="${{ matrix.cmake_arch }}")
           fi
           cmake "${CMAKE_OPTS[@]}"
 
@@ -155,8 +168,12 @@ jobs:
         run: cmake --build build --parallel
 
       - name: Build Windows Targets
-        if: matrix.platform == 'windows'
+        if: matrix.platform == 'windows' && matrix.os != 'windows-11-arm'
         run: cmake --build build --target package zip installer --parallel
+
+      - name: Build Windows ARM Targets
+        if: matrix.os == 'windows-11-arm'
+        run: cmake --build build --target package zip --parallel
 
       - name: Build MacOS Targets
         if: matrix.platform == 'mac'
@@ -171,12 +188,12 @@ jobs:
         uses: actions/upload-artifact@v7
         if: matrix.platform == 'windows'
         with:
-          name: NotepadNext-Windows-Qt${{ matrix.qt_version }}-Zip
+          name: NotepadNext-Windows-${{ matrix.os == 'windows-11-arm' && 'arm64' || 'x64' }}-Qt${{ matrix.qt_version }}-Zip
           path: ${{ github.workspace }}/build/package/
 
       - name: Upload Windows Installer
         uses: actions/upload-artifact@v7
-        if: matrix.platform == 'windows'
+        if: matrix.platform == 'windows' && matrix.os != 'windows-11-arm'
         with:
           name: NotepadNext-Windows-Qt${{ matrix.qt_version }}-Installer
           path: ${{ github.workspace }}/installer/NotepadNext*.exe
@@ -220,7 +237,7 @@ jobs:
 
       - name: Upload Windows Zip
         run: |
-          cd NotepadNext-Windows-Qt$QT_RELEASE_VER-Zip/
+          cd NotepadNext-Windows-x64-Qt$QT_RELEASE_VER-Zip/
           zip -r ../NotepadNext-${{ github.ref_name }}-win64.zip .
           cd ..
           gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}-win64.zip
