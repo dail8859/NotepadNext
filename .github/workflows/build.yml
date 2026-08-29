@@ -19,7 +19,7 @@ jobs:
       matrix:
         include:
           # ─── Windows ───────────────────────────────────────────────
-          - os: windows-latest
+          - os: windows-2025
             platform: windows
             qt_version: "6.5"
           - os: windows-latest
