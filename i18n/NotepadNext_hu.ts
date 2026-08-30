@@ -469,7 +469,7 @@
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="149"/>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="359"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="357"/>
       <source>Replaced %Ln matches</source>
       <translation>
         <numerusform>%Ln egyezés lecserélve</numerusform>
@@ -487,17 +487,17 @@
       <translation>Nincs találat.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="331"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="329"/>
       <source>1 occurrence was replaced</source>
       <translation>1 előfordulás lecserélve</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="340"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="338"/>
       <source>No more occurrences were found</source>
       <translation>Nincs több előfordulás</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="370"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="368"/>
       <source>Found %Ln matches</source>
       <translation>
         <numerusform>%Ln egyezés található</numerusform>
@@ -505,7 +505,7 @@
       </translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="770"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="778"/>
       <source>Mark: %Ln match in entire file</source>
       <translation>
         <numerusform>Jelölés: %Ln egyezés a teljes fájlban</numerusform>
@@ -513,17 +513,17 @@
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="781"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="789"/>
       <source>All marks cleared</source>
       <translation>Az összes jelölés törölve</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="805"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="813"/>
       <source>No marks to copy</source>
       <translation>Nincs másolható jelölés</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="810"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="818"/>
       <source>Copied %Ln marked text(s)</source>
       <translation>
         <numerusform>%Ln megjelölt szövegrész másolva</numerusform>
@@ -817,7 +817,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1495"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1522"/>
       <source>Export As</source>
       <translation>Exportálás mint</translation>
     </message>
@@ -887,994 +887,1004 @@
       <translation>Jelölések törlése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="252"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="254"/>
       <source>&amp;View</source>
       <translation>&amp;Nézet</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="256"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="258"/>
       <source>&amp;Zoom</source>
       <translation>&amp;Nagyítás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="265"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="267"/>
       <source>Show Symbol</source>
       <translation>Szimbólum megjelenítése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="276"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="278"/>
       <source>Fold Level</source>
       <translation>Összecsukási szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="290"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="292"/>
       <source>Unfold Level</source>
       <translation>Kibontási szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="319"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="321"/>
       <source>Language</source>
       <translation>Nyelv</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="324"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="326"/>
       <source>Settings</source>
       <translation>Beállítások</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="330"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="332"/>
       <source>Macro</source>
       <translation>Makró</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="341"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="343"/>
       <source>Help</source>
       <translation>Súgó</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="352"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="354"/>
       <source>Encoding</source>
       <translation>Kódolás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="368"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="370"/>
       <source>Main Tool Bar</source>
       <translation>Fő eszköztár</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="428"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="430"/>
       <source>&amp;New</source>
       <translation>Ú&amp;j</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="431"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="433"/>
       <source>Create a new file</source>
       <translation>Új fájl létrehozása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="444"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="446"/>
       <source>&amp;Open...</source>
       <translation>&amp;Megnyitás...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="460"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="462"/>
       <source>&amp;Save</source>
       <translation>&amp;Mentés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="463"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="465"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2021"/>
       <source>Save</source>
       <translation>Mentés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="471"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="473"/>
       <source>E&amp;xit</source>
       <translation>K&amp;ilépés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="484"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="486"/>
       <source>&amp;Undo</source>
       <translation>&amp;Visszavonás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="497"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="499"/>
       <source>&amp;Redo</source>
       <translation>&amp;Újra</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="510"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="512"/>
       <source>Cu&amp;t</source>
       <translation>Ki&amp;vágás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="523"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="525"/>
       <source>&amp;Copy</source>
       <translation>&amp;Másolás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="536"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="538"/>
       <source>&amp;Paste</source>
       <translation>&amp;Beillesztés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="544"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="546"/>
       <source>&amp;Delete</source>
       <translation>&amp;Törlés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="552"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="554"/>
       <source>Copy Full Path</source>
       <translation>Teljes elérési út másolása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="557"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="559"/>
       <source>Copy File Name</source>
       <translation>Fájlnév másolása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="562"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="564"/>
       <source>Copy File Directory</source>
       <translation>Fájl mappájának másolása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="571"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="573"/>
       <source>&amp;Close</source>
       <translation>&amp;Bezárás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="574"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="576"/>
       <source>Close the current file</source>
       <translation>Az aktuális fájl bezárása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="582"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="584"/>
       <source>Save &amp;As...</source>
       <translation>Mentés &amp;más néven...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="590"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="592"/>
       <source>Save a Copy As...</source>
       <translation>Másolat mentése más néven...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="599"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="601"/>
       <source>Sav&amp;e All</source>
       <translation>Össz&amp;es mentése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="607"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="609"/>
       <source>Select A&amp;ll</source>
       <translation>Összes ki&amp;jelölése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="619"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="621"/>
       <source>Increase Indent</source>
       <translation>Behúzás növelése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="628"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="630"/>
       <source>Decrease Indent</source>
       <translation>Behúzás csökkentése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="633"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="635"/>
       <source>Rename...</source>
       <translation>Átnevezés...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="642"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="644"/>
       <source>Re&amp;load</source>
       <translation>Újratö&amp;ltés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="650"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="652"/>
       <source>Windows (CR LF)</source>
       <translation>Windows (CR LF)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="658"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="660"/>
       <source>Unix (LF)</source>
       <translation>Unix (LF)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="666"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="668"/>
       <source>Macintosh (CR)</source>
       <translation>Macintosh (CR)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="671"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="673"/>
       <source>UPPER CASE</source>
       <translation>NAGYBETŰS</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="674"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="676"/>
       <source>Convert text to upper case</source>
       <translation>Szöveg átalakítása nagybetűssé</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="679"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="681"/>
       <source>lower case</source>
       <translation>kisbetűs</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="682"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="684"/>
       <source>Convert text to lower case</source>
       <translation>Szöveg átalakítása kisbetűssé</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="687"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="689"/>
       <source>Duplicate Current Line</source>
       <translation>Aktuális sor megkettőzése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="695"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="697"/>
       <source>Split Lines</source>
       <translation>Sorok felosztása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="700"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="702"/>
       <source>Join Lines</source>
       <translation>Sorok egyesítése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="708"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="710"/>
       <source>Move Selected Lines Up</source>
       <translation>Kijelölt sorok mozgatása felfelé</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="716"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="718"/>
       <source>Move Selected Lines Down</source>
       <translation>Kijelölt sorok mozgatása lefelé</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="728"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="730"/>
       <source>Clos&amp;e All</source>
       <translation>Össz&amp;es bezárása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="731"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="733"/>
       <source>Close All files</source>
       <translation>Minden fájl bezárása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="739"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="741"/>
       <source>Close All Except Active Document</source>
       <translation>Összes bezárása az aktív dokumentum kivételével</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="744"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="746"/>
       <source>Close All to the Left</source>
       <translation>Összes bezárása balra</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="749"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="751"/>
       <source>Close All to the Right</source>
       <translation>Összes bezárása jobbra</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="759"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="761"/>
       <source>Zoom &amp;In</source>
       <translation>Nagyítás &amp;be</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="772"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="774"/>
       <source>Zoom &amp;Out</source>
       <translation>Nagyítás &amp;ki</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="780"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="782"/>
       <source>Reset Zoom</source>
       <translation>Nagyítás visszaállítása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="788"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="790"/>
       <source>About Qt</source>
       <translation>A Qt névjegye</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="800"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="802"/>
       <source>About Notepad Next</source>
       <translation>A Notepad Next névjegye</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="811"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="813"/>
       <source>Show Whitespace</source>
       <translation>Szóközök megjelenítése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="819"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="821"/>
       <source>Show End of Line</source>
       <translation>Sorvég megjelenítése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="832"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="834"/>
       <source>Show All Characters</source>
       <translation>Összes karakter megjelenítése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="845"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="847"/>
       <source>Show Indent Guide</source>
       <translation>Behúzásvezető megjelenítése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="853"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="855"/>
       <source>Show Wrap Symbol</source>
       <translation>Sortörés szimbólum megjelenítése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="866"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="868"/>
       <source>Word Wrap</source>
       <translation>Sortörés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="871"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="873"/>
       <source>Restore Recently Closed File</source>
       <translation>Nemrég bezárt fájl visszaállítása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="879"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="881"/>
       <source>Open All Recent Files</source>
       <translation>Összes legutóbbi fájl megnyitása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="884"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="886"/>
       <source>Clear Recent Files List</source>
       <translation>Legutóbbi fájlok listájának törlése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="894"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="896"/>
       <source>&amp;Find...</source>
       <translation>&amp;Keresés...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="902"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="904"/>
       <source>Find in Files...</source>
       <translation>Keresés fájlokban...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="907"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="909"/>
       <source>Find &amp;Next</source>
       <translation>Következő &amp;találat</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="915"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="917"/>
       <source>Find &amp;Previous</source>
       <translation>&amp;Előző találat</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="928"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="930"/>
       <source>&amp;Replace...</source>
       <translation>&amp;Csere...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="939"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="941"/>
       <source>Full Screen</source>
       <translation>Teljes képernyő</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="955"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="799"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="957"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="826"/>
       <source>Start Recording</source>
       <translation>Rögzítés indítása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="967"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="969"/>
       <source>Playback</source>
       <translation>Lejátszás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="982"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="984"/>
       <source>Save Current Recorded Macro...</source>
       <translation>Aktuálisan rögzített makró mentése...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="994"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="996"/>
       <source>Run a Macro Multiple Times...</source>
       <translation>Makró futtatása többször...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1003"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1005"/>
       <source>Preferences...</source>
       <translation>Beállítások...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1011"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1013"/>
       <source>Quick Find</source>
       <translation>Gyorskeresés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1019"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1021"/>
       <source>Select Next Instance</source>
       <translation>Következő előfordulás kijelölése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1031"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1033"/>
       <source>Move to Trash...</source>
       <translation>Áthelyezés a kukába...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1034"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1036"/>
       <source>Move to Trash</source>
       <translation>Áthelyezés a kukába</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1039"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1041"/>
       <source>Check for Updates...</source>
       <translation>Frissítések keresése...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1044"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1046"/>
       <source>&amp;Go to Line...</source>
       <translation>&amp;Ugrás sorra...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1056"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1058"/>
       <source>Print...</source>
       <translation>Nyomtatás...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1064"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1066"/>
       <source>Open Folder as Workspace...</source>
       <translation>Mappa megnyitása munkaterületként...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1069"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1071"/>
       <source>Toggle Single Line Comment</source>
       <translation>Egysoros megjegyzés ki-/bekapcsolása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1077"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1079"/>
       <source>Single Line Comment</source>
       <translation>Egysoros megjegyzés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1085"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1087"/>
       <source>Single Line Uncomment</source>
       <translation>Egysoros megjegyzés törlése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1100"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1102"/>
       <source>Edit Macros...</source>
       <translation>Makrók szerkesztése...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1108"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1110"/>
       <source>This is not currently implemented</source>
       <translation>Ez jelenleg nincs megvalósítva</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1113"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1115"/>
       <source>Column Mode...</source>
       <translation>Oszlop mód...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1118"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1120"/>
       <source>Export as HTML...</source>
       <translation>Exportálás HTML-ként...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1123"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1125"/>
       <source>Export as RTF...</source>
       <translation>Exportálás RTF-ként...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1128"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1130"/>
       <source>Copy as HTML</source>
       <translation>Másolás HTML-ként</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1133"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1135"/>
       <source>Copy as RTF</source>
       <translation>Másolás RTF-ként</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1138"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1140"/>
       <source>Base 64 Encode</source>
       <translation>Base64 kódolás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1143"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1145"/>
       <source>URL Encode</source>
       <translation>URL kódolás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1148"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1150"/>
       <source>Base 64 Decode</source>
       <translation>Base64 dekódolás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1153"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1155"/>
       <source>URL Decode</source>
       <translation>URL dekódolás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1158"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1160"/>
       <source>Copy URL</source>
       <translation>URL másolása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1163"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1165"/>
       <source>Remove Empty Lines</source>
       <translation>Üres sorok törlése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1172"/>
-      <location filename="../src/dialogs/MainWindow.ui" line="1175"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1174"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1177"/>
       <source>Show in Explorer</source>
       <translation>Megjelenítés a fájlkezelőben</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1184"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1186"/>
       <source>Open %1 Here</source>
       <translation>%1 megnyitása itt</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1189"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1191"/>
       <source>Toggle Bookmark</source>
       <translation>Könyvjelző ki-/bekapcsolása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1197"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1199"/>
       <source>Search and Bookmark Lines...</source>
       <translation>Keresés és sorok könyvjelzése...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1205"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1207"/>
       <source>Next Bookmark</source>
       <translation>Következő könyvjelző</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1213"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1215"/>
       <source>Previous Bookmark</source>
       <translation>Előző könyvjelző</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1221"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1223"/>
       <source>Clear Bookmarks</source>
       <translation>Könyvjelzők törlése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1226"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1228"/>
       <source>Invert Bookmarks</source>
       <translation>Könyvjelzők megfordítása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1231"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1233"/>
       <source>Next Tab</source>
       <translation>Következő lap</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1242"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1244"/>
       <source>Previous Tab</source>
       <translation>Előző lap</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1253"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1255"/>
       <source>Fold Level 1</source>
       <translation>Összecsukás: 1. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1261"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1263"/>
       <source>Fold Level 2</source>
       <translation>Összecsukás: 2. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1269"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1271"/>
       <source>Fold Level 3</source>
       <translation>Összecsukás: 3. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1277"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1279"/>
       <source>Fold Level 4</source>
       <translation>Összecsukás: 4. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1285"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1287"/>
       <source>Unfold Level 1</source>
       <translation>Kibontás: 1. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1293"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1295"/>
       <source>Unfold Level 2</source>
       <translation>Kibontás: 2. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1301"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1303"/>
       <source>Unfold Level 3</source>
       <translation>Kibontás: 3. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1309"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1311"/>
       <source>Unfold Level 4</source>
       <translation>Kibontás: 4. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1317"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1319"/>
       <source>Fold All</source>
       <translation>Összes összehajtása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1325"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1327"/>
       <source>Unfold All</source>
       <translation>Összes kibontása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1333"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1335"/>
       <source>Fold Level 5</source>
       <translation>Összecsukás: 5. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1341"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1343"/>
       <source>Fold Level 6</source>
       <translation>Összecsukás: 6. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1349"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1351"/>
       <source>Fold Level 7</source>
       <translation>Összecsukás: 7. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1357"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1359"/>
       <source>Fold Level 8</source>
       <translation>Összecsukás: 8. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1365"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1367"/>
       <source>Fold Level 9</source>
       <translation>Összecsukás: 9. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1373"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1375"/>
       <source>Unfold Level 5</source>
       <translation>Kibontás: 5. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1381"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1383"/>
       <source>Unfold Level 6</source>
       <translation>Kibontás: 6. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1389"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1391"/>
       <source>Unfold Level 7</source>
       <translation>Kibontás: 7. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1397"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1399"/>
       <source>Unfold Level 8</source>
       <translation>Kibontás: 8. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1405"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1407"/>
       <source>Unfold Level 9</source>
       <translation>Kibontás: 9. szint</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1413"/>
-      <location filename="../src/dialogs/MainWindow.ui" line="1416"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1415"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1418"/>
       <source>Toggle Overtype</source>
       <translation>Átírás mód ki-/bekapcsolása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1427"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1429"/>
       <source>Debug Info...</source>
       <translation>Hibakeresési információ...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1432"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1434"/>
       <source>Cut Bookmarked Lines</source>
       <translation>Könyvjelzőzött sorok kivágása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1437"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1439"/>
       <source>Copy Bookmarked Lines</source>
       <translation>Könyvjelzőzött sorok másolása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1442"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1444"/>
       <source>Delete Bookmarked Lines</source>
       <translation>Könyvjelzőzött sorok törlése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1447"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1449"/>
       <source>Mark Style 1</source>
       <translation>Jelölési stílus 1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1455"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1457"/>
       <source>Mark Style 2</source>
       <translation>Jelölési stílus 2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1463"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1465"/>
       <source>Clear Style 1</source>
       <translation>1. stílus törlése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1471"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1473"/>
       <source>Clear Style 2</source>
       <translation>2. stílus törlése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1479"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1481"/>
       <source>Mark Style 3</source>
       <translation>Jelölési stílus 3</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1487"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1489"/>
       <source>Clear Style 3</source>
       <translation>3. stílus törlése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1495"/>
-      <location filename="../src/dialogs/MainWindow.ui" line="1498"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1497"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1500"/>
       <source>Clear All Styles</source>
       <translation>Összes stílus törlése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1503"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1505"/>
       <source>Remove Duplicate Lines</source>
       <translation>Ismétlődő sorok eltávolítása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1508"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1510"/>
       <source>Remove Consecutive Duplicate Lines</source>
       <translation>Egymást követő ismétlődő sorok eltávolítása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1513"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1515"/>
       <source>Sort Lines Ascending</source>
       <translation>Sorok rendezése növekvő sorrendbe</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1518"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1520"/>
       <source>Sort Lines Descending</source>
       <translation>Sorok rendezése csökkenő sorrendbe</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1523"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1525"/>
       <source>Sort Lines Ascending (Case-Insensitive)</source>
       <translation>Sorok rendezése növekvő sorrendbe (kis-/nagybetű érzékenység nélkül)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1528"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1530"/>
       <source>Sort Lines Descending (Case-Insensitive)</source>
       <translation>Sorok rendezése csökkenő sorrendbe (kis-/nagybetű érzékenység nélkül)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1533"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1535"/>
       <source>Sort Lines by Length Ascending</source>
       <translation>Sorok rendezése hossz szerint növekvő sorrendbe</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1538"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1540"/>
       <source>Sort Lines by Length Descending</source>
       <translation>Sorok rendezése hossz szerint csökkenő sorrendbe</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1543"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1545"/>
       <source>Reverse Line Order</source>
       <translation>Sorok sorrendjének megfordítása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1548"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1550"/>
       <source>Split Horizontal</source>
       <translation>Vízszintes felosztás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1551"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1553"/>
       <source>Split editor horizontally (left/right)</source>
       <translation>Szerkesztő felosztása vízszintesen (bal/jobb)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1559"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1561"/>
       <source>Split Vertical</source>
       <translation>Függőleges felosztás</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1562"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1564"/>
       <source>Split editor vertically (top/bottom)</source>
       <translation>Szerkesztő felosztása függőlegesen (fent/lent)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="452"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1572"/>
+      <source>Select and Find Next</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1580"/>
+      <source>Select and Find Previous</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="479"/>
       <source>Go to line</source>
       <translation>Ugrás sorra</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="452"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="479"/>
       <source>Line Number (1 - %1)</source>
       <translation>Sorszám (1 - %1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="790"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="817"/>
       <source>Stop Recording</source>
       <translation>Rögzítés leállítása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="895"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="922"/>
       <source>Debug Info</source>
       <translation>Hibakeresési információ</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1115"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1142"/>
       <source>New %1</source>
       <translation>Új %1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1177"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1204"/>
       <source>Create File</source>
       <translation>Fájl létrehozása</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1177"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1204"/>
       <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
       <translation>A(z) &lt;b&gt;%1&lt;/b&gt; nem létezik. Szeretné létrehozni?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2012"/>
       <source>Save File</source>
       <translation>Fájl mentése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1256"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1283"/>
       <source>Open Folder as Workspace</source>
       <translation>Mappa megnyitása munkaterületként</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1279"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1941"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1306"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1955"/>
       <source>Reload File</source>
       <translation>Fájl újratöltése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1279"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1306"/>
       <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
       <translation>Biztosan újra szeretné tölteni a(z) &lt;b&gt;%1&lt;/b&gt; fájlt? A nem mentett módosítások elvesznek.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1451"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1478"/>
       <source>Save a Copy As</source>
       <translation>Másolat mentése más néven</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1536"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1553"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1563"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
       <source>Rename</source>
       <translation>Átnevezés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1553"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
       <source>Name:</source>
       <translation>Név:</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1573"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1600"/>
       <source>Delete File</source>
       <translation>Fájl törlése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1573"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1600"/>
       <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
       <translation>Biztosan a kukába szeretné helyezni a(z) &lt;b&gt;%1&lt;/b&gt; fájlt?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1583"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1610"/>
       <source>Error Deleting File</source>
       <translation>Hiba a fájl törlésekor</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1583"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1610"/>
       <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation>Hiba történt a(z) &lt;b&gt;%1&lt;/b&gt; törlése közben.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1680"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1694"/>
       <source>Administrator</source>
       <translation>Rendszergazda</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1941"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1955"/>
       <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
       <translation>A(z) &lt;b&gt;%1&lt;/b&gt; fájlt egy másik program módosította. Szeretné újratölteni?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1967"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1981"/>
       <source>Read error</source>
       <translation>Olvasási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1968"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1982"/>
       <source>Write error</source>
       <translation>Írási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1969"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1983"/>
       <source>Fatal error</source>
       <translation>Végzetes hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1970"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1984"/>
       <source>Resource error</source>
       <translation>Erőforrás-hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1971"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1985"/>
       <source>Open error</source>
       <translation>Megnyitási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1972"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1986"/>
       <source>Abort error</source>
       <translation>Megszakítási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1973"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1987"/>
       <source>Timeout error</source>
       <translation>Időtúllépési hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1974"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1988"/>
       <source>Unspecified error</source>
       <translation>Meghatározatlan hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1975"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1989"/>
       <source>Remove error</source>
       <translation>Eltávolítási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1976"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1990"/>
       <source>Rename error</source>
       <translation>Átnevezési hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1977"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
       <source>Position error</source>
       <translation>Pozicionálási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1978"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1992"/>
       <source>Resize error</source>
       <translation>Átméretezési hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1979"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1993"/>
       <source>Permissions error</source>
       <translation>Jogosultsági hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1980"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1994"/>
       <source>Copy error</source>
       <translation>Másolási hiba</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1981"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
       <source>Unknown error (%1)</source>
       <translation>Ismeretlen hiba (%1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1984"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
       <source>Error Saving File</source>
       <translation>Hiba a fájl mentésekor</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1985"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
       <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
       <translation>Hiba történt a(z) &lt;b&gt;%1&lt;/b&gt; mentése közben.&lt;br&gt;&lt;br&gt;Hiba: %2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2005"/>
       <source>Zoom: %1%</source>
       <translation>Nagyítás: %1%</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2003"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2017"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation>Menti a(z) &lt;b&gt;%1&lt;/b&gt; módosításait?</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/MainWindow.cpp" line="2004"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2018"/>
       <source>There are %n files with unsaved changes. Save them?</source>
       <translation>
         <numerusform>%n fájlnak vannak nem mentett módosításai. Menti őket?</numerusform>
@@ -1882,22 +1892,22 @@
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2021"/>
       <source>Save All</source>
       <translation>Összes mentése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2008"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2022"/>
       <source>Discard All</source>
       <translation>Összes elvetése</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2008"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2022"/>
       <source>Discard</source>
       <translation>Elvetés</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2196"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2210"/>
       <source>No updates are available at this time.</source>
       <translation>Jelenleg nem érhetők el frissítések.</translation>
     </message>
