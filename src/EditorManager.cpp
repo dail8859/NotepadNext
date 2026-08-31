@@ -17,6 +17,7 @@
  */
 
 #include <QApplication>
+#include <QTimer>
 
 #include "ApplicationSettings.h"
 
@@ -46,10 +47,41 @@ const int MARK_HIDELINESUNDERLINE = 21;
 EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
     : QObject(parent), settings(settings)
 {
+    fileWatcher = new QFileSystemWatcher(this);
+
+    connect(fileWatcher, &QFileSystemWatcher::fileChanged, this, [=](const QString &path) {
+        // Debounce: a single external write commonly fires this signal 2+
+        // times in a row. Only arm one timer per path; further signals
+        // received before it fires are simply dropped.
+        if (pendingFileChanges.contains(path)) {
+            return;
+        }
+
+        pendingFileChanges.insert(path);
+
+        QTimer::singleShot(250, this, [=]() {
+            pendingFileChanges.remove(path);
+            processExternalFileChange(path);
+        });
+    });
+
     connect(this, &EditorManager::editorCreated, this, [=](ScintillaNext *editor) {
         connect(editor, &ScintillaNext::closed, this, [=]() {
             emit editorClosed(editor);
         });
+
+        connect(editor, &ScintillaNext::closed, this, [=]() {
+            unwatchEditorFile(editor);
+        });
+
+        // Covers "Save As" and renaming a "New" buffer into an actual file,
+        // in addition to a plain rename - fileInfo is already up to date
+        // by the time this signal fires.
+        connect(editor, &ScintillaNext::renamed, this, [=]() {
+            watchEditorFile(editor);
+        });
+
+        watchEditorFile(editor);
     });
 
     connect(settings, &ApplicationSettings::showWrapSymbolChanged, this, [=](bool b) {
@@ -362,6 +394,51 @@ QList<QPointer<ScintillaNext> > EditorManager::getEditors()
 {
     purgeOldEditorPointers();
     return editors;
+}
+
+void EditorManager::processExternalFileChange(const QString &path)
+{
+    for (ScintillaNext *editor : qAsConst(editors)) {
+        if (editor && editor->isFile() && editor->getFilePath() == path) {
+            // Some editors/tools save by replacing the file (rename-over-write),
+            // which makes the OS-level watch silently drop the path. Re-arm it
+            // whenever we can, so subsequent external edits keep being detected.
+            if (QFileInfo::exists(path) && !fileWatcher->files().contains(path)) {
+                fileWatcher->addPath(path);
+            }
+
+            emit editorFileChangedOnDisk(editor);
+        }
+    }
+}
+
+void EditorManager::watchEditorFile(ScintillaNext *editor)
+{
+    const QString oldPath = watchedPaths.value(editor);
+    const QString newPath = editor->isFile() ? editor->getFilePath() : QString();
+
+    if (oldPath == newPath) {
+        return;
+    }
+
+    if (!oldPath.isEmpty()) {
+        fileWatcher->removePath(oldPath);
+        watchedPaths.remove(editor);
+    }
+
+    if (!newPath.isEmpty()) {
+        fileWatcher->addPath(newPath);
+        watchedPaths.insert(editor, newPath);
+    }
+}
+
+void EditorManager::unwatchEditorFile(ScintillaNext *editor)
+{
+    const QString path = watchedPaths.take(editor);
+
+    if (!path.isEmpty()) {
+        fileWatcher->removePath(path);
+    }
 }
 
 int EditorManager::detectEOLMode(ScintillaNext *editor) const
