@@ -120,4 +120,10 @@ public:
     DEFINE_SETTING(URLHighlighting, urlHighlighting, bool)
     DEFINE_SETTING(ShowLineNumbers, showLineNumbers, bool)
     DEFINE_SETTING(AutoCompletion, autoCompletion, bool)
+    DEFINE_SETTING(AutoInsertParentheses, autoInsertParentheses, bool)
+    DEFINE_SETTING(AutoInsertSquareBrackets, autoInsertSquareBrackets, bool)
+    DEFINE_SETTING(AutoInsertCurlyBraces, autoInsertCurlyBraces, bool)
+    DEFINE_SETTING(AutoInsertSingleQuotes, autoInsertSingleQuotes, bool)
+    DEFINE_SETTING(AutoInsertDoubleQuotes, autoInsertDoubleQuotes, bool)
+    DEFINE_SETTING(AutoInsertHtmlTags, autoInsertHtmlTags, bool)
 };

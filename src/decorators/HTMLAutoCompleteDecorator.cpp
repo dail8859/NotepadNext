@@ -29,10 +29,26 @@ static const QByteArrayList voidTags = { "area", "base", "br", "col", "embed", "
 HTMLAutoCompleteDecorator::HTMLAutoCompleteDecorator(ScintillaNext *editor)
     : EditorDecorator(editor)
 {
+    markupLanguageActive = editor->languageName == "HTML" || editor->languageName == "XML";
     connect(editor, &ScintillaNext::lexerChanged, this, [=]() {
-        QString language = editor->languageName;
-        setEnabled(language == "HTML");
+        const QString &language = editor->languageName;
+        markupLanguageActive = language == "HTML" || language == "XML";
+        updateEnabled();
     });
+    updateEnabled();
+}
+
+void HTMLAutoCompleteDecorator::setAutoInsertEnabled(bool enabled)
+{
+    autoInsertEnabled = enabled;
+    updateEnabled();
+}
+
+void HTMLAutoCompleteDecorator::updateEnabled()
+{
+    const bool enabled = autoInsertEnabled && markupLanguageActive;
+    if (enabled != isEnabled())
+        setEnabled(enabled);
 }
 
 void HTMLAutoCompleteDecorator::notify(const Scintilla::NotificationData *pscn)

@@ -28,7 +28,13 @@ class HTMLAutoCompleteDecorator : public EditorDecorator
 
 public:
     explicit HTMLAutoCompleteDecorator(ScintillaNext *editor);
+    void setAutoInsertEnabled(bool enabled);
 
 public slots:
     void notify(const Scintilla::NotificationData *pscn) override;
+
+private:
+    void updateEnabled();
+    bool autoInsertEnabled = true;
+    bool markupLanguageActive = false;
 };

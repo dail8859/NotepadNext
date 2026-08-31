@@ -102,6 +102,12 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     MapSettingToCheckBox(ui->checkBoxHighlightURLs, &ApplicationSettings::urlHighlighting, &ApplicationSettings::setURLHighlighting, &ApplicationSettings::urlHighlightingChanged);
     MapSettingToCheckBox(ui->checkBoxShowLineNumbers, &ApplicationSettings::showLineNumbers, &ApplicationSettings::setShowLineNumbers, &ApplicationSettings::showLineNumbersChanged);
     MapSettingToCheckBox(ui->checkBoxAutoCompletion, &ApplicationSettings::autoCompletion, &ApplicationSettings::setAutoCompletion, &ApplicationSettings::autoCompletionChanged);
+    MapSettingToCheckBox(ui->checkBoxAutoInsertParentheses, &ApplicationSettings::autoInsertParentheses, &ApplicationSettings::setAutoInsertParentheses, &ApplicationSettings::autoInsertParenthesesChanged);
+    MapSettingToCheckBox(ui->checkBoxAutoInsertSquareBrackets, &ApplicationSettings::autoInsertSquareBrackets, &ApplicationSettings::setAutoInsertSquareBrackets, &ApplicationSettings::autoInsertSquareBracketsChanged);
+    MapSettingToCheckBox(ui->checkBoxAutoInsertCurlyBraces, &ApplicationSettings::autoInsertCurlyBraces, &ApplicationSettings::setAutoInsertCurlyBraces, &ApplicationSettings::autoInsertCurlyBracesChanged);
+    MapSettingToCheckBox(ui->checkBoxAutoInsertSingleQuotes, &ApplicationSettings::autoInsertSingleQuotes, &ApplicationSettings::setAutoInsertSingleQuotes, &ApplicationSettings::autoInsertSingleQuotesChanged);
+    MapSettingToCheckBox(ui->checkBoxAutoInsertDoubleQuotes, &ApplicationSettings::autoInsertDoubleQuotes, &ApplicationSettings::setAutoInsertDoubleQuotes, &ApplicationSettings::autoInsertDoubleQuotesChanged);
+    MapSettingToCheckBox(ui->checkBoxAutoInsertHtmlTags, &ApplicationSettings::autoInsertHtmlTags, &ApplicationSettings::setAutoInsertHtmlTags, &ApplicationSettings::autoInsertHtmlTagsChanged);
 
     QButtonGroup *buttonGroup = new QButtonGroup(this);
     buttonGroup->addButton(ui->radioFollowCurrentDirectory, ApplicationSettings::FollowCurrentDocument);

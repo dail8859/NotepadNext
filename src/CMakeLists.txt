@@ -99,6 +99,8 @@ qt_add_executable(NotepadNext
 	decorators/ApplicationDecorator.h
 	decorators/AutoCompletion.cpp
 	decorators/AutoCompletion.h
+	decorators/AutoInsertDecorator.cpp
+	decorators/AutoInsertDecorator.h
 	decorators/AutoIndentation.cpp
 	decorators/AutoIndentation.h
 	decorators/BetterMultiSelection.cpp

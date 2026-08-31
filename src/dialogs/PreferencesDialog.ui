@@ -216,6 +216,21 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="groupBoxAutoInsert">
+         <property name="title">
+          <string>Auto-Insert</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayoutAutoInsert">
+          <item><widget class="QCheckBox" name="checkBoxAutoInsertParentheses"><property name="text"><string>Parentheses ()</string></property></widget></item>
+          <item><widget class="QCheckBox" name="checkBoxAutoInsertSquareBrackets"><property name="text"><string>Square brackets []</string></property></widget></item>
+          <item><widget class="QCheckBox" name="checkBoxAutoInsertCurlyBraces"><property name="text"><string>Curly braces {}</string></property></widget></item>
+          <item><widget class="QCheckBox" name="checkBoxAutoInsertSingleQuotes"><property name="text"><string>Single quotes ''</string></property></widget></item>
+          <item><widget class="QCheckBox" name="checkBoxAutoInsertDoubleQuotes"><property name="text"><string>Double quotes &quot;&quot;</string></property></widget></item>
+          <item><widget class="QCheckBox" name="checkBoxAutoInsertHtmlTags"><property name="text"><string>HTML/XML closing tags</string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
           <string>Default Directory</string>
