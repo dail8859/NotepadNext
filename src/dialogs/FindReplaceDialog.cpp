@@ -80,17 +80,17 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     connect(ui->comboReplace, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), ui->comboReplace->lineEdit(), &QLineEdit::selectAll);
 
     // Force focus on the find text box
-    connect(this, &FindReplaceDialog::windowActivated, [=]() {
+    connect(this, &FindReplaceDialog::windowActivated, [=, this]() {
         ui->comboFind->setFocus();
         ui->comboFind->lineEdit()->selectAll();
     });
 
-    connect(this, &QDialog::rejected, [=]() {
+    connect(this, &QDialog::rejected, [=, this]() {
         statusBar->clearMessage();
         savePosition();
     });
 
-    connect(ui->radioRegexSearch, &QRadioButton::toggled, this, [=](bool checked) {
+    connect(ui->radioRegexSearch, &QRadioButton::toggled, this, [=, this](bool checked) {
         ui->checkBoxBackwardsDirection->setDisabled(checked);
         ui->checkBoxMatchWholeWord->setDisabled(checked);
         ui->checkBoxRegexMatchesNewline->setEnabled(checked);
@@ -102,7 +102,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
     connect(ui->buttonFind, &QPushButton::clicked, this, &FindReplaceDialog::find);
     connect(ui->buttonCount, &QPushButton::clicked, this, &FindReplaceDialog::count);
-    connect(ui->buttonFindAllInCurrent, &QPushButton::clicked, this, [=]() {
+    connect(ui->buttonFindAllInCurrent, &QPushButton::clicked, this, [=, this]() {
         prepareToPerformSearch();
 
         searchResultsHandler->newSearch(findString());
@@ -113,7 +113,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
         close();
     });
-    connect(ui->buttonFindAllInDocuments, &QPushButton::clicked, this, [=]() {
+    connect(ui->buttonFindAllInDocuments, &QPushButton::clicked, this, [=, this]() {
         prepareToPerformSearch();
 
         searchResultsHandler->newSearch(findString());
@@ -126,7 +126,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     });
     connect(ui->buttonReplace, &QPushButton::clicked, this, &FindReplaceDialog::replace);
     connect(ui->buttonReplaceAll, &QPushButton::clicked, this, &FindReplaceDialog::replaceAll);
-    connect(ui->buttonReplaceAllInDocuments, &QPushButton::clicked, this, [=]() {
+    connect(ui->buttonReplaceAllInDocuments, &QPushButton::clicked, this, [=, this]() {
         prepareToPerformSearch(true);
 
         QString replaceText = replaceString();
@@ -424,10 +424,10 @@ void FindReplaceDialog::adjustOpacityWhenLosingFocus(bool checked)
     qInfo(Q_FUNC_INFO);
 
     if (checked) {
-        connect(this, &FindReplaceDialog::windowActivated, [=]() {
+        connect(this, &FindReplaceDialog::windowActivated, [=, this]() {
             this->adjustOpacity(100);
         });
-        connect(this, &FindReplaceDialog::windowDeactivated, [=]() {
+        connect(this, &FindReplaceDialog::windowDeactivated, [=, this]() {
             this->adjustOpacity(ui->horizontalSlider->value());
         });
         adjustOpacity(100);
