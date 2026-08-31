@@ -22,6 +22,9 @@
 
 #include <QObject>
 #include <QPointer>
+#include <QFileSystemWatcher>
+#include <QHash>
+#include <QSet>
 
 
 class ApplicationSettings;
@@ -45,14 +48,38 @@ signals:
     void editorCreated(ScintillaNext *editor);
     void editorClosed(ScintillaNext *editor);
 
+    // Emitted asynchronously whenever the OS reports that an open file was
+    // touched outside the application (write, permissions, delete, etc).
+    // Does NOT get emitted for the application's own saves, since the
+    // in-memory timestamp is refreshed synchronously before this signal
+    // could ever be observed.
+    void editorFileChangedOnDisk(ScintillaNext *editor);
+
 private:
     void setupEditor(ScintillaNext *editor);
     void purgeOldEditorPointers();
     QList<QPointer<ScintillaNext>> getEditors();
     int detectEOLMode(ScintillaNext *editor) const;
 
+    void watchEditorFile(ScintillaNext *editor);
+    void unwatchEditorFile(ScintillaNext *editor);
+    void processExternalFileChange(const QString &path);
+
     QList<QPointer<ScintillaNext>> editors;
     ApplicationSettings *settings;
+
+    QFileSystemWatcher *fileWatcher;
+
+    // Tracks the path currently registered with fileWatcher for each editor,
+    // so a rename/"Save As" can drop the old path instead of leaking an
+    // orphaned watch on it.
+    QHash<ScintillaNext *, QString> watchedPaths;
+
+    // A single external write commonly triggers 2+ fileChanged signals in a
+    // row (this is a well-known QFileSystemWatcher/inotify quirk, not a bug
+    // in this class). Paths in this set already have a debounce timer
+    // pending, so further signals for them are ignored until it fires.
+    QSet<QString> pendingFileChanges;
 };
 
 #endif // EDITORMANAGER_H
