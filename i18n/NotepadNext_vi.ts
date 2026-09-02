@@ -717,7 +717,7 @@
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="63"/>
       <source>Execute...</source>
-      <translation type="unfinished"/>
+      <translation>Thực thi...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="116"/>
@@ -1048,7 +1048,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="635"/>
       <source>Rename...</source>
-      <translation type="unfinished"/>
+      <translation>Đổi tên...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="644"/>
@@ -1264,7 +1264,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1005"/>
       <source>Preferences...</source>
-      <translation type="unfinished"/>
+      <translation>Tùy chọn...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1013"/>
@@ -1334,7 +1334,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1115"/>
       <source>Column Mode...</source>
-      <translation type="unfinished"/>
+      <translation>Chế Độ Cột...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1120"/>
@@ -1379,7 +1379,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1160"/>
       <source>Copy URL</source>
-      <translation type="unfinished"/>
+      <translation>Sao chép URL</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1165"/>
@@ -1435,7 +1435,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1244"/>
       <source>Previous Tab</source>
-      <translation type="unfinished"/>
+      <translation>Thẻ Trước</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1255"/>
@@ -1647,7 +1647,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1550"/>
       <source>Split Horizontal</source>
-      <translation type="unfinished"/>
+      <translation>Phân Tách Ngang</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1553"/>
@@ -1657,7 +1657,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1561"/>
       <source>Split Vertical</source>
-      <translation type="unfinished"/>
+      <translation>Phân Tách Dọc</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1564"/>
@@ -1677,7 +1677,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="479"/>
       <source>Go to line</source>
-      <translation type="unfinished"/>
+      <translation>Đi tới dòng</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="479"/>
@@ -1744,12 +1744,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
       <source>Name:</source>
-      <translation type="unfinished"/>
+      <translation>Tên:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1600"/>
       <source>Delete File</source>
-      <translation type="unfinished"/>
+      <translation>Xóa Tệp</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1600"/>
@@ -1972,7 +1972,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="155"/>
       <source>pt</source>
-      <translation type="unfinished"/>
+      <translation>pt</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="188"/>
@@ -2013,7 +2013,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="253"/>
       <source>...</source>
-      <translation type="unfinished"/>
+      <translation>...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="284"/>
@@ -2028,7 +2028,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="56"/>
       <source>Warning</source>
-      <translation type="unfinished"/>
+      <translation>Cảnh báo</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="56"/>
@@ -2043,17 +2043,17 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="86"/>
       <source>Windows (CR LF)</source>
-      <translation type="unfinished"/>
+      <translation>Windows (CR LF)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="87"/>
       <source>Linux (LF)</source>
-      <translation type="unfinished"/>
+      <translation>Linux (LF)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="88"/>
       <source>Macintosh (CR)</source>
-      <translation type="unfinished"/>
+      <translation>Macintosh (CR)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="185"/>
@@ -2066,47 +2066,47 @@
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="17"/>
       <source>Frame</source>
-      <translation type="unfinished"/>
+      <translation>Khung</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="32"/>
       <source>Find...</source>
-      <translation type="unfinished"/>
+      <translation>Tìm kiếm...</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="44"/>
       <source>Match case</source>
-      <translation type="unfinished"/>
+      <translation>Phù hợp với trường hợp</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="47"/>
       <source>Aa</source>
-      <translation type="unfinished"/>
+      <translation>Aa</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="57"/>
       <source>Match whole word</source>
-      <translation type="unfinished"/>
+      <translation>Khớp toàn bộ chữ</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="60"/>
       <source>|A|</source>
-      <translation type="unfinished"/>
+      <translation>|A|</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="70"/>
       <source>Use regular expression</source>
-      <translation type="unfinished"/>
+      <translation>Sử dụng biểu thức chính quy</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.ui" line="73"/>
       <source>. *</source>
-      <translation type="unfinished"/>
+      <translation>. *</translation>
     </message>
     <message>
       <location filename="../src/widgets/QuickFindWidget.cpp" line="238"/>
       <source>%L1/%L2</source>
-      <translation type="unfinished"/>
+      <translation>%L1/%L2</translation>
     </message>
   </context>
   <context>
