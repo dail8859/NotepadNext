@@ -879,12 +879,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="254"/>
       <source>&amp;View</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Xem</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="258"/>
       <source>&amp;Zoom</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Thu phóng</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="267"/>
@@ -929,12 +929,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="370"/>
       <source>Main Tool Bar</source>
-      <translation type="unfinished"/>
+      <translation>Thanh Công Cụ Chính</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="430"/>
       <source>&amp;New</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Mới</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="433"/>
@@ -949,7 +949,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="462"/>
       <source>&amp;Save</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Lưu</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="465"/>
@@ -965,7 +965,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="486"/>
       <source>&amp;Undo</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Hoàn tác</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="499"/>
@@ -990,22 +990,22 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="546"/>
       <source>&amp;Delete</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Xóa</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="554"/>
       <source>Copy Full Path</source>
-      <translation type="unfinished"/>
+      <translation>Sao Chép Đường Dẫn Đầy Đủ</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="559"/>
       <source>Copy File Name</source>
-      <translation type="unfinished"/>
+      <translation>Chép Tên Tập Tin</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="564"/>
       <source>Copy File Directory</source>
-      <translation type="unfinished"/>
+      <translation>Sao Chép Thư Mục của Tệp</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="573"/>
@@ -1015,7 +1015,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="576"/>
       <source>Close the current file</source>
-      <translation type="unfinished"/>
+      <translation>Đóng tệp hiện tại</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="584"/>
@@ -1030,22 +1030,22 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="601"/>
       <source>Sav&amp;e All</source>
-      <translation type="unfinished"/>
+      <translation>Lư&amp;u Tất Cả</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="609"/>
       <source>Select A&amp;ll</source>
-      <translation type="unfinished"/>
+      <translation>Chọn &amp;Tất Cả</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="621"/>
       <source>Increase Indent</source>
-      <translation type="unfinished"/>
+      <translation>Tăng Thụt Lề</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="630"/>
       <source>Decrease Indent</source>
-      <translation type="unfinished"/>
+      <translation>Giảm Thụt Lề</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="635"/>
@@ -1055,7 +1055,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="644"/>
       <source>Re&amp;load</source>
-      <translation type="unfinished"/>
+      <translation>Tải &amp;lại</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="652"/>
@@ -1135,7 +1135,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="746"/>
       <source>Close All to the Left</source>
-      <translation type="unfinished"/>
+      <translation>Đóng Tất Cả Bên Trái</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="751"/>
@@ -1407,22 +1407,22 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1199"/>
       <source>Search and Bookmark Lines...</source>
-      <translation type="unfinished"/>
+      <translation>Tìm Kiếm và Đánh Dấu Trang các Dòng...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1207"/>
       <source>Next Bookmark</source>
-      <translation type="unfinished"/>
+      <translation>Dấu Trang Kế Tiếp</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1215"/>
       <source>Previous Bookmark</source>
-      <translation type="unfinished"/>
+      <translation>Dấu Trang Trước Đó</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1223"/>
       <source>Clear Bookmarks</source>
-      <translation type="unfinished"/>
+      <translation>Xóa Dấu Trang</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1228"/>
@@ -1432,7 +1432,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1233"/>
       <source>Next Tab</source>
-      <translation type="unfinished"/>
+      <translation>Thẻ Kế Tiếp</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1244"/>
