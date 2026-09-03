@@ -202,12 +202,12 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="75"/>
       <source>Multiple Selections</source>
-      <translation type="unfinished"/>
+      <translation>Nhiều Lựa Chọn</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="80"/>
       <source>Document Information</source>
-      <translation type="unfinished"/>
+      <translation>Thông tin tài liệu</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="83"/>
@@ -305,7 +305,7 @@
     <message>
       <location filename="../src/docks/FileListDock.ui" line="14"/>
       <source>File List</source>
-      <translation type="unfinished"/>
+      <translation>Danh Sách Tệp</translation>
     </message>
     <message>
       <location filename="../src/docks/FileListDock.ui" line="51"/>
@@ -315,7 +315,7 @@
     <message>
       <location filename="../src/docks/FileListDock.ui" line="90"/>
       <source>Sort by File Name</source>
-      <translation type="unfinished"/>
+      <translation>Sắp xếp theo Tên Tệp</translation>
     </message>
   </context>
   <context>
@@ -325,17 +325,17 @@
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="247"/>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
       <source>Find</source>
-      <translation type="unfinished"/>
+      <translation>Tìm kiếm</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="69"/>
       <source>Search Mode</source>
-      <translation type="unfinished"/>
+      <translation>Chế Độ Tìm Kiếm</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="90"/>
       <source>&amp;Normal</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Bình thường</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="106"/>
@@ -345,7 +345,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="124"/>
       <source>Re&amp;gular expression</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Biểu thức chính quy</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="140"/>
@@ -375,12 +375,12 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="270"/>
       <source>&amp;Replace</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Thay thế</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="277"/>
       <source>Replace &amp;All</source>
-      <translation type="unfinished"/>
+      <translation>Thay Thế &amp;Tất Cả</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="284"/>
@@ -405,7 +405,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="321"/>
       <source>Clear all marks</source>
-      <translation type="unfinished"/>
+      <translation>Xóa tất cả đánh dấu</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="331"/>
@@ -415,12 +415,12 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="341"/>
       <source>Close</source>
-      <translation type="unfinished"/>
+      <translation>Đóng</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="397"/>
       <source>&amp;Find:</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Tìm kiếm:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="432"/>
@@ -481,7 +481,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="268"/>
       <source>No matches found.</source>
-      <translation type="unfinished"/>
+      <translation>Không tìm thấy kết quả phù hợp.</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="329"/>
@@ -496,7 +496,9 @@
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="368"/>
       <source>Found %Ln matches</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Đã tìm thấy %Ln phù hợp</numerusform>
+      </translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="778"/>
@@ -506,7 +508,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="789"/>
       <source>All marks cleared</source>
-      <translation type="unfinished"/>
+      <translation>Đã xóa hết các đánh dấu</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="813"/>
@@ -524,7 +526,7 @@
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="14"/>
       <source>Folder as Workspace</source>
-      <translation type="unfinished"/>
+      <translation>Thư Mục như là Không Gian Làm Việc</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="88"/>
@@ -598,7 +600,7 @@
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="123"/>
       <source>Keywords:</source>
-      <translation type="unfinished"/>
+      <translation>Từ khóa:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="146"/>
@@ -608,17 +610,17 @@
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="159"/>
       <source>Styles:</source>
-      <translation type="unfinished"/>
+      <translation>Kiểu:</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.ui" line="166"/>
       <source>TextLabel</source>
-      <translation type="unfinished"/>
+      <translation>TextLabel</translation>
     </message>
     <message>
       <location filename="../src/docks/LanguageInspectorDock.cpp" line="146"/>
       <source>Position %1 Style %2</source>
-      <translation type="unfinished"/>
+      <translation>Vị trí %1 Kiểu %2</translation>
     </message>
   </context>
   <context>
@@ -634,7 +636,7 @@
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="14"/>
       <source>Macro Editor</source>
-      <translation type="unfinished"/>
+      <translation>Chỉnh Sửa Macro</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="48"/>
@@ -654,47 +656,47 @@
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="95"/>
       <source>Insert Macro Step</source>
-      <translation type="unfinished"/>
+      <translation>Chèn Bước Macro</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="110"/>
       <source>Delete Selected Macro Step</source>
-      <translation type="unfinished"/>
+      <translation>Xóa Bước Macro Đã Chọn</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="125"/>
       <source>Move Selected Macro Step Up</source>
-      <translation type="unfinished"/>
+      <translation>Chuyển Bước Macro Đã Chọn Lên Trên</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="140"/>
       <source>Move Selected Macro Step Down</source>
-      <translation type="unfinished"/>
+      <translation>Chuyển Bước Macro Đã Chọn Xuống Dưới</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="176"/>
       <source>Copy Selected Macro</source>
-      <translation type="unfinished"/>
+      <translation>Sao Chép Macro Đã Chọn</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.ui" line="191"/>
       <source>Delete Selected Macro</source>
-      <translation type="unfinished"/>
+      <translation>Xóa Macro Đã Chọn</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.cpp" line="129"/>
       <source>Delete Macro</source>
-      <translation type="unfinished"/>
+      <translation>Xoá Macro</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.cpp" line="129"/>
       <source>Are you sure you want to delete &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation type="unfinished"/>
+      <translation>Bạn có chắc chắn muốn xóa &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroEditorDialog.cpp" line="150"/>
       <source>(Copy)</source>
-      <translation type="unfinished"/>
+      <translation>(Sao chép)</translation>
     </message>
   </context>
   <context>
@@ -702,17 +704,17 @@
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="14"/>
       <source>Run a Macro Multiple Times</source>
-      <translation type="unfinished"/>
+      <translation>Chạy một Macro Nhiều Lần</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="31"/>
       <source>Macro:</source>
-      <translation type="unfinished"/>
+      <translation>Macro:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="56"/>
       <source>Run Until End of File</source>
-      <translation type="unfinished"/>
+      <translation>Chạy Cho Đến Khi Kết Thúc Tệp</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="63"/>
@@ -722,17 +724,17 @@
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="116"/>
       <source>times</source>
-      <translation type="unfinished"/>
+      <translation>lần</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="166"/>
       <source>Run</source>
-      <translation type="unfinished"/>
+      <translation>Chạy</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroRunDialog.ui" line="173"/>
       <source>Cancel</source>
-      <translation type="unfinished"/>
+      <translation>Hủy</translation>
     </message>
   </context>
   <context>
@@ -740,27 +742,27 @@
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="14"/>
       <source>Save Macro</source>
-      <translation type="unfinished"/>
+      <translation>Lưu Macro</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="25"/>
       <source>Name:</source>
-      <translation type="unfinished"/>
+      <translation>Tên:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="39"/>
       <source>Shortcut:</source>
-      <translation type="unfinished"/>
+      <translation>Lối tắt:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="82"/>
       <source>OK</source>
-      <translation type="unfinished"/>
+      <translation>Đồng Ý</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MacroSaveDialog.ui" line="89"/>
       <source>Cancel</source>
-      <translation type="unfinished"/>
+      <translation>Hủy</translation>
     </message>
   </context>
   <context>
@@ -768,12 +770,12 @@
     <message>
       <location filename="../src/MacroStepTableModel.cpp" line="34"/>
       <source>Name</source>
-      <translation type="unfinished"/>
+      <translation>Tên</translation>
     </message>
     <message>
       <location filename="../src/MacroStepTableModel.cpp" line="36"/>
       <source>Text</source>
-      <translation type="unfinished"/>
+      <translation>Văn bản</translation>
     </message>
   </context>
   <context>
@@ -786,12 +788,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="33"/>
       <source>+</source>
-      <translation type="unfinished"/>
+      <translation>+</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="48"/>
       <source>&amp;File</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Tập tin</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="52"/>
@@ -801,7 +803,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="60"/>
       <source>&amp;Recent Files</source>
-      <translation type="unfinished"/>
+      <translation>Tệp &amp;Gần đây</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
@@ -817,7 +819,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="101"/>
       <source>Copy More</source>
-      <translation type="unfinished"/>
+      <translation>Sao Chép Thêm</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="109"/>
@@ -827,12 +829,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="116"/>
       <source>EOL Conversion</source>
-      <translation type="unfinished"/>
+      <translation>Chuyển đổi EOL</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="124"/>
       <source>Convert Case</source>
-      <translation type="unfinished"/>
+      <translation>Chuyển Đổi Chữ</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="131"/>
@@ -847,12 +849,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="162"/>
       <source>Copy As</source>
-      <translation type="unfinished"/>
+      <translation>Sao Chép Như</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="169"/>
       <source>Encoding/Decoding</source>
-      <translation type="unfinished"/>
+      <translation>Mã hóa/Giải mã</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="200"/>
@@ -867,12 +869,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="221"/>
       <source>Mark All Occurrences</source>
-      <translation type="unfinished"/>
+      <translation>Đánh Dấu Tất Cả Các Lần Xuất Hiện</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="229"/>
       <source>Clear Marks</source>
-      <translation type="unfinished"/>
+      <translation>Xóa Các Đánh Dấu</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="254"/>
@@ -1058,37 +1060,37 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="652"/>
       <source>Windows (CR LF)</source>
-      <translation type="unfinished"/>
+      <translation>Windows (CR LF)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="660"/>
       <source>Unix (LF)</source>
-      <translation type="unfinished"/>
+      <translation>Unix (LF)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="668"/>
       <source>Macintosh (CR)</source>
-      <translation type="unfinished"/>
+      <translation>Macintosh (CR)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="673"/>
       <source>UPPER CASE</source>
-      <translation type="unfinished"/>
+      <translation>CHỮ HOA</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="676"/>
       <source>Convert text to upper case</source>
-      <translation type="unfinished"/>
+      <translation>Chuyển văn bản thành chữ hoa</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="681"/>
       <source>lower case</source>
-      <translation type="unfinished"/>
+      <translation>chữ thường</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="684"/>
       <source>Convert text to lower case</source>
-      <translation type="unfinished"/>
+      <translation>Chuyển văn bản thành chữ thường</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="689"/>
@@ -1108,22 +1110,22 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="710"/>
       <source>Move Selected Lines Up</source>
-      <translation type="unfinished"/>
+      <translation>Di Chuyển Các Dòng Đã Chọn Lên Trên</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="718"/>
       <source>Move Selected Lines Down</source>
-      <translation type="unfinished"/>
+      <translation>Di Chuyển Các Dòng Đã Chọn Xuống Dưới</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="730"/>
       <source>Clos&amp;e All</source>
-      <translation type="unfinished"/>
+      <translation>Đóng &amp;Tất Cả</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="733"/>
       <source>Close All files</source>
-      <translation type="unfinished"/>
+      <translation>Đóng Tất cả các tệp</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="741"/>
@@ -1153,7 +1155,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="782"/>
       <source>Reset Zoom</source>
-      <translation type="unfinished"/>
+      <translation>Đặt Lại Thu Phóng</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="790"/>
@@ -1163,12 +1165,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="802"/>
       <source>About Notepad Next</source>
-      <translation type="unfinished"/>
+      <translation>Giới thiệu về Notepad Next</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="813"/>
       <source>Show Whitespace</source>
-      <translation type="unfinished"/>
+      <translation>Hiển Thị Khoảng Trắng</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="821"/>
@@ -1213,7 +1215,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="896"/>
       <source>&amp;Find...</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Tìm kiếm...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="904"/>
@@ -1249,7 +1251,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="969"/>
       <source>Playback</source>
-      <translation type="unfinished"/>
+      <translation>Phát lại</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="984"/>
@@ -1359,7 +1361,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1140"/>
       <source>Base 64 Encode</source>
-      <translation type="unfinished"/>
+      <translation>Mã hóa Base 64</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1145"/>
@@ -1546,7 +1548,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1429"/>
       <source>Debug Info...</source>
-      <translation type="unfinished"/>
+      <translation>Thông Tin Gỡ Lỗi...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1434"/>
@@ -1692,17 +1694,17 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="922"/>
       <source>Debug Info</source>
-      <translation type="unfinished"/>
+      <translation>Thông Tin Gỡ Lỗi</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1142"/>
       <source>New %1</source>
-      <translation type="unfinished"/>
+      <translation>Mới %1</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1204"/>
       <source>Create File</source>
-      <translation type="unfinished"/>
+      <translation>Tạo Tệp</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1204"/>
@@ -1712,7 +1714,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2012"/>
       <source>Save File</source>
-      <translation type="unfinished"/>
+      <translation>Lưu Tập Tin</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1283"/>
@@ -1723,7 +1725,7 @@
       <location filename="../src/dialogs/MainWindow.cpp" line="1306"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1955"/>
       <source>Reload File</source>
-      <translation type="unfinished"/>
+      <translation>Tải Lại Tệp</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1306"/>
@@ -1769,7 +1771,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1694"/>
       <source>Administrator</source>
-      <translation type="unfinished"/>
+      <translation>Quản trị viên</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1955"/>
@@ -1779,22 +1781,22 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1981"/>
       <source>Read error</source>
-      <translation type="unfinished"/>
+      <translation>Lỗi đọc</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1982"/>
       <source>Write error</source>
-      <translation type="unfinished"/>
+      <translation>Lỗi ghi</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1983"/>
       <source>Fatal error</source>
-      <translation type="unfinished"/>
+      <translation>Lỗi nghiêm trọng</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1984"/>
       <source>Resource error</source>
-      <translation type="unfinished"/>
+      <translation>Lỗi tài nguyên</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1985"/>
@@ -1824,7 +1826,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1990"/>
       <source>Rename error</source>
-      <translation type="unfinished"/>
+      <translation>Lỗi đổi tên</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
@@ -1839,12 +1841,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1993"/>
       <source>Permissions error</source>
-      <translation type="unfinished"/>
+      <translation>Lỗi quyền truy cập</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1994"/>
       <source>Copy error</source>
-      <translation type="unfinished"/>
+      <translation>Lỗi sao chép</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
@@ -1879,17 +1881,17 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2021"/>
       <source>Save All</source>
-      <translation type="unfinished"/>
+      <translation>Lưu Tất Cả</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2022"/>
       <source>Discard All</source>
-      <translation type="unfinished"/>
+      <translation>Bỏ Qua Tất Cả</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2022"/>
       <source>Discard</source>
-      <translation type="unfinished"/>
+      <translation>Bỏ qua</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2210"/>
@@ -1902,37 +1904,37 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="14"/>
       <source>Preferences</source>
-      <translation type="unfinished"/>
+      <translation>Tùy chọn</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="37"/>
       <source>Show menu bar</source>
-      <translation type="unfinished"/>
+      <translation>Hiện thanh menu</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="44"/>
       <source>Show toolbar</source>
-      <translation type="unfinished"/>
+      <translation>Hiện thanh công cụ</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="51"/>
       <source>Show status bar</source>
-      <translation type="unfinished"/>
+      <translation>Hiện thanh trạng thái</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="58"/>
       <source>Restore previous session</source>
-      <translation type="unfinished"/>
+      <translation>Khôi phục phiên trước</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="70"/>
       <source>Unsaved changes</source>
-      <translation type="unfinished"/>
+      <translation>Thay đổi chưa được lưu</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="77"/>
       <source>Temporary files</source>
-      <translation type="unfinished"/>
+      <translation>Tập tin tạm</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="89"/>
@@ -1942,12 +1944,12 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="96"/>
       <source>Combine search results</source>
-      <translation type="unfinished"/>
+      <translation>Kết hợp các kết quả tìm kiếm</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="114"/>
       <source>Translation:</source>
-      <translation type="unfinished"/>
+      <translation>Bản dịch:</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="123"/>
@@ -1957,17 +1959,17 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="132"/>
       <source>Default Font</source>
-      <translation type="unfinished"/>
+      <translation>Phông Chữ Mặc Định</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="138"/>
       <source>Font</source>
-      <translation type="unfinished"/>
+      <translation>Phông chữ</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="148"/>
       <source>Font Size</source>
-      <translation type="unfinished"/>
+      <translation>Kích Cỡ Phông Chữ</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="155"/>
@@ -1998,7 +2000,7 @@
       <location filename="../src/dialogs/PreferencesDialog.ui" line="221"/>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="122"/>
       <source>Default Directory</source>
-      <translation type="unfinished"/>
+      <translation>Thư Mục Mặc Định</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="227"/>
@@ -2125,7 +2127,7 @@
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="57"/>
       <source>Copy</source>
-      <translation type="unfinished"/>
+      <translation>Sao chép</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="59"/>
@@ -2145,7 +2147,7 @@
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="64"/>
       <source>Delete All</source>
-      <translation type="unfinished"/>
+      <translation>Xóa Tất Cả</translation>
     </message>
   </context>
   <context>
@@ -2153,7 +2155,7 @@
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="40"/>
       <source>Create a new file</source>
-      <translation type="unfinished"/>
+      <translation>Tạo tệp mới</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="43"/>
