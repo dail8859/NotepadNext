@@ -1687,12 +1687,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1572"/>
       <source>Select and Find Next</source>
-      <translation type="unfinished"/>
+      <translation>Выбрать и найти следующее</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1580"/>
       <source>Select and Find Previous</source>
-      <translation type="unfinished"/>
+      <translation>Выбрать и найти предыдущее</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="479"/>
