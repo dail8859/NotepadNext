@@ -739,7 +739,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         showEditorZoomLevelIndicator();
     });
     connect(ui->actionZoomOut, &QAction::triggered, this, [this]() {
-        // Scintilla can zoom out to "-10" but on a screen with fractional scaling it throws alot of Qt warnings
+        // Scintilla can zoom out to "-10" but on a screen with fractional scaling it throws a lot of Qt warnings
         if (zoomLevel == -9) return;
 
         for (ScintillaNext *editor : editors()) {
