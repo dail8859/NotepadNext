@@ -186,11 +186,75 @@ void EditorManager::manageEditor(ScintillaNext *editor)
     emit editorCreated(editor);
 }
 
+#ifdef Q_OS_MACOS
+// Scintilla's macOS key bindings are gated on PLAT_GTK_MACOSX (see KeyMap.cxx), which is
+// never defined for the Qt platform layer, so they never take effect. Scintilla also routes
+// word-wise movement through SCI_META, a modifier that the Qt layer does not report at all.
+// The bindings are assigned here rather than by patching the bundled Scintilla so that
+// updating Scintilla cannot silently revert them.
+//
+// On macOS Qt reports Command as Qt::ControlModifier (i.e. SCMOD_CTRL) and Option as
+// Qt::AltModifier (SCMOD_ALT).
+static void setupMacOsKeys(ScintillaNext *editor)
+{
+    constexpr int Cmd = SCMOD_CTRL;
+    constexpr int Opt = SCMOD_ALT;
+    constexpr int Shift = SCMOD_SHIFT;
+
+    struct KeyBinding {
+        int key;
+        int modifiers;
+        int message;
+    };
+
+    constexpr KeyBinding bindings[] = {
+        // Command + arrow keys move to the start/end of the line and of the document
+        {SCK_LEFT,  Cmd,               SCI_VCHOME},
+        {SCK_LEFT,  Cmd | Shift,       SCI_VCHOMEEXTEND},
+        {SCK_RIGHT, Cmd,               SCI_LINEEND},
+        {SCK_RIGHT, Cmd | Shift,       SCI_LINEENDEXTEND},
+        {SCK_UP,    Cmd,               SCI_DOCUMENTSTART},
+        {SCK_DOWN,  Cmd,               SCI_DOCUMENTEND},
+
+        // Command + Shift + Up/Down are deliberately left alone. They are already used by
+        // the Move Selected Lines Up/Down actions, and those actions receive the key press
+        // before the editor does.
+
+        // Option + arrow keys move by word
+        {SCK_LEFT,  Opt,               SCI_WORDLEFT},
+        {SCK_LEFT,  Opt | Shift,       SCI_WORDLEFTEXTEND},
+        {SCK_RIGHT, Opt,               SCI_WORDRIGHT},
+        {SCK_RIGHT, Opt | Shift,       SCI_WORDRIGHTEXTEND},
+
+        // Option + Shift + Left/Right now select by word, so add Command + Option + Shift +
+        // arrow keys for rectangular selection. Option + Shift + Up/Down are left with
+        // Scintilla's default rectangular behaviour since nothing else uses them.
+        {SCK_LEFT,  Cmd | Opt | Shift, SCI_CHARLEFTRECTEXTEND},
+        {SCK_RIGHT, Cmd | Opt | Shift, SCI_CHARRIGHTRECTEXTEND},
+        {SCK_UP,    Cmd | Opt | Shift, SCI_LINEUPRECTEXTEND},
+        {SCK_DOWN,  Cmd | Opt | Shift, SCI_LINEDOWNRECTEXTEND},
+
+        // Deleting by word/to the start of the line, and redo
+        {SCK_BACK,  Opt,               SCI_DELWORDLEFT},
+        {SCK_BACK,  Cmd,               SCI_DELLINELEFT},
+        {'Z',       Cmd | Shift,       SCI_REDO},
+    };
+
+    for (const KeyBinding &binding : bindings) {
+        editor->assignCmdKey(binding.key + (binding.modifiers << 16), binding.message);
+    }
+}
+#endif
+
 void EditorManager::setupEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
     editor->clearCmdKey(SCK_INSERT);
+
+#ifdef Q_OS_MACOS
+    setupMacOsKeys(editor);
+#endif
 
     editor->setFoldMarkers(QStringLiteral("box"));
     for (int i = SC_MARKNUM_FOLDEREND; i <= SC_MARKNUM_FOLDEROPEN; ++i) {
