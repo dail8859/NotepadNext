@@ -267,6 +267,11 @@ ScintillaNext* SessionManager::loadFileDetails(QSettings &settings)
     if (QFileInfo::exists(filePath)) {
         editor = ScintillaNext::fromFile(filePath);
 
+        if (editor == Q_NULLPTR) {
+            qWarning("  could not be read from disk, ignoring this file for session loading");
+            return Q_NULLPTR;
+        }
+
         app->getEditorManager()->manageEditor(editor);
 
         loadEditorViewDetails(editor, settings);
@@ -311,6 +316,11 @@ ScintillaNext *SessionManager::loadUnsavedFileDetails(QSettings &settings)
 
     if (QFileInfo::exists(filePath) && QFileInfo::exists(sessionFilePath)) {
         ScintillaNext *editor = ScintillaNext::fromFile(sessionFilePath);
+
+        if (editor == Q_NULLPTR) {
+            qWarning("  could not be read from disk, ignoring this file for session loading");
+            return Q_NULLPTR;
+        }
 
         // Since this editor has different file path info, treat this as a temporary buffer
         editor->setFileInfo(filePath);
@@ -357,6 +367,11 @@ ScintillaNext *SessionManager::loadTempFile(QSettings &settings)
     if (QFileInfo::exists(fullFilePath)) {
         ScintillaNext *editor = ScintillaNext::fromFile(fullFilePath, false);
 
+        if (editor == Q_NULLPTR) {
+            qWarning("  could not be read from disk, ignoring this file for session loading");
+            return Q_NULLPTR;
+        }
+
         editor->detachFileInfo(fileName);
         editor->setTemporary(true);
 
@@ -383,6 +398,11 @@ void SessionManager::storeEditorViewDetails(ScintillaNext *editor, QSettings &se
     settings.setValue("CurrentPosition", static_cast<int>(editor->currentPos()));
 
     BookMarkDecorator *decorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
+    if (decorator == Q_NULLPTR) {
+        qWarning("Editor has no BookMarkDecorator, unable to store bookmarks");
+        return;
+    }
+
     QList<int> bookMarkedLines = decorator->bookMarkedLines();
     if (bookMarkedLines.length() > 0)
         settings.setValue("BookMarks", QListToQVariantList(bookMarkedLines));
@@ -401,6 +421,11 @@ void SessionManager::loadEditorViewDetails(ScintillaNext *editor, QSettings &set
         QList<int> bookMarkedLines = QVariantListToQList(settings.value("BookMarks").toList()); // just using .value<QList<int>>() does not work...possibly a Qt bug?
 
         BookMarkDecorator *decorator = editor->findChild<BookMarkDecorator*>(QString(), Qt::FindDirectChildrenOnly);
-        decorator->setBookMarkedLines(bookMarkedLines);
+        if (decorator != Q_NULLPTR) {
+            decorator->setBookMarkedLines(bookMarkedLines);
+        }
+        else {
+            qWarning("Editor has no BookMarkDecorator, unable to restore bookmarks");
+        }
     }
 }
