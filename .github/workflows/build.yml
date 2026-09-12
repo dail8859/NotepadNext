@@ -29,6 +29,20 @@ jobs:
             platform: windows
             qt_version: "6.10"
 
+          # ─── Windows (ARM) ─────────────────────────────────────────
+          - os: windows-11-arm
+            platform: windows
+            qt_version: "6.8"
+            qt_arch: win64_msvc2022_arm64
+            vs_arch: arm64
+            artifact_suffix: -arm64
+          - os: windows-11-arm
+            platform: windows
+            qt_version: "6.10"
+            qt_arch: win64_msvc2022_arm64
+            vs_arch: arm64
+            artifact_suffix: -arm64
+
           # ─── Linux ─────────────────────────────────────────────────
           - os: ubuntu-24.04
             platform: linux
@@ -100,6 +114,7 @@ jobs:
           version: ${{ matrix.qt_version }}
           modules: 'qt5compat'
           cache: true
+          arch: ${{ matrix.qt_arch }}
 
       # ─── Install Qt (macOS via jdpurcell for arch support) ─────
       - name: Install Qt (mac)
@@ -117,7 +132,7 @@ jobs:
         if: matrix.platform == 'windows'
         uses: egor-tensin/vs-shell@v2
         with:
-          arch: x64
+          arch: ${{ matrix.vs_arch || 'x64' }}
 
       - name: Install NSIS
         if: matrix.platform == 'windows'
@@ -171,14 +186,14 @@ jobs:
         uses: actions/upload-artifact@v7
         if: matrix.platform == 'windows'
         with:
-          name: NotepadNext-Windows-Qt${{ matrix.qt_version }}-Zip
+          name: NotepadNext-Windows-Qt${{ matrix.qt_version }}${{ matrix.artifact_suffix }}-Zip
           path: ${{ github.workspace }}/build/package/
 
       - name: Upload Windows Installer
         uses: actions/upload-artifact@v7
         if: matrix.platform == 'windows'
         with:
-          name: NotepadNext-Windows-Qt${{ matrix.qt_version }}-Installer
+          name: NotepadNext-Windows-Qt${{ matrix.qt_version }}${{ matrix.artifact_suffix }}-Installer
           path: ${{ github.workspace }}/installer/NotepadNext*.exe
 
       - name: Upload MacOS dmg
@@ -202,6 +217,7 @@ jobs:
     if: github.repository == 'dail8859/NotepadNext' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      QT_ARM64_RELEASE_VER: 6.8
 
     steps:
       - name: Checkout Repository
@@ -224,6 +240,18 @@ jobs:
           zip -r ../NotepadNext-${{ github.ref_name }}-win64.zip .
           cd ..
           gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}-win64.zip
+
+      - name: Upload Windows arm64 Installer
+        run: |
+          mv NotepadNext-Windows-Qt$QT_ARM64_RELEASE_VER-arm64-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe NotepadNext-${{ github.ref_name }}-Installer-arm64.exe
+          gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}-Installer-arm64.exe
+
+      - name: Upload Windows arm64 Zip
+        run: |
+          cd NotepadNext-Windows-Qt$QT_ARM64_RELEASE_VER-arm64-Zip/
+          zip -r ../NotepadNext-${{ github.ref_name }}-win64-arm64.zip .
+          cd ..
+          gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}-win64-arm64.zip
 
       - name: Upload Linux AppImage
         run: |
