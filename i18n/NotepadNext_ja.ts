@@ -323,7 +323,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="20"/>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="247"/>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="62"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
       <source>Find</source>
       <translation>検索</translation>
     </message>
@@ -423,104 +423,104 @@
       <translation>検索文字列(&amp;F):</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="429"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="432"/>
       <source>Replace:</source>
       <translation>置換文字列:</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="475"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="481"/>
       <source>&amp;Bookmark line</source>
       <translation>行をブックマーク(&amp;B)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="482"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="488"/>
       <source>&amp;Purge for each search</source>
       <translation>検索ごとにマークを消去(&amp;P)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="489"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="495"/>
       <source>Backward direction</source>
       <translation>逆方向に検索する</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="496"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="502"/>
       <source>Match &amp;whole word only</source>
       <translation>単語単位(&amp;W)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="503"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="509"/>
       <source>Match &amp;case</source>
       <translation>大文字/小文字を区別(&amp;C)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.ui" line="510"/>
+      <location filename="../src/dialogs/FindReplaceDialog.ui" line="516"/>
       <source>Wra&amp;p Around</source>
       <translation>先頭/末尾から再検索(&amp;P)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="63"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
       <source>Replace</source>
       <translation>置換</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="65"/>
       <source>Mark</source>
       <translation>マーク</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="148"/>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="358"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="149"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="357"/>
       <source>Replaced %Ln matches</source>
       <translation>
         <numerusform>%Ln件を置換しました</numerusform>
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="256"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="257"/>
       <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
       <translation>文書の末尾に達しました。先頭から1件目の一致が見つかりました。</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="267"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="268"/>
       <source>No matches found.</source>
       <translation>一致は見つかりませんでした。</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="330"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="329"/>
       <source>1 occurrence was replaced</source>
       <translation>1件を置換しました</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="339"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="338"/>
       <source>No more occurrences were found</source>
       <translation>これ以上一致する箇所はありません</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="369"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="368"/>
       <source>Found %Ln matches</source>
       <translation>
         <numerusform>%Ln件見つかりました</numerusform>
       </translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="757"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="778"/>
       <source>Mark: %Ln match in entire file</source>
       <translation>
         <numerusform>マーク: ファイル全体で%Ln件をマーク</numerusform>
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="768"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="789"/>
       <source>All marks cleared</source>
       <translation>すべてのマークを解除しました</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="792"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="813"/>
       <source>No marks to copy</source>
       <translation>コピーできるマーク済みテキストがありません</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="797"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="818"/>
       <source>Copied %Ln marked text(s)</source>
       <translation>
         <numerusform>マークしたテキストを%Ln件コピーしました</numerusform>
@@ -533,6 +533,31 @@
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="14"/>
       <source>Folder as Workspace</source>
       <translation>ワークスペース フォルダー</translation>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="88"/>
+      <source>...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="108"/>
+      <source>Size</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="119"/>
+      <source>Type</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="130"/>
+      <source>Date Modified</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="141"/>
+      <source>Hidden</source>
+      <translation type="unfinished"/>
     </message>
   </context>
   <context>
@@ -788,7 +813,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1487"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1522"/>
       <source>Export As</source>
       <translation>形式を指定してエクスポート</translation>
     </message>
@@ -858,1016 +883,1026 @@
       <translation>マークを解除</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="252"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="254"/>
       <source>&amp;View</source>
       <translation>表示(&amp;V)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="256"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="258"/>
       <source>&amp;Zoom</source>
       <translation>ズーム(&amp;Z)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="265"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="267"/>
       <source>Show Symbol</source>
       <translation>制御文字の表示</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="276"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="278"/>
       <source>Fold Level</source>
       <translation>指定レベルで畳む</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="290"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="292"/>
       <source>Unfold Level</source>
       <translation>指定レベルで展開</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="319"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="321"/>
       <source>Language</source>
       <translation>言語</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="324"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="326"/>
       <source>Settings</source>
       <translation>設定</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="330"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="332"/>
       <source>Macro</source>
       <translation>マクロ</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="341"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="343"/>
       <source>Help</source>
       <translation>ヘルプ</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="352"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="354"/>
       <source>Encoding</source>
       <translation>エンコード</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="368"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="370"/>
       <source>Main Tool Bar</source>
       <translation>メインツールバー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="428"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="430"/>
       <source>&amp;New</source>
       <translation>新規(&amp;N)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="431"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="433"/>
       <source>Create a new file</source>
       <translation>新しいファイルを作成</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="444"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="446"/>
       <source>&amp;Open...</source>
       <translation>開く(&amp;O)...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="460"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="462"/>
       <source>&amp;Save</source>
       <translation>上書き保存(&amp;S)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="463"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="465"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2021"/>
       <source>Save</source>
       <translation>上書き保存</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="471"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="473"/>
       <source>E&amp;xit</source>
       <translation>終了(&amp;X)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="484"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="486"/>
       <source>&amp;Undo</source>
       <translation>元に戻す(&amp;U)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="497"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="499"/>
       <source>&amp;Redo</source>
       <translation>やり直し(&amp;R)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="510"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="512"/>
       <source>Cu&amp;t</source>
       <translation>切り取り(&amp;T)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="523"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="525"/>
       <source>&amp;Copy</source>
       <translation>コピー(&amp;C)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="536"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="538"/>
       <source>&amp;Paste</source>
       <translation>貼り付け(&amp;P)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="544"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="546"/>
       <source>&amp;Delete</source>
       <translation>削除(&amp;D)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="552"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="554"/>
       <source>Copy Full Path</source>
       <translation>フルパスをコピー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="557"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="559"/>
       <source>Copy File Name</source>
       <translation>ファイル名をコピー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="562"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="564"/>
       <source>Copy File Directory</source>
       <translation>ディレクトリをコピー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="571"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="573"/>
       <source>&amp;Close</source>
       <translation>閉じる(&amp;C)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="574"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="576"/>
       <source>Close the current file</source>
       <translation>現在のファイルを閉じる</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="582"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="584"/>
       <source>Save &amp;As...</source>
       <translation>名前を付けて保存(&amp;A)...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="590"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="592"/>
       <source>Save a Copy As...</source>
       <translation>複製を別名で保存...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="599"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="601"/>
       <source>Sav&amp;e All</source>
       <translation>すべて保存(&amp;E)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="607"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="609"/>
       <source>Select A&amp;ll</source>
       <translation>すべて選択(&amp;L)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="619"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="621"/>
       <source>Increase Indent</source>
       <translation>インデントを増やす</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="628"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="630"/>
       <source>Decrease Indent</source>
       <translation>インデントを減らす</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="633"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="635"/>
       <source>Rename...</source>
       <translation>名前の変更...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="642"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="644"/>
       <source>Re&amp;load</source>
       <translation>再読み込み(&amp;L)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="650"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="652"/>
       <source>Windows (CR LF)</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="658"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="660"/>
       <source>Unix (LF)</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="666"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="668"/>
       <source>Macintosh (CR)</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="671"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="673"/>
       <source>UPPER CASE</source>
       <translation>大文字</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="674"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="676"/>
       <source>Convert text to upper case</source>
       <translation>テキストを大文字に変換</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="679"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="681"/>
       <source>lower case</source>
       <translation>小文字</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="682"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="684"/>
       <source>Convert text to lower case</source>
       <translation>テキストを小文字に変換</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="687"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="689"/>
       <source>Duplicate Current Line</source>
       <translation>カーソル行を複製</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="695"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="697"/>
       <source>Split Lines</source>
       <translation>折り返し位置で分割</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="700"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="702"/>
       <source>Join Lines</source>
       <translation>選択行を連結</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="708"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="710"/>
       <source>Move Selected Lines Up</source>
       <translation>選択行を上へ移動</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="716"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="718"/>
       <source>Move Selected Lines Down</source>
       <translation>選択行を下へ移動</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="728"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="730"/>
       <source>Clos&amp;e All</source>
       <translation>すべて閉じる(&amp;E)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="731"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="733"/>
       <source>Close All files</source>
       <translation>すべてのファイルを閉じる</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="739"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="741"/>
       <source>Close All Except Active Document</source>
       <translation>現在の文書以外を閉じる</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="744"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="746"/>
       <source>Close All to the Left</source>
       <translation>左をすべて閉じる</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="749"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="751"/>
       <source>Close All to the Right</source>
       <translation>右をすべて閉じる</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="759"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="761"/>
       <source>Zoom &amp;In</source>
       <translation>拡大(&amp;I)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="772"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="774"/>
       <source>Zoom &amp;Out</source>
       <translation>縮小(&amp;O)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="780"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="782"/>
       <source>Reset Zoom</source>
       <translation>標準倍率に戻す</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="788"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="790"/>
       <source>About Qt</source>
       <translation>Qtについて</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="800"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="802"/>
       <source>About Notepad Next</source>
       <translation>Notepad Nextについて</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="811"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="813"/>
       <source>Show Whitespace</source>
       <translation>半角スペースとタブを表示</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="819"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="821"/>
       <source>Show End of Line</source>
       <translation>改行コードを表示</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="832"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="834"/>
       <source>Show All Characters</source>
       <translation>制御文字をすべて表示</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="845"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="847"/>
       <source>Show Indent Guide</source>
       <translation>インデントガイドを表示</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="853"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="855"/>
       <source>Show Wrap Symbol</source>
       <translation>折り返し位置を表示</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="866"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="868"/>
       <source>Word Wrap</source>
       <translation>画面端で折り返す</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="871"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="873"/>
       <source>Restore Recently Closed File</source>
       <translation>直前に閉じたファイルを開く</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="879"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="881"/>
       <source>Open All Recent Files</source>
       <translation>最近使用したファイルをすべて開く</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="884"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="886"/>
       <source>Clear Recent Files List</source>
       <translation>最近使用したファイルのリストをクリア</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="894"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="896"/>
       <source>&amp;Find...</source>
       <translation>検索(&amp;F)...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="902"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="904"/>
       <source>Find in Files...</source>
       <translation>複数ファイル内を検索...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="907"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="909"/>
       <source>Find &amp;Next</source>
       <translation>次を検索(&amp;N)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="915"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="917"/>
       <source>Find &amp;Previous</source>
       <translation>前を検索(&amp;P)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="928"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="930"/>
       <source>&amp;Replace...</source>
       <translation>置換(&amp;R)...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="939"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="941"/>
       <source>Full Screen</source>
       <translation>全画面表示</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="955"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="791"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="957"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="826"/>
       <source>Start Recording</source>
       <translation>記録開始</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="967"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="969"/>
       <source>Playback</source>
       <translation>再生</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="982"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="984"/>
       <source>Save Current Recorded Macro...</source>
       <translation>記録したマクロを保存...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="994"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="996"/>
       <source>Run a Macro Multiple Times...</source>
       <translation>マクロを複数回実行...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1003"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1005"/>
       <source>Preferences...</source>
       <translation>環境設定...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1011"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1013"/>
       <source>Quick Find</source>
       <translation>クイック検索</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1019"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1021"/>
       <source>Select Next Instance</source>
       <translation>次の出現箇所を選択</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1031"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1033"/>
       <source>Move to Trash...</source>
       <translation>ごみ箱に移動...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1034"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1036"/>
       <source>Move to Trash</source>
       <translation>ごみ箱に移動</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1039"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1041"/>
       <source>Check for Updates...</source>
       <translation>更新を確認...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1044"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1046"/>
       <source>&amp;Go to Line...</source>
       <translation>行へ移動(&amp;G)...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1056"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1058"/>
       <source>Print...</source>
       <translation>印刷...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1064"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1066"/>
       <source>Open Folder as Workspace...</source>
       <translation>フォルダーをワークスペースとして開く...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1069"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1071"/>
       <source>Toggle Single Line Comment</source>
       <translation>行コメント化/解除の切り替え</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1077"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1079"/>
       <source>Single Line Comment</source>
       <translation>行コメント化</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1085"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1087"/>
       <source>Single Line Uncomment</source>
       <translation>行コメント解除</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1100"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1102"/>
       <source>Edit Macros...</source>
       <translation>マクロを編集...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1108"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1110"/>
       <source>This is not currently implemented</source>
       <translation>現在は実装されていません</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1113"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1115"/>
       <source>Column Mode...</source>
       <translation>矩形編集...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1118"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1120"/>
       <source>Export as HTML...</source>
       <translation>HTMLとしてエクスポート...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1123"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1125"/>
       <source>Export as RTF...</source>
       <translation>RTFとしてエクスポート...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1128"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1130"/>
       <source>Copy as HTML</source>
       <translation>HTMLとしてコピー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1133"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1135"/>
       <source>Copy as RTF</source>
       <translation>RTFとしてコピー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1138"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1140"/>
       <source>Base 64 Encode</source>
       <translation>Base64エンコード</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1143"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1145"/>
       <source>URL Encode</source>
       <translation>URLエンコード</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1148"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1150"/>
       <source>Base 64 Decode</source>
       <translation>Base64デコード</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1153"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1155"/>
       <source>URL Decode</source>
       <translation>URLデコード</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1158"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1160"/>
       <source>Copy URL</source>
       <translation>URLをコピー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1163"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1165"/>
       <source>Remove Empty Lines</source>
       <translation>空行をすべて削除</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1172"/>
-      <location filename="../src/dialogs/MainWindow.ui" line="1175"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1174"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1177"/>
       <source>Show in Explorer</source>
       <translation>エクスプローラーで表示</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1184"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1186"/>
       <source>Open %1 Here</source>
       <translation>ここで%1を開く</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1189"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1191"/>
       <source>Toggle Bookmark</source>
       <translation>ブックマーク設定/解除の切り替え</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1197"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1199"/>
       <source>Search and Bookmark Lines...</source>
       <translation>検索して行をブックマーク...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1205"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1207"/>
       <source>Next Bookmark</source>
       <translation>次のブックマークへ</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1213"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1215"/>
       <source>Previous Bookmark</source>
       <translation>前のブックマークへ</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1221"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1223"/>
       <source>Clear Bookmarks</source>
       <translation>すべてのブックマークを解除</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1226"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1228"/>
       <source>Invert Bookmarks</source>
       <translation>ブックマークを反転</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1231"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1233"/>
       <source>Next Tab</source>
       <translation>次のタブを表示</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1242"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1244"/>
       <source>Previous Tab</source>
       <translation>前のタブを表示</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1253"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1255"/>
       <source>Fold Level 1</source>
       <translation>レベル1で畳む</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1261"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1263"/>
       <source>Fold Level 2</source>
       <translation>レベル2で畳む</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1269"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1271"/>
       <source>Fold Level 3</source>
       <translation>レベル3で畳む</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1277"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1279"/>
       <source>Fold Level 4</source>
       <translation>レベル4で畳む</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1285"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1287"/>
       <source>Unfold Level 1</source>
       <translation>レベル1で展開する</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1293"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1295"/>
       <source>Unfold Level 2</source>
       <translation>レベル2で展開する</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1301"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1303"/>
       <source>Unfold Level 3</source>
       <translation>レベル3で展開する</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1309"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1311"/>
       <source>Unfold Level 4</source>
       <translation>レベル4で展開する</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1317"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1319"/>
       <source>Fold All</source>
       <translation>すべて畳む</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1325"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1327"/>
       <source>Unfold All</source>
       <translation>すべて展開する</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1333"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1335"/>
       <source>Fold Level 5</source>
       <translation>レベル5で畳む</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1341"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1343"/>
       <source>Fold Level 6</source>
       <translation>レベル6で畳む</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1349"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1351"/>
       <source>Fold Level 7</source>
       <translation>レベル7で畳む</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1357"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1359"/>
       <source>Fold Level 8</source>
       <translation>レベル8で畳む</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1365"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1367"/>
       <source>Fold Level 9</source>
       <translation>レベル9で畳む</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1373"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1375"/>
       <source>Unfold Level 5</source>
       <translation>レベル5で展開する</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1381"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1383"/>
       <source>Unfold Level 6</source>
       <translation>レベル6で展開する</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1389"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1391"/>
       <source>Unfold Level 7</source>
       <translation>レベル7で展開する</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1397"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1399"/>
       <source>Unfold Level 8</source>
       <translation>レベル8で展開する</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1405"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1407"/>
       <source>Unfold Level 9</source>
       <translation>レベル9で展開する</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1413"/>
-      <location filename="../src/dialogs/MainWindow.ui" line="1416"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1415"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1418"/>
       <source>Toggle Overtype</source>
       <translation>上書きモードを切り替え</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1427"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1429"/>
       <source>Debug Info...</source>
       <translation>デバッグ情報...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1432"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1434"/>
       <source>Cut Bookmarked Lines</source>
       <translation>ブックマークした行を切り取り</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1437"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1439"/>
       <source>Copy Bookmarked Lines</source>
       <translation>ブックマークした行をコピー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1442"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1444"/>
       <source>Delete Bookmarked Lines</source>
       <translation>ブックマークした行を削除</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1447"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1449"/>
       <source>Mark Style 1</source>
       <translation>スタイル1を適用</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1455"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1457"/>
       <source>Mark Style 2</source>
       <translation>スタイル2を適用</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1463"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1465"/>
       <source>Clear Style 1</source>
       <translation>スタイル1を解除</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1471"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1473"/>
       <source>Clear Style 2</source>
       <translation>スタイル2を解除</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1479"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1481"/>
       <source>Mark Style 3</source>
       <translation>スタイル3を適用</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1487"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1489"/>
       <source>Clear Style 3</source>
       <translation>スタイル3を解除</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1495"/>
-      <location filename="../src/dialogs/MainWindow.ui" line="1498"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1497"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1500"/>
       <source>Clear All Styles</source>
       <translation>すべてのスタイルを解除</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1503"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1505"/>
       <source>Remove Duplicate Lines</source>
       <translation>重複行を削除</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1508"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1510"/>
       <source>Remove Consecutive Duplicate Lines</source>
       <translation>連続する重複行を削除</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1513"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1515"/>
       <source>Sort Lines Ascending</source>
       <translation>行を昇順で並べ替え</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1518"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1520"/>
       <source>Sort Lines Descending</source>
       <translation>行を降順で並べ替え</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1523"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1525"/>
       <source>Sort Lines Ascending (Case-Insensitive)</source>
       <translation>行を昇順で並べ替え（大文字/小文字を区別しない）</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1528"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1530"/>
       <source>Sort Lines Descending (Case-Insensitive)</source>
       <translation>行を降順で並べ替え（大文字/小文字を区別しない）</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1533"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1535"/>
       <source>Sort Lines by Length Ascending</source>
       <translation>行の長さで昇順に並べ替え</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1538"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1540"/>
       <source>Sort Lines by Length Descending</source>
       <translation>行の長さで降順に並べ替え</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1543"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1545"/>
       <source>Reverse Line Order</source>
       <translation>行の順序を反転</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1548"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1550"/>
       <source>Split Horizontal</source>
       <translation>左右に分割</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1551"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1553"/>
       <source>Split editor horizontally (left/right)</source>
       <translation>エディタを左右に分割</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1559"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1561"/>
       <source>Split Vertical</source>
       <translation>上下に分割</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1562"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1564"/>
       <source>Split editor vertically (top/bottom)</source>
       <translation>エディタを上下に分割</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="447"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1572"/>
+      <source>Select and Find Next</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1580"/>
+      <source>Select and Find Previous</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="479"/>
       <source>Go to line</source>
       <translation>行へ移動</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="447"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="479"/>
       <source>Line Number (1 - %1)</source>
       <translation>行番号 (1～%1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="782"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="817"/>
       <source>Stop Recording</source>
       <translation>記録終了</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="887"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="922"/>
       <source>Debug Info</source>
       <translation>デバッグ情報</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1107"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1142"/>
       <source>New %1</source>
       <translation>新規 %1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1169"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1204"/>
       <source>Create File</source>
       <translation>ファイルの作成</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1169"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1204"/>
       <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt;は存在しません。作成しますか？</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1990"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2012"/>
       <source>Save File</source>
       <translation>ファイルの保存</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1248"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1283"/>
       <source>Open Folder as Workspace</source>
       <translation>フォルダーをワークスペースとして開く</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1271"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1933"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1306"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1955"/>
       <source>Reload File</source>
       <translation>ファイルを再読み込み</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1271"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1306"/>
       <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
       <translation>&lt;b&gt;%1&lt;/b&gt;を再読み込みしてもよろしいですか？未保存の変更は失われます。</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1443"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1478"/>
       <source>Save a Copy As</source>
       <translation>複製を別名で保存</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1528"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1545"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1563"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
       <source>Rename</source>
       <translation>名前の変更</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1545"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
       <source>Name:</source>
       <translation>名前:</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1565"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1600"/>
       <source>Delete File</source>
       <translation>ファイルの削除</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1565"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1600"/>
       <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt;をごみ箱に移動してもよろしいですか？</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1575"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1610"/>
       <source>Error Deleting File</source>
       <translation>ファイルの削除エラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1575"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1610"/>
       <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt;の削除中に問題が発生しました。</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1672"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1694"/>
       <source>Administrator</source>
       <translation>管理者</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1933"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1955"/>
       <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt;は他のプログラムによって変更されました。再読み込みしますか？</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1959"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1981"/>
       <source>Read error</source>
       <translation>読み取りエラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1960"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1982"/>
       <source>Write error</source>
       <translation>書き込みエラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1961"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1983"/>
       <source>Fatal error</source>
       <translation>致命的エラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1962"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1984"/>
       <source>Resource error</source>
       <translation>リソースエラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1963"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1985"/>
       <source>Open error</source>
       <translation>オープンエラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1964"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1986"/>
       <source>Abort error</source>
       <translation>中止エラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1965"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1987"/>
       <source>Timeout error</source>
       <translation>タイムアウトエラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1966"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1988"/>
       <source>Unspecified error</source>
       <translation>未指定のエラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1967"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1989"/>
       <source>Remove error</source>
       <translation>削除エラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1968"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1990"/>
       <source>Rename error</source>
       <translation>名前変更エラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1969"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
       <source>Position error</source>
       <translation>位置エラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1970"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1992"/>
       <source>Resize error</source>
       <translation>サイズ変更エラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1971"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1993"/>
       <source>Permissions error</source>
       <translation>権限エラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1972"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1994"/>
       <source>Copy error</source>
       <translation>コピーエラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1973"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
       <source>Unknown error (%1)</source>
       <translation>不明なエラー (%1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1976"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
       <source>Error Saving File</source>
       <translation>ファイルの保存エラー</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1977"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
       <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
       <translation>&lt;b&gt;%1&lt;/b&gt;の保存中にエラーが発生しました&lt;br&gt;&lt;br&gt;エラー: %2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1983"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2005"/>
       <source>Zoom: %1%</source>
       <translation>ズーム: %1%</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2017"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt;の変更を保存しますか？</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/MainWindow.cpp" line="1996"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2018"/>
       <source>There are %n files with unsaved changes. Save them?</source>
       <translation>
         <numerusform>未保存の変更があるファイルが%n件あります。保存しますか？</numerusform>
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2021"/>
       <source>Save All</source>
       <translation>すべて保存</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2000"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2022"/>
       <source>Discard All</source>
       <translation>すべて破棄</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2000"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2022"/>
       <source>Discard</source>
       <translation>破棄</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2181"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2210"/>
       <source>No updates are available at this time.</source>
       <translation>現在利用可能な更新はありません。</translation>
     </message>
