@@ -177,6 +177,12 @@ qt_add_executable(NotepadNext
 	widgets/QuickFindWidget.cpp
 	widgets/QuickFindWidget.h
 	widgets/QuickFindWidget.ui
+	widgets/FunctionListWidget.cpp
+	widgets/FunctionListWidget.h
+	widgets/CtagsSymbolManager.cpp
+	widgets/CtagsSymbolManager.h
+	widgets/EditorPane.cpp
+	widgets/EditorPane.h
 	widgets/StatusLabel.cpp
 	widgets/StatusLabel.h
 	Sorter.h Sorter.cpp

@@ -37,6 +37,10 @@ private:
 public:
     explicit DockedEditor(QWidget *parent);
 
+    // Returns the dock widget hosting the editor (even when the editor is
+    // wrapped inside an EditorPane together with a function list)
+    static ads::CDockWidget *dockWidgetForEditor(const ScintillaNext *editor);
+
     ScintillaNext *getCurrentEditor() const;
     ads::CDockAreaWidget *currentDockArea() const;
 
