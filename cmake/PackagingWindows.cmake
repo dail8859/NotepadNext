@@ -24,6 +24,28 @@ list(APPEND WINDEPLOYQT_ARGS "${PACKAGE_DIR}/NotepadNext.exe")
 
 file(GLOB EXTRA_DLLS "${EXTRA_DLL_DIR}/*.dll")
 
+# Determine the target architecture. The extra OpenSSL DLLs used by the
+# auto updater are only shipped for x64; ARM64 builds use Qt's Schannel
+# TLS backend instead, so no OpenSSL DLLs are needed.
+if(CMAKE_CXX_COMPILER_ARCHITECTURE_ID MATCHES "ARM64" OR CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64|aarch64")
+	set(TARGET_ARCH "arm64")
+else()
+	set(TARGET_ARCH "x64")
+endif()
+
+set(OPENSSL_DLL_COMMANDS "")
+if(TARGET_ARCH STREQUAL "x64")
+	list(APPEND OPENSSL_DLL_COMMANDS
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+			"${CMAKE_SOURCE_DIR}/deploy/windows/libcrypto-1_1-x64.dll"
+			"${PACKAGE_DIR}/libcrypto-1_1-x64.dll"
+
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different
+			"${CMAKE_SOURCE_DIR}/deploy/windows/libssl-1_1-x64.dll"
+			"${PACKAGE_DIR}/libssl-1_1-x64.dll"
+	)
+endif()
+
 # Define the package target
 add_custom_target(package
 	COMMENT "Packaging NotepadNext for distribution"
@@ -39,14 +61,8 @@ add_custom_target(package
 		"${CMAKE_SOURCE_DIR}/LICENSE"
 		"${PACKAGE_DIR}/LICENSE"
 
-	# Copy the two extra DLLs
-	COMMAND ${CMAKE_COMMAND} -E copy_if_different
-		"${CMAKE_SOURCE_DIR}/deploy/windows/libcrypto-1_1-x64.dll"
-		"${PACKAGE_DIR}/libcrypto-1_1-x64.dll"
-
-	COMMAND ${CMAKE_COMMAND} -E copy_if_different
-		"${CMAKE_SOURCE_DIR}/deploy/windows/libssl-1_1-x64.dll"
-		"${PACKAGE_DIR}/libssl-1_1-x64.dll"
+	# Copy the two extra DLLs (x64 only, see TARGET_ARCH above)
+	${OPENSSL_DLL_COMMANDS}
 
 	# Run windeployqt with correct flags
 	COMMAND windeployqt ${WINDEPLOYQT_ARGS}

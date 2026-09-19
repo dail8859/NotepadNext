@@ -2187,6 +2187,15 @@ void MainWindow::checkForUpdates(bool silent)
     qInfo(Q_FUNC_INFO);
 
     QString url = "https://github.com/dail8859/NotepadNext/raw/master/updates.json";
+
+#if defined(_M_ARM64) || defined(__aarch64__)
+    // updates.json only points to the x64 installer, so ARM64 builds check
+    // the "windows-arm64" key instead. Until that key is added to the json,
+    // the updater will never report an available update which effectively
+    // disables the auto updater rather than downloading a useless x64 installer.
+    QSimpleUpdater::getInstance()->setPlatformKey(url, "windows-arm64");
+#endif
+
     QSimpleUpdater::getInstance()->checkForUpdates(url);
 
     if (!silent) {
