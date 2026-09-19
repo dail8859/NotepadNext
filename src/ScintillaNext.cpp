@@ -83,10 +83,23 @@ static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString 
         return file.error();
     }
 
-    // Write actual data
-    if (file.write(data) == -1) {
-        qWarning("writeToDisk() failed writing data: %s", qPrintable(file.errorString()));
-        return file.error();
+    // TODO make this convert and write chunks rather than the entire thing
+    if (bom == ScintillaNext::BomType::Utf16LE) {
+        QStringEncoder encoder(QStringEncoder::Utf16LE);
+        const QString text = QString::fromUtf8(data);
+        const QByteArray encoded = encoder(text);
+
+        file.write(encoded);
+    }
+    else if (bom == ScintillaNext::BomType::Utf16BE) {
+        QStringEncoder encoder(QStringEncoder::Utf16BE);
+        const QString text = QString::fromUtf8(data);
+        const QByteArray encoded = encoder(text);
+
+        file.write(encoded);
+    }
+    else {
+        file.write(data);
     }
 
     return file.error();
@@ -681,25 +694,50 @@ bool ScintillaNext::readFromDisk(QFile &file)
         // - determine space vs tabs
         // - determine indentation size
 
+        QStringDecoder decoder;
+        int offset = 0;
         if (first_read) {
             first_read = false;
 
             bomType = detectBom(chunk);
+            offset = bomLength(bomType);
 
-            if (bomType != BomType::None) {
-                qDebug("BOM found");
-            }
+            switch (bomType) {
+            case BomType::Utf16BE:
+                decoder = QStringDecoder(QStringDecoder::Utf16BE);
+                offset = 2;
+                break;
 
-            if (bomType == BomType::Utf8) {
-                chunk.remove(0, bomLength(bomType));
-            }
+            case BomType::Utf16LE:
+                decoder = QStringDecoder(QStringDecoder::Utf16LE);
+                offset = 2;
+                break;
 
-            if (bomType == BomType::Utf16BE || bomType == BomType::Utf16LE) {
-                // Um...ignore this for now?
+            case BomType::Utf8:
+                // No decoder needed if you're already passing UTF-8 to Scintilla.
+                offset = 3;
+                break;
+
+            default:
+                // Whatever your handling is for no BOM.
+                break;
             }
         }
 
-        appendText(chunk.size(), chunk.constData());
+        QByteArrayView input(chunk.constData() + offset, chunk.size() - offset);
+
+        QString text = decoder(input);
+        QByteArray utf8 = text.toUtf8();
+
+        if (bomType == BomType::Utf16BE ||bomType == BomType::Utf16LE) {
+            QString text = decoder(input);
+            QByteArray utf8 = text.toUtf8();
+
+            appendText(utf8.size(), utf8.constData());
+        } else {
+            // No conversion necessary.
+            appendText(input.size(), input.data());
+        }
     } while (!file.atEnd() && status() == SC_STATUS_OK);
 
     file.close();
