@@ -152,7 +152,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="45"/>
       <source>Line Length</source>
-      <translation type="unfinished"/>
+      <translation>Chiều Dài Dòng</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="46"/>
@@ -491,7 +491,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="338"/>
       <source>No more occurrences were found</source>
-      <translation type="unfinished"/>
+      <translation>Không phát hiện thêm trường hợp nào khác</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="368"/>
