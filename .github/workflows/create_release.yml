@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-        with:
-          token: ${{ secrets.CREATE_RELEASE_TOKEN }}
 
       - name: Update App Version
         run: |
