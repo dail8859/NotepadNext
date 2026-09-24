@@ -26,6 +26,7 @@
 #include "DockAreaTitleBar.h"
 
 #include "ScintillaNext.h"
+#include "EditorPane.h"
 
 #include <QUuid>
 
@@ -70,7 +71,7 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
     connect(dockManager, &ads::CDockManager::focusedDockWidgetChanged, this, [=, this](ads::CDockWidget* old, ads::CDockWidget* now) {
         Q_UNUSED(old)
 
-        ScintillaNext *editor = qobject_cast<ScintillaNext *>(now->widget());
+        ScintillaNext *editor = EditorPane::editorFromWidget(now->widget());
 
         currentEditor = editor;
         editor->grabFocus();
@@ -96,6 +97,19 @@ DockedEditor::DockedEditor(QWidget *parent) : QObject(parent)
 }
 
 
+ads::CDockWidget *DockedEditor::dockWidgetForEditor(const ScintillaNext *editor)
+{
+    if (editor == Q_NULLPTR)
+        return Q_NULLPTR;
+
+    QWidget *w = const_cast<ScintillaNext *>(editor)->parentWidget();
+    // The editor may be wrapped inside an EditorPane (function list splitter)
+    if (qobject_cast<EditorPane *>(w) != Q_NULLPTR)
+        w = w->parentWidget();
+    return qobject_cast<ads::CDockWidget *>(w);
+}
+
+
 ScintillaNext *DockedEditor::getCurrentEditor() const
 {
     return currentEditor;
@@ -118,7 +132,7 @@ QVector<ScintillaNext *> DockedEditor::editors() const
     // For each area, for each widget, append it to our list
     for (const ads::CDockAreaWidget* areaWidget : dockManager->openedDockAreas()) {
         for (const ads::CDockWidget* dockWidget : areaWidget->dockWidgets()) {
-            editors.append(qobject_cast<ScintillaNext *>(dockWidget->widget()));
+            editors.append(EditorPane::editorFromWidget(dockWidget->widget()));
         }
     }
 
@@ -127,7 +141,7 @@ QVector<ScintillaNext *> DockedEditor::editors() const
 
 void DockedEditor::switchToEditor(const ScintillaNext *editor)
 {
-    ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+    ads::CDockWidget *dockWidget = dockWidgetForEditor(editor);
 
     if (dockWidget == Q_NULLPTR) {
         qWarning() << "Expected editor's parent to be CDockWidget";
@@ -140,7 +154,7 @@ void DockedEditor::switchToEditor(const ScintillaNext *editor)
 void DockedEditor::dockWidgetCloseRequested()
 {
     ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(sender());
-    ScintillaNext *editor = qobject_cast<ScintillaNext *>(dockWidget->widget());
+    ScintillaNext *editor = EditorPane::editorFromWidget(dockWidget->widget());
 
     emit editorCloseRequested(editor);
 }
@@ -169,7 +183,11 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     // We need a unique object name. Can't use the name or file path so use a uuid
     dockWidget->setObjectName(QUuid::createUuid().toString());
 
-    dockWidget->setWidget(editor);
+    // Wrap the editor together with a function list panel. The panel is
+    // hidden by default; the dock widget content is the pane itself so the
+    // function list can never overlap other docks such as Folder as Workspace.
+    EditorPane *pane = new EditorPane(editor);
+    dockWidget->setWidget(pane);
     dockWidget->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetDeleteOnClose, true);
     dockWidget->setFeature(ads::CDockWidget::DockWidgetFeature::CustomCloseHandling, true);
     dockWidget->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetFloatable, false);
@@ -218,7 +236,7 @@ void DockedEditor::editorRenamed(ScintillaNext *editor)
 {
     Q_ASSERT(editor != Q_NULLPTR);
 
-    ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+    ads::CDockWidget *dockWidget = dockWidgetForEditor(editor);
 
     dockWidget->setWindowTitle(editor->getName());
 
@@ -234,7 +252,7 @@ void DockedEditor::splitToRight(ScintillaNext *editor)
 {
     Q_ASSERT(editor != Q_NULLPTR);
 
-    ads::CDockWidget *newDockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+    ads::CDockWidget *newDockWidget = dockWidgetForEditor(editor);
     if (newDockWidget) {
         ads::CDockAreaWidget *currentArea = currentDockArea();
         if (currentArea) {
@@ -247,7 +265,7 @@ void DockedEditor::splitToBottom(ScintillaNext *editor)
 {
     Q_ASSERT(editor != Q_NULLPTR);
 
-    ads::CDockWidget *newDockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
+    ads::CDockWidget *newDockWidget = dockWidgetForEditor(editor);
     if (newDockWidget) {
         ads::CDockAreaWidget *currentArea = currentDockArea();
         if (currentArea) {

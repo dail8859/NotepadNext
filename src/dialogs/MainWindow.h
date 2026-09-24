@@ -45,6 +45,7 @@ class ShiftWheelToHorizontalScrollFilter;
 class Converter;
 class DefaultDirectoryManager;
 class TabsQuickActionsBar;
+class CtagsSymbolManager;
 
 class MainWindow : public QMainWindow
 {
@@ -125,6 +126,14 @@ public slots:
 
     void addEditor(ScintillaNext *editor);
 
+    void setupFunctionList(ScintillaNext *editor);
+    // Single entry point of the function list: decides whether the panel belongs
+    // on screen and makes sure a background parse is on its way when it does.
+    void updateFunctionList(ScintillaNext *editor);
+    // updateFunctionList() plus a dropped ctags result, for changed files
+    void reparseFunctionList(ScintillaNext *editor);
+    static QString ctagsLanguageFor(const QString &languageName);
+
     void checkForUpdates(bool silent = false);
 
     void restoreWindowState();
@@ -151,6 +160,9 @@ private:
     Ui::MainWindow *ui = Q_NULLPTR;
     NotepadNextApplication *app = Q_NULLPTR;
     DockedEditor *dockedEditor = Q_NULLPTR;
+
+    CtagsSymbolManager *ctagsManager = Q_NULLPTR;
+    QAction *functionListAction = Q_NULLPTR;
 
     QScopedPointer<SearchResultsCollector> searchResults;
 
