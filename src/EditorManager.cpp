@@ -58,6 +58,11 @@ EditorManager::EditorManager(ApplicationSettings *settings, QObject *parent)
         }
     });
 
+    connect(settings, &ApplicationSettings::useTabsChanged, this, [=, this](bool b) {
+        for (auto &editor : getEditors()) {
+            editor->setUseTabs((b ? true : false));
+        }
+    });
 
     connect(settings, &ApplicationSettings::showWhitespaceChanged, this, [=, this](bool b) {
         // TODO: could make SCWS_VISIBLEALWAYS configurable via settings. Probably not worth
@@ -295,6 +300,7 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     editor->setTabDrawMode(SCTD_STRIKEOUT);
     editor->setTabWidth(4);
     editor->setBackSpaceUnIndents(true);
+    editor->setUseTabs(settings->useTabs() ? true : false);
 
     editor->setCaretLineVisible(true);
     editor->setCaretLineVisibleAlways(true);
