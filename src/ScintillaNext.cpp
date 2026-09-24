@@ -679,6 +679,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
     QByteArray chunk;
     qint64 bytesRead;
 
+    QStringDecoder decoder;
     bool first_read = true;
     do {
         // Try to read as much as possible
@@ -694,7 +695,6 @@ bool ScintillaNext::readFromDisk(QFile &file)
         // - determine space vs tabs
         // - determine indentation size
 
-        QStringDecoder decoder;
         int offset = 0;
         if (first_read) {
             first_read = false;
@@ -726,10 +726,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
 
         QByteArrayView input(chunk.constData() + offset, chunk.size() - offset);
 
-        QString text = decoder(input);
-        QByteArray utf8 = text.toUtf8();
-
-        if (bomType == BomType::Utf16BE ||bomType == BomType::Utf16LE) {
+        if (bomType == BomType::Utf16BE || bomType == BomType::Utf16LE) {
             QString text = decoder(input);
             QByteArray utf8 = text.toUtf8();
 
