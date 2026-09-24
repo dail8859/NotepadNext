@@ -680,6 +680,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
     qint64 bytesRead;
 
     QStringDecoder decoder;
+    QStringEncoder encoder;
     bool first_read = true;
     do {
         // Try to read as much as possible
@@ -705,11 +706,13 @@ bool ScintillaNext::readFromDisk(QFile &file)
             switch (bomType) {
             case BomType::Utf16BE:
                 decoder = QStringDecoder(QStringDecoder::Utf16BE);
+                encoder = QStringEncoder(QStringEncoder::Utf8);
                 offset = 2;
                 break;
 
             case BomType::Utf16LE:
                 decoder = QStringDecoder(QStringDecoder::Utf16LE);
+                encoder = QStringEncoder(QStringEncoder::Utf8);
                 offset = 2;
                 break;
 
@@ -728,7 +731,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
 
         if (bomType == BomType::Utf16BE || bomType == BomType::Utf16LE) {
             QString text = decoder(input);
-            QByteArray utf8 = text.toUtf8();
+            QByteArray utf8 = encoder(text);
 
             appendText(utf8.size(), utf8.constData());
         } else {
