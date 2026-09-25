@@ -14,6 +14,8 @@ env:
 
 jobs:
   build:
+    env:
+      MACOS_HAS_CODESIGN_SECRETS: ${{ secrets.MACOS_CERTIFICATE_P12 != '' && secrets.MACOS_CERTIFICATE_PASSWORD != '' && secrets.MACOS_CODESIGN_IDENTITY != '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -156,12 +158,35 @@ jobs:
         shell: bash
         run: echo "DISTRIBUTION=dmg" >> "$GITHUB_ENV"
 
+      - name: Import Code-Signing Certificate (mac)
+        if: matrix.platform == 'mac' && env.MACOS_HAS_CODESIGN_SECRETS == 'true'
+        env:
+          MACOS_CERTIFICATE_P12: ${{ secrets.MACOS_CERTIFICATE_P12 }}
+          MACOS_CERTIFICATE_PASSWORD: ${{ secrets.MACOS_CERTIFICATE_PASSWORD }}
+        shell: bash
+        run: |
+          KEYCHAIN_PATH="$RUNNER_TEMP/notepadnext-signing.keychain-db"
+          KEYCHAIN_PASSWORD="$(uuidgen)"
+          echo "$MACOS_CERTIFICATE_P12" | base64 --decode -o "$RUNNER_TEMP/certificate.p12"
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security import "$RUNNER_TEMP/certificate.p12" -P "$MACOS_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security list-keychain -d user -s "$KEYCHAIN_PATH" $(security list-keychains -d user | sed 's/"//g')
+
+          rm -f "$RUNNER_TEMP/certificate.p12"
+
       - name: Configure
         shell: bash
         run: |
           CMAKE_OPTS=(-S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DAPP_DISTRIBUTION="${DISTRIBUTION}")
           if [ "${{ matrix.platform }}" = "mac" ]; then
             CMAKE_OPTS+=(-DCMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_arch }}" -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}")
+            if [ "${{ env.MACOS_HAS_CODESIGN_SECRETS }}" = "true" ]; then
+              CMAKE_OPTS+=(-DMACOS_CODESIGN_IDENTITY="${{ secrets.MACOS_CODESIGN_IDENTITY }}")
+            fi
           fi
           cmake "${CMAKE_OPTS[@]}"
 
@@ -177,6 +202,37 @@ jobs:
         if: matrix.platform == 'mac'
         shell: bash
         run: cmake --build build --target dmg --parallel
+
+      - name: Notarize and Staple DMG (mac)
+        if: matrix.platform == 'mac' && env.MACOS_HAS_CODESIGN_SECRETS == 'true'
+        env:
+          APPLE_ID: ${{ secrets.APPLE_NOTARIZATION_APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_NOTARIZATION_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        shell: bash
+        run: |
+          DMG_PATH=$(ls build/NotepadNext*.dmg)
+          xcrun notarytool submit "$DMG_PATH" \
+            --apple-id "$APPLE_ID" \
+            --password "$APPLE_APP_SPECIFIC_PASSWORD" \
+            --team-id "$APPLE_TEAM_ID" \
+            --wait
+          xcrun stapler staple "$DMG_PATH"
+
+      - name: Verify Gatekeeper Acceptance (mac)
+        if: matrix.platform == 'mac' && env.MACOS_HAS_CODESIGN_SECRETS == 'true'
+        shell: bash
+        run: |
+          DMG_PATH=$(ls build/NotepadNext*.dmg)
+          MOUNT_POINT=$(mktemp -d)
+          hdiutil attach "$DMG_PATH" -mountpoint "$MOUNT_POINT" -nobrowse -quiet
+          APP_PATH=$(find "$MOUNT_POINT" -maxdepth 1 -name "*.app")
+
+          codesign --verify --deep --strict --verbose=2 "$APP_PATH"
+          spctl --assess --type execute --verbose=2 "$APP_PATH"
+          xcrun stapler validate "$DMG_PATH"
+
+          hdiutil detach "$MOUNT_POINT" -quiet
 
       - name: Build Linux Targets
         if: matrix.platform == 'linux'
