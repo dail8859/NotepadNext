@@ -169,6 +169,11 @@ jobs:
         shell: bash
         run: cmake --build build --parallel
 
+      - name: Run Tests
+        shell: bash
+        working-directory: build
+        run: ctest --output-on-failure
+
       - name: Build Windows Targets
         if: matrix.platform == 'windows'
         run: cmake --build build --target package zip installer --parallel
