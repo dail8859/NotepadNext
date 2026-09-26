@@ -678,9 +678,9 @@ bool ScintillaNext::readFromDisk(QFile &file)
 
     QByteArray chunk;
     qint64 bytesRead;
-
     QStringDecoder decoder;
-    QStringEncoder encoder;
+    QStringEncoder encoder = QStringEncoder(QStringEncoder::Utf8);
+
     bool first_read = true;
     do {
         // Try to read as much as possible
@@ -706,23 +706,20 @@ bool ScintillaNext::readFromDisk(QFile &file)
             switch (bomType) {
             case BomType::Utf16BE:
                 decoder = QStringDecoder(QStringDecoder::Utf16BE);
-                encoder = QStringEncoder(QStringEncoder::Utf8);
                 offset = 2;
                 break;
 
             case BomType::Utf16LE:
                 decoder = QStringDecoder(QStringDecoder::Utf16LE);
-                encoder = QStringEncoder(QStringEncoder::Utf8);
                 offset = 2;
                 break;
 
             case BomType::Utf8:
-                // No decoder needed if you're already passing UTF-8 to Scintilla.
+                // No decoder needed since Scintilla expects UTF-8.
                 offset = 3;
                 break;
 
             default:
-                // Whatever your handling is for no BOM.
                 break;
             }
         }
