@@ -678,6 +678,8 @@ bool ScintillaNext::readFromDisk(QFile &file)
 
     QByteArray chunk;
     qint64 bytesRead;
+    QStringDecoder decoder;
+    QStringEncoder encoder = QStringEncoder(QStringEncoder::Utf8);
 
     bool first_read = true;
     do {
@@ -694,7 +696,6 @@ bool ScintillaNext::readFromDisk(QFile &file)
         // - determine space vs tabs
         // - determine indentation size
 
-        QStringDecoder decoder;
         int offset = 0;
         if (first_read) {
             first_read = false;
@@ -714,24 +715,20 @@ bool ScintillaNext::readFromDisk(QFile &file)
                 break;
 
             case BomType::Utf8:
-                // No decoder needed if you're already passing UTF-8 to Scintilla.
+                // No decoder needed since Scintilla expects UTF-8.
                 offset = 3;
                 break;
 
             default:
-                // Whatever your handling is for no BOM.
                 break;
             }
         }
 
         QByteArrayView input(chunk.constData() + offset, chunk.size() - offset);
 
-        QString text = decoder(input);
-        QByteArray utf8 = text.toUtf8();
-
-        if (bomType == BomType::Utf16BE ||bomType == BomType::Utf16LE) {
+        if (bomType == BomType::Utf16BE || bomType == BomType::Utf16LE) {
             QString text = decoder(input);
-            QByteArray utf8 = text.toUtf8();
+            QByteArray utf8 = encoder(text);
 
             appendText(utf8.size(), utf8.constData());
         } else {
