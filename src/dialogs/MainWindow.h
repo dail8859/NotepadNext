@@ -140,6 +140,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+    void changeEvent(QEvent *event) override;
 
 private slots:
     void tabBarRightClicked(ScintillaNext *editor);
