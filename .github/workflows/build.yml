@@ -10,7 +10,7 @@ on:
   pull_request:
 
 env:
-  QT_RELEASE_VER: 6.5
+  QT_RELEASE_VER: 6.8
 
 jobs:
   build:
@@ -19,9 +19,6 @@ jobs:
       matrix:
         include:
           # ─── Windows ───────────────────────────────────────────────
-          - os: windows-2022
-            platform: windows
-            qt_version: "6.5"
           - os: windows-2022
             platform: windows
             qt_version: "6.8"
@@ -46,22 +43,12 @@ jobs:
           # ─── Linux ─────────────────────────────────────────────────
           - os: ubuntu-24.04
             platform: linux
-            qt_version: "6.5"
-          - os: ubuntu-24.04
-            platform: linux
             qt_version: "6.8"
           - os: ubuntu-24.04
             platform: linux
             qt_version: "6.10"
 
           # ─── macOS Intel (x64) ─────────────────────────────────────
-          - os: macos-15-intel
-            platform: mac
-            arch: x64
-            cmake_arch: x86_64
-            qt_arch: clang_64
-            qt_version: "6.5"
-            deployment_target: "11.0"
           - os: macos-15-intel
             platform: mac
             arch: x64
@@ -78,13 +65,6 @@ jobs:
             deployment_target: "13.0"
 
           # ─── macOS Apple Silicon (arm64) ───────────────────────────
-          - os: macos-15
-            platform: mac
-            arch: arm64
-            cmake_arch: arm64
-            qt_arch: clang_64
-            qt_version: "6.5"
-            deployment_target: "12.0"
           - os: macos-15
             platform: mac
             arch: arm64
@@ -243,12 +223,12 @@ jobs:
 
       - name: Upload Windows arm64 Installer
         run: |
-          mv NotepadNext-Windows-Qt$QT_ARM64_RELEASE_VER-arm64-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe NotepadNext-${{ github.ref_name }}-Installer-arm64.exe
+          mv NotepadNext-Windows-Qt$QT_RELEASE_VER-arm64-Installer/NotepadNext-${{ github.ref_name }}-Installer.exe NotepadNext-${{ github.ref_name }}-Installer-arm64.exe
           gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}-Installer-arm64.exe
 
       - name: Upload Windows arm64 Zip
         run: |
-          cd NotepadNext-Windows-Qt$QT_ARM64_RELEASE_VER-arm64-Zip/
+          cd NotepadNext-Windows-Qt$QT_RELEASE_VER-arm64-Zip/
           zip -r ../NotepadNext-${{ github.ref_name }}-win64-arm64.zip .
           cd ..
           gh release upload ${{ github.ref_name }} NotepadNext-${{ github.ref_name }}-win64-arm64.zip
