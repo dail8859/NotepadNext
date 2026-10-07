@@ -91,6 +91,11 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     });
 
     connect(ui->radioRegexSearch, &QRadioButton::toggled, this, [=, this](bool checked) {
+        if (checked) {
+            ui->checkBoxBackwardsDirection->setChecked(false);
+            ui->checkBoxMatchWholeWord->setChecked(false);
+        }
+
         ui->checkBoxBackwardsDirection->setDisabled(checked);
         ui->checkBoxMatchWholeWord->setDisabled(checked);
         ui->checkBoxRegexMatchesNewline->setEnabled(checked);
