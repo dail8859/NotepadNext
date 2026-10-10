@@ -42,6 +42,7 @@
 #include <QProcess>
 #include <QScreen>
 #include <QFontDatabase>
+#include <QDockWidget>
 
 #ifdef Q_OS_WIN
 #include <QSimpleUpdater.h>
@@ -2030,6 +2031,19 @@ MainWindow::UserSaveAction MainWindow::promptForSave(const QVector<ScintillaNext
     return UserSaveAction::Cancel;
 }
 
+QStringList MainWindow::currentDockObjectNames() const
+{
+    QStringList names;
+
+    for (const QDockWidget *dock : findChildren<QDockWidget *>()) {
+        names.append(dock->objectName());
+    }
+
+    names.sort();
+
+    return names;
+}
+
 void MainWindow::saveSettings() const
 {
     qInfo(Q_FUNC_INFO);
@@ -2038,6 +2052,7 @@ void MainWindow::saveSettings() const
 
     settings->setValue("MainWindow/geometry", saveGeometry());
     settings->setValue("MainWindow/windowState", saveState());
+    settings->setValue("MainWindow/dockObjectNames", currentDockObjectNames());
 
     settings->setValue("Editor/ZoomLevel", zoomLevel);
 }
@@ -2078,7 +2093,17 @@ void MainWindow::restoreWindowState()
     ApplicationSettings *settings = app->getSettings();
 
     restoreGeometry(settings->value("MainWindow/geometry").toByteArray());
-    restoreState(settings->value("MainWindow/windowState").toByteArray());
+
+    // QMainWindow::restoreState() can crash (QTBUG-111538) when the saved
+    // state references a set of dock widgets that doesn't match the ones
+    // that exist now, e.g. after an upgrade added/removed/renamed a dock.
+    // Only restore it when the dock set is unchanged since it was saved.
+    if (settings->value("MainWindow/dockObjectNames").toStringList() == currentDockObjectNames()) {
+        restoreState(settings->value("MainWindow/windowState").toByteArray());
+    }
+    else {
+        qWarning() << "Skipping windowState restore: saved dock layout does not match the current dock set";
+    }
 
     // Always hide the dock no matter how the application was closed
     SearchResultsDock *srDock = findChild<SearchResultsDock *>();
