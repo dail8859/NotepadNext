@@ -23,6 +23,7 @@
 #include "MarkerAppDecorator.h"
 #include "ScintillaSorter.h"
 #include "URLFinder.h"
+#include "XmlFormatter.h"
 #include "SessionManager.h"
 #include "UndoAction.h"
 #include "ui_MainWindow.h"
@@ -201,6 +202,25 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ScintillaNext *editor = currentEditor();
         const QByteArray selection = editor->getSelText();
         editor->replaceSel(QByteArray::fromPercentEncoding(selection).constData());
+    });
+    connect(ui->actionXmlPrettyPrint, &QAction::triggered, this, [this]() {
+        ScintillaNext *editor = currentEditor();
+
+        sptr_t pointer = editor->characterPointer();
+        int len = editor->length();
+        const QByteArray input = QByteArray::fromRawData(reinterpret_cast<const char *>(pointer), len);
+
+        QByteArray output;
+        QString errorString;
+
+        if (!XmlFormatter::format(input, output, errorString)) {
+            QMessageBox::warning(this, tr("Pretty Print XML"), errorString);
+            return;
+        }
+
+        const UndoAction ua(editor);
+        editor->targetWholeDocument();
+        editor->replaceTarget(-1, output.constData());
     });
     connect(ui->actionCopyURL, &QAction::triggered, this, [this]() {
         ScintillaNext *editor = currentEditor();
