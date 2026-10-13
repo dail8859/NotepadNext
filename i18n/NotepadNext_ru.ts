@@ -544,7 +544,7 @@
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="14"/>
       <source>Folder as Workspace</source>
-      <translation>Папка как Проект</translation>
+      <translation>Папка как проект</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="88"/>
@@ -821,7 +821,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="60"/>
       <source>&amp;Recent Files</source>
-      <translation>&amp;Последние файлы</translation>
+      <translation>&amp;Недавние файлы</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
@@ -907,7 +907,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="267"/>
       <source>Show Symbol</source>
-      <translation>Показать символ</translation>
+      <translation>Отображение символов</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="278"/>
@@ -1324,7 +1324,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1066"/>
       <source>Open Folder as Workspace...</source>
-      <translation>Открыть папку как Проект...</translation>
+      <translation>Открыть папку как проект...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1071"/>
@@ -1737,7 +1737,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1283"/>
       <source>Open Folder as Workspace</source>
-      <translation>Открыть папку как Проект</translation>
+      <translation>Открыть папку как проект</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1306"/>
@@ -1917,7 +1917,7 @@
       <translation>Отклонить</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2210"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2219"/>
       <source>No updates are available at this time.</source>
       <translation>В настоящее время обновлений нет.</translation>
     </message>
@@ -1997,7 +1997,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="155"/>
       <source>pt</source>
-      <translation>пт</translation>
+      <translation> пт</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="188"/>
@@ -2007,7 +2007,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="200"/>
       <source>Highlight URLs</source>
-      <translation>Выделить URL-адреса</translation>
+      <translation>Выделять URL-адреса</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="207"/>
