@@ -122,6 +122,27 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(dockedEditor, &DockedEditor::contextMenuRequestedForEditor, this, &MainWindow::tabBarRightClicked);
     connect(dockedEditor, &DockedEditor::titleBarDoubleClicked, this, &MainWindow::newFile);
 
+    // React immediately (instead of only on tab-switch/window-focus) when an
+    // open file is changed by another program - but only if NotepadNext is
+    // actually the foreground window and the affected editor is the one
+    // currently visible, matching Notepad++'s behavior. Otherwise, do
+    // nothing here: the existing activateEditor() (tab switch) and
+    // focusIn() (window regains focus) code paths already re-check the
+    // file's timestamp and will surface the dialog at the right time.
+    connect(app->getEditorManager(), &EditorManager::editorFileChangedOnDisk, this, [=, this](ScintillaNext *editor) {
+        if (!isActiveWindow()) {
+            return;
+        }
+
+        if (editor != currentEditor()) {
+            return;
+        }
+
+        if (checkFileForModification(editor)) {
+            updateGui(currentEditor());
+        }
+    });
+
     // Set up the menus
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFileDialog);
@@ -1952,8 +1973,15 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
     else if (state == ScintillaNext::Modified) {
         qInfo("ScintillaNext::Modified");
         const QString filePath = editor->getFilePath();
-        auto reply = QMessageBox::question(this, tr("Reload File"), tr("<b>%1</b> has been modified by another program. Do you want to reload it?").arg(filePath));
+        QString message = tr("<b>%1</b> has been modified by another program. Do you want to reload it?").arg(filePath);
 
+        if (!editor->isSavedToDisk()) {
+            message += tr("<br><br><b>Warning:</b> you have unsaved changes in this tab. "
+                           "Reloading will discard them permanently.");
+        }
+
+        auto reply = QMessageBox::question(this, tr("Reload File"), message);
+		
         if (reply == QMessageBox::Yes) {
             editor->reload();
         }
@@ -2099,6 +2127,18 @@ void MainWindow::focusIn()
     if (editor) {
         if (checkFileForModification(currentEditor())) {
             updateGui(currentEditor());
+        }
+    }
+}
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    QMainWindow::changeEvent(event);
+
+    if (event->type() == QEvent::ActivationChange) {
+        qInfo() << "ActivationChange reçu, isActiveWindow() =" << isActiveWindow();
+        if (isActiveWindow()) {
+            focusIn();
         }
     }
 }
