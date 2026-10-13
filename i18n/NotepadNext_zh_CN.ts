@@ -468,57 +468,57 @@
       <translation type="unfinished"/>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="149"/>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="357"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="154"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="362"/>
       <source>Replaced %Ln matches</source>
       <translation>
         <numerusform>已替换 %Ln 个匹配项</numerusform>
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="257"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="262"/>
       <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
       <translation>已经到达文档的末尾。从顶部找到第一个匹配项。</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="268"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="273"/>
       <source>No matches found.</source>
       <translation>没有找到匹配项。</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="329"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="334"/>
       <source>1 occurrence was replaced</source>
       <translation>已替换 1 个匹配项</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="338"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="343"/>
       <source>No more occurrences were found</source>
       <translation>没有找到更多匹配项</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="368"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="373"/>
       <source>Found %Ln matches</source>
       <translation>
         <numerusform>找到 %Ln 个匹配项</numerusform>
       </translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="778"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="783"/>
       <source>Mark: %Ln match in entire file</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="789"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="794"/>
       <source>All marks cleared</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="813"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="818"/>
       <source>No marks to copy</source>
       <translation type="unfinished"/>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="818"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="823"/>
       <source>Copied %Ln marked text(s)</source>
       <translation type="unfinished"/>
     </message>
@@ -1853,7 +1853,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
       <source>Unknown error (%1)</source>
-      <translation type="unfinished"/>
+      <translation>未知错误 (%1)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
@@ -1868,12 +1868,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2005"/>
       <source>Zoom: %1%</source>
-      <translation type="unfinished"/>
+      <translation>缩放： %1%</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2017"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation type="unfinished"/>
+      <translation>保存更改到 &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/MainWindow.cpp" line="2018"/>
@@ -1883,20 +1883,20 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2021"/>
       <source>Save All</source>
-      <translation type="unfinished"/>
+      <translation>全部保存</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2022"/>
       <source>Discard All</source>
-      <translation type="unfinished"/>
+      <translation>全部清空</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2022"/>
       <source>Discard</source>
-      <translation type="unfinished"/>
+      <translation>丢弃</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2210"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2219"/>
       <source>No updates are available at this time.</source>
       <translation>本次无可用更新。</translation>
     </message>
@@ -1911,22 +1911,22 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="37"/>
       <source>Show menu bar</source>
-      <translation type="unfinished"/>
+      <translation>显示菜单栏</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="44"/>
       <source>Show toolbar</source>
-      <translation type="unfinished"/>
+      <translation>显示工具栏</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="51"/>
       <source>Show status bar</source>
-      <translation type="unfinished"/>
+      <translation>显示状态栏</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="58"/>
       <source>Restore previous session</source>
-      <translation type="unfinished"/>
+      <translation>恢复此前的会话</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="70"/>
@@ -1936,12 +1936,12 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="77"/>
       <source>Temporary files</source>
-      <translation type="unfinished"/>
+      <translation>临时文件夹</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="89"/>
       <source>Recenter find/replace dialog when opened</source>
-      <translation type="unfinished"/>
+      <translation>打开时恢复查找/替换对话框</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="96"/>
@@ -1956,22 +1956,22 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="123"/>
       <source>Exit on last tab closed</source>
-      <translation type="unfinished"/>
+      <translation>关闭最后一个标签时退出</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="132"/>
       <source>Default Font</source>
-      <translation type="unfinished"/>
+      <translation>默认字体</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="138"/>
       <source>Font</source>
-      <translation type="unfinished"/>
+      <translation>字体</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="148"/>
       <source>Font Size</source>
-      <translation type="unfinished"/>
+      <translation>字体大小</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="155"/>
@@ -1981,38 +1981,38 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="188"/>
       <source>Default Line Endings</source>
-      <translation type="unfinished"/>
+      <translation>默认行结尾</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="200"/>
       <source>Highlight URLs</source>
-      <translation type="unfinished"/>
+      <translation>高亮显示 URL</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="207"/>
       <source>Show Line Numbers</source>
-      <translation type="unfinished"/>
+      <translation>显示行号</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="214"/>
       <source>Auto Completion</source>
-      <translation type="unfinished"/>
+      <translation>自动完成</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="221"/>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="122"/>
       <source>Default Directory</source>
-      <translation type="unfinished"/>
+      <translation>默认文件夹</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="227"/>
       <source>Follow Current Document</source>
-      <translation type="unfinished"/>
+      <translation>查找当前文档</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="234"/>
       <source>Last Used Directory</source>
-      <translation type="unfinished"/>
+      <translation>上次使用的目录</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="253"/>
@@ -2027,7 +2027,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="296"/>
       <source>An application restart is required to apply certain settings.</source>
-      <translation type="unfinished"/>
+      <translation>应用某些设置需要重启应用程序。</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="56"/>
@@ -2042,7 +2042,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="85"/>
       <source>System Default</source>
-      <translation type="unfinished"/>
+      <translation>系统默认</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="86"/>
@@ -2124,12 +2124,12 @@
       <location filename="../src/docks/SearchResultsDock.ui" line="38"/>
       <location filename="../src/docks/SearchResultsDock.ui" line="41"/>
       <source>Copy All Results to Clipboard</source>
-      <translation type="unfinished"/>
+      <translation>复制所有结果到剪贴板</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="57"/>
       <source>Copy</source>
-      <translation type="unfinished"/>
+      <translation>复制</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="59"/>
@@ -2157,17 +2157,17 @@
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="40"/>
       <source>Create a new file</source>
-      <translation type="unfinished"/>
+      <translation>新建文件</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="43"/>
       <source>Show opened files list</source>
-      <translation type="unfinished"/>
+      <translation>显示打开的文件列表</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="49"/>
       <source>Close the current file</source>
-      <translation type="unfinished"/>
+      <translation>关闭当前文件</translation>
     </message>
   </context>
 </TS>
