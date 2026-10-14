@@ -185,6 +185,7 @@ private:
 
     void saveSettings() const;
     void restoreSettings();
+    QStringList currentDockObjectNames() const;
 
     ISearchResultsHandler *determineSearchResultsHandler();
 
