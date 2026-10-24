@@ -148,6 +148,8 @@ public slots:
     void removeDuplicateLines();
     void removeConsecutiveDuplicateLines();
 
+    void trimTrailingWhitespace();
+
 signals:
     void aboutToSave();
     void saved();

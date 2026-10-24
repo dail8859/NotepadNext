@@ -293,6 +293,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         editor->deleteTrailingEmptyLines();
     });
 
+    connectEditorAction(ui->actionTrimTrailingSpace, &ScintillaNext::trimTrailingWhitespace);
+
     connectEditorAction(ui->actionRemoveDuplicateLines, &ScintillaNext::removeDuplicateLines);
     connectEditorAction(ui->actionRemoveConsecutiveDuplicateLines, &ScintillaNext::removeConsecutiveDuplicateLines);
 
