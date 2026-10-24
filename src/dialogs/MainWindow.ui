@@ -149,6 +149,12 @@
      <addaction name="actionSortLinesDescCaseInsensitive"/>
      <addaction name="actionSortLinesbyLengthDesc"/>
     </widget>
+    <widget class="QMenu" name="menuBlankOperations">
+     <property name="title">
+      <string>Blank Operations</string>
+     </property>
+     <addaction name="actionTrimTrailingSpace"/>
+    </widget>
     <widget class="QMenu" name="menuCommentUncomment">
      <property name="title">
       <string>Comment/Uncomment</string>
@@ -190,6 +196,7 @@
     <addaction name="menuConvertCase"/>
     <addaction name="menuEOLConversion"/>
     <addaction name="menuLine_Operations"/>
+    <addaction name="menuBlankOperations"/>
     <addaction name="menuCommentUncomment"/>
     <addaction name="menuEncodingDecoding"/>
     <addaction name="separator"/>
@@ -1163,6 +1170,11 @@
   <action name="actionRemoveEmptyLines">
    <property name="text">
     <string>Remove Empty Lines</string>
+   </property>
+  </action>
+  <action name="actionTrimTrailingSpace">
+   <property name="text">
+    <string>Trim Trailing Space</string>
    </property>
   </action>
   <action name="actionShowInExplorer">

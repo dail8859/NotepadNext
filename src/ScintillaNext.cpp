@@ -635,6 +635,17 @@ void ScintillaNext::removeConsecutiveDuplicateLines()
     replaceTarget(result.length(), result.constData());
 }
 
+void ScintillaNext::trimTrailingWhitespace()
+{
+    Finder f(this);
+    const UndoAction ua(this);
+
+    // $ alone only matches before \n, so handle CRLF and CR line endings explicitly
+    f.options().text = QStringLiteral("[ \\t]+(?=[\\r\\n]|$)");
+    f.options().flags = Scintilla::FindOption::RegExp;
+    f.replaceAll(QString());
+}
+
 void ScintillaNext::dragEnterEvent(QDragEnterEvent *event)
 {
     // Ignore all drag and drop events with urls and let the main application handle it
