@@ -259,6 +259,22 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionUnix,      &QAction::triggered, this, handleEolTrigger);
     connect(ui->actionMacintosh, &QAction::triggered, this, handleEolTrigger);
 
+    QActionGroup *encodingActionGroup = new QActionGroup(this);
+    encodingActionGroup->addAction(ui->actionEncodingUtf8);
+    encodingActionGroup->addAction(ui->actionEncodingUtf8Bom);
+    encodingActionGroup->addAction(ui->actionEncodingUtf16BEBom);
+    encodingActionGroup->addAction(ui->actionEncodingUtf16LEBom);
+
+    ui->actionEncodingUtf8->setData(static_cast<int>(ScintillaNext::BomType::None));
+    ui->actionEncodingUtf8Bom->setData(static_cast<int>(ScintillaNext::BomType::Utf8));
+    ui->actionEncodingUtf16BEBom->setData(static_cast<int>(ScintillaNext::BomType::Utf16BE));
+    ui->actionEncodingUtf16LEBom->setData(static_cast<int>(ScintillaNext::BomType::Utf16LE));
+
+    connect(encodingActionGroup, &QActionGroup::triggered, this, [this](QAction *action) {
+        // The text stays the same, it gets written in the new encoding the next time it is saved
+        currentEditor()->setBom(static_cast<ScintillaNext::BomType>(action->data().toInt()));
+    });
+
 
     connectEditorAction(ui->actionUpperCase, &ScintillaNext::upperCase);
     connectEditorAction(ui->actionLowerCase, &ScintillaNext::lowerCase);
@@ -1013,6 +1029,9 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->statusBar, &EditorInfoStatusBar::customContextMenuRequestedForEOLLabel, this, [this](const QPoint &pos){
         ui->menuEOLConversion->popup(pos);
     });
+    connect(ui->statusBar, &EditorInfoStatusBar::customContextMenuRequestedForEncodingLabel, this, [this](const QPoint &pos){
+        ui->menuEncodings->popup(pos);
+    });
 
     // It seems restoreState() does not affect the status bar so set it manually
     ui->statusBar->setVisible(app->getSettings()->showStatusBar());
@@ -1733,6 +1752,29 @@ void MainWindow::updateEOLBasedUi(ScintillaNext *editor)
     }
 }
 
+void MainWindow::updateEncodingBasedUi(ScintillaNext *editor)
+{
+    qInfo(Q_FUNC_INFO);
+
+    // Only the Unicode encodings are supported, which requires the editor to use UTF-8 internally
+    ui->menuEncodings->setEnabled(editor->codePage() == SC_CP_UTF8);
+
+    switch (editor->bom()) {
+    case ScintillaNext::BomType::None:
+        ui->actionEncodingUtf8->setChecked(true);
+        break;
+    case ScintillaNext::BomType::Utf8:
+        ui->actionEncodingUtf8Bom->setChecked(true);
+        break;
+    case ScintillaNext::BomType::Utf16BE:
+        ui->actionEncodingUtf16BEBom->setChecked(true);
+        break;
+    case ScintillaNext::BomType::Utf16LE:
+        ui->actionEncodingUtf16LEBom->setChecked(true);
+        break;
+    }
+}
+
 void MainWindow::updateSaveStatusBasedUi(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
@@ -1795,6 +1837,7 @@ void MainWindow::updateGui(ScintillaNext *editor)
     updateFileStatusBasedUi(editor);
     updateSaveStatusBasedUi(editor);
     updateEOLBasedUi(editor);
+    updateEncodingBasedUi(editor);
     updateEditorPositionBasedUi();
     updateSelectionBasedUi(editor);
     updateContentBasedUi(editor);
@@ -2117,6 +2160,7 @@ void MainWindow::addEditor(ScintillaNext *editor)
     connect(editor, &ScintillaNext::savePointChanged, this, [=, this]() { updateSaveStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::renamed, this, [= ,this]() { detectLanguage(editor); });
     connect(editor, &ScintillaNext::renamed, this, [=, this]() { updateFileStatusBasedUi(editor); });
+    connect(editor, &ScintillaNext::bomChanged, this, [=, this]() { updateEncodingBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);
 
     // Scintilla pastes the primary selection on middle-click. Suppress an

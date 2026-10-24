@@ -119,6 +119,7 @@ public:
     };
 
     BomType bom() const { return bomType; }
+    void setBom(BomType bom);
 
     bool isTemporary() const { return temporary; }
     void setTemporary(bool temp);
@@ -159,6 +160,7 @@ signals:
 
     void lexerChanged();
     void reloaded();
+    void bomChanged();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -168,6 +170,7 @@ private:
     QString name;
     BufferType bufferType = BufferType::New;
     BomType bomType = BomType::None;
+    BomType savedBomType = BomType::None; // Encoding of the file when it was last read or saved
     QFileInfo fileInfo;
     QDateTime modifiedTime;
     RangeAllocator indicatorResources;

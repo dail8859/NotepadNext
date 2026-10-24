@@ -360,7 +360,10 @@
     <property name="title">
      <string>Encoding</string>
     </property>
-    <addaction name="actionThis_is_not_currently_implemented"/>
+    <addaction name="actionEncodingUtf8"/>
+    <addaction name="actionEncodingUtf8Bom"/>
+    <addaction name="actionEncodingUtf16BEBom"/>
+    <addaction name="actionEncodingUtf16LEBom"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -1109,12 +1112,36 @@
     <string>Edit Macros...</string>
    </property>
   </action>
-  <action name="actionThis_is_not_currently_implemented">
-   <property name="enabled">
-    <bool>false</bool>
+  <action name="actionEncodingUtf8">
+   <property name="checkable">
+    <bool>true</bool>
    </property>
    <property name="text">
-    <string>This is not currently implemented</string>
+    <string>UTF-8</string>
+   </property>
+  </action>
+  <action name="actionEncodingUtf8Bom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>UTF-8-BOM</string>
+   </property>
+  </action>
+  <action name="actionEncodingUtf16BEBom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>UTF-16 BE BOM</string>
+   </property>
+  </action>
+  <action name="actionEncodingUtf16LEBom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>UTF-16 LE BOM</string>
    </property>
   </action>
   <action name="actionColumnMode">
