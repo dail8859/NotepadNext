@@ -1842,8 +1842,15 @@ void MainWindow::detectLanguage(ScintillaNext *editor)
     qInfo(Q_FUNC_INFO);
 
     if (!editor->isFile()) {
-        // Default to some specific language if it is not a file.
-        setLanguage(editor, "Text");
+        // Default to the user's preferred language if it is not a file.
+        QString language_name = app->getSettings()->defaultLanguage();
+
+        if (!app->getLanguages().contains(language_name)) {
+            qWarning("Unexpected DefaultLanguage: %s", qUtf8Printable(language_name));
+            language_name = QStringLiteral("Text");
+        }
+
+        setLanguage(editor, language_name);
         return;
     }
     else {

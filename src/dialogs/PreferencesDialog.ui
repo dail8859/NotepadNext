@@ -192,6 +192,16 @@
          <item row="0" column="1">
           <widget class="QComboBox" name="comboBoxLineEndings"/>
          </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="labelDefaultLanguage">
+           <property name="text">
+            <string>Default Language</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QComboBox" name="comboBoxDefaultLanguage"/>
+         </item>
         </layout>
        </item>
        <item>
