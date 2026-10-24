@@ -42,6 +42,7 @@
 #include <QProcess>
 #include <QScreen>
 #include <QFontDatabase>
+#include <QImageReader>
 
 #ifdef Q_OS_WIN
 #include <QSimpleUpdater.h>
@@ -93,6 +94,22 @@
 
 #include "ActionUtils.h"
 
+
+// The original icons are only 16x16, so add the larger sizes of an icon from another file without replacing the small one
+static QIcon addLargeIconSizes(QIcon icon, const QString &fileName, QIcon::State state = QIcon::Off)
+{
+    QImageReader reader(fileName);
+
+    do {
+        const QImage image = reader.read();
+
+        if (image.width() > 16) {
+            icon.addPixmap(QPixmap::fromImage(image), QIcon::Normal, state);
+        }
+    } while (reader.jumpToNextImage());
+
+    return icon;
+}
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
     ui(new Ui::MainWindow),
@@ -1007,6 +1024,67 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         ui->menuBar->setMaximumHeight(showMenuBar ? QWIDGETSIZE_MAX : 0);
     });
     connect(app->getSettings(), &ApplicationSettings::showToolBarChanged, ui->mainToolBar, &QToolBar::setVisible);
+
+    // Large toolbar icons come from the Fluent icons of Notepad++. They are only set when large icons are used, else
+    // high DPI screens would pick them over the small icons, in the menus too
+    const QList<QPair<QAction *, QString>> largeIconFiles = {
+        {ui->actionNew, "new"},
+        {ui->actionOpen, "open"},
+        {ui->actionSave, "save"},
+        {ui->actionSaveAll, "saveall"},
+        {ui->actionClose, "close"},
+        {ui->actionCloseAll, "closeall"},
+        {ui->actionPrint, "print"},
+        {ui->actionCut, "cut"},
+        {ui->actionCopy, "copy"},
+        {ui->actionPaste, "paste"},
+        {ui->actionUndo, "undo"},
+        {ui->actionRedo, "redo"},
+        {ui->actionFind, "find"},
+        {ui->actionReplace, "findrep"},
+        {ui->actionZoomIn, "zoomIn"},
+        {ui->actionZoomOut, "zoomOut"},
+        {ui->actionWordWrap, "wrap"},
+        {ui->actionShowAllCharacters, "allChars"},
+        {ui->actionShowIndentGuide, "indentGuide"},
+        {ui->actionMacroRecording, "startrecord"},
+        {ui->actionPlayback, "playrecord"},
+        {ui->actionRunMacroMultipleTimes, "playrecord_m"},
+        {ui->actionSaveCurrentRecordedMacro, "saverecord"},
+    };
+    QList<std::tuple<QAction *, QIcon, QIcon>> toolBarIcons;
+    for (const auto &largeIconFile : largeIconFiles) {
+        QAction *action = largeIconFile.first;
+        const QString fileName = QStringLiteral(":/icons/fluent/%1.ico").arg(largeIconFile.second);
+
+        // Most of the icons are only defined for the "on" state, so add the large sizes for both states, else
+        // checked actions would still use the small icon
+        QIcon largeIcon = addLargeIconSizes(action->icon(), fileName, QIcon::Off);
+        largeIcon = addLargeIconSizes(largeIcon, action == ui->actionMacroRecording ? QStringLiteral(":/icons/fluent/stoprecord.ico") : fileName, QIcon::On);
+
+        toolBarIcons.append({action, action->icon(), largeIcon});
+    }
+
+    auto setToolBarIconSize = [this, toolBarIcons](int size) {
+        // Only small and large icons are available
+        size = (size == 32) ? 32 : 16;
+        ui->mainToolBar->setIconSize(QSize(size, size));
+
+        for (const auto &[action, smallIcon, largeIcon] : toolBarIcons) {
+            action->setIcon(size == 32 ? largeIcon : smallIcon);
+        }
+    };
+    auto setToolBarButtonStyle = [this](int style) {
+        if (style < Qt::ToolButtonIconOnly || style > Qt::ToolButtonFollowStyle) {
+            style = Qt::ToolButtonIconOnly;
+        }
+        ui->mainToolBar->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(style));
+    };
+    connect(app->getSettings(), &ApplicationSettings::toolBarIconSizeChanged, this, setToolBarIconSize);
+    connect(app->getSettings(), &ApplicationSettings::toolBarButtonStyleChanged, this, setToolBarButtonStyle);
+    setToolBarIconSize(app->getSettings()->toolBarIconSize());
+    setToolBarButtonStyle(app->getSettings()->toolBarButtonStyle());
+
     connect(app->getSettings(), &ApplicationSettings::showStatusBarChanged, ui->statusBar, &QStatusBar::setVisible);
     connect(ui->statusBar, &EditorInfoStatusBar::customContextMenuRequestedForEOLLabel, this, [this](const QPoint &pos){
         ui->menuEOLConversion->popup(pos);

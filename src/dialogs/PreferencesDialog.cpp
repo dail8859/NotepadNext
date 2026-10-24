@@ -43,6 +43,16 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
 
     MapSettingToCheckBox(ui->checkBoxMenuBar, &ApplicationSettings::showMenuBar, &ApplicationSettings::setShowMenuBar, &ApplicationSettings::showMenuBarChanged);
     MapSettingToCheckBox(ui->checkBoxToolBar, &ApplicationSettings::showToolBar, &ApplicationSettings::setShowToolBar, &ApplicationSettings::showToolBarChanged);
+
+    ui->comboBoxToolBarIconSize->addItem(tr("Small"), 16);
+    ui->comboBoxToolBarIconSize->addItem(tr("Large"), 32);
+    MapSettingToComboBox(ui->comboBoxToolBarIconSize, &ApplicationSettings::toolBarIconSize, &ApplicationSettings::setToolBarIconSize, &ApplicationSettings::toolBarIconSizeChanged);
+
+    ui->comboBoxToolBarButtonStyle->addItem(tr("None"), Qt::ToolButtonIconOnly);
+    ui->comboBoxToolBarButtonStyle->addItem(tr("Beside icon"), Qt::ToolButtonTextBesideIcon);
+    ui->comboBoxToolBarButtonStyle->addItem(tr("Under icon"), Qt::ToolButtonTextUnderIcon);
+    MapSettingToComboBox(ui->comboBoxToolBarButtonStyle, &ApplicationSettings::toolBarButtonStyle, &ApplicationSettings::setToolBarButtonStyle, &ApplicationSettings::toolBarButtonStyleChanged);
+
     MapSettingToCheckBox(ui->checkBoxStatusBar, &ApplicationSettings::showStatusBar, &ApplicationSettings::setShowStatusBar, &ApplicationSettings::showStatusBarChanged);
     MapSettingToCheckBox(ui->checkBoxRecenterSearchDialog, &ApplicationSettings::centerSearchDialog, &ApplicationSettings::setCenterSearchDialog, &ApplicationSettings::centerSearchDialogChanged);
 
@@ -175,6 +185,23 @@ void PreferencesDialog::MapSettingToGroupBox(QGroupBox *groupBox, Func1 getter, 
     // Set up two way connection
     connect(settings, notifier, groupBox, &QGroupBox::setChecked);
     connect(groupBox, &QGroupBox::toggled, settings, setter);
+}
+
+template<typename Func1, typename Func2, typename Func3>
+void PreferencesDialog::MapSettingToComboBox(QComboBox *comboBox, Func1 getter, Func2 setter, Func3 notifier) const
+{
+    // Select the item holding the current value, or the first one if the value is unknown
+    auto selectValue = [=](int value) {
+        const int index = comboBox->findData(value);
+        comboBox->setCurrentIndex(index == -1 ? 0 : index);
+    };
+    selectValue(std::bind(getter, settings)());
+
+    // Set up two way connection
+    connect(settings, notifier, comboBox, selectValue);
+    connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), settings, [=, this](int index) {
+        std::bind(setter, settings, comboBox->itemData(index).toInt())();
+    });
 }
 
 void PreferencesDialog::populateTranslationComboBox()
