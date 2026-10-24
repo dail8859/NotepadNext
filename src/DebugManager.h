@@ -29,6 +29,7 @@ namespace DebugManager {
     void pauseDebugOutput();
     void resumeDebugOutput();
     void addMessageHandler(DebugOutputHandler handler);
+    void removeMessageHandler(DebugOutputHandler handler);
 }
 
 #endif // DEBUGMANAGER_H
