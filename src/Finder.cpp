@@ -201,6 +201,15 @@ int Finder::replaceAll(const QString &replaceText)
         findText.chrg.cpMax = editor->length();
 
         ++total;
+
+        // An empty match must advance past the next original character, not
+        // match the same position again after inserting the replacement.
+        if (start == end) {
+            if (findText.chrg.cpMin == findText.chrg.cpMax)
+                break;
+
+            findText.chrg.cpMin = editor->positionAfter(findText.chrg.cpMin);
+        }
     }
 
     return total;
