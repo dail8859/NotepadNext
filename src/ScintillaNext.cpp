@@ -355,6 +355,11 @@ QString ScintillaNext::getFilePath() const
     return QDir::toNativeSeparators(fileInfo.canonicalFilePath());
 }
 
+QString ScintillaNext::getToolTip() const
+{
+    return isFile() ? getFilePath() : getName();
+}
+
 void ScintillaNext::setFoldMarkers(const QString &type)
 {
     QMap<QString, QList<int>> map{
