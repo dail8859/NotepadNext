@@ -60,6 +60,7 @@
 #include "EditorManager.h"
 
 #include "LuaConsoleDock.h"
+#include "CodeOutputDock.h"
 #include "LanguageInspectorDock.h"
 #include "EditorInspectorDock.h"
 #include "FolderAsWorkspaceDock.h"
@@ -92,6 +93,7 @@
 #include "FadingIndicator.h"
 
 #include "ActionUtils.h"
+#include <string>
 
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
@@ -163,7 +165,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionSaveCopyAs, &QAction::triggered, this, &MainWindow::saveCopyAsDialog);
     connect(ui->actionSaveAll, &QAction::triggered, this, &MainWindow::saveAll);
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
-
+	
+	// New Current file code run action
+    connect(ui->actionRunCode, &QAction::triggered, this, &MainWindow::runCurrentFile);
+	
     connect(ui->actionExportHtml, &QAction::triggered, this, [this]() {
         HtmlConverter html(currentEditor());
         exportAsFormat(&html, QStringLiteral("HTML files (*.html)"));
@@ -1400,6 +1405,24 @@ void MainWindow::closeAllToRight()
             editor->close();
         }
     }
+}
+
+void MainWindow::runCurrentFile()
+{
+	QString currentFilePath = currentEditor()-> getFilePath();
+	// Execute command => go run <currentFilePath>
+	// Get output
+	// Display in a Dock like search results
+	qInfo("Initiated main.runCurrentFile");
+	CodeOutputDock *codeOutputDock = new CodeOutputDock(this);
+    codeOutputDock->hide();
+    addDockWidget(Qt::BottomDockWidgetArea, codeOutputDock);
+	
+	QString cmd = "/usr/local/go/bin/go -C /home/soumen/Agents/anobik run "+currentFilePath +" 2>&1";
+	qInfo(cmd.toUtf8().constData());
+	// run the command. store. display in dock
+	codeOutputDock->executeCommand(cmd);
+	codeOutputDock->show();
 }
 
 bool MainWindow::saveCurrentFile()

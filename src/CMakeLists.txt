@@ -167,6 +167,9 @@ qt_add_executable(NotepadNext
 	docks/LuaConsoleDock.cpp
 	docks/LuaConsoleDock.h
 	docks/LuaConsoleDock.ui
+	docks/CodeOutputDock.cpp
+	docks/CodeOutputDock.h
+	docks/CodeOutputDock.ui
 	docks/SearchResultsDock.cpp
 	docks/SearchResultsDock.h
 	docks/SearchResultsDock.ui

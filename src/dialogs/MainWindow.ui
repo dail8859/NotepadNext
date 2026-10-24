@@ -418,6 +418,8 @@
    <addaction name="actionPlayback"/>
    <addaction name="actionRunMacroMultipleTimes"/>
    <addaction name="actionSaveCurrentRecordedMacro"/>
+   <addaction name="separator"/>
+   <addaction name="actionRunCode"/>
   </widget>
   <widget class="EditorInfoStatusBar" name="statusBar"/>
   <action name="actionNew">
@@ -762,6 +764,16 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl++</string>
+   </property>
+  </action>
+  <action name="actionRunCode">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/runcode.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Run current file</string>
    </property>
   </action>
   <action name="actionZoomOut">

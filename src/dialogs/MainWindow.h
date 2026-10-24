@@ -79,6 +79,7 @@ public slots:
     void closeAllExceptActive();
     void closeAllToLeft();
     void closeAllToRight();
+	void runCurrentFile();
 
     bool saveCurrentFile();
     bool saveFile(ScintillaNext *editor);
