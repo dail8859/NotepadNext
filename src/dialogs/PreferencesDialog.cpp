@@ -99,6 +99,15 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
         ui->comboBoxLineEndings->setCurrentIndex(index == -1 ? 0 : index);
     });
 
+    NotepadNextApplication *app = qobject_cast<NotepadNextApplication *>(qApp);
+    ui->comboBoxDefaultLanguage->addItems(app->getLanguages());
+
+    // Select the current one
+    ui->comboBoxDefaultLanguage->setCurrentText(settings->defaultLanguage());
+
+    connect(ui->comboBoxDefaultLanguage, &QComboBox::currentTextChanged, settings, &ApplicationSettings::setDefaultLanguage);
+    connect(settings, &ApplicationSettings::defaultLanguageChanged, ui->comboBoxDefaultLanguage, &QComboBox::setCurrentText);
+
     MapSettingToCheckBox(ui->checkBoxHighlightURLs, &ApplicationSettings::urlHighlighting, &ApplicationSettings::setURLHighlighting, &ApplicationSettings::urlHighlightingChanged);
     MapSettingToCheckBox(ui->checkBoxShowLineNumbers, &ApplicationSettings::showLineNumbers, &ApplicationSettings::setShowLineNumbers, &ApplicationSettings::showLineNumbersChanged);
     MapSettingToCheckBox(ui->checkBoxAutoCompletion, &ApplicationSettings::autoCompletion, &ApplicationSettings::setAutoCompletion, &ApplicationSettings::autoCompletionChanged);
