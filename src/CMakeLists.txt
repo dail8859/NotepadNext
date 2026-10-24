@@ -19,6 +19,7 @@ qt_add_executable(NotepadNext
 	FocusWatcher.h
 	HtmlConverter.h
 	IFaceTable.h
+	IndentationDetector.h
 	IFaceTableMixer.h
 	ISearchResultsHandler.h
 	LanguageStylesModel.h
@@ -66,6 +67,7 @@ qt_add_executable(NotepadNext
 	Finder.cpp
 	HtmlConverter.cpp
 	IFaceTable.cpp
+	IndentationDetector.cpp
 	IFaceTableMixer.cpp
 	LanguageStylesModel.cpp
 	LuaExtension.cpp
