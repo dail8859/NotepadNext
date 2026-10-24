@@ -24,6 +24,7 @@
 
 #include <QDialog>
 #include <QCheckBox>
+#include <QComboBox>
 #include <QGroupBox>
 
 namespace Ui {
@@ -51,6 +52,9 @@ private:
 
     template <typename Func1, typename Func2, typename Func3>
     void MapSettingToGroupBox(QGroupBox *groupBox, Func1 getter, Func2 setter, Func3 notifier) const;
+
+    template <typename Func1, typename Func2, typename Func3>
+    void MapSettingToComboBox(QComboBox *comboBox, Func1 getter, Func2 setter, Func3 notifier) const;
 
     void populateTranslationComboBox();
 };
