@@ -181,13 +181,7 @@ void DockedEditor::addEditor(ScintillaNext *editor)
         emit contextMenuRequestedForEditor(editor);
     });
 
-    // Set the tooltip based on the buffer
-    if (editor->isFile()) {
-        dockWidget->tabWidget()->setToolTip(editor->getFilePath());
-    }
-    else {
-        dockWidget->tabWidget()->setToolTip(editor->getName());
-    }
+    dockWidget->tabWidget()->setToolTip(editor->getToolTip());
 
     // Set the icon
     if (editor->readOnly()) {
@@ -221,13 +215,7 @@ void DockedEditor::editorRenamed(ScintillaNext *editor)
     ads::CDockWidget *dockWidget = qobject_cast<ads::CDockWidget *>(editor->parentWidget());
 
     dockWidget->setWindowTitle(editor->getName());
-
-    if (editor->isFile()) {
-        dockWidget->tabWidget()->setToolTip(editor->getFilePath());
-    }
-    else {
-        dockWidget->tabWidget()->setToolTip(editor->getName());
-    }
+    dockWidget->tabWidget()->setToolTip(editor->getToolTip());
 }
 
 void DockedEditor::splitToRight(ScintillaNext *editor)
