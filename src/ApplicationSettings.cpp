@@ -69,6 +69,7 @@ CREATE_SETTING(Editor, FontName, fontName, QString, QStringLiteral("Courier New"
 CREATE_SETTING(Editor, FontSize, fontSize, int, []() { return qApp->font().pointSize() + 2; })
 CREATE_SETTING(Editor, AdditionalWordChars, additionalWordChars, QString, QStringLiteral(""));
 CREATE_SETTING(Editor, DefaultEOLMode, defaultEOLMode, QString, QStringLiteral(""))
+CREATE_SETTING(Editor, DefaultLanguage, defaultLanguage, QString, QStringLiteral("Text"))
 CREATE_SETTING(Editor, URLHighlighting, urlHighlighting, bool, true)
 CREATE_SETTING(Editor, ShowLineNumbers, showLineNumbers, bool, true)
 CREATE_SETTING(Editor, AutoCompletion, autoCompletion, bool, true)
