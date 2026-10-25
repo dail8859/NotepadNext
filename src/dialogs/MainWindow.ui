@@ -355,6 +355,19 @@
     </property>
     <addaction name="actionThis_is_not_currently_implemented"/>
    </widget>
+   <widget class="QMenu" name="menuRunConfig">
+    <property name="title">
+     <string>Run</string>
+    </property>
+    <addaction name="actionNewRunConfig"/>
+	<addaction name="actionRunLastConfig"/>
+    <widget class="QMenu" name="recentRunConfigs">
+	  <property name="title">
+      <string>Recent configs...</string>
+	  </property>
+	</widget>
+	<addaction name="recentRunConfigs"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuSearch"/>
@@ -363,6 +376,7 @@
    <addaction name="menuLanguage"/>
    <addaction name="menuSettings"/>
    <addaction name="menuMacro"/>
+   <addaction name="menuRunConfig"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -1594,6 +1608,16 @@
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+F3</string>
    </property>
+  </action>
+  <action name="actionNewRunConfig">
+    <property name="text">
+	<string>Create New Config</string>
+	</property>
+  </action>
+  <action name="actionRunLastConfig">
+    <property name="text">
+	<string>Run last config</string>
+	</property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

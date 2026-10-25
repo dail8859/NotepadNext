@@ -61,6 +61,7 @@
 
 #include "LuaConsoleDock.h"
 #include "CodeOutputDock.h"
+#include "RunConfigDialog.h"
 #include "LanguageInspectorDock.h"
 #include "EditorInspectorDock.h"
 #include "FolderAsWorkspaceDock.h"
@@ -984,6 +985,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     LuaConsoleDock *luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
     luaConsoleDock->hide();
     addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
+	
+	codeOutputDock = new CodeOutputDock(this);
+    codeOutputDock->hide();
+    addDockWidget(Qt::BottomDockWidgetArea, codeOutputDock);
 
     DebugLogDock *debugLogDock = new DebugLogDock(this);
     debugLogDock->hide();
@@ -1016,6 +1021,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->statusBar, &EditorInfoStatusBar::customContextMenuRequestedForEOLLabel, this, [this](const QPoint &pos){
         ui->menuEOLConversion->popup(pos);
     });
+	
+	connect(ui->actionNewRunConfig, &QAction::triggered, this, &MainWindow::openNewRunConfig);
 
     // It seems restoreState() does not affect the status bar so set it manually
     ui->statusBar->setVisible(app->getSettings()->showStatusBar());
@@ -1414,10 +1421,6 @@ void MainWindow::runCurrentFile()
 	// Get output
 	// Display in a Dock like search results
 	qInfo("Initiated main.runCurrentFile");
-	CodeOutputDock *codeOutputDock = new CodeOutputDock(this);
-    codeOutputDock->hide();
-    addDockWidget(Qt::BottomDockWidgetArea, codeOutputDock);
-	
 	QString cmd = "/usr/local/go/bin/go -C /home/soumen/Agents/anobik run "+currentFilePath +" 2>&1";
 	qInfo(cmd.toUtf8().constData());
 	// run the command. store. display in dock
@@ -2430,4 +2433,23 @@ void MainWindow::languageMenuTriggered()
     QVariant v = act->data();
 
     setLanguage(editor, v.toString());
+}
+
+void MainWindow::openNewRunConfig()
+{
+	// Run Config actions
+	QSettings runConfigSettings("RunConfig.ini", QSettings::IniFormat);
+	
+	runConfigSettings.setValue("build/Version","1.0.0");
+	runConfigSettings.sync();
+	
+	runConfDialog = findChild<RunConfigDialog *>(QString(), Qt::FindDirectChildrenOnly);
+	
+	if(runConfDialog == Q_NULLPTR){
+		runConfDialog = new RunConfigDialog(&runConfigSettings, this);
+		runConfDialog->hide();
+	}
+	runConfDialog->show();
+	runConfDialog->raise();
+	runConfDialog->activateWindow();
 }

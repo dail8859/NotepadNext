@@ -146,6 +146,9 @@ qt_add_executable(NotepadNext
 	dialogs/PreferencesDialog.cpp
 	dialogs/PreferencesDialog.h
 	dialogs/PreferencesDialog.ui
+	dialogs/RunConfigDialog.cpp
+	dialogs/RunConfigDialog.h
+	dialogs/RunConfigDialog.ui
 	docks/DebugLogDock.cpp
 	docks/DebugLogDock.h
 	docks/DebugLogDock.ui

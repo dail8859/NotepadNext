@@ -99,6 +99,7 @@ void CodeOutputDock::executeCommand(const QString cmd)
 
 void CodeOutputDock::writeOutputToDock(const QString cmdOutput){
 	codeOutput->setReadOnly(false);
+	codeOutput->clearAll();
     codeOutput->appendText(cmdOutput.size(), cmdOutput.toUtf8().constData());
 	qInfo(cmdOutput.toUtf8().constData());
     codeOutput->setReadOnly(true);

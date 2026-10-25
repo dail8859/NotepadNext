@@ -25,7 +25,8 @@
 #include <QActionGroup>
 
 #include "DockedEditor.h"
-
+#include "CodeOutputDock.h"
+#include "RunConfigDialog.h"
 #include "MacroManager.h"
 #include "ScintillaNext.h"
 #include "NppImporter.h"
@@ -131,6 +132,7 @@ public slots:
     void restoreWindowState();
 
     void switchToEditor(const ScintillaNext *editor);
+	void openNewRunConfig();
 
 signals:
     void editorActivated(ScintillaNext *editor);
@@ -152,7 +154,9 @@ private:
     Ui::MainWindow *ui = Q_NULLPTR;
     NotepadNextApplication *app = Q_NULLPTR;
     DockedEditor *dockedEditor = Q_NULLPTR;
-
+	CodeOutputDock *codeOutputDock = Q_NULLPTR;
+	RunConfigDialog *runConfDialog = Q_NULLPTR;
+	
     QScopedPointer<SearchResultsCollector> searchResults;
 
     template <typename Method>
