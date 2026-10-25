@@ -850,7 +850,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="154"/>
       <source>Blank Operations</source>
-      <translation type="unfinished"/>
+      <translation>空白操作</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="160"/>
@@ -1402,7 +1402,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1177"/>
       <source>Trim Trailing Space</source>
-      <translation type="unfinished"/>
+      <translation>刪除尾隨空格</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1186"/>
@@ -2002,7 +2002,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="198"/>
       <source>Default Language</source>
-      <translation type="unfinished"/>
+      <translation>預設語言</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="210"/>
