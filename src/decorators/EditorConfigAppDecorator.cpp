@@ -62,7 +62,12 @@ void EditorConfigAppDecorator::doEditorConfig(ScintillaNext *editor)
             }
 
             if (settings.contains(QStringLiteral("indent_style"))) {
-                if (settings[QStringLiteral("indent_style")] == QStringLiteral("tab")) editor->setUseTabs(true);
+                if (settings[QStringLiteral("indent_style")] == QStringLiteral("tab")) {
+                    editor->setUseTabs(true);
+
+                    // Indent by the tab width unless indent_size says otherwise, ignoring any indentation size detected from the file
+                    editor->setIndent(0);
+                }
                 else if (settings[QStringLiteral("indent_style")] == QStringLiteral("space")) editor->setUseTabs(false);
 
                 // Set a flag so that the tab/spaces won't get overridden

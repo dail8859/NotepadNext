@@ -111,6 +111,7 @@ PreferencesDialog::PreferencesDialog(ApplicationSettings *settings, QWidget *par
     MapSettingToCheckBox(ui->checkBoxHighlightURLs, &ApplicationSettings::urlHighlighting, &ApplicationSettings::setURLHighlighting, &ApplicationSettings::urlHighlightingChanged);
     MapSettingToCheckBox(ui->checkBoxShowLineNumbers, &ApplicationSettings::showLineNumbers, &ApplicationSettings::setShowLineNumbers, &ApplicationSettings::showLineNumbersChanged);
     MapSettingToCheckBox(ui->checkBoxAutoCompletion, &ApplicationSettings::autoCompletion, &ApplicationSettings::setAutoCompletion, &ApplicationSettings::autoCompletionChanged);
+    MapSettingToCheckBox(ui->checkBoxDetectIndentation, &ApplicationSettings::detectIndentation, &ApplicationSettings::setDetectIndentation, &ApplicationSettings::detectIndentationChanged);
 
     QButtonGroup *buttonGroup = new QButtonGroup(this);
     buttonGroup->addButton(ui->radioFollowCurrentDirectory, ApplicationSettings::FollowCurrentDocument);
