@@ -862,7 +862,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="154"/>
       <source>Blank Operations</source>
-      <translation type="unfinished"/>
+      <translation>Операции с пробелами</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="160"/>
@@ -1414,7 +1414,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1177"/>
       <source>Trim Trailing Space</source>
-      <translation type="unfinished"/>
+      <translation>Удалить пробелы в конце строк</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1186"/>
@@ -2017,7 +2017,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="198"/>
       <source>Default Language</source>
-      <translation type="unfinished"/>
+      <translation>Язык по умолчанию</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="210"/>
