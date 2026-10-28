@@ -195,14 +195,29 @@ void ScintillaNext::forEachLineInSelection(int selection, Func callback)
 template<typename Func>
 void ScintillaNext::forEachMatchInRange(const QByteArray &text, Func callback, Sci_CharacterRange range)
 {
-    Sci_TextToFind ttf {range, text.constData(), {INVALID_POSITION, INVALID_POSITION}};
-    int flags = searchFlags();
+    // Search in the target rather than with SCI_FINDTEXT, which takes a null terminated
+    // string and therefore cannot find null characters. The target is restored afterwards.
+    const Sci_Position originalTargetStart = targetStart();
+    const Sci_Position originalTargetEnd = targetEnd();
 
-    while (send(SCI_FINDTEXT, flags, reinterpret_cast<sptr_t>(&ttf)) != INVALID_POSITION) {
-        if(ttf.chrgText.cpMin == ttf.chrgText.cpMax)
+    Sci_Position start = range.cpMin;
+
+    while (start < range.cpMax) {
+        setTargetRange(start, range.cpMax);
+
+        if (searchInTarget(text.length(), text.constData()) == INVALID_POSITION)
             break;
-        ttf.chrg.cpMin = callback(ttf.chrgText.cpMin, ttf.chrgText.cpMax);
+
+        const Sci_Position matchStart = targetStart();
+        const Sci_Position matchEnd = targetEnd();
+
+        if (matchStart == matchEnd)
+            break;
+
+        start = callback(matchStart, matchEnd);
     }
+
+    setTargetRange(originalTargetStart, originalTargetEnd);
 }
 
 #endif // SCINTILLANEXT_H
