@@ -306,6 +306,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="buttonFindAllInFiles">
+         <property name="text">
+          <string>Find All</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="buttonMarkAll">
          <property name="text">
           <string>Mark All</string>
@@ -455,6 +465,98 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="labelFilters">
+           <property name="text">
+            <string>Filte&amp;rs:</string>
+           </property>
+           <property name="buddy">
+            <cstring>comboFilters</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="comboFilters">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+           <property name="maxCount">
+            <number>10</number>
+           </property>
+           <property name="insertPolicy">
+            <enum>QComboBox::NoInsert</enum>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="labelDirectory">
+           <property name="text">
+            <string>Director&amp;y:</string>
+           </property>
+           <property name="buddy">
+            <cstring>comboDirectory</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QWidget" name="directoryWidget" native="true">
+           <layout class="QHBoxLayout" name="horizontalLayoutDirectory">
+            <property name="spacing">
+             <number>2</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QComboBox" name="comboDirectory">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="editable">
+               <bool>true</bool>
+              </property>
+              <property name="maxCount">
+               <number>10</number>
+              </property>
+              <property name="insertPolicy">
+               <enum>QComboBox::NoInsert</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="buttonBrowseDirectory">
+              <property name="text">
+               <string notr="true">...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>
@@ -486,6 +588,16 @@
           <widget class="QCheckBox" name="checkBoxPurgeForEachSearch">
            <property name="text">
             <string>&amp;Purge for each search</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxInSubFolders">
+           <property name="text">
+            <string>In all su&amp;b-folders</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -528,6 +640,9 @@
  <tabstops>
   <tabstop>comboFind</tabstop>
   <tabstop>comboReplace</tabstop>
+  <tabstop>comboFilters</tabstop>
+  <tabstop>comboDirectory</tabstop>
+  <tabstop>buttonBrowseDirectory</tabstop>
   <tabstop>radioNormalSearch</tabstop>
   <tabstop>radioExtendedSearch</tabstop>
   <tabstop>radioRegexSearch</tabstop>
@@ -539,6 +654,7 @@
   <tabstop>buttonReplaceAllInDocuments</tabstop>
   <tabstop>buttonFindAllInDocuments</tabstop>
   <tabstop>buttonFindAllInCurrent</tabstop>
+  <tabstop>buttonFindAllInFiles</tabstop>
   <tabstop>buttonMarkAll</tabstop>
   <tabstop>buttonClearAllMarks</tabstop>
   <tabstop>buttonCopyMarkedText</tabstop>

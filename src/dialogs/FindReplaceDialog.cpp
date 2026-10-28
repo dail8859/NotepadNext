@@ -19,8 +19,14 @@
 
 #include "FindReplaceDialog.h"
 #include "ApplicationSettings.h"
+#include "EditorManager.h"
+#include "NotepadNextApplication.h"
 #include "ui_FindReplaceDialog.h"
 
+#include <QDirIterator>
+#include <QFileDialog>
+#include <QProgressDialog>
+#include <QRegularExpression>
 #include <QStatusBar>
 #include <QLineEdit>
 #include <QShortcut>
@@ -43,6 +49,22 @@ static void convertToExtended(QString &str)
     // TODO: more
 }
 
+static bool isBinaryFile(const QString &filePath)
+{
+    QFile file(filePath);
+
+    if (!file.open(QIODevice::ReadOnly))
+        return true;
+
+    const QByteArray head = file.read(8000);
+
+    // Unicode files with a byte order mark legitimately contain null bytes
+    if (head.startsWith("\xFF\xFE") || head.startsWith("\xFE\xFF") || head.startsWith(QByteArray("\x00\x00\xFE\xFF", 4)))
+        return false;
+
+    return head.contains('\0');
+}
+
 FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainWindow *window) :
     QDialog(window, Qt::Dialog),
     ui(new Ui::FindReplaceDialog),
@@ -63,6 +85,7 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     tabBar->addTab(tr("Find"));
     tabBar->addTab(tr("Replace"));
     tabBar->addTab(tr("Mark"));
+    tabBar->addTab(tr("Find in Files"));
     tabBar->setExpanding(false);
     qobject_cast<QVBoxLayout *>(layout())->insertWidget(0, tabBar);
     connect(tabBar, &QTabBar::currentChanged, this, &FindReplaceDialog::changeTab);
@@ -74,6 +97,8 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
     // Disable auto completion
     ui->comboFind->setCompleter(nullptr);
     ui->comboReplace->setCompleter(nullptr);
+    ui->comboFilters->setCompleter(nullptr);
+    ui->comboDirectory->setCompleter(nullptr);
 
     // If the selection changes highlight the text
     connect(ui->comboFind, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), ui->comboFind->lineEdit(), &QLineEdit::selectAll);
@@ -129,6 +154,23 @@ FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainW
 
         close();
     });
+    connect(ui->buttonFindAllInFiles, &QPushButton::clicked, this, [=, this]() {
+        if (!QFileInfo(ui->comboDirectory->currentText()).isDir()) {
+            showMessage(tr("The directory does not exist."), "red");
+            return;
+        }
+
+        prepareToPerformSearch();
+
+        searchResultsHandler->newSearch(findString());
+
+        findAllInFiles();
+
+        searchResultsHandler->completeSearch();
+
+        close();
+    });
+    connect(ui->buttonBrowseDirectory, &QToolButton::clicked, this, &FindReplaceDialog::browseDirectory);
     connect(ui->buttonReplace, &QPushButton::clicked, this, &FindReplaceDialog::replace);
     connect(ui->buttonReplaceAll, &QPushButton::clicked, this, &FindReplaceDialog::replaceAll);
     connect(ui->buttonReplaceAllInDocuments, &QPushButton::clicked, this, [=, this]() {
@@ -318,6 +360,67 @@ void FindReplaceDialog::findAllInDocuments()
     setEditor(current_editor);
 }
 
+void FindReplaceDialog::findAllInFiles()
+{
+    qInfo(Q_FUNC_INFO);
+
+    const QString directory = QDir::cleanPath(ui->comboDirectory->currentText());
+    QString filters = ui->comboFilters->currentText().trimmed();
+
+    if (filters.isEmpty())
+        filters = QStringLiteral("*");
+
+    updateComboList(ui->comboDirectory, directory);
+    updateComboList(ui->comboFilters, filters);
+
+    const QStringList nameFilters = filters.split(QRegularExpression(QStringLiteral("[;\\s]+")), Qt::SkipEmptyParts);
+    const QDirIterator::IteratorFlags flags = ui->checkBoxInSubFolders->isChecked() ? QDirIterator::Subdirectories : QDirIterator::NoIteratorFlags;
+
+    QStringList filePaths;
+    QDirIterator it(directory, nameFilters, QDir::Files | QDir::NoDotAndDotDot, flags);
+    while (it.hasNext()) {
+        filePaths.append(it.next());
+    }
+    filePaths.sort();
+
+    QProgressDialog progress(tr("Searching in files..."), tr("Cancel"), 0, filePaths.size(), this);
+    progress.setWindowModality(Qt::WindowModal);
+    progress.setMinimumDuration(500);
+
+    EditorManager *editorManager = qobject_cast<NotepadNextApplication *>(qApp)->getEditorManager();
+    ScintillaNext *current_editor = editor;
+
+    for (int i = 0; i < filePaths.size(); ++i) {
+        progress.setValue(i);
+
+        if (progress.wasCanceled())
+            break;
+
+        const QString &filePath = filePaths.at(i);
+
+        // Search the opened document so that unsaved changes are taken into account
+        ScintillaNext *openedEditor = editorManager->getEditorByFilePath(filePath);
+        if (openedEditor) {
+            setEditor(openedEditor);
+            findAllInCurrentDocument();
+            continue;
+        }
+
+        if (isBinaryFile(filePath))
+            continue;
+
+        QScopedPointer<ScintillaNext> fileEditor(ScintillaNext::fromFile(filePath));
+        if (fileEditor) {
+            setEditor(fileEditor.data());
+            findAllInCurrentDocument();
+        }
+    }
+
+    progress.setValue(filePaths.size());
+
+    setEditor(current_editor);
+}
+
 void FindReplaceDialog::replace()
 {
     qInfo(Q_FUNC_INFO);
@@ -458,6 +561,8 @@ void FindReplaceDialog::adjustOpacityAlways(bool checked)
 
 void FindReplaceDialog::changeTab(int index)
 {
+    setFindInFilesWidgetsVisible(index == FIND_IN_FILES_TAB);
+
     if (index == FIND_TAB) {
         ui->labelReplaceWith->setMaximumHeight(0);
         ui->comboReplace->setMaximumHeight(0);
@@ -531,9 +636,60 @@ void FindReplaceDialog::changeTab(int index)
         ui->checkBoxBackwardsDirection->setEnabled(!ui->radioRegexSearch->isChecked());
         ui->checkBoxWrapAround->setEnabled(true);
     }
+    else if (index == FIND_IN_FILES_TAB) {
+        ui->labelReplaceWith->setMaximumHeight(0);
+        ui->comboReplace->setMaximumHeight(0);
+        ui->comboReplace->setFocusPolicy(Qt::NoFocus);
+
+        ui->buttonFind->hide();
+
+        ui->buttonReplace->hide();
+        ui->buttonReplaceAll->hide();
+        ui->buttonReplaceAllInDocuments->hide();
+        ui->buttonCount->hide();
+        ui->buttonFindAllInCurrent->hide();
+        ui->buttonFindAllInDocuments->hide();
+        ui->buttonMarkAll->hide();
+        ui->buttonClearAllMarks->hide();
+        ui->buttonCopyMarkedText->hide();
+
+        ui->checkBoxBookmarkLine->hide();
+        ui->checkBoxPurgeForEachSearch->hide();
+
+        // Every file is searched from the beginning to the end
+        ui->checkBoxBackwardsDirection->setEnabled(false);
+        ui->checkBoxWrapAround->setEnabled(false);
+
+        if (ui->comboDirectory->currentText().isEmpty()) {
+            const QString directory = editor && editor->isFile() ? editor->getFileInfo().absolutePath() : QDir::homePath();
+            ui->comboDirectory->setCurrentText(QDir::toNativeSeparators(directory));
+        }
+    }
 
     ui->comboFind->setFocus();
     ui->comboFind->lineEdit()->selectAll();
+}
+
+void FindReplaceDialog::setFindInFilesWidgetsVisible(bool visible)
+{
+    ui->labelFilters->setVisible(visible);
+    ui->comboFilters->setVisible(visible);
+    ui->labelDirectory->setVisible(visible);
+    ui->directoryWidget->setVisible(visible);
+    ui->checkBoxInSubFolders->setVisible(visible);
+    ui->buttonFindAllInFiles->setVisible(visible);
+
+    // The Find button is hidden on this tab, so Enter needs to trigger the search
+    ui->buttonFindAllInFiles->setDefault(visible);
+    ui->buttonFind->setDefault(!visible);
+}
+
+void FindReplaceDialog::browseDirectory()
+{
+    const QString directory = QFileDialog::getExistingDirectory(this, tr("Select Directory"), ui->comboDirectory->currentText());
+
+    if (!directory.isEmpty())
+        ui->comboDirectory->setCurrentText(QDir::toNativeSeparators(directory));
 }
 
 QString FindReplaceDialog::findString() const
@@ -597,6 +753,13 @@ void FindReplaceDialog::loadSettings()
 
     ui->comboFind->addItems(settings.value("RecentSearchList").toStringList());
     ui->comboReplace->addItems(settings.value("RecentReplaceList").toStringList());
+    ui->comboDirectory->addItems(settings.value("RecentDirectoryList").toStringList());
+    ui->comboFilters->addItems(settings.value("RecentFiltersList").toStringList());
+
+    if (ui->comboFilters->count() == 0)
+        ui->comboFilters->setCurrentText(QStringLiteral("*"));
+
+    ui->checkBoxInSubFolders->setChecked(settings.value("InSubFolders", true).toBool());
 
     ui->checkBoxBackwardsDirection->setChecked(settings.value("Backwards").toBool());
     ui->checkBoxMatchWholeWord->setChecked(settings.value("WholeWord").toBool());
@@ -651,6 +814,20 @@ void FindReplaceDialog::saveSettings()
         recentSearches << ui->comboReplace->itemText(i);
     }
     settings.setValue("RecentReplaceList", recentSearches);
+
+    recentSearches.clear();
+    for (int i = 0; i < ui->comboDirectory->count(); ++i) {
+        recentSearches << ui->comboDirectory->itemText(i);
+    }
+    settings.setValue("RecentDirectoryList", recentSearches);
+
+    recentSearches.clear();
+    for (int i = 0; i < ui->comboFilters->count(); ++i) {
+        recentSearches << ui->comboFilters->itemText(i);
+    }
+    settings.setValue("RecentFiltersList", recentSearches);
+
+    settings.setValue("InSubFolders", ui->checkBoxInSubFolders->isChecked());
 
     settings.setValue("Backwards", ui->checkBoxBackwardsDirection->isChecked());
     settings.setValue("WholeWord", ui->checkBoxMatchWholeWord->isChecked());
