@@ -93,6 +93,8 @@ public:
     Sci::Position FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, bool caseSensitive, bool word, bool wordStart, Scintilla::FindOption flags, Sci::Position *length) override;
     const char *SubstituteByPosition(Document *doc, const char *text, Sci::Position *length) override;
 
+    static QString ExpandReplacement(const QRegularExpressionMatch &match, const QString &replacement);
+
 private:
     QRegularExpressionMatch match;
     QByteArray *substituted = Q_NULLPTR;

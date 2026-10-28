@@ -103,6 +103,126 @@ Sci::Position QRegexSearch::FindText(Document *doc, Sci::Position minPos, Sci::P
     return positionStart;
 }
 
+// Reads a run of decimal digits starting at i, advancing i past them. Returns -1 if there are none.
+static int readNumber(const QString &s, qsizetype &i)
+{
+    int n = -1;
+    while (i < s.length() && s[i].isDigit()) {
+        n = (n < 0 ? 0 : n * 10) + s[i].digitValue();
+        ++i;
+    }
+    return n;
+}
+
+// Reads hex digits for \xHH or \x{HHHH}, advancing i past them. Returns -1 if invalid.
+static int readHex(const QString &s, qsizetype &i)
+{
+    const bool braced = i < s.length() && s[i] == QLatin1Char('{');
+    const qsizetype start = braced ? i + 1 : i;
+    qsizetype end = start;
+    while (end < s.length() && (braced || end - start < 2) && QStringLiteral("0123456789abcdefABCDEF").contains(s[end]))
+        ++end;
+
+    if (end == start || (braced && (end >= s.length() || s[end] != QLatin1Char('}'))))
+        return -1;
+
+    bool ok;
+    const uint value = QStringView(s).mid(start, end - start).toUInt(&ok, 16);
+    if (!ok || value > 0x10FFFF)
+        return -1;
+
+    i = braced ? end + 1 : end;
+    return static_cast<int>(value);
+}
+
+// Expands a Notepad++ style replacement string: $N, ${N}, ${name}, $&, $$, \N and the usual character escapes.
+// Groups that did not participate in the match (or do not exist) expand to nothing.
+QString QRegexSearch::ExpandReplacement(const QRegularExpressionMatch &match, const QString &replacement)
+{
+    QString result;
+    result.reserve(replacement.length());
+
+    for (qsizetype i = 0; i < replacement.length(); ++i) {
+        const QChar c = replacement[i];
+
+        if (c == QLatin1Char('$') && i + 1 < replacement.length()) {
+            const QChar next = replacement[i + 1];
+            qsizetype j = i + 1;
+
+            if (next == QLatin1Char('$')) {
+                result += QLatin1Char('$');
+                i = j;
+            }
+            else if (next == QLatin1Char('&')) {
+                result += match.captured(0);
+                i = j;
+            }
+            else if (next.isDigit()) {
+                result += match.captured(readNumber(replacement, j));
+                i = j - 1;
+            }
+            else if (next == QLatin1Char('{')) {
+                const qsizetype close = replacement.indexOf(QLatin1Char('}'), j + 1);
+                if (close < 0) {
+                    result += c;
+                    continue;
+                }
+
+                const QString group = replacement.mid(j + 1, close - j - 1);
+                bool isNumber;
+                const int n = group.toInt(&isNumber);
+                result += isNumber ? match.captured(n) : match.captured(group);
+                i = close;
+            }
+            else {
+                result += c;
+            }
+        }
+        else if (c == QLatin1Char('\\') && i + 1 < replacement.length()) {
+            const QChar next = replacement[i + 1];
+            qsizetype j = i + 1;
+
+            if (next.isDigit()) {
+                result += match.captured(readNumber(replacement, j));
+                i = j - 1;
+                continue;
+            }
+
+            i = j;
+            switch (next.unicode()) {
+            case 'n': result += QLatin1Char('\n'); break;
+            case 'r': result += QLatin1Char('\r'); break;
+            case 't': result += QLatin1Char('\t'); break;
+            case 'f': result += QLatin1Char('\f'); break;
+            case 'v': result += QLatin1Char('\v'); break;
+            case 'a': result += QLatin1Char('\a'); break;
+            case 'e': result += QChar(0x1B); break;
+            case 'x': {
+                qsizetype k = j + 1;
+                const int value = readHex(replacement, k);
+                if (value < 0) {
+                    result += next;
+                }
+                else {
+                    result += QString::fromUcs4(reinterpret_cast<const char32_t *>(&value), 1);
+                    i = k - 1;
+                }
+                break;
+            }
+            default:
+                // Any other escaped character (e.g. \\ or \$) is taken literally
+                result += next;
+                break;
+            }
+        }
+        else {
+            result += c;
+        }
+    }
+
+    return result;
+}
+
 const char *QRegexSearch::SubstituteByPosition(Document *doc, const char *text, Sci::Position *length)
 {
     Q_UNUSED(doc);
@@ -112,9 +232,7 @@ const char *QRegexSearch::SubstituteByPosition(Document *doc, const char *text, 
     Q_ASSERT(match.isValid());
     Q_ASSERT(match.hasMatch());
 
-    // Get the captured text and replace the match
-    QString newString = match.captured();
-    newString.replace(match.regularExpression(), QByteArray(text, *length));
+    const QString newString = ExpandReplacement(match, QString::fromUtf8(text, *length));
 
     // TODO: figure out why this has to be new'd and can't be an instantiated class member
     if (substituted) {
