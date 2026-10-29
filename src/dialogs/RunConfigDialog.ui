@@ -65,19 +65,6 @@
        </property>
       </spacer>
      </item>
-     <item>
-      <widget class="QToolButton" name="pathButton">
-       <property name="toolTip">
-        <string>File / folder selection</string>
-       </property>
-       <property name="text">
-        <string>...</string>
-       </property>
-       <property name="popupMode">
-        <enum>QToolButton::ToolButtonPopupMode::InstantPopup</enum>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
    <item>
@@ -213,6 +200,16 @@
       <widget class="QPushButton" name="saveButton">
        <property name="text">
         <string>Save</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+	 <item>
+      <widget class="QPushButton" name="buildDeleteButton">
+       <property name="text">
+        <string>Delete</string>
        </property>
        <property name="autoDefault">
         <bool>false</bool>

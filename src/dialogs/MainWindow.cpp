@@ -1023,7 +1023,12 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     });
 	
 	connect(ui->actionNewRunConfig, &QAction::triggered, this, &MainWindow::openNewRunConfig);
-
+	runConfDialog = findChild<RunConfigDialog *>(QString(), Qt::FindDirectChildrenOnly);
+	
+	if(runConfDialog == Q_NULLPTR){
+		runConfDialog = new RunConfigDialog(this);
+		runConfDialog->hide();
+	}
     // It seems restoreState() does not affect the status bar so set it manually
     ui->statusBar->setVisible(app->getSettings()->showStatusBar());
 
@@ -2438,17 +2443,7 @@ void MainWindow::languageMenuTriggered()
 void MainWindow::openNewRunConfig()
 {
 	// Run Config actions
-	QSettings runConfigSettings("RunConfig.ini", QSettings::IniFormat);
-	
-	runConfigSettings.setValue("build/Version","1.0.0");
-	runConfigSettings.sync();
-	
-	runConfDialog = findChild<RunConfigDialog *>(QString(), Qt::FindDirectChildrenOnly);
-	
-	if(runConfDialog == Q_NULLPTR){
-		runConfDialog = new RunConfigDialog(&runConfigSettings, this);
-		runConfDialog->hide();
-	}
+	runConfDialog->loadConfig();
 	runConfDialog->show();
 	runConfDialog->raise();
 	runConfDialog->activateWindow();

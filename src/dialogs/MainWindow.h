@@ -208,6 +208,7 @@ private:
     int zoomLevel = 0;
     int contextMenuPos = 0;
     QMenu *buildMenu(QStringList actionNames);
+	QSettings runConfigSettings;
 };
 
 #endif // MAINWINDOW_H

@@ -2,13 +2,12 @@
 #include "ui_RunConfigDialog.h"
 
 #include <QFileDialog>
-#include <QMenu>
 #include <QMessageBox>
 #include <QProcess>
 #include <QProcessEnvironment>
 #include <QSettings>
 
-
+#include "ApplicationSettings.h"
 #include "MainWindow.h"
 
 namespace {
@@ -16,18 +15,11 @@ const char kFilenameToken[] = "<filename>";
 const char kDefaultCommand[] = "go run <filename>";
 }
 
-RunConfigDialog::RunConfigDialog(QSettings *runConf, MainWindow *parent)
+RunConfigDialog::RunConfigDialog(MainWindow *parent)
     : QDialog(parent, Qt::Dialog)
-    , ui(new Ui::RunConfigDialog),
-	runConfSettings(runConf)
+    , ui(new Ui::RunConfigDialog)
 {
     ui->setupUi(this);
-
-    // File / folder selection menu (menus are attached in code, not in the .ui)
-    auto *pathMenu = new QMenu(ui->pathButton);
-    pathMenu->addAction(tr("Select file..."), this, &RunConfigDialog::selectFile);
-    pathMenu->addAction(tr("Select folder..."), this, &RunConfigDialog::selectFolder);
-    ui->pathButton->setMenu(pathMenu);
 
     connect(ui->upsertButton, &QPushButton::clicked, this, &RunConfigDialog::upsertEntry);
     connect(ui->deleteButton, &QPushButton::clicked, this, &RunConfigDialog::deleteEntry);
@@ -35,6 +27,7 @@ RunConfigDialog::RunConfigDialog(QSettings *runConf, MainWindow *parent)
     connect(ui->table, &QTableWidget::itemSelectionChanged, this, &RunConfigDialog::loadRowIntoInputs);
     connect(ui->runButton, &QPushButton::clicked, this, &RunConfigDialog::onRun);
     connect(ui->saveButton, &QPushButton::clicked, this, &RunConfigDialog::onSave);
+	connect(ui->buildDeleteButton, &QPushButton::clicked, this, &RunConfigDialog::onDelete);
     connect(ui->doneButton, &QPushButton::clicked, this, &QDialog::reject);
 
     loadConfig();
@@ -80,6 +73,10 @@ void RunConfigDialog::upsertEntry()
         ui->table->insertRow(row);
     }
     setRow(row, key, value);
+	ApplicationSettings settings;
+	settings.beginGroup("EnvironmentVariable");
+	settings.setValue(key, value);
+	settings.endGroup();
 
     ui->table->clearSelection();
     ui->keyEdit->clear();
@@ -92,6 +89,10 @@ void RunConfigDialog::deleteEntry()
     const int row = findRowByKey(ui->keyEdit->text().trimmed());
     if (row < 0)
         return;
+	ApplicationSettings settings;
+	settings.beginGroup("EnvironmentVariable");
+	settings.remove(ui->keyEdit->text().trimmed());
+	settings.endGroup();
     ui->table->removeRow(row);
     ui->keyEdit->clear();
     ui->valueEdit->clear();
@@ -105,24 +106,6 @@ void RunConfigDialog::loadRowIntoInputs()
     const int row = selected.first()->row();
     ui->keyEdit->setText(ui->table->item(row, 0)->text());
     ui->valueEdit->setText(ui->table->item(row, 1)->text());
-}
-
-// ---------------------------------------------------------------------------
-// File / folder selection
-// ---------------------------------------------------------------------------
-
-void RunConfigDialog::selectFile()
-{
-    const QString path = QFileDialog::getOpenFileName(this, tr("Select file"));
-    if (!path.isEmpty())
-        insertIntoCommand(path);
-}
-
-void RunConfigDialog::selectFolder()
-{
-    const QString path = QFileDialog::getExistingDirectory(this, tr("Select folder"));
-    if (!path.isEmpty())
-        insertIntoCommand(path);
 }
 
 // Replaces the first "<filename>" token if present (in the text, or in the
@@ -148,33 +131,114 @@ void RunConfigDialog::insertIntoCommand(const QString &path)
 
 void RunConfigDialog::loadConfig()
 {
-    QSettings s;
-    ui->commandEdit->setText(s.value(QStringLiteral("command")).toString());
+    ApplicationSettings settings;
+	
+	settings.beginGroup("FolderAsWorkspace");
+	QString RootPath = settings.value("RootPath").toString();
+	settings.endGroup();
+	
+	settings.beginGroup("EnvironmentVariable");
+	settings.setValue("WorkingDirectory", RootPath);
+	
+	QStringList EnvironmentVariableList = settings.childKeys();
+	int rowIndex = 0;
+	ui->table->setRowCount(EnvironmentVariableList.size());
+	for (const QString &EnvironmentVariable : EnvironmentVariableList)
+	{
+		setRow(rowIndex++, EnvironmentVariable, settings.value(EnvironmentVariable).toString());
+	}
+    settings.endGroup();
+	
+	settings.beginGroup("RunConfigurations");
+	
+	QStringList runConfigurationList = settings.childKeys();
+	filteredConfigList.clear();
+	
+	for(const QString &runConfiguration: runConfigurationList)
+	{
+		qInfo("Detected rootDir: %s\nrun-conf: %s", qUtf8Printable(RootPath), qUtf8Printable(runConfiguration));
+		QStringList tmpConfig = runConfiguration.split("#");
+		if(tmpConfig[0]==RunConfigDialog::encode(QDir::cleanPath(RootPath)))
+		{
+			filteredConfigList.append(tmpConfig[1]);
+		}
+	}
+	runConfigNamesByWorkingDirectory = new QCompleter(filteredConfigList,ui->buildName);
+	runConfigNamesByWorkingDirectory->setCompletionMode(QCompleter::PopupCompletion);
+	runConfigNamesByWorkingDirectory->setFilterMode(Qt::MatchContains);
+	runConfigNamesByWorkingDirectory->setCaseSensitivity(Qt::CaseInsensitive);
+	
+	ui->buildName->setCompleter(runConfigNamesByWorkingDirectory);
+	
+	connect(runConfigNamesByWorkingDirectory, QOverload<const QString &>::of(&QCompleter::activated), this, &RunConfigDialog::fillBuildDetails);
+	
+	settings.endGroup();
+}
 
-    const int n = s.beginReadArray(QStringLiteral("env"));
-    for (int i = 0; i < n; ++i) {
-        s.setArrayIndex(i);
-        const int row = ui->table->rowCount();
-        ui->table->insertRow(row);
-        setRow(row, s.value(QStringLiteral("key")).toString(),
-               s.value(QStringLiteral("value")).toString());
-    }
-    s.endArray();
+void RunConfigDialog::fillBuildDetails(QString buildNameFromCompleter)
+{
+	ApplicationSettings settings;
+	
+	settings.beginGroup("FolderAsWorkspace");
+	QString RootPath = settings.value("RootPath").toString();
+	settings.endGroup();
+	
+	settings.beginGroup("RunConfigurations");
+	ui->buildName->setText(buildNameFromCompleter);
+	ui->commandEdit->setText(settings.value(RunConfigDialog::encode(QDir::cleanPath(RootPath))+"#"+buildNameFromCompleter).toString());
+	settings.endGroup();
+}
+
+QString RunConfigDialog::encode(const QString &path)
+{
+	return QString::fromLatin1(path.toUtf8().toPercentEncoding());
 }
 
 void RunConfigDialog::onSave()
 {
-    QSettings s;
-    s.setValue(QStringLiteral("command"), ui->commandEdit->text());
+    ApplicationSettings settings;
+	settings.beginGroup("EnvironmentVariable");
+	QString workingDirectory = settings.value("WorkingDirectory").toString();
+	settings.endGroup();
+	
+	settings.beginGroup("RunConfigurations");
+	settings.setValue((RunConfigDialog::encode(QDir::cleanPath(workingDirectory))+"#"+(ui->buildName->text())),ui->commandEdit->text());
+	
+    settings.sync();
+	settings.endGroup();
+	if (!filteredConfigList.contains(ui->buildName->text())) filteredConfigList.append(ui->buildName->text());
+	runConfigNamesByWorkingDirectory = new QCompleter(filteredConfigList,ui->buildName);
+	runConfigNamesByWorkingDirectory->setCompletionMode(QCompleter::PopupCompletion);
+	runConfigNamesByWorkingDirectory->setFilterMode(Qt::MatchContains);
+	runConfigNamesByWorkingDirectory->setCaseSensitivity(Qt::CaseInsensitive);
+	
+	ui->buildName->setCompleter(runConfigNamesByWorkingDirectory);
+	connect(runConfigNamesByWorkingDirectory, QOverload<const QString &>::of(&QCompleter::activated), this, &RunConfigDialog::fillBuildDetails);
+	
+}
 
-    s.beginWriteArray(QStringLiteral("env"), ui->table->rowCount());
-    for (int i = 0; i < ui->table->rowCount(); ++i) {
-        s.setArrayIndex(i);
-        s.setValue(QStringLiteral("key"), ui->table->item(i, 0)->text());
-        s.setValue(QStringLiteral("value"), ui->table->item(i, 1)->text());
-    }
-    s.endArray();
-    s.sync();
+void RunConfigDialog::onDelete()
+{
+	ApplicationSettings settings;
+	settings.beginGroup("EnvironmentVariable");
+	QString workingDirectory = settings.value("WorkingDirectory").toString();
+	settings.endGroup();
+	
+	settings.beginGroup("RunConfigurations");
+	settings.remove(RunConfigDialog::encode(QDir::cleanPath(workingDirectory))+"#"+ui->buildName->text());
+	settings.endGroup();
+	if(filteredConfigList.removeOne(ui->buildName->text()))
+	{
+	runConfigNamesByWorkingDirectory = new QCompleter(filteredConfigList,ui->buildName);
+	runConfigNamesByWorkingDirectory->setCompletionMode(QCompleter::PopupCompletion);
+	runConfigNamesByWorkingDirectory->setFilterMode(Qt::MatchContains);
+	runConfigNamesByWorkingDirectory->setCaseSensitivity(Qt::CaseInsensitive);
+	
+	ui->buildName->setCompleter(runConfigNamesByWorkingDirectory);
+	connect(runConfigNamesByWorkingDirectory, QOverload<const QString &>::of(&QCompleter::activated), this, &RunConfigDialog::fillBuildDetails);
+	}
+	ui->buildName->setText("");
+	ui->commandEdit->setText("");
 }
 
 // ---------------------------------------------------------------------------
