@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QObject>
 #include <QCompleter>
+#include <QStringListModel>
 
 class MainWindow;
 
@@ -24,6 +25,7 @@ public:
 	QString encode(const QString &path);
 	QCompleter *runConfigNamesByWorkingDirectory;
 	QStringList filteredConfigList;
+	QStringListModel *qStrModel;
 
 private slots:
     void upsertEntry();
@@ -32,6 +34,9 @@ private slots:
     void onRun();
     void onSave();
 	void onDelete();
+	
+signals:
+	void sendCommand(const QString &command);
 
 private:
     int findRowByKey(const QString &key) const;

@@ -168,7 +168,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
 	
 	// New Current file code run action
-    connect(ui->actionRunCode, &QAction::triggered, this, &MainWindow::runCurrentFile);
+    //connect(ui->actionRunCode, &QAction::triggered, this, &MainWindow::runCommand);
 	
     connect(ui->actionExportHtml, &QAction::triggered, this, [this]() {
         HtmlConverter html(currentEditor());
@@ -1029,6 +1029,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 		runConfDialog = new RunConfigDialog(this);
 		runConfDialog->hide();
 	}
+	connect(runConfDialog, &RunConfigDialog::sendCommand, this, &MainWindow::registerLastCommand);
+	connect(runConfDialog, &RunConfigDialog::sendCommand, this, &MainWindow::runCommand);
+	
+	
     // It seems restoreState() does not affect the status bar so set it manually
     ui->statusBar->setVisible(app->getSettings()->showStatusBar());
 
@@ -1419,18 +1423,39 @@ void MainWindow::closeAllToRight()
     }
 }
 
-void MainWindow::runCurrentFile()
+void MainWindow::runCommand(const QString command)
 {
-	QString currentFilePath = currentEditor()-> getFilePath();
-	// Execute command => go run <currentFilePath>
-	// Get output
-	// Display in a Dock like search results
-	qInfo("Initiated main.runCurrentFile");
-	QString cmd = "/usr/local/go/bin/go -C /home/soumen/Agents/anobik run "+currentFilePath +" 2>&1";
-	qInfo(cmd.toUtf8().constData());
-	// run the command. store. display in dock
-	codeOutputDock->executeCommand(cmd);
+	MainWindow::registerLastCommand(command);
+	
+	
+	ApplicationSettings *settings = app->getSettings();
+    settings->beginGroup("FolderAsWorkspace");
+	QString RootPath = settings->value("RootPath").toString();
+	settings->endGroup();
+	QString finalCmd = MainWindow::constructCommand(command);
+	
+	qInfo("final command: %s", finalCmd);
+	
+	codeOutputDock->executeCommand(finalCmd);
 	codeOutputDock->show();
+}
+
+QString MainWindow::constructCommand(QString cmd)
+{
+	ApplicationSettings *settings = app->getSettings();
+    settings->beginGroup("EnvironmentVariables");
+	QStringList keys = settings->childKeys();
+	for (const QString &key : keys)
+	{
+		cmd.replace(("{"+key+"}"), settings->value(key).toString());
+	}
+	
+	settings->endGroup();
+	return cmd;
+}
+void MainWindow::registerLastCommand(QString cmd)
+{
+	
 }
 
 bool MainWindow::saveCurrentFile()

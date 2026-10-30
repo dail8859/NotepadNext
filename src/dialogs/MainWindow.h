@@ -58,13 +58,17 @@ public:
     bool isAnyUnsaved() const;
 
     void setupLanguageMenu();
+	QString constructCommand(QString cmd);
     ScintillaNext *currentEditor() const;
     int editorCount() const;
     QVector<ScintillaNext *> editors() const;
     DockedEditor *getDockedEditor() const { return dockedEditor; }
+	
 
 public slots:
     void newFile();
+	void runCommand(const QString cmd);
+	void registerLastCommand(QString cmd);
 
     void openFileDialog();
     void openFile(const QString &filePath);
@@ -80,7 +84,6 @@ public slots:
     void closeAllExceptActive();
     void closeAllToLeft();
     void closeAllToRight();
-	void runCurrentFile();
 
     bool saveCurrentFile();
     bool saveFile(ScintillaNext *editor);

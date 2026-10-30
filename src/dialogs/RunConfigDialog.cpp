@@ -163,7 +163,8 @@ void RunConfigDialog::loadConfig()
 			filteredConfigList.append(tmpConfig[1]);
 		}
 	}
-	runConfigNamesByWorkingDirectory = new QCompleter(filteredConfigList,ui->buildName);
+	qStrModel = new QStringListModel(filteredConfigList, this);
+	runConfigNamesByWorkingDirectory = new QCompleter(qStrModel,ui->buildName);
 	runConfigNamesByWorkingDirectory->setCompletionMode(QCompleter::PopupCompletion);
 	runConfigNamesByWorkingDirectory->setFilterMode(Qt::MatchContains);
 	runConfigNamesByWorkingDirectory->setCaseSensitivity(Qt::CaseInsensitive);
@@ -206,14 +207,10 @@ void RunConfigDialog::onSave()
 	
     settings.sync();
 	settings.endGroup();
-	if (!filteredConfigList.contains(ui->buildName->text())) filteredConfigList.append(ui->buildName->text());
-	runConfigNamesByWorkingDirectory = new QCompleter(filteredConfigList,ui->buildName);
-	runConfigNamesByWorkingDirectory->setCompletionMode(QCompleter::PopupCompletion);
-	runConfigNamesByWorkingDirectory->setFilterMode(Qt::MatchContains);
-	runConfigNamesByWorkingDirectory->setCaseSensitivity(Qt::CaseInsensitive);
-	
-	ui->buildName->setCompleter(runConfigNamesByWorkingDirectory);
-	connect(runConfigNamesByWorkingDirectory, QOverload<const QString &>::of(&QCompleter::activated), this, &RunConfigDialog::fillBuildDetails);
+	if (!filteredConfigList.contains(ui->buildName->text())) {
+		filteredConfigList.append(ui->buildName->text());
+		qStrModel->setStringList(filteredConfigList);
+	}
 	
 }
 
@@ -229,13 +226,7 @@ void RunConfigDialog::onDelete()
 	settings.endGroup();
 	if(filteredConfigList.removeOne(ui->buildName->text()))
 	{
-	runConfigNamesByWorkingDirectory = new QCompleter(filteredConfigList,ui->buildName);
-	runConfigNamesByWorkingDirectory->setCompletionMode(QCompleter::PopupCompletion);
-	runConfigNamesByWorkingDirectory->setFilterMode(Qt::MatchContains);
-	runConfigNamesByWorkingDirectory->setCaseSensitivity(Qt::CaseInsensitive);
-	
-	ui->buildName->setCompleter(runConfigNamesByWorkingDirectory);
-	connect(runConfigNamesByWorkingDirectory, QOverload<const QString &>::of(&QCompleter::activated), this, &RunConfigDialog::fillBuildDetails);
+	qStrModel->setStringList(filteredConfigList);
 	}
 	ui->buildName->setText("");
 	ui->commandEdit->setText("");
@@ -247,36 +238,7 @@ void RunConfigDialog::onDelete()
 
 void RunConfigDialog::onRun()
 {
-    const QString cmd = ui->commandEdit->text().trimmed();
-    if (cmd.isEmpty()) {
-        QMessageBox::warning(this, tr("No command"), tr("The command field is empty."));
-        return;
-    }
-    if (cmd.contains(QLatin1String(kFilenameToken))) {
-        QMessageBox::warning(this, tr("Unresolved token"),
-                             tr("The command still contains <filename>. "
-                                "Use the file / folder selection button."));
-        return;
-    }
-
-    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    for (int i = 0; i < ui->table->rowCount(); ++i)
-        env.insert(ui->table->item(i, 0)->text(), ui->table->item(i, 1)->text());
-
-    // A shell is required because the command may contain pipes.
-    QProcess process;
-#ifdef Q_OS_WIN
-    process.setProgram(QStringLiteral("cmd"));
-    process.setArguments({QStringLiteral("/c"), cmd});
-#else
-    process.setProgram(QStringLiteral("/bin/sh"));
-    process.setArguments({QStringLiteral("-c"), cmd});
-#endif
-    process.setProcessEnvironment(env);
-
-    if (!process.startDetached()) {
-        QMessageBox::critical(this, tr("Run failed"), process.errorString());
-        return;
-    }
+	QString cmd = ui->commandEdit->text();
+	emit sendCommand(cmd);
     accept();
 }
