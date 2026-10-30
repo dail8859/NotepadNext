@@ -693,16 +693,31 @@ bool ScintillaNext::readFromDisk(QFile &file)
     // modEventMask(SC_MOD_NONE)?
 
     QByteArray chunk;
-    qint64 bytesRead;
+    qint64 bytesRead = 0;
+    qint64 totalBytesRead = 0;
     QStringDecoder decoder;
     QStringEncoder encoder = QStringEncoder(QStringEncoder::Utf8);
 
     bool first_read = true;
-    do {
+    // Set up-front: an immediate read error leaves the loop without ever
+    // running the first_read detection below.
+    bomType = BomType::None;
+
+    // Stop explicitly on a failed or empty read rather than relying only on
+    // file.atEnd(): after a failed read the position has not advanced, so
+    // atEnd() stays false for a mid-file error and the old do/while spun
+    // forever re-reading the same failing position. A zero-length first read
+    // still runs the BOM detection below (for an empty file) before stopping.
+    while (true) {
         // Try to read as much as possible
         chunk.resize(CHUNK_SIZE);
         bytesRead = file.read(chunk.data(), CHUNK_SIZE);
+
+        if (bytesRead < 0)
+            break;
+
         chunk.resize(bytesRead);
+        totalBytesRead += bytesRead;
 
         qDebug("Read %lld bytes", bytesRead);
 
@@ -751,7 +766,13 @@ bool ScintillaNext::readFromDisk(QFile &file)
             // No conversion necessary.
             appendText(input.size(), input.data());
         }
-    } while (!file.atEnd() && status() == SC_STATUS_OK);
+        if (bytesRead == 0 || status() != SC_STATUS_OK || file.atEnd())
+            break;
+    }
+
+    // Capture the error now: a successful close() clears it.
+    const QFileDevice::FileError readError = file.error();
+    const QString readErrorString = file.errorString();
 
     file.close();
 
@@ -765,8 +786,9 @@ bool ScintillaNext::readFromDisk(QFile &file)
         return false;
     }
 
-    if (bytesRead == -1) {
-        qWarning("Something bad happened when reading disk %d %s", file.error(), qUtf8Printable(file.errorString()));
+    if (bytesRead < 0 || readError != QFileDevice::NoError) {
+        qWarning("Something bad happened when reading %s after %lld bytes: %d %s",
+                 qUtf8Printable(file.fileName()), totalBytesRead, readError, qUtf8Printable(readErrorString));
         return false;
     }
 
