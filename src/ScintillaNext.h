@@ -134,7 +134,7 @@ public:
 public slots:
     void close();
     QFileDevice::FileError save();
-    void reload();
+    bool reload();
     void omitModifications();
     QFileDevice::FileError saveAs(const QString &newFilePath);
     QFileDevice::FileError saveCopyAs(const QString &filePath);
