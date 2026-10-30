@@ -66,6 +66,21 @@ int bomLength(ScintillaNext::BomType bom)
     return 0;
 }
 
+static bool writeAll(QFile &file, const QByteArray &data)
+{
+    // QIODevice::write() may write fewer bytes than requested without setting an
+    // error (e.g. QFSFileEngine returns a short count at a file-size limit), so
+    // loop until everything is written and treat any non-progress as failure.
+    qsizetype offset = 0;
+    while (offset < data.size()) {
+        const qint64 written = file.write(data.constData() + offset, data.size() - offset);
+        if (written <= 0)
+            return false;
+        offset += written;
+    }
+    return true;
+}
+
 static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString &path, ScintillaNext::BomType bom)
 {
     qInfo(Q_FUNC_INFO);
@@ -76,32 +91,40 @@ static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString 
         return file.error();
     }
 
+    const auto writeFailed = [&file]() {
+        return file.error() == QFileDevice::NoError ? QFileDevice::WriteError : file.error();
+    };
+
     // Write BOM
-    const QByteArray bomBytes = bomData(bom);
-    if (!bomBytes.isEmpty() && file.write(bomBytes) == -1) {
+    if (!writeAll(file, bomData(bom))) {
         qWarning("writeToDisk() failed writing BOM: %s", qPrintable(file.errorString()));
-        return file.error();
+        return writeFailed();
     }
 
     // TODO make this convert and write chunks rather than the entire thing
-    if (bom == ScintillaNext::BomType::Utf16LE) {
-        QStringEncoder encoder(QStringEncoder::Utf16LE);
-        const QString text = QString::fromUtf8(data);
-        const QByteArray encoded = encoder(text);
-
-        file.write(encoded);
-    }
-    else if (bom == ScintillaNext::BomType::Utf16BE) {
-        QStringEncoder encoder(QStringEncoder::Utf16BE);
-        const QString text = QString::fromUtf8(data);
-        const QByteArray encoded = encoder(text);
-
-        file.write(encoded);
+    bool writeOk = false;
+    if (bom == ScintillaNext::BomType::Utf16LE || bom == ScintillaNext::BomType::Utf16BE) {
+        const auto encoding = bom == ScintillaNext::BomType::Utf16LE ? QStringEncoder::Utf16LE : QStringEncoder::Utf16BE;
+        QStringEncoder encoder(encoding);
+        writeOk = writeAll(file, encoder(QString::fromUtf8(data)));
     }
     else {
-        file.write(data);
+        writeOk = writeAll(file, data);
     }
 
+    if (!writeOk) {
+        qWarning("writeToDisk() failed writing data: %s", qPrintable(file.errorString()));
+        return writeFailed();
+    }
+
+    // Small writes may only sit in QFileDevice's write buffer until now, and
+    // QFileDevice::close() is documented to ignore flush errors, so flush and
+    // close explicitly rather than relying on file.error() before either.
+    if (!file.flush()) {
+        qWarning("writeToDisk() failed flushing file %s: %s", qPrintable(path), qPrintable(file.errorString()));
+        return writeFailed();
+    }
+    file.close();
     return file.error();
 }
 
