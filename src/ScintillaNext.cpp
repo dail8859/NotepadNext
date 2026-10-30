@@ -414,35 +414,36 @@ QFileDevice::FileError ScintillaNext::save()
     return writeSuccessful;
 }
 
-void ScintillaNext::reload()
+bool ScintillaNext::reload()
 {
     Q_ASSERT(isFile());
 
     // Ensure the file still exists.
     if (!QFile::exists(fileInfo.canonicalFilePath())) {
-        return;
+        return false;
     }
 
     const int line = firstVisibleLine();
     const int caret = selectionNCaret(mainSelection());
     const int anchor = selectionNAnchor(mainSelection());
+    const bool wasReadOnly = readOnly();
 
-    // Remove all the text
-    {
-        const QSignalBlocker blocker(this);
-        setUndoCollection(false);
-        emptyUndoBuffer();
-        setText("");
-        setUndoCollection(true);
-    }
+    // Scintilla silently drops DeleteChars/InsertString (hence setText() and
+    // appendText()) while the document is read-only. Unlock it for the reload;
+    // readFromDisk() re-applies the flag from the file's permissions and the
+    // previous state is restored if reading fails.
+    setReadOnly(false);
 
-    // NOTE: if the read fails then the buffer will be completely empty...which probably
-    // isn't a good thing, but this should be a rare occurrence.
+    // NOTE: readFromDisk() only clears the existing text once the file has
+    // been opened, so a file that can no longer be opened leaves the current
+    // buffer untouched. A read that fails part-way through can still leave
+    // the buffer empty or partial, which should be a rare occurrence.
     QFile f(fileInfo.canonicalFilePath());
-    bool readSuccessful = readFromDisk(f);
+    const bool readSuccessful = readFromDisk(f);
 
     if (!readSuccessful) {
-        return;
+        setReadOnly(wasReadOnly);
+        return false;
     }
 
     updateTimestamp();
@@ -456,6 +457,8 @@ void ScintillaNext::reload()
     setSelection(caret, anchor);
 
     emit reloaded();
+
+    return true;
 }
 
 void ScintillaNext::omitModifications()
@@ -689,6 +692,12 @@ bool ScintillaNext::readFromDisk(QFile &file)
     // Turn off undo collection and block signals during loading
     setUndoCollection(false);
     blockSignals(true);
+
+    // Replace any existing contents only now that the file is open. Doing this
+    // here (rather than in reload(), before the open is even attempted) keeps
+    // a failed open from discarding the editor's current buffer.
+    emptyUndoBuffer();
+    setText("");
     // TODO disable notifications
     // modEventMask(SC_MOD_NONE)?
 
@@ -770,10 +779,12 @@ bool ScintillaNext::readFromDisk(QFile &file)
         return false;
     }
 
-    if (!QFileInfo(file).isWritable()) {
+    const bool fileIsReadOnly = !QFileInfo(file).isWritable();
+    if (fileIsReadOnly) {
         qInfo("Setting file as read-only");
-        setReadOnly(true);
     }
+    // Always assign, not only set: a reloaded file may have become writable.
+    setReadOnly(fileIsReadOnly);
 
     return true;
 }
