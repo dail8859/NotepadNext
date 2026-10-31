@@ -56,19 +56,18 @@ public:
     ~MainWindow() override;
 
     bool isAnyUnsaved() const;
-
     void setupLanguageMenu();
 	QString constructCommand(QString cmd);
     ScintillaNext *currentEditor() const;
     int editorCount() const;
     QVector<ScintillaNext *> editors() const;
     DockedEditor *getDockedEditor() const { return dockedEditor; }
+	void runLastCommand();
 	
 
 public slots:
     void newFile();
 	void runCommand(const QString cmd);
-	void registerLastCommand(QString cmd);
 
     void openFileDialog();
     void openFile(const QString &filePath);

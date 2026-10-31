@@ -168,7 +168,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
 	
 	// New Current file code run action
-    //connect(ui->actionRunCode, &QAction::triggered, this, &MainWindow::runCommand);
+    connect(ui->actionRunCode, &QAction::triggered, this, &MainWindow::runLastCommand);
 	
     connect(ui->actionExportHtml, &QAction::triggered, this, [this]() {
         HtmlConverter html(currentEditor());
@@ -1029,7 +1029,6 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
 		runConfDialog = new RunConfigDialog(this);
 		runConfDialog->hide();
 	}
-	connect(runConfDialog, &RunConfigDialog::sendCommand, this, &MainWindow::registerLastCommand);
 	connect(runConfDialog, &RunConfigDialog::sendCommand, this, &MainWindow::runCommand);
 	
 	
@@ -1425,16 +1424,14 @@ void MainWindow::closeAllToRight()
 
 void MainWindow::runCommand(const QString command)
 {
-	MainWindow::registerLastCommand(command);
-	
-	
+	ui->actionRunCode->setText(command);
 	ApplicationSettings *settings = app->getSettings();
     settings->beginGroup("FolderAsWorkspace");
 	QString RootPath = settings->value("RootPath").toString();
 	settings->endGroup();
 	QString finalCmd = MainWindow::constructCommand(command);
 	
-	qInfo("final command: %s", finalCmd);
+	qInfo("final command: %s", qUtf8Printable(finalCmd));
 	
 	codeOutputDock->executeCommand(finalCmd);
 	codeOutputDock->show();
@@ -1443,7 +1440,23 @@ void MainWindow::runCommand(const QString command)
 QString MainWindow::constructCommand(QString cmd)
 {
 	ApplicationSettings *settings = app->getSettings();
-    settings->beginGroup("EnvironmentVariables");
+	QAction *recentCommandAction = new QAction(cmd);
+	recentCommandAction->setText(cmd);
+	int menu_size = static_cast<int>(ui->recentRunConfigs->actions().size());
+	connect(recentCommandAction, &QAction::triggered, this, [this, cmd](){
+	runCommand(cmd);
+	});
+	
+	if (!ui->recentRunConfigs->findChild<QAction*>(cmd)){
+	if(menu_size<5) {
+		ui->recentRunConfigs->addAction(recentCommandAction);
+	}
+	else {
+		ui->recentRunConfigs->insertAction(ui->recentRunConfigs->actions().at(0),recentCommandAction);
+		ui->recentRunConfigs->removeAction(ui->recentRunConfigs->actions().at(menu_size));
+	}
+	}
+    settings->beginGroup("EnvironmentVariable");
 	QStringList keys = settings->childKeys();
 	for (const QString &key : keys)
 	{
@@ -1453,9 +1466,15 @@ QString MainWindow::constructCommand(QString cmd)
 	settings->endGroup();
 	return cmd;
 }
-void MainWindow::registerLastCommand(QString cmd)
+void MainWindow::runLastCommand()
 {
+	QString lastRunCommand = ui->actionRunCode->text();
+	qInfo("final command: %s", qUtf8Printable(lastRunCommand));
+	QString finalCmd = MainWindow::constructCommand(lastRunCommand);
 	
+	qInfo("final command: %s", qUtf8Printable(finalCmd));
+	codeOutputDock->executeCommand(finalCmd);
+	codeOutputDock->show();
 }
 
 bool MainWindow::saveCurrentFile()

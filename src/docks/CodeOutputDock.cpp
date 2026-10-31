@@ -72,13 +72,14 @@ CodeOutputDock::~CodeOutputDock()
 void CodeOutputDock::executeCommand(const QString cmd)
 {
 	qInfo("Entered Function");
+	QString fullCmd = cmd + " 2>&1";
 	std::array<char, 128> buff;
 	QString cmdOutput;
 	
 #ifdef _WIN32
-	auto pipe = _popen(cmd.toUtf8().constData(), "r");
+	auto pipe = _popen(fullCmd.toUtf8().constData(), "r");
 #else
-	auto pipe = popen(cmd.toUtf8().constData(), "r");
+	auto pipe = popen(fullCmd.toUtf8().constData(), "r");
 #endif
 
 	if(!pipe) {
@@ -101,7 +102,6 @@ void CodeOutputDock::writeOutputToDock(const QString cmdOutput){
 	codeOutput->setReadOnly(false);
 	codeOutput->clearAll();
     codeOutput->appendText(cmdOutput.size(), cmdOutput.toUtf8().constData());
-	qInfo(cmdOutput.toUtf8().constData());
     codeOutput->setReadOnly(true);
     codeOutput->documentEnd();
 }

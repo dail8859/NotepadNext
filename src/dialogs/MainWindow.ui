@@ -360,7 +360,6 @@
      <string>Run</string>
     </property>
     <addaction name="actionNewRunConfig"/>
-	<addaction name="actionRunLastConfig"/>
     <widget class="QMenu" name="recentRunConfigs">
 	  <property name="title">
       <string>Recent configs...</string>
@@ -787,7 +786,7 @@
     </iconset>
    </property>
    <property name="text">
-    <string>Run current file</string>
+    <string>Run Last command</string>
    </property>
   </action>
   <action name="actionZoomOut">
@@ -1611,12 +1610,7 @@
   </action>
   <action name="actionNewRunConfig">
     <property name="text">
-	<string>Create New Config</string>
-	</property>
-  </action>
-  <action name="actionRunLastConfig">
-    <property name="text">
-	<string>Run last config</string>
+	<string>Run Configurations...</string>
 	</property>
   </action>
  </widget>
