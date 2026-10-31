@@ -504,27 +504,36 @@ bool ScintillaNext::rename(const QString &newFilePath)
 {
     emit aboutToSave();
 
-    // Write out the buffer to the new path
-    if (saveCopyAs(newFilePath) == QFileDevice::NoError) {
-        // Remove the old file
-        const QString oldPath = fileInfo.canonicalFilePath();
-        QFile::remove(oldPath);
+    // Resolve the old path (empty for a missing file) before writing anything.
+    // If the destination is the same file system entry -- an unchanged path, a
+    // "./file" spelling, a symlink alias, or a case-only rename on a
+    // case-insensitive file system -- the file just written must not then be
+    // removed as "the old file".
+    const QString oldPath = fileInfo.canonicalFilePath();
+    const bool sameFile = !oldPath.isEmpty() && QFileInfo::exists(newFilePath)
+            && QFileInfo(oldPath) == QFileInfo(newFilePath);
 
-        // Everything worked fine, so update the buffer's info
-        setFileInfo(newFilePath);
-        setSavePoint();
-
-        // If this was a temporary file, make sure it is not any more
-        setTemporary(false);
-
-        emit saved();
-
-        emit renamed();
-
-        return true;
+    // Write out the buffer to the new path; keep the old file on failure.
+    if (saveCopyAs(newFilePath) != QFileDevice::NoError) {
+        return false;
     }
 
-    return false;
+    if (!sameFile && !oldPath.isEmpty() && !QFile::remove(oldPath)) {
+        qWarning("rename() could not remove the old file %s", qUtf8Printable(oldPath));
+    }
+
+    // Everything worked fine, so update the buffer's info
+    setFileInfo(newFilePath);
+    setSavePoint();
+
+    // If this was a temporary file, make sure it is not any more
+    setTemporary(false);
+
+    emit saved();
+
+    emit renamed();
+
+    return true;
 }
 
 ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
