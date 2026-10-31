@@ -183,19 +183,22 @@ void DockedEditor::addEditor(ScintillaNext *editor)
 
     dockWidget->tabWidget()->setToolTip(editor->getToolTip());
 
-    // Set the icon
-    if (editor->readOnly()) {
-        dockWidget->tabWidget()->setIcon(QIcon(":/icons/readonly.png"));
-    }
-    else {
-        dockWidget->tabWidget()->setIcon(QIcon(editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png"));
-        connect(editor, &ScintillaNext::savePointChanged, dockWidget, [=, this](bool dirty) {
-            Q_UNUSED(dirty)
-            const bool actuallyDirty = editor->canSaveToDisk();
-            const QString iconPath = actuallyDirty ? ":/icons/unsaved.png" : ":/icons/saved.png";
-            dockWidget->tabWidget()->setIcon(QIcon(iconPath));
-        });
-    }
+    // Set the icon, and keep it up to date. The read-only flag can change in
+    // either direction after a reload(), so the icon may never be decided once
+    // at creation time, and the save point has to be tracked even for an editor
+    // that happens to be read-only right now: it may become editable later.
+    const auto updateTabIcon = [editor, dockWidget]() {
+        if (editor->readOnly()) {
+            dockWidget->tabWidget()->setIcon(QIcon(":/icons/readonly.png"));
+        }
+        else {
+            dockWidget->tabWidget()->setIcon(QIcon(editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png"));
+        }
+    };
+
+    updateTabIcon();
+    connect(editor, &ScintillaNext::savePointChanged, dockWidget, updateTabIcon);
+    connect(editor, &ScintillaNext::reloaded, dockWidget, updateTabIcon);
 
     connect(editor, &ScintillaNext::closed, dockWidget, &ads::CDockWidget::closeDockWidget);
     connect(editor, &ScintillaNext::closed, this, [=, this]() { emit editorClosed(editor); });

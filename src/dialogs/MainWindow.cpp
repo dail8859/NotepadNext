@@ -1308,7 +1308,13 @@ void MainWindow::reloadFile()
     auto reply = QMessageBox::question(this, tr("Reload File"), tr("Are you sure you want to reload <b>%1</b>? Any unsaved changes will be lost.").arg(filePath));
 
     if (reply == QMessageBox::Yes) {
-        editor->reload();
+        if (!editor->reload()) {
+            // A failed reload can leave the buffer empty or half filled, so say
+            // so instead of implying that nothing changed.
+            QMessageBox::warning(this, tr("Reload File"),
+                tr("<b>%1</b> could not be reloaded from disk. The text in this tab may now be "
+                   "incomplete, so check it before saving over the file.").arg(filePath));
+        }
     }
 }
 
@@ -1964,7 +1970,13 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
         auto reply = QMessageBox::question(this, tr("Reload File"), tr("<b>%1</b> has been modified by another program. Do you want to reload it?").arg(filePath));
 
         if (reply == QMessageBox::Yes) {
-            editor->reload();
+            if (!editor->reload()) {
+                // A failed reload can leave the buffer empty or half filled, so
+                // say so instead of implying that nothing changed.
+                QMessageBox::warning(this, tr("Reload File"),
+                    tr("<b>%1</b> could not be reloaded from disk. The text in this tab may now be "
+                       "incomplete, so check it before saving over the file.").arg(filePath));
+            }
         }
         else {
             editor->omitModifications();
