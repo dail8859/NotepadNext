@@ -500,31 +500,82 @@ QFileDevice::FileError ScintillaNext::saveCopyAs(const QString &filePath)
     return writeToDisk(data, filePath, bomType);
 }
 
+// True when newInfo names the same directory entry as oldCanonicalPath but with
+// different capitalisation, i.e. a case-only rename on a case-insensitive file
+// system. The canonical paths cannot be compared directly for this: they resolve
+// to the spelling that is actually on disk.
+static bool isCaseOnlyRename(const QString &oldCanonicalPath, const QFileInfo &newInfo)
+{
+    const QFileInfo oldInfo(oldCanonicalPath);
+
+    return oldInfo.fileName() != newInfo.fileName()
+            && oldInfo.fileName().compare(newInfo.fileName(), Qt::CaseInsensitive) == 0
+            && oldInfo.canonicalPath() == newInfo.canonicalPath();
+}
+
 bool ScintillaNext::rename(const QString &newFilePath)
 {
     emit aboutToSave();
 
-    // Write out the buffer to the new path
-    if (saveCopyAs(newFilePath) == QFileDevice::NoError) {
-        // Remove the old file
-        const QString oldPath = fileInfo.canonicalFilePath();
-        QFile::remove(oldPath);
+    // Resolve the old path (empty for a missing file) before writing anything.
+    // If the destination is the same file system entry -- an unchanged path, a
+    // "./file" spelling, a symlink alias, or a case-only rename on a
+    // case-insensitive file system -- the file just written must not then be
+    // removed as "the old file".
+    // Note that QFileInfo::operator==() compares file system entries only: hard
+    // links and (on Windows) 8.3 short names are still treated as different
+    // entries, so those aliases go down the "different file" path below.
+    const QString oldPath = fileInfo.canonicalFilePath();
+    const QFileInfo newInfo(newFilePath);
+    const bool sameFile = !oldPath.isEmpty() && newInfo.exists()
+            && QFileInfo(oldPath) == newInfo;
 
-        // Everything worked fine, so update the buffer's info
-        setFileInfo(newFilePath);
-        setSavePoint();
+    // Writing through an alias (or to an unchanged path) only rewrites the bytes,
+    // it never changes the directory entry's spelling, so a case-only rename
+    // needs QFile::rename() as well. On a case-sensitive file system the
+    // destination does not exist yet, sameFile is false and this is a no-op.
+    // NOTE: only reachable on case-insensitive file systems; worth verifying
+    // that it really renames on Windows and macOS.
+    const auto applyCaseOnlyRename = [&oldPath, &newFilePath, &newInfo]() {
+        if (!isCaseOnlyRename(oldPath, newInfo))
+            return;
 
-        // If this was a temporary file, make sure it is not any more
-        setTemporary(false);
+        if (!QFile::rename(oldPath, newFilePath)) {
+            qWarning("rename() could not change the case of %s to %s",
+                     qUtf8Printable(oldPath), qUtf8Printable(newFilePath));
+        }
+    };
 
-        emit saved();
+    // Nothing to write and nothing to remove when the destination is the file the
+    // buffer already refers to and there is nothing pending: rewriting it would
+    // only truncate and recreate the file for no reason.
+    const bool writeNeeded = !sameFile || canSaveToDisk();
 
-        emit renamed();
-
-        return true;
+    // Write out the buffer to the new path; keep the old file on failure.
+    if (writeNeeded && saveCopyAs(newFilePath) != QFileDevice::NoError) {
+        return false;
     }
 
-    return false;
+    if (sameFile) {
+        applyCaseOnlyRename();
+    }
+    else if (!oldPath.isEmpty() && !QFile::remove(oldPath)) {
+        qWarning("rename() could not remove the old file %s", qUtf8Printable(oldPath));
+    }
+
+    // Everything worked fine, so update the buffer's info
+    setFileInfo(newFilePath);
+    setSavePoint();
+
+    // If this was a temporary file, make sure it is not any more
+    setTemporary(false);
+
+    if (writeNeeded)
+        emit saved();
+
+    emit renamed();
+
+    return true;
 }
 
 ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
