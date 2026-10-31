@@ -703,16 +703,19 @@ bool ScintillaNext::readFromDisk(QFile &file)
     // running the first_read detection below.
     bomType = BomType::None;
 
-    // Stop explicitly on a failed or empty read rather than relying only on
-    // file.atEnd(): after a failed read the position has not advanced, so
-    // atEnd() stays false for a mid-file error and the old do/while spun
-    // forever re-reading the same failing position. A zero-length first read
-    // still runs the BOM detection below (for an empty file) before stopping.
-    while (true) {
+    // The loop must run at least once, since the BOM detection below (and an
+    // empty file) depends on it, but it must stop on a failed read instead of
+    // retrying it: after a failed read the position has not advanced, so
+    // atEnd() stays false for a mid-file error and the old !atEnd() condition
+    // spun forever on the same failing offset. A zero-length read is treated as
+    // the end of the file.
+    do {
         // Try to read as much as possible
         chunk.resize(CHUNK_SIZE);
         bytesRead = file.read(chunk.data(), CHUNK_SIZE);
 
+        // A negative read is a failure: the position did not advance, and the
+        // length must not be handed to chunk.resize() either.
         if (bytesRead < 0)
             break;
 
@@ -766,9 +769,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
             // No conversion necessary.
             appendText(input.size(), input.data());
         }
-        if (bytesRead == 0 || status() != SC_STATUS_OK || file.atEnd())
-            break;
-    }
+    } while (bytesRead > 0 && status() == SC_STATUS_OK && !file.atEnd());
 
     // Capture the error now: a successful close() clears it.
     const QFileDevice::FileError readError = file.error();
@@ -787,7 +788,8 @@ bool ScintillaNext::readFromDisk(QFile &file)
     }
 
     if (bytesRead < 0 || readError != QFileDevice::NoError) {
-        qWarning("Something bad happened when reading %s after %lld bytes: %d %s",
+        qWarning("Something bad happened when reading %s after %lld bytes: %d %s"
+                 " (the buffer holds only the bytes read so far)",
                  qUtf8Printable(file.fileName()), totalBytesRead, readError, qUtf8Printable(readErrorString));
         return false;
     }
