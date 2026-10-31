@@ -362,17 +362,18 @@ QString ScintillaNext::getToolTip() const
 
 void ScintillaNext::setFoldMarkers(const QString &type)
 {
-    QMap<QString, QList<int>> map{
+    static const QMap<QString, QList<int>> map{
         {"simple", {SC_MARK_MINUS, SC_MARK_PLUS, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY}},
         {"arrow",  {SC_MARK_ARROWDOWN, SC_MARK_ARROW, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY, SC_MARK_EMPTY}},
         {"circle", {SC_MARK_CIRCLEMINUS, SC_MARK_CIRCLEPLUS, SC_MARK_VLINE, SC_MARK_LCORNERCURVE, SC_MARK_CIRCLEPLUSCONNECTED, SC_MARK_CIRCLEMINUSCONNECTED, SC_MARK_TCORNERCURVE }},
         {"box",    {SC_MARK_BOXMINUS, SC_MARK_BOXPLUS, SC_MARK_VLINE, SC_MARK_LCORNER, SC_MARK_BOXPLUSCONNECTED, SC_MARK_BOXMINUSCONNECTED, SC_MARK_TCORNER }},
     };
 
-    if (!map.contains(type))
+    const auto it = map.constFind(type);
+    if (it == map.cend())
         return;
 
-    const auto types = map[type];
+    const QList<int> &types = it.value();
     markerDefine(SC_MARKNUM_FOLDEROPEN, types[0]);
     markerDefine(SC_MARKNUM_FOLDER, types[1]);
     markerDefine(SC_MARKNUM_FOLDERSUB, types[2]);
