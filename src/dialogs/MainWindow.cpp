@@ -1309,8 +1309,11 @@ void MainWindow::reloadFile()
 
     if (reply == QMessageBox::Yes) {
         if (!editor->reload()) {
+            // A failed reload can leave the buffer empty or half filled, so say
+            // so instead of implying that nothing changed.
             QMessageBox::warning(this, tr("Reload File"),
-                tr("<b>%1</b> could not be reloaded from disk.").arg(filePath));
+                tr("<b>%1</b> could not be reloaded from disk. The text in this tab may now be "
+                   "incomplete, so check it before saving over the file.").arg(filePath));
         }
     }
 }
@@ -1968,8 +1971,11 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
 
         if (reply == QMessageBox::Yes) {
             if (!editor->reload()) {
+                // A failed reload can leave the buffer empty or half filled, so
+                // say so instead of implying that nothing changed.
                 QMessageBox::warning(this, tr("Reload File"),
-                    tr("<b>%1</b> could not be reloaded from disk.").arg(filePath));
+                    tr("<b>%1</b> could not be reloaded from disk. The text in this tab may now be "
+                       "incomplete, so check it before saving over the file.").arg(filePath));
             }
         }
         else {
