@@ -25,7 +25,8 @@
 #include <QActionGroup>
 
 #include "DockedEditor.h"
-
+#include "CodeOutputDock.h"
+#include "RunConfigDialog.h"
 #include "MacroManager.h"
 #include "ScintillaNext.h"
 #include "NppImporter.h"
@@ -55,15 +56,18 @@ public:
     ~MainWindow() override;
 
     bool isAnyUnsaved() const;
-
     void setupLanguageMenu();
+	QString constructCommand(QString cmd);
     ScintillaNext *currentEditor() const;
     int editorCount() const;
     QVector<ScintillaNext *> editors() const;
     DockedEditor *getDockedEditor() const { return dockedEditor; }
+	void runLastCommand();
+	
 
 public slots:
     void newFile();
+	void runCommand(const QString cmd);
 
     void openFileDialog();
     void openFile(const QString &filePath);
@@ -130,6 +134,7 @@ public slots:
     void restoreWindowState();
 
     void switchToEditor(const ScintillaNext *editor);
+	void openNewRunConfig();
 
 signals:
     void editorActivated(ScintillaNext *editor);
@@ -151,7 +156,9 @@ private:
     Ui::MainWindow *ui = Q_NULLPTR;
     NotepadNextApplication *app = Q_NULLPTR;
     DockedEditor *dockedEditor = Q_NULLPTR;
-
+	CodeOutputDock *codeOutputDock = Q_NULLPTR;
+	RunConfigDialog *runConfDialog = Q_NULLPTR;
+	
     QScopedPointer<SearchResultsCollector> searchResults;
 
     template <typename Method>
@@ -203,6 +210,7 @@ private:
     int zoomLevel = 0;
     int contextMenuPos = 0;
     QMenu *buildMenu(QStringList actionNames);
+	QSettings runConfigSettings;
 };
 
 #endif // MAINWINDOW_H

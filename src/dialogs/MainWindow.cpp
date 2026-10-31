@@ -60,6 +60,8 @@
 #include "EditorManager.h"
 
 #include "LuaConsoleDock.h"
+#include "CodeOutputDock.h"
+#include "RunConfigDialog.h"
 #include "LanguageInspectorDock.h"
 #include "EditorInspectorDock.h"
 #include "FolderAsWorkspaceDock.h"
@@ -92,6 +94,7 @@
 #include "FadingIndicator.h"
 
 #include "ActionUtils.h"
+#include <string>
 
 
 MainWindow::MainWindow(NotepadNextApplication *app) :
@@ -163,7 +166,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionSaveCopyAs, &QAction::triggered, this, &MainWindow::saveCopyAsDialog);
     connect(ui->actionSaveAll, &QAction::triggered, this, &MainWindow::saveAll);
     connect(ui->actionRename, &QAction::triggered, this, &MainWindow::renameFile);
-
+	
+	// New Current file code run action
+    connect(ui->actionRunCode, &QAction::triggered, this, &MainWindow::runLastCommand);
+	
     connect(ui->actionExportHtml, &QAction::triggered, this, [this]() {
         HtmlConverter html(currentEditor());
         exportAsFormat(&html, QStringLiteral("HTML files (*.html)"));
@@ -981,6 +987,10 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     LuaConsoleDock *luaConsoleDock = new LuaConsoleDock(app->getLuaState(), this);
     luaConsoleDock->hide();
     addDockWidget(Qt::BottomDockWidgetArea, luaConsoleDock);
+	
+	codeOutputDock = new CodeOutputDock(this);
+    codeOutputDock->hide();
+    addDockWidget(Qt::BottomDockWidgetArea, codeOutputDock);
 
     DebugLogDock *debugLogDock = new DebugLogDock(this);
     debugLogDock->hide();
@@ -1013,7 +1023,17 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->statusBar, &EditorInfoStatusBar::customContextMenuRequestedForEOLLabel, this, [this](const QPoint &pos){
         ui->menuEOLConversion->popup(pos);
     });
-
+	
+	connect(ui->actionNewRunConfig, &QAction::triggered, this, &MainWindow::openNewRunConfig);
+	runConfDialog = findChild<RunConfigDialog *>(QString(), Qt::FindDirectChildrenOnly);
+	
+	if(runConfDialog == Q_NULLPTR){
+		runConfDialog = new RunConfigDialog(this);
+		runConfDialog->hide();
+	}
+	connect(runConfDialog, &RunConfigDialog::sendCommand, this, &MainWindow::runCommand);
+	
+	
     // It seems restoreState() does not affect the status bar so set it manually
     ui->statusBar->setVisible(app->getSettings()->showStatusBar());
 
@@ -1402,6 +1422,61 @@ void MainWindow::closeAllToRight()
             editor->close();
         }
     }
+}
+
+void MainWindow::runCommand(const QString command)
+{
+	ui->actionRunCode->setText(command);
+	ApplicationSettings *settings = app->getSettings();
+    settings->beginGroup("FolderAsWorkspace");
+	QString RootPath = settings->value("RootPath").toString();
+	settings->endGroup();
+	QString finalCmd = MainWindow::constructCommand(command);
+	
+	qInfo("final command: %s", qUtf8Printable(finalCmd));
+	
+	codeOutputDock->executeCommand(finalCmd);
+	codeOutputDock->show();
+}
+
+QString MainWindow::constructCommand(QString cmd)
+{
+	ApplicationSettings *settings = app->getSettings();
+	QAction *recentCommandAction = new QAction(cmd);
+	recentCommandAction->setText(cmd);
+	int menu_size = static_cast<int>(ui->recentRunConfigs->actions().size());
+	connect(recentCommandAction, &QAction::triggered, this, [this, cmd](){
+	runCommand(cmd);
+	});
+	
+	if (!ui->recentRunConfigs->findChild<QAction*>(cmd)){
+	if(menu_size<5) {
+		ui->recentRunConfigs->addAction(recentCommandAction);
+	}
+	else {
+		ui->recentRunConfigs->insertAction(ui->recentRunConfigs->actions().at(0),recentCommandAction);
+		ui->recentRunConfigs->removeAction(ui->recentRunConfigs->actions().at(menu_size));
+	}
+	}
+    settings->beginGroup("EnvironmentVariable");
+	QStringList keys = settings->childKeys();
+	for (const QString &key : keys)
+	{
+		cmd.replace(("{"+key+"}"), settings->value(key).toString());
+	}
+	
+	settings->endGroup();
+	return cmd;
+}
+void MainWindow::runLastCommand()
+{
+	QString lastRunCommand = ui->actionRunCode->text();
+	qInfo("final command: %s", qUtf8Printable(lastRunCommand));
+	QString finalCmd = MainWindow::constructCommand(lastRunCommand);
+	
+	qInfo("final command: %s", qUtf8Printable(finalCmd));
+	codeOutputDock->executeCommand(finalCmd);
+	codeOutputDock->show();
 }
 
 bool MainWindow::saveCurrentFile()
@@ -2416,4 +2491,13 @@ void MainWindow::languageMenuTriggered()
     QVariant v = act->data();
 
     setLanguage(editor, v.toString());
+}
+
+void MainWindow::openNewRunConfig()
+{
+	// Run Config actions
+	runConfDialog->loadConfig();
+	runConfDialog->show();
+	runConfDialog->raise();
+	runConfDialog->activateWindow();
 }
