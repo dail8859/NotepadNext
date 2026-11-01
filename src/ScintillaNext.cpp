@@ -443,6 +443,14 @@ bool ScintillaNext::reload()
 
     if (!readSuccessful) {
         setReadOnly(wasReadOnly);
+        
+        // The buffer no longer necessarily matches the file, and readFromDisk()
+        // may have reset the undo history, which makes a half-read buffer look
+        // unmodified. Treat it like declined external modifications: refresh the
+        // timestamp so the "modified by another program" prompt is not shown
+        // again for the same change, and flag the buffer so it is still offered
+        // for saving instead of being closed silently.
+        omitModifications();
         return false;
     }
 
