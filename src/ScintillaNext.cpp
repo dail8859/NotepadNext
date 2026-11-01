@@ -551,8 +551,15 @@ bool ScintillaNext::rename(const QString &newFilePath)
     // only truncate and recreate the file for no reason.
     const bool writeNeeded = !sameFile || canSaveToDisk();
 
+    // Remember whether the destination is new, so a failed write does not leave
+    // a truncated file behind that did not exist before.
+    const bool destinationExisted = newInfo.exists();
+
     // Write out the buffer to the new path; keep the old file on failure.
     if (writeNeeded && saveCopyAs(newFilePath) != QFileDevice::NoError) {
+        if (!destinationExisted && !QFile::remove(newFilePath)) {
+            qWarning("rename() could not remove the partially written file %s", qUtf8Printable(newFilePath));
+        }
         return false;
     }
 
