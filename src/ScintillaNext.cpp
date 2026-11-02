@@ -536,14 +536,27 @@ bool ScintillaNext::rename(const QString &newFilePath)
     // destination does not exist yet, sameFile is false and this is a no-op.
     // NOTE: only reachable on case-insensitive file systems; worth verifying
     // that it really renames on Windows and macOS.
-    const auto applyCaseOnlyRename = [&oldPath, &newFilePath, &newInfo]() {
+    // Returns false if a case-only rename was needed but failed.
+    const auto applyCaseOnlyRename = [&oldPath, &newInfo]() {
         if (!isCaseOnlyRename(oldPath, newInfo))
-            return;
+            return true;
 
-        if (!QFile::rename(oldPath, newFilePath)) {
+        // QFile::rename() decides that this is a case-only rename by comparing
+        // its own file name -- oldPath, which is canonical -- with the new name
+        // case-insensitively, and otherwise fails with "Destination file exists".
+        // The user's path may spell the directory differently (a symlinked
+        // directory, "./", a different directory case, ...), so build the target
+        // from the canonical directory. isCaseOnlyRename() already ensured that
+        // it is the same directory.
+        const QString target = QDir(QFileInfo(oldPath).path()).filePath(newInfo.fileName());
+
+        if (!QFile::rename(oldPath, target)) {
             qWarning("rename() could not change the case of %s to %s",
-                     qUtf8Printable(oldPath), qUtf8Printable(newFilePath));
+                     qUtf8Printable(oldPath), qUtf8Printable(target));
+            return false;
         }
+
+        return true;
     };
 
     // Nothing to write and nothing to remove when the destination is the file the
@@ -557,14 +570,29 @@ bool ScintillaNext::rename(const QString &newFilePath)
 
     // Write out the buffer to the new path; keep the old file on failure.
     if (writeNeeded && saveCopyAs(newFilePath) != QFileDevice::NoError) {
-        if (!destinationExisted && !QFile::remove(newFilePath)) {
+        // If the write failed at open() (e.g. no permission on the directory) no
+        // file was created, so there is nothing to clean up and nothing to warn about.
+        if (!destinationExisted && QFile::exists(newFilePath) && !QFile::remove(newFilePath)) {
             qWarning("rename() could not remove the partially written file %s", qUtf8Printable(newFilePath));
         }
         return false;
     }
 
     if (sameFile) {
-        applyCaseOnlyRename();
+        if (!applyCaseOnlyRename()) {
+            // Keep the buffer's name and file info as they are, so the tab keeps
+            // matching the real name on disk. The buffer's text, however, was
+            // already written to this very file above, so record that.
+            if (writeNeeded) {
+                updateTimestamp();
+                setSavePoint();
+                setTemporary(false);
+
+                emit saved();
+            }
+
+            return false;
+        }
     }
     else if (!oldPath.isEmpty() && !QFile::remove(oldPath)) {
         qWarning("rename() could not remove the old file %s", qUtf8Printable(oldPath));
