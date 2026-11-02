@@ -698,10 +698,11 @@ bool ScintillaNext::readFromDisk(QFile &file)
     QStringDecoder decoder;
     QStringEncoder encoder = QStringEncoder(QStringEncoder::Utf8);
 
+    // bomType is intentionally not reset here: it is (re)detected by the first
+    // successful read below (an empty file yields BomType::None). If the very
+    // first read fails, an existing document (reload()) keeps its encoding, and a
+    // new ScintillaNext already starts out as BomType::None.
     bool first_read = true;
-    // Set up-front: an immediate read error leaves the loop without ever
-    // running the first_read detection below.
-    bomType = BomType::None;
 
     // The loop must run at least once, since the BOM detection below (and an
     // empty file) depends on it, but it must stop on a failed read instead of
