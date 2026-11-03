@@ -189,6 +189,7 @@ private:
 	int rectangularSelectionModifier;
 
 	ScaleTechnique scaleTechnique = ScaleTechnique::Default;
+	qreal cachedScale = 0.0; // device pixel ratio last published through SetScaleProperty()
 
 	friend class ::ScintillaEditBase;
 };
