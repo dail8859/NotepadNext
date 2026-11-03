@@ -852,6 +852,7 @@ void ScintillaQt::SetScaleProperty()
 		QWidget *widget = window(wMain.GetID());
 		scale = widget->devicePixelRatioF();
 	}
+	cachedScale = scale;
 	scrollArea->viewport()->setProperty("ScintillaScale", scale);
 }
 
@@ -859,7 +860,15 @@ void ScintillaQt::SetScaleProperty()
 
 void ScintillaQt::PartialPaint(const PRectangle &rect)
 {
+	const qreal previousScale = cachedScale;
 	SetScaleProperty();
+	if (scaleTechnique == ScaleTechnique::PixelAligned && previousScale != 0.0 && previousScale != cachedScale) {
+		// Fonts are realised in device pixels using the scale published by SetScaleProperty(). The window can
+		// change screens (e.g. Retina -> external 1x monitor) after the styles were built, and on Qt < 6.6 (or
+		// when QEvent::DevicePixelRatioChange does not reach this widget) nothing rebuilds them, leaving the text
+		// drawn at the wrong size. Rebuild the style data when the published scale changed.
+		InvalidateStyleRedraw();
+	}
 	if (scaleTechnique == ScaleTechnique::PixelAligned) {
 		QWidget *widget = window(wMain.GetID());
 		rcPaint = rect * widget->devicePixelRatioF();
