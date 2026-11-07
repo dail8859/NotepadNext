@@ -14,6 +14,7 @@ qt_add_executable(NotepadNext
 
 	EditorManager.h
 	EditorPrintPreviewRenderer.h
+	EncodingSpecs.h
 	FileDialogHelpers.h
 	Finder.h
 	FocusWatcher.h
@@ -233,6 +234,7 @@ target_link_libraries(NotepadNext
         Qt6::Widgets
         Qt6::Network
         Qt6::PrintSupport
+        Qt6::Core5Compat
         qtadvanceddocking-qt6
         QSimpleUpdater
         SingleApplication::SingleApplication

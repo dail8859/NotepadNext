@@ -1906,6 +1906,70 @@
       <source>No updates are available at this time.</source>
       <translation>目前沒有可用的更新。</translation>
     </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1144"/>
+      <source>Text Encoding</source>
+      <translation>文字編碼</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1145"/>
+      <source>Change the text encoding of this document to %1?</source>
+      <translation>要將此文件的文字編碼變更為 %1 嗎？</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1147"/>
+      <source>Convert keeps the current text and writes it in the selected encoding the next time the file is saved.
+
+Reinterpret re-reads the file from disk with the selected encoding. Use it to fix garbled text; unsaved changes will be lost.</source>
+      <translation>轉換保留目前文字，並在下次儲存檔案時以所選編碼寫入。
+
+重新解譯會以所選編碼重新讀取磁碟上的檔案，可用來修正亂碼；未儲存的變更將會遺失。</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1150"/>
+      <source>Convert</source>
+      <translation>轉換</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1151"/>
+      <source>Reinterpret</source>
+      <translation>重新解譯</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1158"/>
+      <source>Incompatible Characters</source>
+      <translation>不相容的字元</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1159"/>
+      <source>Some characters cannot be represented in %1 and would be replaced. Convert anyway?</source>
+      <translation>部分字元無法以 %1 表示，將會被取代。仍要轉換嗎？</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1168"/>
+      <source>Reinterpret is only available for files saved on disk.</source>
+      <translation>只有已儲存到磁碟的檔案才能重新解譯。</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1173"/>
+      <source>Reinterpret is only available for encodings without a BOM.</source>
+      <translation>只有不含 BOM 的編碼才能重新解譯。</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1179"/>
+      <source>Reinterpret File</source>
+      <translation>重新解譯檔案</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1180"/>
+      <source>Re-reading the file will discard unsaved changes. Continue?</source>
+      <translation>重新讀取檔案將捨棄未儲存的變更。是否繼續？</translation>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1187"/>
+      <source>The file could not be re-read. The document was left unchanged.</source>
+      <translation>無法重新讀取檔案，檔案內容保持不變。</translation>
+    </message>
   </context>
   <context>
     <name>PreferencesDialog</name>

@@ -57,6 +57,7 @@ public:
     bool isAnyUnsaved() const;
 
     void setupLanguageMenu();
+    void setupEncodingMenu();
     ScintillaNext *currentEditor() const;
     int editorCount() const;
     QVector<ScintillaNext *> editors() const;
@@ -108,6 +109,7 @@ public slots:
 
     void updateFileStatusBasedUi(ScintillaNext *editor);
     void updateEOLBasedUi(ScintillaNext *editor);
+    void updateEncodingBasedUi(ScintillaNext *editor);
     void updateDocumentBasedUi(Scintilla::Update updated);
     void updateSelectionBasedUi(ScintillaNext *editor);
     void updateContentBasedUi(ScintillaNext *editor);
@@ -144,6 +146,7 @@ protected:
 private slots:
     void tabBarRightClicked(ScintillaNext *editor);
     void languageMenuTriggered();
+    void changeEncoding(const QString &spec);
     void checkForUpdatesFinished(QString url);
     void activateEditor(ScintillaNext *editor);
 
@@ -189,6 +192,8 @@ private:
     ISearchResultsHandler *determineSearchResultsHandler();
 
     QActionGroup *languageActionGroup;
+    QActionGroup *encodingActionGroup = Q_NULLPTR;
+    QList<QAction *> injectedEncodingActions;
 
     TabsQuickActionsBar *tabsQuickActionsBar = Q_NULLPTR;
 

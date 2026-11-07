@@ -18,6 +18,7 @@
 
 
 #include "ScintillaNext.h"
+#include "EncodingSpecs.h"
 #include "Finder.h"
 #include "ScintillaCommenter.h"
 
@@ -64,6 +65,112 @@ int bomLength(ScintillaNext::BomType bom)
     else if (bom == ScintillaNext::BomType::Utf16BE) return BOM_UTF16BE.length();
 
     return 0;
+}
+
+// QStringDecoder only understands the Unicode encodings, so legacy code pages
+// are decoded with QTextCodec (Qt6::Core5Compat). uchardet is already linked
+// and only *detects* a charset; it never converts one.
+static bool looksSingleByteWestern(const QString &name)
+{
+    static const char *const prefixes[] = {
+        "ISO-8859", "ISO 8859", "WINDOWS-125", "KOI8", "IBM", "TIS-620",
+        "MACINTOSH", "X-MAC", "CP8", "CP4", "ASCII"
+    };
+    for (const char *prefix : prefixes) {
+        if (name.startsWith(QLatin1String(prefix), Qt::CaseInsensitive))
+            return true;
+    }
+    return false;
+}
+
+static bool hasHighBytes(const QByteArray &data)
+{
+    for (int i = 0; i < data.size(); ++i) {
+        if (static_cast<unsigned char>(data.at(i)) >= 0x80)
+            return true;
+    }
+    return false;
+}
+
+// uchardet tends to answer WINDOWS-1252 / ISO-8859-x for files that are almost
+// pure ASCII with only a few CJK characters. Trusting that guess turns those
+// characters into Latin garbage, which is worse than not detecting at all.
+static bool decodesAsGb18030WithCjk(const QByteArray &data)
+{
+    QTextCodec *codec = QTextCodec::codecForName("GB18030");
+    if (!codec)
+        return false;
+
+    QTextCodec::ConverterState state(QTextCodec::DefaultConversion);
+    const QString text = codec->toUnicode(data.constData(), data.size(), &state);
+    if (state.invalidChars > 0)
+        return false;
+
+    int cjk = 0;
+    for (const QChar ch : text) {
+        if (ch.unicode() >= 0x4E00 && ch.unicode() <= 0x9FFF) {
+            if (++cjk >= 3)
+                return true;
+        }
+    }
+    return false;
+}
+
+// Return an Encoding-menu spec, or an empty string when the data is UTF-8.
+// Strict UTF-8 must be tried first: uchardet happily reports a legacy code
+// page for short or mostly-ASCII UTF-8 samples.
+static QString detectCharset(const QByteArray &data)
+{
+    if (data.isEmpty())
+        return QString();
+
+    {
+        QStringDecoder decoder(QStringDecoder::Utf8);
+        // The result MUST be consumed. QStringDecoder only updates hasError()
+        // when the decoded value is used, so discarding it silently disables
+        // this probe under some optimizers.
+        const QString probe = decoder(QByteArrayView(data));
+        Q_UNUSED(probe);
+        if (!decoder.hasError())
+            return QString();
+    }
+
+    QString name;
+    uchardet_t ud = uchardet_new();
+    if (ud) {
+        uchardet_handle_data(ud, data.constData(), static_cast<size_t>(data.size()));
+        uchardet_data_end(ud);
+        const char *charset = uchardet_get_charset(ud);
+        if (charset && *charset)
+            name = QString::fromLatin1(charset);
+        uchardet_delete(ud);
+    }
+
+    if (name.isEmpty() || name.compare(QLatin1String("ASCII"), Qt::CaseInsensitive) == 0)
+        return QString();
+    if (name.startsWith(QLatin1String("UTF-"), Qt::CaseInsensitive))
+        return QString();
+
+    if (looksSingleByteWestern(name) && hasHighBytes(data) && decodesAsGb18030WithCjk(data)) {
+        qInfo("uchardet guessed \"%s\" but the data decodes cleanly as GB18030 with CJK text", qUtf8Printable(name));
+        return QStringLiteral("GB18030");
+    }
+
+    // Normalize uchardet's spelling to the Encoding menu's spelling so the
+    // status bar and the checked menu item agree with the detected charset.
+    // An unsupported name must not reach readFromDisk(): with no QTextCodec
+    // it would silently append the raw legacy bytes as UTF-8.
+    const QString spec = EncodingSpecs::canonical(name);
+    if (spec.isEmpty()) {
+        qWarning("uchardet reported \"%s\", which is not available as a QTextCodec; reading as UTF-8",
+                 qUtf8Printable(name));
+        return QString();
+    }
+    if (!QTextCodec::codecForName(spec.toLatin1())) {
+        qWarning("Qt has no codec for \"%s\"; reading as UTF-8", qUtf8Printable(spec));
+        return QString();
+    }
+    return spec;
 }
 
 static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString &path, ScintillaNext::BomType bom)
@@ -316,7 +423,9 @@ bool ScintillaNext::canSaveToDisk() const
     // - It is marked as a temporary since as soon as it gets saved it is no longer a temporary buffer
     // - A modified file
     // - A missing file since as soon as it is saved it is no longer missing.
+    // - The encoding was changed since the file was last read or saved
     return temporary ||
+           encoding() != savedEncodingSpec ||
            (bufferType == ScintillaNext::New && modify()) ||
            (bufferType == ScintillaNext::File && modify()) ||
             (bufferType == ScintillaNext::FileMissing);
@@ -397,12 +506,13 @@ QFileDevice::FileError ScintillaNext::save()
 
     emit aboutToSave();
 
-    const QByteArray data = QByteArray::fromRawData((char*)characterPointer(), textLength());
+    const QByteArray data = toFileBytes(QByteArray::fromRawData((char*)characterPointer(), textLength()));
     const QString path = fileInfo.filePath();
     QFileDevice::FileError writeSuccessful = writeToDisk(data, path, bomType);
 
     if (writeSuccessful == QFileDevice::NoError) {
         updateTimestamp();
+        savedEncodingSpec = encoding();
         setSavePoint();
 
         // If this was a temporary file, make sure it is not any more
@@ -414,13 +524,13 @@ QFileDevice::FileError ScintillaNext::save()
     return writeSuccessful;
 }
 
-void ScintillaNext::reload()
+bool ScintillaNext::reload()
 {
     Q_ASSERT(isFile());
 
     // Ensure the file still exists.
     if (!QFile::exists(fileInfo.canonicalFilePath())) {
-        return;
+        return false;
     }
 
     const int line = firstVisibleLine();
@@ -442,7 +552,7 @@ void ScintillaNext::reload()
     bool readSuccessful = readFromDisk(f);
 
     if (!readSuccessful) {
-        return;
+        return false;
     }
 
     updateTimestamp();
@@ -456,6 +566,7 @@ void ScintillaNext::reload()
     setSelection(caret, anchor);
 
     emit reloaded();
+    return true;
 }
 
 void ScintillaNext::omitModifications()
@@ -474,11 +585,12 @@ QFileDevice::FileError ScintillaNext::saveAs(const QString &newFilePath)
 
     emit aboutToSave();
 
-    const QByteArray data = QByteArray::fromRawData((char*)characterPointer(), textLength());
+    const QByteArray data = toFileBytes(QByteArray::fromRawData((char*)characterPointer(), textLength()));
     QFileDevice::FileError saveSuccessful = writeToDisk(data, newFilePath, bomType);
 
     if (saveSuccessful == QFileDevice::NoError) {
         setFileInfo(newFilePath);
+        savedEncodingSpec = encoding();
         setSavePoint();
 
         // If this was a temporary file, make sure it is not any more
@@ -496,7 +608,7 @@ QFileDevice::FileError ScintillaNext::saveAs(const QString &newFilePath)
 
 QFileDevice::FileError ScintillaNext::saveCopyAs(const QString &filePath)
 {
-    const QByteArray data = QByteArray::fromRawData((char*)characterPointer(), textLength());
+    const QByteArray data = toFileBytes(QByteArray::fromRawData((char*)characterPointer(), textLength()));
     return writeToDisk(data, filePath, bomType);
 }
 
@@ -697,6 +809,12 @@ bool ScintillaNext::readFromDisk(QFile &file)
     QStringDecoder decoder;
     QStringEncoder encoder = QStringEncoder(QStringEncoder::Utf8);
 
+    // A ConverterState must survive across chunks: a 4 MB read boundary can
+    // fall in the middle of a multi-byte character.
+    QTextCodec *fileCodec = Q_NULLPTR;
+    QTextCodec::ConverterState codecState;
+    codecName.clear();
+
     bool first_read = true;
     do {
         // Try to read as much as possible
@@ -719,25 +837,40 @@ bool ScintillaNext::readFromDisk(QFile &file)
             bomType = detectBom(chunk);
             offset = bomLength(bomType);
 
-            switch (bomType) {
-            case BomType::Utf16BE:
-                decoder = QStringDecoder(QStringDecoder::Utf16BE);
-                offset = 2;
-                break;
+            if (!forcedReadSpec.isEmpty()) {
+                // Reinterpret: honour the user's choice instead of detecting.
+                applyEncodingSpec(forcedReadSpec);
+            } else {
+                switch (bomType) {
+                case BomType::Utf16BE:
+                    decoder = QStringDecoder(QStringDecoder::Utf16BE);
+                    offset = 2;
+                    break;
 
-            case BomType::Utf16LE:
-                decoder = QStringDecoder(QStringDecoder::Utf16LE);
-                offset = 2;
-                break;
+                case BomType::Utf16LE:
+                    decoder = QStringDecoder(QStringDecoder::Utf16LE);
+                    offset = 2;
+                    break;
 
-            case BomType::Utf8:
-                // No decoder needed since Scintilla expects UTF-8.
-                offset = 3;
-                break;
+                case BomType::Utf8:
+                    // No decoder needed since Scintilla expects UTF-8.
+                    offset = 3;
+                    break;
 
-            default:
-                break;
+                default:
+                    // No BOM: strict UTF-8 first, then uchardet.
+                    applyEncodingSpec(detectCharset(chunk));
+                    break;
+                }
             }
+
+            if (!codecName.isEmpty()) {
+                fileCodec = QTextCodec::codecForName(codecName.toLatin1());
+                if (!fileCodec)
+                    qWarning("No QTextCodec for \"%s\"; reading as UTF-8", qUtf8Printable(codecName));
+            }
+
+            savedEncodingSpec = encoding();
         }
 
         QByteArrayView input(chunk.constData() + offset, chunk.size() - offset);
@@ -745,6 +878,12 @@ bool ScintillaNext::readFromDisk(QFile &file)
         if (bomType == BomType::Utf16BE || bomType == BomType::Utf16LE) {
             QString text = decoder(input);
             QByteArray utf8 = encoder(text);
+
+            appendText(utf8.size(), utf8.constData());
+        } else if (fileCodec) {
+            // Legacy code page -> QString -> UTF-8 (Scintilla only speaks UTF-8).
+            const QString text = fileCodec->toUnicode(input.data(), static_cast<int>(input.size()), &codecState);
+            const QByteArray utf8 = encoder(text);
 
             appendText(utf8.size(), utf8.constData());
         } else {
@@ -810,6 +949,134 @@ void ScintillaNext::detachFileInfo(const QString &newName)
     setName(newName);
 
     bufferType = ScintillaNext::New;
+    savedEncodingSpec = encoding();
+}
+
+QString ScintillaNext::encoding() const
+{
+    if (!codecName.isEmpty())
+        return codecName;
+
+    switch (bomType) {
+    case BomType::Utf8:    return QStringLiteral("UTF-8 BOM");
+    case BomType::Utf16LE: return QStringLiteral("UTF-16LE BOM");
+    case BomType::Utf16BE: return QStringLiteral("UTF-16BE BOM");
+    default:               return QStringLiteral("UTF-8");
+    }
+}
+
+void ScintillaNext::applyEncodingSpec(const QString &spec)
+{
+    codecName.clear();
+
+    if (spec.isEmpty() || spec == QStringLiteral("UTF-8")) {
+        bomType = BomType::None;
+    } else if (spec == QStringLiteral("UTF-8 BOM")) {
+        bomType = BomType::Utf8;
+    } else if (spec == QStringLiteral("UTF-16LE BOM")) {
+        bomType = BomType::Utf16LE;
+    } else if (spec == QStringLiteral("UTF-16BE BOM")) {
+        bomType = BomType::Utf16BE;
+    } else {
+        bomType = BomType::None;
+        codecName = spec;
+    }
+}
+
+QByteArray ScintillaNext::toFileBytes(const QByteArray &utf8) const
+{
+    if (codecName.isEmpty())
+        return utf8;
+
+    QTextCodec *codec = QTextCodec::codecForName(codecName.toLatin1());
+    if (!codec) {
+        qWarning("No QTextCodec for \"%s\"; writing UTF-8 instead", qUtf8Printable(codecName));
+        return utf8;
+    }
+
+    const QString text = QString::fromUtf8(utf8);
+    QTextCodec::ConverterState state(QTextCodec::DefaultConversion);
+    const QByteArray encoded = codec->fromUnicode(text.constData(), text.size(), &state);
+    if (state.invalidChars > 0) {
+        qWarning("%d characters could not be represented in %s",
+                 state.invalidChars, qUtf8Printable(codecName));
+    }
+    return encoded;
+}
+
+bool ScintillaNext::canBeConvertedTo(const QString &spec)
+{
+    // The Unicode specs can represent anything Scintilla stores (UTF-8).
+    const bool unicode = spec.isEmpty()
+        || spec == QStringLiteral("UTF-8")
+        || spec == QStringLiteral("UTF-8 BOM")
+        || spec == QStringLiteral("UTF-16LE BOM")
+        || spec == QStringLiteral("UTF-16BE BOM");
+    if (unicode)
+        return true;
+
+    QTextCodec *codec = QTextCodec::codecForName(spec.toLatin1());
+    if (!codec)
+        return false;
+
+    const QString text = QString::fromUtf8(QByteArray::fromRawData((char*)characterPointer(), textLength()));
+    QTextCodec::ConverterState state(QTextCodec::DefaultConversion);
+    codec->fromUnicode(text.constData(), text.size(), &state);
+    return state.invalidChars == 0;
+}
+
+void ScintillaNext::setEncoding(const QString &spec)
+{
+    if (encoding() == spec)
+        return;
+
+    applyEncodingSpec(spec);
+    emit encodingChanged();
+
+    // The text did not change, but the file must be written again.
+    emit savePointChanged(canSaveToDisk());
+}
+
+bool ScintillaNext::reinterpretWithEncoding(const QString &spec)
+{
+    Q_ASSERT(isFile());
+
+    // Reinterpreting is only meaningful for encodings without a BOM.
+    if (spec.contains(QStringLiteral("BOM")))
+        return false;
+
+    // reload() empties the buffer before it reads. Keep a copy of the text and
+    // the encoding state so a failed read cannot silently destroy the document.
+    const QByteArray previousText(characterPointer(), textLength());
+    const QString previousEncoding = encoding();
+    const QString previousSavedEncoding = savedEncodingSpec;
+
+    forcedReadSpec = spec;
+    const bool readSuccessful = reload();
+    forcedReadSpec.clear();
+
+    if (!readSuccessful) {
+        // reload() may return before clearing the buffer (e.g. the file was
+        // deleted), in which case there is nothing to restore and the caret
+        // position and undo history should be left alone.
+        const QByteArray currentText(characterPointer(), textLength());
+        if (currentText != previousText) {
+            const QSignalBlocker blocker(this);
+            setUndoCollection(false);
+            setText("");
+            appendText(previousText.size(), previousText.constData());
+            setUndoCollection(true);
+            setSavePoint();
+        }
+        applyEncodingSpec(previousEncoding);
+        savedEncodingSpec = previousSavedEncoding;
+        emit savePointChanged(canSaveToDisk());
+        return false;
+    }
+
+    emit encodingChanged();
+    emit savePointChanged(canSaveToDisk());
+    return true;
 }
 
 void ScintillaNext::setTemporary(bool temp)
