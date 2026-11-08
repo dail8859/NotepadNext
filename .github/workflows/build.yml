@@ -208,7 +208,9 @@ jobs:
         if: matrix.platform == 'linux'
         with:
           name: NotepadNext-Linux-Qt${{ matrix.qt_version }}-AppImage
-          path: ${{ github.workspace }}/build/NotepadNext*.AppImage
+          path: |
+            ${{ github.workspace }}/build/NotepadNext*.AppImage
+            ${{ github.workspace }}/build/NotepadNext*.AppImage.zsync
 
   github:
     name: Draft GitHub Release
@@ -256,6 +258,7 @@ jobs:
       - name: Upload Linux AppImage
         run: |
           gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt$QT_RELEASE_VER-AppImage/NotepadNext-${{ github.ref_name }}-x86_64.AppImage
+          gh release upload ${{ github.ref_name }} NotepadNext-Linux-Qt$QT_RELEASE_VER-AppImage/NotepadNext-${{ github.ref_name }}-x86_64.AppImage.zsync
 
       - name: Upload macOS App (Intel x64)
         run: |
