@@ -415,35 +415,56 @@ QFileDevice::FileError ScintillaNext::save()
     return writeSuccessful;
 }
 
-void ScintillaNext::reload()
+ScintillaNext::ReloadResult ScintillaNext::reload()
 {
     Q_ASSERT(isFile());
 
     // Ensure the file still exists.
     if (!QFile::exists(fileInfo.canonicalFilePath())) {
-        return;
+        return ReloadResult::FailedBufferIntact;
     }
 
     const int line = firstVisibleLine();
     const int caret = selectionNCaret(mainSelection());
     const int anchor = selectionNAnchor(mainSelection());
+    const bool wasReadOnly = readOnly();
 
-    // Remove all the text
-    {
-        const QSignalBlocker blocker(this);
-        setUndoCollection(false);
-        emptyUndoBuffer();
-        setText("");
-        setUndoCollection(true);
-    }
+    // Scintilla silently drops DeleteChars/InsertString (hence setText() and
+    // appendText()) while the document is read-only. Unlock it for the reload;
+    // readFromDisk() re-applies the flag from the file's permissions and the
+    // previous state is restored if reading fails.
+    setReadOnly(false);
 
-    // NOTE: if the read fails then the buffer will be completely empty...which probably
-    // isn't a good thing, but this should be a rare occurrence.
+    // NOTE: readFromDisk() only clears the existing text once the first read of
+    // the file has succeeded, so a file that can no longer be opened or read
+    // leaves the current buffer and its undo history untouched. A read that
+    // fails part-way through can still leave the buffer partial, which should be
+    // a rare occurrence.
+    bool bufferReplaced = false;
     QFile f(fileInfo.canonicalFilePath());
-    bool readSuccessful = readFromDisk(f);
+    const bool readSuccessful = readFromDisk(f, &bufferReplaced);
 
     if (!readSuccessful) {
-        return;
+        setReadOnly(wasReadOnly);
+
+        if (!bufferReplaced) {
+            // Nothing was changed: the buffer, its undo history and its
+            // modified/temporary state are exactly as they were. Only refresh the
+            // timestamp so the "modified by another program" prompt is not shown
+            // again for the same change. Do not flag the buffer as temporary, that
+            // would make a clean (or read-only) file look like it has unsaved text.
+            updateTimestamp();
+            return ReloadResult::FailedBufferIntact;
+        }
+
+        // The buffer no longer necessarily matches the file, and readFromDisk()
+        // reset the undo history, which makes a half-read buffer look
+        // unmodified. Treat it like declined external modifications: refresh the
+        // timestamp so the "modified by another program" prompt is not shown
+        // again for the same change, and flag the buffer so it is still offered
+        // for saving instead of being closed silently.
+        omitModifications();
+        return ReloadResult::FailedBufferChanged;
     }
 
     updateTimestamp();
@@ -457,6 +478,8 @@ void ScintillaNext::reload()
     setSelection(caret, anchor);
 
     emit reloaded();
+
+    return ReloadResult::Reloaded;
 }
 
 void ScintillaNext::omitModifications()
@@ -672,7 +695,7 @@ void ScintillaNext::dropEvent(QDropEvent *event)
     ScintillaEdit::dropEvent(event);
 }
 
-bool ScintillaNext::readFromDisk(QFile &file)
+bool ScintillaNext::readFromDisk(QFile &file, bool *bufferReplaced)
 {
     if (!file.exists()) {
         qWarning("Cannot read \"%s\": doesn't exist", qUtf8Printable(file.fileName()));
@@ -716,6 +739,16 @@ bool ScintillaNext::readFromDisk(QFile &file)
         int offset = 0;
         if (first_read) {
             first_read = false;
+
+            // Replace any existing contents only now that the first read has
+            // succeeded. Doing this any earlier (before the open, or right after
+            // it) would let a failed open or a failed read (permissions, a locked
+            // byte range, an I/O error) discard the editor's current buffer and
+            // undo history. Files up to CHUNK_SIZE are read in this single pass.
+            emptyUndoBuffer();
+            setText("");
+            if (bufferReplaced)
+                *bufferReplaced = true;
 
             bomType = detectBom(chunk);
             offset = bomLength(bomType);
@@ -771,10 +804,12 @@ bool ScintillaNext::readFromDisk(QFile &file)
         return false;
     }
 
-    if (!QFileInfo(file).isWritable()) {
+    const bool fileIsReadOnly = !QFileInfo(file).isWritable();
+    if (fileIsReadOnly) {
         qInfo("Setting file as read-only");
-        setReadOnly(true);
     }
+    // Always assign, not only set: a reloaded file may have become writable.
+    setReadOnly(fileIsReadOnly);
 
     return true;
 }

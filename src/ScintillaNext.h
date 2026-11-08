@@ -105,6 +105,14 @@ public:
         Restored,
     };
 
+    // The outcome of reload(). A failure either left the buffer exactly as it was,
+    // or it may now hold only part of the file.
+    enum class ReloadResult {
+        Reloaded,
+        FailedBufferIntact,
+        FailedBufferChanged,
+    };
+
     enum BufferType {
         New, // A temporary buffer, e.g. "New 1"
         File, // Buffer tied to a file on the file system
@@ -134,7 +142,7 @@ public:
 public slots:
     void close();
     QFileDevice::FileError save();
-    void reload();
+    ReloadResult reload();
     void omitModifications();
     QFileDevice::FileError saveAs(const QString &newFilePath);
     QFileDevice::FileError saveCopyAs(const QString &filePath);
@@ -174,7 +182,7 @@ private:
 
     bool temporary = false; // Temporary file loaded from a session. It can either be a 'New' file or actual 'File'
 
-    bool readFromDisk(QFile &file);
+    bool readFromDisk(QFile &file, bool *bufferReplaced = nullptr);
     QDateTime fileTimestamp();
     void updateTimestamp();
 

@@ -1296,6 +1296,29 @@ void MainWindow::setFolderAsWorkspacePath(const QString &dir)
     }
 }
 
+void MainWindow::reloadEditor(ScintillaNext *editor)
+{
+    const QString filePath = editor->getFilePath();
+
+    switch (editor->reload()) {
+    case ScintillaNext::ReloadResult::Reloaded:
+        break;
+
+    case ScintillaNext::ReloadResult::FailedBufferIntact:
+        // Nothing was touched, so do not suggest that the text is damaged.
+        QMessageBox::warning(this, tr("Reload File"),
+            tr("<b>%1</b> could not be reloaded from disk. The text in this tab has not been changed.").arg(filePath));
+        break;
+
+    case ScintillaNext::ReloadResult::FailedBufferChanged:
+        // The read failed part-way through and left a partial buffer behind.
+        QMessageBox::warning(this, tr("Reload File"),
+            tr("<b>%1</b> could not be reloaded from disk. The text in this tab may now be "
+               "incomplete, so check it before saving over the file.").arg(filePath));
+        break;
+    }
+}
+
 void MainWindow::reloadFile()
 {
     auto editor = currentEditor();
@@ -1308,7 +1331,7 @@ void MainWindow::reloadFile()
     auto reply = QMessageBox::question(this, tr("Reload File"), tr("Are you sure you want to reload <b>%1</b>? Any unsaved changes will be lost.").arg(filePath));
 
     if (reply == QMessageBox::Yes) {
-        editor->reload();
+        reloadEditor(editor);
     }
 }
 
@@ -1964,7 +1987,7 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
         auto reply = QMessageBox::question(this, tr("Reload File"), tr("<b>%1</b> has been modified by another program. Do you want to reload it?").arg(filePath));
 
         if (reply == QMessageBox::Yes) {
-            editor->reload();
+            reloadEditor(editor);
         }
         else {
             editor->omitModifications();
