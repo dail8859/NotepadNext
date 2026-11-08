@@ -181,6 +181,9 @@ private:
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     bool checkFileForModification(ScintillaNext *editor);
     void showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileError error);
+    // Warns about a save that cannot round-trip (undecodable bytes or characters
+    // the target code page cannot represent). Returns false if the user cancels.
+    bool confirmCharcodeLoss(ScintillaNext *editor);
     void showEditorZoomLevelIndicator();
 
     enum class UserSaveAction { SaveAll, DiscardAll, Cancel };

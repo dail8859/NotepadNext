@@ -134,6 +134,10 @@ public:
     // represent (CotEditor calls these "incompatible characters").
     bool canBeConvertedTo(const QString &spec);
 
+    // Number of bytes that had no mapping to text when the file was read. They
+    // are shown as U+FFFD and cannot be written back, so a save drops them.
+    int undecodableByteCount() const { return decodeInvalidChars; }
+
     bool isTemporary() const { return temporary; }
     void setTemporary(bool temp);
 
@@ -188,6 +192,7 @@ private:
     QString codecName;          // legacy code page on disk; empty = UTF-8
     QString savedEncodingSpec = QStringLiteral("UTF-8");  // encoding() at the last read/save
     QString forcedReadSpec;     // one-shot override used by Reinterpret
+    int decodeInvalidChars = 0; // bytes the read codec could not map to text
     QFileInfo fileInfo;
     QDateTime modifiedTime;
     RangeAllocator indicatorResources;

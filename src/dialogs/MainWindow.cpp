@@ -1581,6 +1581,49 @@ void MainWindow::closeAllToRight()
     }
 }
 
+// CotEditor asks before a save that cannot round-trip. Two different losses can
+// happen here: bytes that never decoded (they became replacement characters
+// while the file was read) and characters the target code page cannot represent
+// (replaced on the way out). Both are permanent once the file is written, so ask
+// instead of dropping them silently.
+bool MainWindow::confirmCharcodeLoss(ScintillaNext *editor)
+{
+    const int undecodable = editor->undecodableByteCount();
+    const QString spec = editor->encoding();
+    const bool unrepresentable = !editor->canBeConvertedTo(spec);
+
+    if (undecodable == 0 && !unrepresentable)
+        return true;
+
+    QStringList details;
+    if (undecodable > 0) {
+        details << tr("%1 byte(s) of this file could not be decoded and are shown as replacement characters. Saving now replaces them permanently.")
+                       .arg(undecodable);
+    }
+    if (unrepresentable) {
+        details << tr("Some characters cannot be represented in %1 and would be replaced.")
+                       .arg(spec);
+    }
+
+    QMessageBox box(this);
+    box.setIcon(QMessageBox::Warning);
+    box.setWindowTitle(tr("Save with Character Loss"));
+    box.setText(details.join(QStringLiteral("\n\n")));
+    box.setInformativeText(tr("Saving as UTF-8 keeps every character."));
+    box.addButton(tr("Save Anyway"), QMessageBox::DestructiveRole);
+    QPushButton *saveUtf8 = box.addButton(tr("Save as UTF-8"), QMessageBox::AcceptRole);
+    QPushButton *cancel = box.addButton(QMessageBox::Cancel);
+    box.setDefaultButton(saveUtf8);
+    box.exec();
+
+    if (box.clickedButton() == cancel)
+        return false;
+    if (box.clickedButton() == saveUtf8)
+        editor->setEncoding(QStringLiteral("UTF-8"));
+
+    return true;
+}
+
 bool MainWindow::saveCurrentFile()
 {
     return saveFile(currentEditor());
@@ -1597,6 +1640,9 @@ bool MainWindow::saveFile(ScintillaNext *editor)
         return saveCurrentFileAsDialog();
     }
     else {
+        if (!confirmCharcodeLoss(editor))
+            return false;
+
         QFileDevice::FileError error = editor->save();
         if (error == QFileDevice::NoError) {
             return true;
@@ -1636,6 +1682,9 @@ bool MainWindow::saveCurrentFileAs(const QString &fileName)
 bool MainWindow::saveFileAs(ScintillaNext *editor, const QString &fileName)
 {
     qInfo("saveFileAs(%s)", qUtf8Printable(fileName));
+
+    if (!confirmCharcodeLoss(editor))
+        return false;
 
     QFileDevice::FileError error = editor->saveAs(fileName);
 
