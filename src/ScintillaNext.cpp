@@ -801,6 +801,18 @@ void ScintillaNext::detachFileInfo(const QString &newName)
     bufferType = ScintillaNext::New;
 }
 
+bool ScintillaNext::isValidUtf8()
+{
+    // Stateless so that an incomplete sequence at the end of the text is an error as well
+    QStringDecoder decoder(QStringDecoder::Utf8, QStringDecoder::Flag::Stateless);
+
+    // The decoding only happens once the result is converted to a string
+    const QString text = decoder(QByteArrayView((char*)characterPointer(), textLength()));
+    Q_UNUSED(text);
+
+    return !decoder.hasError();
+}
+
 void ScintillaNext::setBom(BomType bom)
 {
     if (bomType == bom) {

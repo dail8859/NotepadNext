@@ -271,8 +271,21 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     ui->actionEncodingUtf16LEBom->setData(static_cast<int>(ScintillaNext::BomType::Utf16LE));
 
     connect(encodingActionGroup, &QActionGroup::triggered, this, [this](QAction *action) {
+        ScintillaNext *editor = currentEditor();
+        const auto bom = static_cast<ScintillaNext::BomType>(action->data().toInt());
+
+        // UTF-16 is written by decoding the text as UTF-8, which would replace any invalid bytes for good
+        const bool isUtf16 = bom == ScintillaNext::BomType::Utf16BE || bom == ScintillaNext::BomType::Utf16LE;
+        if (isUtf16 && !editor->isValidUtf8()) {
+            QMessageBox::warning(this, tr("Encoding"), tr("This document is not valid UTF-8, so converting it to %1 would lose characters.").arg(action->text()));
+
+            // The action group has already moved the check mark to this action
+            updateEncodingBasedUi(editor);
+            return;
+        }
+
         // The text stays the same, it gets written in the new encoding the next time it is saved
-        currentEditor()->setBom(static_cast<ScintillaNext::BomType>(action->data().toInt()));
+        editor->setBom(bom);
     });
 
 
