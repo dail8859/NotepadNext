@@ -43,7 +43,12 @@
 #include <Windows.h>
 #endif
 
-const SingleApplication::Options opts = SingleApplication::ExcludeAppPath | SingleApplication::ExcludeAppVersion | SingleApplication::SecondaryNotification;
+// Include the application path and version in the instance lock key (the
+// SingleApplication default). Excluding both made every Notepad Next build
+// share a single lock, so two different versions installed on the same
+// machine could not be run side by side. The same bundle still stays
+// single-instance, since its path and version are unchanged.
+const SingleApplication::Options opts = SingleApplication::SecondaryNotification;
 
 void parseCommandLine(QCommandLineParser &parser, const QStringList &args)
 {
