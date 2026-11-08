@@ -362,6 +362,18 @@
     </property>
     <addaction name="actionThis_is_not_currently_implemented"/>
    </widget>
+   <widget class="QMenu" name="menuRunConfig">
+    <property name="title">
+     <string>Run</string>
+    </property>
+    <addaction name="actionNewRunConfig"/>
+    <widget class="QMenu" name="recentRunConfigs">
+	  <property name="title">
+      <string>Recent configs...</string>
+	  </property>
+	</widget>
+	<addaction name="recentRunConfigs"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuSearch"/>
@@ -370,6 +382,7 @@
    <addaction name="menuLanguage"/>
    <addaction name="menuSettings"/>
    <addaction name="menuMacro"/>
+   <addaction name="menuRunConfig"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -425,6 +438,8 @@
    <addaction name="actionPlayback"/>
    <addaction name="actionRunMacroMultipleTimes"/>
    <addaction name="actionSaveCurrentRecordedMacro"/>
+   <addaction name="separator"/>
+   <addaction name="actionRunCode"/>
   </widget>
   <widget class="EditorInfoStatusBar" name="statusBar"/>
   <action name="actionNew">
@@ -769,6 +784,16 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl++</string>
+   </property>
+  </action>
+  <action name="actionRunCode">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/runcode.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Run Last command</string>
    </property>
   </action>
   <action name="actionZoomOut">
@@ -1594,6 +1619,11 @@
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+F3</string>
    </property>
+  </action>
+  <action name="actionNewRunConfig">
+    <property name="text">
+	<string>Run Configurations...</string>
+	</property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

@@ -75,3 +75,8 @@ ads--CDockWidgetTab[activeTab="false"] QLabel {
     border-bottom: 3px solid blue;
     background: palette(window);
 }
+
+CodeOutputDock ads--CDockWidget{
+    background-color: rgb(23, 23, 23);
+	font: bold 10pt "Courier New";
+}
