@@ -23,7 +23,7 @@
 #include "ScintillaNext.h"
 
 #include <QDockWidget>
-#include <QListWidgetItem>
+#include <QTreeWidgetItem>
 
 namespace Ui {
 class FileList;
@@ -46,13 +46,14 @@ private slots:
 
     void selectCurrentEditor();
 
-    void itemClicked(QListWidgetItem *item);
+    void itemClicked(QTreeWidgetItem *item, int column);
 
     void editorSavePointChanged(bool dirty);
     void editorRenamed();
 
 private:
-    QListWidgetItem *lookupItemByEditor(ScintillaNext *editor);
+    void setPathColumnVisible(bool visible);
+    QTreeWidgetItem *lookupItemByEditor(ScintillaNext *editor);
 
     Ui::FileList *ui;
     MainWindow *window;

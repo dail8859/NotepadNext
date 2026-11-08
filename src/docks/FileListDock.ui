@@ -65,7 +65,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QListWidget" name="listWidget">
+     <widget class="QTreeWidget" name="treeWidget">
       <property name="frameShape">
        <enum>QFrame::Shape::NoFrame</enum>
       </property>
@@ -75,9 +75,28 @@
       <property name="selectionBehavior">
        <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
       </property>
-      <property name="uniformItemSizes">
+      <property name="indentation">
+       <number>0</number>
+      </property>
+      <property name="rootIsDecorated">
+       <bool>false</bool>
+      </property>
+      <property name="uniformRowHeights">
        <bool>true</bool>
       </property>
+      <property name="itemsExpandable">
+       <bool>false</bool>
+      </property>
+      <column>
+       <property name="text">
+        <string>Name</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Path</string>
+       </property>
+      </column>
      </widget>
     </item>
    </layout>
@@ -88,6 +107,17 @@
    </property>
    <property name="text">
     <string>Sort by File Name</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionShowPathColumn">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Path Column</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
