@@ -95,6 +95,14 @@ static bool hasHighBytes(const QByteArray &data)
 // uchardet tends to answer WINDOWS-1252 / ISO-8859-x for files that are almost
 // pure ASCII with only a few CJK characters. Trusting that guess turns those
 // characters into Latin garbage, which is worse than not detecting at all.
+//
+// The override has to stay narrow, because the opposite mistake is worse. An
+// accented Latin letter followed by another letter is a valid GBK lead/trail
+// pair, so Western prose decodes "cleanly" into scattered ideographs
+// ("Hélène" -> 閘鑞, "Größenänderung" -> Gr鲞en鋘derung). Counting ideographs
+// alone cannot separate the two. Real CJK text has runs of three or more
+// ideographs back to back, while an accented Latin word yields runs of two at
+// most, so the run length is what makes the override trustworthy.
 static bool decodesAsGb18030WithCjk(const QByteArray &data)
 {
     QTextCodec *codec = QTextCodec::codecForName("GB18030");
@@ -103,17 +111,22 @@ static bool decodesAsGb18030WithCjk(const QByteArray &data)
 
     QTextCodec::ConverterState state(QTextCodec::DefaultConversion);
     const QString text = codec->toUnicode(data.constData(), data.size(), &state);
-    if (state.invalidChars > 0)
+    if (state.invalidChars > 0 || text.contains(QChar(0xFFFD)))
         return false;
 
-    int cjk = 0;
+    int run = 0;
+    int longestRun = 0;
     for (const QChar ch : text) {
-        if (ch.unicode() >= 0x4E00 && ch.unicode() <= 0x9FFF) {
-            if (++cjk >= 3)
-                return true;
+        const ushort c = ch.unicode();
+        if (c >= 0x4E00 && c <= 0x9FFF) {
+            if (++run > longestRun)
+                longestRun = run;
+        }
+        else {
+            run = 0;
         }
     }
-    return false;
+    return longestRun >= 3;
 }
 
 // Return an Encoding-menu spec, or an empty string when the data is UTF-8.
@@ -814,6 +827,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
     QTextCodec *fileCodec = Q_NULLPTR;
     QTextCodec::ConverterState codecState;
     codecName.clear();
+    decodeInvalidChars = 0;
 
     bool first_read = true;
     do {
@@ -891,6 +905,11 @@ bool ScintillaNext::readFromDisk(QFile &file)
             appendText(input.size(), input.data());
         }
     } while (!file.atEnd() && status() == SC_STATUS_OK);
+
+    // A byte sequence the codec cannot map becomes U+FFFD in the buffer, so the
+    // original bytes are gone. Remember the count: saving re-encodes the text,
+    // which would write replacement characters over those bytes.
+    decodeInvalidChars = codecState.invalidChars;
 
     file.close();
 
