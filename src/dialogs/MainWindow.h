@@ -108,6 +108,7 @@ public slots:
 
     void updateFileStatusBasedUi(ScintillaNext *editor);
     void updateEOLBasedUi(ScintillaNext *editor);
+    void updateEncodingBasedUi(ScintillaNext *editor);
     void updateDocumentBasedUi(Scintilla::Update updated);
     void updateSelectionBasedUi(ScintillaNext *editor);
     void updateContentBasedUi(ScintillaNext *editor);

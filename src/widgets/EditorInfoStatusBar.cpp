@@ -44,6 +44,10 @@ EditorInfoStatusBar::EditorInfoStatusBar(QMainWindow *window) :
 
     unicodeType = new StatusLabel(125);
     addPermanentWidget(unicodeType, 0);
+    unicodeType->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(qobject_cast<StatusLabel*>(unicodeType), &StatusLabel::customContextMenuRequested, this, [=, this](const QPoint &pos) {
+        emit customContextMenuRequestedForEncodingLabel(unicodeType->mapToGlobal(pos));
+    });
 
     overType = new StatusLabel(25);
     addPermanentWidget(overType, 0);
@@ -74,10 +78,12 @@ void EditorInfoStatusBar::connectToEditor(ScintillaNext *editor)
     // Remove any previous connections
     disconnect(editorUiUpdated);
     disconnect(documentLexerChanged);
+    disconnect(documentBomChanged);
 
     // Connect to the new editor
     editorUiUpdated = connect(editor, &ScintillaNext::updateUi, this, &EditorInfoStatusBar::editorUpdated);
     documentLexerChanged = connect(editor, &ScintillaNext::lexerChanged, this, [=, this]() { updateLanguage(editor); });
+    documentBomChanged = connect(editor, &ScintillaNext::bomChanged, this, [=, this]() { updateEncoding(editor); });
 
     refresh(editor);
 }

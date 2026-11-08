@@ -119,6 +119,10 @@ public:
     };
 
     BomType bom() const { return bomType; }
+    void setBom(BomType bom);
+
+    // Files in other encodings are kept as raw bytes, which are not valid UTF-8
+    bool isValidUtf8();
 
     bool isTemporary() const { return temporary; }
     void setTemporary(bool temp);
@@ -159,6 +163,7 @@ signals:
 
     void lexerChanged();
     void reloaded();
+    void bomChanged();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -168,6 +173,7 @@ private:
     QString name;
     BufferType bufferType = BufferType::New;
     BomType bomType = BomType::None;
+    BomType savedBomType = BomType::None; // Encoding of the file when it was last read or saved
     QFileInfo fileInfo;
     QDateTime modifiedTime;
     RangeAllocator indicatorResources;

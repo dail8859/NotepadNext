@@ -316,7 +316,9 @@ bool ScintillaNext::canSaveToDisk() const
     // - It is marked as a temporary since as soon as it gets saved it is no longer a temporary buffer
     // - A modified file
     // - A missing file since as soon as it is saved it is no longer missing.
+    // - The encoding was changed since the file was last read or saved
     return temporary ||
+           bomType != savedBomType ||
            (bufferType == ScintillaNext::New && modify()) ||
            (bufferType == ScintillaNext::File && modify()) ||
             (bufferType == ScintillaNext::FileMissing);
@@ -403,6 +405,7 @@ QFileDevice::FileError ScintillaNext::save()
 
     if (writeSuccessful == QFileDevice::NoError) {
         updateTimestamp();
+        savedBomType = bomType;
         setSavePoint();
 
         // If this was a temporary file, make sure it is not any more
@@ -479,6 +482,7 @@ QFileDevice::FileError ScintillaNext::saveAs(const QString &newFilePath)
 
     if (saveSuccessful == QFileDevice::NoError) {
         setFileInfo(newFilePath);
+        savedBomType = bomType;
         setSavePoint();
 
         // If this was a temporary file, make sure it is not any more
@@ -717,6 +721,7 @@ bool ScintillaNext::readFromDisk(QFile &file)
             first_read = false;
 
             bomType = detectBom(chunk);
+            savedBomType = bomType;
             offset = bomLength(bomType);
 
             switch (bomType) {
@@ -810,6 +815,32 @@ void ScintillaNext::detachFileInfo(const QString &newName)
     setName(newName);
 
     bufferType = ScintillaNext::New;
+}
+
+bool ScintillaNext::isValidUtf8()
+{
+    // Stateless so that an incomplete sequence at the end of the text is an error as well
+    QStringDecoder decoder(QStringDecoder::Utf8, QStringDecoder::Flag::Stateless);
+
+    // The decoding only happens once the result is converted to a string
+    const QString text = decoder(QByteArrayView((char*)characterPointer(), textLength()));
+    Q_UNUSED(text);
+
+    return !decoder.hasError();
+}
+
+void ScintillaNext::setBom(BomType bom)
+{
+    if (bomType == bom) {
+        return;
+    }
+
+    bomType = bom;
+
+    emit bomChanged();
+
+    // The text did not change but the file needs saved again in the new encoding, so fake this signal
+    emit savePointChanged(canSaveToDisk());
 }
 
 void ScintillaNext::setTemporary(bool temp)
