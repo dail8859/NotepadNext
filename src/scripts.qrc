@@ -24,6 +24,7 @@
         <file>languages/cs.lua</file>
         <file>languages/csound.lua</file>
         <file>languages/css.lua</file>
+        <file>languages/cue.lua</file>
         <file>languages/scss.lua</file>
         <file>languages/d.lua</file>
         <file>languages/diff.lua</file>
