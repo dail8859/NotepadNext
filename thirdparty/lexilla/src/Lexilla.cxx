@@ -66,6 +66,7 @@ extern const LexerModule lmCPP;
 extern const LexerModule lmCPPNoCase;
 extern const LexerModule lmCsound;
 extern const LexerModule lmCss;
+extern const LexerModule lmCue;
 extern const LexerModule lmD;
 extern const LexerModule lmDart;
 extern const LexerModule lmDataflex;
@@ -221,6 +222,7 @@ void AddEachLexer() {
 		&lmCPPNoCase,
 		&lmCsound,
 		&lmCss,
+		&lmCue,
 		&lmD,
 		&lmDart,
 		&lmDataflex,

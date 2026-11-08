@@ -1,81 +1,83 @@
 local L = {}
 
--- CUE sheets have no dedicated Lexilla lexer. The "conf" lexer already
--- handles quoted strings, numbers, punctuation and two configurable word
--- lists, which maps well onto CUE commands and their arguments.
+-- Dedicated CUE lexer: thirdparty/lexilla/lexers/LexCue.cxx.
+-- The five word lists mirror the six rule groups of the CotEditor
+-- "CUE Sheet" .cotsyntax bundle (the sixth group, numbers, is handled
+-- by the lexer itself so that a MM:SS:FF timecode stays one styled run).
 --
--- LexConf lowercases every identifier before the WordList lookup
--- (LexConf.cxx:86,138), so keywords here MUST be lowercase. It also only
--- starts an identifier on isalpha() (LexConf.cxx:83), which is why "4ch"
--- (a FLAGS value) cannot be listed.
-L.lexer = "conf"
-
-L.singleLineComment = "REM "
+-- The lexer lowercases every token before the WordList lookup, so all
+-- keywords here MUST be lower case. Unlike the generic "conf" lexer it
+-- accepts digit-leading tokens, which is why "4ch" can be listed.
+L.lexer = "cue"
 
 L.extensions = {
     "cue",
 }
 
 L.keywords = {
-    -- SCE_CONF_DIRECTIVE (9): CUE commands
-    [0] = "arranger catalog cdtextfile composer file flags index isrc message performer postgap pregap rem songwriter title track",
+    -- SCE_CUE_KEYWORD (3): commands that open a line
+    [0] = "file track index pregap postgap",
 
-    -- SCE_CONF_PARAMETER (5): REM fields, FILE types and FLAGS values
-    [1] = "aiff audio binary cdg comment data date dcp discid fps genre mode1 mode1_raw mode2 mode2_raw motorola mp3 pre replaygain_album_gain replaygain_track_gain scms wave",
+    -- SCE_CUE_COMMAND (4): the other line-opening commands
+    [1] = "arranger catalog cdtextfile composer flags isrc message performer rem songwriter title",
+
+    -- SCE_CUE_ATTRIBUTE (5): fields immediately following REM
+    [2] = "comment date discid genre replaygain_album_gain replaygain_track_gain",
+
+    -- SCE_CUE_TYPE (6): FILE formats and TRACK modes
+    [3] = "aiff audio binary cdg mode1 mode1_raw mode2 mode2_raw motorola mp3 wave",
+
+    -- SCE_CUE_VALUE (7): FLAGS values
+    [4] = "4ch data dcp fps pre scms",
 }
 
 L.styles = {
     ["DEFAULT"] = {
         id = 0,
-        fgColor = rgb(0x000000),
+        fgColor = rgb(0x1A1A1A),
         bgColor = rgb(0xFFFFFF),
     },
-    ["COMMENT"] = {
+    ["STRING"] = {
         id = 1,
-        fgColor = rgb(0x008000),
+        fgColor = rgb(0x33475B),
         bgColor = rgb(0xFFFFFF),
     },
     ["NUMBER"] = {
         id = 2,
-        fgColor = rgb(0xFF8000),
+        fgColor = rgb(0xC25E00),
+        bgColor = rgb(0xFFFFFF),
+    },
+    ["KEYWORD"] = {
+        id = 3,
+        fgColor = rgb(0x0033CC),
+        bgColor = rgb(0xFFFFFF),
+        fontStyle = 1,
+    },
+    ["COMMAND"] = {
+        id = 4,
+        fgColor = rgb(0x7A1FA2),
+        bgColor = rgb(0xFFFFFF),
+        fontStyle = 1,
+    },
+    ["ATTRIBUTE"] = {
+        id = 5,
+        fgColor = rgb(0x00838F),
+        bgColor = rgb(0xFFFFFF),
+    },
+    ["TYPE"] = {
+        id = 6,
+        fgColor = rgb(0x1B7F3B),
+        bgColor = rgb(0xFFFFFF),
+    },
+    ["VALUE"] = {
+        id = 7,
+        fgColor = rgb(0xB01B6B),
         bgColor = rgb(0xFFFFFF),
     },
     ["IDENTIFIER"] = {
-        id = 3,
-        fgColor = rgb(0x000000),
-        bgColor = rgb(0xFFFFFF),
-    },
-    ["EXTENSION"] = {
-        id = 4,
-        fgColor = rgb(0x8000FF),
-        bgColor = rgb(0xFFFFFF),
-    },
-    ["PARAMETER"] = {
-        id = 5,
-        fgColor = rgb(0x008080),
-        bgColor = rgb(0xFFFFFF),
-    },
-    ["STRING"] = {
-        id = 6,
-        fgColor = rgb(0x808080),
-        bgColor = rgb(0xFFFFFF),
-    },
-    ["OPERATOR"] = {
-        id = 7,
-        fgColor = rgb(0x000080),
-        bgColor = rgb(0xFFFFFF),
-        fontStyle = 1,
-    },
-    ["IP"] = {
         id = 8,
-        fgColor = rgb(0xFF8000),
+        fgColor = rgb(0x1A1A1A),
         bgColor = rgb(0xFFFFFF),
-    },
-    ["DIRECTIVE"] = {
-        id = 9,
-        fgColor = rgb(0x0000FF),
-        bgColor = rgb(0xFFFFFF),
-        fontStyle = 1,
     },
 }
 
