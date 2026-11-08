@@ -71,6 +71,15 @@ public:
 
     QStringList debugInfo() const;
 
+    // User-defined languages: a "languages" folder under the application data
+    // directory whose *.lua files are executed into the shared Lua state, so a
+    // language can be added without recompiling or sending a pull request.
+    QString userLanguagesDir() const;
+    void loadUserLanguages();
+
+signals:
+    void userLanguagesChanged();
+
 protected:
     bool event(QEvent *event) override;
 

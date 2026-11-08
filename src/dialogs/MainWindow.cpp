@@ -29,6 +29,9 @@
 
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QDir>
 #include <QStringList>
 #include <QClipboard>
 #include <QStandardPaths>
@@ -1078,7 +1081,41 @@ void MainWindow::setupLanguageMenu()
 {
     qInfo(Q_FUNC_INFO);
 
+    populateLanguageMenu();
+
+    // A persistent submenu for user-defined languages: open the folder where
+    // *.lua files live, or reload them without restarting.
+    if (!userLanguagesMenu) {
+        userLanguagesMenu = new QMenu(tr("User Languages"), this);
+
+        QAction *openFolder = new QAction(tr("Open Folder…"), this);
+        connect(openFolder, &QAction::triggered, this, [this]() {
+            const QString dir = app->userLanguagesDir();
+            QDir().mkpath(dir);
+            QDesktopServices::openUrl(QUrl::fromLocalFile(dir));
+        });
+
+        QAction *reload = new QAction(tr("Reload User Languages"), this);
+        connect(reload, &QAction::triggered, app, &NotepadNextApplication::loadUserLanguages);
+
+        userLanguagesMenu->addAction(openFolder);
+        userLanguagesMenu->addSeparator();
+        userLanguagesMenu->addAction(reload);
+        ui->menuLanguage->addMenu(userLanguagesMenu);
+
+        // Rebuild on every (re)load so several windows stay in sync.
+        connect(app, &NotepadNextApplication::userLanguagesChanged,
+                this, &MainWindow::rebuildLanguageMenu);
+    }
+}
+
+void MainWindow::populateLanguageMenu()
+{
     QStringList language_names = app->getLanguages();
+
+    // After a reload the "User Languages" submenu already sits at the bottom, so
+    // the rebuilt entries have to be inserted above it to keep one stable order.
+    QAction *before = userLanguagesMenu ? userLanguagesMenu->menuAction() : Q_NULLPTR;
 
     int i = 0;
     while (i < language_names.size()) {
@@ -1100,16 +1137,42 @@ void MainWindow::setupLanguageMenu()
         }
 
         if (actions.size() == 1) {
-            ui->menuLanguage->addActions(actions);
+            ui->menuLanguage->insertActions(before, actions);
         }
         else {
             // Create a sub menu with the actions
-            QMenu *compactMenu = new QMenu(actions[0]->text().at(0).toUpper());
+            QMenu *compactMenu = new QMenu(actions[0]->text().at(0).toUpper(), ui->menuLanguage);
             compactMenu->addActions(actions);
-            ui->menuLanguage->addMenu(compactMenu);
+            ui->menuLanguage->insertMenu(before, compactMenu);
+            generatedLanguageMenus.append(compactMenu);
         }
         i = j;
     }
+}
+
+void MainWindow::rebuildLanguageMenu()
+{
+    // Tear down the previously generated language entries so a reload does not
+    // pile up duplicates. The persistent "User Languages" submenu is kept.
+    for (QMenu *menu : generatedLanguageMenus) {
+        ui->menuLanguage->removeAction(menu->menuAction());
+        delete menu;
+    }
+    generatedLanguageMenus.clear();
+
+    const QList<QAction *> actions = languageActionGroup->actions();
+    for (QAction *action : actions) {
+        ui->menuLanguage->removeAction(action);
+        languageActionGroup->removeAction(action);
+        delete action;
+    }
+
+    populateLanguageMenu();
+
+    // The actions were re-created unchecked; restore the state for the editor
+    // that is currently visible.
+    if (ScintillaNext *editor = currentEditor())
+        updateLanguageBasedUi(editor);
 }
 
 ScintillaNext *MainWindow::currentEditor() const

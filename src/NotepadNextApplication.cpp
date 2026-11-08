@@ -37,7 +37,10 @@
 
 #include <QCommandLineParser>
 
+#include <QDir>
 #include <QDirIterator>
+#include <QFile>
+#include <QStandardPaths>
 
 #ifdef Q_OS_WIN
 #include <Windows.h>
@@ -151,6 +154,10 @@ bool NotepadNextApplication::init()
 
     luaState->executeFile(":/scripts/init.lua");
     LuaExtension::Instance().Initialise(luaState->L, Q_NULLPTR);
+
+    // Load any user-defined languages dropped into the application data folder
+    // so they appear in the Language menu without recompiling or sending a PR.
+    loadUserLanguages();
 
     createNewWindow();
     connect(editorManager, &EditorManager::editorCreated, window, &MainWindow::addEditor);
@@ -267,6 +274,76 @@ QStringList NotepadNextApplication::getLanguages() const
                 table.sort(names, function (a, b) return string.lower(a) < string.lower(b) end)
                 return names
                 )");
+}
+
+QString NotepadNextApplication::userLanguagesDir() const
+{
+    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QStringLiteral("/languages");
+}
+
+// Drops the README explaining the file format into a fresh user languages
+// folder so the feature is discoverable. Never overwrites an edited copy.
+static void writeUserLanguagesReadme(const QDir &dir)
+{
+    const QString path = dir.filePath(QStringLiteral("README.txt"));
+    if (QFile::exists(path))
+        return;
+
+    QFile readme(path);
+    if (!readme.open(QFile::WriteOnly | QFile::Text))
+        return;
+
+    // Delimited with README so the ")" in the sample below cannot end it.
+    readme.write(R"README(Notepad Next - user defined languages
+
+Every *.lua file in this folder is executed on startup and when you choose
+Language > User Languages > Reload User Languages.
+
+A language file registers itself in the global "languages" table; the key is the
+name shown in the Language menu:
+
+    languages["INI (custom)"] = {
+        lexer = "props",              -- a Lexilla lexer name
+        extensions = { "ini2" },      -- used for the file dialog filters
+        keywords = { [0] = "alpha beta" },
+        styles = {
+            { id = 1, fgColor = rgb(0x000000), bgColor = rgb(0xFFFFFF) },
+        },
+    }
+
+"lexer" must name an existing Scintilla lexer; the keywords table index is the
+keyword list number that lexer uses. See src/languages/*.lua in the Notepad Next
+source tree for complete examples.
+)README");
+}
+
+void NotepadNextApplication::loadUserLanguages()
+{
+    qInfo(Q_FUNC_INFO);
+
+    const QDir dir(userLanguagesDir());
+    if (!dir.exists() && !dir.mkpath(".")) {
+        qWarning("Could not create user languages directory: %s", qUtf8Printable(dir.path()));
+        return;
+    }
+    writeUserLanguagesReadme(dir);
+
+    const QStringList entries = dir.entryList(QStringList() << QStringLiteral("*.lua"),
+                                              QDir::Files | QDir::Readable, QDir::Name);
+    for (const QString &file : entries) {
+        const QString path = dir.filePath(file);
+        qInfo("Loading user language: %s", qUtf8Printable(path));
+        // executeFile runs the script through lua_pcall, so a faulty user file
+        // only emits a warning instead of crashing the application.
+        luaState->executeFile(path);
+    }
+
+    // A user script can add anything to the global table; the Language menu
+    // treats every key as a string and every value as a table, so drop the rest.
+    luaState->execute("for k, v in pairs(languages) do "
+                      "if type(k) ~= 'string' or type(v) ~= 'table' then languages[k] = nil end end");
+
+    emit userLanguagesChanged();
 }
 
 void NotepadNextApplication::setEditorLanguage(ScintillaNext *editor, const QString &languageName) const
