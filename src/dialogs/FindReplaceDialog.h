@@ -45,7 +45,8 @@ public:
     enum {
         FIND_TAB = 0,
         REPLACE_TAB = 1,
-        MARK_TAB = 2
+        MARK_TAB = 2,
+        FIND_IN_FILES_TAB = 3
     };
 
     enum class SearchDirection
@@ -80,6 +81,7 @@ public slots:
     void find();
     void findAllInCurrentDocument();
     void findAllInDocuments();
+    void findAllInFiles();
     void count();
     void replace();
     void replaceAll();
@@ -95,6 +97,7 @@ private slots:
     void adjustOpacityAlways(bool on);
 
     void changeTab(int index);
+    void browseDirectory();
 
 private:
     QString findString() const;
@@ -115,6 +118,7 @@ private:
 
     void updateFindList(const QString &text);
     void updateReplaceList(const QString &text);
+    void setFindInFilesWidgetsVisible(bool visible);
 
     bool isFirstTime = true;
     QPoint lastClosedPosition;

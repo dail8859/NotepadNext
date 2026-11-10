@@ -59,6 +59,7 @@ private slots:
 
 signals:
     void searchResultActivated(ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning);
+    void fileSearchResultActivated(const QString &filePath, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning);
 
 private:
     void updateSearchStatus();
