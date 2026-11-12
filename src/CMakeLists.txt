@@ -49,6 +49,7 @@ qt_add_executable(NotepadNext
 	SpinBoxDelegate.h
 	TranslationManager.h
 	UndoAction.h
+	XmlFormatter.h
 	ZoomEventWatcher.h
 	resources.qrc
 	scripts.qrc
@@ -94,6 +95,7 @@ qt_add_executable(NotepadNext
 	SpinBoxDelegate.cpp
 	TranslationManager.cpp
 	UndoAction.cpp
+	XmlFormatter.cpp
 	ZoomEventWatcher.cpp
 	decorators/ApplicationDecorator.cpp
 	decorators/ApplicationDecorator.h
