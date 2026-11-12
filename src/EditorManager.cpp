@@ -21,6 +21,7 @@
 #include "ApplicationSettings.h"
 
 #include "EditorManager.h"
+#include "IndentationDetector.h"
 #include "ScintillaNext.h"
 #include "Scintilla.h"
 
@@ -375,6 +376,23 @@ void EditorManager::setupEditor(ScintillaNext *editor)
     }
     else {
         editor->setEOLMode(detectedEOLMode);
+    }
+
+    if (settings->detectIndentation()) {
+        const int MAX_BYTES_TO_CHECK = 64*1024;
+        const QByteArrayView text((char*) editor->characterPointer(), qMin<qint64>(MAX_BYTES_TO_CHECK, editor->length()));
+        const DetectedIndentation indentation = IndentationDetector::detect(text);
+
+        if (indentation.detected) {
+            editor->setUseTabs(indentation.useTabs);
+
+            // Set a flag so that the tab/spaces won't get overridden by the language. EditorConfig is applied afterwards so it still takes priority
+            editor->QObject::setProperty("nn_skip_usetabs", "Detected");
+
+            if (indentation.indentSize > 0) {
+                editor->setIndent(indentation.indentSize);
+            }
+        }
     }
 
     // Decorators

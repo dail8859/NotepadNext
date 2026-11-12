@@ -73,3 +73,4 @@ CREATE_SETTING(Editor, DefaultLanguage, defaultLanguage, QString, QStringLiteral
 CREATE_SETTING(Editor, URLHighlighting, urlHighlighting, bool, true)
 CREATE_SETTING(Editor, ShowLineNumbers, showLineNumbers, bool, true)
 CREATE_SETTING(Editor, AutoCompletion, autoCompletion, bool, true)
+CREATE_SETTING(Editor, DetectIndentation, detectIndentation, bool, true)
