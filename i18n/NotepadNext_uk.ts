@@ -468,8 +468,8 @@
       <translation type="unfinished"/>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="149"/>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="357"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="154"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="362"/>
       <source>Replaced %Ln matches</source>
       <translation>
         <numerusform>Замінено %Ln співпадінь</numerusform>
@@ -479,27 +479,27 @@
       </translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="257"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="262"/>
       <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
       <translation>Досягнуто кінець документу. Знайдено 1 збіг.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="268"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="273"/>
       <source>No matches found.</source>
       <translation>Нічого не знайдено.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="329"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="334"/>
       <source>1 occurrence was replaced</source>
       <translation>Був замінений 1 збіг</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="338"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="343"/>
       <source>No more occurrences were found</source>
       <translation>Більше збігів не знайдено</translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="368"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="373"/>
       <source>Found %Ln matches</source>
       <translation>
         <numerusform>Знайдено %Ln співпадінь</numerusform>
@@ -509,22 +509,22 @@
       </translation>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="778"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="783"/>
       <source>Mark: %Ln match in entire file</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="789"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="794"/>
       <source>All marks cleared</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="813"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="818"/>
       <source>No marks to copy</source>
       <translation type="unfinished"/>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="818"/>
+      <location filename="../src/dialogs/FindReplaceDialog.cpp" line="823"/>
       <source>Copied %Ln marked text(s)</source>
       <translation type="unfinished"/>
     </message>
@@ -815,7 +815,7 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1522"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1524"/>
       <source>Export As</source>
       <translation>Експортувати як</translation>
     </message>
@@ -851,1058 +851,1068 @@
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="154"/>
+      <source>Blank Operations</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="160"/>
       <source>Comment/Uncomment</source>
       <translation>Закоментувати/розкоментувати</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="162"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="168"/>
       <source>Copy As</source>
       <translation>Копіювати як</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="169"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="175"/>
       <source>Encoding/Decoding</source>
       <translation>Зашифрувати/Розшифрувати</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="200"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="207"/>
       <source>Search</source>
       <translation>По&amp;шук</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="204"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="211"/>
       <source>Bookmarks</source>
       <translation>Закладки</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="221"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="228"/>
       <source>Mark All Occurrences</source>
       <translation>Позначити всі збіги</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="229"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="236"/>
       <source>Clear Marks</source>
       <translation>Очистити позначки</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="254"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="261"/>
       <source>&amp;View</source>
       <translation>&amp;Вид</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="258"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="265"/>
       <source>&amp;Zoom</source>
       <translation>&amp;Масштаб</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="267"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="274"/>
       <source>Show Symbol</source>
       <translation>Показувати символи</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="278"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="285"/>
       <source>Fold Level</source>
       <translation>Згорнути рівень</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="292"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="299"/>
       <source>Unfold Level</source>
       <translation>Розгорнути рівень</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="321"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="328"/>
       <source>Language</source>
       <translation>&amp;Синтаксис</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="326"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="333"/>
       <source>Settings</source>
       <translation>&amp;Параметри</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="332"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="339"/>
       <source>Macro</source>
       <translation>&amp;Макрос</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="343"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="350"/>
       <source>Help</source>
       <translation>&amp;Довідка</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="354"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="361"/>
       <source>Encoding</source>
       <translation>Набір символів</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="370"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="377"/>
       <source>Main Tool Bar</source>
       <translation>Головна панель інструментів</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="430"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="437"/>
       <source>&amp;New</source>
       <translation>&amp;Новий</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="433"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="440"/>
       <source>Create a new file</source>
       <translation>Створити новий файл</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="446"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="453"/>
       <source>&amp;Open...</source>
       <translation>&amp;Відкрити...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="462"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="469"/>
       <source>&amp;Save</source>
       <translation>&amp;Зберегти</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="465"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2021"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="472"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2030"/>
       <source>Save</source>
       <translation>Зберегти</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="473"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="480"/>
       <source>E&amp;xit</source>
       <translation>Ви&amp;йти</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="486"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="493"/>
       <source>&amp;Undo</source>
       <translation>&amp;Відмінити операцію</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="499"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="506"/>
       <source>&amp;Redo</source>
       <translation>&amp;Повторити операцію</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="512"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="519"/>
       <source>Cu&amp;t</source>
       <translation>В&amp;ирізати</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="525"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="532"/>
       <source>&amp;Copy</source>
       <translation>&amp;Копіювати</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="538"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="545"/>
       <source>&amp;Paste</source>
       <translation>В&amp;ставити</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="546"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="553"/>
       <source>&amp;Delete</source>
       <translation>Ви&amp;далити</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="554"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="561"/>
       <source>Copy Full Path</source>
       <translation>Копіювати повний шлях</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="559"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="566"/>
       <source>Copy File Name</source>
       <translation>Копіювати назву файлу</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="564"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="571"/>
       <source>Copy File Directory</source>
       <translation>Копіювати назву каталогу</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="573"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="580"/>
       <source>&amp;Close</source>
       <translation>За&amp;крити</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="576"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="583"/>
       <source>Close the current file</source>
       <translation>Закрити поточний файл</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="584"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="591"/>
       <source>Save &amp;As...</source>
       <translation>З&amp;берегти як...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="592"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="599"/>
       <source>Save a Copy As...</source>
       <translation>Зберегти копію як...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="601"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="608"/>
       <source>Sav&amp;e All</source>
       <translation>Зб&amp;ерегти все</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="609"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="616"/>
       <source>Select A&amp;ll</source>
       <translation>&amp;Обрати всі</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="621"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="628"/>
       <source>Increase Indent</source>
       <translation>Збільшити відступ</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="630"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="637"/>
       <source>Decrease Indent</source>
       <translation>Зменшити відступ</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="635"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="642"/>
       <source>Rename...</source>
       <translation>Перейменувати...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="644"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="651"/>
       <source>Re&amp;load</source>
       <translation>&amp;Перезавантажити</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="652"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="659"/>
       <source>Windows (CR LF)</source>
       <translation>Windows (CR LF)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="660"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="667"/>
       <source>Unix (LF)</source>
       <translation>Unix (LF)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="668"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="675"/>
       <source>Macintosh (CR)</source>
       <translation>Macintosh (CR)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="673"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="680"/>
       <source>UPPER CASE</source>
       <translation>ВЕРХНІЙ РЕГІСТР</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="676"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="683"/>
       <source>Convert text to upper case</source>
       <translation>Перетворити в ВЕРХНІЙ РЕГІСТР</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="681"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="688"/>
       <source>lower case</source>
       <translation>нижній регістр</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="684"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="691"/>
       <source>Convert text to lower case</source>
       <translation>Перетворити в нижній регістр</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="689"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="696"/>
       <source>Duplicate Current Line</source>
       <translation>Дублювати поточний рядок</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="697"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="704"/>
       <source>Split Lines</source>
       <translation>Розділити рядки</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="702"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="709"/>
       <source>Join Lines</source>
       <translation>Об&apos;єднати рядки</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="710"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="717"/>
       <source>Move Selected Lines Up</source>
       <translation>Перемістити поточний рядок вверх</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="718"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="725"/>
       <source>Move Selected Lines Down</source>
       <translation>Перемістити поточний  рядок вниз</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="730"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="737"/>
       <source>Clos&amp;e All</source>
       <translation>Зак&amp;рити все</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="733"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="740"/>
       <source>Close All files</source>
       <translation>Закрити всі файли</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="741"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="748"/>
       <source>Close All Except Active Document</source>
       <translation>Закрити всі документи окрім поточного</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="746"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="753"/>
       <source>Close All to the Left</source>
       <translation>Закрити всі ліворуч</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="751"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="758"/>
       <source>Close All to the Right</source>
       <translation>Закрити всі праворуч</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="761"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="768"/>
       <source>Zoom &amp;In</source>
       <translation>Ма&amp;сштаб +</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="774"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="781"/>
       <source>Zoom &amp;Out</source>
       <translation>&amp;Масштаб -</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="782"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="789"/>
       <source>Reset Zoom</source>
       <translation>Масштаб за замовчуванням</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="790"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="797"/>
       <source>About Qt</source>
       <translation>Про Qt</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="802"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="809"/>
       <source>About Notepad Next</source>
       <translation>Про Notepad Next</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="813"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="820"/>
       <source>Show Whitespace</source>
       <translation>Показувати пробіл</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="821"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="828"/>
       <source>Show End of Line</source>
       <translation>Показувати кінець рядку</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="834"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="841"/>
       <source>Show All Characters</source>
       <translation>Показувати всі символи</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="847"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="854"/>
       <source>Show Indent Guide</source>
       <translation>Показувати лінії відступу</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="855"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="862"/>
       <source>Show Wrap Symbol</source>
       <translation>Показувати символ переносу</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="868"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="875"/>
       <source>Word Wrap</source>
       <translation>Перенесення слів</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="873"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="880"/>
       <source>Restore Recently Closed File</source>
       <translation>Відновити щойно закритий файл</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="881"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="888"/>
       <source>Open All Recent Files</source>
       <translation>Відкрити ві нещодавні файли</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="886"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="893"/>
       <source>Clear Recent Files List</source>
       <translation>Очистити список нещодавніх файлів</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="896"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="903"/>
       <source>&amp;Find...</source>
       <translation>&amp;Знайти...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="904"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="911"/>
       <source>Find in Files...</source>
       <translation>Знайти в файлах...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="909"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="916"/>
       <source>Find &amp;Next</source>
       <translation>Знайти &amp;наступний</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="917"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="924"/>
       <source>Find &amp;Previous</source>
       <translation>Знайти &amp;попередній</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="930"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="937"/>
       <source>&amp;Replace...</source>
       <translation>З&amp;амінити...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="941"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="948"/>
       <source>Full Screen</source>
       <translation>Повноекранний режим</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="957"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="826"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="964"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="828"/>
       <source>Start Recording</source>
       <translation>Почати запис</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="969"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="976"/>
       <source>Playback</source>
       <translation>Виконати</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="984"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="991"/>
       <source>Save Current Recorded Macro...</source>
       <translation>Зберегти щойно записаний макрос...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="996"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1003"/>
       <source>Run a Macro Multiple Times...</source>
       <translation>Виконати макрос багато разів...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1005"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1012"/>
       <source>Preferences...</source>
       <translation>Налаштування...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1013"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1020"/>
       <source>Quick Find</source>
       <translation>Швидкий пошук</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1021"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1028"/>
       <source>Select Next Instance</source>
       <translation>Виділити схожі вирази</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1033"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1040"/>
       <source>Move to Trash...</source>
       <translation>Перемістити до смітника...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1036"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1043"/>
       <source>Move to Trash</source>
       <translation>Перемістити до смітника</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1041"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1048"/>
       <source>Check for Updates...</source>
       <translation>Перевірити оновлення...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1046"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1053"/>
       <source>&amp;Go to Line...</source>
       <translation>П&amp;ерейти до рядку...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1058"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1065"/>
       <source>Print...</source>
       <translation>Друк...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1066"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1073"/>
       <source>Open Folder as Workspace...</source>
       <translation>Відкрити каталог як робочий простір...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1071"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1078"/>
       <source>Toggle Single Line Comment</source>
       <translation>Однорядковий коментар</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1079"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1086"/>
       <source>Single Line Comment</source>
       <translation>Закоментувати один рядок</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1087"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1094"/>
       <source>Single Line Uncomment</source>
       <translation>Розкоментувати один рядок</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1102"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1109"/>
       <source>Edit Macros...</source>
       <translation>Редагувати макрос...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1110"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1117"/>
       <source>This is not currently implemented</source>
       <translation>Ця можливість ще не реалізована</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1115"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1122"/>
       <source>Column Mode...</source>
       <translation>Створити стовпець...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1120"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1127"/>
       <source>Export as HTML...</source>
       <translation>Експортувати як HTML...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1125"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1132"/>
       <source>Export as RTF...</source>
       <translation>Експортувати як RTF...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1130"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1137"/>
       <source>Copy as HTML</source>
       <translation>Копіювати як HTML</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1135"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1142"/>
       <source>Copy as RTF</source>
       <translation>Копіювати як RTF</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1140"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1147"/>
       <source>Base 64 Encode</source>
       <translation>Зашифрувати Base 64</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1145"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1152"/>
       <source>URL Encode</source>
       <translation>Зашифрувати URL</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1150"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1157"/>
       <source>Base 64 Decode</source>
       <translation>Розшифрувати Base 64</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1155"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1162"/>
       <source>URL Decode</source>
       <translation>Розшифрувати URL</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1160"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1167"/>
       <source>Copy URL</source>
       <translation>Копіювати URL</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1165"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1172"/>
       <source>Remove Empty Lines</source>
       <translation>Видалити пусті рядки</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1174"/>
       <location filename="../src/dialogs/MainWindow.ui" line="1177"/>
+      <source>Trim Trailing Space</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1186"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1189"/>
       <source>Show in Explorer</source>
       <translation>Показати в файловому менеджері</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1186"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1198"/>
       <source>Open %1 Here</source>
       <translation>Відкрити %1 тут</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1191"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1203"/>
       <source>Toggle Bookmark</source>
       <translation>Додати/видалити закладку</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1199"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1211"/>
       <source>Search and Bookmark Lines...</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1207"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1219"/>
       <source>Next Bookmark</source>
       <translation>Наступна закладка</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1215"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1227"/>
       <source>Previous Bookmark</source>
       <translation>Попередня закладка</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1223"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1235"/>
       <source>Clear Bookmarks</source>
       <translation>Очистити закладки</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1228"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1240"/>
       <source>Invert Bookmarks</source>
       <translation>Інвертувати закладки</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1233"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1245"/>
       <source>Next Tab</source>
       <translation>Наступна вкладка</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1244"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1256"/>
       <source>Previous Tab</source>
       <translation>Попередня вкладка</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1255"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1267"/>
       <source>Fold Level 1</source>
       <translation>Згорнути рівень 1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1263"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1275"/>
       <source>Fold Level 2</source>
       <translation>Згорнути рівень 2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1271"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1283"/>
       <source>Fold Level 3</source>
       <translation>Згорнути рівень 3</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1279"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1291"/>
       <source>Fold Level 4</source>
       <translation>Згорнути рівень 4</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1287"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1299"/>
       <source>Unfold Level 1</source>
       <translation>Розгорнути рівень 1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1295"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1307"/>
       <source>Unfold Level 2</source>
       <translation>Розгорнути рівень 2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1303"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1315"/>
       <source>Unfold Level 3</source>
       <translation>Розгорнути рівень 3</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1311"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1323"/>
       <source>Unfold Level 4</source>
       <translation>Розгорнути рівень 4</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1319"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1331"/>
       <source>Fold All</source>
       <translation>Згорнути всі</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1327"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1339"/>
       <source>Unfold All</source>
       <translation>Розгорнути всі</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1335"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1347"/>
       <source>Fold Level 5</source>
       <translation>Згорнути рівень 5</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1343"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1355"/>
       <source>Fold Level 6</source>
       <translation>Згорнути рівень 6</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1351"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1363"/>
       <source>Fold Level 7</source>
       <translation>Згорнути рівень 7</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1359"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1371"/>
       <source>Fold Level 8</source>
       <translation>Згорнути рівень 8</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1367"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1379"/>
       <source>Fold Level 9</source>
       <translation>Згорнути рівень 9</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1375"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1387"/>
       <source>Unfold Level 5</source>
       <translation>Розгорнути рівень 5</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1383"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1395"/>
       <source>Unfold Level 6</source>
       <translation>Розгорнути рівень 6</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1391"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1403"/>
       <source>Unfold Level 7</source>
       <translation>Розгорнути рівень 7</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1399"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1411"/>
       <source>Unfold Level 8</source>
       <translation>Розгорнути рівень 8</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1407"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1419"/>
       <source>Unfold Level 9</source>
       <translation>Розгорнути рівень 9</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1415"/>
-      <location filename="../src/dialogs/MainWindow.ui" line="1418"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1427"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1430"/>
       <source>Toggle Overtype</source>
       <translation>Toggle Overtype</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1429"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1441"/>
       <source>Debug Info...</source>
       <translation>Інформація про налагодження...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1434"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1446"/>
       <source>Cut Bookmarked Lines</source>
       <translation>Вирізати рядки з закладок</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1439"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1451"/>
       <source>Copy Bookmarked Lines</source>
       <translation>Копіювати рядки з закладок</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1444"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1456"/>
       <source>Delete Bookmarked Lines</source>
       <translation>Видалити рядки з закладок</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1449"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1461"/>
       <source>Mark Style 1</source>
       <translation>Позначити стилем 1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1457"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1469"/>
       <source>Mark Style 2</source>
       <translation>Позначити стилем 2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1465"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1477"/>
       <source>Clear Style 1</source>
       <translation>Очистити стиль 1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1473"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1485"/>
       <source>Clear Style 2</source>
       <translation>Очистити стиль 2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1481"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1493"/>
       <source>Mark Style 3</source>
       <translation>Позначити стилем 3</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1489"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1501"/>
       <source>Clear Style 3</source>
       <translation>Очистити стиль 3</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1497"/>
-      <location filename="../src/dialogs/MainWindow.ui" line="1500"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1509"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1512"/>
       <source>Clear All Styles</source>
       <translation>Очистити всі стилі</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1505"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1517"/>
       <source>Remove Duplicate Lines</source>
       <translation>Remove Duplicate Lines</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1510"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1522"/>
       <source>Remove Consecutive Duplicate Lines</source>
       <translation>Remove Consecutive Duplicate Lines</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1515"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1527"/>
       <source>Sort Lines Ascending</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1520"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1532"/>
       <source>Sort Lines Descending</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1525"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1537"/>
       <source>Sort Lines Ascending (Case-Insensitive)</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1530"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1542"/>
       <source>Sort Lines Descending (Case-Insensitive)</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1535"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1547"/>
       <source>Sort Lines by Length Ascending</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1540"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1552"/>
       <source>Sort Lines by Length Descending</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1545"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1557"/>
       <source>Reverse Line Order</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1550"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1562"/>
       <source>Split Horizontal</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1553"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1565"/>
       <source>Split editor horizontally (left/right)</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1561"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1573"/>
       <source>Split Vertical</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1564"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1576"/>
       <source>Split editor vertically (top/bottom)</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1572"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1584"/>
       <source>Select and Find Next</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1580"/>
+      <location filename="../src/dialogs/MainWindow.ui" line="1592"/>
       <source>Select and Find Previous</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="479"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="481"/>
       <source>Go to line</source>
       <translation>Перейти до рядку</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="479"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="481"/>
       <source>Line Number (1 - %1)</source>
       <translation>Номер рядку (1 - %1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="817"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="819"/>
       <source>Stop Recording</source>
       <translation>Зупинити запис</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="922"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="924"/>
       <source>Debug Info</source>
       <translation>Інформація про налагодження</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1142"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1144"/>
       <source>New %1</source>
       <translation>Новий %1</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1204"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1206"/>
       <source>Create File</source>
       <translation>Створити файл</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1204"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1206"/>
       <source>&lt;b&gt;%1&lt;/b&gt; does not exist. Do you want to create it?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt; не існує. Бажаєте створити його ?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2012"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2021"/>
       <source>Save File</source>
       <translation>Зберегти файл</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1283"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1285"/>
       <source>Open Folder as Workspace</source>
       <translation>Відкрити каталог як робочий простір</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1306"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1955"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1308"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1964"/>
       <source>Reload File</source>
       <translation>Перезавантажити файл</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1306"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1308"/>
       <source>Are you sure you want to reload &lt;b&gt;%1&lt;/b&gt;? Any unsaved changes will be lost.</source>
       <translation>Ви дійсно хочете перезавантажити файл&lt;b&gt;%1&lt;/b&gt;? Всі не збережені зміни будут втрачені.</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1478"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1480"/>
       <source>Save a Copy As</source>
       <translation>Зберегти копію як</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1563"/>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1565"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1582"/>
       <source>Rename</source>
       <translation>Перейменувати</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1580"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1582"/>
       <source>Name:</source>
       <translation>Назва:</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1600"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1602"/>
       <source>Delete File</source>
       <translation>Видалити файл</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1600"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1602"/>
       <source>Are you sure you want to move &lt;b&gt;%1&lt;/b&gt; to the trash?</source>
       <translation>Ви дійсно хочете перемістити файл &lt;b&gt;%1&lt;/b&gt; до смітника ?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1610"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1612"/>
       <source>Error Deleting File</source>
       <translation>Помилка видалення файлу</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1610"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1612"/>
       <source>Something went wrong deleting &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation>Під час видалення щось пішло не так &lt;b&gt;%1&lt;/b&gt;?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1694"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1696"/>
       <source>Administrator</source>
       <translation>Адміністратор</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1955"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1964"/>
       <source>&lt;b&gt;%1&lt;/b&gt; has been modified by another program. Do you want to reload it?</source>
       <translation>&lt;b&gt;%1&lt;/b&gt; був змінений. Бажаєте завантажити актуальну версію?</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1981"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1990"/>
       <source>Read error</source>
       <translation>Read error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1982"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
       <source>Write error</source>
       <translation>Write error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1983"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1992"/>
       <source>Fatal error</source>
       <translation>Fatal error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1984"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1993"/>
       <source>Resource error</source>
       <translation>Resource error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1985"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1994"/>
       <source>Open error</source>
       <translation>Open error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1986"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
       <source>Abort error</source>
       <translation>Abort error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1987"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1996"/>
       <source>Timeout error</source>
       <translation>Timeout error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1988"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1997"/>
       <source>Unspecified error</source>
       <translation>Unspecified error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1989"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
       <source>Remove error</source>
       <translation>Remove error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1990"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
       <source>Rename error</source>
       <translation>Rename error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2000"/>
       <source>Position error</source>
       <translation>Position error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1992"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2001"/>
       <source>Resize error</source>
       <translation>Resize error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1993"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2002"/>
       <source>Permissions error</source>
       <translation>Permissions error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1994"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2003"/>
       <source>Copy error</source>
       <translation>Copy error</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2004"/>
       <source>Unknown error (%1)</source>
       <translation>Unknown error (%1)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1998"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
       <source>Error Saving File</source>
       <translation>Помилка збереження файлу</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="1999"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2008"/>
       <source>An error occurred when saving &lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Error: %2</source>
       <translation>Під час збереження виникла помилка&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Помилка: %2</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2005"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2014"/>
       <source>Zoom: %1%</source>
       <translation>Масштаб: %1%</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2017"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2026"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
       <translation type="unfinished"/>
     </message>
     <message numerus="yes">
-      <location filename="../src/dialogs/MainWindow.cpp" line="2018"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2027"/>
       <source>There are %n files with unsaved changes. Save them?</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2021"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2030"/>
       <source>Save All</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2022"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2031"/>
       <source>Discard All</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2022"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2031"/>
       <source>Discard</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.cpp" line="2210"/>
+      <location filename="../src/dialogs/MainWindow.cpp" line="2228"/>
       <source>No updates are available at this time.</source>
       <translation>На цю мить не має ніяких оновлень.</translation>
     </message>
@@ -1990,48 +2000,53 @@
       <translation>Символ кінця рядку за замовчуванням</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/PreferencesDialog.ui" line="200"/>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="198"/>
+      <source>Default Language</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="210"/>
       <source>Highlight URLs</source>
       <translation>Підкреслювати посилання URL</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/PreferencesDialog.ui" line="207"/>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="217"/>
       <source>Show Line Numbers</source>
       <translation>Показувати кількість рядків</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/PreferencesDialog.ui" line="214"/>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="224"/>
       <source>Auto Completion</source>
       <translation type="unfinished"/>
     </message>
     <message>
-      <location filename="../src/dialogs/PreferencesDialog.ui" line="221"/>
-      <location filename="../src/dialogs/PreferencesDialog.cpp" line="122"/>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="231"/>
+      <location filename="../src/dialogs/PreferencesDialog.cpp" line="131"/>
       <source>Default Directory</source>
       <translation>Default Directory</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/PreferencesDialog.ui" line="227"/>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="237"/>
       <source>Follow Current Document</source>
       <translation>Follow Current Document</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/PreferencesDialog.ui" line="234"/>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="244"/>
       <source>Last Used Directory</source>
       <translation>Last Used Directory</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/PreferencesDialog.ui" line="253"/>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="263"/>
       <source>...</source>
       <translation>...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/PreferencesDialog.ui" line="284"/>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="294"/>
       <source>TextLabel</source>
       <translation>Текстове поле</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/PreferencesDialog.ui" line="296"/>
+      <location filename="../src/dialogs/PreferencesDialog.ui" line="306"/>
       <source>An application restart is required to apply certain settings.</source>
       <translation>Для застосування деяких змін потрібно перезапустити програму.</translation>
     </message>
@@ -2066,7 +2081,7 @@
       <translation>Macintosh (CR)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/PreferencesDialog.cpp" line="185"/>
+      <location filename="../src/dialogs/PreferencesDialog.cpp" line="194"/>
       <source>&lt;System Default&gt;</source>
       <translation>&lt;Мова системи&gt;</translation>
     </message>
