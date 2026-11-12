@@ -66,6 +66,23 @@ int bomLength(ScintillaNext::BomType bom)
     return 0;
 }
 
+// Returns how many bytes actually made it out. A QIODevice::write() may write
+// fewer bytes than requested without setting an error (e.g. QFSFileEngine
+// returns a short count at a file-size limit), so keep going until everything is
+// written and treat any non-progress as the end of the attempt: a short return
+// lets the caller report where the write stopped.
+static qsizetype writeAll(QFile &file, const QByteArray &data)
+{
+    qsizetype offset = 0;
+    while (offset < data.size()) {
+        const qint64 written = file.write(data.constData() + offset, data.size() - offset);
+        if (written <= 0)
+            break;
+        offset += written;
+    }
+    return offset;
+}
+
 static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString &path, ScintillaNext::BomType bom)
 {
     qInfo(Q_FUNC_INFO);
@@ -76,32 +93,62 @@ static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString 
         return file.error();
     }
 
+    // A failed write does not necessarily leave an error behind: Qt reports a
+    // short write without setting one, so fall back to WriteError for reporting.
+    const auto currentWriteError = [&file]() {
+        return file.error() == QFileDevice::NoError ? QFileDevice::WriteError : file.error();
+    };
+
+    const auto reportShortWrite = [&file, &path](const char *what, qsizetype written, qsizetype expected) {
+        // errorString() is often "Unknown error" in this case, so log the
+        // progress instead of relying on it alone.
+        qWarning("writeToDisk() failed writing %s to %s: %lld of %lld bytes (%d %s)",
+                 what, qPrintable(path), qint64(written), qint64(expected),
+                 file.error(), qPrintable(file.errorString()));
+    };
+
     // Write BOM
     const QByteArray bomBytes = bomData(bom);
-    if (!bomBytes.isEmpty() && file.write(bomBytes) == -1) {
-        qWarning("writeToDisk() failed writing BOM: %s", qPrintable(file.errorString()));
-        return file.error();
+    const qsizetype bomWritten = writeAll(file, bomBytes);
+    if (bomWritten != bomBytes.size()) {
+        reportShortWrite("BOM", bomWritten, bomBytes.size());
+        return currentWriteError();
     }
 
     // TODO make this convert and write chunks rather than the entire thing
-    if (bom == ScintillaNext::BomType::Utf16LE) {
-        QStringEncoder encoder(QStringEncoder::Utf16LE);
-        const QString text = QString::fromUtf8(data);
-        const QByteArray encoded = encoder(text);
-
-        file.write(encoded);
-    }
-    else if (bom == ScintillaNext::BomType::Utf16BE) {
-        QStringEncoder encoder(QStringEncoder::Utf16BE);
-        const QString text = QString::fromUtf8(data);
-        const QByteArray encoded = encoder(text);
-
-        file.write(encoded);
+    qsizetype dataSize = 0;
+    qsizetype dataWritten = 0;
+    if (bom == ScintillaNext::BomType::Utf16LE || bom == ScintillaNext::BomType::Utf16BE) {
+        const auto encoding = bom == ScintillaNext::BomType::Utf16LE ? QStringEncoder::Utf16LE : QStringEncoder::Utf16BE;
+        QStringEncoder encoder(encoding);
+        const QByteArray encoded = encoder(QString::fromUtf8(data));
+        dataSize = encoded.size();
+        dataWritten = writeAll(file, encoded);
     }
     else {
-        file.write(data);
+        dataSize = data.size();
+        dataWritten = writeAll(file, data);
     }
 
+    if (dataWritten != dataSize) {
+        reportShortWrite("data", dataWritten, dataSize);
+        return currentWriteError();
+    }
+
+    // Up to 16 KiB of buffered data never reaches the file system from write():
+    // QFileDevice's write buffer reports the full length instead, so a failure
+    // that only happens on the real write can still surface here. close() does
+    // call flush() and keeps the error in error(), but it returns void, so flush
+    // explicitly to fail early and to log a distinct message.
+    if (!file.flush()) {
+        qWarning("writeToDisk() failed flushing file %s: %s", qPrintable(path), qPrintable(file.errorString()));
+        return currentWriteError();
+    }
+
+    file.close();
+
+    // Still worth checking: a close() that fails (e.g. on a network share)
+    // leaves its error behind here.
     return file.error();
 }
 
