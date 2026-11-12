@@ -112,16 +112,55 @@ const char *QRegexSearch::SubstituteByPosition(Document *doc, const char *text, 
     Q_ASSERT(match.isValid());
     Q_ASSERT(match.hasMatch());
 
-    // Get the captured text and replace the match
-    QString newString = match.captured();
-    newString.replace(match.regularExpression(), QByteArray(text, *length));
+    // Build the replacement using the already-computed match's captured groups, rather than
+    // re-running the search pattern against just the matched text: that previous approach broke
+    // whenever the pattern relied on context outside the match itself (anchors, lookaround), and
+    // gave no way to reference the whole match, since Qt has no "$0"/"\0" token of its own here.
+    //
+    // \0-\9 refer to the whole match and capture groups 1-9, matching Notepad++'s own replace
+    // syntax. \n, \r, \t and \\ are also expanded, matching the "Extended" search mode's escapes,
+    // since users expect those to work in a regex replacement too.
+    QByteArray result;
+
+    for (Sci::Position i = 0; i < *length; i++) {
+        if (text[i] == '\\' && i + 1 < *length) {
+            const char next = text[++i];
+
+            if (next >= '0' && next <= '9') {
+                result += match.captured(next - '0').toUtf8();
+            }
+            else {
+                switch (next) {
+                case 'n':
+                    result += '\n';
+                    break;
+                case 'r':
+                    result += '\r';
+                    break;
+                case 't':
+                    result += '\t';
+                    break;
+                case '\\':
+                    result += '\\';
+                    break;
+                default:
+                    result += '\\';
+                    result += next;
+                    break;
+                }
+            }
+        }
+        else {
+            result += text[i];
+        }
+    }
 
     // TODO: figure out why this has to be new'd and can't be an instantiated class member
     if (substituted) {
         delete substituted;
     }
 
-    substituted = new QByteArray(newString.toUtf8());
+    substituted = new QByteArray(result);
     *length = substituted->length();
     return substituted->data();
 }
