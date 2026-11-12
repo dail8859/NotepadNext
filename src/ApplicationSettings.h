@@ -90,6 +90,8 @@ public:
 
     DEFINE_SETTING(ShowMenuBar, showMenuBar, bool)
     DEFINE_SETTING(ShowToolBar, showToolBar, bool)
+    DEFINE_SETTING(ToolBarIconSize, toolBarIconSize, int)
+    DEFINE_SETTING(ToolBarButtonStyle, toolBarButtonStyle, int)
     DEFINE_SETTING(ShowTabBar, showTabBar, bool)
     DEFINE_SETTING(ShowStatusBar, showStatusBar, bool)
     DEFINE_SETTING(CenterSearchDialog, centerSearchDialog, bool)

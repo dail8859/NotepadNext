@@ -45,5 +45,29 @@
         <file>icons/cross.svg</file>
         <file>icons/plus.svg</file>
         <file>icons/list_with_icons.svg</file>
+        <file>icons/fluent/new.ico</file>
+        <file>icons/fluent/open.ico</file>
+        <file>icons/fluent/save.ico</file>
+        <file>icons/fluent/saveall.ico</file>
+        <file>icons/fluent/close.ico</file>
+        <file>icons/fluent/closeall.ico</file>
+        <file>icons/fluent/print.ico</file>
+        <file>icons/fluent/cut.ico</file>
+        <file>icons/fluent/copy.ico</file>
+        <file>icons/fluent/paste.ico</file>
+        <file>icons/fluent/undo.ico</file>
+        <file>icons/fluent/redo.ico</file>
+        <file>icons/fluent/find.ico</file>
+        <file>icons/fluent/findrep.ico</file>
+        <file>icons/fluent/zoomIn.ico</file>
+        <file>icons/fluent/zoomOut.ico</file>
+        <file>icons/fluent/wrap.ico</file>
+        <file>icons/fluent/allChars.ico</file>
+        <file>icons/fluent/indentGuide.ico</file>
+        <file>icons/fluent/startrecord.ico</file>
+        <file>icons/fluent/stoprecord.ico</file>
+        <file>icons/fluent/playrecord.ico</file>
+        <file>icons/fluent/playrecord_m.ico</file>
+        <file>icons/fluent/saverecord.ico</file>
     </qresource>
 </RCC>

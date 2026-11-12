@@ -46,6 +46,36 @@
           </widget>
          </item>
          <item>
+          <layout class="QFormLayout" name="formLayoutToolBar">
+           <property name="labelAlignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+           <property name="formAlignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="labelToolBarIconSize">
+             <property name="text">
+              <string>Toolbar icon size:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="comboBoxToolBarIconSize"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="labelToolBarButtonStyle">
+             <property name="text">
+              <string>Toolbar labels:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="comboBoxToolBarButtonStyle"/>
+           </item>
+          </layout>
+         </item>
+         <item>
           <widget class="QCheckBox" name="checkBoxStatusBar">
            <property name="text">
             <string>Show status bar</string>
