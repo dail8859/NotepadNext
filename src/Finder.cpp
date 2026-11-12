@@ -166,27 +166,27 @@ int Finder::replaceAll(const QString &replaceText)
     const QByteArray searchText = find_options.text.toUtf8();
     const QByteArray replacementText = replaceText.toUtf8();
 
-    Sci_TextToFind findText{
-        {0, static_cast<Sci_PositionCR>(editor->length())},
-        searchText.constData(),
-        {-1, -1}
-    };
-
     editor->setSearchFlags(searchFlags());
 
     UndoAction undoAction(editor);
 
     int total = 0;
+    Sci_Position searchStart = 0;
 
-    // We intentionally use SCI_FINDTEXT here rather than forEachMatch().
+    // We intentionally search in the target here rather than using forEachMatch().
     //
     // Replacing text changes the document length, so the search range has
-    // to be updated after every replacement.
-    while (editor->send(SCI_FINDTEXT, searchFlags(), reinterpret_cast<sptr_t>(&findText)) != INVALID_POSITION) {
-        const Sci_Position start = findText.chrgText.cpMin;
-        const Sci_Position end = findText.chrgText.cpMax;
+    // to be updated after every replacement. Searching in the target (instead of
+    // SCI_FINDTEXT) also takes the text length, so null characters can be found.
+    while (true) {
+        editor->setTargetRange(searchStart, editor->length());
 
-        editor->setTargetRange(start, end);
+        if (editor->searchInTarget(searchText.length(), searchText.constData()) == INVALID_POSITION)
+            break;
+
+        // The target is now the match
+        const Sci_Position start = editor->targetStart();
+        const Sci_Position end = editor->targetEnd();
 
         Sci_Position replacementLength;
         if (isRegexSearch()) {
@@ -197,18 +197,17 @@ int Finder::replaceAll(const QString &replaceText)
         }
 
         // Continue searching after the replacement.
-        findText.chrg.cpMin = start + replacementLength;
-        findText.chrg.cpMax = editor->length();
+        searchStart = start + replacementLength;
 
         ++total;
 
         // An empty match must advance past the next original character, not
         // match the same position again after inserting the replacement.
         if (start == end) {
-            if (findText.chrg.cpMin == findText.chrg.cpMax)
+            if (searchStart == editor->length())
                 break;
 
-            findText.chrg.cpMin = editor->positionAfter(findText.chrg.cpMin);
+            searchStart = editor->positionAfter(searchStart);
         }
     }
 
