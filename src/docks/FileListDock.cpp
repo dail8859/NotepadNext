@@ -24,6 +24,12 @@
 #include "MainWindow.h"
 
 ApplicationSetting<bool> sortByName{"FileList/SortByName", false};
+ApplicationSetting<bool> showPathColumn{"FileList/ShowPathColumn", false};
+
+enum FileListColumn {
+    NameColumn = 0,
+    PathColumn = 1,
+};
 
 FileListDock::FileListDock(MainWindow *parent) :
     QDockWidget(parent),
@@ -34,16 +40,27 @@ FileListDock::FileListDock(MainWindow *parent) :
 
     ui->setupUi(this);
     ui->btnSettings->addAction(ui->actionSortbyFileName);
+    ui->btnSettings->addAction(ui->actionShowPathColumn);
+
+    ui->treeWidget->header()->setSectionResizeMode(NameColumn, QHeaderView::ResizeToContents);
 
     // Set the initial state
     ApplicationSettings settings;
     ui->actionSortbyFileName->setChecked(settings.get(sortByName));
+    ui->actionShowPathColumn->setChecked(settings.get(showPathColumn));
+    setPathColumnVisible(settings.get(showPathColumn));
 
     // Track it if it changes
     connect(ui->actionSortbyFileName, &QAction::toggled, this, [=, this](bool b) {
         ApplicationSettings settings;
         settings.set(sortByName, b);
         refreshList();
+    });
+
+    connect(ui->actionShowPathColumn, &QAction::toggled, this, [=, this](bool b) {
+        ApplicationSettings settings;
+        settings.set(showPathColumn, b);
+        setPathColumnVisible(b);
     });
 
     connect(this, &QDockWidget::visibilityChanged, this, [=, this](bool visible) {
@@ -64,22 +81,22 @@ FileListDock::FileListDock(MainWindow *parent) :
         }
         else {
             // Disconnect all the editors
-            for(int i = 0; i < ui->listWidget->count(); ++i) {
-                QListWidgetItem* item = ui->listWidget->item(i);
-                const ScintillaNext *other = item->data(Qt::UserRole).value<ScintillaNext *>();
+            for(int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i) {
+                QTreeWidgetItem* item = ui->treeWidget->topLevelItem(i);
+                const ScintillaNext *other = item->data(NameColumn, Qt::UserRole).value<ScintillaNext *>();
 
                 disconnect(other, Q_NULLPTR, this, Q_NULLPTR);
             }
 
             // Don't need to clear it but why not
-            ui->listWidget->clear();
+            ui->treeWidget->clear();
 
             // Don't need events from the docked editor either
             disconnect(window->getDockedEditor(), Q_NULLPTR, this, Q_NULLPTR);
         }
     });
 
-    connect(ui->listWidget, &QListWidget::itemClicked, this, &FileListDock::itemClicked);
+    connect(ui->treeWidget, &QTreeWidget::itemClicked, this, &FileListDock::itemClicked);
 }
 
 FileListDock::~FileListDock()
@@ -87,11 +104,18 @@ FileListDock::~FileListDock()
     delete ui;
 }
 
+void FileListDock::setPathColumnVisible(bool visible)
+{
+    // The header is only useful when there is more than one column
+    ui->treeWidget->setColumnHidden(PathColumn, !visible);
+    ui->treeWidget->setHeaderHidden(!visible);
+}
+
 void FileListDock::refreshList()
 {
     qInfo(Q_FUNC_INFO);
 
-    ui->listWidget->clear();
+    ui->treeWidget->clear();
 
     QVector<ScintillaNext*> editors = window->getDockedEditor()->editors();
     ApplicationSettings settings;
@@ -113,11 +137,12 @@ void FileListDock::addEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    QListWidgetItem *item = new QListWidgetItem(editor->getName());
-    item->setToolTip(editor->getToolTip());
-    item->setIcon(QIcon(":/icons/saved.png"));
-    item->setData(Qt::UserRole, QVariant::fromValue(editor));
-    item->setIcon(QIcon(editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png"));
+    QTreeWidgetItem *item = new QTreeWidgetItem();
+    item->setText(NameColumn, editor->getName());
+    item->setToolTip(NameColumn, editor->getToolTip());
+    item->setText(PathColumn, editor->isFile() ? editor->getPath() : QString());
+    item->setData(NameColumn, Qt::UserRole, QVariant::fromValue(editor));
+    item->setIcon(NameColumn, QIcon(editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png"));
 
     // Need some notifications from the editor itself
     // NOTE: Cannot use a lambda here because item is not a QObject, and thus cannot be used as a context for Qt to know
@@ -125,17 +150,17 @@ void FileListDock::addEditor(ScintillaNext *editor)
     connect(editor, &ScintillaNext::savePointChanged, this, &FileListDock::editorSavePointChanged, Qt::UniqueConnection);
     connect(editor, &ScintillaNext::renamed, this, &FileListDock::editorRenamed, Qt::UniqueConnection);
 
-    ui->listWidget->addItem(item);
+    ui->treeWidget->addTopLevelItem(item);
 }
 
 void FileListDock::removeEditor(ScintillaNext *editor)
 {
     qInfo(Q_FUNC_INFO);
 
-    QListWidgetItem* item = lookupItemByEditor(editor);
+    QTreeWidgetItem* item = lookupItemByEditor(editor);
 
     if (item) {
-        delete ui->listWidget->takeItem(ui->listWidget->row(item));
+        delete ui->treeWidget->takeTopLevelItem(ui->treeWidget->indexOfTopLevelItem(item));
     }
 }
 
@@ -144,18 +169,19 @@ void FileListDock::selectCurrentEditor()
     qInfo(Q_FUNC_INFO);
 
     ScintillaNext *editor = window->currentEditor();
-    QListWidgetItem* item = lookupItemByEditor(editor);
+    QTreeWidgetItem* item = lookupItemByEditor(editor);
 
     if (item) {
-        ui->listWidget->setCurrentItem(item);
+        ui->treeWidget->setCurrentItem(item);
     }
 }
 
-void FileListDock::itemClicked(QListWidgetItem *item)
+void FileListDock::itemClicked(QTreeWidgetItem *item, int column)
 {
+    Q_UNUSED(column);
     qInfo(Q_FUNC_INFO);
 
-    ScintillaNext *editor = item->data(Qt::UserRole).value<ScintillaNext *>();
+    ScintillaNext *editor = item->data(NameColumn, Qt::UserRole).value<ScintillaNext *>();
 
     window->getDockedEditor()->switchToEditor(editor);
 }
@@ -168,11 +194,11 @@ void FileListDock::editorSavePointChanged(bool dirty)
     ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
 
     if (editor) {
-        QListWidgetItem* item = lookupItemByEditor(editor);
+        QTreeWidgetItem* item = lookupItemByEditor(editor);
 
         if (item) {
             const QString iconPath = editor->canSaveToDisk() ? ":/icons/unsaved.png" : ":/icons/saved.png";
-            item->setIcon(QIcon(iconPath));
+            item->setIcon(NameColumn, QIcon(iconPath));
         }
     }
 }
@@ -184,20 +210,21 @@ void FileListDock::editorRenamed()
     ScintillaNext *editor = qobject_cast<ScintillaNext *>(sender());
 
     if (editor) {
-        QListWidgetItem* item = lookupItemByEditor(editor);
+        QTreeWidgetItem* item = lookupItemByEditor(editor);
 
         if (item) {
-            item->setText(editor->getName());
-            item->setToolTip(editor->getToolTip());
+            item->setText(NameColumn, editor->getName());
+            item->setToolTip(NameColumn, editor->getToolTip());
+            item->setText(PathColumn, editor->isFile() ? editor->getPath() : QString());
         }
     }
 }
 
-QListWidgetItem *FileListDock::lookupItemByEditor(ScintillaNext *editor)
+QTreeWidgetItem *FileListDock::lookupItemByEditor(ScintillaNext *editor)
 {
-    for(int i = 0; i < ui->listWidget->count(); ++i) {
-        QListWidgetItem* item = ui->listWidget->item(i);
-        const ScintillaNext *other = item->data(Qt::UserRole).value<ScintillaNext *>();
+    for(int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i) {
+        QTreeWidgetItem* item = ui->treeWidget->topLevelItem(i);
+        const ScintillaNext *other = item->data(NameColumn, Qt::UserRole).value<ScintillaNext *>();
 
         if (other == editor) {
             return item;
