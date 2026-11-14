@@ -66,7 +66,7 @@
     </widget>
     <widget class="QMenu" name="menuExportAs">
      <property name="title">
-      <string>Export As</string>
+      <string>&amp;Export As</string>
      </property>
      <addaction name="actionExportHtml"/>
      <addaction name="actionExportRtf"/>
@@ -204,7 +204,7 @@
    </widget>
    <widget class="QMenu" name="menuSearch">
     <property name="title">
-     <string>Search</string>
+     <string>&amp;Search</string>
     </property>
     <widget class="QMenu" name="menuBookmark">
      <property name="title">
@@ -325,18 +325,18 @@
    </widget>
    <widget class="QMenu" name="menuLanguage">
     <property name="title">
-     <string>Language</string>
+     <string>&amp;Language</string>
     </property>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
-     <string>Settings</string>
+     <string>Se&amp;ttings</string>
     </property>
     <addaction name="actionPreferences"/>
    </widget>
    <widget class="QMenu" name="menuMacro">
     <property name="title">
-     <string>Macro</string>
+     <string>&amp;Macro</string>
     </property>
     <addaction name="actionMacroRecording"/>
     <addaction name="actionPlayback"/>
@@ -347,7 +347,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>&amp;Help</string>
     </property>
     <addaction name="separator"/>
     <addaction name="actionCheckForUpdates"/>
@@ -358,7 +358,7 @@
    </widget>
    <widget class="QMenu" name="menuEncodings">
     <property name="title">
-     <string>Encoding</string>
+     <string>E&amp;ncoding</string>
     </property>
     <addaction name="actionThis_is_not_currently_implemented"/>
    </widget>
@@ -596,7 +596,7 @@
   </action>
   <action name="actionSaveCopyAs">
    <property name="text">
-    <string>Save a Copy As...</string>
+    <string>Save a Cop&amp;y As...</string>
    </property>
   </action>
   <action name="actionSaveAll">
@@ -605,7 +605,7 @@
      <normaloff>:/icons/saveAll.png</normaloff>:/icons/saveAll.png</iconset>
    </property>
    <property name="text">
-    <string>Sav&amp;e All</string>
+    <string>Sa&amp;ve All</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+S</string>
@@ -613,7 +613,7 @@
   </action>
   <action name="actionSelectAll">
    <property name="text">
-    <string>Select A&amp;ll</string>
+    <string>&amp;Select All</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+A</string>
@@ -639,7 +639,7 @@
   </action>
   <action name="actionRename">
    <property name="text">
-    <string>Rename...</string>
+    <string>&amp;Rename...</string>
    </property>
   </action>
   <action name="actionReload">
@@ -1037,7 +1037,7 @@
      <normaloff>:/icons/bin_closed.png</normaloff>:/icons/bin_closed.png</iconset>
    </property>
    <property name="text">
-    <string>Move to Trash...</string>
+    <string>Move to &amp;Trash...</string>
    </property>
    <property name="iconText">
     <string>Move to Trash</string>
@@ -1062,7 +1062,7 @@
      <normaloff>:/icons/printer.png</normaloff>:/icons/printer.png</iconset>
    </property>
    <property name="text">
-    <string>Print...</string>
+    <string>&amp;Print...</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+P</string>
@@ -1070,7 +1070,7 @@
   </action>
   <action name="actionOpenFolderasWorkspace">
    <property name="text">
-    <string>Open Folder as Workspace...</string>
+    <string>Open Folder as &amp;Workspace...</string>
    </property>
   </action>
   <action name="actionToggleSingleLineComment">
