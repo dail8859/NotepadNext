@@ -28,7 +28,9 @@
 #include "ui_MainWindow.h"
 
 #include <QFileDialog>
+#include <QMenu>
 #include <QMessageBox>
+#include <QTextCodec>
 #include <QStringList>
 #include <QClipboard>
 #include <QStandardPaths>
@@ -54,6 +56,7 @@
 #include "ApplicationSettings.h"
 
 #include "ScintillaNext.h"
+#include "EncodingSpecs.h"
 
 #include "RecentFilesListManager.h"
 #include "RecentFilesListMenuBuilder.h"
@@ -258,6 +261,8 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     connect(ui->actionWindows,   &QAction::triggered, this, handleEolTrigger);
     connect(ui->actionUnix,      &QAction::triggered, this, handleEolTrigger);
     connect(ui->actionMacintosh, &QAction::triggered, this, handleEolTrigger);
+
+    setupEncodingMenu();
 
 
     connectEditorAction(ui->actionUpperCase, &ScintillaNext::upperCase);
@@ -1074,6 +1079,178 @@ void MainWindow::applyCustomShortcuts()
     settings->endGroup();
 }
 
+void MainWindow::setupEncodingMenu()
+{
+    qInfo(Q_FUNC_INFO);
+
+    // Grouped in the spirit of CotEditor's "Text Encoding" menu. Legacy code
+    // pages are only offered when Qt actually provides the codec.
+    encodingActionGroup = new QActionGroup(this);
+    encodingActionGroup->setExclusive(true);
+
+    for (const char *const *it = EncodingSpecs::menu(); *it; ++it) {
+        const QString name = QString::fromLatin1(*it);
+
+        if (name == QStringLiteral("-")) {
+            ui->menuEncodings->addSeparator();
+            continue;
+        }
+
+        const bool unicode = name.startsWith(QStringLiteral("UTF"));
+        if (!unicode && !QTextCodec::codecForName(*it))
+            continue;
+
+        QAction *action = ui->menuEncodings->addAction(name);
+        action->setCheckable(true);
+        action->setData(name);
+        encodingActionGroup->addAction(action);
+    }
+
+    connect(encodingActionGroup, &QActionGroup::triggered, this, [this](QAction *action) {
+        changeEncoding(action->data().toString());
+    });
+
+    // CotEditor rebuilds its Text Encoding menu every time it is shown
+    // (NSMenuDelegate.menuNeedsUpdate -> updateEncodingMenu(checksDocument: true)).
+    // Switching tabs does not change any encoding signal, so re-check the items
+    // against the currently active document here as well.
+    connect(ui->menuEncodings, &QMenu::aboutToShow, this, [this]() {
+        if (ScintillaNext *editor = currentEditor())
+            updateEncodingBasedUi(editor);
+    });
+}
+
+void MainWindow::changeEncoding(const QString &spec)
+{
+    ScintillaNext *editor = currentEditor();
+    if (!editor)
+        return;
+
+    // Clicking the already-checked item is a no-op. Returning before rebuilding
+    // the menu also avoids deleting an action while its triggered() signal is
+    // still being delivered (the injected "current encoding" item is one).
+    if (editor->encoding() == spec)
+        return;
+
+    // QActionGroup already moved the check mark to the item the user clicked.
+    // Put it back on the real encoding before asking, so Cancel and every
+    // early return leave the menu consistent with the document.
+    updateEncodingBasedUi(editor);
+
+    // CotEditor asks what the user meant before changing a text encoding:
+    // "Convert" keeps the text and changes how it is saved, while
+    // "Reinterpret" changes how the bytes on disk are read.
+    QMessageBox box(this);
+    box.setWindowTitle(tr("Text Encoding"));
+    box.setText(tr("Change the text encoding of this document to %1?").arg(spec));
+    box.setInformativeText(
+        tr("Convert keeps the current text and writes it in the selected encoding the next time the file is saved.\n\n"
+           "Reinterpret re-reads the file from disk with the selected encoding. Use it to fix garbled text; unsaved changes will be lost."));
+    box.setIcon(QMessageBox::Question);
+    QPushButton *convertButton = box.addButton(tr("Convert"), QMessageBox::AcceptRole);
+    QPushButton *reinterpretButton = box.addButton(tr("Reinterpret"), QMessageBox::ActionRole);
+    box.addButton(QMessageBox::Cancel);
+    box.exec();
+
+    auto *clicked = box.clickedButton();
+    if (clicked == convertButton) {
+        if (!editor->canBeConvertedTo(spec)) {
+            const auto reply = QMessageBox::warning(this, tr("Incompatible Characters"),
+                tr("Some characters cannot be represented in %1 and would be replaced. Convert anyway?").arg(spec),
+                QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+            if (reply != QMessageBox::Yes)
+                return;
+        }
+        editor->setEncoding(spec);
+    } else if (clicked == reinterpretButton) {
+        if (!editor->isFile()) {
+            QMessageBox::information(this, tr("Text Encoding"),
+                tr("Reinterpret is only available for files saved on disk."));
+            return;
+        }
+        if (spec.contains(QStringLiteral("BOM"))) {
+            QMessageBox::information(this, tr("Text Encoding"),
+                tr("Reinterpret is only available for encodings without a BOM."));
+            return;
+        }
+        // Only real text edits are lost by a re-read. isSavedToDisk() is also
+        // false when the encoding alone changed or the buffer is temporary.
+        if (editor->modify()) {
+            const auto reply = QMessageBox::question(this, tr("Reinterpret File"),
+                tr("Re-reading the file will discard unsaved changes. Continue?"),
+                QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+            if (reply != QMessageBox::Yes)
+                return;
+        }
+        if (!editor->reinterpretWithEncoding(spec)) {
+            QMessageBox::warning(this, tr("Text Encoding"),
+                tr("The file could not be re-read. The document was left unchanged."));
+            return;
+        }
+    } else {
+        return;
+    }
+
+    // encodingChanged() drives updateEncodingBasedUi() and the status bar.
+}
+
+void MainWindow::updateEncodingBasedUi(ScintillaNext *editor)
+{
+    qInfo(Q_FUNC_INFO);
+
+    if (!editor || !encodingActionGroup)
+        return;
+
+    // Drop the items injected for the previously active document. deleteLater()
+    // keeps us from freeing an action while a triggered() signal is in flight.
+    const QList<QAction *> injected = injectedEncodingActions;
+    injectedEncodingActions.clear();
+    for (QAction *action : injected) {
+        ui->menuEncodings->removeAction(action);
+        if (!action->isSeparator())
+            encodingActionGroup->removeAction(action);
+        action->deleteLater();
+    }
+
+    const QString spec = editor->encoding();
+    const QString current = EncodingSpecs::key(spec);
+    bool checked = false;
+
+    for (QAction *action : ui->menuEncodings->actions()) {
+        if (!action->data().isValid())
+            continue;
+        const bool match = EncodingSpecs::key(action->data().toString()) == current;
+        action->setChecked(match);
+        checked |= match;
+    }
+
+    // CotEditor inserts the document's encoding at the top of the list, followed
+    // by a separator, when it is not part of the configured encodings. Without
+    // this, an encoding Qt does not offer would leave the menu with no checkmark
+    // at all and contradict the status bar.
+    if (checked)
+        return;
+
+    const QList<QAction *> actions = ui->menuEncodings->actions();
+    if (actions.isEmpty())
+        return;
+
+    QAction *before = actions.first();
+
+    QAction *currentAction = new QAction(spec, this);
+    currentAction->setCheckable(true);
+    currentAction->setData(spec);
+    encodingActionGroup->addAction(currentAction);
+    ui->menuEncodings->insertAction(before, currentAction);
+
+    QAction *separator = new QAction(this);
+    separator->setSeparator(true);
+    ui->menuEncodings->insertAction(before, separator);
+
+    currentAction->setChecked(true);
+    injectedEncodingActions << currentAction << separator;
+}
+
 void MainWindow::setupLanguageMenu()
 {
     qInfo(Q_FUNC_INFO);
@@ -1404,6 +1581,49 @@ void MainWindow::closeAllToRight()
     }
 }
 
+// CotEditor asks before a save that cannot round-trip. Two different losses can
+// happen here: bytes that never decoded (they became replacement characters
+// while the file was read) and characters the target code page cannot represent
+// (replaced on the way out). Both are permanent once the file is written, so ask
+// instead of dropping them silently.
+bool MainWindow::confirmCharcodeLoss(ScintillaNext *editor)
+{
+    const int undecodable = editor->undecodableByteCount();
+    const QString spec = editor->encoding();
+    const bool unrepresentable = !editor->canBeConvertedTo(spec);
+
+    if (undecodable == 0 && !unrepresentable)
+        return true;
+
+    QStringList details;
+    if (undecodable > 0) {
+        details << tr("%1 byte(s) of this file could not be decoded and are shown as replacement characters. Saving now replaces them permanently.")
+                       .arg(undecodable);
+    }
+    if (unrepresentable) {
+        details << tr("Some characters cannot be represented in %1 and would be replaced.")
+                       .arg(spec);
+    }
+
+    QMessageBox box(this);
+    box.setIcon(QMessageBox::Warning);
+    box.setWindowTitle(tr("Save with Character Loss"));
+    box.setText(details.join(QStringLiteral("\n\n")));
+    box.setInformativeText(tr("Saving as UTF-8 keeps every character."));
+    box.addButton(tr("Save Anyway"), QMessageBox::DestructiveRole);
+    QPushButton *saveUtf8 = box.addButton(tr("Save as UTF-8"), QMessageBox::AcceptRole);
+    QPushButton *cancel = box.addButton(QMessageBox::Cancel);
+    box.setDefaultButton(saveUtf8);
+    box.exec();
+
+    if (box.clickedButton() == cancel)
+        return false;
+    if (box.clickedButton() == saveUtf8)
+        editor->setEncoding(QStringLiteral("UTF-8"));
+
+    return true;
+}
+
 bool MainWindow::saveCurrentFile()
 {
     return saveFile(currentEditor());
@@ -1420,6 +1640,9 @@ bool MainWindow::saveFile(ScintillaNext *editor)
         return saveCurrentFileAsDialog();
     }
     else {
+        if (!confirmCharcodeLoss(editor))
+            return false;
+
         QFileDevice::FileError error = editor->save();
         if (error == QFileDevice::NoError) {
             return true;
@@ -1459,6 +1682,9 @@ bool MainWindow::saveCurrentFileAs(const QString &fileName)
 bool MainWindow::saveFileAs(ScintillaNext *editor, const QString &fileName)
 {
     qInfo("saveFileAs(%s)", qUtf8Printable(fileName));
+
+    if (!confirmCharcodeLoss(editor))
+        return false;
 
     QFileDevice::FileError error = editor->saveAs(fileName);
 
@@ -1795,6 +2021,7 @@ void MainWindow::updateGui(ScintillaNext *editor)
     updateFileStatusBasedUi(editor);
     updateSaveStatusBasedUi(editor);
     updateEOLBasedUi(editor);
+    updateEncodingBasedUi(editor);
     updateEditorPositionBasedUi();
     updateSelectionBasedUi(editor);
     updateContentBasedUi(editor);
@@ -2122,6 +2349,12 @@ void MainWindow::addEditor(ScintillaNext *editor)
     // TODO: look at editor inspector as an example to ensure updates are only coming from one editor.
     // Can save the connection objects and disconnected from them and only connect to the editor as it is activated.
     connect(editor, &ScintillaNext::savePointChanged, this, [=, this]() { updateSaveStatusBasedUi(editor); });
+    connect(editor, &ScintillaNext::encodingChanged, this, [=, this]() {
+        if (editor == currentEditor()) {
+            updateEncodingBasedUi(editor);
+            ui->statusBar->refresh(editor);
+        }
+    });
     connect(editor, &ScintillaNext::renamed, this, [= ,this]() { detectLanguage(editor); });
     connect(editor, &ScintillaNext::renamed, this, [=, this]() { updateFileStatusBasedUi(editor); });
     connect(editor, &ScintillaNext::updateUi, this, &MainWindow::updateDocumentBasedUi);

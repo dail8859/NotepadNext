@@ -120,6 +120,24 @@ public:
 
     BomType bom() const { return bomType; }
 
+    // Text encoding of the file on disk. The returned string is one of the
+    // entries offered by the Encoding menu, e.g. "UTF-8" or "GB18030".
+    QString encoding() const;
+
+    // "Convert": keep the text and write it in the new encoding on next save.
+    void setEncoding(const QString &spec);
+
+    // "Reinterpret": re-read the file from disk using the given encoding.
+    bool reinterpretWithEncoding(const QString &spec);
+
+    // False when the document contains characters the target encoding cannot
+    // represent (CotEditor calls these "incompatible characters").
+    bool canBeConvertedTo(const QString &spec);
+
+    // Number of bytes that had no mapping to text when the file was read. They
+    // are shown as U+FFFD and cannot be written back, so a save drops them.
+    int undecodableByteCount() const { return decodeInvalidChars; }
+
     bool isTemporary() const { return temporary; }
     void setTemporary(bool temp);
 
@@ -134,7 +152,9 @@ public:
 public slots:
     void close();
     QFileDevice::FileError save();
-    void reload();
+    // Returns false when the file could not be read (the buffer may be empty
+    // in that case, see reload()'s original NOTE).
+    bool reload();
     void omitModifications();
     QFileDevice::FileError saveAs(const QString &newFilePath);
     QFileDevice::FileError saveCopyAs(const QString &filePath);
@@ -159,6 +179,7 @@ signals:
 
     void lexerChanged();
     void reloaded();
+    void encodingChanged();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -168,11 +189,18 @@ private:
     QString name;
     BufferType bufferType = BufferType::New;
     BomType bomType = BomType::None;
+    QString codecName;          // legacy code page on disk; empty = UTF-8
+    QString savedEncodingSpec = QStringLiteral("UTF-8");  // encoding() at the last read/save
+    QString forcedReadSpec;     // one-shot override used by Reinterpret
+    int decodeInvalidChars = 0; // bytes the read codec could not map to text
     QFileInfo fileInfo;
     QDateTime modifiedTime;
     RangeAllocator indicatorResources;
 
     bool temporary = false; // Temporary file loaded from a session. It can either be a 'New' file or actual 'File'
+
+    void applyEncodingSpec(const QString &spec);
+    QByteArray toFileBytes(const QByteArray &utf8) const;
 
     bool readFromDisk(QFile &file);
     QDateTime fileTimestamp();
