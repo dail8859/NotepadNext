@@ -824,7 +824,6 @@
       <translation>&amp;Недавние файлы</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="69"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1524"/>
       <source>Export As</source>
       <translation>Экспортировать как</translation>
@@ -880,11 +879,6 @@
       <translation>Кодирование/декодирование</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="207"/>
-      <source>Search</source>
-      <translation>Поиск</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="211"/>
       <source>Bookmarks</source>
       <translation>Закладки</translation>
@@ -923,31 +917,6 @@
       <location filename="../src/dialogs/MainWindow.ui" line="299"/>
       <source>Unfold Level</source>
       <translation>Развернуть уровень</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="328"/>
-      <source>Language</source>
-      <translation>Язык</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="333"/>
-      <source>Settings</source>
-      <translation>Опции</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="339"/>
-      <source>Macro</source>
-      <translation>Макросы</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="350"/>
-      <source>Help</source>
-      <translation>Справка</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="361"/>
-      <source>Encoding</source>
-      <translation>Кодировка</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="377"/>
@@ -1046,21 +1015,6 @@
       <translation>Сох&amp;ранить как...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="599"/>
-      <source>Save a Copy As...</source>
-      <translation>Сохранить копию как...</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="608"/>
-      <source>Sav&amp;e All</source>
-      <translation>Сохра&amp;нить все</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="616"/>
-      <source>Select A&amp;ll</source>
-      <translation>Выделить &amp;все</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="628"/>
       <source>Increase Indent</source>
       <translation>Увеличить отступ</translation>
@@ -1069,11 +1023,6 @@
       <location filename="../src/dialogs/MainWindow.ui" line="637"/>
       <source>Decrease Indent</source>
       <translation>Уменьшить отступ</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="642"/>
-      <source>Rename...</source>
-      <translation>Переименовать...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="651"/>
@@ -1302,11 +1251,6 @@
       <translation>Выделить следующий экземпляр</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1040"/>
-      <source>Move to Trash...</source>
-      <translation>Убрать в корзину...</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1043"/>
       <source>Move to Trash</source>
       <translation>Убрать в корзину</translation>
@@ -1322,14 +1266,74 @@
       <translation>&amp;Перейти к строке...</translation>
     </message>
     <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="69"/>
+      <source>&amp;Export As</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="207"/>
+      <source>&amp;Search</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="328"/>
+      <source>&amp;Language</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="333"/>
+      <source>Se&amp;ttings</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="339"/>
+      <source>&amp;Macro</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="350"/>
+      <source>&amp;Help</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="361"/>
+      <source>E&amp;ncoding</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="599"/>
+      <source>Save a Cop&amp;y As...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="608"/>
+      <source>Sa&amp;ve All</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="616"/>
+      <source>&amp;Select All</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="642"/>
+      <source>&amp;Rename...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1040"/>
+      <source>Move to &amp;Trash...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1065"/>
-      <source>Print...</source>
-      <translation>Печать...</translation>
+      <source>&amp;Print...</source>
+      <translation type="unfinished"/>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1073"/>
-      <source>Open Folder as Workspace...</source>
-      <translation>Открыть папку как проект...</translation>
+      <source>Open Folder as &amp;Workspace...</source>
+      <translation type="unfinished"/>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1078"/>
