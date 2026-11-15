@@ -812,7 +812,6 @@
       <translation>最近開啟的檔案(&amp;R)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="69"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1524"/>
       <source>Export As</source>
       <translation>匯出為</translation>
@@ -868,11 +867,6 @@
       <translation>編碼/解碼</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="207"/>
-      <source>Search</source>
-      <translation>搜尋</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="211"/>
       <source>Bookmarks</source>
       <translation>書籤</translation>
@@ -911,31 +905,6 @@
       <location filename="../src/dialogs/MainWindow.ui" line="299"/>
       <source>Unfold Level</source>
       <translation>展開層級</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="328"/>
-      <source>Language</source>
-      <translation>語言</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="333"/>
-      <source>Settings</source>
-      <translation>設定</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="339"/>
-      <source>Macro</source>
-      <translation>巨集</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="350"/>
-      <source>Help</source>
-      <translation>幫助</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="361"/>
-      <source>Encoding</source>
-      <translation>編碼</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="377"/>
@@ -1034,21 +1003,6 @@
       <translation>另存新檔(&amp;A)...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="599"/>
-      <source>Save a Copy As...</source>
-      <translation>另存副本為...</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="608"/>
-      <source>Sav&amp;e All</source>
-      <translation>全部儲存(&amp;e)</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="616"/>
-      <source>Select A&amp;ll</source>
-      <translation>全選(&amp;A)</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="628"/>
       <source>Increase Indent</source>
       <translation>增加縮排</translation>
@@ -1057,11 +1011,6 @@
       <location filename="../src/dialogs/MainWindow.ui" line="637"/>
       <source>Decrease Indent</source>
       <translation>減少縮排</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="642"/>
-      <source>Rename...</source>
-      <translation>重新命名...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="651"/>
@@ -1290,11 +1239,6 @@
       <translation>選擇下一個實例</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1040"/>
-      <source>Move to Trash...</source>
-      <translation>移至垃圾桶...</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1043"/>
       <source>Move to Trash</source>
       <translation>移至垃圾桶</translation>
@@ -1310,14 +1254,74 @@
       <translation>跳轉到行(&amp;G)...</translation>
     </message>
     <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="69"/>
+      <source>&amp;Export As</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="207"/>
+      <source>&amp;Search</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="328"/>
+      <source>&amp;Language</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="333"/>
+      <source>Se&amp;ttings</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="339"/>
+      <source>&amp;Macro</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="350"/>
+      <source>&amp;Help</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="361"/>
+      <source>E&amp;ncoding</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="599"/>
+      <source>Save a Cop&amp;y As...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="608"/>
+      <source>Sa&amp;ve All</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="616"/>
+      <source>&amp;Select All</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="642"/>
+      <source>&amp;Rename...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1040"/>
+      <source>Move to &amp;Trash...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1065"/>
-      <source>Print...</source>
-      <translation>列印...</translation>
+      <source>&amp;Print...</source>
+      <translation type="unfinished"/>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1073"/>
-      <source>Open Folder as Workspace...</source>
-      <translation>以工作區方式開啟資料夾...</translation>
+      <source>Open Folder as &amp;Workspace...</source>
+      <translation type="unfinished"/>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1078"/>
