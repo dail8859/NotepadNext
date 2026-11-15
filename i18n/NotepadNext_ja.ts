@@ -812,7 +812,6 @@
       <translation>最近使用したファイル(&amp;R)</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="69"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="1524"/>
       <source>Export As</source>
       <translation>形式を指定してエクスポート</translation>
@@ -868,11 +867,6 @@
       <translation>エンコード/デコード</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="207"/>
-      <source>Search</source>
-      <translation>検索</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="211"/>
       <source>Bookmarks</source>
       <translation>ブックマーク</translation>
@@ -911,31 +905,6 @@
       <location filename="../src/dialogs/MainWindow.ui" line="299"/>
       <source>Unfold Level</source>
       <translation>指定レベルで展開</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="328"/>
-      <source>Language</source>
-      <translation>言語</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="333"/>
-      <source>Settings</source>
-      <translation>設定</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="339"/>
-      <source>Macro</source>
-      <translation>マクロ</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="350"/>
-      <source>Help</source>
-      <translation>ヘルプ</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="361"/>
-      <source>Encoding</source>
-      <translation>エンコード</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="377"/>
@@ -1034,21 +1003,6 @@
       <translation>名前を付けて保存(&amp;A)...</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="599"/>
-      <source>Save a Copy As...</source>
-      <translation>複製を別名で保存...</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="608"/>
-      <source>Sav&amp;e All</source>
-      <translation>すべて保存(&amp;E)</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="616"/>
-      <source>Select A&amp;ll</source>
-      <translation>すべて選択(&amp;L)</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="628"/>
       <source>Increase Indent</source>
       <translation>インデントを増やす</translation>
@@ -1057,11 +1011,6 @@
       <location filename="../src/dialogs/MainWindow.ui" line="637"/>
       <source>Decrease Indent</source>
       <translation>インデントを減らす</translation>
-    </message>
-    <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="642"/>
-      <source>Rename...</source>
-      <translation>名前の変更...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="651"/>
@@ -1290,11 +1239,6 @@
       <translation>次の出現箇所を選択</translation>
     </message>
     <message>
-      <location filename="../src/dialogs/MainWindow.ui" line="1040"/>
-      <source>Move to Trash...</source>
-      <translation>ごみ箱に移動...</translation>
-    </message>
-    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1043"/>
       <source>Move to Trash</source>
       <translation>ごみ箱に移動</translation>
@@ -1310,14 +1254,74 @@
       <translation>行へ移動(&amp;G)...</translation>
     </message>
     <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="69"/>
+      <source>&amp;Export As</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="207"/>
+      <source>&amp;Search</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="328"/>
+      <source>&amp;Language</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="333"/>
+      <source>Se&amp;ttings</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="339"/>
+      <source>&amp;Macro</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="350"/>
+      <source>&amp;Help</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="361"/>
+      <source>E&amp;ncoding</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="599"/>
+      <source>Save a Cop&amp;y As...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="608"/>
+      <source>Sa&amp;ve All</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="616"/>
+      <source>&amp;Select All</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="642"/>
+      <source>&amp;Rename...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <location filename="../src/dialogs/MainWindow.ui" line="1040"/>
+      <source>Move to &amp;Trash...</source>
+      <translation type="unfinished"/>
+    </message>
+    <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1065"/>
-      <source>Print...</source>
-      <translation>印刷...</translation>
+      <source>&amp;Print...</source>
+      <translation type="unfinished"/>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1073"/>
-      <source>Open Folder as Workspace...</source>
-      <translation>フォルダーをワークスペースとして開く...</translation>
+      <source>Open Folder as &amp;Workspace...</source>
+      <translation type="unfinished"/>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1078"/>
