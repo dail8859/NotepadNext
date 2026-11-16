@@ -33,14 +33,94 @@
 #include "BookMarkDecorator.h"
 
 
+struct ExtendedCodeFormat
+{
+    int digits;
+    int base;
+    uint maxValue;
+};
+
+// Format of the character code following \x, \u, \o, \d and \b
+static bool extendedCodeFormat(QChar c, ExtendedCodeFormat &format)
+{
+    switch (c.unicode()) {
+    case 'x': format = {2, 16, 0xFF}; return true;
+    case 'u': format = {4, 16, 0xFFFF}; return true;
+    case 'o': format = {3, 8, 0xFF}; return true;
+    case 'd': format = {3, 10, 0xFF}; return true;
+    case 'b': format = {8, 2, 0xFF}; return true;
+    default: return false;
+    }
+}
+
+static int digitValue(QChar c, int base)
+{
+    int value = -1;
+
+    if (c >= '0' && c <= '9')
+        value = c.unicode() - '0';
+    else if (c >= 'a' && c <= 'f')
+        value = c.unicode() - 'a' + 10;
+    else if (c >= 'A' && c <= 'F')
+        value = c.unicode() - 'A' + 10;
+
+    return value < base ? value : -1;
+}
+
 static void convertToExtended(QString &str)
 {
-    str.replace("\\r", "\r");
-    str.replace("\\n", "\n");
-    str.replace("\\t", "\t");
-    str.replace("\\0", "\0");
-    str.replace("\\\\", "\\");
-    // TODO: more
+    // Parse in a single pass so that an escaped backslash (e.g. "\\t") is not
+    // reinterpreted as the start of another sequence
+    QString result;
+    result.reserve(str.size());
+
+    for (qsizetype i = 0; i < str.size(); ++i) {
+        if (str.at(i) != '\\' || i + 1 == str.size()) {
+            result.append(str.at(i));
+            continue;
+        }
+
+        const QChar next = str.at(i + 1);
+        ExtendedCodeFormat format;
+
+        switch (next.unicode()) {
+        case 'r': result.append('\r'); break;
+        case 'n': result.append('\n'); break;
+        case 't': result.append('\t'); break;
+        case '0': result.append(QChar(0)); break;
+        case '\\': result.append('\\'); break;
+        default:
+            if (extendedCodeFormat(next, format)) {
+                // e.g. \x41, é, \o101, \d065, \b01000001
+                uint code = 0;
+                int digits = 0;
+
+                while (digits < format.digits && i + 2 + digits < str.size()) {
+                    const int value = digitValue(str.at(i + 2 + digits), format.base);
+                    if (value < 0)
+                        break;
+
+                    code = code * format.base + value;
+                    ++digits;
+                }
+
+                if (digits == format.digits && code <= format.maxValue) {
+                    result.append(QChar(static_cast<char16_t>(code)));
+                    i += digits + 1;
+                    continue;
+                }
+            }
+
+            // Unknown, incomplete or out of range sequences are kept as is
+            result.append('\\');
+            result.append(next);
+            break;
+        }
+
+        ++i;
+    }
+
+    str = result;
 }
 
 FindReplaceDialog::FindReplaceDialog(ISearchResultsHandler *searchResults, MainWindow *window) :
@@ -280,9 +360,6 @@ void FindReplaceDialog::findAllInCurrentDocument()
 
     bool firstMatch = true;
 
-    QString text = findString();
-
-    finder->options().text = text;
     finder->forEachMatch([&](int start, int end){
         // Only add the file entry if there was a valid search result
         if (firstMatch) {
@@ -565,11 +642,6 @@ void FindReplaceDialog::prepareToPerformSearch(bool replace)
 
     statusBar->clearMessage();
 
-    if (ui->radioExtendedSearch->isChecked()) {
-        convertToExtended(findText);
-        //convertToExtended(replaceText);
-    }
-
     finder->options() = findOptions();
 }
 
@@ -701,6 +773,9 @@ FindOptions FindReplaceDialog::findOptions() const
     FindOptions options;
 
     options.text = findString();
+
+    if (ui->radioExtendedSearch->isChecked())
+        convertToExtended(options.text);
 
     if (ui->checkBoxMatchWholeWord->isChecked())
         options.flags |= Scintilla::FindOption::WholeWord;
