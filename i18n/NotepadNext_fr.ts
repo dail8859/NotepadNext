@@ -380,7 +380,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="277"/>
       <source>Replace &amp;All</source>
-      <translation>Remplacer Tout</translation>
+      <translation>Rempl&amp;acer Tout</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="284"/>
@@ -390,7 +390,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="291"/>
       <source>Find All in All &amp;Opened Documents</source>
-      <translation>Tout trouver dans tous les documents &amp;ouverts</translation>
+      <translation>Rechercher tout dans tous les documents &amp;ouverts</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="301"/>
@@ -420,7 +420,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="397"/>
       <source>&amp;Find:</source>
-      <translation>&amp;Rechercher:</translation>
+      <translation>Rechercher :</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="432"/>
@@ -430,7 +430,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="481"/>
       <source>&amp;Bookmark line</source>
-      <translation>&amp;Ligne de favori</translation>
+      <translation>Ligne de favori</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="488"/>
@@ -455,7 +455,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="516"/>
       <source>Wra&amp;p Around</source>
-      <translation>Entourer autour</translation>
+      <translation>Rechercher autour</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
@@ -541,27 +541,27 @@
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="88"/>
       <source>...</source>
-      <translation type="unfinished"/>
+      <translation>...</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="108"/>
       <source>Size</source>
-      <translation type="unfinished"/>
+      <translation>Taille</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="119"/>
       <source>Type</source>
-      <translation type="unfinished"/>
+      <translation>Type</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="130"/>
       <source>Date Modified</source>
-      <translation type="unfinished"/>
+      <translation>Date de modification</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="141"/>
       <source>Hidden</source>
-      <translation type="unfinished"/>
+      <translation>Masqué</translation>
     </message>
   </context>
   <context>
@@ -853,7 +853,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="154"/>
       <source>Blank Operations</source>
-      <translation type="unfinished"/>
+      <translation>Opérations vides</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="160"/>
@@ -933,7 +933,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="469"/>
       <source>&amp;Save</source>
-      <translation>&amp;Enregistrer</translation>
+      <translation>Enregi&amp;strer</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="472"/>
@@ -1260,72 +1260,72 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
       <source>&amp;Export As</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Exporter sous</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="207"/>
       <source>&amp;Search</source>
-      <translation type="unfinished"/>
+      <translation>Rechercher</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="328"/>
       <source>&amp;Language</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Langue</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="333"/>
       <source>Se&amp;ttings</source>
-      <translation type="unfinished"/>
+      <translation>Paramè&amp;tres</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="339"/>
       <source>&amp;Macro</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Macro</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="350"/>
       <source>&amp;Help</source>
-      <translation type="unfinished"/>
+      <translation>Aide</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="361"/>
       <source>E&amp;ncoding</source>
-      <translation type="unfinished"/>
+      <translation>E&amp;ncodage</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="599"/>
       <source>Save a Cop&amp;y As...</source>
-      <translation type="unfinished"/>
+      <translation>Enregistrer une copie sous...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="608"/>
       <source>Sa&amp;ve All</source>
-      <translation type="unfinished"/>
+      <translation>Tout enregistrer</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="616"/>
       <source>&amp;Select All</source>
-      <translation type="unfinished"/>
+      <translation>Tout &amp;sélectionner</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="642"/>
       <source>&amp;Rename...</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Renommer...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1040"/>
       <source>Move to &amp;Trash...</source>
-      <translation type="unfinished"/>
+      <translation>Déplacer vers la corbeille...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1065"/>
       <source>&amp;Print...</source>
-      <translation type="unfinished"/>
+      <translation>Im&amp;primer...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1073"/>
       <source>Open Folder as &amp;Workspace...</source>
-      <translation type="unfinished"/>
+      <translation>Ouvrir le dossier en tant qu’espace de travail...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1078"/>
@@ -1410,7 +1410,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1177"/>
       <source>Trim Trailing Space</source>
-      <translation type="unfinished"/>
+      <translation>Supprimer les espaces de fin de ligne</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1186"/>
@@ -1693,12 +1693,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1584"/>
       <source>Select and Find Next</source>
-      <translation type="unfinished"/>
+      <translation>Sélectionner et rechercher le suivant</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1592"/>
       <source>Select and Find Previous</source>
-      <translation type="unfinished"/>
+      <translation>Sélectionner et rechercher le précédent</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="481"/>
@@ -2011,7 +2011,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="198"/>
       <source>Default Language</source>
-      <translation type="unfinished"/>
+      <translation>Langue par défaut</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="210"/>
