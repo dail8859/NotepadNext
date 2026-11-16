@@ -157,22 +157,22 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="46"/>
       <source>Line End Position</source>
-      <translation type="unfinished"/>
+      <translation>Vị Trí Cuối Dòng</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="47"/>
       <source>Line Indentation</source>
-      <translation type="unfinished"/>
+      <translation>Thụt Lề Dòng</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="48"/>
       <source>Line Indent Position</source>
-      <translation type="unfinished"/>
+      <translation>Vị Trí Thụt Lề Dòng</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="52"/>
       <source>Selection Information</source>
-      <translation type="unfinished"/>
+      <translation>Thông Tin Lựa Chọn</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="55"/>
@@ -395,7 +395,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="301"/>
       <source>Find All in Current Document</source>
-      <translation type="unfinished"/>
+      <translation>Tìm Tất Cả trong Tài Liệu Hiện Tại</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="311"/>
@@ -410,7 +410,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="331"/>
       <source>Copy Marked Text</source>
-      <translation type="unfinished"/>
+      <translation>Sao Chép Văn Bản Đã Đánh Dấu</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="341"/>
@@ -440,7 +440,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="495"/>
       <source>Backward direction</source>
-      <translation type="unfinished"/>
+      <translation>Hướng ngược lại</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="502"/>
@@ -471,12 +471,14 @@
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="154"/>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="362"/>
       <source>Replaced %Ln matches</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Đã thay thế %Ln khớp</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="262"/>
       <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
-      <translation type="unfinished"/>
+      <translation>Đã đến cuối tài liệu. Tìm thấy lần xuất hiện đầu tiên từ trên xuống.</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="273"/>
@@ -486,7 +488,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="334"/>
       <source>1 occurrence was replaced</source>
-      <translation type="unfinished"/>
+      <translation>1 lần xuất hiện đã được thay thế</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="343"/>
@@ -503,7 +505,9 @@
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="783"/>
       <source>Mark: %Ln match in entire file</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Đánh dấu: %Ln khớp trong toàn bộ tệp</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="794"/>
