@@ -267,17 +267,17 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="104"/>
       <source>Fold Parent</source>
-      <translation>Fold Parent</translation>
+      <translation>Üst Bloğu Daralt</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="105"/>
       <source>Last Child</source>
-      <translation>Last Child</translation>
+      <translation>Son Alt Blok</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="106"/>
       <source>Contracted Fold Next</source>
-      <translation>Contracted Fold Next</translation>
+      <translation>Sonraki Daraltılmış Blok</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="173"/>
@@ -400,7 +400,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="311"/>
       <source>Mark All</source>
-      <translation type="unfinished"/>
+      <translation>Tümünü İşaretle</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="321"/>
@@ -410,7 +410,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="331"/>
       <source>Copy Marked Text</source>
-      <translation type="unfinished"/>
+      <translation>İşaretli Metni Kopyala</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="341"/>
@@ -430,12 +430,12 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="481"/>
       <source>&amp;Bookmark line</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Satıra yer imi ekle</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="488"/>
       <source>&amp;Purge for each search</source>
-      <translation type="unfinished"/>
+      <translation>Her aramada &amp;temizle</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="495"/>
@@ -465,7 +465,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="65"/>
       <source>Mark</source>
-      <translation type="unfinished"/>
+      <translation>İşaretle</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="154"/>
@@ -507,22 +507,28 @@
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="783"/>
       <source>Mark: %Ln match in entire file</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>İşaretle: Tüm dosyada %Ln eşleşme</numerusform>
+        <numerusform>İşaretle: Tüm dosyada %Ln eşleşme</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="794"/>
       <source>All marks cleared</source>
-      <translation type="unfinished"/>
+      <translation>Tüm işaretler temizlendi</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="818"/>
       <source>No marks to copy</source>
-      <translation type="unfinished"/>
+      <translation>İşaretli metin bulunamadı</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="823"/>
       <source>Copied %Ln marked text(s)</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>İşaretli %Ln metin kopyalandı</numerusform>
+        <numerusform>İşaretli %Ln metin kopyalandı</numerusform>
+      </translation>
     </message>
   </context>
   <context>
@@ -535,27 +541,27 @@
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="88"/>
       <source>...</source>
-      <translation type="unfinished"/>
+      <translation>...</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="108"/>
       <source>Size</source>
-      <translation type="unfinished"/>
+      <translation>Boyut</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="119"/>
       <source>Type</source>
-      <translation type="unfinished"/>
+      <translation>Tür</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="130"/>
       <source>Date Modified</source>
-      <translation type="unfinished"/>
+      <translation>Değiştirme Tarihi</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="141"/>
       <source>Hidden</source>
-      <translation type="unfinished"/>
+      <translation>Gizli</translation>
     </message>
   </context>
   <context>
@@ -847,7 +853,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="154"/>
       <source>Blank Operations</source>
-      <translation type="unfinished"/>
+      <translation>Boşluk İşlemleri</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="160"/>
@@ -1254,72 +1260,72 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
       <source>&amp;Export As</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Farklı Dışa Aktar</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="207"/>
       <source>&amp;Search</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Ara</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="328"/>
       <source>&amp;Language</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Dil</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="333"/>
       <source>Se&amp;ttings</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Ayarlar</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="339"/>
       <source>&amp;Macro</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Makro</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="350"/>
       <source>&amp;Help</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Yardım</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="361"/>
       <source>E&amp;ncoding</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Kodlama</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="599"/>
       <source>Save a Cop&amp;y As...</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Kopya Olarak Kaydet...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="608"/>
       <source>Sa&amp;ve All</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Tümünü Kaydet</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="616"/>
       <source>&amp;Select All</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Tümünü Seç</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="642"/>
       <source>&amp;Rename...</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Yeniden Adlandır...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1040"/>
       <source>Move to &amp;Trash...</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Çöp Kutusuna Taşı...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1065"/>
       <source>&amp;Print...</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Yazdır...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1073"/>
       <source>Open Folder as &amp;Workspace...</source>
-      <translation type="unfinished"/>
+      <translation>Klasörü Çalışma &amp;Alanı Olarak Aç...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1078"/>
@@ -1404,7 +1410,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1177"/>
       <source>Trim Trailing Space</source>
-      <translation type="unfinished"/>
+      <translation>Sondaki Boşlukları Kırp</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1186"/>
@@ -1425,7 +1431,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1211"/>
       <source>Search and Bookmark Lines...</source>
-      <translation type="unfinished"/>
+      <translation>Satırları Ara ve Yer İmi Ekle...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1219"/>
@@ -1632,67 +1638,67 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1527"/>
       <source>Sort Lines Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Satırları Artan Şekilde Sırala</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1532"/>
       <source>Sort Lines Descending</source>
-      <translation type="unfinished"/>
+      <translation>Satırları Azalan Şekilde Sırala</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1537"/>
       <source>Sort Lines Ascending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>Satırları Artan Şekilde Sırala (Büyük/Küçük Harf Duyarsız)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1542"/>
       <source>Sort Lines Descending (Case-Insensitive)</source>
-      <translation type="unfinished"/>
+      <translation>Satırları Azalan Şekilde Sırala (Büyük/Küçük Harf Duyarsız)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1547"/>
       <source>Sort Lines by Length Ascending</source>
-      <translation type="unfinished"/>
+      <translation>Satırları Uzunluğa Göre Artan Şekilde Sırala</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1552"/>
       <source>Sort Lines by Length Descending</source>
-      <translation type="unfinished"/>
+      <translation>Satırları Uzunluğa Göre Azalan Şekilde Sırala</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1557"/>
       <source>Reverse Line Order</source>
-      <translation type="unfinished"/>
+      <translation>Satır Sırasını Tersine Çevir</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1562"/>
       <source>Split Horizontal</source>
-      <translation type="unfinished"/>
+      <translation>Yatay Böl</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1565"/>
       <source>Split editor horizontally (left/right)</source>
-      <translation type="unfinished"/>
+      <translation>Düzenleyiciyi yatay olarak böl (sol/sağ)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1573"/>
       <source>Split Vertical</source>
-      <translation type="unfinished"/>
+      <translation>Dikey Böl</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1576"/>
       <source>Split editor vertically (top/bottom)</source>
-      <translation type="unfinished"/>
+      <translation>Düzenleyiciyi dikey olarak böl (üst/alt)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1584"/>
       <source>Select and Find Next</source>
-      <translation type="unfinished"/>
+      <translation>Seç ve Sonrakini Bul</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1592"/>
       <source>Select and Find Previous</source>
-      <translation type="unfinished"/>
+      <translation>Seç ve Öncekini Bul</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="481"/>
@@ -1889,27 +1895,30 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2026"/>
       <source>Save changes to &lt;b&gt;%1&lt;/b&gt;?</source>
-      <translation type="unfinished"/>
+      <translation>&lt;b&gt;%1&lt;/b&gt; değişiklikleri kaydedilsin mi?</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/MainWindow.cpp" line="2027"/>
       <source>There are %n files with unsaved changes. Save them?</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>Kaydedilmemiş değişiklikler içeren %n dosya var. Kaydedilsin mi?</numerusform>
+        <numerusform>Kaydedilmemiş değişiklikleri olan %n dosya var. Kaydedilsin mi?</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2030"/>
       <source>Save All</source>
-      <translation type="unfinished"/>
+      <translation>Tümünü Kaydet</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2031"/>
       <source>Discard All</source>
-      <translation type="unfinished"/>
+      <translation>Tümünü Yoksay</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2031"/>
       <source>Discard</source>
-      <translation type="unfinished"/>
+      <translation>Yoksay</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2228"/>
@@ -2002,7 +2011,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="198"/>
       <source>Default Language</source>
-      <translation type="unfinished"/>
+      <translation>Varsayılan Dil</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="210"/>
@@ -2017,7 +2026,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="224"/>
       <source>Auto Completion</source>
-      <translation type="unfinished"/>
+      <translation>Otomatik Tamamlama</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="231"/>
@@ -2145,12 +2154,12 @@
       <location filename="../src/docks/SearchResultsDock.ui" line="38"/>
       <location filename="../src/docks/SearchResultsDock.ui" line="41"/>
       <source>Copy All Results to Clipboard</source>
-      <translation type="unfinished"/>
+      <translation>Tüm Sonuçları Panoya Kopyala</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="57"/>
       <source>Copy</source>
-      <translation type="unfinished"/>
+      <translation>Kopyala</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="59"/>
@@ -2178,17 +2187,17 @@
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="40"/>
       <source>Create a new file</source>
-      <translation type="unfinished"/>
+      <translation>Yeni bir dosya oluştur</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="43"/>
       <source>Show opened files list</source>
-      <translation type="unfinished"/>
+      <translation>Açık dosyalar listesini göster</translation>
     </message>
     <message>
       <location filename="../src/widgets/TabsQuickActionsBar.cpp" line="49"/>
       <source>Close the current file</source>
-      <translation type="unfinished"/>
+      <translation>Geçerli dosyayı kapat</translation>
     </message>
   </context>
 </TS>
