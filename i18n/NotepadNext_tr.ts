@@ -405,7 +405,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="321"/>
       <source>Clear all marks</source>
-      <translation type="unfinished"/>
+      <translation>Tüm İşaretleri Temizle</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="331"/>
