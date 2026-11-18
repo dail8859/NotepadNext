@@ -1256,72 +1256,72 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
       <source>&amp;Export As</source>
-      <translation type="unfinished"/>
+      <translation>&amp;匯出為</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="207"/>
       <source>&amp;Search</source>
-      <translation type="unfinished"/>
+      <translation>&amp;搜尋</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="328"/>
       <source>&amp;Language</source>
-      <translation type="unfinished"/>
+      <translation>&amp;語言</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="333"/>
       <source>Se&amp;ttings</source>
-      <translation type="unfinished"/>
+      <translation>&amp;設定</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="339"/>
       <source>&amp;Macro</source>
-      <translation type="unfinished"/>
+      <translation>&amp;巨集</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="350"/>
       <source>&amp;Help</source>
-      <translation type="unfinished"/>
+      <translation>&amp;幫助</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="361"/>
       <source>E&amp;ncoding</source>
-      <translation type="unfinished"/>
+      <translation>&amp;編碼</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="599"/>
       <source>Save a Cop&amp;y As...</source>
-      <translation type="unfinished"/>
+      <translation>&amp;另存副本為...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="608"/>
       <source>Sa&amp;ve All</source>
-      <translation type="unfinished"/>
+      <translation>&amp;全部儲存</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="616"/>
       <source>&amp;Select All</source>
-      <translation type="unfinished"/>
+      <translation>&amp;全選</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="642"/>
       <source>&amp;Rename...</source>
-      <translation type="unfinished"/>
+      <translation>&amp;重新命名...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1040"/>
       <source>Move to &amp;Trash...</source>
-      <translation type="unfinished"/>
+      <translation>&amp;移至垃圾桶...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1065"/>
       <source>&amp;Print...</source>
-      <translation type="unfinished"/>
+      <translation>&amp;列印...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1073"/>
       <source>Open Folder as &amp;Workspace...</source>
-      <translation type="unfinished"/>
+      <translation>&amp;以工作區方式開啟資料夾...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1078"/>
