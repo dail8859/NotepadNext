@@ -393,7 +393,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     srDock->toggleViewAction()->setShortcut(Qt::Key_F7);
     ui->menuView->addAction(srDock->toggleViewAction());
 
-    connect(srDock, &SearchResultsDock::searchResultActivated, this, [=, this](ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning) {
+    auto goToSearchResult = [=, this](ScintillaNext *editor, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning) {
         dockedEditor->switchToEditor(editor);
 
         int linePos = editor->positionFromLine(lineNumber);
@@ -401,10 +401,27 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
         editor->verticalCentreCaret();
 
         editor->grabFocus();
+    };
+
+    connect(srDock, &SearchResultsDock::searchResultActivated, this, goToSearchResult);
+    connect(srDock, &SearchResultsDock::fileSearchResultActivated, this, [=, this](const QString &filePath, int lineNumber, int startPositionFromBeginning, int endPositionFromBeginning) {
+        // Only open existing files, never offer to create one that disappeared since the search
+        if (!QFileInfo(filePath).isFile())
+            return;
+
+        openFile(filePath);
+
+        ScintillaNext *editor = app->getEditorManager()->getEditorByFilePath(filePath);
+        if (editor)
+            goToSearchResult(editor, lineNumber, startPositionFromBeginning, endPositionFromBeginning);
     });
 
     connect(ui->actionFind, &QAction::triggered, this, [this]() {
         showFindReplaceDialog(FindReplaceDialog::FIND_TAB);
+    });
+
+    connect(ui->actionFindInFiles, &QAction::triggered, this, [this]() {
+        showFindReplaceDialog(FindReplaceDialog::FIND_IN_FILES_TAB);
     });
 
     connect(ui->actionFindNext, &QAction::triggered, this, [this]() {

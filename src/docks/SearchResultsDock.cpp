@@ -118,6 +118,10 @@ void SearchResultsDock::newFileEntry(ScintillaNext *editor)
     currentFile = new QTreeWidgetItem(currentSearch);
     currentFile->setData(0, Qt::UserRole, QVariant::fromValue(editor_pointer));
 
+    // Remember the file so it can be reopened if the editor is gone (e.g. a file searched on disk)
+    if (editor->isFile())
+        currentFile->setData(0, Qt::UserRole + 1, editor->getFilePath());
+
     currentFile->setBackground(0, QColor(213, 255, 213));
     currentFile->setForeground(0, QColor(0, 128, 0));
     currentFile->setExpanded(true);
@@ -197,14 +201,18 @@ void SearchResultsDock::itemActivated(QTreeWidgetItem *item, int column)
     // Make sure the entry has a parent since search entries can have no children
     if (item->childCount() == 0 && item->parent() != Q_NULLPTR) {
         QPointer<ScintillaNext> editor = item->parent()->data(0, Qt::UserRole).value<QPointer<ScintillaNext>>();
+        const QString filePath = item->parent()->data(0, Qt::UserRole + 1).toString();
 
-        // The editor may no longer exist
+        int lineNumber = item->data(1, SearchResultData::LineNumber).toInt();
+        int startPositionFromBeginning = item->data(1, SearchResultData::LinePosStart).toInt();
+        int endPositionFromBeginning = item->data(1, SearchResultData::LinePosEnd).toInt();
+
+        // The editor may no longer exist, in which case the file is reopened
         if (editor) {
-            int lineNumber = item->data(1, SearchResultData::LineNumber).toInt();
-            int startPositionFromBeginning = item->data(1, SearchResultData::LinePosStart).toInt();
-            int endPositionFromBeginning = item->data(1, SearchResultData::LinePosEnd).toInt();
-
             emit searchResultActivated(editor, lineNumber, startPositionFromBeginning, endPositionFromBeginning);
+        }
+        else if (!filePath.isEmpty()) {
+            emit fileSearchResultActivated(filePath, lineNumber, startPositionFromBeginning, endPositionFromBeginning);
         }
     }
 }
