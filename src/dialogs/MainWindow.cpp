@@ -1574,8 +1574,14 @@ void MainWindow::renameFile()
         // The new fileName might be to one of the existing editors.
         //auto otherEditor = app->getEditorByFilePath(fileName);
 
-        bool renameSuccessful = editor->rename(fileName);
-        Q_UNUSED(renameSuccessful)
+        // Remember the current path, since the dialog's path is only the destination
+        const QString oldFilePath = editor->getFilePath();
+
+        if (!editor->rename(fileName)) {
+            QMessageBox::warning(this, tr("Rename"),
+                tr("<b>%1</b> could not be renamed to <b>%2</b>. The file keeps its current name.")
+                    .arg(oldFilePath, QDir::toNativeSeparators(fileName)));
+        }
     }
     else {
         bool ok;

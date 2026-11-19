@@ -501,31 +501,117 @@ QFileDevice::FileError ScintillaNext::saveCopyAs(const QString &filePath)
     return writeToDisk(data, filePath, bomType);
 }
 
+// True when newInfo names the same directory entry as oldCanonicalPath but with
+// different capitalisation, i.e. a case-only rename on a case-insensitive file
+// system. The canonical paths cannot be compared directly for this: they resolve
+// to the spelling that is actually on disk.
+static bool isCaseOnlyRename(const QString &oldCanonicalPath, const QFileInfo &newInfo)
+{
+    const QFileInfo oldInfo(oldCanonicalPath);
+
+    return oldInfo.fileName() != newInfo.fileName()
+            && oldInfo.fileName().compare(newInfo.fileName(), Qt::CaseInsensitive) == 0
+            && oldInfo.canonicalPath() == newInfo.canonicalPath();
+}
+
 bool ScintillaNext::rename(const QString &newFilePath)
 {
     emit aboutToSave();
 
-    // Write out the buffer to the new path
-    if (saveCopyAs(newFilePath) == QFileDevice::NoError) {
-        // Remove the old file
-        const QString oldPath = fileInfo.canonicalFilePath();
-        QFile::remove(oldPath);
+    // Resolve the old path (empty for a missing file) before writing anything.
+    // If the destination is the same file system entry -- an unchanged path, a
+    // "./file" spelling, a symlink alias, or a case-only rename on a
+    // case-insensitive file system -- the file just written must not then be
+    // removed as "the old file".
+    // Note that QFileInfo::operator==() compares file system entries only: hard
+    // links and (on Windows) 8.3 short names are still treated as different
+    // entries, so those aliases go down the "different file" path below.
+    const QString oldPath = fileInfo.canonicalFilePath();
+    const QFileInfo newInfo(newFilePath);
+    const bool sameFile = !oldPath.isEmpty() && newInfo.exists()
+            && QFileInfo(oldPath) == newInfo;
 
-        // Everything worked fine, so update the buffer's info
-        setFileInfo(newFilePath);
-        setSavePoint();
+    // Writing through an alias (or to an unchanged path) only rewrites the bytes,
+    // it never changes the directory entry's spelling, so a case-only rename
+    // needs QFile::rename() as well. On a case-sensitive file system the
+    // destination does not exist yet, sameFile is false and this is a no-op.
+    // NOTE: only reachable on case-insensitive file systems; worth verifying
+    // that it really renames on Windows and macOS.
+    // Returns false if a case-only rename was needed but failed.
+    const auto applyCaseOnlyRename = [&oldPath, &newInfo]() {
+        if (!isCaseOnlyRename(oldPath, newInfo))
+            return true;
 
-        // If this was a temporary file, make sure it is not any more
-        setTemporary(false);
+        // QFile::rename() decides that this is a case-only rename by comparing
+        // its own file name -- oldPath, which is canonical -- with the new name
+        // case-insensitively, and otherwise fails with "Destination file exists".
+        // The user's path may spell the directory differently (a symlinked
+        // directory, "./", a different directory case, ...), so build the target
+        // from the canonical directory. isCaseOnlyRename() already ensured that
+        // it is the same directory.
+        const QString target = QDir(QFileInfo(oldPath).path()).filePath(newInfo.fileName());
 
-        emit saved();
-
-        emit renamed();
+        if (!QFile::rename(oldPath, target)) {
+            qWarning("rename() could not change the case of %s to %s",
+                     qUtf8Printable(oldPath), qUtf8Printable(target));
+            return false;
+        }
 
         return true;
+    };
+
+    // Nothing to write and nothing to remove when the destination is the file the
+    // buffer already refers to and there is nothing pending: rewriting it would
+    // only truncate and recreate the file for no reason.
+    const bool writeNeeded = !sameFile || canSaveToDisk();
+
+    // Remember whether the destination is new, so a failed write does not leave
+    // a truncated file behind that did not exist before.
+    const bool destinationExisted = newInfo.exists();
+
+    // Write out the buffer to the new path; keep the old file on failure.
+    if (writeNeeded && saveCopyAs(newFilePath) != QFileDevice::NoError) {
+        // If the write failed at open() (e.g. no permission on the directory) no
+        // file was created, so there is nothing to clean up and nothing to warn about.
+        if (!destinationExisted && QFile::exists(newFilePath) && !QFile::remove(newFilePath)) {
+            qWarning("rename() could not remove the partially written file %s", qUtf8Printable(newFilePath));
+        }
+        return false;
     }
 
-    return false;
+    if (sameFile) {
+        if (!applyCaseOnlyRename()) {
+            // Keep the buffer's name and file info as they are, so the tab keeps
+            // matching the real name on disk. The buffer's text, however, was
+            // already written to this very file above, so record that.
+            if (writeNeeded) {
+                updateTimestamp();
+                setSavePoint();
+                setTemporary(false);
+
+                emit saved();
+            }
+
+            return false;
+        }
+    }
+    else if (!oldPath.isEmpty() && !QFile::remove(oldPath)) {
+        qWarning("rename() could not remove the old file %s", qUtf8Printable(oldPath));
+    }
+
+    // Everything worked fine, so update the buffer's info
+    setFileInfo(newFilePath);
+    setSavePoint();
+
+    // If this was a temporary file, make sure it is not any more
+    setTemporary(false);
+
+    if (writeNeeded)
+        emit saved();
+
+    emit renamed();
+
+    return true;
 }
 
 ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
