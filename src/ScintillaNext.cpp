@@ -694,16 +694,35 @@ bool ScintillaNext::readFromDisk(QFile &file)
     // modEventMask(SC_MOD_NONE)?
 
     QByteArray chunk;
-    qint64 bytesRead;
+    qint64 bytesRead = 0;
+    qint64 totalBytesRead = 0;
     QStringDecoder decoder;
     QStringEncoder encoder = QStringEncoder(QStringEncoder::Utf8);
 
+    // bomType is intentionally not reset here: it is (re)detected by the first
+    // successful read below (an empty file yields BomType::None). If the very
+    // first read fails, an existing document (reload()) keeps its encoding, and a
+    // new ScintillaNext already starts out as BomType::None.
     bool first_read = true;
+
+    // The loop must run at least once, since the BOM detection below (and an
+    // empty file) depends on it, but it must stop on a failed read instead of
+    // retrying it: after a failed read the position has not advanced, so
+    // atEnd() stays false for a mid-file error and the old !atEnd() condition
+    // spun forever on the same failing offset. A zero-length read is treated as
+    // the end of the file.
     do {
         // Try to read as much as possible
         chunk.resize(CHUNK_SIZE);
         bytesRead = file.read(chunk.data(), CHUNK_SIZE);
+
+        // A negative read is a failure: the position did not advance, and the
+        // length must not be handed to chunk.resize() either.
+        if (bytesRead < 0)
+            break;
+
         chunk.resize(bytesRead);
+        totalBytesRead += bytesRead;
 
         qDebug("Read %lld bytes", bytesRead);
 
@@ -752,7 +771,11 @@ bool ScintillaNext::readFromDisk(QFile &file)
             // No conversion necessary.
             appendText(input.size(), input.data());
         }
-    } while (!file.atEnd() && status() == SC_STATUS_OK);
+    } while (bytesRead > 0 && status() == SC_STATUS_OK && !file.atEnd());
+
+    // Capture the error now: a successful close() clears it.
+    const QFileDevice::FileError readError = file.error();
+    const QString readErrorString = file.errorString();
 
     file.close();
 
@@ -766,8 +789,10 @@ bool ScintillaNext::readFromDisk(QFile &file)
         return false;
     }
 
-    if (bytesRead == -1) {
-        qWarning("Something bad happened when reading disk %d %s", file.error(), qUtf8Printable(file.errorString()));
+    if (bytesRead < 0 || readError != QFileDevice::NoError) {
+        qWarning("Something bad happened when reading %s after %lld bytes: %d %s"
+                 " (the buffer holds only the bytes read so far)",
+                 qUtf8Printable(file.fileName()), totalBytesRead, readError, qUtf8Printable(readErrorString));
         return false;
     }
 
