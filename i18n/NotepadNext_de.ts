@@ -350,7 +350,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="140"/>
       <source>&amp;. matches newline</source>
-      <translation>&amp;. entspricht einem Zeilenumbruch</translation>
+      <translation>&amp;. findet Zeilenumbruch</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="179"/>
@@ -380,37 +380,37 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="277"/>
       <source>Replace &amp;All</source>
-      <translation>Ersetzen &amp;Alle</translation>
+      <translation>&amp;Alle Ersetzen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="284"/>
       <source>Replace All in &amp;Opened Documents</source>
-      <translation>Alle in geöffneten Dokumenten ersetzen</translation>
+      <translation>In allen geöffneten Dokumenten ersetzen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="291"/>
       <source>Find All in All &amp;Opened Documents</source>
-      <translation>Finde Alles in Allen geöffneten Dokumenten</translation>
+      <translation>In allen geöffneten Dokumenten suchen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="301"/>
       <source>Find All in Current Document</source>
-      <translation>Alles im aktuellen Dokument suchen</translation>
+      <translation>Alle Treffer im aktuellen Dokument finden</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="311"/>
       <source>Mark All</source>
-      <translation type="unfinished"/>
+      <translation>Alle markieren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="321"/>
       <source>Clear all marks</source>
-      <translation type="unfinished"/>
+      <translation>Alle Hervorhebungen löschen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="331"/>
       <source>Copy Marked Text</source>
-      <translation type="unfinished"/>
+      <translation>Markierten Text kopieren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="341"/>
@@ -430,17 +430,17 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="481"/>
       <source>&amp;Bookmark line</source>
-      <translation type="unfinished"/>
+      <translation>Lesezeichen setzen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="488"/>
       <source>&amp;Purge for each search</source>
-      <translation type="unfinished"/>
+      <translation>Bei erneuter Suche Hervorhebungen entfernen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="495"/>
       <source>Backward direction</source>
-      <translation>Rückwärtsrichtung</translation>
+      <translation>Rückwärts</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="502"/>
@@ -455,7 +455,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.ui" line="516"/>
       <source>Wra&amp;p Around</source>
-      <translation>Umwickeln</translation>
+      <translation>Am Ende von vorn beginnen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="64"/>
@@ -465,26 +465,26 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="65"/>
       <source>Mark</source>
-      <translation>Markieren</translation>
+      <translation>Hervorheben</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="154"/>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="362"/>
       <source>Replaced %Ln matches</source>
       <translation>
-        <numerusform>Ersetzte %Ln Übereinstimmung</numerusform>
-        <numerusform>Ersetzte %Ln Übereinstimmungen</numerusform>
+        <numerusform>%Ln Treffer ersetzt</numerusform>
+        <numerusform/>
       </translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="262"/>
       <source>The end of the document has been reached. Found 1st occurrence from the top.</source>
-      <translation>Das Ende des Dokuments wurde erreicht. Erste Stelle von oben gefunden.</translation>
+      <translation>Dokumentende erreicht. Erster Treffer ab Anfang gefunden.</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="273"/>
       <source>No matches found.</source>
-      <translation>Keine Übereinstimmungen gefunden.</translation>
+      <translation>Keine Treffer.</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="334"/>
@@ -494,7 +494,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="343"/>
       <source>No more occurrences were found</source>
-      <translation>Es wurden keine weiteren Vorkommen gefunden.</translation>
+      <translation>Keine weiteren Treffer</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="373"/>
@@ -512,17 +512,20 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="794"/>
       <source>All marks cleared</source>
-      <translation type="unfinished"/>
+      <translation>Alle Hervorhebungen gelöscht</translation>
     </message>
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="818"/>
       <source>No marks to copy</source>
-      <translation type="unfinished"/>
+      <translation>Keine Hervorhebungen zu kopieren </translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="823"/>
       <source>Copied %Ln marked text(s)</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>%Ln markierte Textstelle kopiert</numerusform>
+        <numerusform>%Ln markierte Textstellen kopiert</numerusform>
+      </translation>
     </message>
   </context>
   <context>
@@ -540,7 +543,7 @@
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="108"/>
       <source>Size</source>
-      <translation type="unfinished"/>
+      <translation>Größe</translation>
     </message>
     <message>
       <location filename="../src/docks/FolderAsWorkspaceDock.ui" line="119"/>
@@ -843,12 +846,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="131"/>
       <source>Line Operations</source>
-      <translation>Linienbetrieb</translation>
+      <translation>Zeilenoperationen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="154"/>
       <source>Blank Operations</source>
-      <translation type="unfinished"/>
+      <translation>Leerzeichenoperationen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="160"/>
@@ -1104,7 +1107,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="768"/>
       <source>Zoom &amp;In</source>
-      <translation>Vergrößer</translation>
+      <translation>Vergrößern</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="781"/>
@@ -1134,7 +1137,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="828"/>
       <source>Show End of Line</source>
-      <translation>Zeilen Ende anzeigen</translation>
+      <translation>Zeilenende anzeigen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="841"/>
@@ -1149,12 +1152,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="862"/>
       <source>Show Wrap Symbol</source>
-      <translation>Zeilenumbruch Symbol anzeigen</translation>
+      <translation>Umbruchsymbol anzeigen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="875"/>
       <source>Word Wrap</source>
-      <translation>Zeilenumbruch</translation>
+      <translation>Automatischer Umbruch</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="880"/>
@@ -1260,7 +1263,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="207"/>
       <source>&amp;Search</source>
-      <translation type="unfinished"/>
+      <translation/>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="328"/>
@@ -1623,17 +1626,17 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1517"/>
       <source>Remove Duplicate Lines</source>
-      <translation>Remove Duplicate Lines</translation>
+      <translation>Gleiche Zeilen entfernen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1522"/>
       <source>Remove Consecutive Duplicate Lines</source>
-      <translation>Remove Consecutive Duplicate Lines</translation>
+      <translation>Aufeinanderfolgende gleiche Zeilen entfernen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1527"/>
       <source>Sort Lines Ascending</source>
-      <translation/>
+      <translation>Zeilen alphabetisch sortieren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1532"/>
@@ -1663,7 +1666,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1557"/>
       <source>Reverse Line Order</source>
-      <translation>Linienreihenfolge umkehren</translation>
+      <translation>Zeilenreihenfolge umkehren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1562"/>
@@ -1713,7 +1716,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="924"/>
       <source>Debug Info</source>
-      <translation>Debug-Informationen</translation>
+      <translation>Debuginformationen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1144"/>
@@ -1800,17 +1803,17 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1990"/>
       <source>Read error</source>
-      <translation>Read error</translation>
+      <translation>Lesefehler</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1991"/>
       <source>Write error</source>
-      <translation>Write error</translation>
+      <translation>Schreibfehler</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1992"/>
       <source>Fatal error</source>
-      <translation>Fatal error</translation>
+      <translation>Schwerer Fehler</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1993"/>
@@ -1820,12 +1823,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1994"/>
       <source>Open error</source>
-      <translation>Open error</translation>
+      <translation>Fehler beim Öffnen</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1995"/>
       <source>Abort error</source>
-      <translation>Abort error</translation>
+      <translation>Abbruchfehler</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="1996"/>
@@ -1870,7 +1873,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2004"/>
       <source>Unknown error (%1)</source>
-      <translation>Unknown error (%1)</translation>
+      <translation>Unbehandelter Fehler  (%1)</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2007"/>
@@ -1895,12 +1898,15 @@
     <message numerus="yes">
       <location filename="../src/dialogs/MainWindow.cpp" line="2027"/>
       <source>There are %n files with unsaved changes. Save them?</source>
-      <translation type="unfinished"/>
+      <translation>
+        <numerusform>%n Datei hat ungesicherte Änderungen. Speichern?</numerusform>
+        <numerusform>%n Dateien haben ungesicherte Änderungen. Speichern?</numerusform>
+      </translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2030"/>
       <source>Save All</source>
-      <translation type="unfinished"/>
+      <translation/>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.cpp" line="2031"/>
@@ -1958,7 +1964,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="89"/>
       <source>Recenter find/replace dialog when opened</source>
-      <translation>Dialogfeld „Suchen/Ersetzen“ beim Öffnen neu zentrieren</translation>
+      <translation>Dialog „Suchen/Ersetzen“ beim Öffnen neu zentrieren</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="96"/>
@@ -1998,7 +2004,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="188"/>
       <source>Default Line Endings</source>
-      <translation>Standard-Zeilenenden</translation>
+      <translation>Standardzeilenenden</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="198"/>
@@ -2024,7 +2030,7 @@
       <location filename="../src/dialogs/PreferencesDialog.ui" line="231"/>
       <location filename="../src/dialogs/PreferencesDialog.cpp" line="131"/>
       <source>Default Directory</source>
-      <translation>Default Directory</translation>
+      <translation>Standardverzeichnis</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="237"/>
@@ -2034,7 +2040,7 @@
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="244"/>
       <source>Last Used Directory</source>
-      <translation>Last Used Directory</translation>
+      <translation>Zuletzt benutztes Verzeichnis</translation>
     </message>
     <message>
       <location filename="../src/dialogs/PreferencesDialog.ui" line="263"/>
@@ -2146,7 +2152,7 @@
       <location filename="../src/docks/SearchResultsDock.ui" line="38"/>
       <location filename="../src/docks/SearchResultsDock.ui" line="41"/>
       <source>Copy All Results to Clipboard</source>
-      <translation type="unfinished"/>
+      <translation>Alle Ergebnisse in die Zwischenablage kopieren</translation>
     </message>
     <message>
       <location filename="../src/docks/SearchResultsDock.cpp" line="57"/>
