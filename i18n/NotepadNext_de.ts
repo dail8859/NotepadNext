@@ -465,7 +465,7 @@
     <message>
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="65"/>
       <source>Mark</source>
-      <translation type="unfinished"/>
+      <translation>Markieren</translation>
     </message>
     <message numerus="yes">
       <location filename="../src/dialogs/FindReplaceDialog.cpp" line="154"/>
