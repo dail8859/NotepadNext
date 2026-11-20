@@ -1410,12 +1410,12 @@
       <location filename="../src/dialogs/MainWindow.ui" line="1186"/>
       <location filename="../src/dialogs/MainWindow.ui" line="1189"/>
       <source>Show in Explorer</source>
-      <translation type="unfinished"/>
+      <translation>Hiển thị trong Explorer</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1198"/>
       <source>Open %1 Here</source>
-      <translation type="unfinished"/>
+      <translation>Mở %1 Tại Đây</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1203"/>
