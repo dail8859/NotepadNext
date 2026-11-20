@@ -187,7 +187,7 @@
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="70"/>
       <source>Selection Empty</source>
-      <translation type="unfinished"/>
+      <translation>Lựa Chọn Trống</translation>
     </message>
     <message>
       <location filename="../src/docks/EditorInspectorDock.cpp" line="71"/>
@@ -1053,7 +1053,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="696"/>
       <source>Duplicate Current Line</source>
-      <translation type="unfinished"/>
+      <translation>Nhân Bản Dòng Hiện Tại</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="704"/>
@@ -1088,7 +1088,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="748"/>
       <source>Close All Except Active Document</source>
-      <translation type="unfinished"/>
+      <translation>Đóng Tất Cả Ngoại Trừ Tài Liệu Đang Hoạt Động</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="753"/>
@@ -1098,7 +1098,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="758"/>
       <source>Close All to the Right</source>
-      <translation type="unfinished"/>
+      <translation>Đóng Tất Cả Sang Bên Phải</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="768"/>
@@ -1143,7 +1143,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="854"/>
       <source>Show Indent Guide</source>
-      <translation type="unfinished"/>
+      <translation>Hiển Thị Hướng Dẫn Thụt Lề</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="862"/>
@@ -1163,12 +1163,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="888"/>
       <source>Open All Recent Files</source>
-      <translation type="unfinished"/>
+      <translation>Mở Tất Cả Các Tệp Gần Đây</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="893"/>
       <source>Clear Recent Files List</source>
-      <translation type="unfinished"/>
+      <translation>Xóa Danh Sách Tệp Gần Đây</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="903"/>
@@ -1178,7 +1178,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="911"/>
       <source>Find in Files...</source>
-      <translation type="unfinished"/>
+      <translation>Tìm Trong Tệp...</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="916"/>
@@ -1204,7 +1204,7 @@
       <location filename="../src/dialogs/MainWindow.ui" line="964"/>
       <location filename="../src/dialogs/MainWindow.cpp" line="828"/>
       <source>Start Recording</source>
-      <translation type="unfinished"/>
+      <translation>Bắt Đầu Ghi</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="976"/>
@@ -1229,12 +1229,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1020"/>
       <source>Quick Find</source>
-      <translation type="unfinished"/>
+      <translation>Tìm Nhanh</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1028"/>
       <source>Select Next Instance</source>
-      <translation type="unfinished"/>
+      <translation>Chọn Phiên Bản Tiếp Theo</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1043"/>
@@ -1344,7 +1344,7 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1117"/>
       <source>This is not currently implemented</source>
-      <translation type="unfinished"/>
+      <translation>Tính năng này hiện chưa được triển khai</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1122"/>
@@ -1379,12 +1379,12 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1152"/>
       <source>URL Encode</source>
-      <translation type="unfinished"/>
+      <translation>Mã Hóa URL</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1157"/>
       <source>Base 64 Decode</source>
-      <translation type="unfinished"/>
+      <translation>Giải Mã Base 64</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="1162"/>
