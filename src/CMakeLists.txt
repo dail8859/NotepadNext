@@ -11,6 +11,7 @@ qt_add_executable(NotepadNext
 	DefaultDirectoryManager.h
 	DockedEditor.h
 	DockedEditorTitleBar.h
+	DocumentLifecycleController.h
 
 	EditorManager.h
 	EditorPrintPreviewRenderer.h
@@ -59,6 +60,7 @@ qt_add_executable(NotepadNext
 	DebugManager.cpp
 	DefaultDirectoryManager.cpp
 	DockedEditor.cpp
+	DocumentLifecycleController.cpp
 
 	EditorManager.cpp
 	EditorPrintPreviewRenderer.cpp

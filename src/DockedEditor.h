@@ -21,6 +21,7 @@
 #define DOCKEDEDITOR_H
 
 #include <QObject>
+#include <QByteArray>
 
 #include "DockManager.h"
 #include "ScintillaNext.h"
@@ -45,6 +46,8 @@ public:
     void switchToEditor(const ScintillaNext *editor);
 
     int count() const;
+    QByteArray saveState() const;
+    bool restoreState(const QByteArray &state);
 
     void splitToRight(ScintillaNext *editor);
     void splitToBottom(ScintillaNext *editor);
