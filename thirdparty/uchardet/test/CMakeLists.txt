@@ -1,7 +1,4 @@
-set(
-	UCHARDET_TEST_SOURCES
-	uchardet-tests.c
-)
+set(UCHARDET_TEST_SOURCES uchardet-tests.c)
 
 add_executable(
 	uchardet-tests
@@ -10,23 +7,25 @@ add_executable(
 
 target_link_libraries(
 	uchardet-tests
-	${UCHARDET_LIBRARY}
+	PRIVATE uchardet
 )
 
 set_target_properties(
 	uchardet-tests
 	PROPERTIES
-		LINKER_LANGUAGE
-			C
+		C_STANDARD
+			99
+		C_STANDARD_REQUIRED
+			YES
 		OUTPUT_NAME
 			uchardet-tests
 )
 
 # Iterate through all langs.
-file(GLOB dirs "[a-z][a-z]")
+file(GLOB dirs CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/[a-z][a-z]")
 foreach(dir ${dirs})
 	get_filename_component(lang ${dir} NAME)
-	file(GLOB files "${dir}/*")
+	file(GLOB files CONFIGURE_DEPENDS "${dir}/*")
 	# Iterate through all files.
 	foreach(file ${files})
 		get_filename_component(charset ${file} NAME_WE)

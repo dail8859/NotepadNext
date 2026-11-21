@@ -74,6 +74,15 @@ If you are familiar with building C++ Qt desktop applications with Qt Creator, t
 
 If you are new to building C++ Qt desktop applications, there is a more detailed guide [here](/doc/Building.md).
 
+The Scintilla, Lexilla, and uchardet test suites can be built and run with CMake/CTest:
+
+```sh
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DNOTEPADNEXT_ENABLE_ASAN=ON -DNOTEPADNEXT_WARNINGS_AS_ERRORS=ON
+cmake --build build --target scintilla-unit-tests lexilla-unit-tests uchardet-tests
+ctest --test-dir build --output-on-failure
+```
+
+AddressSanitizer and warning-as-error checks are optional; disable either option by setting it to `OFF`.
 
 # License
 This code is released under the [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.txt).

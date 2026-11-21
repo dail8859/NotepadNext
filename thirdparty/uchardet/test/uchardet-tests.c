@@ -49,6 +49,7 @@ detect(FILE *fp)
 {
     uchardet_t  handle = uchardet_new();
     char       *charset;
+    const char *detected_charset;
     char        buffer[BUFFER_SIZE];
     int         i;
 
@@ -67,7 +68,15 @@ detect(FILE *fp)
     }
     uchardet_data_end(handle);
 
-    charset = strdup(uchardet_get_charset(handle));
+    detected_charset = uchardet_get_charset(handle);
+    charset = malloc(strlen(detected_charset) + 1);
+    if (charset == NULL)
+    {
+        uchardet_delete(handle);
+        fprintf(stderr, "uchardet-tests: out of memory.\n");
+        exit(1);
+    }
+    memcpy(charset, detected_charset, strlen(detected_charset) + 1);
     for (i = 0; charset[i]; i++)
     {
         /* Our test files are lowercase. */
@@ -96,7 +105,13 @@ main(int argc, char ** argv)
         return 1;
     }
 
-    filename = strdup(argv[1]);
+    filename = malloc(strlen(argv[1]) + 1);
+    if (filename == NULL)
+    {
+        fprintf(stderr, "uchardet-tests: out of memory.\n");
+        return 1;
+    }
+    memcpy(filename, argv[1], strlen(argv[1]) + 1);
     f = fopen(filename, "r");
     if (f == NULL)
     {
@@ -109,15 +124,18 @@ main(int argc, char ** argv)
     }
 
     expected_charset = strrchr(filename, '/');
-    if (expected_charset == NULL)
+    char *windows_separator = strrchr(filename, '\\');
+    if (windows_separator != NULL &&
+        (expected_charset == NULL || windows_separator > expected_charset))
     {
-        expected_charset = filename;
+        expected_charset = windows_separator;
     }
-    else
+    expected_charset = expected_charset == NULL ? filename : expected_charset + 1;
+    char *extension = strchr(expected_charset, '.');
+    if (extension != NULL)
     {
-        expected_charset++;
+        *extension = '\0';
     }
-    expected_charset = strtok(expected_charset, ".");
 
     charset = detect(f);
     fclose (f);
