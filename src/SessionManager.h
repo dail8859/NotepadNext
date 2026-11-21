@@ -23,6 +23,7 @@
 
 #include <QDir>
 #include <QSettings>
+#include <QVariantMap>
 
 
 class ScintillaNext;
@@ -45,9 +46,9 @@ public:
 
     void setSessionFileTypes(SessionFileTypes types);
 
-    void clear() const;
+    bool clear() const;
 
-    void saveSession(MainWindow *window);
+    bool saveSession(MainWindow *window);
     void loadSession(MainWindow *window);
 
     bool willFileGetStoredInSession(ScintillaNext *editor) const;
@@ -55,23 +56,24 @@ public:
 private:
     QDir sessionDirectory() const;
 
-    void saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName) const;
+    bool saveIntoSessionDirectory(ScintillaNext *editor, const QString &sessionFileName) const;
 
     SessionFileType determineType(ScintillaNext *editor) const;
 
-    void clearSettings() const;
-    void clearDirectory() const;
+    bool clearSettings() const;
+    void clearDirectory(const QStringList &retainedFiles = QStringList()) const;
 
-    void storeFileDetails(ScintillaNext *editor, QSettings &settings);
+    void storeFileDetails(ScintillaNext *editor, QVariantMap &details);
     ScintillaNext *loadFileDetails(QSettings &settings);
 
-    void storeUnsavedFileDetails(ScintillaNext *editor, QSettings &settings);
+    bool storeUnsavedFileDetails(ScintillaNext *editor, QVariantMap &details);
     ScintillaNext *loadUnsavedFileDetails(QSettings &settings);
 
-    void storeTempFile(ScintillaNext *editor, QSettings &settings);
+    bool storeTempFile(ScintillaNext *editor, QVariantMap &details);
     ScintillaNext *loadTempFile(QSettings &settings);
 
-    void storeEditorViewDetails(ScintillaNext *editor, QSettings &settings);
+    void storeEditorViewDetails(ScintillaNext *editor, QVariantMap &details);
+    void loadDockWidgetDetails(ScintillaNext *editor, QSettings &settings);
     void loadEditorViewDetails(ScintillaNext *editor, QSettings &settings);
 
     NotepadNextApplication *app;

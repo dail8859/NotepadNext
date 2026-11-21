@@ -111,6 +111,16 @@ int DockedEditor::count() const
     return total;
 }
 
+QByteArray DockedEditor::saveState() const
+{
+    return dockManager->saveState();
+}
+
+bool DockedEditor::restoreState(const QByteArray &state)
+{
+    return dockManager->restoreState(state);
+}
+
 QVector<ScintillaNext *> DockedEditor::editors() const
 {
     QVector<ScintillaNext *> editors;
@@ -166,8 +176,12 @@ void DockedEditor::addEditor(ScintillaNext *editor)
     // Disable elide, elided file names not readable when lots of files opened
     dockWidget->tabWidget()->setElideMode(Qt::ElideNone);
 
-    // We need a unique object name. Can't use the name or file path so use a uuid
-    dockWidget->setObjectName(QUuid::createUuid().toString());
+    QString objectName = editor->QObject::property("nn_session_dock_widget_name").toString();
+    editor->QObject::setProperty("nn_session_dock_widget_name", QVariant());
+    if (objectName.isEmpty() || dockManager->findChild<ads::CDockWidget *>(objectName)) {
+        objectName = QUuid::createUuid().toString(QUuid::WithoutBraces);
+    }
+    dockWidget->setObjectName(objectName);
 
     dockWidget->setWidget(editor);
     dockWidget->setFeature(ads::CDockWidget::DockWidgetFeature::DockWidgetDeleteOnClose, true);

@@ -45,6 +45,7 @@ class ShiftWheelToHorizontalScrollFilter;
 class Converter;
 class DefaultDirectoryManager;
 class TabsQuickActionsBar;
+class DocumentLifecycleController;
 
 class MainWindow : public QMainWindow
 {
@@ -128,6 +129,7 @@ public slots:
     void checkForUpdates(bool silent = false);
 
     void restoreWindowState();
+    void saveWindowState() const;
 
     void switchToEditor(const ScintillaNext *editor);
 
@@ -153,6 +155,7 @@ private:
     DockedEditor *dockedEditor = Q_NULLPTR;
 
     QScopedPointer<SearchResultsCollector> searchResults;
+    QScopedPointer<DocumentLifecycleController> documentLifecycle;
 
     template <typename Method>
     void connectEditorAction(QAction* action, Method method) {
@@ -173,15 +176,11 @@ private:
     void applyStyleSheet();
     void applyCustomShortcuts();
     void initUpdateCheck();
-    ScintillaNext *getInitialEditor();
+    bool editorLayoutCanBePersisted() const;
     void openFileList(const QStringList &fileNames);
     bool checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors);
     bool checkFileForModification(ScintillaNext *editor);
-    void showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileError error);
     void showEditorZoomLevelIndicator();
-
-    enum class UserSaveAction { SaveAll, DiscardAll, Cancel };
-    UserSaveAction promptForSave(const QVector<ScintillaNext *> &editors);
 
     void saveSettings() const;
     void restoreSettings();

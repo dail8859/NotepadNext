@@ -467,7 +467,7 @@ void NotepadNextApplication::saveSettings()
     getSettings()->setValue("App/RecentFilesList", recentFilesListManager->fileList());
 }
 
-void NotepadNextApplication::saveSession()
+bool NotepadNextApplication::saveSession()
 {
     // Iterate all the opened editors and add them to the recent file list
     for (const auto &editor : window->editors()) {
@@ -477,7 +477,8 @@ void NotepadNextApplication::saveSession()
     }
     saveSettings();
 
-    getSessionManager()->saveSession(window);
+    window->saveWindowState();
+    return getSessionManager()->saveSession(window);
 }
 
 MainWindow *NotepadNextApplication::createNewWindow()
@@ -494,8 +495,6 @@ MainWindow *NotepadNextApplication::createNewWindow()
     // TODO: this shouldn't be dependent on a MainWindow closing, but this works for now
     // since the assumption is MainWindow::aboutToClose() infers the application is shutting
     // down but the editors are still active.
-    connect(window, &MainWindow::aboutToClose, this, &NotepadNextApplication::saveSession);
-
     // Timer to autosave the session
     connect(&autoSaveTimer, &QTimer::timeout, this, &NotepadNextApplication::saveSession);
     autoSaveTimer.start(60 * 1000);

@@ -66,6 +66,7 @@ public:
     QString detectLanguageFromContents(ScintillaNext *editor) const;
 
     void sendInfoToPrimaryInstance();
+    bool saveSession();
 
     bool isRunningAsAdmin() const;
 
@@ -77,7 +78,6 @@ protected:
 private slots:
     void saveSettings();
     void receiveInfoFromSecondaryInstance(quint32 instanceId, QByteArray message);
-    void saveSession();
 
 private:
     void openFiles(const QStringList &files);

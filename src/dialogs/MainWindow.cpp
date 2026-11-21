@@ -19,6 +19,7 @@
 
 #include "MainWindow.h"
 #include "BookMarkDecorator.h"
+#include "DocumentLifecycleController.h"
 #include "DefaultDirectoryManager.h"
 #include "MarkerAppDecorator.h"
 #include "ScintillaSorter.h"
@@ -106,6 +107,7 @@ MainWindow::MainWindow(NotepadNextApplication *app) :
     setAttribute(Qt::WA_DeleteOnClose);
 
     ui->setupUi(this);
+    documentLifecycle.reset(new DocumentLifecycleController(this, app));
 
     applyCustomShortcuts();
 
@@ -1161,106 +1163,14 @@ void MainWindow::newFile()
     }
 }
 
-// One unedited, new blank document
-ScintillaNext *MainWindow::getInitialEditor()
-{
-    if (editorCount() == 1) {
-        ScintillaNext *editor = currentEditor();
-
-        // If the editor:
-        //   is a temporary file
-        //   is a 'real' file (or a 'missing' file)
-        //   can undo any actions
-        //   can redo any actions
-        // Then do not treat it as an 'initial editor' that can be transparently closed for the user
-        if (editor->isTemporary() || editor->isFile() || editor->canUndo() || editor->canRedo()) {
-            return Q_NULLPTR;
-        }
-
-        return editor;
-    }
-
-    return Q_NULLPTR;
-}
-
 void MainWindow::openFileList(const QStringList &fileNames)
 {
-    qInfo(Q_FUNC_INFO);
-
-    if (fileNames.size() == 0)
-        return;
-
-    QList<ScintillaNext *> openedEditors;
-    ScintillaNext *initialEditor = getInitialEditor();
-
-    for (const QString &filePath : fileNames) {
-        qInfo("%s", qUtf8Printable(filePath));
-
-        // Search currently open editors to see if it is already open
-        ScintillaNext *editor = app->getEditorManager()->getEditorByFilePath(filePath);
-
-        if (editor == Q_NULLPTR) {
-            QFileInfo fileInfo(filePath);
-
-            if (!fileInfo.isFile()) {
-                auto reply = QMessageBox::question(this, tr("Create File"), tr("<b>%1</b> does not exist. Do you want to create it?").arg(filePath));
-
-                if (reply == QMessageBox::Yes) {
-                    editor = app->getEditorManager()->createEditorFromFile(filePath, true);
-                }
-                else {
-                    // Make sure it is not still in the recent files list still.
-                    // Normally when a file is opened it is removed from the file list,
-                    // but if a user doesn't want to create the file, remove it explicitly.
-                    app->getRecentFilesListManager()->removeFile(filePath);
-                    continue;
-                }
-            }
-            else {
-                editor = app->getEditorManager()->createEditorFromFile(filePath);
-            }
-        }
-
-        if (editor) {
-            openedEditors.append(editor);
-        }
-    }
-
-    // If any were successful
-    if (!openedEditors.empty()) {
-        dockedEditor->switchToEditor(openedEditors.last());
-
-        if (initialEditor) {
-            initialEditor->close();
-        }
-    }
-
+    documentLifecycle->openFiles(fileNames);
 }
 
 bool MainWindow::checkEditorsBeforeClose(const QVector<ScintillaNext *> &editors)
 {
-    QVector<ScintillaNext *> unsaved;
-    for (auto *e : editors) {
-        if (!e->isSavedToDisk()) unsaved.append(e);
-    }
-
-    if (unsaved.isEmpty()) return true;
-
-    // Focus the user's attention on the first unsaved file
-    dockedEditor->switchToEditor(unsaved.first());
-
-    // Single point of interaction
-    UserSaveAction action = promptForSave(unsaved);
-
-    switch (action) {
-        case UserSaveAction::DiscardAll:
-            return true;
-        case UserSaveAction::SaveAll:
-            return saveAllEditors(unsaved);
-        case UserSaveAction::Cancel:
-        default:
-            return false;
-    }
+    return documentLifecycle->checkEditorsBeforeClose(editors);
 }
 
 void MainWindow::openFileDialog()
@@ -1319,26 +1229,7 @@ void MainWindow::closeCurrentFile()
 
 void MainWindow::closeFile(ScintillaNext *editor)
 {
-    // Early out. If we aren't exiting on last tab closed, and it exists, there's no point in continuing
-    if (!app->getSettings()->exitOnLastTabClosed() && getInitialEditor() != Q_NULLPTR) {
-        return;
-    }
-
-    if (!checkEditorsBeforeClose({editor})) {
-        return;
-    }
-
-    editor->close();
-
-    // If the last document was closed, figure out what to do next
-    if (editorCount() == 0) {
-        if (app->getSettings()->exitOnLastTabClosed()) {
-            close();
-        }
-        else {
-            newFile();
-        }
-    }
+    documentLifecycle->closeFile(editor);
 }
 
 void MainWindow::closeAllFiles()
@@ -1411,24 +1302,7 @@ bool MainWindow::saveCurrentFile()
 
 bool MainWindow::saveFile(ScintillaNext *editor)
 {
-    if (editor->isSavedToDisk())
-        return true;
-
-    if (!editor->isFile()) {
-        // Switch to the editor and show the saveas dialog
-        dockedEditor->switchToEditor(editor);
-        return saveCurrentFileAsDialog();
-    }
-    else {
-        QFileDevice::FileError error = editor->save();
-        if (error == QFileDevice::NoError) {
-            return true;
-        }
-        else {
-            showSaveErrorMessage(editor, error);
-            return false;
-        }
-    }
+    return documentLifecycle->saveFile(editor);
 }
 
 bool MainWindow::saveCurrentFileAsDialog()
@@ -1458,17 +1332,7 @@ bool MainWindow::saveCurrentFileAs(const QString &fileName)
 
 bool MainWindow::saveFileAs(ScintillaNext *editor, const QString &fileName)
 {
-    qInfo("saveFileAs(%s)", qUtf8Printable(fileName));
-
-    QFileDevice::FileError error = editor->saveAs(fileName);
-
-    if (error == QFileDevice::NoError) {
-        return true;
-    }
-    else {
-        showSaveErrorMessage(editor, error);
-        return false;
-    }
+    return documentLifecycle->saveFileAs(editor, fileName);
 }
 
 bool MainWindow::saveCopyAsDialog()
@@ -1498,7 +1362,7 @@ bool MainWindow::saveCopyAs(const QString &fileName)
         return true;
     }
     else {
-        showSaveErrorMessage(editor, error);
+        documentLifecycle->showSaveErrorMessage(editor, error);
         return false;
     }
 }
@@ -1510,13 +1374,7 @@ bool MainWindow::saveAll()
 
 bool MainWindow::saveAllEditors(const QVector<ScintillaNext *> &editors)
 {
-    for (ScintillaNext *editor : editors) {
-        if (!saveFile(editor)){
-            return false;
-        }
-    }
-
-    return true;
+    return documentLifecycle->saveAllEditors(editors);
 }
 
 void MainWindow::exportAsFormat(Converter *converter, const QString &filter)
@@ -1980,63 +1838,10 @@ bool MainWindow::checkFileForModification(ScintillaNext *editor)
     return true;
 }
 
-void MainWindow::showSaveErrorMessage(ScintillaNext *editor, QFileDevice::FileError error)
-{
-    const QString name = editor->isFile() ? editor->getFilePath() : editor->getName();
-
-    // Map error code to human-readable string
-    QString errorString;
-    switch (error) {
-        case QFileDevice::ReadError:        errorString = tr("Read error"); break;
-        case QFileDevice::WriteError:       errorString = tr("Write error"); break;
-        case QFileDevice::FatalError:       errorString = tr("Fatal error"); break;
-        case QFileDevice::ResourceError:    errorString = tr("Resource error"); break;
-        case QFileDevice::OpenError:        errorString = tr("Open error"); break;
-        case QFileDevice::AbortError:       errorString = tr("Abort error"); break;
-        case QFileDevice::TimeOutError:     errorString = tr("Timeout error"); break;
-        case QFileDevice::UnspecifiedError: errorString = tr("Unspecified error"); break;
-        case QFileDevice::RemoveError:      errorString = tr("Remove error"); break;
-        case QFileDevice::RenameError:      errorString = tr("Rename error"); break;
-        case QFileDevice::PositionError:    errorString = tr("Position error"); break;
-        case QFileDevice::ResizeError:      errorString = tr("Resize error"); break;
-        case QFileDevice::PermissionsError: errorString = tr("Permissions error"); break;
-        case QFileDevice::CopyError:        errorString = tr("Copy error"); break;
-        default:                            errorString = tr("Unknown error (%1)").arg(static_cast<int>(error)); break;
-    }
-
-    QMessageBox::warning(this, tr("Error Saving File"),
-        tr("An error occurred when saving <b>%1</b><br><br>Error: %2").arg(name, errorString));
-}
-
 void MainWindow::showEditorZoomLevelIndicator()
 {
     // Not sure if Scintilla's zoom level matches up to an exact percentage, but visibly this is close
     FadingIndicator::showText(currentEditor(), tr("Zoom: %1%").arg(zoomLevel * 10 + 100));
-}
-
-MainWindow::UserSaveAction MainWindow::promptForSave(const QVector<ScintillaNext *> &editors)
-{
-    const int count = editors.count();
-    QMessageBox msgBox(this);
-    msgBox.setWindowTitle(tr("Save File"));
-    msgBox.setIcon(QMessageBox::Question);
-
-    // Using pluralization for the main text
-    QString text = (count == 1)
-                       ? tr("Save changes to <b>%1</b>?").arg(editors.first()->getName())
-                       : tr("There are %n files with unsaved changes. Save them?", "", count);
-    msgBox.setText(text);
-
-    auto *saveBtn = msgBox.addButton(count > 1 ? tr("Save All") : tr("Save"), QMessageBox::AcceptRole);
-    auto *discardBtn = msgBox.addButton(count > 1 ? tr("Discard All") : tr("Discard"), QMessageBox::DestructiveRole);
-    msgBox.addButton(QMessageBox::Cancel);
-
-    msgBox.setDefaultButton(saveBtn);
-    msgBox.exec();
-
-    if (msgBox.clickedButton() == saveBtn)    return UserSaveAction::SaveAll;
-    if (msgBox.clickedButton() == discardBtn) return UserSaveAction::DiscardAll;
-    return UserSaveAction::Cancel;
 }
 
 void MainWindow::saveSettings() const
@@ -2045,10 +1850,41 @@ void MainWindow::saveSettings() const
 
     ApplicationSettings *settings = app->getSettings();
 
+    saveWindowState();
+    settings->setValue("Editor/ZoomLevel", zoomLevel);
+}
+
+void MainWindow::saveWindowState() const
+{
+    qInfo(Q_FUNC_INFO);
+
+    ApplicationSettings *settings = app->getSettings();
     settings->setValue("MainWindow/geometry", saveGeometry());
     settings->setValue("MainWindow/windowState", saveState());
+    if (editorLayoutCanBePersisted()) {
+        settings->setValue("MainWindow/editorDockState", dockedEditor->saveState());
+    }
+    else {
+        settings->remove("MainWindow/editorDockState");
+    }
+}
 
-    settings->setValue("Editor/ZoomLevel", zoomLevel);
+bool MainWindow::editorLayoutCanBePersisted() const
+{
+    const ApplicationSettings *settings = app->getSettings();
+    if (!settings->restorePreviousSession() &&
+        !settings->restoreUnsavedFiles() &&
+        !settings->restoreTempFiles()) {
+        return false;
+    }
+
+    const SessionManager *sessionManager = app->getSessionManager();
+    for (ScintillaNext *editor : editors()) {
+        if (!sessionManager->willFileGetStoredInSession(editor)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void MainWindow::restoreSettings()
@@ -2088,6 +1924,13 @@ void MainWindow::restoreWindowState()
 
     restoreGeometry(settings->value("MainWindow/geometry").toByteArray());
     restoreState(settings->value("MainWindow/windowState").toByteArray());
+
+    if (editorLayoutCanBePersisted()) {
+        const QByteArray editorDockState = settings->value("MainWindow/editorDockState").toByteArray();
+        if (!editorDockState.isEmpty() && !dockedEditor->restoreState(editorDockState)) {
+            qWarning("Could not restore editor dock layout");
+        }
+    }
 
     // Always hide the dock no matter how the application was closed
     SearchResultsDock *srDock = findChild<SearchResultsDock *>();
@@ -2281,6 +2124,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 
     if (!checkEditorsBeforeClose(e)) {
+        event->ignore();
+        return;
+    }
+
+    if (!app->saveSession()) {
+        QMessageBox::warning(this, tr("Session Recovery"),
+                             tr("The session could not be saved. Your open documents remain open."));
         event->ignore();
         return;
     }

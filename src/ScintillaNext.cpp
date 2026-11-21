@@ -70,17 +70,32 @@ static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString 
 {
     qInfo(Q_FUNC_INFO);
 
-    QFile file(path);
+    QSaveFile file(path);
     if (!file.open(QIODevice::WriteOnly)) {
         qWarning("writeToDisk() failed to open file %s: %s", qPrintable(path), qPrintable(file.errorString()));
-        return file.error();
+        return file.error() == QFileDevice::NoError ? QFileDevice::OpenError : file.error();
     }
+
+    auto writeAll = [&file](const QByteArray &bytes) {
+        qint64 offset = 0;
+        while (offset < bytes.size()) {
+            const qint64 written = file.write(bytes.constData() + offset, bytes.size() - offset);
+            if (written <= 0) {
+                return false;
+            }
+            offset += written;
+        }
+        return true;
+    };
+    auto writeError = [&file]() {
+        return file.error() == QFileDevice::NoError ? QFileDevice::WriteError : file.error();
+    };
 
     // Write BOM
     const QByteArray bomBytes = bomData(bom);
-    if (!bomBytes.isEmpty() && file.write(bomBytes) == -1) {
+    if (!bomBytes.isEmpty() && !writeAll(bomBytes)) {
         qWarning("writeToDisk() failed writing BOM: %s", qPrintable(file.errorString()));
-        return file.error();
+        return writeError();
     }
 
     // TODO make this convert and write chunks rather than the entire thing
@@ -89,20 +104,34 @@ static QFileDevice::FileError writeToDisk(const QByteArray &data, const QString 
         const QString text = QString::fromUtf8(data);
         const QByteArray encoded = encoder(text);
 
-        file.write(encoded);
+        if (!writeAll(encoded)) {
+            qWarning("writeToDisk() failed writing file %s: %s", qPrintable(path), qPrintable(file.errorString()));
+            return writeError();
+        }
     }
     else if (bom == ScintillaNext::BomType::Utf16BE) {
         QStringEncoder encoder(QStringEncoder::Utf16BE);
         const QString text = QString::fromUtf8(data);
         const QByteArray encoded = encoder(text);
 
-        file.write(encoded);
+        if (!writeAll(encoded)) {
+            qWarning("writeToDisk() failed writing file %s: %s", qPrintable(path), qPrintable(file.errorString()));
+            return writeError();
+        }
     }
     else {
-        file.write(data);
+        if (!writeAll(data)) {
+            qWarning("writeToDisk() failed writing file %s: %s", qPrintable(path), qPrintable(file.errorString()));
+            return writeError();
+        }
     }
 
-    return file.error();
+    if (!file.commit()) {
+        qWarning("writeToDisk() failed committing file %s: %s", qPrintable(path), qPrintable(file.errorString()));
+        return file.error() == QFileDevice::NoError ? QFileDevice::WriteError : file.error();
+    }
+
+    return QFileDevice::NoError;
 }
 
 static bool isNewlineCharacter(char c)
@@ -345,14 +374,16 @@ QString ScintillaNext::getPath() const
 {
     Q_ASSERT(isFile());
 
-    return QDir::toNativeSeparators(fileInfo.canonicalPath());
+    const QString canonicalPath = fileInfo.canonicalPath();
+    return QDir::toNativeSeparators(canonicalPath.isEmpty() ? fileInfo.absolutePath() : canonicalPath);
 }
 
 QString ScintillaNext::getFilePath() const
 {
     Q_ASSERT(isFile());
 
-    return QDir::toNativeSeparators(fileInfo.canonicalFilePath());
+    const QString canonicalFilePath = fileInfo.canonicalFilePath();
+    return QDir::toNativeSeparators(canonicalFilePath.isEmpty() ? fileInfo.absoluteFilePath() : canonicalFilePath);
 }
 
 QString ScintillaNext::getToolTip() const
@@ -403,6 +434,7 @@ QFileDevice::FileError ScintillaNext::save()
     QFileDevice::FileError writeSuccessful = writeToDisk(data, path, bomType);
 
     if (writeSuccessful == QFileDevice::NoError) {
+        bufferType = BufferType::File;
         updateTimestamp();
         setSavePoint();
 
@@ -559,6 +591,7 @@ ScintillaNext::FileStateChange ScintillaNext::checkFileForStateChange()
 
         if (fileInfo.exists()) {
             bufferType = BufferType::File;
+            updateTimestamp();
 
             return FileStateChange::Restored;
         }
@@ -797,13 +830,17 @@ void ScintillaNext::setFileInfo(const QString &filePath)
 {
     fileInfo.setFile(filePath);
     fileInfo.makeAbsolute();
-
-    Q_ASSERT(fileInfo.exists());
+    fileInfo.refresh();
 
     name = fileInfo.fileName();
-    bufferType = ScintillaNext::File;
+    bufferType = fileInfo.exists() ? ScintillaNext::File : ScintillaNext::FileMissing;
 
-    updateTimestamp();
+    if (bufferType == ScintillaNext::File) {
+        updateTimestamp();
+    }
+    else {
+        modifiedTime = QDateTime();
+    }
 }
 
 void ScintillaNext::detachFileInfo(const QString &newName)
