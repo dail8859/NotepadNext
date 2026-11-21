@@ -1268,17 +1268,17 @@
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="69"/>
       <source>&amp;Export As</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Экспортировать как</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="207"/>
       <source>&amp;Search</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Поиск</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="328"/>
       <source>&amp;Language</source>
-      <translation type="unfinished"/>
+      <translation>&amp;Язык</translation>
     </message>
     <message>
       <location filename="../src/dialogs/MainWindow.ui" line="333"/>
