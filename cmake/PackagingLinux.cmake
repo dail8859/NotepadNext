@@ -6,9 +6,17 @@ set(APPDIR_USR ${APPDIR}/usr)
 set(LINUXDEPLOY ${CMAKE_BINARY_DIR}/linuxdeploy-x86_64.AppImage)
 set(LINUXDEPLOY_QT ${CMAKE_BINARY_DIR}/linuxdeploy-plugin-qt-x86_64.AppImage)
 
+set(APPIMAGE_UPDATE_INFORMATION "gh-releases-zsync|dail8859|NotepadNext|latest|NotepadNext-*-x86_64.AppImage.zsync"
+    CACHE STRING "Update information embedded in the AppImage (empty to disable)")
+
 set(APPIMAGE_ENV_VARS
     LDAI_OUTPUT=NotepadNext-v${PROJECT_VERSION}-x86_64.AppImage
 )
+
+if(APPIMAGE_UPDATE_INFORMATION)
+    message(STATUS "AppImage update information: ${APPIMAGE_UPDATE_INFORMATION}")
+    list(APPEND APPIMAGE_ENV_VARS "LDAI_UPDATE_INFORMATION=${APPIMAGE_UPDATE_INFORMATION}")
+endif()
 
 if(DEFINED ENV{QMAKE} AND NOT "$ENV{QMAKE}" STREQUAL "")
     set(APPIMAGE_QMAKE "$ENV{QMAKE}")
@@ -90,4 +98,5 @@ add_custom_target(appimage
         --output appimage
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     DEPENDS appdir download_linuxdeploy
+    VERBATIM
 )
