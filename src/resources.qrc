@@ -45,5 +45,8 @@
         <file>icons/cross.svg</file>
         <file>icons/plus.svg</file>
         <file>icons/list_with_icons.svg</file>
+		<file>icons/runcode.png</file>
+		<file>icons/envadd.png</file>
+		<file>icons/envdlt.png</file>
     </qresource>
 </RCC>
