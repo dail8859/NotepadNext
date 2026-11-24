@@ -34,6 +34,33 @@ CPMAddPackage(
     GIT_TAG ab62f0554abf2bbe4d45427b36a8b2f81ca7b4ab
 )
 
+# PCRE2 - regex engine used by Find/Replace (src/QRegexSearch.cpp)
+if(APPLE)
+    set(NN_PCRE2_JIT OFF) # avoid needing the allow-jit entitlement for hardened runtime
+else()
+    set(NN_PCRE2_JIT ON)
+endif()
+CPMAddPackage(
+    EXCLUDE_FROM_ALL YES
+    NAME pcre2
+    URL https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.45/pcre2-10.45.tar.gz
+    OPTIONS
+        "BUILD_SHARED_LIBS OFF"
+        "BUILD_STATIC_LIBS ON"
+        "PCRE2_BUILD_PCRE2_8 ON"
+        "PCRE2_BUILD_PCRE2_16 OFF"
+        "PCRE2_BUILD_PCRE2_32 OFF"
+        "PCRE2_SUPPORT_UNICODE ON"
+        "PCRE2_SUPPORT_JIT ${NN_PCRE2_JIT}"
+        "PCRE2_BUILD_PCRE2GREP OFF"
+        "PCRE2_BUILD_TESTS OFF"
+        "PCRE2_SHOW_REPORT OFF"
+        "PCRE2_SUPPORT_LIBZ OFF"
+        "PCRE2_SUPPORT_LIBBZ2 OFF"
+        "PCRE2_SUPPORT_LIBEDIT OFF"
+        "PCRE2_SUPPORT_LIBREADLINE OFF"
+)
+
 add_subdirectory(lua EXCLUDE_FROM_ALL)
 add_subdirectory(scintilla EXCLUDE_FROM_ALL)
 add_subdirectory(lexilla EXCLUDE_FROM_ALL)

@@ -20,36 +20,32 @@
 #ifndef QREGEXSEARCH_H
 #define QREGEXSEARCH_H
 
-#include <QRegularExpressionMatch>
+// NOTE: despite the (historical) file name, this regex engine is PCRE2 (8-bit,
+// UTF-8) running directly on Scintilla's byte buffer - the same flavour of
+// regex that Notepad++ / Notepad3 users expect: lookahead/lookbehind, lazy
+// quantifiers, \s \d \w, named groups, (?s), (?i), etc.
 
 #include <vector>
 #include <map>
 #include <memory>
 #include <stdexcept>
 
-
-// TODO: Fix this mess. Scintilla makes you include everything...in the correct order...
-// this was copied from Editor.cxx just to get it to compile
-
-
+// Scintilla makes you include everything...in the correct order...
 #include <cstddef>
 #include <cstdlib>
+#include <cstdint>
 #include <cassert>
 #include <cstring>
 #include <cstdio>
 #include <cmath>
 
-#include <stdexcept>
 #include <string>
 #include <string_view>
-#include <vector>
-#include <map>
 #include <set>
 #include <forward_list>
 #include <optional>
 #include <algorithm>
 #include <iterator>
-#include <memory>
 #include <chrono>
 
 #include "ScintillaTypes.h"
@@ -83,19 +79,46 @@
 #include "Document.h"
 #include "Scintilla.h"
 
+#ifndef PCRE2_CODE_UNIT_WIDTH
+#define PCRE2_CODE_UNIT_WIDTH 8
+#endif
+#include <pcre2.h>
+
 using namespace Scintilla::Internal;
 
 class QRegexSearch : public RegexSearchBase
 {
 public:
     QRegexSearch();
+    ~QRegexSearch() override;
+
+    QRegexSearch(const QRegexSearch &) = delete;
+    QRegexSearch &operator=(const QRegexSearch &) = delete;
 
     Sci::Position FindText(Document *doc, Sci::Position minPos, Sci::Position maxPos, const char *s, bool caseSensitive, bool word, bool wordStart, Scintilla::FindOption flags, Sci::Position *length) override;
     const char *SubstituteByPosition(Document *doc, const char *text, Sci::Position *length) override;
 
 private:
-    QRegularExpressionMatch match;
-    QByteArray *substituted = Q_NULLPTR;
+    bool compile(const char *pattern, Sci::Position patternLength, bool caseSensitive, bool utf8);
+    bool execute(Document *doc, Sci::Position subjectStart, Sci::Position subjectEnd, Sci::Position startPos,
+                 Sci::Position &matchStart, Sci::Position &matchEnd, bool keepGroups);
+    void releaseCode() noexcept;
+
+    pcre2_compile_context *compileContext = nullptr;
+    pcre2_code *code = nullptr;
+    pcre2_match_data *matchData = nullptr;
+
+    std::string compiledPattern;
+    bool compiledCaseSensitive = false;
+    bool compiledUtf8 = false;
+
+    // Captured groups of the last successful match, copied out of the document
+    // so they stay valid for SubstituteByPosition().
+    std::vector<std::string> groups;
+    std::vector<bool> groupSet;
+    std::map<std::string, int> groupNames;
+
+    std::string substituted;
 };
 
 #endif // QREGEXSEARCH_H

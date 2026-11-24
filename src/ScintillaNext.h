@@ -198,10 +198,22 @@ void ScintillaNext::forEachMatchInRange(const QByteArray &text, Func callback, S
     Sci_TextToFind ttf {range, text.constData(), {INVALID_POSITION, INVALID_POSITION}};
     int flags = searchFlags();
 
-    while (send(SCI_FINDTEXT, flags, reinterpret_cast<sptr_t>(&ttf)) != INVALID_POSITION) {
-        if(ttf.chrgText.cpMin == ttf.chrgText.cpMax)
-            break;
-        ttf.chrg.cpMin = callback(ttf.chrgText.cpMin, ttf.chrgText.cpMax);
+    while (ttf.chrg.cpMin <= ttf.chrg.cpMax && send(SCI_FINDTEXT, flags, reinterpret_cast<sptr_t>(&ttf)) != INVALID_POSITION) {
+        const Sci_PositionCR matchStart = ttf.chrgText.cpMin;
+        const Sci_PositionCR matchEnd = ttf.chrgText.cpMax;
+
+        Sci_PositionCR next = callback(matchStart, matchEnd);
+
+        // Zero-length regex matches (^, $, lookarounds...) are valid results.
+        // Step over them one character so the loop keeps going instead of
+        // stopping at the first one (or finding the same spot forever).
+        if (matchStart == matchEnd || next <= ttf.chrg.cpMin) {
+            if (matchEnd >= ttf.chrg.cpMax)
+                break;
+            next = static_cast<Sci_PositionCR>(positionAfter(matchEnd));
+        }
+
+        ttf.chrg.cpMin = next;
     }
 }
 

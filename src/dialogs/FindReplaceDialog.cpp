@@ -280,9 +280,7 @@ void FindReplaceDialog::findAllInCurrentDocument()
 
     bool firstMatch = true;
 
-    QString text = findString();
 
-    finder->options().text = text;
     finder->forEachMatch([&](int start, int end){
         // Only add the file entry if there was a valid search result
         if (firstMatch) {
@@ -702,14 +700,23 @@ FindOptions FindReplaceDialog::findOptions() const
 
     options.text = findString();
 
+    // Extended mode: turn \n, \t... into the real characters
+    if (ui->radioExtendedSearch->isChecked())
+        convertToExtended(options.text);
+
     if (ui->checkBoxMatchWholeWord->isChecked())
         options.flags |= Scintilla::FindOption::WholeWord;
 
     if (ui->checkBoxMatchCase->isChecked())
         options.flags |= Scintilla::FindOption::MatchCase;
 
-    if (ui->radioRegexSearch->isChecked())
+    if (ui->radioRegexSearch->isChecked()) {
         options.flags |= Scintilla::FindOption::RegExp;
+
+        // ". matches newline" checkbox
+        if (ui->checkBoxRegexMatchesNewline->isChecked())
+            options.text.prepend(QStringLiteral("(?s)"));
+    }
 
     options.wrapAround = ui->checkBoxWrapAround->isChecked();
 

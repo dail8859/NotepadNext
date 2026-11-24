@@ -61,6 +61,7 @@ target_include_directories(scintilla
 target_compile_definitions(scintilla
     PUBLIC
         SCINTILLA_QT=1
+        SCI_OWNREGEX=1
         MAKING_LIBRARY=1
         SCI_LEXER=1
         _CRT_SECURE_NO_DEPRECATE=1

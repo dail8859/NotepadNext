@@ -241,6 +241,7 @@ target_link_libraries(NotepadNext
         lexilla
         scintilla
         uchardet
+        pcre2-8-static
 )
 
 if(APPLE)
