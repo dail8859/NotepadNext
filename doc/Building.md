@@ -50,7 +50,7 @@ sudo apt install -y \
   file \
   libxkbcommon-dev \
   libxkbcommon-x11-0 \
-  fuse \
+  fuse3 \
   libxcb-cursor-dev \
   libcups2-dev \
   libglib2.0-0 \
